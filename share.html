@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share the notes — SPPU Sem 7</title>
+<style>
+:root{--bg:#080c17;--line:#233252;--txt:#e8eefc;--muted:#9fb0cf;--dim:#6f82a6;--accent:#4fd1c5;--amber:#ffc46b}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;
+ background:radial-gradient(900px 500px at 80% -10%,#16305a66,transparent 60%),radial-gradient(800px 500px at -10% 20%,#1b4d4a55,transparent 55%),var(--bg);
+ color:var(--txt);font:16px/1.65 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+.card{width:min(880px,100%);background:linear-gradient(180deg,#111a2e,#0f1729);border:1px solid var(--line);border-radius:22px;padding:30px 32px;box-shadow:0 24px 60px #00000055}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 6px;font-size:clamp(26px,4vw,38px);letter-spacing:-.02em;line-height:1.12}
+p{margin:8px 0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:center;margin:22px 0}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+.qr{background:#fff;border-radius:18px;padding:12px;display:block;width:100%;max-width:300px;margin:0 auto}
+.urlbox{display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:12px 14px;margin:12px 0}
+.url{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;color:#bfe9ff;word-break:break-all;flex:1}
+button{background:var(--accent);color:#04110f;border:0;border-radius:10px;padding:9px 14px;font-weight:700;font-size:13px;cursor:pointer}
+button:hover{filter:brightness(1.08)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.links a{font-size:13px;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted);text-decoration:none}
+.links a:hover{border-color:#4fd1c577;color:var(--txt)}
+.note{background:#ffc46b0e;border:1px solid #ffc46b35;color:#ffe6bd;border-radius:12px;padding:12px 16px;margin-top:20px;font-size:14px}
+.note b{color:#fff}
+.back{display:inline-block;margin-top:16px;color:var(--dim);font-size:13.5px;text-decoration:none}
+.back:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="kicker">SPPU · Semester VII · End-Sem Notes</div>
+  <h1>Share these notes</h1>
+  <p>One link for all five subjects. Friends can open it on a phone or laptop and use the <b>Print / Save PDF</b> button on any page.</p>
+
+  <div class="grid">
+    <img class="qr" src="assets/qr.png" alt="QR code for the notes site">
+    <div>
+      <div class="urlbox">
+        <span class="url" id="url">https://heymemukul.github.io/sem7-notes/</span>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('url').textContent).then(()=>this.textContent='Copied ✓')">Copy</button>
+      </div>
+      <p style="font-size:14px">Scan the QR code, or type the short URL. Works on any device — no login, no app.</p>
+      <div class="links">
+        <a href="index.html">All subjects</a>
+        <a href="DAA/index.html">DAA</a>
+        <a href="ML/index.html">ML</a>
+        <a href="BT/index.html">BT</a>
+        <a href="CSDF/index.html">CSDF</a>
+        <a href="STQA/index.html">STQA</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>To print:</b> open any unit page → press the amber <b>🖨️ Print / Save PDF</b> button (bottom-left) → choose your printer or “Save as PDF”. The page automatically switches to a clean white print layout, and the sidebar/buttons are hidden.
+  </div>
+  <a class="back" href="index.html">← Back to all subjects</a>
+</div>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>
