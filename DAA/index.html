@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAA — Design &amp; Analysis of Algorithms | SPPU 410241 Notes</title>
+<style>
+:root{--bg:#080c17;--card:#111a2e;--line:#233252;--txt:#e8eefc;--muted:#9fb0cf;--dim:#6f82a6;--accent:#4fd1c5;--accent2:#7c9cff;--amber:#ffc46b;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1100px 600px at 85% -10%,#16305a55,transparent 60%),radial-gradient(900px 500px at -10% 10%,#1b4d4a44,transparent 55%),var(--bg);color:var(--txt);font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:30px 20px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);border-radius:20px;padding:30px;margin-bottom:24px}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+h1{margin:0 0 10px;font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.02em}
+.hero p{color:var(--muted);margin:8px 0;max-width:820px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.unit{display:block;background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:20px 22px;transition:.2s;color:inherit}
+.unit:hover{border-color:#4fd1c577;transform:translateY(-2px);text-decoration:none}
+.unit .n{font-family:var(--mono);font-size:12px;color:var(--accent2);letter-spacing:.1em}
+.unit h2{margin:4px 0 8px;font-size:20px;color:#e9f1ff}
+.unit p{margin:0;color:var(--muted);font-size:14px}
+.tags{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;background:#ff7aa21a;color:#ffb3c9;border:1px solid #ff7aa233}
+.note{background:#ffc46b0e;border:1px solid #ffc46b35;color:#ffe6bd;border-radius:14px;padding:14px 18px;margin:22px 0;font-size:14.5px}
+.note b{color:#fff}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:30px 0 50px}
+.back{display:inline-block;margin-bottom:16px;font-size:14px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../index.html">← All subjects</a>
+
+<header class="hero">
+  <div class="kicker">SPPU · B.E. Computer Engineering · Semester VII · 2019 Pattern</div>
+  <h1>Design and Analysis of Algorithms</h1>
+  <p><b>410241</b> · End-sem 70 marks · Exam: <b>Monday, 23 November 2026, 2:00–4:30 PM</b></p>
+  <p>Question-answer notes for Units 3–6, built from every available end-sem paper (2022 Nov, 2023 Nov, 2024 May, 2025 May, 2025 Nov). Each question carries a repetition badge and a mark-appropriate answer.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>5</b> end-sem papers</span>
+    <span class="chip">❓ <b>87</b> question instances mapped</span>
+    <span class="chip">📚 4 units</span>
+    <span class="chip">🎯 <b>70</b> marks</span>
+  </div>
+</header>
+
+<div class="grid">
+  <a class="unit" href="Unit-3-Greedy-and-Dynamic-Programming.html">
+    <div class="n">UNIT 3</div>
+    <h2>Greedy &amp; Dynamic Programming</h2>
+    <p>Greedy control abstraction, fractional knapsack, job sequencing, activity selection, DP, matrix chain, OBST, 0/1 knapsack, binomial coefficients.</p>
+    <div class="tags"><span class="tag">Job sequencing ★★★★</span><span class="tag">Matrix chain ★★</span><span class="tag">0/1 knapsack ★★</span></div>
+  </a>
+
+  <a class="unit" href="Unit-4-Backtracking-and-Branch-and-Bound.html">
+    <div class="n">UNIT 4</div>
+    <h2>Backtracking &amp; Branch and Bound</h2>
+    <p>Backtracking principles, sum of subsets, graph colouring, BnB / LC search, knapsack BnB, TSP, comparison and drawbacks.</p>
+    <div class="tags"><span class="tag">Sum of subsets ★★★★★</span><span class="tag">Graph colouring ★★★★</span><span class="tag">TSP ★★</span></div>
+  </a>
+
+  <a class="unit" href="Unit-5-Amortized-Analysis.html">
+    <div class="n">UNIT 5</div>
+    <h2>Amortized Analysis &amp; Algorithm Classes</h2>
+    <p>Aggregate / accounting / potential methods, stack and binary counter, tractable vs intractable, randomized and approximation algorithms, embedded scheduling.</p>
+    <div class="tags"><span class="tag">Amortized ★★★★★</span><span class="tag">Randomized ★★★★★</span><span class="tag">Approximation ★★★★</span></div>
+  </a>
+
+  <a class="unit" href="Unit-6-Multithreaded-and-Distributed.html">
+    <div class="n">UNIT 6</div>
+    <h2>Multithreaded, Distributed &amp; String Matching</h2>
+    <p>Spawn/sync, work &amp; span, matrix multiplication, merge sort, distributed BFS &amp; MST, naive matching, Rabin–Karp with solved traces.</p>
+    <div class="tags"><span class="tag">Rabin–Karp ★★★★★</span><span class="tag">Merge sort ★★★★</span><span class="tag">Distributed BFS ★★★</span></div>
+  </a>
+</div>
+
+<div class="note">
+  <b>Source note:</b> the supplied DAA “Technical” book covers Units 1–2 only. Units 3–6 notes therefore follow the syllabus-listed texts — Cormen et al. (<i>Introduction to Algorithms</i>), Horowitz &amp; Sahani (<i>Fundamentals of Computer Algorithms</i>), Motwani &amp; Raghavan (<i>Randomized Algorithms</i>) — while matching the exact PYQ wording and mark weights.
+  <br><br>
+  <b>Paper availability:</b> the site's 2023 May DAA link returns 404, so repeat counts are based on the 5 hosted end-sem papers (2022 Nov, 2023 Nov, 2024 May, 2025 May, 2025 Nov). All of them are saved in <code>DAA/PYQ/</code>.
+</div>
+
+<footer>
+  DAA · 410241 · notes generated from SPPU end-sem papers · 2019 Pattern<br>
+  <span style="font-size:12px">Questions are reproduced from university papers; answers are exam-oriented study notes, not official solutions.</span>
+</footer>
+</div>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

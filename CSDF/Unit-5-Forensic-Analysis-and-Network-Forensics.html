@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSDF Unit 5 — Forensic Analysis &amp; Network Forensics | SPPU 410244(C)</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.freq td.l{text-align:left}
+.stars{color:var(--amber);letter-spacing:1px}
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<aside class="side">
+  <h3>CSDF · Unit 5</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s51">5.1 What data to collect</a>
+    <a href="#s52">5.2 Validating forensic data</a>
+    <a href="#s53">5.3 Data-hiding techniques</a>
+    <a href="#s54">5.4 Remote &amp; live acquisition</a>
+    <a href="#s55">5.5 Network forensics</a>
+    <a href="#s56">5.6 Honeynet project</a>
+    <a href="#s57">5.7 Identifying digital evidence</a>
+    <a href="#s58">5.8 Seizing &amp; securing a scene</a>
+    <a href="#s59">5.9 Digital hash &amp; storage</a>
+    <a href="#s510">5.10 Search prep &amp; case review</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Introduction-to-Digital-Forensics.html">Unit 3 · Introduction</a>
+  <a href="Unit-4-Evidence-Collection-and-Seizure.html">Unit 4 · Evidence collection</a>
+  <a href="Unit-6-Forensic-Tools-and-Email-Investigation.html">Unit 6 · Tools &amp; email</a>
+  <a href="index.html">↩ CSDF home</a>
+</aside>
+
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 5 — Forensic Analysis, Validation &amp; Network Forensics</h1>
+  <p><b>Subject:</b> Cyber Security and Digital Forensics (410244 C) &nbsp;·&nbsp; <b>Exam:</b> Tuesday, 01 Dec 2026, 2:00 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>Q5 and Q6 are always Unit 5. The paper rotates between <b>validating data</b>, <b>seizing evidence</b>, <b>data hiding</b>, <b>honeynet</b>, <b>remote acquisition</b> and <b>network tools</b>. Every one of those is covered below with the exact paper wording.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>7</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>28</b> Unit-5 question instances</span>
+    <span class="chip">🧩 <b>13</b> answer cards</span>
+    <span class="chip">🔁 Highest repeat: <b>validation — 5×</b>, <b>seizing — 5×</b></span>
+    <span class="chip">⏱️ Unit weight = <b>18 marks</b> (Q5 or Q6)</span>
+  </div>
+</header>
+
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — what actually gets asked</h2>
+  <p class="lead">Counted from all seven end-sem papers. Q6(a) in 2025 May (“digital hash”) and Q6(b) in 2025 Nov (“standard procedures”) are the newest additions — both are below.</p>
+
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">Approaches for validating forensic data</td><td>2022 May Q5(b) [9]; 2022 Nov Q5(b) [9]; 2023 May Q5(a) [9]; 2023 Nov Q6(a) [8]; 2025 Nov Q5(a) [9]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>2</td><td class="l">Approaches for seizing digital evidence at the crime scene</td><td>2022 May Q6(a) [9]; 2022 Nov Q6(a) [9]; 2023 May Q5(b) [8]; 2023 Nov Q6(b) [9]; 2025 Nov Q5(b) [8]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>3</td><td class="l">Honeynet project and its contribution to network forensics</td><td>2023 Nov Q5(b) [9]; 2024 May Q5(b) [9]; 2025 May Q5(b) [9]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>4</td><td class="l">Techniques to hide data in digital forensics</td><td>2022 May Q6(b) [9]; 2022 Nov Q6(b) [9]; 2024 May Q5(a) [8]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>5</td><td class="l">Remote and live acquisitions (with example / challenges)</td><td>2022 May Q5(a) [9]; 2022 Nov Q5(a) [9]; 2024 May Q6(b) [9]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>6</td><td class="l">Process of identifying digital evidence</td><td>2023 May Q6(a) [9]; 2025 Nov Q6(a) [9]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>7</td><td class="l">Determine which data is relevant to collect &amp; analyse</td><td>2023 Nov Q5(a) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>8</td><td class="l">Network forensics + order of volatility</td><td>2023 May Q6(b) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>9</td><td class="l">Standard procedures for network forensics using tools</td><td>2025 Nov Q6(b) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>10</td><td class="l">Common network tools used in network forensics (any one)</td><td>2025 May Q6(b) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>11</td><td class="l">Precautions to prevent data alteration during seizure</td><td>2024 May Q6(a) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>12</td><td class="l">Steps to secure an incident / crime scene before search</td><td>2025 May Q5(a) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>13</td><td class="l">Obtaining a digital hash — importance and generation</td><td>2025 May Q6(a) [9]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>Coverage:</b> validation + seizing alone are 17–18 marks in every paper. Honeynet, data hiding, remote acquisition and identifying evidence rotate as the second pair. The 2025 papers added digital hash, network tools and standard procedures — all four are included.</div>
+
+  <div class="tip"><b>Mark strategy:</b> this unit is definition-heavy. For 8–9 marks: definition + 6–8 numbered points + one diagram (volatility ladder, network tap, or honeynet topology).</div>
+</section>
+
+<!-- 5.1 -->
+<section class="card" id="s51">
+  <h2>5.1 Determining what data to collect and analyse</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>How do investigators determine which data is relevant to collect and analyse in a digital forensics investigation?</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q5(a) [8]</p>
+
+      <h4>1. Start from the type of investigation</h4>
+      <p>The <b>type of investigation</b> and the <b>volume of data</b> determine how the evidence is examined:</p>
+      <ul>
+        <li><b>Civil investigation</b> — frequently constrained by a <b>court order for discovery</b>.</li>
+        <li><b>Criminal investigation</b> — restricted to the data specified in the <b>search warrant</b>.</li>
+        <li><b>Corporate / HR investigation</b> — focuses on <b>infringements of corporate policy</b>, often only e-mail or a few specified topics.</li>
+      </ul>
+
+      <h4>2. Build a case strategy</h4>
+      <ol>
+        <li><b>Read the complaint / warrant</b> — what exactly is alleged, and what is the legal scope?</li>
+        <li><b>List the questions to answer</b> — who, what, when, where, how.</li>
+        <li><b>Identify likely sources</b> — PC, server, mobile, cloud account, USB, printer, router.</li>
+        <li><b>Set a keyword list</b> — names, e-mail addresses, account numbers, project names, dates.</li>
+        <li><b>Define the date range</b> — the period in which the incident occurred.</li>
+        <li><b>Define file types</b> — documents, spreadsheets, images, databases, chat logs.</li>
+        <li><b>Decide depth</b> — logical files only, or full physical image including slack and unallocated space.</li>
+      </ol>
+
+      <h4>3. Control scope creep</h4>
+      <p><b>Scope creep</b> is when an investigation broadens beyond what was originally planned because unexpected information is found, leading the lawyer to request a search of other places. It increases time and cost. The book's advice:</p>
+      <ul>
+        <li>Document every request for more inquiry.</li>
+        <li>Be able to explain why the investigation took longer than expected.</li>
+        <li>Keep the search <b>comprehensive enough</b> to include all pertinent evidence, but <b>not so extensive</b> that time and money are wasted on irrelevant data.</li>
+        <li>Start with a strategy, but be prepared to modify it when the evidence points elsewhere.</li>
+      </ul>
+
+      <h4>4. The 8-step examination method (book §5.1)</h4>
+      <ol>
+        <li>Use only recently erased, reformatted and virus-checked media for target drives.</li>
+        <li>List the components of the suspect's computer and record its state at seizure.</li>
+        <li>If possible, remove the original disk before checking the CMOS date and time for a static acquisition.</li>
+        <li>Note how the data was obtained, including every step used to produce the bit-stream image and the tools employed.</li>
+        <li>Be methodical and logical: list every folder and file, and note where specific evidence is located.</li>
+        <li>Start at the root directory of the partition and look through all folders (limited search in a civil case).</li>
+        <li>Recover the contents of password-protected files that may be relevant.</li>
+        <li>Determine each executable's purpose by its hash value and known-file comparison.</li>
+      </ol>
+
+      <div class="note"><b>Example to quote:</b> a worker is accused of running a side business in office hours. The strategy is to focus on <b>temporary Internet files, Internet history and e-mail</b> within the relevant date range — not on the entire disk.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.2 -->
+<section class="card" id="s52">
+  <h2>5.2 Validating forensic data</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are the different approaches for validating forensic data? / Why is data validation crucial and what methods are commonly used?</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q5(b) [9] · 2022 Nov Q5(b) [9] · 2023 May Q5(a) [9] · 2023 Nov Q6(a) [8] · 2025 Nov Q5(a) [9]</p>
+
+      <h4>1. Why validation is crucial</h4>
+      <p>Validating digital evidence is one of the most important components of computer forensics because it is necessary to <b>ensure the integrity of the data</b> gathered, in order to present it in court. Validation proves that the copy analysed is identical to the original and that the tool used produced correct results. Without it, the defence can argue that the evidence was altered.</p>
+
+      <h4>2. Approach 1 — Hashing</h4>
+      <p>A cryptographic hash converts the data into a fixed-length value. The examiner computes the hash of the original, the image and the working copy. If all values match, the data is validated.</p>
+      <ul>
+        <li><b>MD5</b> (128-bit) — fast, widely accepted, still common in forensic tools.</li>
+        <li><b>SHA-1</b> (160-bit) and <b>SHA-256</b> — stronger; preferred for new reports.</li>
+        <li>Record the algorithm and value in the report and on the evidence bag.</li>
+        <li>Re-hash after every transfer or restoration.</li>
+      </ul>
+
+      <h4>3. Approach 2 — Known good hash sets / hash databases</h4>
+      <p>Compare each file's hash with a database of known files. Known-good sets (such as the NSRL) eliminate operating-system and application files; known-bad sets flag contraband or malware. This both speeds up the review and validates that the tool recognises known files correctly.</p>
+
+      <h4>4. Approach 3 — Hexadecimal editors</h4>
+      <p>Many functions, such as hashing a specific file or sector, are not available in some forensic programs but are available in advanced hex editors. A hex editor shows the raw bytes, so the examiner can:</p>
+      <ul>
+        <li>Locate a specific file, even if its name was changed.</li>
+        <li>Compare two files with different names but the same content.</li>
+        <li>Obtain a hash quickly and verify it manually.</li>
+        <li>Inspect a file header to see whether the extension is appropriate.</li>
+      </ul>
+
+      <h4>5. Approach 4 — Tool-generated checksum verification</h4>
+      <p>Tools such as ProDiscover, X-Ways, FTK and EnCase compute a hash when an image is imported and compare it with the hash recorded when the image was created. ProDiscover shows an <b>Auto Image Checksum Verification</b> dialogue when the image is loaded. If the values differ, the image is corrupt or was modified.</p>
+
+      <h4>6. Approach 5 — Re-imaging and cross-tool comparison</h4>
+      <ul>
+        <li>Image the same original with a <b>second tool</b> and compare the hashes.</li>
+        <li>Restore the image to a disk and re-image it; the new hash must match.</li>
+        <li>Use two different tools to carve the same deleted file; the recovered content should match.</li>
+      </ul>
+
+      <h4>7. Approach 6 — Reproducibility and documentation</h4>
+      <p>Another examiner, using the same image and the same procedure, must get the same result. Document the tool name, version, settings, date, time and examiner. ISO 17025 calls this <b>repeatability</b> (same lab, same equipment) and <b>reproducibility</b> (different lab or operator).</p>
+
+      <h4>8. Validation vs verification (review question 5.10)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Term</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Validation</b></td><td>Proving that the tool or procedure produces correct, reliable results for its intended use.</td><td>Testing a new imaging tool against a known drive; NIST CFTT test.</td></tr>
+          <tr><td><b>Verification</b></td><td>Proving that a particular copy or result is correct in this case.</td><td>Comparing the MD5 of the original and the image.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tip"><b>9-mark structure:</b> definition/why (2) + hashing (2) + known hash sets (1) + hex editor (1) + tool checksum (1) + re-imaging (1) + documentation (1). Name a real tool in each approach — that is what separates a 6 from a 9.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.3 -->
+<section class="card" id="s53">
+  <h2>5.3 Addressing data-hiding techniques</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Give in detail the different techniques to hide data in digital forensics. / What are some common data hiding techniques? Explain any one in detail.</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q6(b) [9] · 2022 Nov Q6(b) [9] · 2024 May Q5(a) [8, any one in detail]</p>
+
+      <p><b>Data hiding</b> is the process of altering or modifying a file to hide information. Partitions may be concealed, file properties changed, extensions altered, bits shifted, encryption applied or password security set.</p>
+
+      <h4>1. The techniques (book §5.3)</h4>
+      <ol>
+        <li><b>Hiding partitions</b> — create a partition and manually erase all references to it using a disc editor such as Norton Disk Edit, or update the partition table to restore the links. When the machine restarts, the hidden partition resurfaces. A boot manager such as G Disk, Partition Magic, System Commander or GRUB can also conceal a partition by removing it from the boot menu.</li>
+        <li><b>Marking bad clusters</b> — place sensitive data in open or slack space and label the clusters “bad”. The OS then regards them as useless and will not read them; the attacker converts them back to good clusters with a disc editor when needed.</li>
+        <li><b>Bit-shifting</b> — use an assembler program (macro) to reorder the bits in a file, making it unreadable in a text editor or word processor. A second program restores the original sequence. This can make it impossible for an investigator to examine the data on a suspicious disk.</li>
+        <li><b>Steganography</b> — hide data inside an image, audio or video file; the carrier looks normal but contains a secret payload.</li>
+        <li><b>Encryption</b> — encrypt files, containers or the whole disk; without the key the content is unreadable.</li>
+        <li><b>File-extension changes</b> — rename <code>.doc</code> to <code>.jpg</code> or <code>.txt</code>; the file header no longer matches the extension, and a superficial review misses it.</li>
+        <li><b>Hidden files and folders</b> — set the hidden attribute, or use a name that users do not notice.</li>
+        <li><b>Alternate Data Streams (ADS)</b> — on NTFS, attach a hidden stream to a normal file; the visible file looks unchanged.</li>
+        <li><b>Slack space</b> — store data in the unused tail of the last cluster of a file.</li>
+        <li><b>Password-protected archives</b> — ZIP/RAR with encryption; the examiner needs the password or a cracking tool.</li>
+      </ol>
+
+      <h4>2. Bit-shifting in detail (the book's worked example)</h4>
+      <p>Bit-shifting changes the position of every bit in a byte. For example, shifting the 8-bit value <code>00000001</code> one place to the left gives <code>00000010</code>; the byte now means a different character. Apply this to the whole file and it looks like garbage.</p>
+      <ol>
+        <li>Open the file in a hex editor (Hex Workshop).</li>
+        <li>Select <b>Data Operations → Shift Left</b>.</li>
+        <li>Choose the operand size (16-bit unsigned short) and byte ordering (little-endian).</li>
+        <li>Apply to the selection or the entire file; save as a new file (for example <code>Bit shift left.txt</code>).</li>
+        <li>To restore, apply <b>Shift Right</b> the same number of bits; the original text reappears.</li>
+        <li>Compute MD5 of the original, the shifted file and the restored file. The shifted file has a different hash; the restored file must have the original hash.</li>
+      </ol>
+      <p><b>Why attackers use it:</b> antivirus and keyword search do not recognise the shifted content. Some malware bit-shifts an executable hidden at the end of a Word document and reverses it when the document is opened.</p>
+
+      <h4>3. Hiding partitions in detail</h4>
+      <p>A partition is described by an entry in the partition table. If the entry is removed or marked as an unknown type, the operating system no longer mounts it, but the data remains on disk. Disk Manager may show a gap, a partition with no drive letter, or non-sequential drive letters (C, E, F — D missing). The examiner recovers it by:</p>
+      <ul>
+        <li>Comparing the total disk size with the sum of visible partitions.</li>
+        <li>Looking for a partition gap larger than the normal 63/128 sectors.</li>
+        <li>Using a disc editor or forensic tool (ProDiscover, FTK, WinHex) to view the partition table and carve data from the gap.</li>
+      </ul>
+
+      <div class="note"><b>Book example:</b> a 5.38 GB disk shows a 109.8 MB primary DOS partition, a 5381.1 MB extended partition and a 5116.5 MB logical drive. The mismatch and the missing drive letter reveal the hidden partition (Fig. 5.3.1).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.4 -->
+<section class="card" id="s54">
+  <h2>5.4 Remote &amp; live acquisitions</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain how to perform remote and live acquisitions with an appropriate example. / What are the challenges and best practices associated with performing remote acquisitions?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q5(a) [9] · 2022 Nov Q5(a) [9] · 2024 May Q6(b) [9, challenges &amp; best practices]</p>
+
+      <h4>1. Live acquisition</h4>
+      <p>A <b>live acquisition</b> captures data from a running system. It is used when the system cannot be switched off (a production server), when encryption keys exist only in RAM, or when volatile evidence would otherwise be lost.</p>
+      <p><b>Order of volatility:</b> collect RAM and active processes first, then disk. The book's steps:</p>
+      <ol>
+        <li><b>Test a bootable forensic CD</b> before using it on a suspect system. Add the proper network tools to your workstation if the suspect is on the network.</li>
+        <li><b>Record everything you do</b> — both the action and the reason.</li>
+        <li>Save the data to a <b>network drive</b> if possible.</li>
+        <li>Connect a <b>USB thumb drive</b> to the suspicious machine to gather data if no network drive is available; record this action in the journal.</li>
+        <li><b>Copy physical memory (RAM)</b> next. Microsoft provides built-in tools; free tools include Back and mem fetch.</li>
+        <li>If an intrusion is suspected, use <b>Root Kit Revealer</b> to check for a rootkit; then take a drive image over the network, or shut down and do a static acquisition.</li>
+        <li>Obtain a <b>forensically sound digital hash</b> for every file recovered, so that later changes can be detected.</li>
+      </ol>
+
+      <h4>2. Tools for live acquisition</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><b>ManTech Memory DD</b></td><td>Memory dump; supports up to 4 GB of RAM.</td></tr>
+          <tr><td><b>Win32dd</b></td><td>Free memory-dump program for Windows.</td></tr>
+          <tr><td><b>Guidance Software WinMem</b></td><td>Beginner-level memory capture.</td></tr>
+          <tr><td><b>Backtrack</b></td><td>Live CD with more than 300 tools — forensics, packet sniffers, password crackers.</td></tr>
+          <tr><td><b>Helix / DEFT / SIFT</b></td><td>Bootable forensic Linux distributions.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Remote acquisition</h4>
+      <p><b>Remote acquisition</b> means imaging a computer that is far away, or imaging without the suspect knowing. It saves time and money and is useful when the machine is at a branch office or in another city.</p>
+      <p><b>Tools (Runtime Software):</b></p>
+      <ul>
+        <li><b>DiskExplorer for FAT</b> — raw or segmented image of a FAT drive.</li>
+        <li><b>DiskExplorer for NTFS</b> — raw or segmented image of an NTFS drive.</li>
+        <li><b>HDHOST</b> — lets two computers communicate remotely; the examiner runs DiskExplorer on the local machine and connects to the suspect machine over the network. Best on the same LAN or router with little traffic.</li>
+      </ul>
+
+      <h4>4. Example procedure (remote)</h4>
+      <pre><code>1. Obtain legal authority / written consent for remote access.
+2. Record the suspect IP, host name, OS and file system.
+3. Start HDHOST on the examiner machine; connect to the remote host.
+4. Run DiskExplorer (FAT or NTFS) against the remote drive.
+5. Create a raw image on the examiner's evidence drive.
+6. Compute MD5/SHA-1 on the remote source and on the local image.
+7. Compare hashes; record the result and the time.
+8. Seal the image; analyse only the copy.</code></pre>
+
+      <h4>5. Challenges</h4>
+      <ul>
+        <li><b>Bandwidth</b> — a full image may be hundreds of GB; the link may be too slow.</li>
+        <li><b>Encryption</b> — the remote disk may be encrypted and the key unavailable.</li>
+        <li><b>Rootkits</b> — the remote OS may hide files or processes from the acquisition tool.</li>
+        <li><b>Alteration</b> — every command changes the remote system (access time, logs, network connections).</li>
+        <li><b>Attacker detection</b> — the intruder may notice the connection and destroy evidence.</li>
+        <li><b>Legal authority</b> — remote access across a jurisdiction may need a local warrant.</li>
+        <li><b>Network instability</b> — a dropped link produces an incomplete image.</li>
+      </ul>
+
+      <h4>6. Best practices</h4>
+      <ul>
+        <li>Use a <b>write blocker</b> or a read-only connection where possible.</li>
+        <li><b>Log every action</b> with date, time and reason.</li>
+        <li>Capture <b>volatile data first</b>; hash every file and the final image.</li>
+        <li>Image to a <b>dedicated evidence drive</b>, never to the suspect disk.</li>
+        <li>Verify the image by re-hashing; keep a second copy.</li>
+        <li>Use a <b>trusted bootable CD/USB</b> so the remote OS cannot tamper with the tool.</li>
+        <li>Work on a quiet network segment to avoid packet loss.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5.5 -->
+<section class="card" id="s55">
+  <h2>5.5 Network forensics</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain Network forensics and order of volatility for computer system.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q6(b) [8]</p>
+
+      <h4>1. Network forensics — definition</h4>
+      <p><b>Network forensics</b> is the act of <b>gathering and analysing raw network data and tracing network traffic</b> regularly, in order to determine how an attack was executed or how an event took place on a network.</p>
+
+      <h4>2. Why it is needed</h4>
+      <ul>
+        <li>To decide whether a network is really under attack or whether a user installed a bespoke program or an untested patch.</li>
+        <li>To avoid wasting time and money chasing a defect in a custom application or an open-source program.</li>
+        <li>To create standard operating procedures for data collection after an intrusion.</li>
+        <li>To discover how a security breach happened, so the network can be hardened.</li>
+        <li>Demand is rising: projections cited in the book speak of a shortage of about <b>50,000 network forensics experts</b> in government, law firms, businesses and academic institutions.</li>
+      </ul>
+
+      <h4>3. Sources of network evidence</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Source</th><th>What it shows</th></tr></thead>
+        <tbody>
+          <tr><td>Firewall logs</td><td>Allowed and blocked connections, source/destination IP and port.</td></tr>
+          <tr><td>Router / NetFlow</td><td>Traffic volume and flow between hosts.</td></tr>
+          <tr><td>IDS/IPS alerts</td><td>Signatures of known attacks (Snort).</td></tr>
+          <tr><td>Packet capture</td><td>Full payload; reconstruct e-mail, HTTP, chat (tcpdump, Wireshark, Xplico).</td></tr>
+          <tr><td>DHCP / DNS logs</td><td>Which device had which IP, and which names were resolved.</td></tr>
+          <tr><td>Proxy / web logs</td><td>URLs visited, downloads, user agent.</td></tr>
+          <tr><td>Server logs</td><td>Login attempts, file access, e-mail transfer.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. Order of volatility for a computer system</h4>
+      <p>Collect the most volatile evidence first. The book's list (also Unit 4) is:</p>
+      <ol>
+        <li>Registers and cache</li>
+        <li>Routing tables</li>
+        <li>ARP cache</li>
+        <li>Process table</li>
+        <li>Kernel statistics and modules</li>
+        <li>Main memory</li>
+        <li>Temporary file systems</li>
+        <li>Secondary memory</li>
+        <li>Router configuration</li>
+        <li>Network topology</li>
+      </ol>
+
+      <div class="tree">most volatile
+   registers / cache
+   routing table / ARP cache
+   process table / kernel modules
+   RAM
+   temp file systems
+   disk
+   router config / topology
+least volatile</div>
+
+      <div class="note"><b>Network-specific volatility:</b> the ARP cache and routing table change within seconds; a switch's MAC table ages out in minutes. Capture them before pulling any cable.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain the process of developing standard procedures for network forensics using network forensics tools.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q6(b) [8]</p>
+
+      <h4>1. Why a standard procedure is needed</h4>
+      <p>Network forensics is a <b>time-consuming, labour-intensive</b> procedure and the investigation can rapidly become fruitless. A written procedure ensures that evidence is collected the same way every time, that volatile data is not lost, and that the result is defensible.</p>
+
+      <h4>2. The standard procedure (book §5.4.3)</h4>
+      <ol>
+        <li><b>Use a standard installation image</b> for systems on the network. The image contains all commonly used standard applications; it is <b>not</b> a bit-stream image. Keep MD5 and SHA-1 hash values for all OS and application files.</li>
+        <li><b>As soon as an intrusion is detected</b>, check whether the vulnerability has been addressed, to stop further exploitation.</li>
+        <li><b>Before shutting the system off</b>, retrieve all volatile data by performing a live acquisition of RAM and active processes.</li>
+        <li><b>Acquire the infected drive</b> and create a forensic image of it.</li>
+        <li><b>Compare the files on the forensic image</b> with the installation image's original files. Check the hashes of popular files, including <code>win.exe</code> and common DLLs, to see whether they changed.</li>
+        <li><b>Work from the image</b> — deleted or hidden files and partitions may be found by examining the physical disk; occasionally restore the image to a drive to run applications.</li>
+        <li><b>Recover the disk</b> in a controlled way and examine the system functions that the attacker modified.</li>
+        <li><b>Document</b> the tools, versions, settings, timestamps and every action.</li>
+      </ol>
+
+      <h4>3. Tools used at each stage</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Stage</th><th>Tool</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>Volatile capture</td><td>ManTech DD, Win32dd, Volatility</td><td>RAM and process dump.</td></tr>
+          <tr><td>Packet capture</td><td>tcpdump, Wireshark, Snort</td><td>Raw traffic and IDS alerts.</td></tr>
+          <tr><td>Flow analysis</td><td>NetFlow, ntop</td><td>Traffic volume and top talkers.</td></tr>
+          <tr><td>Imaging</td><td>FTK Imager, dd, EnCase</td><td>Bit-stream image of the drive.</td></tr>
+          <tr><td>File analysis</td><td>The Sleuth Kit, Autopsy</td><td>Deleted files, timeline, hash filtering.</td></tr>
+          <tr><td>Payload extraction</td><td>Xplico</td><td>E-mail and HTTP objects from captured traffic.</td></tr>
+          <tr><td>Rootkit check</td><td>Root Kit Revealer, chkrootkit</td><td>Detect hidden processes and files.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tip"><b>8-mark answer:</b> 1 line on why + 8 numbered procedure steps + a 4-row tool table. The examiner is looking for the words <b>standard installation image</b>, <b>hash values</b>, <b>volatile data first</b> and <b>compare with the image</b>.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>What are some common network tools used in network forensics? Explain any one in detail.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q6(b) [8]</p>
+
+      <h4>1. Windows tools (Sysinternals)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Tool</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><b>RegMon</b></td><td>Shows all registry data in real time.</td></tr>
+          <tr><td><b>Process Explorer</b></td><td>Shows what files, registry keys and DLLs are loaded at a specific time.</td></tr>
+          <tr><td><b>Handle</b></td><td>Shows which files are open and which processes use them.</td></tr>
+          <tr><td><b>Filemon</b></td><td>Shows file-system activity.</td></tr>
+          <tr><td><b>PsExec</b></td><td>Runs processes remotely.</td></tr>
+          <tr><td><b>PsGetSid</b></td><td>Displays the security identifier (SID) of a computer or user.</td></tr>
+          <tr><td><b>PsKill</b></td><td>Kills processes by name or process ID.</td></tr>
+          <tr><td><b>PsList</b></td><td>Lists detailed information about processes.</td></tr>
+          <tr><td><b>PsLoggedOn</b></td><td>Displays who is logged on locally.</td></tr>
+          <tr><td><b>PsPasswd</b></td><td>Allows you to change account passwords.</td></tr>
+          <tr><td><b>PsService</b></td><td>Enables you to view and control services.</td></tr>
+          <tr><td><b>PsShutdown</b></td><td>Shuts down and optionally restarts a computer.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. UNIX / Linux tools</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Tool</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><b>dcfldd</b></td><td>U.S. DoD computer forensics lab version of the <code>dd</code> command.</td></tr>
+          <tr><td><b>memfetch</b></td><td>Forces a memory dump.</td></tr>
+          <tr><td><b>photorec</b></td><td>Retrieves files from a digital camera.</td></tr>
+          <tr><td><b>snort</b></td><td>Popular IDS that performs packet capture and analysis in real time.</td></tr>
+          <tr><td><b>oinkmaster</b></td><td>Helps manage Snort rules so you can specify what to ignore and what should raise alarms.</td></tr>
+          <tr><td><b>john</b></td><td>John the Ripper, a password cracker.</td></tr>
+          <tr><td><b>chntpw</b></td><td>Resets passwords on a Windows computer, including the administrator password.</td></tr>
+          <tr><td><b>tcpdump / ethereal</b></td><td>Packet sniffers.</td></tr>
+          <tr><td><b>Knoppix Security Tools Distribution</b></td><td>Bootable Linux CD with authentication, firewall, password, wireless, encryption, IDS, honeynet, forensics and packet-sniffer tools.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. One tool in detail — Snort</h4>
+      <p><b>Snort</b> is an open-source <b>intrusion detection and prevention system</b>. It captures packets in real time, reassembles TCP streams and matches the traffic against a rule set.</p>
+      <ul>
+        <li><b>Packet sniffer mode</b> — prints packets to the console.</li>
+        <li><b>Packet logger mode</b> — writes packets to disk for later analysis.</li>
+        <li><b>IDS mode</b> — applies rules and raises alerts.</li>
+        <li>Rules have a header (action, protocol, source/destination IP and port) and options (content, flags, byte test).</li>
+        <li><b>oinkmaster</b> downloads and manages the rule set.</li>
+        <li>In forensics, Snort alerts provide a timeline of attacks; the captured packets can be replayed in Wireshark to reconstruct the session.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5.6 -->
+<section class="card" id="s56">
+  <h2>5.6 The Honeynet project</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is the honeynet project and how does it contribute to network forensics?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q5(b) [9] · 2024 May Q5(b) [9] · 2025 May Q5(b) [9]</p>
+
+      <h4>1. Definition</h4>
+      <p>The <b>Honeynet Project</b> is a research project that makes information about honeypots, honeynets and honewalls available in order to <b>thwart Internet and network attackers</b>. Its aims are to create awareness, provide information on how to protect against threats, explain how attackers operate and communicate, and give people tools and methods for their own research.</p>
+
+      <h4>2. Key components</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Component</th><th>What it is</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><b>Honeypot</b></td><td>A computer set up to look like any other machine on the network, but with no real data of value.</td><td>Lure attackers away from production systems and observe them.</td></tr>
+          <tr><td><b>Honeynet</b></td><td>A network of honeypots.</td><td>Observe large-scale, multi-host attacks and attacker-to-attacker communication.</td></tr>
+          <tr><td><b>Honewall</b></td><td>A computer that monitors what happens to the honeypots.</td><td>Record the attacker's actions and control outgoing traffic.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. How a honeynet works</h4>
+      <ol>
+        <li>The original machine is loaded with the same standard software as the production network.</li>
+        <li>A <b>forensic image</b> of the machine is created before deployment.</li>
+        <li>The machine is deployed on the network and left as bait. It is not used for real work.</li>
+        <li>If it is compromised, it is taken offline and <b>another image is made</b>.</li>
+        <li>The two images are compared to determine the <b>method of attack</b> and which files were altered or added.</li>
+        <li>Both images are stored in a database for research.</li>
+      </ol>
+
+      <h4>4. Contribution to network forensics</h4>
+      <ul>
+        <li><b>Early warning</b> — reveals new attack tools and zero-day techniques before they hit production.</li>
+        <li><b>Behaviour capture</b> — records the full sequence of an attack: scanning, exploit, download, command-and-control.</li>
+        <li><b>Attribution data</b> — source IPs, malware samples, IRC/C2 channels, file hashes.</li>
+        <li><b>Evidence preservation</b> — before/after images provide a controlled comparison, which is exactly what a forensic report needs.</li>
+        <li><b>Research database</b> — shared with the community, improving detection signatures.</li>
+        <li><b>DDoS and zero-day research</b> — the project studies distributed denial-of-service and zero-day attacks, including botnets and “zombies”.</li>
+      </ul>
+
+      <h4>5. Limitations (good for the last 2 marks)</h4>
+      <ul>
+        <li>A honeypot sees only what is directed at it; it cannot prove that a production system was not attacked.</li>
+        <li>It must be isolated, or it becomes a launch point for attacks on others.</li>
+        <li>Legal and ethical issues: entrapment and privacy concerns.</li>
+        <li>Skilled attackers can fingerprint a honeypot and avoid it.</li>
+      </ul>
+
+      <div class="note"><b>Terminology to use:</b> honeypot = single decoy; honeynet = network of decoys; honewall = monitor/control device. The 2023 Nov paper spells it “honeynet”, 2024 May “honey net” and 2025 May “honeyenet” — all the same project.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.7 -->
+<section class="card" id="s57">
+  <h2>5.7 Identifying digital evidence</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain the process of identifying digital evidence in computer forensics. / Describe the steps of identifying digital evidence.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q6(a) [9] · 2025 Nov Q6(a) [9]</p>
+
+      <h4>1. What digital evidence is</h4>
+      <p><b>Digital evidence</b> is any information stored or transmitted in digital form that can be used in court. US courts accept digital evidence as <b>physical evidence</b>; digital data is treated as a tangible object.</p>
+
+      <h4>2. The identification process</h4>
+      <ol>
+        <li><b>Understand the case</b> — read the complaint, warrant or policy; list the questions the evidence must answer.</li>
+        <li><b>Survey the scene</b> — identify every device that may hold data: PCs, laptops, servers, phones, tablets, USB drives, external disks, printers, cameras, routers, smart devices.</li>
+        <li><b>Document the scene</b> — photograph the area, the screen, the cable connections and the device labels; record serial numbers and the system time.</li>
+        <li><b>Identify potential sources of evidence</b> — local disk, RAM, network shares, cloud accounts, e-mail server, logs, backup tapes, CCTV.</li>
+        <li><b>Decide relevance</b> — which sources fall within the warrant or policy, and which are likely to contain the answers.</li>
+        <li><b>Preserve before touching</b> — capture volatile data, isolate the device, use a write blocker, hash the data.</li>
+        <li><b>Record the chain of custody</b> — every item, every transfer, every access.</li>
+        <li><b>Classify the evidence</b> — computer-generated records vs computer-stored records; real, documentary, testimonial or demonstrative.</li>
+        <li><b>Prepare for analysis</b> — image the media, verify the hash, and load the image into the forensic tool.</li>
+      </ol>
+
+      <h4>3. General tasks performed by investigators</h4>
+      <ul>
+        <li><b>Identify</b> digital information or artefacts that can be used as evidence.</li>
+        <li><b>Collect, preserve and document</b> evidence.</li>
+        <li><b>Analyse, identify and organize</b> evidence.</li>
+        <li><b>Rebuild evidence or repeat a situation</b> to verify that the results can be reproduced reliably.</li>
+      </ul>
+
+      <h4>4. Rules to follow while identifying evidence</h4>
+      <ul>
+        <li>Consistent practices verify your work and enhance your credibility.</li>
+        <li>Comply with the state's rules of evidence or the Federal Rules of Evidence.</li>
+        <li>Evidence admitted in a criminal case can be used in a civil suit, and vice versa.</li>
+        <li>Keep current on rulings about collecting, processing, storing and admitting digital evidence.</li>
+        <li>Digital evidence is unlike other physical evidence because it can be changed more easily; compare the original with the duplicate.</li>
+        <li>Most courts treat computer records as hearsay evidence, with a <b>business-record exception</b> for records of regularly conducted activity.</li>
+        <li>Computer-generated records are authentic if the program that created the output was functioning correctly.</li>
+        <li>Computer-stored records must be shown to be authentic and trustworthy; file metadata can identify the author.</li>
+      </ul>
+
+      <div class="tip"><b>9-mark answer:</b> definition (1) + 7–9 identification steps (5) + four general tasks (2) + two rules-of-evidence points (1). Use the phrase “identify → preserve → document → analyse → reproduce”.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.8 -->
+<section class="card" id="s58">
+  <h2>5.8 Seizing &amp; securing the scene</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Brief about the approaches for seizing digital evidence at the crime scene. / Describe the process of seizing digital evidence at a crime or incident scene.</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q6(a) [9] · 2022 Nov Q6(a) [9] · 2023 May Q5(b) [8] · 2023 Nov Q6(b) [9] · 2025 Nov Q5(b) [8]</p>
+
+      <h4>1. Two legal settings</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Setting</th><th>Power to seize</th><th>Typical approach</th></tr></thead>
+        <tbody>
+          <tr><td><b>Law enforcement</b></td><td>All computing equipment and accessories can be seized with the appropriate search warrant.</td><td>Seize the whole system, photograph, label, transport, image in the lab.</td></tr>
+          <tr><td><b>Corporate / private sector</b></td><td>Similar level of power may exist under company policy, but usually the investigator can only take a <b>screenshot</b> or a copy of the suspect's hard drive.</td><td>Image or copy the drive; leave the machine in place; rely on the employment policy.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Private-sector vs law-enforcement incident scenes (book §5.5.2)</h4>
+      <ul>
+        <li>Businesses and government entities that are <b>not involved in law enforcement</b> are private-sector organisations. They must make some documents accessible as public records under the Freedom of Information Act (FOIA) and state disclosure requirements.</li>
+        <li><b>State public records</b> are open for review; a divorce recorded in a public place becomes public information unless a judge orders the paperwork sealed.</li>
+        <li><b>ISPs</b> are a special category: they may look into employee-committed computer misuse, but they must protect customer privacy, particularly where e-mail is concerned.</li>
+        <li>The <b>Patriot Act</b> and Homeland Security legislation changed some provisions; “emergency circumstances” means immediate danger of death or serious physical harm, such as a bomb threat.</li>
+        <li>The practical difference: police can seize the whole system under a warrant; a corporate investigator usually images or copies the drive and must stay within company policy.</li>
+      </ul>
+
+      <h4>3. The seizure process (book §5.5.6)</h4>
+      <ol>
+        <li><b>Secure the scene</b> — barricade, guards, access log (see Q2).</li>
+        <li><b>Photograph</b> the computer, the screen, the connections and the surrounding area before touching anything.</li>
+        <li><b>Record the system state</b> — make, model, serial number, OS, running programs, network connections, logged-on user.</li>
+        <li><b>Decide the shutdown method</b> — normal shutdown, pull the plug, or live acquisition first. Record the reason.</li>
+        <li><b>Capture volatile data</b> if it is relevant (RAM, ARP cache, netstat).</li>
+        <li><b>Label every item</b> — exhibit number, date, time, place, officer.</li>
+        <li><b>Package</b> — anti-static bags for boards and drives; faraday bag for phones; seal with tamper-evident tape.</li>
+        <li><b>Transport</b> — keep away from heat, magnets and shock; never leave evidence unattended.</li>
+        <li><b>Chain of custody</b> — record every transfer and store in the evidence safe.</li>
+        <li><b>Image in the lab</b> — bit-stream copy, hash, verify, analyse the copy.</li>
+      </ol>
+
+      <h4>4. Approaches to the shutdown decision</h4>
+      <ul>
+        <li><b>Pull the plug</b> — preserves the disk exactly but loses RAM. Use when the machine is idle and disk evidence is the priority.</li>
+        <li><b>Normal shutdown</b> — lets the OS flush caches, but changes timestamps and may trigger deletion of swap/temp files. Avoid unless necessary.</li>
+        <li><b>Live acquisition then shutdown</b> — best for servers and encrypted disks; capture RAM first.</li>
+        <li><b>Network isolation</b> — unplug the network cable rather than power off, to stop remote wiping while preserving RAM.</li>
+      </ul>
+
+      <div class="note"><b>Legal caution:</b> a badly written warrant can cause the court to dismiss the evidence. Discuss the wording with the prosecutor before the search; keep the seizure within the warrant's scope.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What precautions should investigators take to prevent data alteration or loss during the seizure process? Explain any one in detail.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q6(a) [8]</p>
+
+      <h4>1. Precautions</h4>
+      <ol>
+        <li><b>Photograph before touching</b> — the screen, cables, ports and device labels.</li>
+        <li><b>Do not boot the suspect computer</b> — booting changes timestamps, runs malware and may destroy evidence. Use a write blocker or a forensic boot CD.</li>
+        <li><b>Do not open the case</b> unless trained; handle drives by the edges and use anti-static protection.</li>
+        <li><b>Do not run antivirus or scandisk</b> on the evidence disk.</li>
+        <li><b>Capture volatile data first</b> if the machine is running.</li>
+        <li><b>Isolate from the network</b> — unplug the cable or use a faraday bag for wireless devices.</li>
+        <li><b>Use tamper-evident bags and seals</b>; sign across the seal.</li>
+        <li><b>Keep a chain-of-custody record</b> for every item.</li>
+        <li><b>Store in a cool, dry, magnetic-free place</b>; never leave evidence unattended.</li>
+        <li><b>Hash before and after</b> transport and before analysis.</li>
+      </ol>
+
+      <h4>2. One precaution in detail — never boot the suspect computer</h4>
+      <p>Booting a suspect machine is one of the most common and most damaging mistakes. When Windows starts, it:</p>
+      <ul>
+        <li>Updates the <b>last-access time</b> of files, destroying the timeline.</li>
+        <li>Creates, modifies or deletes <b>swap and temp files</b>.</li>
+        <li>Runs <b>startup programs and malware</b>, which may delete logs or contact a remote server.</li>
+        <li>Mounts the disk read-write, so the OS can write to it.</li>
+        <li>May trigger a <b>booby trap</b> or “dead man switch” that wipes the drive.</li>
+      </ul>
+      <p><b>Correct procedure:</b> remove the drive (or boot from a trusted forensic CD/USB), connect it through a <b>hardware write blocker</b>, and image it with a tool that reads every sector. Verify the image hash against the source. Only then boot the image in a virtual machine, never the original.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>What steps should be taken to secure a computer incident or crime scene before beginning the search for digital evidence?</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q5(a) [8]</p>
+
+      <h4>1. Secure the perimeter (book §5.5.5)</h4>
+      <ul>
+        <li>Protect the evidence and the privacy of those involved; the inquiry may be compromised if information becomes public.</li>
+        <li>Use <b>yellow barrier tape</b> to keep onlookers away from a crime or computer incident scene.</li>
+        <li>Use <b>police officers or security guards</b> to keep people out. Trespass law and obstruction law provide legal grounds to exclude them.</li>
+        <li>Allow entry only to individuals with a <b>legitimate cause</b> to be there.</li>
+        <li><b>Extend the perimeter</b> beyond the immediate vicinity — it is easier to reduce the scene than to increase it later.</li>
+        <li>Computer investigators are often not in charge of perimeter security; work with the officer or detective who is.</li>
+      </ul>
+
+      <h4>2. Protect the digital evidence</h4>
+      <ol>
+        <li><b>Do not touch the keyboard or mouse</b> — a screensaver or open session may be evidence.</li>
+        <li><b>Photograph the screen</b> before anything changes.</li>
+        <li><b>Note running programs, open windows and network connections.</b></li>
+        <li><b>Disconnect the network cable</b> (not the power) to stop remote access and wiping.</li>
+        <li><b>Place phones in a faraday bag</b> and switch off wireless where lawful.</li>
+        <li><b>Prevent bystanders from using the machine</b> or deleting files.</li>
+        <li><b>Record who enters and leaves</b> the scene and what they touch.</li>
+        <li><b>Keep the scene cool and dry</b>; protect devices from shocks and liquids.</li>
+      </ol>
+
+      <h4>3. Before the search begins</h4>
+      <ul>
+        <li>Brief the team on the warrant scope and the plan.</li>
+        <li>Assign roles: scene security, photography, evidence collection, scribe.</li>
+        <li>Prepare the evidence kit: bags, seals, labels, gloves, camera, write blockers, faraday bags, forensic laptop.</li>
+        <li>Start the <b>evidence notebook</b> and the <b>chain-of-custody form</b>.</li>
+        <li>Record the date, time, place, case number and names of all persons present.</li>
+      </ul>
+
+      <div class="tree">OUTER PERIMETER  ── tape + guard + access log
+        ↓
+INNER SCENE      ── only authorised examiners
+        ↓
+DEVICE           ── photograph → note state → isolate network → seize</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.9 -->
+<section class="card" id="s59">
+  <h2>5.9 Obtaining a digital hash &amp; storing evidence</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Why is obtaining a digital hash important while storing digital evidence, and how is it generated? Explain in detail.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q6(a) [9]</p>
+
+      <h4>1. What a digital hash is</h4>
+      <p>A <b>hash</b> (message digest) is a fixed-length hexadecimal value produced by a one-way mathematical function from a file or a whole disk. The same input always gives the same hash; a one-bit change gives a completely different value. It is the digital equivalent of a fingerprint.</p>
+
+      <h4>2. Why it is important</h4>
+      <ul>
+        <li><b>Integrity</b> — proves that the image is identical to the original.</li>
+        <li><b>Admissibility</b> — gives the court a verifiable value that can be re-checked at any time.</li>
+        <li><b>Detects alteration</b> — if anyone changes a byte, the hash no longer matches.</li>
+        <li><b>Chain of custody support</b> — the hash is recorded at seizure, imaging, transfer and analysis.</li>
+        <li><b>Identification</b> — two files with different names but the same content have the same hash; known-bad databases rely on this.</li>
+        <li><b>Reproducibility</b> — a second examiner can confirm the result independently.</li>
+      </ul>
+
+      <h4>3. How it is generated</h4>
+      <ol>
+        <li>Connect the evidence drive through a <b>write blocker</b>.</li>
+        <li>Open the forensic tool (FTK Imager, EnCase, ProDiscover, <code>md5sum</code>, <code>sha1sum</code>).</li>
+        <li>Select the source — a single file, a folder or the entire physical disk.</li>
+        <li>Choose the algorithm — <b>MD5</b> (128-bit), <b>SHA-1</b> (160-bit) or <b>SHA-256</b> (256-bit).</li>
+        <li>Run the hash; the tool reads every byte and produces a hexadecimal value.</li>
+        <li>Record the value, the algorithm, the date/time and the tool version.</li>
+        <li>Create the image and hash the image with the same algorithm.</li>
+        <li>Compare the two values. <b>Equal = verified.</b></li>
+      </ol>
+
+      <div class="math">MD5("hello") = 5d41402abc4b2a76b9719d911017c592<br>MD5("Hello") = 8b1a9953c4611296a827abf8c47804d7</div>
+      <p class="small">One changed letter produces a completely different hash — this is the avalanche effect. Values verified with Python <code>hashlib</code>.</p>
+
+      <h4>4. Hash values used in the book</h4>
+      <ul>
+        <li><b>CRC-32</b> — a mathematical procedure used to detect whether a file's contents changed; it is <b>not</b> regarded as a forensic hashing technique.</li>
+        <li><b>MD5</b> — Message Digest 5; the initial method for computer forensics.</li>
+        <li><b>SHA-1 / SHA-256</b> — stronger algorithms used by modern tools and courts.</li>
+        <li>A hash can be taken of a file, a partition or an entire disk; the value is stored in the report and on the evidence label.</li>
+      </ul>
+
+      <h4>5. Storing digital evidence (book §5.5.7)</h4>
+      <ul>
+        <li>Choose the storage medium according to how long the evidence must be kept.</li>
+        <li><b>CD-R / DVD-R</b> — good for a permanent copy; verify after burning.</li>
+        <li><b>Hard disk</b> — fast working copy; 200 GB drives are typical, DVDs hold only about 17 GB (dual-layer).</li>
+        <li><b>Magnetic tape (4-mm DAT, DLT, LTO)</b> — long-term archive; test by restoring a sample and comparing hashes.</li>
+        <li>Keep <b>two copies</b>; store them in separate locations if possible.</li>
+        <li>Label with case number, exhibit number, date and hash.</li>
+        <li>Store in a secure, cool, dry, magnetic-free evidence safe with an access log.</li>
+      </ul>
+
+      <div class="tip"><b>9-mark structure:</b> definition (2) + six reasons (3) + eight generation steps (3) + one real hash example (1). Mention “equal hash = verified image”; that is the sentence examiners look for.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.10 -->
+<section class="card" id="s510">
+  <h2>5.10 Syllabus context — preparing for a search &amp; reviewing a case</h2>
+  <div class="note"><b>Not a PYQ.</b> These two topics are listed in the Unit-5 syllabus but have not appeared as a standalone end-sem question in the seven papers. They are included for completeness and can be used as supporting points in a seizing or scene-security answer.</div>
+
+  <h3>Preparing for a search (book §5.5.4)</h3>
+  <p>The most crucial phase of a computing investigation is <b>getting ready</b> for the search and seizure. The better you prepare, the smoother the inquiry will go.</p>
+  <ul>
+    <li><b>Interview the people involved</b> — the complainant, the victim, the police investigator, a witness, the management of the person under investigation, and a co-worker.</li>
+    <li><b>Obtain the warrant</b> — make the wording as explicit as possible so that the evidence cannot be challenged later.</li>
+    <li><b>Discuss the case with the prosecutor</b> — a court may dismiss evidence collected through a badly written warrant.</li>
+    <li><b>Define the scope</b> — a single e-mail or spreadsheet in a civil case, or whole drives in a criminal case to preserve as much as possible.</li>
+    <li><b>Plan the team and equipment</b> — scene security, photography, seizure, scribe; bags, seals, labels, write blockers, faraday bags, forensic laptop.</li>
+    <li><b>Follow the DOJ requirements</b> for obtaining digital evidence; the same rules of evidence apply in civil and criminal cases.</li>
+    <li><b>Consult the attorney</b> if there are any reservations or queries about scope or privilege.</li>
+  </ul>
+
+  <h3>Reviewing a case (book §5.5.9)</h3>
+  <ol>
+    <li><b>Specify the requirements for the case</b> — what must be proved and to what standard.</li>
+    <li><b>Plan your research</b> — sources, tools, keywords, sequence of examination.</li>
+    <li><b>Carry out the investigation</b> — acquire, examine, analyse, document.</li>
+    <li><b>Finish writing the case report</b> — findings, method, tools, hashes, exhibits, limitations.</li>
+    <li><b>Examine the case</b> — review the whole file for gaps before it goes to court.</li>
+  </ol>
+
+  <h4>Final review checklist</h4>
+  <div class="grid2">
+    <div>
+      <ul>
+        <li>Is every exhibit numbered, sealed and logged?</li>
+        <li>Does every hash match the original?</li>
+        <li>Is the chain of custody unbroken?</li>
+        <li>Are the tools and versions recorded?</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>Is the report understandable to a non-technical reader?</li>
+        <li>Are the findings tied to the charges or policy breaches?</li>
+        <li>Are limitations and alternative explanations stated?</li>
+        <li>Is the expert ready for cross-examination?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CHEAT -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Counts to memorise</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Item</th><th>Count</th></tr></thead>
+        <tbody>
+          <tr><td>Validation approaches</td><td>6</td></tr>
+          <tr><td>Data-hiding techniques</td><td>10</td></tr>
+          <tr><td>Order of volatility</td><td>10</td></tr>
+          <tr><td>Network standard procedure</td><td>8 steps</td></tr>
+          <tr><td>Seizure process</td><td>10 steps</td></tr>
+          <tr><td>Scene security</td><td>6 + 8 points</td></tr>
+          <tr><td>Hash generation</td><td>8 steps</td></tr>
+          <tr><td>Honeynet components</td><td>3</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div>
+      <h4>One-line memory hooks</h4>
+      <ul>
+        <li><b>Validation</b> = hash + compare + re-image.</li>
+        <li><b>Hiding</b> = partitions, bad clusters, bit-shift, stego, encryption.</li>
+        <li><b>Live</b> = RAM first; <b>remote</b> = HDHOST + DiskExplorer.</li>
+        <li><b>Network forensics</b> = capture raw traffic, rebuild the attack.</li>
+        <li><b>Honeynet</b> = honeypot + honeynet + honewall.</li>
+        <li><b>Seize</b> = photograph → document → isolate → label → seal.</li>
+        <li><b>Secure</b> = tape, guard, access log, extend the perimeter.</li>
+        <li><b>Hash</b> = fingerprint; equal value = verified copy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> built from the supplied Technical book <i>Cyber Security &amp; Digital Forensics (SPPU)</i>, Unit 5, §§5.1–5.5 (book pages 5-1 to 5-25). The book covers validation, data hiding, remote/live acquisition, network tools, honeynet, crime scenes and digital hash in full. The four-option shutdown discussion and the tool table in §5.5 Q2 combine the book with standard practice from Nelson et al., <i>Computer Forensics and Investigations</i>.</div>
+
+  <div class="tip"><b>Exam-day order:</b> attempt validation (Q5a/Q5b) and seizing (Q6a/Q6b) first — they appear in every paper. Then honeynet and data hiding. Keep the volatility ladder ready; it is reused in three different questions.</div>
+</section>
+
+<footer>
+  CSDF · Unit 5 · built from 7 SPPU end-sem papers (2022 May – 2025 Nov) · 410244(C) · 2019 Pattern<br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

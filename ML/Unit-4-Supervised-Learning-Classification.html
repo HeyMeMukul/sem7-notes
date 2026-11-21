@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Unit 4 — Supervised Learning: Classification | SPPU 410242</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+/* ---------- cards ---------- */
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+/* ---------- Q&A ---------- */
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+/* ---------- code / tables ---------- */
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+/* ---------- callouts ---------- */
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+/* ---------- frequency table ---------- */
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+/* ---------- tree drawing ---------- */
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+/* footer */
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="side">
+  <h3>ML · Unit 4</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s41">4.1 Evaluating classifiers</a>
+    <a href="#s42">4.2 K-nearest neighbours</a>
+    <a href="#s43">4.3 Support vector machine</a>
+    <a href="#s44">4.4 Ensemble learning</a>
+    <a href="#s45">4.5 Multiclass &amp; imbalance</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Supervised-Learning-Regression.html">Unit 3 · Regression</a>
+  <a href="Unit-5-Unsupervised-Learning.html">Unit 5 · Unsupervised</a>
+  <a href="Unit-6-Neural-Networks.html">Unit 6 · Neural networks</a>
+  <a href="index.html">↩ ML home</a>
+</aside>
+
+<!-- ================= MAIN ================= -->
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 4 — Supervised Learning: Classification</h1>
+  <p><b>Subject:</b> Machine Learning (410242) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 26 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>All questions are reproduced from the six available end-sem papers (2022 Nov, 2023 May, 2023 Nov, 2024 May, 2025 May, 2025 Nov). Confusion-matrix numbers were read from the PDF pages and every metric was recomputed in Python.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>34</b> Unit-4 question instances</span>
+    <span class="chip">🧩 <b>15</b> distinct topics</span>
+    <span class="chip">🔁 Highest repeat: <b>Ensemble learning — 6×</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>17–18 marks</b></span>
+  </div>
+</header>
+
+<!-- ================= FREQUENCY MAP ================= -->
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — what actually gets asked</h2>
+  <p class="lead">Counted from the <b>six end-sem papers only</b>. Ensemble learning and KNN dominate; the confusion-matrix numerical appears in two papers with completely different numbers. Rows overlap where one question mixes topics (for example “ensemble learning” and “bagging vs boosting”).</p>
+
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">Ensemble learning — concept, simple/advanced, why used, example</td><td>2022 Nov Q3(c) [6]; 2023 May Q3(b) [6]; 2023 Nov Q3(b) [9]; 2024 May Q3(a) [5]; 2025 May Q3(b) [6]; 2025 Nov Q4(c) [6]</td><td><span class="stars">★★★★★★</span> 6×</td></tr>
+      <tr><td>2</td><td class="l">KNN — algorithm/example, numerical, pros/cons, distance metrics</td><td>2022 Nov Q3(b) [6]; 2023 May Q4(c) [5]; 2024 May Q3(b) [6], Q3(c) [6]; 2025 May Q4(a) [5]; 2025 Nov Q4(b) [6]</td><td><span class="stars">★★★★★★</span> 6×</td></tr>
+      <tr><td>3</td><td class="l">Evaluation metrics — accuracy, precision, recall, F1</td><td>2022 Nov Q3(a) [5]; 2023 Nov Q4(b) [8]; 2025 May Q3(c) [6]; 2025 Nov Q3(c) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>4</td><td class="l">Random forest — algorithm with example/diagram</td><td>2022 Nov Q4(a) [5]; 2023 May Q4(b)(i) [6]; 2023 Nov Q3(b) [9]; 2025 Nov Q4(a) [5]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>5</td><td class="l">Binary vs multiclass + variants (OvO / OvA)</td><td>2023 May Q3(c) [6]; 2024 May Q4(a) [5]; 2025 May Q3(a) [5]; 2025 Nov Q3(b) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>6</td><td class="l">Bagging vs boosting</td><td>2023 May Q3(b) [6]; 2023 Nov Q3(a) [4]; 2025 May Q4(c) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>7</td><td class="l">SVM — hyperplane, margin, support vectors, kernels, SVR</td><td>2022 Nov Q4(c) [6]; 2023 May Q3(a) [5 — SVR]; 2024 May Q4(b) [6 — kernels]; 2025 Nov Q3(a) [5]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>8</td><td class="l">Confusion matrix — importance and numerical metrics</td><td>2022 Nov Q4(b) [6]; 2023 May Q4(a) [6]; 2025 Nov Q3(c) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>9</td><td class="l">Cross-validation / K-fold</td><td>2023 Nov Q4(a) [9]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>10</td><td class="l">Precision–recall relationship</td><td>2023 Nov Q3(c) [4]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>11</td><td class="l">Handling imbalanced multiclass data</td><td>2025 May Q4(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>12</td><td class="l">AdaBoost</td><td>2023 May Q4(b)(ii) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>13</td><td class="l">Macro-average precision, recall, F-score numerical</td><td>2023 May Q4(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>14</td><td class="l">KNN advantages and disadvantages</td><td>2024 May Q3(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>15</td><td class="l">KNN distance metrics</td><td>2024 May Q3(c) [6]; 2025 Nov Q4(b) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>How to read the repeat column:</b> ensemble learning, KNN and the metric numerical cover almost every Unit-4 option. Learn the confusion-matrix formulas cold — they appear as a full numerical in 2023 May (4×4 macro) and 2025 Nov (binary).</div>
+
+  <div class="tip"><b>Marks strategy:</b> 5–6 mark theory = definition + 4–6 bullets + one example. 6-mark numerical = formula + substitution + answer + interpretation. 9-mark = algorithm/diagram + comparison table + example.</div>
+</section>
+
+<!-- ================= 4.1 ================= -->
+<section class="card" id="s41">
+  <h2>4.1 Evaluating classification models</h2>
+  <p class="lead">Syllabus: <em>Accuracy, Precision, Recall, F-score, confusion matrix, cross-validation, micro/macro averages.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain in brief the methods used for evaluating classification models. Write a short note on metrics for evaluating classifier performance.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(a) [5] · 2025 May Q3(c) [6]</p>
+
+      <h4>1. Confusion matrix</h4>
+      <p>A 2×2 table for binary classification with TP, TN, FP, FN. Every other metric is computed from these four numbers.</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th></th><th>Predicted Positive</th><th>Predicted Negative</th></tr></thead>
+        <tbody>
+          <tr><th>Actual Positive</th><td>TP</td><td>FN</td></tr>
+          <tr><th>Actual Negative</th><td>FP</td><td>TN</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Accuracy</h4>
+      <div class="math">Accuracy = (TP + TN) / (TP + TN + FP + FN)</div>
+      <p>Fraction of all predictions that are correct. Misleading when classes are imbalanced.</p>
+
+      <h4>3. Precision</h4>
+      <div class="math">Precision = TP / (TP + FP)</div>
+      <p>Of all samples the model labelled positive, how many really are positive. Important when a false alarm is costly (spam filter).</p>
+
+      <h4>4. Recall (Sensitivity / TPR)</h4>
+      <div class="math">Recall = TP / (TP + FN)</div>
+      <p>Of all actual positives, how many the model found. Important when missing a positive is costly (cancer detection).</p>
+
+      <h4>5. F1-score</h4>
+      <div class="math">F1 = 2 × Precision × Recall / (Precision + Recall)</div>
+      <p>Harmonic mean of precision and recall. High only when both are high.</p>
+
+      <h4>6. Other methods</h4>
+      <ul>
+        <li><b>Specificity / TNR</b> = TN/(TN+FP).</li>
+        <li><b>ROC curve</b> — TPR vs FPR at all thresholds; <b>AUC</b> summarises it.</li>
+        <li><b>Precision–Recall curve</b> — better than ROC for imbalanced data.</li>
+        <li><b>Log loss / cross-entropy</b> — punishes confident wrong probabilities.</li>
+        <li><b>Macro / micro / weighted averages</b> for multiclass.</li>
+        <li><b>Cross-validation</b> — estimates performance on unseen data.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain (i) Accuracy (ii) Precision (iii) Recall and (iv) F-score.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [8]</p>
+
+      <p>Use the same four quantities from the confusion matrix. Write the formula, the meaning in one line, and when to use it.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Metric</th><th>Formula</th><th>Question it answers</th><th>Use when</th></tr></thead>
+        <tbody>
+          <tr><td>Accuracy</td><td>(TP+TN)/(TP+TN+FP+FN)</td><td>How many predictions are correct overall?</td><td>Classes are balanced</td></tr>
+          <tr><td>Precision</td><td>TP/(TP+FP)</td><td>When we say positive, how often are we right?</td><td>False positives are costly</td></tr>
+          <tr><td>Recall</td><td>TP/(TP+FN)</td><td>Of the real positives, how many did we catch?</td><td>False negatives are costly</td></tr>
+          <tr><td>F-score</td><td>2PR/(P+R)</td><td>Balance precision and recall</td><td>Both errors matter; imbalanced data</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Worked example</h4>
+      <p>TP = 40, TN = 50, FP = 10, FN = 0.</p>
+      <div class="math">Accuracy = (40+50)/100 = 0.90<br>
+      Precision = 40/50 = 0.80<br>
+      Recall = 40/40 = 1.00<br>
+      F1 = 2×0.8×1.0/(1.8) = <b>0.8889</b></div>
+      <p>Recall is perfect because there are no false negatives, but precision is only 0.80 because 10 negatives were wrongly flagged. F1 = 0.889 captures both facts; accuracy 0.90 alone hides the false alarms.</p>
+
+      <div class="note"><b>Accuracy paradox:</b> with 95 negatives and 5 positives, a model that always says “negative” gets 95% accuracy but recall = 0. Always report precision/recall/F1 on imbalanced data.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Write a short note on the importance of the confusion matrix.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(b) [6]</p>
+
+      <h4>What it is</h4>
+      <p>A confusion matrix is a table that compares <b>actual</b> class labels with <b>predicted</b> labels. For two classes it has four cells: TP, TN, FP, FN.</p>
+
+      <h4>Why it is important</h4>
+      <ol>
+        <li><b>Shows the type of error</b> — accuracy only says “90% correct”; the matrix says whether the 10% errors are false positives or false negatives.</li>
+        <li><b>Base for all metrics</b> — accuracy, precision, recall, specificity and F1 are all calculated from its four cells.</li>
+        <li><b>Exposes class imbalance</b> — a high-accuracy model can still have terrible recall for the minority class; the matrix makes this visible.</li>
+        <li><b>Cost-sensitive decisions</b> — if a false negative costs more than a false positive (medical test), the matrix shows which one dominates.</li>
+        <li><b>Multiclass diagnosis</b> — a 4×4 matrix shows which classes are confused with which (e.g. class A predicted as B).</li>
+        <li><b>Threshold tuning</b> — changing the decision threshold changes FP and FN; the matrix shows the trade-off.</li>
+      </ol>
+
+      <h4>Example</h4>
+      <p>Model A: 90% accuracy with 0 FP and 20 FN. Model B: 90% accuracy with 20 FP and 0 FN. Accuracy is identical, but the matrices show completely different behaviour. For cancer screening, B (no missed cases) is better; for spam filtering, A may be better.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>A binary classifier has TP = 120, TN = 45, FP = 10, FN = 5. Calculate accuracy, precision, recall and F1-score.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q3(c) [6]</p>
+
+      <h4>Step 1 — total</h4>
+      <div class="math">Total = TP + TN + FP + FN = 120 + 45 + 10 + 5 = 180</div>
+
+      <h4>Step 2 — metrics</h4>
+      <div class="math">Accuracy = (TP + TN)/Total = (120 + 45)/180 = 165/180 = <b>0.9167 = 91.67%</b><br><br>
+      Precision = TP/(TP + FP) = 120/(120 + 10) = 120/130 = <b>0.9231 = 92.31%</b><br><br>
+      Recall = TP/(TP + FN) = 120/(120 + 5) = 120/125 = <b>0.9600 = 96.00%</b><br><br>
+      F1 = 2PR/(P + R) = 2×0.9231×0.96/(0.9231 + 0.96)<br>
+      F1 = 1.7723/1.8831 = <b>0.9412 = 94.12%</b></div>
+
+      <h4>Step 3 — interpretation</h4>
+      <ul>
+        <li>Accuracy 91.67% — 15 of 180 predictions are wrong (10 FP + 5 FN).</li>
+        <li>Precision 92.31% — when the model says positive, it is right 92% of the time.</li>
+        <li>Recall 96% — it catches 96% of all real positives; only 5 are missed.</li>
+        <li>F1 94.12% — high because both precision and recall are high.</li>
+      </ul>
+      <p class="small">Exam tip: write the formula first, then substitute, then the percentage. Step marks are given for the formula even if arithmetic slips.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Calculate macro-average precision, macro-average recall and macro-average F-score for the given confusion matrix of multiclass classification. <span class="small">4 classes A–D; rows = actual, columns = predicted</span></p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q4(a) [6]</p>
+
+      <h4>Given matrix</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Actual ↓ / Predicted →</th><th>A</th><th>B</th><th>C</th><th>D</th><th>Row total</th></tr></thead>
+        <tbody>
+          <tr><th>A</th><td>100</td><td>80</td><td>10</td><td>10</td><td>200</td></tr>
+          <tr><th>B</th><td>0</td><td>9</td><td>0</td><td>1</td><td>10</td></tr>
+          <tr><th>C</th><td>0</td><td>1</td><td>8</td><td>1</td><td>10</td></tr>
+          <tr><th>D</th><td>0</td><td>1</td><td>0</td><td>9</td><td>10</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Step 1 — per-class TP, FP, FN</h4>
+      <p>For class X: TP = diagonal cell; FP = column sum − TP; FN = row sum − TP.</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Class</th><th>TP</th><th>FP</th><th>FN</th><th>Precision = TP/(TP+FP)</th><th>Recall = TP/(TP+FN)</th><th>F1</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>100</td><td>0</td><td>100</td><td>100/100 = 1.0000</td><td>100/200 = 0.5000</td><td>0.6667</td></tr>
+          <tr><td>B</td><td>9</td><td>82</td><td>1</td><td>9/91 = 0.0989</td><td>9/10 = 0.9000</td><td>0.1782</td></tr>
+          <tr><td>C</td><td>8</td><td>10</td><td>2</td><td>8/18 = 0.4444</td><td>8/10 = 0.8000</td><td>0.5714</td></tr>
+          <tr><td>D</td><td>9</td><td>12</td><td>1</td><td>9/21 = 0.4286</td><td>9/10 = 0.9000</td><td>0.5806</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Step 2 — macro averages</h4>
+      <div class="math">Macro precision = (1.0000 + 0.0989 + 0.4444 + 0.4286)/4 = 1.9719/4 = <b>0.4930 = 49.30%</b><br><br>
+      Macro recall = (0.5000 + 0.9000 + 0.8000 + 0.9000)/4 = 3.1000/4 = <b>0.7750 = 77.50%</b><br><br>
+      Macro F1 = (0.6667 + 0.1782 + 0.5714 + 0.5806)/4 = 1.9969/4 = <b>0.4992 = 49.92%</b></div>
+
+      <h4>Step 3 — interpretation</h4>
+      <p>Macro averages give every class <b>equal weight</b>, so small classes B, C, D matter as much as class A. Class A has perfect precision but only 50% recall (80 A’s were predicted as B). Class B has high recall but terrible precision because 80 A’s were wrongly called B. The low macro precision (49.3%) exposes this; plain accuracy would be 126/230 = 54.8% and would hide it.</p>
+
+      <div class="note"><b>Macro vs micro:</b> macro = unweighted mean of per-class metrics. Micro = pool all TP/FP/FN first, then compute; micro is dominated by the largest class. Weighted average weights each class by its support (row total).</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>What is the relation between precision and recall? Explain with an example.</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q3(c) [4]</p>
+
+      <h4>Relation</h4>
+      <p>Precision and recall usually move in <b>opposite directions</b> when the decision threshold changes. This is the <b>precision–recall trade-off</b>.</p>
+      <ul>
+        <li><b>Lower the threshold</b> → more samples are called positive → recall rises, precision usually falls (more false positives).</li>
+        <li><b>Raise the threshold</b> → fewer positives → precision rises, recall falls (more false negatives).</li>
+        <li>F1 combines both: <code>F1 = 2PR/(P+R)</code>.</li>
+      </ul>
+
+      <h4>Example — cancer screening</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Threshold</th><th>TP</th><th>FP</th><th>FN</th><th>Precision</th><th>Recall</th></tr></thead>
+        <tbody>
+          <tr><td>Low (0.2)</td><td>48</td><td>30</td><td>2</td><td>48/78 = 0.615</td><td>48/50 = 0.960</td></tr>
+          <tr><td>High (0.8)</td><td>35</td><td>2</td><td>15</td><td>35/37 = 0.946</td><td>35/50 = 0.700</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>At the low threshold we catch almost all cancers (recall 96%) but many healthy people are flagged (precision 61.5%). At the high threshold precision is 94.6% but 15 cancers are missed (recall 70%). The doctor must choose the threshold based on the cost of each error.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>What is K-fold cross-validation? Comment on the situations when K is too large and when K is too small. How do you decide the value of K?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(a) [9]</p>
+
+      <h4>Definition</h4>
+      <p>K-fold cross-validation splits the dataset into <b>K equal folds</b>. The model is trained K times; each time one fold is the test set and the other K−1 folds are the training set. The final score is the average of the K scores.</p>
+
+      <h4>Procedure</h4>
+<pre><code>1. Shuffle the dataset (keep class proportions if stratified).
+2. Split into K folds F1, F2, ..., FK.
+3. For i = 1 to K:
+      train on all folds except Fi
+      test on Fi
+      record score Si
+4. Final score = (S1 + S2 + ... + SK) / K</code></pre>
+
+      <h4>Diagram (K = 5)</h4>
+      <div class="tree">Round 1  [ TEST ][ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ]
+Round 2  [ TRAIN ][ TEST ][ TRAIN ][ TRAIN ][ TRAIN ]
+Round 3  [ TRAIN ][ TRAIN ][ TEST ][ TRAIN ][ TRAIN ]
+Round 4  [ TRAIN ][ TRAIN ][ TRAIN ][ TEST ][ TRAIN ]
+Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
+
+      <h4>When K is too large</h4>
+      <ul>
+        <li>Each training set is almost the full dataset → the K models are very similar, so averaging adds little.</li>
+        <li>Training cost is K times the single-fit cost. For K = n (leave-one-out) this is extremely expensive.</li>
+        <li>Variance of the estimate can increase because the training sets overlap heavily.</li>
+        <li>Leave-one-out has low bias but high variance and is impractical for large data.</li>
+      </ul>
+
+      <h4>When K is too small</h4>
+      <ul>
+        <li>Each training set is much smaller than the full data (e.g. K = 2 uses only 50%) → the model is trained on less data, so the estimate is pessimistic (high bias).</li>
+        <li>Fewer folds → higher variance in the estimated score; the result depends on how the split happened.</li>
+        <li>Example: K = 2 is cheap but unreliable; K = 3 is the minimum for a reasonable estimate.</li>
+      </ul>
+
+      <h4>How to choose K</h4>
+      <ul>
+        <li><b>K = 5 or 10</b> is the standard compromise between bias, variance and cost.</li>
+        <li><b>Small dataset</b> → larger K (10 or leave-one-out) to use more data for training.</li>
+        <li><b>Large dataset</b> → K = 5 is enough; the training fraction is already ~80%.</li>
+        <li>Use <b>stratified K-fold</b> for classification so each fold has the same class ratio.</li>
+        <li>Use <b>nested cross-validation</b> when hyperparameters are tuned: inner folds for tuning, outer folds for the final estimate.</li>
+        <li>For time-series, use <b>forward-chaining</b> splits, not random K-fold.</li>
+      </ul>
+
+      <div class="tip"><b>9-mark structure:</b> definition (2) + procedure/diagram (2) + too-large K (2) + too-small K (2) + how to choose (1).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.2 ================= -->
+<section class="card" id="s42">
+  <h2>4.2 K-nearest neighbours (KNN)</h2>
+  <p class="lead">KNN is a lazy, non-parametric classifier: it stores the training data and votes among the K closest points.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Discuss the K-nearest neighbour algorithm with a suitable example. Explain KNN with an example.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q4(c) [5] · 2025 May Q4(a) [5]</p>
+
+      <h4>Definition</h4>
+      <p>KNN classifies a new point by finding the <b>K nearest training points</b> and assigning the <b>majority class</b> among them. For regression it returns the average of the K neighbours.</p>
+
+      <h4>Algorithm</h4>
+<pre><code>1. Choose K and a distance metric.
+2. For the query point q, compute d(q, x) for every training point x.
+3. Sort the distances and pick the K smallest.
+4. Count the class labels of those K neighbours.
+5. Assign the majority class (or average for regression).</code></pre>
+
+      <h4>Example</h4>
+      <p>Training points: (1,1) A, (2,2) A, (4,4) B, (5,5) B. Query q = (2.5, 2.5), K = 3.</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Point</th><th>Class</th><th>Distance to q</th><th>Rank</th></tr></thead>
+        <tbody>
+          <tr><td>(1,1)</td><td>A</td><td>√(1.5²+1.5²)=2.12</td><td>1</td></tr>
+          <tr><td>(2,2)</td><td>A</td><td>√(0.5²+0.5²)=0.71</td><td>2</td></tr>
+          <tr><td>(4,4)</td><td>B</td><td>√(1.5²+1.5²)=2.12</td><td>3</td></tr>
+          <tr><td>(5,5)</td><td>B</td><td>√(2.5²+2.5²)=3.54</td><td>4</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The 3 nearest are (2,2) A, (1,1) A, (4,4) B → 2 votes A, 1 vote B → <b>q is classified as A</b>.</p>
+
+      <h4>Choosing K</h4>
+      <ul>
+        <li><b>Small K</b> (K = 1) → sensitive to noise, overfits.</li>
+        <li><b>Large K</b> → smoother boundary, but may mix distant classes and underfit.</li>
+        <li>Use odd K for two classes to avoid ties; choose K by cross-validation.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Predict whether the student will pass or fail using KNN. Physics = 6, Chemistry = 8, K = 3. <span class="small">Data: (4,3) Fail; (6,7) Pass; (7,8) Pass; (5,5) Fail; (8,8) Pass</span></p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6]</p>
+
+      <h4>Step 1 — Euclidean distances to q = (6,8)</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Student</th><th>Physics</th><th>Chemistry</th><th>Result</th><th>d = √[(x−6)²+(y−8)²]</th><th>Rank</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>4</td><td>3</td><td>Fail</td><td>√(4+25)=√29=5.385</td><td>5</td></tr>
+          <tr><td>2</td><td>6</td><td>7</td><td>Pass</td><td>√(0+1)=1.000</td><td>1</td></tr>
+          <tr><td>3</td><td>7</td><td>8</td><td>Pass</td><td>√(1+0)=1.000</td><td>2</td></tr>
+          <tr><td>4</td><td>5</td><td>5</td><td>Fail</td><td>√(1+9)=3.162</td><td>4</td></tr>
+          <tr><td>5</td><td>8</td><td>8</td><td>Pass</td><td>√(4+0)=2.000</td><td>3</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Step 2 — three nearest neighbours</h4>
+      <p>K = 3 → student 2 (Pass, d = 1), student 3 (Pass, d = 1), student 5 (Pass, d = 2).</p>
+
+      <h4>Step 3 — majority vote</h4>
+      <div class="math">Pass = 3 votes &nbsp;&nbsp; Fail = 0 votes &nbsp;&nbsp;→&nbsp;&nbsp; <b>Prediction: PASS</b></div>
+
+      <div class="tip"><b>Presentation:</b> draw the table with distances, circle the three smallest, write the vote count. That is the full 6 marks. A tie would need a distance-weighted vote or a smaller K.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>What are the advantages and disadvantages of K-NN?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q3(b) [6]</p>
+
+      <div class="grid2">
+        <div>
+          <h4>Advantages</h4>
+          <ul>
+            <li><b>Simple</b> — no training phase; just store the data.</li>
+            <li><b>Non-parametric</b> — no assumption about the data distribution.</li>
+            <li><b>Naturally multiclass</b> — majority vote extends to any number of classes.</li>
+            <li><b>Works for regression</b> too (average of neighbours).</li>
+            <li><b>Adapts</b> to complex, non-linear boundaries.</li>
+            <li>New data can be added without retraining.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Disadvantages</h4>
+          <ul>
+            <li><b>Slow prediction</b> — computes distance to every training point: O(n·d) per query.</li>
+            <li><b>Memory heavy</b> — stores the entire training set.</li>
+            <li><b>Curse of dimensionality</b> — distances lose meaning in high dimensions.</li>
+            <li><b>Sensitive to scale</b> — features must be normalised.</li>
+            <li><b>Sensitive to noise and outliers</b>, especially K = 1.</li>
+            <li><b>K must be chosen</b>; no built-in feature importance.</li>
+            <li>Imbalanced data → majority class dominates the vote.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>What are the different distance metrics used in K-NN?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q3(c) [6] · 2025 Nov Q4(b) [6]</p>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Metric</th><th>Formula</th><th>Use / property</th></tr></thead>
+        <tbody>
+          <tr><td>Euclidean (L2)</td><td>√Σ(x<sub>i</sub> − y<sub>i</sub>)²</td><td>Default; continuous features; straight-line distance</td></tr>
+          <tr><td>Manhattan (L1)</td><td>Σ|x<sub>i</sub> − y<sub>i</sub>|</td><td>Grid-like paths; robust to outliers; city-block distance</td></tr>
+          <tr><td>Minkowski (Lp)</td><td>(Σ|x<sub>i</sub> − y<sub>i</sub>|<sup>p</sup>)<sup>1/p</sup></td><td>Generalisation: p=1 Manhattan, p=2 Euclidean</td></tr>
+          <tr><td>Chebyshev (L∞)</td><td>max<sub>i</sub> |x<sub>i</sub> − y<sub>i</sub>|</td><td>Largest coordinate difference</td></tr>
+          <tr><td>Cosine</td><td>1 − (x·y)/(‖x‖‖y‖)</td><td>Text / high-dimensional vectors; direction, not magnitude</td></tr>
+          <tr><td>Hamming</td><td>Number of positions that differ</td><td>Categorical / binary strings</td></tr>
+          <tr><td>Mahalanobis</td><td>√[(x−y)ᵀΣ⁻¹(x−y)]</td><td>Accounts for feature correlation and scale</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Worked comparison</h4>
+      <p>For p = (1,2) and q = (4,6):</p>
+      <div class="math">Euclidean = √(3² + 4²) = √25 = <b>5</b><br>
+      Manhattan = |3| + |4| = <b>7</b><br>
+      Chebyshev = max(3,4) = <b>4</b><br>
+      Minkowski with p = 3 = (3³ + 4³)<sup>1/3</sup> = (27+64)<sup>1/3</sup> = 91<sup>1/3</sup> = <b>4.498</b></div>
+      <p class="small">Always normalise features before using distance-based methods, otherwise a feature with a large range dominates the distance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.3 ================= -->
+<section class="card" id="s43">
+  <h2>4.3 Support vector machine (SVM)</h2>
+  <p class="lead">SVM finds the widest possible “street” between two classes. The points on the edge of the street are the support vectors.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain the basic principles of SVM. What are support vectors and how does SVM find the optimal hyperplane? Define separating hyperplane and margin with reference to SVM.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [6 — separating hyperplane, margin] · 2025 Nov Q3(a) [5 — principles, support vectors, optimal hyperplane]</p>
+
+      <h4>Separating hyperplane</h4>
+      <p>A hyperplane is a decision boundary that separates the classes. In 2-D it is a line; in 3-D it is a plane; in n-D it is an (n−1)-dimensional flat surface.</p>
+      <div class="math">w · x + b = 0</div>
+      <p><code>w</code> is the normal vector (direction perpendicular to the plane); <code>b</code> is the bias (offset from the origin).</p>
+
+      <h4>Margin</h4>
+      <p>The margin is the distance between the hyperplane and the closest points of either class. For the canonical hyperplanes <code>w·x+b = +1</code> and <code>w·x+b = −1</code>:</p>
+      <div class="math">Margin = 2 / ‖w‖</div>
+      <p>SVM chooses the hyperplane with the <b>maximum margin</b> — the “widest street”.</p>
+
+      <h4>Support vectors</h4>
+      <p>The training points that lie exactly on the margin (or violate it in the soft-margin case). They are the only points that determine <code>w</code> and <code>b</code>; removing any other point does not change the boundary.</p>
+
+      <div class="tree">        x2
+         |    o   o
+         |   o  o
+  -------+-----\-------- w·x+b = +1
+         |      \  <- margin = 2/||w||
+  -------+-------\------ w·x+b = 0
+         |        \
+  -------+---------\---- w·x+b = -1
+         |   x  x   \
+         |  x   x    x
+         +---------------- x1
+   o = class +1, x = class -1
+   circled points on dashed lines = support vectors</div>
+
+      <h4>Optimisation problem (hard margin)</h4>
+      <div class="math">Minimise&nbsp; ½‖w‖²<br>
+      subject to&nbsp; y<sub>i</sub>(w·x<sub>i</sub> + b) ≥ 1 &nbsp; for all i</div>
+      <p>Minimising ‖w‖ maximises the margin 2/‖w‖. This is a convex quadratic program, so it has a unique global optimum.</p>
+
+      <h4>Soft margin</h4>
+      <p>Real data is not perfectly separable. Add slack variables ξ<sub>i</sub> ≥ 0 and a penalty C:</p>
+      <div class="math">Minimise&nbsp; ½‖w‖² + C Σξ<sub>i</sub><br>
+      subject to&nbsp; y<sub>i</sub>(w·x<sub>i</sub> + b) ≥ 1 − ξ<sub>i</sub></div>
+      <ul>
+        <li><b>C large</b> → few training errors allowed → narrow margin → overfitting risk.</li>
+        <li><b>C small</b> → wide margin, more errors allowed → underfitting risk.</li>
+      </ul>
+
+      <h4>Why SVM is popular</h4>
+      <ul>
+        <li>Maximum margin gives good generalization.</li>
+        <li>Works well in high dimensions.</li>
+        <li>Kernel trick handles non-linear boundaries.</li>
+        <li>Only support vectors matter → efficient.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain with an example the variant of SVM: support vector regression (SVR).</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q3(a) [5]</p>
+
+      <h4>Idea</h4>
+      <p>SVR applies the SVM idea to regression. Instead of a separating line, it fits a tube of width <b>2ε</b> around the predicted function. Points inside the tube incur <b>no loss</b>; only points outside are penalised.</p>
+
+      <h4>ε-insensitive loss</h4>
+      <div class="math">L<sub>ε</sub>(y, f(x)) = max(0, |y − f(x)| − ε)</div>
+      <p>If the error is smaller than ε, the loss is zero. This makes SVR robust to small noise.</p>
+
+      <h4>Optimisation</h4>
+      <div class="math">Minimise&nbsp; ½‖w‖² + C Σ(ξ<sub>i</sub> + ξ<sub>i</sub>*)<br>
+      subject to&nbsp; y<sub>i</sub> − (w·x<sub>i</sub> + b) ≤ ε + ξ<sub>i</sub><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (w·x<sub>i</sub> + b) − y<sub>i</sub> ≤ ε + ξ<sub>i</sub>*<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ξ<sub>i</sub>, ξ<sub>i</sub>* ≥ 0</div>
+      <ul>
+        <li><b>ξ, ξ*</b> — slack variables for points above/below the tube.</li>
+        <li><b>C</b> — trade-off between a flat function and fitting the data.</li>
+        <li><b>ε</b> — tube width; larger ε → fewer support vectors, smoother fit.</li>
+      </ul>
+
+      <h4>Example</h4>
+      <p>House price prediction from area. With ε = 5 (lakh), a prediction 3 lakh away from the true price is ignored. A prediction 12 lakh away is outside the tube and contributes a loss of 12 − 5 = 7, which pushes the line towards it. The final model is a straight line (or kernel curve) that stays inside the tube wherever possible.</p>
+
+      <h4>Kernel SVR</h4>
+      <p>Replace <code>w·x</code> with a kernel <code>K(x<sub>i</sub>, x)</code> (RBF is common). The prediction becomes:</p>
+      <div class="math">f(x) = Σ α<sub>i</sub> K(x<sub>i</sub>, x) + b</div>
+      <p>Only support vectors (points outside the tube) have α<sub>i</sub> &gt; 0.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Explain the kernel methods which are suitable for SVM.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q4(b) [6]</p>
+
+      <h4>Why kernels are needed</h4>
+      <p>A linear SVM can only draw a straight boundary. Many datasets are not linearly separable. The <b>kernel trick</b> maps the data into a higher-dimensional space where a linear boundary exists, without explicitly computing the coordinates.</p>
+      <div class="math">K(x<sub>i</sub>, x<sub>j</sub>) = φ(x<sub>i</sub>) · φ(x<sub>j</sub>)</div>
+
+      <h4>Common kernels</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Kernel</th><th>Formula</th><th>Property / use</th></tr></thead>
+        <tbody>
+          <tr><td>Linear</td><td>x<sub>i</sub>·x<sub>j</sub></td><td>Linearly separable data; fast; interpretable</td></tr>
+          <tr><td>Polynomial</td><td>(γ x<sub>i</sub>·x<sub>j</sub> + r)<sup>d</sup></td><td>Curved boundaries; degree d controls flexibility</td></tr>
+          <tr><td>RBF / Gaussian</td><td>exp(−γ‖x<sub>i</sub> − x<sub>j</sub>‖²)</td><td>Most popular; local, smooth boundary; γ controls width</td></tr>
+          <tr><td>Sigmoid</td><td>tanh(γ x<sub>i</sub>·x<sub>j</sub> + r)</td><td>Neural-network-like; not always PSD</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Example</h4>
+      <p>Points inside a circle (class A) and outside (class B) cannot be separated by a line in 2-D. Map <code>(x,y) → (x, y, x²+y²)</code>. In 3-D the classes are separated by a horizontal plane. The RBF kernel does this mapping implicitly and measures similarity by distance.</p>
+
+      <h4>Choosing a kernel</h4>
+      <ul>
+        <li>Start with <b>linear</b> if the number of features is large (text data).</li>
+        <li>Use <b>RBF</b> as the default for non-linear, low-to-medium-dimensional data.</li>
+        <li>Tune <code>C</code> and <code>γ</code> by cross-validation. Large γ → wiggly boundary (overfit); small γ → smooth (underfit).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.4 ================= -->
+<section class="card" id="s44">
+  <h2>4.4 Ensemble learning</h2>
+  <p class="lead">An ensemble combines several weak/base models into one stronger model. This is the most repeated Unit-4 topic (6 instances).</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What do you mean by ensemble learning? Explain with an example. Why is ensemble learning used in ML? Write a short note on simple and advanced ensemble methods.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep hot">★★★★★★ 6×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [6 — simple/advanced] · 2023 May Q3(b) [6] · 2023 Nov Q3(b) [9] · 2024 May Q3(a) [5 — why] · 2025 May Q3(b) [6 — example] · 2025 Nov Q4(c) [6 — why]</p>
+
+      <h4>Definition</h4>
+      <p>Ensemble learning trains <b>multiple models</b> (called base learners) and combines their predictions by voting (classification) or averaging (regression). The combined model is usually more accurate and more stable than any single model.</p>
+      <div class="math">Classification: ŷ = mode(h<sub>1</sub>(x), h<sub>2</sub>(x), …, h<sub>M</sub>(x))<br>
+      Regression: ŷ = (1/M) Σ h<sub>m</sub>(x)</div>
+
+      <h4>Why ensembles are used</h4>
+      <ol>
+        <li><b>Reduce variance</b> — averaging many models cancels their individual errors (bagging).</li>
+        <li><b>Reduce bias</b> — boosting focuses on hard examples and builds a stronger model.</li>
+        <li><b>Improve accuracy</b> — a group of weak learners can outperform a single strong learner.</li>
+        <li><b>Robustness</b> — less sensitive to noise, outliers and the choice of training sample.</li>
+        <li><b>Avoid overfitting</b> — random forest and bagging are much harder to overfit than a single deep tree.</li>
+        <li><b>Handle heterogeneous data</b> — different models capture different patterns (stacking).</li>
+      </ol>
+
+      <h4>Simple vs advanced ensembles (2022 Nov)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Meaning</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Simple ensemble</td><td>Many copies of the <b>same</b> base learner, combined by a fixed rule (vote/average)</td><td>Bagging with decision trees, simple voting, averaging</td></tr>
+          <tr><td>Advanced ensemble</td><td><b>Heterogeneous</b> learners or a learned combination (meta-model), or sequential correction</td><td>Stacking, blending, AdaBoost, gradient boosting, random forest, XGBoost</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Example</h4>
+      <p>Three decision trees classify a loan applicant: Tree 1 = reject, Tree 2 = reject, Tree 3 = approve. Majority vote → <b>reject</b>. If each tree is only 70% accurate but makes different errors, the majority is often more accurate than any single tree.</p>
+
+      <h4>Types of ensemble</h4>
+      <ul>
+        <li><b>Bagging</b> — parallel, bootstrap samples, average/vote (random forest).</li>
+        <li><b>Boosting</b> — sequential, each model fixes the errors of the previous one (AdaBoost, gradient boosting).</li>
+        <li><b>Stacking</b> — train a meta-model on the outputs of several base models.</li>
+        <li><b>Voting</b> — hard vote (labels) or soft vote (probabilities).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Differentiate between bagging and boosting. Explain bagging and boosting used in ensemble learning.</p>
+      <div class="badges"><span class="b marks">4–6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q3(b) [6] · 2023 Nov Q3(a) [4] · 2025 May Q4(c) [6]</p>
+
+      <h4>Bagging (Bootstrap Aggregating)</h4>
+      <ul>
+        <li>Draw <b>M bootstrap samples</b> (random sampling <b>with replacement</b>) from the training set.</li>
+        <li>Train one base model on each sample <b>in parallel</b>.</li>
+        <li>Combine by majority vote (classification) or average (regression).</li>
+        <li>Main effect: <b>reduces variance</b>; each sample is slightly different, so errors cancel.</li>
+        <li>Example: random forest = bagging + random feature selection.</li>
+      </ul>
+
+      <h4>Boosting</h4>
+      <ul>
+        <li>Train models <b>sequentially</b>. Each new model focuses on the examples the previous model got wrong.</li>
+        <li>Each model gets a weight α based on its accuracy; the final prediction is a weighted vote.</li>
+        <li>Main effect: <b>reduces bias</b>; a set of weak learners becomes a strong learner.</li>
+        <li>Example: AdaBoost, gradient boosting, XGBoost.</li>
+      </ul>
+
+      <h4>Comparison</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Bagging</th><th>Boosting</th></tr></thead>
+        <tbody>
+          <tr><td>Training order</td><td>Parallel, independent</td><td>Sequential, dependent</td></tr>
+          <tr><td>Data for each model</td><td>Bootstrap sample (with replacement)</td><td>Full data, reweighted each round</td></tr>
+          <tr><td>Focus</td><td>Reduce variance</td><td>Reduce bias</td></tr>
+          <tr><td>Combining</td><td>Equal vote / average</td><td>Weighted vote (α per model)</td></tr>
+          <tr><td>Overfitting risk</td><td>Low</td><td>High if too many rounds / noise</td></tr>
+          <tr><td>Base learners</td><td>Strong, low-bias models (deep trees)</td><td>Weak learners (stumps)</td></tr>
+          <tr><td>Example</td><td>Random forest</td><td>AdaBoost, XGBoost</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note"><b>One-line memory:</b> bagging = <em>many independent opinions, averaged</em>; boosting = <em>a sequence of students, each fixing the previous one’s mistakes</em>.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Explain the random forest algorithm with an example and a suitable diagram.</p>
+      <div class="badges"><span class="b marks">5–9 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [5] · 2023 May Q4(b)(i) [6] · 2023 Nov Q3(b) [9] · 2025 Nov Q4(a) [5]</p>
+
+      <h4>Definition</h4>
+      <p>Random forest is an ensemble of <b>decision trees</b>. Each tree is trained on a bootstrap sample, and at every split only a <b>random subset of features</b> is considered. The forest combines the trees by majority vote (classification) or average (regression).</p>
+
+      <h4>Algorithm</h4>
+<pre><code>1. Choose the number of trees T and the number of features m
+   (usually m = sqrt(d) for classification, d/3 for regression).
+2. For t = 1 to T:
+     a. Draw a bootstrap sample of size n from the training data.
+     b. Grow a decision tree. At each node:
+          - choose m features at random from all d features
+          - split on the best feature among those m
+     c. Do not prune the tree.
+3. Predict:
+     classification -> majority vote over T trees
+     regression     -> average of T tree outputs</code></pre>
+
+      <h4>Diagram</h4>
+      <div class="tree">                 Training data
+                       |
+        +--------------+--------------+
+        |              |              |
+   Bootstrap 1    Bootstrap 2    Bootstrap 3
+        |              |              |
+     Tree 1          Tree 2         Tree 3
+   (random m       (random m      (random m
+    features)       features)      features)
+        |              |              |
+      Class A        Class A        Class B
+        +--------------+--------------+
+                       |
+                 Majority vote
+                       |
+                    Class A</div>
+
+      <h4>Example</h4>
+      <p>Predict whether a customer will buy a product using age, income, city and previous purchases. Each tree sees a different bootstrap sample and a different random subset of features at each split. Tree 1 says “buy”, Tree 2 says “buy”, Tree 3 says “not buy” → forest predicts <b>buy</b> (2 out of 3).</p>
+
+      <h4>Why it works</h4>
+      <ul>
+        <li><b>Bagging</b> reduces variance by averaging many trees.</li>
+        <li><b>Feature randomness</b> decorrelates the trees; without it, all trees would split on the same dominant feature.</li>
+        <li>No pruning is needed; individual trees may overfit, but the average does not.</li>
+      </ul>
+
+      <h4>Advantages / disadvantages</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>High accuracy; robust to noise and outliers</td><td>Slow and memory-heavy for many trees</td></tr>
+          <tr><td>Works for classification and regression</td><td>Less interpretable than a single tree</td></tr>
+          <tr><td>Handles high-dimensional data</td><td>Many hyperparameters (T, m, depth)</td></tr>
+          <tr><td>Gives feature importance</td><td>Can overfit small/noisy data if trees are deep</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Hyperparameters</h4>
+      <p><code>n_estimators</code> (number of trees), <code>max_features</code> (m), <code>max_depth</code>, <code>min_samples_leaf</code>, <code>oob_score</code> (out-of-bag error).</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Write a short note on AdaBoost.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q4(b)(ii) [6]</p>
+
+      <h4>Definition</h4>
+      <p>AdaBoost (Adaptive Boosting) combines many <b>weak learners</b> (usually decision stumps — one-split trees) sequentially. Each new learner focuses on the samples that the previous learners misclassified.</p>
+
+      <h4>Algorithm</h4>
+<pre><code>1. Start with equal weights: w_i = 1/n for i = 1..n.
+2. For t = 1 to T:
+     a. Train weak learner h_t on the weighted data.
+     b. Compute weighted error:
+          eps_t = sum of w_i for misclassified i.
+     c. Compute learner weight:
+          alpha_t = 0.5 * ln((1 - eps_t) / eps_t).
+     d. Update sample weights:
+          w_i = w_i * exp(-alpha_t * y_i * h_t(x_i))
+     e. Normalise weights so they sum to 1.
+3. Final prediction:
+     H(x) = sign( sum alpha_t * h_t(x) ).</code></pre>
+
+      <h4>Key points</h4>
+      <ul>
+        <li>If a learner is better than random (ε &lt; 0.5), α &gt; 0; better learners get more vote.</li>
+        <li>Misclassified samples get larger weights, so the next learner concentrates on them.</li>
+        <li>If ε = 0.5, α = 0 (the learner is useless); if ε → 0, α → large.</li>
+        <li>Training error of the ensemble falls exponentially with the number of rounds.</li>
+        <li>Sensitive to noise and outliers because it keeps increasing their weights.</li>
+      </ul>
+
+      <h4>Small example</h4>
+      <p>Three samples, all weight 1/3. Learner h<sub>1</sub> misclassifies one sample: ε<sub>1</sub> = 1/3.</p>
+      <div class="math">α<sub>1</sub> = ½ ln((1 − 1/3)/(1/3)) = ½ ln(2) = <b>0.3466</b></div>
+      <p>The misclassified sample’s weight becomes (1/3)e<sup>0.3466</sup> ≈ 0.471, and the correct ones become (1/3)e<sup>−0.3466</sup> ≈ 0.236. After normalisation, the hard sample has about <b>0.5</b> of the total weight, so the next learner is forced to focus on it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.5 ================= -->
+<section class="card" id="s45">
+  <h2>4.5 Multiclass classification and imbalanced data</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Differentiate binary classification with multiclass classification with an example. What is multiclass classification? Explain the variants of multiclass classification.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q3(c) [6] · 2024 May Q4(a) [5] · 2025 May Q3(a) [5 — binary vs multiclass] · 2025 Nov Q3(b) [6]</p>
+
+      <h4>Binary vs multiclass</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Binary classification</th><th>Multiclass classification</th></tr></thead>
+        <tbody>
+          <tr><td>Number of classes</td><td>2</td><td>3 or more</td></tr>
+          <tr><td>Output</td><td>0/1, yes/no, spam/not spam</td><td>One of C labels: A/B/C/D</td></tr>
+          <tr><td>Decision boundary</td><td>One hyperplane</td><td>Several boundaries / regions</td></tr>
+          <tr><td>Algorithms</td><td>Logistic regression, linear SVM, perceptron</td><td>Multinomial logistic regression, decision tree, random forest, KNN, OvO/OvA SVM</td></tr>
+          <tr><td>Metrics</td><td>TP/TN/FP/FN, precision, recall, F1</td><td>Per-class + macro/micro averages, confusion matrix C×C</td></tr>
+          <tr><td>Example</td><td>Email: spam or not spam</td><td>Fruit: apple, mango, banana, orange</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Variants of multiclass classification</h4>
+
+      <h4>(a) One-vs-All (OvA), also called One-vs-Rest (OvR)</h4>
+      <ul>
+        <li>Train <b>C binary classifiers</b>, one per class.</li>
+        <li>Classifier c is trained with class c as positive and all other classes as negative.</li>
+        <li>At prediction time, run all C classifiers and choose the class with the <b>highest score/probability</b>.</li>
+        <li>Example: classes A, B, C → classifiers “A vs {B,C}”, “B vs {A,C}”, “C vs {A,B}”.</li>
+        <li>Cost: C classifiers. Each classifier sees the full dataset.</li>
+      </ul>
+
+      <h4>(b) One-vs-One (OvO)</h4>
+      <ul>
+        <li>Train one binary classifier for <b>every pair of classes</b>.</li>
+        <li>Number of classifiers = <b>C(C−1)/2</b>.</li>
+        <li>At prediction time, each classifier votes for one of its two classes; the class with the most votes wins.</li>
+        <li>Example: classes A, B, C → “A vs B”, “A vs C”, “B vs C” (3 classifiers).</li>
+        <li>Each classifier is trained on only the data of its two classes → cheaper per classifier, but more classifiers.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>OvA / OvR</th><th>OvO</th></tr></thead>
+        <tbody>
+          <tr><td>Classifiers</td><td>C</td><td>C(C−1)/2</td></tr>
+          <tr><td>Training data per classifier</td><td>All data</td><td>Only the two classes</td></tr>
+          <tr><td>Prediction</td><td>Highest confidence</td><td>Majority vote</td></tr>
+          <tr><td>Class imbalance</td><td>Suffers (one vs all)</td><td>Less severe (balanced pairs)</td></tr>
+          <tr><td>Best for</td><td>Many classes, limited compute</td><td>SVMs, small C</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Example with 4 classes</h4>
+      <p>For A, B, C, D: OvA needs <b>4</b> classifiers; OvO needs 4×3/2 = <b>6</b> classifiers. If a new point gets OvO votes A=3, B=1, C=1, D=0, the prediction is <b>A</b>.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Write a short note on handling imbalanced data in multiclass classification.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q4(b) [6]</p>
+
+      <h4>Problem</h4>
+      <p>Imbalanced data has very different class frequencies (e.g. 95% class A, 5% classes B/C/D). A model can predict the majority class always and still get 95% accuracy, while completely failing on the minority classes. Multiclass imbalance is harder because there can be several minority classes.</p>
+
+      <h4>Techniques</h4>
+      <ol>
+        <li><b>Resampling</b>
+          <ul>
+            <li><b>Oversampling</b> — duplicate minority samples (or use SMOTE to create synthetic ones).</li>
+            <li><b>Undersampling</b> — remove majority samples; risks losing information.</li>
+            <li><b>Hybrid</b> — combine both (e.g. SMOTE + Tomek links).</li>
+          </ul>
+        </li>
+        <li><b>Class weights</b> — set <code>class_weight='balanced'</code>; the loss penalises minority errors more.</li>
+        <li><b>Cost-sensitive learning</b> — assign a higher misclassification cost to minority classes.</li>
+        <li><b>Threshold moving</b> — lower the decision threshold for minority classes; tune per class.</li>
+        <li><b>Better metrics</b> — use macro F1, balanced accuracy, per-class recall, PR-AUC; do not rely on accuracy.</li>
+        <li><b>Ensemble methods</b> — BalancedBagging, EasyEnsemble, RUSBoost; each learner sees a balanced sample.</li>
+        <li><b>One-vs-rest with calibration</b> — train each class against the rest and calibrate probabilities.</li>
+        <li><b>Data collection</b> — the best long-term fix is to collect more minority samples.</li>
+      </ol>
+
+      <div class="warn"><b>Do not resample before splitting.</b> Split train/test first, then resample only the training set. Otherwise the same sample can appear in both sets and the test score becomes optimistic.</div>
+
+      <h4>Example</h4>
+      <p>For classes A (950), B (30), C (20), plain accuracy is misleading. After class weighting and SMOTE, macro F1 might rise from 0.35 to 0.72 even though overall accuracy drops slightly — that is the correct trade-off.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Formulas you must write correctly</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Metric</th><th>Formula</th></tr></thead>
+        <tbody>
+          <tr><td>Accuracy</td><td>(TP+TN)/(TP+TN+FP+FN)</td></tr>
+          <tr><td>Precision</td><td>TP/(TP+FP)</td></tr>
+          <tr><td>Recall</td><td>TP/(TP+FN)</td></tr>
+          <tr><td>F1</td><td>2PR/(P+R)</td></tr>
+          <tr><td>Specificity</td><td>TN/(TN+FP)</td></tr>
+          <tr><td>Macro avg</td><td>(1/C)Σ metric<sub>c</sub></td></tr>
+          <tr><td>Micro avg</td><td>ΣTP / Σ(TP+FP) etc.</td></tr>
+          <tr><td>OvO classifiers</td><td>C(C−1)/2</td></tr>
+          <tr><td>OvA classifiers</td><td>C</td></tr>
+          <tr><td>SVM margin</td><td>2/‖w‖</td></tr>
+          <tr><td>AdaBoost α</td><td>½ ln((1−ε)/ε)</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div>
+      <h4>One-line memory hooks</h4>
+      <ul>
+        <li><b>Precision</b> = trust of a positive alarm; <b>recall</b> = coverage of real positives.</li>
+        <li><b>F1</b> = harmonic mean; punishes a weak precision or recall.</li>
+        <li><b>KNN</b> = lazy, distance-based, no training, sensitive to scale.</li>
+        <li><b>SVM</b> = widest street; support vectors define the boundary.</li>
+        <li><b>Kernel</b> = implicit mapping to a higher dimension.</li>
+        <li><b>Bagging</b> = parallel + bootstrap + variance reduction.</li>
+        <li><b>Boosting</b> = sequential + reweight + bias reduction.</li>
+        <li><b>Random forest</b> = bagging + random feature subsets.</li>
+        <li><b>OvA</b> = C classifiers; <b>OvO</b> = C(C−1)/2.</li>
+        <li><b>Imbalance</b> → macro F1, not accuracy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h4>Solved numerical answers at a glance</h4>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Paper</th><th>Given</th><th>Answer</th></tr></thead>
+    <tbody>
+      <tr><td>2022 Nov Q3(b)</td><td>KNN, q = (6,8), K = 3</td><td>Nearest: (6,7), (7,8), (8,8) all Pass → <b>Pass</b></td></tr>
+      <tr><td>2023 May Q4(a)</td><td>4×4 matrix</td><td>Macro P = 49.30%, R = 77.50%, F1 = 49.92%</td></tr>
+      <tr><td>2025 Nov Q3(c)</td><td>TP 120, TN 45, FP 10, FN 5</td><td>Acc 91.67%, P 92.31%, R 96.00%, F1 94.12%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="book"><b>Source note:</b> answers are built from the supplied scanned technical book <em>Machine Learning</em> (Technical Publications, Unit 4, pages 4-1 to 4-26) for KNN, SVM, ensembles, metrics, micro/macro averages and cross-validation. Confusion-matrix tables were read from the original PDFs and all arithmetic was verified in Python.</div>
+
+  <div class="tip"><b>Exam-day order:</b> the metric numerical is the safest 6 marks — do it first. Then write the ensemble comparison table (bagging vs boosting) and the random-forest diagram. Keep SVM for last; it is theory-heavy.</div>
+</section>
+
+<footer>
+  ML · Unit 4 · built from 6 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410242 · 2019 Pattern<br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+// highlight active sidebar link
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

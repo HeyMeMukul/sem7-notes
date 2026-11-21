@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STQA Unit 3 — Test Case Design Techniques | SPPU 410245D</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+/* ---------- cards ---------- */
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+/* ---------- Q&A ---------- */
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+/* ---------- code / tables ---------- */
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+/* ---------- callouts ---------- */
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+/* ---------- frequency table ---------- */
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+/* ---------- tree drawing ---------- */
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+/* footer */
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+
+.freq td:nth-child(2),.freq td:nth-child(3){text-align:left}
+
+main{min-width:0}
+.tbl-wrap{max-width:100%}
+.card,.qa{min-width:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="side">
+  <h3>STQA · Unit 3</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s31">3.1 White / black / grey box</a>
+    <a href="#s32">3.2 Static techniques &amp; reviews</a>
+    <a href="#s33">3.3 Coverage techniques</a>
+    <a href="#s34">3.4 Black-box design</a>
+    <a href="#s35">3.5 Experience-based</a>
+    <a href="#s36">3.6 Levels of testing</a>
+    <a href="#s37">3.7 Functional vs non-functional</a>
+    <a href="#s38">3.8 Syllabus-only topics</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-4-SQA-and-Quality-Control.html">Unit 4 · SQA &amp; QC</a>
+  <a href="Unit-5-Automation-and-Performance-Testing.html">Unit 5 · Automation &amp; performance</a>
+  <a href="Unit-6-Testing-Framework-and-SQA-Tools.html">Unit 6 · Testing framework &amp; SQA</a>
+  <a href="index.html">↩ STQA home</a>
+</aside>
+
+<!-- ================= MAIN ================= -->
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 3 — Test Case Design Techniques</h1>
+  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>Every question below is taken <b>verbatim from the six end-sem papers</b> (2022 Nov, 2023 May, 2023 Nov, 2024 May, 2025 May, 2025 Nov). The badge shows how many times the same question was repeated. Answers are sized to the mark weight (6 marks mostly, a few 5-mark parts).</p>
+  <div class="meta">
+    <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>36</b> Unit-3 question instances</span>
+    <span class="chip">🧩 <b>20</b> Q&amp;A cards</span>
+    <span class="chip">🔁 Highest repeat: <b>white/black box + static — 4×</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>12–18 marks</b></span>
+  </div>
+</header>
+
+<!-- ================= FREQUENCY MAP ================= -->
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — Unit 3</h2>
+  <p class="lead">Counted from all <b>six</b> available end-sem papers (2022 Nov, 2023 May, 2023 Nov, 2024 May, 2025 May, 2025 Nov). In-sem papers are excluded. A badge of <b>★★★ 3×</b> means the same question was asked in three sub-questions across these papers.</p>
+
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">White box testing / white vs black box</td><td>2023 May Q1(a) [6]; 2024 May Q1(a) [6]; 2025 May Q1(a) [6]; 2025 Nov Q1(a) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>2</td><td class="l">Static techniques (reviews, walkthrough, inspection)</td><td>2022 Nov Q1(a) [6]; 2023 Nov Q1(a) [6], Q1(c) [6]; 2024 May Q2(a) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>3</td><td class="l">Unit and integration testing + integration approaches</td><td>2023 May Q1(b) [6]; 2023 Nov Q2(b) [6]; 2025 Nov Q1(c) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>4</td><td class="l">System testing and acceptance testing</td><td>2022 Nov Q1(c) [6]; 2023 May Q2(c) [6]; 2025 Nov Q1(b) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>5</td><td class="l">Experience-based techniques (error guessing, exploratory)</td><td>2022 Nov Q1(b) [6]; 2023 May Q2(a) [6]; 2025 May Q2(c) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>6</td><td class="l">Functional vs non-functional testing</td><td>2023 May Q1(c) [6]; 2024 May Q1(c) [6]; 2025 Nov Q2(c) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>7</td><td class="l">BVA and equivalence class partitioning</td><td>2024 May Q1(b) [6]; 2025 Nov Q2(a) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>8</td><td class="l">Cookies testing with example</td><td>2024 May Q2(b) [6]; 2025 Nov Q2(b) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td class="l">Regression testing and its importance</td><td>2022 Nov Q2(b) [6]; 2023 Nov Q2(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>10</td><td class="l">Path and condition coverage</td><td>2022 Nov Q2(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>11</td><td class="l">Statement and branch coverage</td><td>2023 May Q2(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>12</td><td class="l">Loop coverage and its types</td><td>2024 May Q2(c) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>13</td><td class="l">Dynamic test design techniques (overview)</td><td>2023 Nov Q1(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>14</td><td class="l">Black box testing</td><td>2025 May Q2(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>15</td><td class="l">Ad hoc testing with example</td><td>2023 Nov Q2(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>16</td><td class="l">Risk-based testing</td><td>2025 May Q1(c) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>17</td><td class="l">Compatibility and security testing</td><td>2025 May Q2(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>18</td><td class="l">Performance and security testing (non-functional)</td><td>2022 Nov Q2(c) [6]; 2025 May Q1(b) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>Read this first:</b> four question groups cover <b>14 of the 36</b> Unit-3 marks on offer. Prepare in this order — (1) white/black box comparison, (2) static techniques and review types, (3) unit/integration + system/acceptance, (4) BVA/ECP and coverage. These reappear in almost every paper.</div>
+  <div class="tip"><b>Mark sizing:</b> 6-mark answer = definition + 5–7 numbered points + one small example/table. 5-mark answer = definition + 4–5 points. Do not write a full essay; SPPU gives step marks for correct headings and a labelled diagram.</div>
+</section>
+
+<!-- ================= 3.1 ================= -->
+<section class="card" id="s31">
+  <h2>3.1 White box testing (and grey box testing)</h2>
+  <p class="lead">Syllabus: <em>White Box Testing, Black Box Testing, Grey Box Testing.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain White box testing and Grey box testing in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q1(a) [6] · 2025 May Q1(a) [6, white box only]</p>
+
+      <h4>1. White box testing — definition</h4>
+      <p><b>White box testing</b> tests the <b>internal structure and logic</b> of the code. The tester can see the source code, control flow and data flow. It is also called <b>structural testing</b>, <b>glass-box testing</b> or <b>clear-box testing</b>.</p>
+      <p><b>Goal:</b> execute every statement, branch, condition, path and loop at least once, and remove dead code and logic errors.</p>
+
+      <h4>2. White box process</h4>
+      <ol>
+        <li>Read the code and identify all input and output points.</li>
+        <li>Draw the <b>control flow graph (CFG)</b> — nodes are statements, edges are control transfers.</li>
+        <li>Find independent paths and compute <b>cyclomatic complexity</b> <code>V(G) = E − N + 2</code>.</li>
+        <li>Design test data to cover statements, branches, conditions, paths and loop boundaries.</li>
+        <li>Execute the tests and measure coverage. Add tests until the target coverage is reached.</li>
+      </ol>
+
+      <h4>3. White box techniques (name them in the exam)</h4>
+      <ul>
+        <li><b>Statement coverage</b> — every executable statement runs once.</li>
+        <li><b>Branch / decision coverage</b> — every true and false outcome of every decision runs.</li>
+        <li><b>Condition coverage</b> — every atomic condition takes both true and false.</li>
+        <li><b>Path coverage</b> — every independent path from entry to exit runs.</li>
+        <li><b>Loop coverage</b> — zero, one, two, many and boundary iterations run.</li>
+      </ul>
+
+      <h4>4. Grey box testing — definition</h4>
+      <p><b>Grey box testing</b> is a <b>partial white box</b> approach. The tester knows some internal details — database schema, architecture, API contracts, data structures — but not the full source code. Testing is done at the <b>interface level</b> with this partial knowledge.</p>
+      <p><b>Example:</b> test a web login by knowing the user table columns (<code>user_id, password_hash, status</code>) and the API URL, but without reading the Java service code. The tester checks SQL injection through the API and verifies database state after login.</p>
+
+      <h4>5. White vs grey box</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>White box</th><th>Grey box</th></tr></thead>
+        <tbody>
+          <tr><td>Knowledge of code</td><td>Full source code visible</td><td>Partial — schema, design, APIs</td></tr>
+          <tr><td>Tests based on</td><td>Code logic and CFG</td><td>Interfaces plus partial internals</td></tr>
+          <tr><td>Main techniques</td><td>Statement, branch, path, condition, loop</td><td>API tests, DB checks, penetration tests</td></tr>
+          <tr><td>Done by</td><td>Developer or white-box tester</td><td>Independent tester with design access</td></tr>
+          <tr><td>Best for</td><td>Unit testing, logic errors</td><td>Integration, security, database testing</td></tr>
+          <tr><td>Limitation</td><td>Expensive; may miss missing requirements</td><td>Depends on quality of partial knowledge</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small">Write the CFG diagram for any small <code>if</code> in the answer. A labelled diagram is worth 1–2 marks.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>State in your own words Black Box Testing.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q2(a) [6]</p>
+      <p><b>Definition:</b> Black box testing checks <b>what the software does</b>, not how it does it. The tester sees only the input, the output and the requirement. The code is hidden, so it is also called <b>behavioural</b>, <b>functional</b> or <b>specification-based</b> testing.</p>
+      <h4>How it is done</h4>
+      <ol>
+        <li>Read the SRS and list input fields, rules and expected outputs.</li>
+        <li>Identify valid and invalid input classes.</li>
+        <li>Select test data using BVA, equivalence partitioning, decision table, state transition, cause-effect graph or use cases.</li>
+        <li>Run the test, compare actual output with expected output, and log a defect on mismatch.</li>
+      </ol>
+      <h4>Example — ATM withdrawal</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Input</th><th>Expected output</th><th>Type</th></tr></thead>
+        <tbody>
+          <tr><td>Amount ₹2,000, balance ₹10,000</td><td>Cash dispensed; balance ₹8,000</td><td>Valid</td></tr>
+          <tr><td>Amount ₹0</td><td>“Enter a valid amount”</td><td>Invalid</td></tr>
+          <tr><td>Amount ₹30,000, balance ₹10,000</td><td>“Insufficient balance”</td><td>Invalid</td></tr>
+          <tr><td>Amount ₹1,500 (not a multiple of ₹500)</td><td>“Amount must be multiple of 500”</td><td>Boundary/rule</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>Advantages and limitations</h4>
+      <ul>
+        <li><b>Advantages:</b> works without code; tests user-visible behaviour; can start early from SRS; good for large systems and third-party software.</li>
+        <li><b>Limitations:</b> cannot test hidden paths; may miss dead code; test data quality depends on the specification; duplication of tests is possible.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Differentiate between black box and white box testing.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q1(a) [6] · 2025 Nov Q1(a) [6]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Black box testing</th><th>White box testing</th></tr></thead>
+        <tbody>
+          <tr><td>Also called</td><td>Functional, behavioural, specification-based</td><td>Structural, glass-box, clear-box</td></tr>
+          <tr><td>Focus</td><td>Input → output behaviour</td><td>Internal code, logic, control flow</td></tr>
+          <tr><td>Code knowledge</td><td>Not required</td><td>Required</td></tr>
+          <tr><td>Starting point</td><td>SRS / user requirements</td><td>Source code / design</td></tr>
+          <tr><td>Main techniques</td><td>BVA, equivalence partitioning, decision table, state transition, cause-effect graph, use case</td><td>Statement, branch, path, condition, loop coverage</td></tr>
+          <tr><td>Who performs</td><td>Independent QA tester</td><td>Developer or white-box tester</td></tr>
+          <tr><td>Testing level</td><td>System, acceptance, functional</td><td>Unit, integration</td></tr>
+          <tr><td>Finds</td><td>Missing functions, wrong output, usability issues</td><td>Dead code, wrong logic, unreachable paths</td></tr>
+          <tr><td>Limitation</td><td>Cannot see internal paths</td><td>Expensive; may miss missing requirements</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>One-line answer:</b> black box tests <b>behaviour against requirements</b>; white box tests <b>logic against code structure</b>. They are complementary — use both for complete coverage.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.2 ================= -->
+<section class="card" id="s32">
+  <h2>3.2 Static techniques and reviews</h2>
+  <p class="lead">Syllabus: <em>Informal Reviews, Walkthroughs, Technical Reviews, Inspection.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>What do you think about static techniques? / Identify how the different static test case design techniques are useful for software testing.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [6] · 2023 Nov Q1(a) [6] · 2023 Nov Q1(c) [6]</p>
+      <p><b>Definition:</b> Static techniques test a work product <b>without executing it</b>. They examine requirements, design, code, test cases and documents by reading and reviewing them. They find defects early, before code runs.</p>
+
+      <h4>Main static techniques and their usefulness</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Technique</th><th>What happens</th><th>Usefulness</th></tr></thead>
+        <tbody>
+          <tr><td><b>Informal review</b></td><td>Author asks one or two colleagues to read the document; no formal record.</td><td>Very cheap; quick feedback; good for early drafts and small teams.</td></tr>
+          <tr><td><b>Walkthrough</b></td><td>Author explains the document or code step by step to a small group.</td><td>Spreads understanding; finds unclear logic; good for training new team members.</td></tr>
+          <tr><td><b>Technical review</b></td><td>Peer group with technical experts checks whether the product follows standards and is technically sound.</td><td>Checks architecture, design, interfaces and compliance; decision-making review.</td></tr>
+          <tr><td><b>Inspection</b></td><td>Formal, documented review with a moderator, checklist, preparation, meeting and follow-up.</td><td>Most effective for finding defects; gives measurable defect data; used for critical artefacts.</td></tr>
+          <tr><td><b>Static analysis</b></td><td>Tool scans code for syntax, coding-standard, complexity and data-flow problems.</td><td>Finds unreachable code, uninitialised variables, buffer risks; fast and repeatable.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Benefits</h4>
+      <ul>
+        <li>Defects are found <b>before coding or testing</b>, so the cost of fixing is low.</li>
+        <li>No test environment or executable build is needed.</li>
+        <li>Improves document quality, coding standards and team knowledge.</li>
+        <li>Complements dynamic testing — it finds defects that execution may hide.</li>
+      </ul>
+      <div class="note"><b>Limitation:</b> static techniques cannot check run-time behaviour, performance, memory use or real user interaction. They must be combined with dynamic testing.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Explain the following test case design techniques: (i) Informal Reviews (ii) Walkthroughs (iii) Inspection.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [6] — technical review is also part of the syllabus list</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Informal review</th><th>Walkthrough</th><th>Inspection</th></tr></thead>
+        <tbody>
+          <tr><td>Formality</td><td>Lowest</td><td>Low–medium</td><td>Highest</td></tr>
+          <tr><td>Led by</td><td>Author</td><td>Author</td><td>Moderator (not the author)</td></tr>
+          <tr><td>Participants</td><td>1–2 peers</td><td>3–6 team members</td><td>Trained inspection team (3–6)</td></tr>
+          <tr><td>Preparation</td><td>None</td><td>Read the material</td><td>Individual preparation with checklist</td></tr>
+          <tr><td>Recording</td><td>Usually none</td><td>Notes may be taken</td><td>Formal defect log and minutes</td></tr>
+          <tr><td>Output</td><td>Verbal comments</td><td>List of questions and suggestions</td><td>Defect list, severity, action owners</td></tr>
+          <tr><td>Best used for</td><td>Drafts, small documents</td><td>Code logic, design teaching</td><td>Critical requirements, design, code</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>(i) Informal review</h4>
+      <p>The author gives a document to a colleague and asks for comments. There is no agenda, no checklist and no formal record. It is fast and cheap. <b>Example:</b> a developer asks a teammate to read a test-case sheet before sending it to the client.</p>
+
+      <h4>(ii) Walkthrough</h4>
+      <p>The author <b>walks the group through</b> the document or code. The group asks questions and suggests improvements. The aim is understanding and informal defect finding, not approval. <b>Example:</b> a programmer explains a payment module to testers so they can design integration tests.</p>
+
+      <h4>(iii) Inspection</h4>
+      <p>A <b>formal, six-phase review</b>: planning → overview → individual preparation → inspection meeting → rework → follow-up. Each reviewer checks against a <b>checklist</b>; a moderator controls the meeting; a recorder logs every defect. The author fixes defects and the moderator verifies closure. Inspection is the <b>most effective</b> static technique because it is systematic and measured.</p>
+
+      <h4>(iv) Technical review (extra point)</h4>
+      <p>A group of technical experts reviews the product for <b>technical correctness and standards compliance</b>. It may approve or reject the design. It is less formal than inspection but more technical than a walkthrough.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.3 ================= -->
+<section class="card" id="s33">
+  <h2>3.3 Dynamic structural techniques (coverage)</h2>
+  <p class="lead">Syllabus: <em>Statement, Branch, Path, Conditional and Loop Coverage Testing.</em> These are white-box techniques: the test data is derived from the code structure.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>Interpret the different Dynamic Test Design Techniques.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q1(b) [6]</p>
+      <p><b>Dynamic testing</b> executes the software with test data and compares actual results with expected results. Dynamic <b>structural</b> techniques use the internal code structure to choose that data.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Technique</th><th>Coverage rule</th><th>Formula / criterion</th><th>Strength</th></tr></thead>
+        <tbody>
+          <tr><td><b>Statement</b></td><td>Every executable statement runs at least once.</td><td>Executed statements ÷ total statements × 100</td><td>Weakest; finds dead code.</td></tr>
+          <tr><td><b>Branch / decision</b></td><td>Every decision takes both true and false.</td><td>Branches exercised ÷ total branches × 100</td><td>Stronger than statement; finds wrong conditions.</td></tr>
+          <tr><td><b>Condition</b></td><td>Every atomic condition takes both true and false.</td><td>Condition outcomes exercised ÷ total outcomes × 100</td><td>Tests each part of a compound condition.</td></tr>
+          <tr><td><b>Path</b></td><td>Every independent path from entry to exit runs.</td><td>Paths executed ÷ total paths × 100</td><td>Strongest; grows exponentially.</td></tr>
+          <tr><td><b>Loop</b></td><td>Zero, one, two, typical, maximum and maximum+1 iterations.</td><td>Loop boundary cases covered</td><td>Finds off-by-one and infinite-loop defects.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Order of strength:</b> statement &lt; branch &lt; condition/decision &lt; path. 100% path coverage implies branch coverage, which implies statement coverage; the reverse is not true.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Can you explain statement coverage testing &amp; branch coverage testing?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q2(b) [6]</p>
+
+      <h4>1. Statement coverage</h4>
+      <p>Every <b>executable statement</b> in the program must run at least once.</p>
+      <div class="math">Statement coverage (%) = (statements executed ÷ total executable statements) × 100</div>
+
+      <h4>2. Branch coverage</h4>
+      <p>Every <b>decision</b> must take both the <b>true</b> and <b>false</b> path. It is also called decision coverage.</p>
+      <div class="math">Branch coverage (%) = (branches exercised ÷ total branches) × 100</div>
+
+      <h4>3. Worked example</h4>
+<pre><code>1  read a, b
+2  if (a &gt; b) then
+3      max = a
+4  else
+5      max = b
+6  end if
+7  print max</code></pre>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Test case</th><th>Input</th><th>Statements executed</th><th>Branch taken</th></tr></thead>
+        <tbody>
+          <tr><td>TC1</td><td>a = 5, b = 3</td><td>1, 2, 3, 6, 7</td><td>2 → true</td></tr>
+          <tr><td>TC2</td><td>a = 2, b = 7</td><td>1, 2, 4, 5, 6, 7</td><td>2 → false</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>TC1 + TC2 give <b>100% statement coverage</b> (all 7 statements) and <b>100% branch coverage</b> (both outcomes of the <code>if</code>).</p>
+
+      <h4>4. Important difference</h4>
+      <p>Statement coverage can be 100% while branch coverage is only 50%. Consider:</p>
+<pre><code>if (x &gt; 0) then
+    y = 1
+z = 2</code></pre>
+      <p>With <code>x = 5</code>, statements <code>y=1</code> and <code>z=2</code> both run, so statement coverage is 100%. But the false branch of the <code>if</code> never runs, so branch coverage is 50%. <b>Branch coverage is therefore stronger.</b></p>
+      <p><b>Use:</b> statement coverage for quick smoke checks; branch coverage as the minimum unit-test gate in safety-critical code.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>Can you explain path coverage testing &amp; conditional coverage testing.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [6]</p>
+
+      <h4>1. Path coverage</h4>
+      <p>Every possible <b>path from entry to exit</b> through the control flow graph must execute at least once. A path is a sequence of nodes and edges.</p>
+      <div class="math">Path coverage (%) = (paths executed ÷ total feasible paths) × 100</div>
+      <p><b>Cyclomatic complexity</b> gives the number of independent paths:</p>
+      <div class="math">V(G) = E − N + 2 = number of predicate nodes + 1</div>
+      <p><b>Example:</b> two independent <code>if</code> statements give <code>V(G) = 3</code> independent paths, but up to <code>2² = 4</code> actual paths (TT, TF, FT, FF). Test all four if feasible.</p>
+      <p><b>Strength:</b> strongest structural criterion — it exercises combinations of decisions. <b>Weakness:</b> the number of paths can grow exponentially; loops can make it infinite, so only a bounded subset is used.</p>
+
+      <h4>2. Condition coverage</h4>
+      <p>Every <b>atomic condition</b> inside a compound decision must take both <b>true</b> and <b>false</b> at least once.</p>
+      <div class="math">Condition coverage (%) = (condition outcomes exercised ÷ total condition outcomes) × 100</div>
+      <p><b>Example:</b> <code>if (a &gt; 0 AND b &lt; 5)</code> has two atomic conditions, so four outcomes are needed: <code>a&gt;0</code> T/F and <code>b&lt;5</code> T/F.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Test</th><th>a</th><th>b</th><th>a &gt; 0</th><th>b &lt; 5</th><th>Decision</th></tr></thead>
+        <tbody>
+          <tr><td>TC1</td><td>1</td><td>3</td><td>T</td><td>T</td><td>True</td></tr>
+          <tr><td>TC2</td><td>−1</td><td>7</td><td>F</td><td>F</td><td>False</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>TC1 + TC2 give 100% condition coverage and 100% decision coverage.</p>
+
+      <h4>3. Condition coverage without decision coverage</h4>
+      <p>TC1: <code>a=1, b=7</code> → T, F → decision false. TC2: <code>a=−1, b=3</code> → F, T → decision false. Every atomic condition takes T and F, so condition coverage is 100%, but the decision is never true, so decision coverage is 0%. This is why <b>condition/decision coverage (CDC)</b> is used in critical systems.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q9</span>Discuss Loop coverage testing and types of it in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q2(c) [6]</p>
+      <p><b>Definition:</b> Loop coverage (loop testing) checks the <b>boundaries of loops</b>. Most loop defects are off-by-one errors — the loop runs one time too many or one time too few.</p>
+
+      <h4>1. Loop test cases (for a simple loop with maximum n)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Case</th><th>Iterations</th><th>What it checks</th></tr></thead>
+        <tbody>
+          <tr><td>Zero</td><td>0</td><td>Loop body is skipped; initialisation is correct.</td></tr>
+          <tr><td>One</td><td>1</td><td>First iteration and exit condition.</td></tr>
+          <tr><td>Two</td><td>2</td><td>Second iteration; loop variable update.</td></tr>
+          <tr><td>Typical</td><td>n/2</td><td>Normal working case.</td></tr>
+          <tr><td>Maximum</td><td>n</td><td>Last valid iteration; array bound.</td></tr>
+          <tr><td>Maximum + 1</td><td>n+1</td><td>Overflow / extra iteration defect.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Types of loops</h4>
+      <ul>
+        <li><b>Simple loop</b> — one loop, fixed or variable bound. Use the six cases above.</li>
+        <li><b>Nested loop</b> — a loop inside a loop. Test inner loop with outer at minimum, typical and maximum; then test outer boundaries.</li>
+        <li><b>Concatenated loop</b> — two loops one after another. Test each independently, then test the boundary where the first ends and the second starts.</li>
+        <li><b>Unstructured loop</b> — <code>goto</code>-based or irregular jumps. Redesign it if possible; otherwise test every jump path.</li>
+      </ul>
+
+      <h4>3. Example</h4>
+<pre><code>sum = 0
+for i = 1 to n do
+    sum = sum + marks[i]
+print sum</code></pre>
+      <p>Test with <code>n = 0</code> (empty array), <code>n = 1</code>, <code>n = 2</code>, <code>n = 50</code> (typical), <code>n = 100</code> (maximum), <code>n = 101</code> (maximum+1 → should be rejected, not crash).</p>
+      <p><b>Benefits:</b> catches off-by-one, wrong initialisation, missing update and array-overflow defects. <b>Limitation:</b> does not test the logic inside the body — combine with branch and path coverage.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.4 ================= -->
+<section class="card" id="s34">
+  <h2>3.4 Black-box test design techniques</h2>
+  <p class="lead">Syllabus: <em>Boundary Value Analysis, Equivalence Class Partition, State Transition, Cause-Effect Graph, Decision Table, Use Case Testing.</em> The two most repeated are BVA and ECP.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q10</span>Discuss Boundary Value Analysis and Equivalence Class Partition.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q1(b) [6] · 2025 Nov Q2(a) [6]</p>
+
+      <h4>1. Equivalence class partitioning (ECP)</h4>
+      <p>Divide the input domain into <b>classes</b> that are expected to behave the same way. Test <b>one value from each class</b> instead of every value. This reduces the number of test cases without losing defect-finding power.</p>
+      <ul>
+        <li><b>Valid class</b> — input the program should accept.</li>
+        <li><b>Invalid class</b> — input the program should reject with a proper message.</li>
+      </ul>
+
+      <h4>2. Boundary value analysis (BVA)</h4>
+      <p>Defects cluster at the <b>edges</b> of input ranges. BVA tests the value at the boundary, just below it and just above it. For a range <code>a ≤ x ≤ b</code>, test <code>a−1, a, a+1</code> and <code>b−1, b, b+1</code>.</p>
+
+      <h4>3. Common example — age field accepts 18 to 60</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Technique</th><th>Class / value</th><th>Test data</th><th>Expected</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="3">ECP</td><td>Valid: 18–60</td><td>30</td><td>Accepted</td></tr>
+          <tr><td>Invalid: below 18</td><td>10</td><td>Rejected</td></tr>
+          <tr><td>Invalid: above 60</td><td>70</td><td>Rejected</td></tr>
+          <tr><td rowspan="6">BVA</td><td>Lower boundary −1</td><td>17</td><td>Rejected</td></tr>
+          <tr><td>Lower boundary</td><td>18</td><td>Accepted</td></tr>
+          <tr><td>Lower boundary +1</td><td>19</td><td>Accepted</td></tr>
+          <tr><td>Upper boundary −1</td><td>59</td><td>Accepted</td></tr>
+          <tr><td>Upper boundary</td><td>60</td><td>Accepted</td></tr>
+          <tr><td>Upper boundary +1</td><td>61</td><td>Rejected</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. BVA vs ECP</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>ECP</th><th>BVA</th></tr></thead>
+        <tbody>
+          <tr><td>Basis</td><td>Groups of similar inputs</td><td>Edges of each group</td></tr>
+          <tr><td>Values chosen</td><td>Any one representative value</td><td>Boundary, boundary ±1</td></tr>
+          <tr><td>Strength</td><td>Reduces test count</td><td>Catches off-by-one errors</td></tr>
+          <tr><td>Dependency</td><td>Can be used alone</td><td>Usually applied after ECP</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Exam tip:</b> always show one valid and two invalid classes. For BVA, list six values — not just the two endpoints.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Syllabus context (no direct PYQ):</b> the other syllabus-listed black-box techniques are state transition, cause-effect graph, decision table and use case testing. They are not asked as a full question in the six papers; use the table below if a question asks you to “list black-box techniques” (2025 May Q2a).</div>
+  <div class="tbl-wrap">
+  <table class="left">
+    <thead><tr><th>Technique</th><th>How it works</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><b>State transition</b></td><td>Model states, events and transitions; test every valid transition and every invalid event.</td><td>ATM: Idle → Card inserted → PIN → Menu → Withdraw → Eject.</td></tr>
+      <tr><td><b>Cause-effect graph</b></td><td>Draw causes (inputs) and effects (outputs) as nodes; convert the graph into a decision table.</td><td>Cause: “user is admin”; effect: “delete button enabled”.</td></tr>
+      <tr><td><b>Decision table</b></td><td>List conditions and actions; one column per rule; test each rule.</td><td>Discount rules based on member type and order value.</td></tr>
+      <tr><td><b>Use case testing</b></td><td>Test each actor–system interaction from start to end, including alternate and exception flows.</td><td>“Place order” use case: login, add item, pay, confirm, cancel.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small"><b>State transition formula:</b> for <code>n</code> states and <code>e</code> events, test every valid transition once, plus one invalid event per state (the “switch off” test).</p>
+</section>
+
+<!-- ================= 3.5 ================= -->
+<section class="card" id="s35">
+  <h2>3.5 Experience-based techniques</h2>
+  <p class="lead">Syllabus: <em>Error guessing, Exploratory testing.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q11</span>State in your own words Error guessing and Exploratory testing. / What do you think about Exploratory testing.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(b) [6] · 2023 May Q2(a) [6, experience-based techniques] · 2025 May Q2(c) [6, exploratory]</p>
+
+      <h4>1. Error guessing</h4>
+      <p><b>Definition:</b> The tester uses experience and intuition to guess where the program is likely to fail, then writes tests for those areas. There is no formal model; it depends on the tester's skill.</p>
+      <p><b>Typical guesses:</b> empty input, zero, negative numbers, very long strings, special characters, divide by zero, duplicate IDs, wrong date format, network failure, double-click on Submit.</p>
+      <p><b>Example:</b> for a “percentage” field, an experienced tester immediately tries <code>0</code>, <code>100</code>, <code>101</code>, <code>−1</code>, <code>abc</code> and a blank value.</p>
+      <p><b>Advantages:</b> very fast, needs no documentation, finds unusual defects. <b>Limitation:</b> not repeatable, coverage cannot be measured, depends heavily on the tester.</p>
+
+      <h4>2. Exploratory testing</h4>
+      <p><b>Definition:</b> Testing in which <b>learning, test design and test execution happen together</b>. The tester explores the application, designs the next test from what was just learned, and records findings — usually in a <b>time-boxed session</b>.</p>
+      <p><b>How it is done (session-based):</b></p>
+      <ol>
+        <li>Write a <b>charter</b> — what area to explore and why (e.g. “explore the refund flow for partial cancellations”).</li>
+        <li>Set a <b>time box</b> — typically 60–120 minutes.</li>
+        <li>Explore, test, note defects and coverage ideas as you go.</li>
+        <li>Debrief: summarise what was covered, what was found and what remains.</li>
+      </ol>
+      <p><b>Example:</b> charter “explore coupon codes on checkout”. The tester tries stacking two coupons, expired coupons, a coupon above cart value, back-button after apply, and refresh after apply.</p>
+
+      <h4>3. Other experience-based techniques (one line each)</h4>
+      <ul>
+        <li><b>Checklist-based testing:</b> the tester follows a list of common defect types for that domain.</li>
+        <li><b>Fault attack:</b> deliberately inject likely faults (null, timeout, bad data) and observe behaviour.</li>
+        <li><b>Pair testing:</b> two testers explore together and challenge each other's assumptions.</li>
+      </ul>
+      <h4>4. Error guessing vs exploratory testing</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Error guessing</th><th>Exploratory testing</th></tr></thead>
+        <tbody>
+          <tr><td>Basis</td><td>Past experience and intuition</td><td>Simultaneous learning, design and execution</td></tr>
+          <tr><td>Structure</td><td>Informal list of likely errors</td><td>Charter + time box + session notes</td></tr>
+          <tr><td>Documentation</td><td>Minimal</td><td>Session sheet and debrief</td></tr>
+          <tr><td>Best for</td><td>Quick checks, regression of known risk areas</td><td>New features, unclear requirements, Agile projects</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.6 ================= -->
+<section class="card" id="s36">
+  <h2>3.6 Levels of testing</h2>
+  <p class="lead">Syllabus: <em>Unit, Integration, System, User Acceptance, Sanity/Smoke, Regression, Retest.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q12</span>What do you mean by unit and integration testing? What are the approaches used in integration testing?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q1(b) [6] · 2023 Nov Q2(b) [6] · 2025 Nov Q1(c) [6]</p>
+
+      <h4>1. Unit testing</h4>
+      <p><b>Definition:</b> Testing the <b>smallest testable piece</b> of software — a function, method, class or module — in isolation. It is usually white-box and is done by the developer.</p>
+      <ul>
+        <li><b>Driver:</b> dummy code that calls the unit under test and passes input.</li>
+        <li><b>Stub:</b> dummy code that replaces a module the unit calls.</li>
+        <li><b>Checks:</b> correct output, boundary values, error handling, code coverage.</li>
+        <li><b>Tools:</b> JUnit, TestNG, NUnit, PyTest.</li>
+      </ul>
+
+      <h4>2. Integration testing</h4>
+      <p><b>Definition:</b> Testing <b>groups of modules together</b> to verify that interfaces, data flow and control flow work correctly. It focuses on the “seams” between units, not on individual logic.</p>
+      <p><b>Defects found:</b> wrong parameter order, mismatched data types, missing fields, incompatible protocols, shared-state problems.</p>
+
+      <h4>3. Integration approaches</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Approach</th><th>How it works</th><th>Advantage</th><th>Limitation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Big-bang</b></td><td>Combine all modules at once and test.</td><td>Simple; no extra code.</td><td>Hard to locate faults; risky.</td></tr>
+          <tr><td><b>Top-down</b></td><td>Start from the main module; replace lower modules with <b>stubs</b>; add real modules level by level.</td><td>Early demo of overall flow; tests major control logic first.</td><td>Needs many stubs; low-level logic tested late.</td></tr>
+          <tr><td><b>Bottom-up</b></td><td>Start from lowest modules; use <b>drivers</b> to call them; build upward.</td><td>Low-level logic tested early; fewer stubs.</td><td>No early view of overall system; needs drivers.</td></tr>
+          <tr><td><b>Sandwich / hybrid</b></td><td>Combine top-down and bottom-up; meet at a middle layer.</td><td>Balances both; good for large systems.</td><td>Complex to plan.</td></tr>
+          <tr><td><b>Incremental</b></td><td>Add one module at a time and retest after each addition.</td><td>Faults isolated quickly; steady progress.</td><td>More test runs.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note"><b>Diagram to draw:</b> a top-down tree with the main module at the top, stubs shaded, and an arrow showing “level 1, level 2…”. Label one driver at the bottom for bottom-up.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q13</span>How would you explain System Testing and Acceptance Testing?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(c) [6] · 2023 May Q2(c) [6] · 2025 Nov Q1(b) [6]</p>
+
+      <h4>1. System testing</h4>
+      <p><b>Definition:</b> Testing the <b>complete, integrated system</b> against the Software Requirements Specification (SRS). It is done in an environment close to production, by an independent test team, after integration testing.</p>
+      <ul>
+        <li><b>Functional:</b> every requirement, use case and business rule.</li>
+        <li><b>Non-functional:</b> performance, load, security, usability, compatibility, recovery.</li>
+        <li><b>End-to-end:</b> complete workflows across modules and databases.</li>
+        <li><b>Entry:</b> all modules integrated and smoke test passed. <b>Exit:</b> all critical defects closed, test summary report signed.</li>
+      </ul>
+      <p><b>Example:</b> for an e-commerce site, place an order end to end — search → cart → payment gateway → order record → confirmation e-mail — and check performance with 500 users.</p>
+
+      <h4>2. Acceptance testing</h4>
+      <p><b>Definition:</b> Testing by the <b>customer or end user</b> to decide whether the system is acceptable for release. It checks <b>business fitness</b>, not technical correctness.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Who does it</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><b>User acceptance (UAT)</b></td><td>End users / business team</td><td>Does it support the real business process?</td></tr>
+          <tr><td><b>Alpha testing</b></td><td>Internal testers at developer site</td><td>Find defects before external release.</td></tr>
+          <tr><td><b>Beta testing</b></td><td>Real users at their own site</td><td>Get field feedback from a limited release.</td></tr>
+          <tr><td><b>Contract / regulation</b></td><td>Customer or auditor</td><td>Verify contractual and legal requirements.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Acceptance criteria:</b> all agreed test cases pass, no open critical/high defects, performance targets met, user sign-off obtained.</p>
+
+      <h4>3. System vs acceptance testing</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>System testing</th><th>Acceptance testing</th></tr></thead>
+        <tbody>
+          <tr><td>Done by</td><td>Independent QA team</td><td>Customer / end user</td></tr>
+          <tr><td>Basis</td><td>SRS and design</td><td>Business needs and contract</td></tr>
+          <tr><td>Scope</td><td>Whole system, functional + non-functional</td><td>Fitness for use, key business scenarios</td></tr>
+          <tr><td>Result</td><td>Test report / defect log</td><td>Formal acceptance or rejection</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q14</span>Identify the importance of Regression Testing &amp; explain it. / Why Regression Testing is important?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2023 Nov Q2(c) [6]</p>
+      <p><b>Definition:</b> Regression testing re-runs a selected set of existing tests after a change — bug fix, new feature, configuration change or environment upgrade — to make sure <b>nothing that worked earlier is broken</b>.</p>
+      <h4>Why it is important</h4>
+      <ol>
+        <li><b>Detects side effects:</b> a small fix in tax calculation may break invoice rounding.</li>
+        <li><b>Protects old functionality</b> when new features are added.</li>
+        <li><b>Supports continuous delivery:</b> every build can be checked automatically.</li>
+        <li><b>Reduces release risk</b> and avoids emergency patches after go-live.</li>
+        <li><b>Builds confidence</b> in refactoring and technology upgrades.</li>
+        <li><b>Saves cost:</b> finding a regression in testing is far cheaper than finding it in production.</li>
+      </ol>
+      <h4>How to select tests</h4>
+      <ul>
+        <li><b>Retest-all:</b> run the whole suite — safest but slow.</li>
+        <li><b>Impact analysis:</b> run tests that touch the changed module and its callers.</li>
+        <li><b>Priority-based:</b> run critical and high-risk tests first.</li>
+        <li><b>Automated suite:</b> use Selenium/JUnit for repeatable, fast regression.</li>
+      </ul>
+      <p><b>Example:</b> after changing the login password rule from 6 to 8 characters, re-run registration, login, forgot-password, session timeout and account-lock tests.</p>
+      <p><b>Note:</b> regression testing is <b>not</b> the same as retesting. Retesting checks that the <b>specific defect is fixed</b>; regression checks that <b>other features still work</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.7 ================= -->
+<section class="card" id="s37">
+  <h2>3.7 Functional vs non-functional testing</h2>
+  <p class="lead">Syllabus: non-functional testing includes performance, memory, scalability, compatibility, security, cookies, session, recovery, installation, ad hoc, risk-based, I18N, L10N and compliance testing.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q15</span>Differentiate between Functional testing and Non-functional testing. / Illustrate Non-functional testing and explain performance testing with example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q1(c) [6] · 2025 Nov Q2(c) [6] · 2023 May Q1(c) [6, non-functional + performance example]</p>
+
+      <h4>1. Functional testing</h4>
+      <p>Checks <b>what</b> the system does — whether each function produces the expected output for a given input, as stated in the SRS. It answers: “Does the login accept a valid user?”</p>
+      <p><b>Techniques:</b> BVA, ECP, decision table, state transition, use case testing.</p>
+
+      <h4>2. Non-functional testing</h4>
+      <p>Checks <b>how well</b> the system behaves — speed, load, security, usability, reliability and portability. It answers: “How fast is login with 1,000 users?”</p>
+
+      <h4>3. Comparison</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Functional testing</th><th>Non-functional testing</th></tr></thead>
+        <tbody>
+          <tr><td>Focus</td><td>Functions and business rules</td><td>Quality attributes / behaviour</td></tr>
+          <tr><td>Question</td><td>“Does it do the right thing?”</td><td>“How well does it do it?”</td></tr>
+          <tr><td>Basis</td><td>SRS, use cases</td><td>NFRs, SLAs, architecture</td></tr>
+          <tr><td>Examples</td><td>Login, payment, report generation</td><td>Performance, security, usability, compatibility</td></tr>
+          <tr><td>Techniques</td><td>BVA, ECP, decision table</td><td>Load test, stress test, penetration test, recovery test</td></tr>
+          <tr><td>Done by</td><td>Functional QA tester</td><td>Performance/security specialist</td></tr>
+          <tr><td>Result</td><td>Pass/fail against expected output</td><td>Measured value against target (e.g. 2 s, 99.9%)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. Main non-functional types (name them)</h4>
+      <ul>
+        <li><b>Performance:</b> response time and throughput under load.</li>
+        <li><b>Memory:</b> RAM use, leaks, garbage collection.</li>
+        <li><b>Scalability:</b> behaviour when users/data grow.</li>
+        <li><b>Compatibility:</b> OS, browser, device, database versions.</li>
+        <li><b>Security:</b> authentication, authorisation, confidentiality.</li>
+        <li><b>Cookies/session:</b> cookie scope, expiry, session timeout, hijack resistance.</li>
+        <li><b>Recovery:</b> restart after crash and restore data.</li>
+        <li><b>Installation:</b> install, upgrade, uninstall, rollback.</li>
+        <li><b>Ad hoc:</b> informal testing without written cases.</li>
+        <li><b>Risk-based:</b> effort proportional to risk.</li>
+        <li><b>I18N/L10N:</b> internationalisation and localisation.</li>
+        <li><b>Compliance:</b> legal, accessibility and industry standards.</li>
+      </ul>
+
+      <h4>5. Performance testing example</h4>
+      <p><b>Target:</b> the login API must respond in under <b>2 seconds</b> for <b>500 concurrent users</b>, with error rate below <b>1%</b>.</p>
+      <p><b>Test:</b> ramp 0 → 500 virtual users over 10 minutes, hold for 30 minutes, measure average and 95th-percentile response time, throughput and errors. If the 95th percentile is 3.8 s, the NFR fails and the bottleneck (usually DB connection pool or CPU) is reported.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q16</span>How would you explain performance &amp; security testing?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(c) [6, performance with example] · 2025 May Q1(b) [6, performance + security]</p>
+      <h4>1. Performance testing</h4>
+      <p>Non-functional testing that measures <b>speed, responsiveness and stability</b> under a given workload. It does not check whether a function is correct; it checks whether it is fast enough and stable enough.</p>
+      <ul>
+        <li><b>Load testing:</b> expected peak load (e.g. 500 users).</li>
+        <li><b>Stress testing:</b> beyond peak until the system fails; finds the breaking point.</li>
+        <li><b>Spike testing:</b> sudden jump in users.</li>
+        <li><b>Endurance/soak:</b> long run to find memory leaks.</li>
+        <li><b>Volume:</b> large amounts of data.</li>
+      </ul>
+      <p><b>Metrics:</b> average and 95th-percentile response time, throughput (requests/sec), error rate, CPU/memory usage, hits/sec.</p>
+      <p><b>Example:</b> an e-commerce sale page must serve 2,000 users with page load under 3 s. JMeter ramps to 2,000 threads, holds 30 minutes and reports 2.4 s average, 3.6 s p95, 0.4% errors — the target is narrowly missed, so the image CDN is tuned.</p>
+
+      <h4>2. Security testing</h4>
+      <p>Testing that the system protects <b>confidentiality, integrity and availability</b> (CIA). It tries to find weaknesses an attacker could use.</p>
+      <ul>
+        <li><b>Authentication:</b> weak passwords, brute force, MFA.</li>
+        <li><b>Authorisation:</b> horizontal/vertical privilege escalation (IDOR).</li>
+        <li><b>Input validation:</b> SQL injection, XSS, command injection.</li>
+        <li><b>Session/cookie:</b> fixation, hijacking, missing Secure/HttpOnly flags.</li>
+        <li><b>Data protection:</b> encryption in transit (TLS) and at rest.</li>
+        <li><b>Configuration:</b> default accounts, verbose errors, open ports.</li>
+      </ul>
+      <p><b>Example:</b> log in as a normal user, change the URL <code>/account?id=105</code> to <code>/account?id=106</code> and confirm the server returns “403 Forbidden”, not another user's data.</p>
+      <p><b>Difference:</b> performance asks “will it stay fast under load?”; security asks “can an attacker break it?”. Both are non-functional and both need a production-like environment.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q17</span>Explain Risk Based Testing in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q1(c) [6]</p>
+      <p><b>Definition:</b> Risk-based testing (RBT) plans and prioritises testing according to <b>risk</b> — the chance that a part of the system will fail and the damage if it does. High-risk areas get more and earlier testing; low-risk areas get less.</p>
+      <h4>1. Risk formula</h4>
+      <div class="math">Risk = Probability of failure × Impact of failure</div>
+      <p><b>Probability</b> depends on complexity, new technology, change frequency, developer experience and usage. <b>Impact</b> depends on money, safety, legal exposure, users affected and reputation.</p>
+      <h4>2. Risk matrix</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Probability ↓ / Impact →</th><th>Low</th><th>Medium</th><th>High</th></tr></thead>
+        <tbody>
+          <tr><th>High</th><td>Medium</td><td>High</td><td><b>Critical</b></td></tr>
+          <tr><th>Medium</th><td>Low</td><td>Medium</td><td>High</td></tr>
+          <tr><th>Low</th><td>Low</td><td>Low</td><td>Medium</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>3. Steps</h4>
+      <ol>
+        <li>Identify product risks with business users and architects (brainstorming, checklists, past defects).</li>
+        <li>Estimate probability and impact; assign a risk score.</li>
+        <li>Rank risks and define a test approach for each level.</li>
+        <li>Allocate effort: critical → exhaustive tests + reviews; high → broad tests; medium → standard; low → smoke only.</li>
+        <li>Track and update risks as the project changes; re-prioritise each iteration.</li>
+      </ol>
+      <h4>4. Example</h4>
+      <p>In a hospital app, “wrong dosage calculation” has high probability (complex formula) and very high impact (patient safety) → <b>critical risk</b>: code review, unit tests, boundary tests and independent clinical validation. “Colour of the help icon” has low probability and low impact → test once.</p>
+      <p><b>Benefits:</b> focuses limited time on what matters, gives early warning, supports release decisions. <b>Limitation:</b> risk scores are estimates and can be biased.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q18</span>Can you explain compatibility testing &amp; security testing?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q2(b) [6]</p>
+      <h4>1. Compatibility testing</h4>
+      <p>Checks that the software works correctly across different <b>environments</b> — operating systems, browsers, devices, screen sizes, databases, network speeds and versions.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>What is varied</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>OS</td><td>Windows, Linux, macOS, Android, iOS</td><td>Same build on Windows 11 and Ubuntu.</td></tr>
+          <tr><td>Browser</td><td>Chrome, Firefox, Edge, Safari</td><td>Checkout page layout and JS behaviour.</td></tr>
+          <tr><td>Device</td><td>Desktop, tablet, phone; resolutions</td><td>Responsive menu on 360 px width.</td></tr>
+          <tr><td>Database</td><td>MySQL, PostgreSQL, Oracle</td><td>Same query returns correct rows.</td></tr>
+          <tr><td>Network</td><td>2G/3G/4G/Wi-Fi, high latency</td><td>App does not timeout on slow links.</td></tr>
+          <tr><td>Version</td><td>Old and new client versions</td><td>v2.1 client works with v2.3 server.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Approach:</b> build a compatibility matrix, pick the most used and most risky combinations, use virtual machines/emulators/cloud device farms.</p>
+
+      <h4>2. Security testing</h4>
+      <p>Checks that <b>only authorised users</b> can access data and functions, and that data is protected in transit and at rest. It covers confidentiality, integrity, availability, authentication, authorisation, non-repudiation.</p>
+      <ul>
+        <li><b>Authentication:</b> password policy, account lockout, MFA.</li>
+        <li><b>Authorisation:</b> role checks, IDOR, privilege escalation.</li>
+        <li><b>Injection:</b> SQLi, XSS, command injection, unsafe file upload.</li>
+        <li><b>Session:</b> secure cookie flags, timeout, logout invalidation.</li>
+        <li><b>Transport/data:</b> TLS, encryption at rest, no secrets in logs.</li>
+        <li><b>Error handling:</b> no stack traces or database details to users.</li>
+      </ul>
+      <p><b>Example:</b> a user changes <code>role=user</code> to <code>role=admin</code> in the request; the server must reject it. A search box given <code>' OR 1=1 --</code> must return no data and log the attempt.</p>
+      <p><b>Tools:</b> OWASP ZAP, Burp Suite, Nessus, SQLMap (only on authorised systems).</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q19</span>What is Cookies testing? Explain Cookies testing with an example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q2(b) [6] · 2025 Nov Q2(b) [6]</p>
+      <p><b>Definition:</b> A <b>cookie</b> is a small text file stored by the browser on the user's machine. It holds session IDs, preferences or tracking data. <b>Cookie testing</b> checks that cookies are created, stored, sent, expired and deleted correctly and securely.</p>
+      <h4>1. What to test</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Test</th><th>Expected behaviour</th></tr></thead>
+        <tbody>
+          <tr><td>Creation</td><td>Cookie is created after login or “remember me”.</td></tr>
+          <tr><td>Name/value</td><td>Correct name, encoded value, no plain-text password.</td></tr>
+          <tr><td>Domain and path</td><td>Cookie sent only to the intended domain and path.</td></tr>
+          <tr><td>Expiry</td><td>Session cookie dies on browser close; persistent cookie expires on date.</td></tr>
+          <tr><td>Secure / HttpOnly</td><td>Secure = HTTPS only; HttpOnly = JavaScript cannot read it.</td></tr>
+          <tr><td>Tampering</td><td>Edited cookie is rejected or re-authenticated.</td></tr>
+          <tr><td>Deletion</td><td>Logout deletes the session cookie; “clear cookies” works.</td></tr>
+          <tr><td>Multiple tabs</td><td>Same session is shared; no duplicate conflicting cookies.</td></tr>
+          <tr><td>Disabled cookies</td><td>Site shows a clear message or uses a safe fallback.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Example — shopping cart</h4>
+      <ol>
+        <li>Open the site, add a shirt to the cart. A cookie such as <code>cart_id=8f3a...</code> is created.</li>
+        <li>Close the browser and reopen. If the cookie is persistent, the cart still shows the shirt.</li>
+        <li>Open DevTools → Application → Cookies; change <code>cart_id</code> to another value and refresh. The server must not show another user's cart.</li>
+        <li>Log out. The session cookie must be removed; pressing Back must not restore the logged-in page.</li>
+        <li>Set the system date beyond the expiry date; the cookie must expire and the cart must reset.</li>
+      </ol>
+      <p><b>Why it matters:</b> weak cookie handling causes session hijacking, cart leakage, “remember me” security holes and privacy-law violations.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q20</span>Can you illustrate Adhoc Testing with example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q2(a) [6]</p>
+      <p><b>Definition:</b> Ad hoc testing is <b>informal testing without written test cases, plan or documentation</b>. The tester randomly tries inputs and actions to break the software, usually after formal testing is complete.</p>
+      <h4>1. Features</h4>
+      <ul>
+        <li>No test plan, no test cases, no expected-result document.</li>
+        <li>Depends on tester experience and creativity.</li>
+        <li>Done once, not repeatable; defects are logged informally.</li>
+        <li>Useful as a quick check before release or after a bug fix.</li>
+      </ul>
+      <h4>2. Example</h4>
+      <p>A tester opens a food-delivery app and randomly:</p>
+      <ol>
+        <li>adds 20 items, then removes them all;</li>
+        <li>applies a coupon, goes back, and applies it again;</li>
+        <li>turns off Wi-Fi during payment;</li>
+        <li>rotates the phone on the checkout screen;</li>
+        <li>enters a 200-character address.</li>
+      </ol>
+      <p>The app crashes on step 3 and shows a blank coupon on step 2. Both are logged as defects.</p>
+      <h4>3. Advantages and limitations</h4>
+      <ul>
+        <li><b>Advantages:</b> very fast, no preparation cost, finds unusual defects and usability issues.</li>
+        <li><b>Limitations:</b> cannot measure coverage, not repeatable, may miss core requirements, depends on the tester.</li>
+      </ul>
+      <p><b>Difference from exploratory testing:</b> exploratory testing is <b>structured and time-boxed</b> with a charter and session notes; ad hoc testing has <b>no structure at all</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.8 ================= -->
+<section class="card" id="s38">
+  <h2>3.8 Syllabus-only non-functional topics</h2>
+  <div class="note"><b>Not asked in the six papers:</b> memory testing, scalability testing, session testing, recovery testing, installation testing, I18N testing, L1ON (L10N) testing, compliance testing, sanity/smoke testing and retest. They are in the syllabus but no direct PYQ was found. Learn one line each for a possible 3–4 mark part.</div>
+  <div class="tbl-wrap">
+  <table class="left">
+    <thead><tr><th>Topic</th><th>One-line exam answer</th></tr></thead>
+    <tbody>
+      <tr><td>Memory testing</td><td>Check RAM usage, leaks, fragmentation and out-of-memory behaviour under long runs and large data.</td></tr>
+      <tr><td>Scalability testing</td><td>Increase users/data/nodes and check whether throughput grows linearly (vertical vs horizontal scaling).</td></tr>
+      <tr><td>Session testing</td><td>Check session creation, timeout, concurrent logins, logout invalidation and session-ID randomness.</td></tr>
+      <tr><td>Recovery testing</td><td>Force a crash and verify restart, data restore, transaction rollback and recovery-time objective.</td></tr>
+      <tr><td>Installation testing</td><td>Verify fresh install, upgrade, downgrade, uninstall, rollback, permissions and disk-space checks.</td></tr>
+      <tr><td>I18N testing</td><td>Check that the code supports multiple languages, locales, currencies, date formats and Unicode without change.</td></tr>
+      <tr><td>L10N testing</td><td>Check the translated build for correct language, layout, images, currency and cultural fit.</td></tr>
+      <tr><td>Compliance testing</td><td>Verify legal/industry rules: GDPR, HIPAA, PCI-DSS, accessibility (WCAG), tax rules.</td></tr>
+      <tr><td>Sanity testing</td><td>Narrow, shallow check that a specific fix or build is worth deeper testing.</td></tr>
+      <tr><td>Smoke testing</td><td>Broad, shallow check that the critical build is stable enough to start testing.</td></tr>
+      <tr><td>Retest</td><td>Re-run the exact failed test case after a fix to confirm the defect is closed.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet — Unit 3</h2>
+  <div class="grid2">
+    <div>
+      <h4>Coverage strength (weak → strong)</h4>
+      <div class="math">Statement &lt; Branch &lt; Condition/Decision &lt; Path</div>
+      <ul>
+        <li><b>Statement:</b> every line runs once.</li>
+        <li><b>Branch:</b> every if/loop takes T and F.</li>
+        <li><b>Condition:</b> every atomic condition takes T and F.</li>
+        <li><b>Path:</b> every independent entry→exit path.</li>
+        <li><b>Loop:</b> 0, 1, 2, typical, max, max+1.</li>
+        <li><b>Cyclomatic:</b> <code>V(G)=E−N+2</code>.</li>
+      </ul>
+      <h4>Static techniques (formal → informal)</h4>
+      <div class="math">Inspection &gt; Technical review &gt; Walkthrough &gt; Informal review</div>
+    </div>
+    <div>
+      <h4>Levels of testing</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Level</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>Unit</td><td>One function/class; white box; driver/stub.</td></tr>
+          <tr><td>Integration</td><td>Interfaces; big-bang/top-down/bottom-up/sandwich.</td></tr>
+          <tr><td>System</td><td>Whole system vs SRS; functional + non-functional.</td></tr>
+          <tr><td>Acceptance</td><td>Customer fitness; alpha/beta/UAT.</td></tr>
+          <tr><td>Regression</td><td>Old features still work after change.</td></tr>
+          <tr><td>Retest</td><td>Specific defect is fixed.</td></tr>
+          <tr><td>Smoke</td><td>Build is stable enough to test.</td></tr>
+          <tr><td>Sanity</td><td>Specific fix is worth deeper testing.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <h4>Comparison tables examiners love</h4>
+  <div class="tbl-wrap">
+  <table class="left">
+    <thead><tr><th>Pair</th><th>Key difference in one line</th></tr></thead>
+    <tbody>
+      <tr><td>Black vs white box</td><td>Behaviour vs internal logic.</td></tr>
+      <tr><td>ECP vs BVA</td><td>One value per class vs boundary ±1 values.</td></tr>
+      <tr><td>Verification vs validation</td><td>“Did we build it right?” vs “Did we build the right thing?”</td></tr>
+      <tr><td>Regression vs retest</td><td>Other features still work vs the reported defect is fixed.</td></tr>
+      <tr><td>Smoke vs sanity</td><td>Broad and shallow vs narrow and deep.</td></tr>
+      <tr><td>Error guessing vs exploratory</td><td>Intuition only vs charter + time-boxed learning.</td></tr>
+      <tr><td>Ad hoc vs exploratory</td><td>No structure vs structured session.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="book"><b>Source note:</b> the supplied STQA “TechKnowledge” book covers <b>Units 1–2 only</b>. Unit 3 is therefore built from the syllabus-listed reference texts — M. G. Limaye, <em>Software Testing: Principles, Techniques and Tools</em>; Srinivasan Desikan &amp; Gopal Swamy Ramesh, <em>Software Testing: Principles and Practices</em>; Naresh Chauhan, <em>Software Testing: Principles and Practices</em> — and matched to the exact PYQ wording and mark weights.</div>
+
+  <div class="tip"><b>Exam-day order:</b> Q1/Q2 are usually Unit 3. Answer the comparison question first (white vs black box), then static techniques, then unit/integration or system/acceptance, then BVA/ECP. Keep one diagram (CFG or V-model) and one table per answer.</div>
+</section>
+
+
+<footer>
+  STQA · Unit 3 · built from 6 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410245D · 2019 Pattern<br><span class="small">Source: syllabus-listed texts — Limaye; Desikan &amp; Ramesh; Chauhan. The supplied TechKnowledge book covers Units 1–2 only.</span><br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+// highlight active sidebar link
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

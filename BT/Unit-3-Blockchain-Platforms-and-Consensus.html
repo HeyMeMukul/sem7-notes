@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BT Unit 3 — Blockchain Platforms &amp; Consensus | SPPU 410243</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+/* ---------- cards ---------- */
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+/* ---------- Q&A ---------- */
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+/* ---------- code / tables ---------- */
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+/* ---------- callouts ---------- */
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+/* ---------- frequency table ---------- */
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+/* ---------- tree drawing ---------- */
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+/* footer */
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="side">
+  <h3>BT · Unit 3</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s31">3.1 Public / private / consortium</a>
+    <a href="#s32">3.2 IOTA &amp; the Tangle</a>
+    <a href="#s33">3.3 Corda and R3</a>
+    <a href="#s34">3.4 Bitcoin · Ethereum · Hyperledger</a>
+    <a href="#s35">3.5 Bitcoin vs Ethereum</a>
+    <a href="#s36">3.6 Consensus fundamentals</a>
+    <a href="#s37">3.7 Byzantine Generals</a>
+    <a href="#s38">3.8 Proof of Work + mining</a>
+    <a href="#s39">3.9 Proof of Stake</a>
+    <a href="#s310">3.10 PoA, PoB, PoET</a>
+    <a href="#s311">3.11 Permissioned vs permissionless</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-4-Cryptocurrency-and-Bitcoin.html">Unit 4 · Cryptocurrency &amp; Bitcoin</a>
+  <a href="Unit-5-Ethereum-and-Solidity.html">Unit 5 · Ethereum &amp; Solidity</a>
+  <a href="Unit-6-Blockchain-Case-Studies.html">Unit 6 · Case studies</a>
+  <a href="index.html">↩ BT home</a>
+</aside>
+
+<!-- ================= MAIN ================= -->
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 3 — Blockchain Platforms &amp; Consensus</h1>
+  <p><b>Subject:</b> Blockchain Technology (410243) &nbsp;·&nbsp; <b>Exam:</b> Saturday, 28 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>Every question below is taken <b>verbatim from the five end-sem papers</b> (2022 Nov, 2023 Nov, 2024 May, 2025 May, 2025 Nov). Answers are written to the exact mark weight. The 2024 May and 2025 Nov papers are near-identical, so their repeats are counted separately.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>5</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>28</b> Unit-3 instances</span>
+    <span class="chip">🧩 <b>15</b> distinct topics</span>
+    <span class="chip">🔥 Hottest: <b>Proof of Work — 5×</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>17–18 marks</b></span>
+  </div>
+</header>
+
+<!-- ================= FREQUENCY MAP ================= -->
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — what actually gets asked</h2>
+  <p class="lead">Counted from all five end-sem papers only. In-sem papers (Oct/Aug) are excluded. A single sub-question that lists four algorithms is counted once for each algorithm, so the appearances below add up to more than 28.</p>
+
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th style="text-align:left">Question asked</th><th style="text-align:left">Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td style="text-align:left">Proof of Work — mechanism + example</td><td style="text-align:left">2022 Nov Q1(b) [6] · 2023 Nov Q1(b) [6] · 2024 May Q1(a) [8] · 2025 May Q1(a) [8 — bitcoin mining] · 2025 Nov Q1(a) [8]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>2</td><td style="text-align:left">Proof of Stake — mechanism + example</td><td style="text-align:left">2022 Nov Q1(c) [4] · 2023 Nov Q2(b) [6] · 2024 May Q1(a) [8] · 2025 Nov Q1(a) [8]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>3</td><td style="text-align:left">Byzantine General Problem</td><td style="text-align:left">2022 Nov Q2(c) [4] · 2023 Nov Q1(c) [6] · 2024 May Q2(c) [4] · 2025 Nov Q2(c) [4]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>4</td><td style="text-align:left">Public / private / consortium platforms (+ advantages and disadvantages)</td><td style="text-align:left">2022 Nov Q1(a) [8] · 2023 Nov Q2(a) [6] · 2025 May Q2(a) [8]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>5</td><td style="text-align:left">Bitcoin / Ethereum / Hyperledger as platforms</td><td style="text-align:left">2022 Nov Q2(b) [6] · 2024 May Q1(b) [6] · 2025 Nov Q1(b) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>6</td><td style="text-align:left">IOTA and its role in IoT</td><td style="text-align:left">2022 Nov Q1(a) [8, part] · 2024 May Q2(d) [6] · 2025 Nov Q2(d) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>7</td><td style="text-align:left">Proof of Activity</td><td style="text-align:left">2022 Nov Q1(b) [6] · 2024 May Q1(a) [8] · 2025 Nov Q1(a) [8]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>8</td><td style="text-align:left">Consensus in blockchain — approach and elements</td><td style="text-align:left">2022 Nov Q2(a) [8] · 2023 Nov Q2(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td style="text-align:left">Proof of Burn</td><td style="text-align:left">2024 May Q1(a) [8] · 2025 Nov Q1(a) [8]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>10</td><td style="text-align:left">Corda / R3</td><td style="text-align:left">2023 Nov Q1(a) [6, option] · 2025 May Q1(b) [9]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>11</td><td style="text-align:left">Bitcoin vs Ethereum</td><td style="text-align:left">2024 May Q2(a) [4] · 2025 Nov Q2(a) [4]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>12</td><td style="text-align:left">Permissioned vs permissionless consensus</td><td style="text-align:left">2024 May Q2(b) [4] · 2025 Nov Q2(b) [4]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>13</td><td style="text-align:left">Five consensus algorithms with examples</td><td style="text-align:left">2025 May Q2(b) [9]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>14</td><td style="text-align:left">Bitcoin mining and the functionality of miners</td><td style="text-align:left">2025 May Q1(a) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>15</td><td style="text-align:left">Any two named platforms (R3 / Ethereum / Hyperledger / Corda)</td><td style="text-align:left">2023 Nov Q1(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>How to read this:</b> PoW, PoS, Byzantine Generals and the platform types cover almost every Unit-3 option. If you learn only four things, learn these. The 2025 papers moved to 8/9-mark questions, so the same topic now needs a diagram and an example.</div>
+
+  <div class="tip"><b>Marks strategy (SPPU checking):</b> 4 marks = definition + 4 points. 6 marks = definition + working/steps + one example. 8–9 marks = definition + step-by-step mechanism + <b>solved example with numbers</b> + table or diagram + 2 advantages/limitations. Always draw the flow; examiners give step marks for it.</div>
+</section>
+
+<!-- ================= 3.1 ================= -->
+<section class="card" id="s31">
+  <h2>3.1 Public, private and consortium blockchains</h2>
+  <p class="lead">Syllabus: <em>Types of Blockchain Platforms — Public, Private and Consortium.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain in detail the following blockchain platforms: (i) Public (ii) Private (iii) Consortium. Give the different types of blockchain and state their advantages and disadvantages.</p>
+      <div class="badges"><span class="b marks">8 / 6 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [8] · 2023 Nov Q2(a) [6 — any two] · 2025 May Q2(a) [8 — types + advantages/disadvantages]</p>
+
+      <h4>1. Definition</h4>
+      <p>A <b>blockchain platform</b> is the software layer that lets participants create, store, validate and query a shared, append-only ledger. The <b>type</b> of platform is decided by <b>who is allowed to join</b>, <b>who validates</b> and <b>who owns the network</b>.</p>
+
+      <h4>2. The four types (book's classification)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Public</th><th>Private (managed)</th><th>Consortium</th><th>Hybrid</th></tr></thead>
+        <tbody>
+          <tr><td>Who can join</td><td>Anyone, no permission</td><td>Only nodes approved by one organisation</td><td>Only members of a group of organisations</td><td>One organisation controls; public chain supervises some checks</td></tr>
+          <tr><td>Who validates</td><td>Any miner / validator</td><td>The central owner or its chosen validators</td><td>Validators chosen by the consortium</td><td>Mixed</td></tr>
+          <tr><td>Decentralisation</td><td>Fully decentralised</td><td>Partially decentralised</td><td>More decentralised than private, less than public</td><td>Mostly central with public oversight</td></tr>
+          <tr><td>Speed / cost</td><td>Slow, high energy (PoW)</td><td>Fast, cheap</td><td>Fast, cheap</td><td>Medium</td></tr>
+          <tr><td>Transparency</td><td>Everyone can read the ledger</td><td>Read access restricted</td><td>Read access restricted to members</td><td>Selective</td></tr>
+          <tr><td>Trust model</td><td>Trustless; code + economics</td><td>Trust the owner</td><td>Trust the consortium rules</td><td>Mixed</td></tr>
+          <tr><td>Examples</td><td>Bitcoin, Ethereum, Litecoin</td><td>Hyperledger Fabric (single org), Ripple</td><td>R3 Corda, Global Shipping Business Network, Hyperledger</td><td>IBM Food Trust</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Public blockchain</h4>
+      <ul>
+        <li><b>Open access:</b> any node can read the chain, send a transaction and take part in validation.</li>
+        <li><b>Fully decentralised:</b> no single owner; rules are enforced by the protocol and by economic incentives.</li>
+        <li><b>Consensus:</b> usually PoW or PoS; every node stores a copy of the ledger.</li>
+        <li><b>Advantages:</b> censorship-resistant, transparent, anyone can audit, large number of participants makes tampering hard.</li>
+        <li><b>Disadvantages:</b> slow throughput, high energy use (PoW), public exposure of transaction data, hard to change rules.</li>
+      </ul>
+
+      <h4>4. Private blockchain</h4>
+      <ul>
+        <li><b>Permissioned:</b> a single organisation decides which nodes join and what rights they get.</li>
+        <li><b>Partially decentralised:</b> the ledger may be replicated, but the central authority controls membership.</li>
+        <li><b>Advantages:</b> high speed, low cost, privacy, easy governance, no need for expensive mining.</li>
+        <li><b>Disadvantages:</b> trust is back on the owner; fewer validators means easier collusion; less transparent.</li>
+      </ul>
+
+      <h4>5. Consortium blockchain</h4>
+      <ul>
+        <li><b>Permissioned but multi-owner:</b> a group of organisations (banks, shippers, hospitals) jointly runs the network. No single member owns it.</li>
+        <li><b>Better decentralisation than private:</b> no one party can rewrite history alone, so safety improves.</li>
+        <li><b>Advantages:</b> shared truth between competitors, lower settlement cost, privacy between members, good for trade finance and supply chains.</li>
+        <li><b>Disadvantages:</b> forming the consortium is slow (legal, technical and antitrust issues); every member must invest in infrastructure; governance disputes are common.</li>
+      </ul>
+
+      <h4>6. Diagram — decentralisation spectrum</h4>
+      <pre class="tree">PUBLIC                 CONSORTIUM                 PRIVATE
+open to all            selected organisations     one organisation
+   |                          |                         |
+   v                          v                         v
+[ Bitcoin ]  ------&gt;  [ R3 Corda / GSBN ]  ------&gt;  [ Fabric, single org ]
+more decentralised  ----------------------------&gt;  more centralised
+slower, transparent  ----------------------------&gt;  faster, private</pre>
+
+      <div class="tip"><b>8-mark structure:</b> 3 definitions (3) + comparison table (3) + one advantage and one disadvantage each (2). For 2025 May Q2(a), add a short "advantages/disadvantages" list after the table.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.2 ================= -->
+<section class="card" id="s32">
+  <h2>3.2 IOTA and the Tangle</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain IOTA in detail. Explain the role of IOTA in the context of the Internet of Things (IoT).</p>
+      <div class="badges"><span class="b marks">6 / 8 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a)(iv) [8, part] · 2024 May Q2(d) [6] · 2025 Nov Q2(d) [6]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>IOTA (MIOTA)</b> is a distributed ledger built for the <b>Internet of Things</b>. It records machine-to-machine and device-to-device transactions. Its native currency is <b>MIOTA</b>. Instead of a chain of blocks, IOTA uses a directed acyclic graph (DAG) called the <b>Tangle</b>.</p>
+
+      <h4>2. Why IOTA was created</h4>
+      <ul>
+        <li>Bitcoin-style chains have <b>transaction fees</b> and limited throughput — bad for millions of tiny device payments.</li>
+        <li>PoW mining needs heavy hardware and energy — bad for cheap sensors.</li>
+        <li>IOTA aims to be a <b>feeless</b>, <b>scalable</b>, <b>lightweight</b> ledger for connected devices.</li>
+      </ul>
+
+      <h4>3. How the Tangle works</h4>
+      <ol>
+        <li>Every new transaction must <b>approve two earlier transactions</b> (called tips).</li>
+        <li>To approve them, the sender solves a <b>small proof-of-work puzzle</b>. This is easy compared with Bitcoin mining.</li>
+        <li>The new transaction becomes a new tip. Later transactions approve it, so its <b>confidence</b> (weight) grows.</li>
+        <li>There are <b>no miners and no blocks</b>. The users themselves do the validation.</li>
+        <li>The more devices that join, the more validation capacity the network has — the opposite of a congested blockchain.</li>
+      </ol>
+
+      <pre class="tree">                 TANGLE (DAG)
+        tx A ───────┐
+                    ├────&gt; tx C ─────┐
+        tx B ───────┘                ├────&gt; tx E (new tip)
+                                     │
+        tx D ────────────────────────┘
+
+Each new transaction approves 2 old transactions.
+No blocks. No miners. No fees.</pre>
+
+      <h4>4. Role of IOTA in IoT (6-mark answer)</h4>
+      <ul>
+        <li><b>Micropayments:</b> a sensor can sell one reading for a tiny amount because there is no fee.</li>
+        <li><b>Machine identity:</b> each device can have an address and a signed transaction history.</li>
+        <li><b>Data integrity:</b> sensor data is anchored on the Tangle, so tampering is detectable.</li>
+        <li><b>M2M economy:</b> smart cars, charging stations and smart meters can settle directly.</li>
+        <li><b>Low footprint:</b> small memory and low power, suitable for constrained devices.</li>
+        <li><b>Scalability:</b> parallel tip approval avoids the single-chain bottleneck.</li>
+      </ul>
+
+      <h4>5. Advantages and concerns</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Advantages</h4>
+          <ul>
+            <li>Zero transaction fees.</li>
+            <li>High parallelism and scalability.</li>
+            <li>No miners, so no mining centralisation.</li>
+            <li>Designed for tiny devices.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Concerns</h4>
+          <ul>
+            <li>The <b>Coordinator</b> (a central milestone server) was a single point of failure. IOTA planned to remove it ("Coordicide").</li>
+            <li>The original <b>Curl</b> hash had a collision weakness reported by MIT researchers.</li>
+            <li>New consensus design is less battle-tested than Bitcoin.</li>
+            <li>A 2020 phishing attack stole about $3.94 million of MIOTA.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note"><b>One-line answer:</b> IOTA replaces the blockchain with the Tangle, a DAG where each transaction validates two previous transactions — feeless, parallel and built for IoT micropayments.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.3 ================= -->
+<section class="card" id="s33">
+  <h2>3.3 Corda and R3</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Describe the features of the Corda blockchain. Justify how it is different. Elaborate CorDapps. / Explain R3.</p>
+      <div class="badges"><span class="b marks">9 / 6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q1(a)(i) [6 — R3 option] · 2025 May Q1(b) [9 — Corda features, difference, CorDapps]</p>
+      <p class="small">The cleaned text of 2023 Nov Q1(a) lost option (i). The PDF page shows the four options are: i) R3, ii) Ethereum, iii) Hyperledger, iv) Corda.</p>
+
+      <h4>1. What is R3?</h4>
+      <p><b>R3</b> is a financial-technology company founded in 2014 by a group of nine financial institutions (including Goldman Sachs, Credit Suisse and J.P. Morgan). It leads a consortium of more than 100 banks and builds distributed-ledger software for financial markets. Its main product is <b>Corda</b>.</p>
+
+      <h4>2. What is Corda?</h4>
+      <p><b>Corda</b> is an open-source, <b>permissioned</b> distributed ledger platform for business and finance. It runs on the <b>JVM</b> and is written mainly in Kotlin and Java. Unlike Bitcoin, Corda does <b>not</b> broadcast every transaction to every node. It shares data only with the parties who need it.</p>
+
+      <h4>3. Features of Corda (2025 May Q1b — 9 marks)</h4>
+      <ol>
+        <li><b>Permissioned network:</b> every node has a real-world identity and a certificate from a doorman/network operator. There are no anonymous miners.</li>
+        <li><b>Point-to-point privacy:</b> transaction data goes only to the involved parties and the notary, not to the whole network.</li>
+        <li><b>States:</b> the ledger stores facts (e.g. "Bank A owes Bank B $1M") in <b>state objects</b>, which are immutable. A new version replaces the old one.</li>
+        <li><b>Contracts:</b> each state has a <b>contract</b> that validates every update (e.g. both parties must sign).</li>
+        <li><b>Flows:</b> the business workflow is written as a <b>flow</b> — a sequence of steps that gathers signatures, talks to the counterparty and asks the notary to finalise.</li>
+        <li><b>Notary:</b> a special node that prevents double-spending by signing a state only once. It does not see the full transaction, only the input state reference.</li>
+        <li><b>No native cryptocurrency:</b> Corda settles real assets, not coins. Fees are a business decision, not a mining reward.</li>
+        <li><b>Interoperability:</b> can connect to existing banking systems, databases and other DLTs; supports R3's Corda Settler for cross-border payments.</li>
+        <li><b>Deterministic finality:</b> once the notary signs, the transaction is final. No probabilistic confirmations.</li>
+      </ol>
+
+      <h4>4. Why Corda is different from Bitcoin/Ethereum</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Bitcoin / Ethereum</th><th>Corda</th></tr></thead>
+        <tbody>
+          <tr><td>Access</td><td>Public, anonymous</td><td>Permissioned, identified parties</td></tr>
+          <tr><td>Data visibility</td><td>Every node sees every transaction</td><td>Only the parties involved see the details</td></tr>
+          <tr><td>Consensus</td><td>PoW / PoS, probabilistic</td><td>Notary + contract validation, deterministic</td></tr>
+          <tr><td>Currency</td><td>BTC / ETH built in</td><td>No native coin; real assets</td></tr>
+          <tr><td>Smart contract</td><td>Solidity on EVM</td><td>Kotlin/Java contract + flow</td></tr>
+          <tr><td>Use case</td><td>Open payments, DeFi</td><td>Banking, trade finance, insurance, capital markets</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>5. CorDapps</h4>
+      <p>A <b>CorDapp</b> (Corda Distributed Application) is an application built on Corda. It is a normal JAR file that is installed on Corda nodes. It has three parts:</p>
+      <ul>
+        <li><b>States</b> — the shared facts on the ledger (e.g. <code>IOUState</code> with lender, borrower, amount).</li>
+        <li><b>Contracts</b> — code that says which state changes are valid (e.g. amount must be positive, both parties must sign).</li>
+        <li><b>Flows</b> — the workflow that proposes, signs and records the state change.</li>
+      </ul>
+      <pre class="tree">CorDapp = States + Contracts + Flows
+             |          |          |
+             v          v          v
+        "what is true" "what is   "how do we
+                        allowed"   get there"</pre>
+
+      <div class="book"><b>Book link:</b> the supplied book covers R3 and Corda Settler in §3.5 (news-style), not Corda's internal architecture. The feature list above is the standard Corda model required by the 2025 paper.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.4 ================= -->
+<section class="card" id="s34">
+  <h2>3.4 Bitcoin, Ethereum and Hyperledger as platforms</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Explain in detail: (i) Bitcoin (ii) Ethereum (iii) Hyperledger. / Explain any two blockchain platforms.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2024 May Q1(b) [6] · 2025 Nov Q1(b) [6] &nbsp;|&nbsp; 2023 Nov Q1(a) [6 — any two of R3, Ethereum, Hyperledger, Corda; see §3.3 for R3/Corda]</p>
+
+      <h4>1. Bitcoin</h4>
+      <ul>
+        <li><b>What:</b> the first public blockchain and cryptocurrency, released in 2009 by the pseudonymous <b>Satoshi Nakamoto</b>.</li>
+        <li><b>Model:</b> UTXO (unspent transaction output). A transaction spends old outputs and creates new ones.</li>
+        <li><b>Consensus:</b> Proof of Work; one block about every 10 minutes; difficulty adjusts every 2016 blocks.</li>
+        <li><b>Supply:</b> capped at <b>21 million BTC</b>; reward halves every 210,000 blocks (about 4 years).</li>
+        <li><b>Scripting:</b> a limited, non-Turing-complete script for conditions such as multisignature.</li>
+        <li><b>Use:</b> peer-to-peer value transfer, store of value. No general smart contracts.</li>
+      </ul>
+
+      <h4>2. Ethereum</h4>
+      <ul>
+        <li><b>What:</b> a public, programmable blockchain proposed by <b>Vitalik Buterin</b> in 2013; Frontier released in 2015.</li>
+        <li><b>Model:</b> account-based (externally owned accounts and contract accounts).</li>
+        <li><b>Core:</b> the <b>EVM</b> runs smart-contract bytecode; developers write contracts in <b>Solidity</b>.</li>
+        <li><b>Currency:</b> ether (ETH) pays for gas. There is no hard 21-million cap.</li>
+        <li><b>Consensus:</b> PoW until "The Merge" (2022), then <b>Proof of Stake</b>.</li>
+        <li><b>Use:</b> DApps, tokens (ERC-20), NFTs (ERC-721), DAOs, DeFi.</li>
+      </ul>
+
+      <h4>3. Hyperledger (Fabric)</h4>
+      <ul>
+        <li><b>What:</b> an open-source, <b>permissioned</b> enterprise blockchain hosted by the Linux Foundation.</li>
+        <li><b>Modular architecture:</b> pluggable consensus, membership, identity and storage.</li>
+        <li><b>Channels:</b> a subset of members can run a private sub-ledger; other members cannot see it.</li>
+        <li><b>Chaincode:</b> smart contracts written in Go, Java or JavaScript. No native cryptocurrency.</li>
+        <li><b>Identity:</b> every participant has a certificate from a membership service provider (MSP).</li>
+        <li><b>Use:</b> supply chain, trade finance, healthcare consortia, banking pilots.</li>
+      </ul>
+
+      <h4>4. Comparison table (use this for the 6-mark answer)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th><th>Hyperledger Fabric</th></tr></thead>
+        <tbody>
+          <tr><td>Type</td><td>Public</td><td>Public</td><td>Permissioned / private</td></tr>
+          <tr><td>Main purpose</td><td>Digital money</td><td>Smart contracts &amp; DApps</td><td>Enterprise business ledger</td></tr>
+          <tr><td>Consensus</td><td>PoW</td><td>PoS (since 2022)</td><td>Pluggable (Raft, BFT)</td></tr>
+          <tr><td>Smart contracts</td><td>Limited script</td><td>Solidity / EVM</td><td>Chaincode (Go, Java, JS)</td></tr>
+          <tr><td>Currency</td><td>BTC, 21M cap</td><td>ETH, no hard cap</td><td>None</td></tr>
+          <tr><td>Privacy</td><td>Pseudonymous, public</td><td>Pseudonymous, public</td><td>Private channels</td></tr>
+          <tr><td>Speed</td><td>~7 tx/s, 10-min blocks</td><td>~15–30 tx/s, 12-s slots</td><td>Thousands tx/s</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tip"><b>For "any two":</b> pick Ethereum + Hyperledger if you want a strong contrast (public programmable vs private enterprise). Write one paragraph each and two comparison rows — that is enough for 6 marks.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.5 ================= -->
+<section class="card" id="s35">
+  <h2>3.5 Bitcoin vs Ethereum</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Discuss the difference between Bitcoin and Ethereum.</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [4] · 2025 Nov Q2(a) [4]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th></tr></thead>
+        <tbody>
+          <tr><td>Launched</td><td>2009, Satoshi Nakamoto</td><td>2015, Vitalik Buterin</td></tr>
+          <tr><td>Purpose</td><td>Peer-to-peer electronic cash / store of value</td><td>Programmable platform for smart contracts and DApps</td></tr>
+          <tr><td>Ledger model</td><td>UTXO</td><td>Account-based</td></tr>
+          <tr><td>Consensus</td><td>Proof of Work</td><td>Proof of Stake (since The Merge, 2022)</td></tr>
+          <tr><td>Supply</td><td>Capped at 21 million BTC</td><td>No hard cap; issuance depends on staking</td></tr>
+          <tr><td>Block time</td><td>~10 minutes</td><td>~12-second slots</td></tr>
+          <tr><td>Programming</td><td>Limited Script (non-Turing-complete)</td><td>Turing-complete EVM; Solidity, Vyper</td></tr>
+          <tr><td>Currency</td><td>BTC</td><td>ETH, plus ERC-20 tokens and NFTs</td></tr>
+          <tr><td>Fees</td><td>Paid to miners; depends on block space</td><td>Gas = gas limit × gas price</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note"><b>4-mark version:</b> give four differences only — purpose, consensus, supply and programmability. Add one line: "Bitcoin is digital gold; Ethereum is a world computer."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.6 ================= -->
+<section class="card" id="s36">
+  <h2>3.6 Consensus fundamentals</h2>
+  <p class="lead">Syllabus: <em>Consensus Approach, Consensus Elements, Consensus Algorithms.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>Explain consensus in blockchain in detail. What is consensus in blockchain?</p>
+      <div class="badges"><span class="b marks">8 / 6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [8] · 2023 Nov Q2(c) [6]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Consensus</b> is the process by which all peers (nodes) of a blockchain network agree on <b>one present state of the ledger</b> and on the <b>order of transactions</b>. It creates reliability and trust between nodes that may not know or trust each other.</p>
+      <p>A <b>consensus algorithm</b> is the set of rules that lets all peers reach this agreement. It decides which node proposes the next block and which blocks are valid.</p>
+
+      <h4>2. Why blockchain needs consensus</h4>
+      <ul>
+        <li>There is no central bank or administrator to decide the true balance.</li>
+        <li>Nodes may be faulty, slow or malicious.</li>
+        <li>It prevents <b>double-spending</b>: the same coin cannot be spent twice.</li>
+        <li>It gives a single history even when messages arrive out of order.</li>
+        <li>It provides <b>fault tolerance</b>: the network keeps working if some nodes fail.</li>
+      </ul>
+
+      <h4>3. Consensus approach (two main families)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Approach</th><th>Idea</th><th>Examples</th><th>Finality</th></tr></thead>
+        <tbody>
+          <tr><td>Proof-based ("Nakamoto")</td><td>Nodes spend a scarce resource (hash power, stake, burn) for the right to propose a block; the heaviest/longest chain wins.</td><td>PoW, PoS, PoB</td><td>Probabilistic</td></tr>
+          <tr><td>Voting-based (BFT)</td><td>Known validators exchange votes in rounds; a block needs a supermajority (usually 2/3).</td><td>PBFT, IBFT, Tendermint, Raft (crash-only)</td><td>Deterministic</td></tr>
+          <tr><td>Hybrid</td><td>A proof selects the proposer, then validators vote or sign.</td><td>PoA (activity), PoET</td><td>Mixed</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. Consensus elements (the seven pieces)</h4>
+      <ol>
+        <li><b>Nodes / peers</b> — the participants that store the ledger and validate blocks.</li>
+        <li><b>Transactions</b> — signed requests to change state.</li>
+        <li><b>Blocks</b> — an ordered batch of transactions with a header and a hash link to the parent.</li>
+        <li><b>Validation rules</b> — signature, balance, nonce, gas, block format and size checks.</li>
+        <li><b>Fork-choice / finality rule</b> — which branch is canonical (longest chain in PoW; checkpoint finality in PoS; quorum certificate in BFT).</li>
+        <li><b>Incentives and penalties</b> — block reward and fees for honest work; slashing or wasted energy for bad behaviour.</li>
+        <li><b>Agreement and liveness</b> — all honest nodes eventually agree (safety) and the chain keeps growing (liveness).</li>
+      </ol>
+
+      <h4>5. Diagram — consensus round</h4>
+      <pre class="tree">new transactions
+      │
+      ▼
+[ mempool ] ──► proposer / miner selects txs
+      │
+      ▼
+candidate block ──► other nodes validate
+      │                    │
+      │              valid │ invalid
+      │                    ▼
+      │              reject / penalise
+      ▼
+consensus rule (PoW longest chain / PoS votes / BFT quorum)
+      │
+      ▼
+block appended ──► state updated ──► next round</pre>
+
+      <div class="note"><b>For 6 marks:</b> definition (2) + why needed (2) + approach table (2). For 8 marks, add the seven elements and the diagram.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Explain the difference between a permissioned and permissionless consensus approach.</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q2(b) [4] · 2025 Nov Q2(b) [4]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Permissionless</th><th>Permissioned</th></tr></thead>
+        <tbody>
+          <tr><td>Who joins</td><td>Anyone, anonymously</td><td>Only approved, identified members</td></tr>
+          <tr><td>Validators</td><td>Unknown; anyone can mine/stake</td><td>Known validators chosen by the operator/consortium</td></tr>
+          <tr><td>Consensus</td><td>PoW / PoS, probabilistic</td><td>BFT voting, Raft, PoA; deterministic finality</td></tr>
+          <tr><td>Speed</td><td>Lower (large network)</td><td>Higher (small, known set)</td></tr>
+          <tr><td>Trust</td><td>Trustless; economic incentives</td><td>Trust in membership and governance</td></tr>
+          <tr><td>Privacy</td><td>Public ledger</td><td>Private channels / need-to-know</td></tr>
+          <tr><td>Examples</td><td>Bitcoin, Ethereum</td><td>Hyperledger Fabric, R3 Corda</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>One-line answer:</b> permissionless = open entry + probabilistic proof-based consensus; permissioned = restricted entry + fast voting-based consensus with known identities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.7 ================= -->
+<section class="card" id="s37">
+  <h2>3.7 Byzantine General Problem</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>What is the Byzantine General Problem? Explain its significance in the context of blockchain consensus.</p>
+      <div class="badges"><span class="b marks">4 / 6 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(c) [4] · 2023 Nov Q1(c) [6 — with significance] · 2024 May Q2(c) [4] · 2025 Nov Q2(c) [4]</p>
+
+      <h4>1. The story</h4>
+      <p>Several Byzantine army divisions surround an enemy city. Each division is commanded by a general. They must agree on a <b>single plan</b>: attack together or retreat together. If some attack and some retreat, they lose. They can communicate only by <b>messengers</b>, and some generals may be <b>traitors</b> who send different messages to different generals.</p>
+      <p>The question is: <b>can the loyal generals still reach agreement?</b></p>
+
+      <h4>2. Formal statement</h4>
+      <ul>
+        <li>There are <code>n</code> generals and at most <code>m</code> traitors.</li>
+        <li>With <b>oral messages</b> (a traitor can lie and change a message), agreement is possible only if <code>n ≥ 3m + 1</code>.</li>
+        <li>So to tolerate 1 traitor, you need at least <b>4 generals</b>. With only 3 generals and 1 traitor, agreement is impossible.</li>
+        <li>With <b>signed (unforgeable) messages</b>, the bound improves to <code>n ≥ m + 2</code>.</li>
+      </ul>
+
+      <pre class="tree">Case: 3 generals, 1 traitor (C)
+
+        A ─── "attack" ───► B
+        │                   │
+     "retreat"           "attack"
+        │                   │
+        ▼                   ▼
+        C (traitor) ────────┘
+
+A hears "B says retreat"; B hears "A says attack".
+No common plan.  Need n ≥ 3m + 1 = 4.</pre>
+
+      <h4>3. Mapping to blockchain</h4>
+      <ul>
+        <li><b>Generals</b> → nodes / miners / validators.</li>
+        <li><b>Messages</b> → blocks, votes, transactions.</li>
+        <li><b>Traitors</b> → faulty or malicious nodes (Byzantine faults).</li>
+        <li><b>Agreement</b> → all honest nodes accept the same block order.</li>
+        <li>In a BFT protocol such as PBFT or Tendermint, the network needs <b>more than two-thirds</b> of validators honest (equivalent to <code>n ≥ 3m + 1</code>).</li>
+        <li>Bitcoin's PoW solves the problem <b>probabilistically</b>: an attacker needs more than 50% of hash power to rewrite history (the "51% attack").</li>
+      </ul>
+
+      <h4>4. Significance (for the 6-mark version)</h4>
+      <ul>
+        <li>It proves that distributed agreement is impossible with too many faulty nodes — consensus has a <b>hard limit</b>.</li>
+        <li>It explains why blockchain needs <b>redundancy</b> and <b>incentives</b>, not just voting.</li>
+        <li>It justifies the <b>2/3 honest assumption</b> in permissioned BFT chains and the <b>&gt;50% hash</b> assumption in PoW.</li>
+        <li>It explains why exchanges wait for <b>multiple confirmations</b> before accepting a deposit.</li>
+        <li>It is the theoretical base of PBFT, Tendermint, Corda's notary and other enterprise consensus protocols.</li>
+      </ul>
+
+      <div class="tip"><b>Memory hook:</b> "3m + 1" — three times the traitors plus one. One traitor → four generals.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.8 ================= -->
+<section class="card" id="s38">
+  <h2>3.8 Proof of Work and Bitcoin mining</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q9</span>Explain Proof of Work with an example. Discuss Proof of Work as a consensus algorithm.</p>
+      <div class="badges"><span class="b marks">6 / 8 marks</span><span class="b rep hot">★★★★★ 5×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(b)(i) [6 — shared with PoA] · 2023 Nov Q1(b) [6] · 2024 May Q1(a)(i) [8 — shared] · 2025 May Q1(a) [8 — bitcoin mining, see Q10] · 2025 Nov Q1(a)(i) [8 — shared] &nbsp;|&nbsp; 2025 May Q2(b) [9] asks for any five algorithms — PoW can be one of them</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Proof of Work (PoW)</b> is a consensus mechanism in which nodes compete to solve a <b>computationally hard but easy-to-verify puzzle</b>. The first node to find a valid solution gets the right to add the next block and earns a reward. Bitcoin, Ethereum (before 2022), Litecoin and Dogecoin use it.</p>
+
+      <h4>2. The puzzle</h4>
+      <p>The block header contains the previous block hash, Merkle root, timestamp, difficulty target and a <b>nonce</b>. Miners repeatedly change the nonce and hash the header:</p>
+      <div class="math">SHA-256( block_header || nonce ) &lt; target</div>
+      <p>Because SHA-256 is unpredictable, the only way to find a nonce is <b>trial and error</b>. Verification, however, needs only <b>one hash</b>.</p>
+
+      <h4>3. Step-by-step working</h4>
+      <ol>
+        <li>Collect valid transactions from the mempool.</li>
+        <li>Build a candidate block and compute the Merkle root.</li>
+        <li>Set the difficulty target from the network rule.</li>
+        <li>Try nonce = 0, 1, 2, … and hash the header each time.</li>
+        <li>When the hash is below the target, broadcast the block.</li>
+        <li>Other nodes verify the hash and all transactions in one pass.</li>
+        <li>If valid, the block is appended; the miner receives the block reward + fees.</li>
+        <li>All miners start the next block on top of this one.</li>
+      </ol>
+
+      <h4>4. Solved example (small numbers)</h4>
+      <p>Suppose the target requires the hash to begin with <b>four hexadecimal zeros</b>. Four hex digits = 16 bits, so the expected number of tries is:</p>
+      <div class="math">2<sup>16</sup> = 65,536 hashes</div>
+      <p>If a laptop computes 1 million hashes per second, the expected time is <b>0.065 s</b>. If the target requires eight hex zeros (32 bits):</p>
+      <div class="math">2<sup>32</sup> = 4,294,967,296 hashes ≈ 4.29 billion</div>
+      <p>At 100 million hashes/s, that is about <b>42.9 seconds</b>. Bitcoin raises the difficulty so that the whole network needs about <b>10 minutes</b> per block.</p>
+
+      <h4>5. Difficulty adjustment</h4>
+      <ul>
+        <li>Every <b>2016 blocks</b> (about two weeks), each node recomputes the target.</li>
+        <li>If blocks came too fast, the target is lowered (harder); if too slow, it is raised (easier).</li>
+        <li>This keeps the average block time near 10 minutes.</li>
+      </ul>
+
+      <h4>6. Diagram</h4>
+      <pre class="tree">transactions ──► candidate block ──► header + nonce
+                                          │
+                                          ▼
+                                   SHA-256(header)
+                                          │
+                              ┌───────────┴───────────┐
+                         hash &lt; target           hash ≥ target
+                              │                       │
+                              ▼                       ▼
+                        broadcast block          nonce = nonce + 1
+                              │                       │
+                              ▼                       └──► try again
+                        others verify
+                              │
+                              ▼
+                     append + reward + fees</pre>
+
+      <h4>7. Advantages and limitations</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Advantages</h4>
+          <ul>
+            <li>Proven security over 15+ years.</li>
+            <li>Trivial to verify, hard to fake.</li>
+            <li>Permissionless: anyone can join.</li>
+            <li>Attacking needs &gt;50% of the hash power.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Limitations</h4>
+          <ul>
+            <li>Very high electricity consumption.</li>
+            <li>Low throughput (~7 tx/s for Bitcoin).</li>
+            <li>Mining pools and ASICs centralise power.</li>
+            <li>Probabilistic finality — confirmations needed.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note"><b>51% attack:</b> if one entity controls more than half the hash rate, it can mine a private chain faster and double-spend. It still cannot steal coins from other wallets because it lacks their private keys.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q10</span>State and discuss bitcoin mining. Elaborate the functionality of miners.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q1(a) [8]</p>
+
+      <h4>1. What is bitcoin mining?</h4>
+      <p><b>Mining</b> is the process of adding new blocks to the Bitcoin blockchain. Miners compete to find a nonce that makes the block hash satisfy the difficulty target. The winner publishes the block and receives newly created bitcoins plus transaction fees.</p>
+
+      <h4>2. Functions of a miner</h4>
+      <ol>
+        <li><b>Collect transactions</b> from the mempool and check signatures and balances.</li>
+        <li><b>Build a candidate block</b> — choose transactions, create the coinbase transaction (reward + fees), compute the Merkle root.</li>
+        <li><b>Run the hash puzzle</b> — change the nonce/extranonce until the hash is below the target.</li>
+        <li><b>Broadcast the block</b> to peers as soon as a solution is found.</li>
+        <li><b>Validate others' blocks</b> — every miner checks the PoW and every transaction before extending the chain.</li>
+        <li><b>Secure the chain</b> — the accumulated work makes past blocks expensive to rewrite.</li>
+        <li><b>Earn rewards</b> — block subsidy + fees; this is the economic incentive to stay honest.</li>
+      </ol>
+
+      <h4>3. Mining hardware and pools</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Generation</th><th>Hardware</th><th>Typical speed</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>2009–2010</td><td>CPU</td><td>A few MH/s</td><td>Satoshi's original setup</td></tr>
+          <tr><td>2010–2013</td><td>GPU</td><td>Hundreds of MH/s</td><td>Parallel cores</td></tr>
+          <tr><td>2013–2014</td><td>FPGA</td><td>GH/s</td><td>Better energy efficiency</td></tr>
+          <tr><td>2014–now</td><td>ASIC</td><td>TH/s</td><td>Application-specific; dominates today</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Mining pool:</b> many miners combine hash power and share the reward in proportion to work. Pools reduce variance but increase centralisation risk.</p>
+
+      <h4>4. Reward schedule</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Era</th><th>Block reward</th><th>Halving</th></tr></thead>
+        <tbody>
+          <tr><td>2009–2012</td><td>50 BTC</td><td>—</td></tr>
+          <tr><td>2012–2016</td><td>25 BTC</td><td>2012</td></tr>
+          <tr><td>2016–2020</td><td>12.5 BTC</td><td>2016</td></tr>
+          <tr><td>2020–2024</td><td>6.25 BTC</td><td>2020</td></tr>
+          <tr><td>2024–2028</td><td>3.125 BTC</td><td>2024</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Worked example:</b> a miner finds a block when the reward is 3.125 BTC. If BTC = $60,000 and fees = 0.05 BTC, earnings = 3.175 × 60,000 = <b>$190,500</b> before electricity and hardware cost.</p>
+
+      <h4>5. Mining diagram</h4>
+      <pre class="tree">mempool ──► select txs ──► build block ──► hash puzzle
+                                                   │
+                         ┌─────────────────────────┘
+                         ▼
+                  solution found
+                         │
+                         ▼
+                  broadcast block
+                         │
+                         ▼
+             other miners verify + extend
+                         │
+                         ▼
+          reward (3.125 BTC) + transaction fees</pre>
+
+      <div class="tip"><b>8-mark structure:</b> definition (2) + seven miner functions (3) + hardware/pool table (1.5) + reward example (1) + diagram (0.5).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.9 ================= -->
+<section class="card" id="s39">
+  <h2>3.9 Proof of Stake</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q11</span>Explain Proof of Stake (PoS) with an example. Discuss PoS as a consensus algorithm.</p>
+      <div class="badges"><span class="b marks">4 / 6 / 8 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(c) [4] · 2023 Nov Q2(b) [6] · 2024 May Q1(a)(iv) [8 — shared] · 2025 Nov Q1(a)(iv) [8 — shared]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Proof of Stake (PoS)</b> is a consensus mechanism in which validators <b>lock ("stake") their own coins</b> as collateral. The protocol selects the next block proposer at random, with probability proportional to the stake. A validator who breaks the rules loses part or all of its stake (<b>slashing</b>).</p>
+
+      <h4>2. Working</h4>
+      <ol>
+        <li>A user deposits the minimum stake (32 ETH on Ethereum) into a validator contract.</li>
+        <li>The protocol pseudo-randomly chooses a proposer from the validator set, weighted by stake.</li>
+        <li>The proposer builds and broadcasts a block.</li>
+        <li>Other validators <b>attest</b> (vote) that the block is valid.</li>
+        <li>After a supermajority of attestations, the block is finalised at a checkpoint.</li>
+        <li>Honest validators earn rewards; lazy or malicious validators are slashed.</li>
+      </ol>
+
+      <h4>3. Solved example</h4>
+      <p>Ethereum requires <b>32 ETH</b> per validator. Suppose the total staked amount is <b>16,000,000 ETH</b>. Then the number of validators is:</p>
+      <div class="math">16,000,000 ÷ 32 = 500,000 validators</div>
+      <p>The chance that one particular validator is chosen to propose a given slot is:</p>
+      <div class="math">32 ÷ 16,000,000 = 0.000002 = <b>0.0002%</b> (1 in 500,000)</div>
+      <p>A validator with 64 ETH (two validators) has twice that chance. This is why "the more you stake, the more you earn" — but it also creates a centralisation risk.</p>
+
+      <h4>4. PoW vs PoS (must-know table)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Proof of Work</th><th>Proof of Stake</th></tr></thead>
+        <tbody>
+          <tr><td>Scarce resource</td><td>Computing power / electricity</td><td>Locked coins</td></tr>
+          <tr><td>Who proposes</td><td>First to solve the hash puzzle</td><td>Randomly chosen, weighted by stake</td></tr>
+          <tr><td>Energy</td><td>Very high</td><td>Very low (≈99.95% less for Ethereum)</td></tr>
+          <tr><td>Hardware</td><td>ASIC / GPU farms</td><td>Ordinary server or VPS</td></tr>
+          <tr><td>Entry barrier</td><td>Expensive hardware + cheap power</td><td>32 ETH + technical setup</td></tr>
+          <tr><td>Reward</td><td>Block subsidy + fees</td><td>Issuance + priority fees; no mining reward</td></tr>
+          <tr><td>Attack cost</td><td>&gt;50% hash rate</td><td>&gt;50% (often 2/3) of stake</td></tr>
+          <tr><td>Penalty</td><td>Wasted electricity</td><td>Slashing of stake</td></tr>
+          <tr><td>Finality</td><td>Probabilistic</td><td>Deterministic checkpoints</td></tr>
+          <tr><td>Centralisation risk</td><td>Mining pools, ASIC makers</td><td>Large staking pools / exchanges</td></tr>
+          <tr><td>Examples</td><td>Bitcoin, Litecoin, Dogecoin</td><td>Ethereum (2022+), Cardano, Solana, Tezos</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>5. Advantages and limitations</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Advantages</h4>
+          <ul>
+            <li>Energy-efficient and green.</li>
+            <li>Cheaper to run a validator.</li>
+            <li>Faster finality.</li>
+            <li>Slashing punishes bad behaviour directly.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Limitations</h4>
+          <ul>
+            <li>"Rich get richer" — stake concentration.</li>
+            <li>Nothing-at-stake problem in naive designs.</li>
+            <li>Complex to implement safely.</li>
+            <li>Large staking services can dominate.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note"><b>For 4 marks:</b> definition + 3 steps + one line on slashing. For 8 marks: add the example calculation and the PoW/PoS table.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3.10 ================= -->
+<section class="card" id="s310">
+  <h2>3.10 Proof of Activity, Proof of Burn, Proof of Elapsed Time</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q12</span>Discuss Proof of Activity (PoA) as a consensus algorithm.</p>
+      <div class="badges"><span class="b marks">6 / 8 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(b)(ii) [6 — shared with PoW] · 2024 May Q1(a)(ii) [8 — shared] · 2025 Nov Q1(a)(ii) [8 — shared]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Proof of Activity (PoA)</b> is a <b>hybrid of PoW and PoS</b>. Mining starts like PoW, but the finished block must be signed by a group of validators chosen in proportion to their stake. It is used by <b>Decred</b> and <b>Espers</b>.</p>
+
+      <h4>2. Working</h4>
+      <ol>
+        <li>Miners solve the PoW puzzle and create a block header (often with no transactions yet).</li>
+        <li>The header is broadcast; the network derives a random seed from its hash.</li>
+        <li>From this seed, <b>N validators</b> are selected; the chance of selection rises with stake.</li>
+        <li>The selected validators sign the block. The block is valid only when all chosen validators sign.</li>
+        <li>The block is filled with transactions and added to the chain.</li>
+        <li>The reward is <b>split between the miner and the validators</b>.</li>
+      </ol>
+
+      <pre class="tree">PoW phase                  PoS phase
+──────────                 ──────────
+miner finds block  ──►  seed from hash
+      │                       │
+      ▼                       ▼
+block header  ────────► select N validators
+                              │
+                              ▼
+                        validators sign
+                              │
+                              ▼
+                     block accepted + reward split</pre>
+
+      <h4>3. Advantages / limitations</h4>
+      <ul>
+        <li><b>+</b> Keeps PoW's security while adding stake-based checkpoints.</li>
+        <li><b>+</b> Attackers need both hash power and stake.</li>
+        <li><b>−</b> Still consumes mining energy.</li>
+        <li><b>−</b> Validators with more coins are favoured.</li>
+      </ul>
+
+      <div class="warn"><b>Do not confuse:</b> <b>Proof of Activity</b> (PoA) and <b>Proof of Authority</b> (PoA) have the same abbreviation. Activity = PoW + PoS. Authority = reputation-based validators (Gavin Wood, 2017).</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q13</span>Discuss Proof of Burn (PoB) as a consensus algorithm.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q1(a)(iii) [8 — shared] · 2025 Nov Q1(a)(iii) [8 — shared]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Proof of Burn (PoB)</b> is a consensus mechanism in which a miner earns the right to mine by <b>destroying ("burning") coins</b>. The coins are sent to an <b>eater address</b> — a provably unspendable address — so they can never be recovered. The more coins burned, the higher the chance of being selected.</p>
+
+      <h4>2. Working</h4>
+      <ol>
+        <li>The miner creates a transaction that sends coins to a verifiable burn address.</li>
+        <li>The network records the burn permanently on the chain.</li>
+        <li>The protocol assigns mining rights with probability proportional to the total burned.</li>
+        <li>The selected miner adds the next block and earns the reward.</li>
+        <li>Burned coins are gone forever, reducing the circulating supply.</li>
+      </ol>
+
+      <h4>3. Solved example</h4>
+      <p>Suppose the total burned in the network is 1,000 coins. Miner A burned 100 coins and Miner B burned 10 coins. Then A's selection chance is 100/1,000 = <b>10%</b>, while B's is 10/1,000 = <b>1%</b>. A has a 10× higher chance.</p>
+
+      <h4>4. Advantages / limitations</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Advantages</h4>
+          <ul>
+            <li>No expensive mining hardware.</li>
+            <li>Lower energy than PoW.</li>
+            <li>Burning reduces supply, which can support the price.</li>
+            <li>Long-term commitment: burned coins cannot be recovered.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Limitations</h4>
+          <ul>
+            <li>Wastes real value on purpose.</li>
+            <li>Favours wealthy miners.</li>
+            <li>Security is hard to measure.</li>
+            <li>Few live networks use it.</li>
+          </ul>
+        </div>
+      </div>
+      <p><b>Examples:</b> Slimcoin, Counterparty, Factom.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q14</span>Illustrate five different types of consensus algorithm with an example.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q2(b) [9]</p>
+      <p>Pick any five. The safest five are PoW, PoS, DPoS, PoA (Activity) and PoB — all are in the book and all have named example coins.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>#</th><th>Algorithm</th><th>One-line mechanism</th><th>Example</th><th>Strength</th><th>Weakness</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>Proof of Work</b></td><td>Solve a hash puzzle; first solver adds the block.</td><td>Bitcoin, Litecoin</td><td>Battle-tested security</td><td>High energy, slow</td></tr>
+          <tr><td>2</td><td><b>Proof of Stake</b></td><td>Random proposer weighted by locked stake; slashing.</td><td>Ethereum, Cardano</td><td>Energy-efficient, fast finality</td><td>Stake centralisation</td></tr>
+          <tr><td>3</td><td><b>Delegated PoS</b></td><td>Token holders vote for a small set of block producers.</td><td>EOS, TRON, Lisk</td><td>High throughput</td><td>Few producers → cartels</td></tr>
+          <tr><td>4</td><td><b>Proof of Activity</b></td><td>PoW finds the block; stake-weighted validators sign it.</td><td>Decred, Espers</td><td>Needs both hash and stake</td><td>Still energy-heavy</td></tr>
+          <tr><td>5</td><td><b>Proof of Burn</b></td><td>Burn coins; selection chance ∝ coins burned.</td><td>Slimcoin, Counterparty</td><td>Low hardware, deflationary</td><td>Wastes value, favours rich</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Syllabus extras (not directly asked, useful as a 6th choice)</h4>
+      <ul>
+        <li><b>Proof of Elapsed Time (PoET):</b> each node waits a random time inside a trusted enclave (Intel SGX); the first to wake wins. Used by Hyperledger Sawtooth.</li>
+        <li><b>Proof of Authority (PoA):</b> a small set of identified, reputable validators signs blocks. Used by JPMCoin, VeChain and testnets.</li>
+        <li><b>Proof of Capacity / Space:</b> mining rights depend on disk space ("plotting"). Used by Chia, Storj.</li>
+        <li><b>Proof of History:</b> a verifiable delay function timestamps events. Used by Solana.</li>
+        <li><b>Proof of Importance:</b> selection depends on stake plus recent activity. Used by NEM.</li>
+      </ul>
+
+      <div class="tip"><b>9-mark structure:</b> table of five (5) + two lines of explanation each (3) + one line saying which you would choose for a bank vs a public chain (1).</div>
+    </div>
+  </div>
+
+  <div class="note"><b>Syllabus context — PoET:</b> Proof of Elapsed Time is listed in the syllabus but no end-sem paper asks it by name. Learn it as a backup for "any five consensus algorithms": random wait times, Intel SGX trusted execution, first to wake mines, used by Hyperledger Sawtooth.</div>
+</section>
+
+<!-- ================= 3.11 ================= -->
+<section class="card" id="s311">
+  <h2>3.11 Full consensus comparison</h2>
+  <div class="tbl-wrap">
+  <table class="left">
+    <thead><tr><th>Algorithm</th><th>Resource</th><th>Selection</th><th>Finality</th><th>Energy</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>PoW</td><td>Hash power</td><td>First to solve puzzle</td><td>Probabilistic</td><td>Very high</td><td>Bitcoin</td></tr>
+      <tr><td>PoS</td><td>Stake</td><td>Random, weighted by stake</td><td>Deterministic checkpoints</td><td>Very low</td><td>Ethereum</td></tr>
+      <tr><td>DPoS</td><td>Votes + stake</td><td>Elected witnesses</td><td>Fast</td><td>Low</td><td>EOS</td></tr>
+      <tr><td>PoA (Activity)</td><td>Hash + stake</td><td>PoW block + validator signatures</td><td>Probabilistic + signatures</td><td>High</td><td>Decred</td></tr>
+      <tr><td>PoA (Authority)</td><td>Reputation</td><td>Approved validators</td><td>Deterministic</td><td>Very low</td><td>VeChain</td></tr>
+      <tr><td>PoB</td><td>Burned coins</td><td>Random, weighted by burn</td><td>Probabilistic</td><td>Low</td><td>Slimcoin</td></tr>
+      <tr><td>PoC / PoSpace</td><td>Disk space</td><td>Largest plot / best hash</td><td>Probabilistic</td><td>Low</td><td>Chia</td></tr>
+      <tr><td>PoET</td><td>Trusted wait time</td><td>Shortest random wait</td><td>Deterministic-ish</td><td>Low</td><td>Sawtooth</td></tr>
+      <tr><td>PBFT / Tendermint</td><td>Votes</td><td>Round-robin proposer + 2/3 quorum</td><td>Deterministic</td><td>Very low</td><td>Hyperledger, Cosmos</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tip"><b>Choosing a consensus:</b> public + open → PoW or PoS. Bank consortium → PBFT/IBFT or Corda notary. IoT → lightweight PoA/PoET or IOTA. Private test network → PoA (Authority).</div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Numbers to quote</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Item</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Bitcoin block time</td><td>~10 minutes</td></tr>
+          <tr><td>Bitcoin difficulty change</td><td>every 2016 blocks</td></tr>
+          <tr><td>Bitcoin supply cap</td><td>21,000,000 BTC</td></tr>
+          <tr><td>Bitcoin reward 2024–28</td><td>3.125 BTC</td></tr>
+          <tr><td>Bitcoin halving</td><td>every 210,000 blocks (~4 years)</td></tr>
+          <tr><td>Ethereum slot</td><td>12 seconds</td></tr>
+          <tr><td>Ethereum validator stake</td><td>32 ETH</td></tr>
+          <tr><td>Ethereum gas for plain transfer</td><td>21,000</td></tr>
+          <tr><td>Byzantine bound (oral)</td><td>n ≥ 3m + 1</td></tr>
+          <tr><td>Byzantine bound (signed)</td><td>n ≥ m + 2</td></tr>
+          <tr><td>BFT quorum</td><td>&gt; 2/3 honest</td></tr>
+          <tr><td>PoW attack threshold</td><td>&gt; 50% hash rate</td></tr>
+          <tr><td>IOTA approvals per transaction</td><td>2 previous tips</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div>
+      <h4>One-line memory hooks</h4>
+      <ul>
+        <li><b>Public</b> = open, slow, transparent. <b>Private</b> = one owner, fast. <b>Consortium</b> = many owners, shared truth.</li>
+        <li><b>IOTA</b> = DAG Tangle, each tx approves two, feeless, IoT.</li>
+        <li><b>Corda</b> = permissioned, point-to-point, states + contracts + flows, notary, CorDapps.</li>
+        <li><b>Bitcoin</b> = UTXO + PoW + 21M cap. <b>Ethereum</b> = accounts + EVM + smart contracts.</li>
+        <li><b>PoW</b> = hash puzzle. <b>PoS</b> = stake + slashing. <b>PoA</b> = PoW + stake signatures. <b>PoB</b> = burn coins.</li>
+        <li><b>Byzantine</b> = 3m + 1; 1 traitor needs 4 generals.</li>
+        <li><b>PoET</b> = random sleep in SGX; Sawtooth.</li>
+        <li><b>Permissioned</b> = known validators; <b>permissionless</b> = anyone.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> definitions and lists follow the supplied Technical Publications book, <em>Blockchain Technology</em>, Unit III (§3.1–3.16). The book does not cover the Byzantine Generals proof or Corda's internal architecture in depth, so those two answers use the standard syllabus references (Lamport–Shostak–Pease, 1982; R3 Corda documentation) and are matched to the exact PYQ wording.</div>
+
+  <div class="tip"><b>Exam-day order:</b> Q1/Q2 is Unit 3. Answer PoW (with the 2<sup>16</sup> example) or PoS (with the 32 ETH example) first, then the platform table, then Byzantine. Do not spend more than 25 minutes on this unit — it is one full question of 17–18 marks.</div>
+</section>
+
+<footer>
+  BT · Unit 3 · built from 5 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410243 · 2019 Pattern<br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+// highlight active sidebar link
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

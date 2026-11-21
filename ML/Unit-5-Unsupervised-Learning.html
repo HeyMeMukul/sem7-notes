@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Unit 5 — Unsupervised Learning | SPPU 410242</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+/* ---------- cards ---------- */
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+/* ---------- Q&A ---------- */
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+/* ---------- code / tables ---------- */
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+/* ---------- callouts ---------- */
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+/* ---------- frequency table ---------- */
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+/* ---------- tree drawing ---------- */
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+/* footer */
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="side">
+  <h3>ML · Unit 5</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s51">5.1 K-means &amp; cluster optimisation</a>
+    <a href="#s52">5.2 K-medoids</a>
+    <a href="#s53">5.3 Hierarchical clustering</a>
+    <a href="#s54">5.4 Density, graph, spectral</a>
+    <a href="#s55">5.5 Outlier analysis</a>
+    <a href="#s56">5.6 Evaluation &amp; elbow</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Supervised-Learning-Regression.html">Unit 3 · Regression</a>
+  <a href="Unit-4-Supervised-Learning-Classification.html">Unit 4 · Classification</a>
+  <a href="Unit-6-Neural-Networks.html">Unit 6 · Neural networks</a>
+  <a href="index.html">↩ ML home</a>
+</aside>
+
+<!-- ================= MAIN ================= -->
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 5 — Unsupervised Learning</h1>
+  <p><b>Subject:</b> Machine Learning (410242) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 26 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>All questions are taken from the six available end-sem papers (2022 Nov, 2023 May, 2023 Nov, 2024 May, 2025 May, 2025 Nov). The K-means and hierarchical examples below are fully solved and checked in Python.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>36</b> Unit-5 question instances</span>
+    <span class="chip">🧩 <b>15</b> distinct topics</span>
+    <span class="chip">🔁 Highest repeat: <b>Density-based clustering — 6×</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>18 marks</b></span>
+  </div>
+</header>
+
+<!-- ================= FREQUENCY MAP ================= -->
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — what actually gets asked</h2>
+  <p class="lead">Counted from the <b>six end-sem papers only</b>. DBSCAN and K-means are the two safest topics; hierarchical clustering and outlier analysis are close behind. Rows overlap where one question mixes topics (for example “hierarchical and density-based approaches”).</p>
+
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">Density-based clustering — DBSCAN / OPTICS / DENCLUE, terms, why used</td><td>2022 Nov Q5(a) [6]; 2023 May Q5(c) [6]; 2023 Nov Q6(a) [9]; 2024 May Q5(b) [6]; 2025 May Q6(c)(ii) [6]; 2025 Nov Q5(c) [6]</td><td><span class="stars">★★★★★★</span> 6×</td></tr>
+      <tr><td>2</td><td class="l">K-means — algorithm, steps, example, applications</td><td>2022 Nov Q5(b) [6]; 2023 Nov Q5(a) [8]; 2024 May Q6(b) [6]; 2025 May Q6(b) [6]; 2025 Nov Q5(a) [5]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>3</td><td class="l">Hierarchical clustering — agglomerative, dendrogram, example</td><td>2022 Nov Q5(c) [6]; 2023 Nov Q6(a) [9]; 2024 May Q6(c) [6]; 2025 May Q5(a) [6]; 2025 Nov Q6(b) [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>4</td><td class="l">Outlier analysis — definition, importance, advantages/disadvantages</td><td>2023 May Q6(b) [6]; 2024 May Q5(c) [6]; 2025 May Q5(b) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>5</td><td class="l">Local Outlier Factor (LOF)</td><td>2022 Nov Q6(a) [6]; 2023 Nov Q5(b) [5]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>6</td><td class="l">K-medoids — why used, algorithm, choice of K</td><td>2023 May Q6(a) [6]; 2023 Nov Q6(b)(ii) [9]; 2024 May Q5(a) [5]; 2025 Nov Q5(b) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>7</td><td class="l">Spectral clustering and comparison with K-means</td><td>2023 May Q6(c) [6]; 2023 Nov Q5(c) [5]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>8</td><td class="l">Graph-based clustering</td><td>2022 Nov Q6(b) [6]; 2025 May Q6(c)(i) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td class="l">Isolation factor / isolation forest model</td><td>2024 May Q6(a) [5]; 2025 Nov Q6(a) [5]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>10</td><td class="l">Elbow method</td><td>2022 Nov Q6(c)(i) [6]; 2025 May Q5(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>11</td><td class="l">Extrinsic and intrinsic evaluation methods</td><td>2022 Nov Q6(c)(ii) [6]; 2025 May Q6(a) [6]; 2025 Nov Q6(c) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>12</td><td class="l">Optimisation of clusters</td><td>2023 May Q5(a) [6]; 2023 Nov Q6(b)(i) [9]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>13</td><td class="l">Hierarchical vs K-means comparison</td><td>2023 May Q5(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>14</td><td class="l">Outlier handling techniques</td><td>2024 May Q4(c) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>15</td><td class="l">Clustering evaluation metrics</td><td>2023 Nov Q6(b)(iii) [9]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>How to read the repeat column:</b> DBSCAN appears in every second paper. K-means and hierarchical are the two “explain with example” questions that alternate. Outlier analysis (LOF / isolation forest) is the dark horse — two papers ask isolation factor.</div>
+
+  <div class="tip"><b>Marks strategy:</b> 5–6 mark = definition + algorithm + one example. 8–9 mark = definition + algorithm + <b>fully solved tiny dataset</b> + complexity + comparison table. Always draw the dendrogram or the DBSCAN core/border/noise diagram.</div>
+</section>
+
+<!-- ================= 5.1 ================= -->
+<section class="card" id="s51">
+  <h2>5.1 K-means and optimisation of clusters</h2>
+  <p class="lead">K-means partitions n points into K clusters by minimising the within-cluster sum of squares (WCSS).</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is K-means clustering? Explain how it works with the essential steps and a suitable example. What are its applications?</p>
+      <div class="badges"><span class="b marks">5–8 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(b) [6] · 2023 Nov Q5(a) [8] · 2024 May Q6(b) [6] · 2025 May Q6(b) [6 — essential steps] · 2025 Nov Q5(a) [5 — principles + applications]</p>
+
+      <h4>Definition</h4>
+      <p>K-means is an <b>unsupervised, partitional</b> clustering algorithm. It divides n objects into K non-overlapping clusters so that objects in the same cluster are as similar as possible. Similarity is measured by distance from the cluster <b>centroid</b> (mean).</p>
+      <div class="math">Minimise&nbsp; WCSS = Σ<sub>k=1..K</sub> Σ<sub>x∈C<sub>k</sub></sub> ‖x − μ<sub>k</sub>‖²</div>
+
+      <h4>Algorithm (Lloyd’s algorithm)</h4>
+<pre><code>1. Choose K (number of clusters).
+2. Select K initial centroids (random points or k-means++).
+3. Repeat:
+     a. Assignment: assign each point to the nearest centroid.
+     b. Update: recompute each centroid as the mean of its points.
+     c. If centroids do not change (or max iterations reached), stop.
+4. Return the K clusters.</code></pre>
+
+      <h4>Worked example — 7 points, K = 2</h4>
+      <p>Data (A, B scores): 1=(1,1), 2=(1.5,2), 3=(3,4), 4=(5,7), 5=(3.5,5), 6=(4.5,5), 7=(3.5,4.5). Initial centroids: point 1 (1,1) and point 4 (5,7), the two farthest points.</p>
+
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Iteration</th><th>Centroid C1</th><th>Centroid C2</th><th>Cluster 1 members</th><th>Cluster 2 members</th></tr></thead>
+        <tbody>
+          <tr><td>0 (init)</td><td>(1.00, 1.00)</td><td>(5.00, 7.00)</td><td>1, 2, 3</td><td>4, 5, 6, 7</td></tr>
+          <tr><td>1</td><td>(1.83, 2.33)</td><td>(4.13, 5.38)</td><td>1, 2</td><td>3, 4, 5, 6, 7</td></tr>
+          <tr><td>2</td><td>(1.25, 1.50)</td><td>(3.90, 5.10)</td><td>1, 2</td><td>3, 4, 5, 6, 7</td></tr>
+          <tr><td>3</td><td>(1.25, 1.50)</td><td>(3.90, 5.10)</td><td>1, 2</td><td>3, 4, 5, 6, 7</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>At iteration 3 the centroids stop changing → convergence.</p>
+      <div class="math"><b>Final clusters:</b> C1 = {1, 2} with centroid (1.25, 1.50)<br>
+      C2 = {3, 4, 5, 6, 7} with centroid (3.90, 5.10)<br>
+      <b>WCSS = 8.525</b></div>
+
+      <h4>Distance check for the final clusters</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Point</th><th>Coordinates</th><th>Distance to C1</th><th>Distance to C2</th><th>Assigned</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>(1, 1)</td><td>0.559</td><td>5.022</td><td>C1</td></tr>
+          <tr><td>2</td><td>(1.5, 2)</td><td>0.559</td><td>3.920</td><td>C1</td></tr>
+          <tr><td>3</td><td>(3, 4)</td><td>3.052</td><td>1.421</td><td>C2</td></tr>
+          <tr><td>4</td><td>(5, 7)</td><td>6.657</td><td>2.195</td><td>C2</td></tr>
+          <tr><td>5</td><td>(3.5, 5)</td><td>4.161</td><td>0.412</td><td>C2</td></tr>
+          <tr><td>6</td><td>(4.5, 5)</td><td>4.776</td><td>0.608</td><td>C2</td></tr>
+          <tr><td>7</td><td>(3.5, 4.5)</td><td>3.750</td><td>0.721</td><td>C2</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Complexity</h4>
+      <p><b>Time:</b> O(n · K · d · I), where n = points, K = clusters, d = dimensions, I = iterations. <b>Space:</b> O(n + K).</p>
+
+      <h4>Applications</h4>
+      <ul>
+        <li>Customer segmentation (market basket analysis).</li>
+        <li>Image compression / colour quantisation.</li>
+        <li>Document clustering and topic grouping.</li>
+        <li>Anomaly detection (points far from every centroid).</li>
+        <li>Pre-processing for supervised learning (vector quantisation).</li>
+      </ul>
+
+      <h4>Limitations</h4>
+      <ul>
+        <li>K must be chosen in advance.</li>
+        <li>Sensitive to initial centroids → use k-means++ or multiple restarts.</li>
+        <li>Assumes spherical, similar-sized clusters.</li>
+        <li>Sensitive to outliers (the mean is dragged).</li>
+        <li>Only finds a local optimum.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>With reference to clustering, explain the issue of “optimisation of clusters”. Write a short note on optimisation of clusters.</p>
+      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q5(a) [6] · 2023 Nov Q6(b)(i) [9]</p>
+
+      <h4>What the issue means</h4>
+      <p>Clustering has no labels, so “optimal” is not obvious. Optimisation of clusters means choosing the <b>number of clusters K</b> and the <b>cluster assignments</b> that best balance compactness (points close to their centroid) and separation (clusters far apart).</p>
+
+      <h4>1. Choosing K</h4>
+      <ul>
+        <li><b>Elbow method</b> — plot WCSS vs K; choose the knee where the fall slows down.</li>
+        <li><b>Silhouette score</b> — choose K with the highest average silhouette.</li>
+        <li><b>Gap statistic</b> — compare WCSS with the WCSS of random data.</li>
+        <li><b>Domain knowledge</b> — the business may fix K (e.g. 3 customer tiers).</li>
+      </ul>
+
+      <h4>2. Objective function</h4>
+      <div class="math">WCSS = Σ<sub>k</sub> Σ<sub>x∈C<sub>k</sub></sub> ‖x − μ<sub>k</sub>‖²</div>
+      <p>Lower WCSS is better, but WCSS always falls as K increases (at K = n it is zero). That is why we cannot simply minimise WCSS; we need a penalty or a knee.</p>
+
+      <h4>3. Local optima and initialisation</h4>
+      <ul>
+        <li>K-means converges to a <b>local</b> minimum, not necessarily the global one.</li>
+        <li>Bad initial centroids can merge two real clusters or split one.</li>
+        <li><b>k-means++</b> chooses initial centroids far apart, which improves the result.</li>
+        <li>Run the algorithm several times with different seeds and keep the lowest WCSS.</li>
+      </ul>
+
+      <h4>4. Other optimisation issues</h4>
+      <ul>
+        <li><b>Empty clusters</b> — reassign the farthest point or reinitialise the centroid.</li>
+        <li><b>Outliers</b> — pull the mean; use K-medoids or remove outliers first.</li>
+        <li><b>Feature scaling</b> — a large-range feature dominates the distance; normalise first.</li>
+        <li><b>High dimensions</b> — distances become similar (curse of dimensionality); reduce dimensions with PCA.</li>
+        <li><b>Cluster shape</b> — K-means assumes convex/spherical clusters; density or spectral methods may be better.</li>
+      </ul>
+
+      <div class="note"><b>One-line answer:</b> optimisation of clusters = choose K and the partition that minimise intra-cluster distance and maximise inter-cluster distance, while avoiding local optima caused by initialisation and outliers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.2 ================= -->
+<section class="card" id="s52">
+  <h2>5.2 K-medoids (PAM)</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Why is K-medoid used? Explain the K-medoid algorithm.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q6(a) [6 — choosing number of clusters] · 2023 Nov Q6(b)(ii) [9] · 2024 May Q5(a) [5] · 2025 Nov Q5(b) [6]</p>
+
+      <h4>Why K-medoids is used</h4>
+      <p>K-means uses the <b>mean</b> as the cluster centre. The mean is not an actual data point and is badly affected by outliers. K-medoids uses an actual data point — the <b>medoid</b> — as the centre. The medoid is the object with the smallest average distance to all other objects in its cluster.</p>
+      <ul>
+        <li><b>Robust to outliers</b> — a medoid is a real point, so one extreme value cannot drag it far.</li>
+        <li><b>Works with any distance metric</b> — Manhattan, Minkowski, even a precomputed dissimilarity matrix. K-means needs Euclidean distance to compute the mean.</li>
+        <li><b>Interpretable centre</b> — the representative is an actual sample (e.g. a real customer profile).</li>
+        <li><b>Handles categorical / mixed data</b> better when a suitable distance is defined.</li>
+      </ul>
+
+      <h4>PAM algorithm (Partitioning Around Medoids)</h4>
+<pre><code>1. Choose K objects as initial medoids.
+2. Assign each remaining object to the nearest medoid.
+3. For each medoid m and each non-medoid o:
+     compute the total cost S of swapping m with o
+     (sum of distances from every point to its nearest medoid).
+4. If S < 0, perform the swap (the clustering improves).
+5. Repeat steps 2-4 until no swap improves the cost.
+6. Return the K medoids and their clusters.</code></pre>
+
+      <h4>Cost function</h4>
+      <div class="math">Cost = Σ<sub>i=1..n</sub> min<sub>m∈M</sub> d(x<sub>i</sub>, m)</div>
+      <p>PAM tries to minimise the sum of dissimilarities to the closest medoid. A swap is accepted only if the total cost decreases.</p>
+
+      <h4>Complexity</h4>
+      <p>Each iteration evaluates K(n−K) swaps, and each evaluation costs O(n). Total ≈ <b>O(K n²)</b> per iteration, which is more expensive than K-means (O(nKdI)).</p>
+
+      <h4>K-means vs K-medoids</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>K-means</th><th>K-medoids</th></tr></thead>
+        <tbody>
+          <tr><td>Centre</td><td>Mean (not a real point)</td><td>Medoid (a real point)</td></tr>
+          <tr><td>Outliers</td><td>Sensitive</td><td>Robust</td></tr>
+          <tr><td>Distance</td><td>Euclidean (to compute mean)</td><td>Any metric</td></tr>
+          <tr><td>Complexity</td><td>O(nKdI)</td><td>O(Kn²) per iteration</td></tr>
+          <tr><td>Cluster shape</td><td>Convex / spherical</td><td>Any shape (distance-based)</td></tr>
+          <tr><td>Use</td><td>Large numeric data</td><td>Noisy data, categorical data, small n</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Choosing the number of clusters in K-medoids</h4>
+      <ul>
+        <li><b>Elbow method</b> — plot the total cost vs K and look for the knee.</li>
+        <li><b>Silhouette coefficient</b> — choose K with the best average silhouette.</li>
+        <li><b>Domain knowledge</b> — the number of natural groups may be known.</li>
+        <li><b>Gap statistic</b> — compare the cost with that of a null reference dataset.</li>
+        <li>For PAM, the <b>average silhouette width</b> is the standard built-in choice.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.3 ================= -->
+<section class="card" id="s53">
+  <h2>5.3 Hierarchical clustering</h2>
+  <p class="lead">Hierarchical clustering builds a tree of clusters. Agglomerative = bottom-up; divisive = top-down.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write a short note on hierarchical clustering methods: (i) Agglomerative (ii) Dendrogram. Explain hierarchical clustering with an example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(c) [6] · 2023 Nov Q6(a) [9] · 2024 May Q6(c) [6] · 2025 May Q5(a) [6] · 2025 Nov Q6(b) [6]</p>
+
+      <h4>Definition</h4>
+      <p>Hierarchical clustering creates a <b>nested hierarchy</b> of clusters. It does not need K in advance; the result is a tree called a <b>dendrogram</b>. Cutting the dendrogram at a chosen height gives the clusters.</p>
+
+      <h4>(i) Agglomerative clustering (AGNES)</h4>
+      <p>Bottom-up approach:</p>
+      <ol>
+        <li>Start with each point as its own cluster (n clusters).</li>
+        <li>Find the two closest clusters and merge them.</li>
+        <li>Repeat until one cluster remains (or the desired K is reached).</li>
+      </ol>
+      <p>The result is a dendrogram whose merge heights show the distance at which clusters joined.</p>
+
+      <h4>Linkage methods</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Linkage</th><th>Distance between clusters</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td>Single</td><td>Minimum pairwise distance</td><td>Long, chain-like clusters; sensitive to noise</td></tr>
+          <tr><td>Complete</td><td>Maximum pairwise distance</td><td>Compact, similar-size clusters</td></tr>
+          <tr><td>Average</td><td>Average of all pairwise distances</td><td>Compromise</td></tr>
+          <tr><td>Centroid</td><td>Distance between centroids</td><td>Can invert (crossing merges)</td></tr>
+          <tr><td>Ward</td><td>Increase in within-cluster variance</td><td>Compact clusters; popular</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>(ii) Dendrogram</h4>
+      <p>A dendrogram is a tree diagram of the merges. The y-axis is the distance (or dissimilarity); the x-axis lists the objects. A horizontal cut at height h gives the clusters at that level.</p>
+
+      <h4>Worked example — one-dimensional data [7, 10, 20, 28, 35]</h4>
+      <p><b>Single linkage:</b></p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Merge</th><th>Distance</th><th>Clusters after merge</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>7 + 10</td><td>3</td><td>{7,10}, {20}, {28}, {35}</td></tr>
+          <tr><td>2</td><td>28 + 35</td><td>7</td><td>{7,10}, {20}, {28,35}</td></tr>
+          <tr><td>3</td><td>20 + {28,35}</td><td>8</td><td>{7,10}, {20,28,35}</td></tr>
+          <tr><td>4</td><td>{7,10} + {20,28,35}</td><td>10</td><td>{7,10,20,28,35}</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tree">Single-link dendrogram (height on the left)
+
+10 |                    +-----------+
+   |                    |           |
+ 8 |            +-------+           |
+   |            |                   |
+ 7 |      +-----+                   |
+   |      |                         |
+ 3 |  +---+                         |
+   |  |   |                         |
+ 0 +--7---10----20----28----35------+
+        (merges at 3, 7, 8, 10)</div>
+
+      <p><b>Complete linkage:</b> merges at 3, 7, 13, 28. The first two are the same; then {7,10} joins 20 at max(20−7, 20−10) = 13, and the final merge is at max(35−7) = 28.</p>
+
+      <h4>Cutting the tree</h4>
+      <ul>
+        <li>Cut at height 5 → {7,10}, {20}, {28}, {35} (4 clusters).</li>
+        <li>Cut at height 9 (single link) → {7,10}, {20,28,35} (2 clusters).</li>
+        <li>Cut at height 14 (complete link) → {7,10,20}, {28,35} (2 clusters).</li>
+      </ul>
+
+      <h4>Advantages / disadvantages</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>No need to choose K in advance</td><td>O(n² log n) or O(n³); slow for large n</td></tr>
+          <tr><td>Dendrogram gives a full hierarchy</td><td>Merges are final; cannot undo</td></tr>
+          <tr><td>Works with any distance metric</td><td>Sensitive to noise and outliers</td></tr>
+          <tr><td>Easy to interpret</td><td>Hard to choose the cut height / linkage</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Compare hierarchical clustering and K-means clustering.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q5(b) [6]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Hierarchical</th><th>K-means</th></tr></thead>
+        <tbody>
+          <tr><td>Approach</td><td>Builds a tree of nested clusters</td><td>Partitions into K flat clusters</td></tr>
+          <tr><td>K</td><td>Not required in advance</td><td>Must be chosen in advance</td></tr>
+          <tr><td>Output</td><td>Dendrogram; any K by cutting</td><td>K clusters and centroids</td></tr>
+          <tr><td>Time</td><td>O(n² log n) to O(n³)</td><td>O(nKdI) — much faster</td></tr>
+          <tr><td>Scalability</td><td>Poor for large n</td><td>Good for large n</td></tr>
+          <tr><td>Cluster shape</td><td>Any shape (depends on linkage)</td><td>Convex / spherical</td></tr>
+          <tr><td>Outliers</td><td>Sensitive</td><td>Sensitive (mean)</td></tr>
+          <tr><td>Reversibility</td><td>Merges cannot be undone</td><td>Iterates until convergence</td></tr>
+          <tr><td>Use</td><td>Small data, taxonomy, unknown K</td><td>Large numeric data, known K</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.4 ================= -->
+<section class="card" id="s54">
+  <h2>5.4 Density-based, graph-based and spectral clustering</h2>
+  <p class="lead">Density methods find arbitrary-shaped clusters and label sparse regions as noise. Graph/spectral methods cut a similarity graph.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain density-based clustering with reference to DBSCAN, OPTICS and DENCLUE. Explain how a cluster is formed in the density-based clustering algorithm. Why is density-based clustering used?</p>
+      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep hot">★★★★★★ 6×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [6] · 2023 May Q5(c) [6] · 2023 Nov Q6(a) [9] · 2024 May Q5(b) [6] · 2025 May Q6(c)(ii) [6] · 2025 Nov Q5(c) [6 — DBSCAN terms]</p>
+
+      <h4>Idea</h4>
+      <p>A cluster is a <b>dense region of points</b> separated by sparse regions. Density-based methods do not need K and can find arbitrary shapes. They also identify noise instead of forcing every point into a cluster.</p>
+
+      <h4>DBSCAN — Density-Based Spatial Clustering of Applications with Noise</h4>
+      <p>Two parameters: <b>ε</b> (radius) and <b>MinPts</b> (minimum neighbours).</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+        <tbody>
+          <tr><td>ε-neighbourhood</td><td>N<sub>ε</sub>(p) = {q ∈ D | dist(p,q) ≤ ε}</td></tr>
+          <tr><td>Core point</td><td>|N<sub>ε</sub>(p)| ≥ MinPts</td></tr>
+          <tr><td>Border point</td><td>Not a core point, but lies in the ε-neighbourhood of a core point</td></tr>
+          <tr><td>Noise point</td><td>Neither core nor border</td></tr>
+          <tr><td>Directly density-reachable</td><td>q ∈ N<sub>ε</sub>(p) and p is a core point</td></tr>
+          <tr><td>Density-reachable</td><td>There is a chain p<sub>1</sub>, …, p<sub>n</sub> where each p<sub>i+1</sub> is directly reachable from p<sub>i</sub></td></tr>
+          <tr><td>Density-connected</td><td>There exists a point o such that both p and q are density-reachable from o</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>How a cluster is formed</h4>
+<pre><code>1. Pick an unvisited point p.
+2. If p is not a core point, mark it as noise (it may later become a border point).
+3. If p is a core point, create a new cluster and add all points
+   density-reachable from p (expand the neighbourhood recursively).
+4. Repeat until every point is visited.</code></pre>
+      <p>All points in one density-connected region end up in the same cluster. Points in sparse regions remain noise.</p>
+
+      <h4>OPTICS — Ordering Points To Identify the Clustering Structure</h4>
+      <ul>
+        <li>Handles <b>varying density</b>, which DBSCAN struggles with (one global ε).</li>
+        <li>Computes a <b>core distance</b> and a <b>reachability distance</b> for each point.</li>
+        <li>Produces an ordered list and a <b>reachability plot</b>; valleys = clusters, peaks = noise.</li>
+        <li>You can extract clusters at different ε levels from one run.</li>
+      </ul>
+
+      <h4>DENCLUE — DENsity-based CLUstEring</h4>
+      <ul>
+        <li>Models the density with a <b>kernel density estimate</b>: f(x) = (1/(nh<sup>d</sup>)) Σ K((x − x<sub>i</sub>)/h).</li>
+        <li>Clusters are regions around <b>density attractors</b> (local maxima).</li>
+        <li>Points are assigned by hill-climbing to the nearest attractor.</li>
+        <li>Handles noise, arbitrary shapes and large data; but the bandwidth h and threshold are hard to choose.</li>
+      </ul>
+
+      <h4>Why density-based clustering is used</h4>
+      <ul>
+        <li>Finds <b>arbitrary-shaped</b> clusters (elongated, ring-shaped), unlike K-means.</li>
+        <li>Does not require K in advance.</li>
+        <li>Explicitly identifies <b>noise and outliers</b>.</li>
+        <li>Robust to outliers because they are not forced into a cluster.</li>
+        <li>DBSCAN is O(n log n) with a spatial index (O(n²) without).</li>
+      </ul>
+
+      <h4>Limitations</h4>
+      <ul>
+        <li>ε and MinPts are difficult to choose; results are very sensitive to them.</li>
+        <li>Struggles when clusters have very different densities (use OPTICS).</li>
+        <li>High-dimensional data makes density estimation hard.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain graph-based clustering. Write a short note on graph-based and density-based clustering.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(b) [6] · 2025 May Q6(c)(i) [6]</p>
+
+      <h4>Idea</h4>
+      <p>Represent each data point as a <b>vertex</b> and the similarity between points as a weighted <b>edge</b>. Clustering becomes a <b>graph partitioning</b> problem: cut the graph into components with strong internal edges and weak cut edges.</p>
+
+      <h4>Graph construction</h4>
+      <ul>
+        <li><b>ε-neighbourhood graph</b> — connect points within distance ε.</li>
+        <li><b>k-nearest-neighbour graph</b> — connect each point to its k nearest neighbours.</li>
+        <li><b>Fully connected graph</b> — every pair connected; weight = similarity (e.g. Gaussian).</li>
+      </ul>
+
+      <h4>Partitioning</h4>
+      <ul>
+        <li><b>Minimum cut</b> — remove edges with the smallest total weight. It may isolate a single vertex; use <b>normalised cut</b> to balance cluster sizes.</li>
+        <li><b>Spectral clustering</b> — use the eigenvectors of the graph Laplacian to embed the graph in a low-dimensional space, then run K-means.</li>
+        <li><b>Chameleon</b> — hierarchical graph clustering based on relative interconnectivity and closeness.</li>
+      </ul>
+
+      <h4>Example</h4>
+      <p>Six points forming two triangles connected by one weak edge. A min-cut removes that weak edge and returns the two triangles as clusters, even if they are not linearly separable in the original space.</p>
+
+      <h4>Advantages / disadvantages</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>Finds non-convex clusters</td><td>O(n²) or O(n³); not scalable</td></tr>
+          <tr><td>Uses global similarity structure</td><td>Needs a good similarity graph</td></tr>
+          <tr><td>Works well for image and network data</td><td>Sensitive to the graph construction and parameters</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Explain the spectral clustering algorithm. Differentiate between K-means and spectral clustering.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q6(c) [6 — K-means vs spectral] · 2023 Nov Q5(c) [5 — spectral algorithm]</p>
+
+      <h4>Algorithm</h4>
+<pre><code>1. Build the affinity matrix W (e.g. W_ij = exp(-||x_i - x_j||^2 / (2*sigma^2))).
+2. Compute the degree matrix D, where D_ii = sum_j W_ij.
+3. Compute the graph Laplacian L = D - W
+   (or the normalised Laplacian L_sym = I - D^(-1/2) W D^(-1/2)).
+4. Find the k smallest eigenvectors of L.
+5. Form a matrix U with those eigenvectors as columns.
+6. Treat each row of U as a new point and run K-means (or another algorithm).
+7. Map the cluster labels back to the original points.</code></pre>
+
+      <h4>Why it works</h4>
+      <p>The eigenvectors of the Laplacian encode the “smoothness” of the graph. Points in the same densely connected component get similar eigenvector values, so they become close in the new space even if they were far apart in the original space.</p>
+
+      <h4>Example — two concentric circles</h4>
+      <p>K-means cuts the circles with a straight line and fails. Spectral clustering builds a similarity graph where each circle is a connected component, and the cut separates the two rings correctly.</p>
+
+      <h4>K-means vs spectral</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>K-means</th><th>Spectral</th></tr></thead>
+        <tbody>
+          <tr><td>Basis</td><td>Distance to centroid</td><td>Graph connectivity / eigenvectors</td></tr>
+          <tr><td>Cluster shape</td><td>Convex, spherical</td><td>Arbitrary, non-convex</td></tr>
+          <tr><td>Input</td><td>Feature vectors</td><td>Similarity/affinity matrix</td></tr>
+          <tr><td>Complexity</td><td>O(nKdI)</td><td>O(n³) for eigendecomposition</td></tr>
+          <tr><td>Scalability</td><td>Large data</td><td>Small/medium data</td></tr>
+          <tr><td>Parameters</td><td>K</td><td>K, kernel width σ, graph type</td></tr>
+          <tr><td>Failure case</td><td>Concentric circles, moons</td><td>Very large graphs, bad affinity matrix</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small">Spectral clustering is essentially graph partitioning + K-means in the eigenvector space. Mention this line; it links the two syllabus topics.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.5 ================= -->
+<section class="card" id="s55">
+  <h2>5.5 Outlier analysis</h2>
+  <p class="lead">An outlier is an observation that deviates so much from the rest of the data that it looks like it was generated by a different mechanism.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is outlier analysis? Explain it with importance, advantages and disadvantages. Write a short note on outlier analysis with respect to clustering.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q6(b) [6] · 2024 May Q5(c) [6] · 2025 May Q5(b) [6]</p>
+
+      <h4>Definition</h4>
+      <p>Outlier analysis is the process of <b>detecting, explaining and handling</b> data objects that do not follow the general pattern of the dataset. Such objects are also called anomalies.</p>
+
+      <h4>Types of outliers</h4>
+      <ul>
+        <li><b>Point outlier</b> — a single value far from the rest (salary = 10 crore).</li>
+        <li><b>Contextual outlier</b> — normal in one context, abnormal in another (30 °C in summer vs winter).</li>
+        <li><b>Collective outlier</b> — a group of values that is anomalous together (a sudden sequence of failed logins).</li>
+      </ul>
+
+      <h4>Why it matters</h4>
+      <ul>
+        <li><b>Data quality</b> — outliers may be typing errors, sensor faults or missing-value codes.</li>
+        <li><b>Model damage</b> — the mean and variance are sensitive; K-means centroids and linear regression lines get dragged.</li>
+        <li><b>Fraud / intrusion detection</b> — the outlier <em>is</em> the event of interest (credit-card fraud, network attack).</li>
+        <li><b>Medical and industrial monitoring</b> — a sudden reading can indicate a fault.</li>
+      </ul>
+
+      <h4>Detection methods</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Family</th><th>Method</th><th>Idea</th></tr></thead>
+        <tbody>
+          <tr><td>Statistical</td><td>z-score, IQR, Grubbs</td><td>Values beyond 3σ or 1.5×IQR</td></tr>
+          <tr><td>Distance</td><td>kNN distance</td><td>Far from its neighbours</td></tr>
+          <tr><td>Density</td><td>LOF</td><td>Lower density than its neighbours</td></tr>
+          <tr><td>Clustering</td><td>K-means / DBSCAN</td><td>Far from centroid / labelled noise</td></tr>
+          <tr><td>Isolation</td><td>Isolation forest</td><td>Easily isolated by random splits</td></tr>
+          <tr><td>Classification</td><td>One-class SVM</td><td>Learn the boundary of normal data</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Advantages</h4>
+      <ul>
+        <li>Improves data quality and model accuracy.</li>
+        <li>Detects fraud, faults and rare events.</li>
+        <li>Prevents distortion of means, variances and cluster centres.</li>
+        <li>Can reveal a new, unknown phenomenon.</li>
+      </ul>
+
+      <h4>Disadvantages</h4>
+      <ul>
+        <li>“Outlier” is domain-dependent; a statistical outlier may be a valid rare case.</li>
+        <li>High-dimensional data makes distance/density unreliable.</li>
+        <li>Methods need thresholds/parameters that are hard to set.</li>
+        <li>Removing outliers can delete important information.</li>
+        <li>Labeled anomaly data is rare, so supervised evaluation is difficult.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What is LOF? Explain it with its advantages and disadvantages. What is outlier analysis and how is Local Outlier Factor detected?</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(a) [6] · 2023 Nov Q5(b) [5]</p>
+
+      <h4>Definition</h4>
+      <p>Local Outlier Factor (LOF) is a <b>density-based</b> anomaly detection method. It compares the local density around a point with the local densities of its neighbours. A point in a sparser region than its neighbours gets a high LOF.</p>
+
+      <h4>Steps</h4>
+      <ol>
+        <li><b>k-distance(p)</b> — distance from p to its k-th nearest neighbour.</li>
+        <li><b>k-distance neighbourhood</b> N<sub>k</sub>(p) — all points within that distance.</li>
+        <li><b>Reachability distance</b>:
+          <div class="math">reach-dist<sub>k</sub>(p, q) = max( k-distance(q), d(p, q) )</div>
+        </li>
+        <li><b>Local reachability density</b>:
+          <div class="math">lrd<sub>k</sub>(p) = 1 / [ (1/|N<sub>k</sub>(p)|) Σ<sub>q∈N<sub>k</sub>(p)</sub> reach-dist<sub>k</sub>(p, q) ]</div>
+        </li>
+        <li><b>LOF</b>:
+          <div class="math">LOF<sub>k</sub>(p) = [ (1/|N<sub>k</sub>(p)|) Σ<sub>q∈N<sub>k</sub>(p)</sub> lrd<sub>k</sub>(q) ] / lrd<sub>k</sub>(p)</div>
+        </li>
+      </ol>
+
+      <h4>Interpretation</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>LOF value</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>≈ 1</td><td>Similar density to its neighbours → normal point</td></tr>
+          <tr><td>&lt; 1</td><td>Denser than its neighbours → inlier</td></tr>
+          <tr><td>&gt; 1 (e.g. &gt; 1.5)</td><td>Sparser than its neighbours → outlier</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Example</h4>
+      <p>Point A sits in a dense cluster (lrd high). Point B sits alone far away (lrd low). B’s neighbours are mostly normal points with higher lrd, so the ratio (average neighbour lrd)/(B’s lrd) is large → high LOF → B is flagged.</p>
+
+      <h4>Advantages</h4>
+      <ul>
+        <li>Detects <b>local</b> outliers, not just global ones.</li>
+        <li>Works when clusters have different densities.</li>
+        <li>No assumption about the data distribution.</li>
+        <li>Gives a score, not just a binary label; threshold can be tuned.</li>
+      </ul>
+
+      <h4>Disadvantages</h4>
+      <ul>
+        <li>Needs k; results depend on it.</li>
+        <li>O(n²) distance computations (can be indexed).</li>
+        <li>Not reliable in very high dimensions.</li>
+        <li>Sensitive to the choice of distance metric.</li>
+        <li>Does not work well if the outlier is in a dense but different region.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>What is the isolation factor model? What is the isolation forest?</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q6(a) [5] · 2025 Nov Q6(a) [5]</p>
+
+      <h4>Idea</h4>
+      <p>The paper uses “isolation factor model”; the standard name is <b>Isolation Forest</b>. It is an unsupervised anomaly detector based on the fact that <b>anomalies are few and different</b>, so random splits isolate them in fewer steps than normal points.</p>
+
+      <h4>How it works</h4>
+      <ol>
+        <li>Build many <b>isolation trees</b>. Each tree repeatedly picks a random feature and a random split value between the min and max of that feature.</li>
+        <li>Continue until every point is isolated (leaf) or a depth limit is reached.</li>
+        <li>The <b>path length h(x)</b> is the number of splits needed to isolate x.</li>
+        <li>Average the path length over all trees: E[h(x)].</li>
+        <li>Compute the anomaly score:
+          <div class="math">s(x, n) = 2<sup>−E[h(x)] / c(n)</sup></div>
+          where c(n) = 2H(n−1) − 2(n−1)/n and H is the harmonic number.
+        </li>
+      </ol>
+
+      <h4>Interpretation</h4>
+      <ul>
+        <li>Short path (isolated quickly) → <b>s close to 1</b> → anomaly.</li>
+        <li>Long path → <b>s close to 0.5</b> or below → normal.</li>
+        <li>Typical rule: s &gt; 0.6 → suspicious; s &gt; 0.75 → strong anomaly.</li>
+      </ul>
+
+      <h4>Example</h4>
+      <p>In a set of employee salaries, one salary of ₹10 crore is separated by the first random split on “salary”, while normal salaries need many splits to separate. Its average path length is short, so its score is near 1 and it is flagged.</p>
+
+      <h4>Advantages / disadvantages</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>Fast: O(n log n) training</td><td>Struggles with local outliers in dense regions</td></tr>
+          <tr><td>No distance metric needed</td><td>Random splits are less effective in high dimensions</td></tr>
+          <tr><td>Scales to large data; low memory</td><td>Needs a contamination estimate / threshold</td></tr>
+          <tr><td>Works without labels</td><td>Less interpretable than LOF</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>What are the different techniques used for outlier handling?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q4(c) [6]</p>
+      <p class="small">The paper prints this question inside the Q4 (classification) block, but the syllabus topic “outlier handling” belongs to Unit 5. It is answered here with the other outlier questions.</p>
+
+      <h4>1. Detect first</h4>
+      <p>Use z-score, IQR, box plot, scatter plot, LOF, isolation forest or DBSCAN noise labels. Decide whether the value is an error or a genuine rare event.</p>
+
+      <h4>2. Handling techniques</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Technique</th><th>What it does</th><th>When to use</th></tr></thead>
+        <tbody>
+          <tr><td>Remove / drop</td><td>Delete the row</td><td>Confirmed data-entry error; very few rows</td></tr>
+          <tr><td>Capping / winsorising</td><td>Replace with a percentile value (e.g. 1st/99th)</td><td>Keep the row but limit its influence</td></tr>
+          <tr><td>Impute</td><td>Replace with mean/median/model prediction</td><td>Outlier is actually a missing value</td></tr>
+          <tr><td>Transform</td><td>log, sqrt, Box–Cox</td><td>Right-skewed data; reduces the pull of extremes</td></tr>
+          <tr><td>Discretise / bin</td><td>Convert to ranges</td><td>Extreme values are not meaningful</td></tr>
+          <tr><td>Robust model</td><td>Median, K-medoids, RANSAC, robust regression, tree ensembles</td><td>Cannot remove outliers</td></tr>
+          <tr><td>Separate model</td><td>Flag as a separate “anomaly” class</td><td>The outlier is the event of interest (fraud)</td></tr>
+          <tr><td>Keep</td><td>Do nothing</td><td>Outlier is a valid rare case and important</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="warn"><b>Never remove automatically.</b> First ask why the point is extreme. Removing a valid minority case can bias the model and hide fraud or disease.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.6 ================= -->
+<section class="card" id="s56">
+  <h2>5.6 Evaluation of clustering — elbow, intrinsic/extrinsic</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write a short note on the elbow method used in K-means clustering.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(c)(i) [6] · 2025 May Q5(c) [6]</p>
+
+      <h4>Purpose</h4>
+      <p>The elbow method chooses the number of clusters K. It plots the <b>within-cluster sum of squares (WCSS)</b> against K and looks for the “elbow” where adding another cluster stops giving a big improvement.</p>
+
+      <h4>Procedure</h4>
+      <ol>
+        <li>Run K-means for K = 1, 2, 3, …, K<sub>max</sub>.</li>
+        <li>For each K, compute WCSS = Σ<sub>k</sub>Σ<sub>x∈C<sub>k</sub></sub>‖x − μ<sub>k</sub>‖².</li>
+        <li>Plot WCSS vs K.</li>
+        <li>Choose the K at the <b>bend (elbow)</b> — after this point the curve flattens.</li>
+      </ol>
+
+      <h4>Typical plot</h4>
+      <div class="tree">WCSS
+  |*
+  | *
+  |  *
+  |   *
+  |    *___
+  |        *___*___*     <- elbow at K = 4
+  +---------------------- K
+    1 2 3 4 5 6 7 8</div>
+
+      <h4>Why it works</h4>
+      <p>Before the true K, each new cluster explains a lot of variance, so WCSS falls steeply. After the true K, new clusters only split existing compact groups, so the fall is small. The change in slope marks the elbow.</p>
+
+      <h4>Limitations</h4>
+      <ul>
+        <li>The elbow is not always sharp; the curve can be smooth (ambiguous).</li>
+        <li>WCSS always decreases with K, so it cannot be used alone.</li>
+        <li>Use the <b>silhouette score</b> or gap statistic to confirm.</li>
+        <li>Results depend on scaling and outliers.</li>
+      </ul>
+
+      <h4>Example</h4>
+      <p>For the 7-point dataset in §5.1, K = 2 gives a large drop from K = 1. K = 3 gives a smaller drop, and K = 4 barely improves. The elbow is at K = 2, matching the two visible groups.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Define extrinsic and intrinsic methods of measuring clustering quality. Compare intrinsic and extrinsic evaluation. <span class="small">(2025 May prints “intrinsic motivation with extrinsic motivation” — the syllabus topic is intrinsic vs extrinsic evaluation methods.)</span></p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(c)(ii) [6] · 2025 May Q6(a) [6] · 2025 Nov Q6(c) [6]</p>
+
+      <h4>Intrinsic (internal) methods</h4>
+      <p>Evaluate the clustering using <b>only the data and the cluster assignments</b>. No true labels are needed. They measure compactness (points close within a cluster) and separation (clusters far apart).</p>
+      <ul>
+        <li><b>Silhouette coefficient</b>: s = (b − a)/max(a,b), where a = mean intra-cluster distance, b = mean distance to the nearest other cluster. Range −1 to 1; higher is better.</li>
+        <li><b>Davies–Bouldin index</b>: average ratio of within-cluster scatter to between-cluster separation; lower is better.</li>
+        <li><b>Dunn index</b>: minimum inter-cluster distance / maximum intra-cluster diameter; higher is better.</li>
+        <li><b>WCSS / SSE</b> and the <b>elbow method</b>.</li>
+      </ul>
+
+      <h4>Extrinsic (external) methods</h4>
+      <p>Compare the clustering with a <b>known ground-truth partition</b> (class labels). Used when labelled data is available.</p>
+      <ul>
+        <li><b>Purity</b> — fraction of points that belong to the majority class in their cluster.</li>
+        <li><b>Entropy</b> — impurity of the classes within clusters; lower is better.</li>
+        <li><b>Adjusted Rand Index (ARI)</b> — agreement between two partitions, corrected for chance; range ≈ −1 to 1, 1 = perfect.</li>
+        <li><b>Normalised Mutual Information (NMI)</b> — shared information between clustering and labels; 0 to 1.</li>
+        <li><b>Homogeneity and completeness</b> — each cluster contains one class / each class is in one cluster.</li>
+        <li><b>F-measure</b> — harmonic mean of precision and recall of pairs.</li>
+      </ul>
+
+      <h4>Comparison</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Intrinsic</th><th>Extrinsic</th></tr></thead>
+        <tbody>
+          <tr><td>Ground truth</td><td>Not needed</td><td>Required</td></tr>
+          <tr><td>Measures</td><td>Compactness, separation, silhouette</td><td>Agreement with labels: purity, ARI, NMI</td></tr>
+          <tr><td>Use</td><td>Real unsupervised clustering</td><td>Benchmarking / labelled datasets</td></tr>
+          <tr><td>Example</td><td>Silhouette, Davies–Bouldin, Dunn</td><td>Purity, entropy, ARI, NMI</td></tr>
+          <tr><td>Limitation</td><td>Bias towards convex clusters</td><td>Needs labels; may not reflect business value</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note"><b>Paper wording:</b> 2025 May Q6(a) says “Compare Intrinsic motivation with extrinsic motivation.” In the 410242 syllabus, Unit 5 lists “extrinsic and intrinsic methods” for clustering evaluation. The answer above covers that syllabus meaning; add one line saying the paper’s word “motivation” is a misprint for “methods”.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Write a short note on evaluation metrics for clustering.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q6(b)(iii) [9]</p>
+
+      <h4>1. SSE / WCSS</h4>
+      <div class="math">SSE = Σ<sub>k</sub> Σ<sub>x∈C<sub>k</sub></sub> ‖x − μ<sub>k</sub>‖²</div>
+      <p>Lower is better for a fixed K. Use the elbow plot to choose K.</p>
+
+      <h4>2. Silhouette coefficient</h4>
+      <div class="math">a(i) = average distance from i to points in its own cluster<br>
+      b(i) = minimum average distance from i to points in another cluster<br>
+      s(i) = (b(i) − a(i)) / max(a(i), b(i))</div>
+      <p>Range −1 to 1. s ≈ 1 → well clustered; s ≈ 0 → on a boundary; s &lt; 0 → probably in the wrong cluster. Average over all points.</p>
+
+      <h4>3. Davies–Bouldin index</h4>
+      <div class="math">DB = (1/K) Σ<sub>i</sub> max<sub>j≠i</sub> ( (σ<sub>i</sub> + σ<sub>j</sub>) / d(c<sub>i</sub>, c<sub>j</sub>) )</div>
+      <p>σ = average distance of points to their centroid. Lower DB is better (compact, well-separated).</p>
+
+      <h4>4. Dunn index</h4>
+      <div class="math">D = min<sub>i≠j</sub> d(C<sub>i</sub>, C<sub>j</sub>) / max<sub>k</sub> diam(C<sub>k</sub>)</div>
+      <p>Higher is better: large separation, small diameter.</p>
+
+      <h4>5. External metrics</h4>
+      <ul>
+        <li><b>Purity</b> = (1/n) Σ<sub>k</sub> max<sub>j</sub> |C<sub>k</sub> ∩ L<sub>j</sub>|.</li>
+        <li><b>Entropy</b> = −Σ (|C<sub>k</sub>|/n) Σ p<sub>kj</sub> log p<sub>kj</sub>; lower is better.</li>
+        <li><b>ARI</b> — pair-counting agreement corrected for chance.</li>
+        <li><b>NMI</b> — mutual information normalised to 0–1.</li>
+      </ul>
+
+      <h4>Which metric to use?</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Situation</th><th>Recommended metric</th></tr></thead>
+        <tbody>
+          <tr><td>No labels, convex clusters</td><td>Silhouette, DB, Dunn</td></tr>
+          <tr><td>No labels, choose K</td><td>Elbow (SSE), silhouette</td></tr>
+          <tr><td>Labels available</td><td>ARI, NMI, purity, entropy</td></tr>
+          <tr><td>Different density clusters</td><td>Silhouette may fail; use visual/domain check</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Algorithms and complexities</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Algorithm</th><th>Time</th><th>Key idea</th></tr></thead>
+        <tbody>
+          <tr><td>K-means</td><td>O(nKdI)</td><td>Centroid, WCSS</td></tr>
+          <tr><td>K-medoids (PAM)</td><td>O(Kn²) / iter</td><td>Real medoid, robust</td></tr>
+          <tr><td>Agglomerative</td><td>O(n² log n)–O(n³)</td><td>Merge closest pair</td></tr>
+          <tr><td>DBSCAN</td><td>O(n log n) with index</td><td>ε, MinPts, core/border/noise</td></tr>
+          <tr><td>OPTICS</td><td>O(n log n)</td><td>Reachability plot, varying density</td></tr>
+          <tr><td>DENCLUE</td><td>Depends on grid</td><td>Kernel density, attractors</td></tr>
+          <tr><td>Spectral</td><td>O(n³)</td><td>Laplacian eigenvectors + K-means</td></tr>
+          <tr><td>LOF</td><td>O(n²)</td><td>Local density ratio</td></tr>
+          <tr><td>Isolation forest</td><td>O(n log n)</td><td>Short isolation path = anomaly</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div>
+      <h4>One-line memory hooks</h4>
+      <ul>
+        <li><b>K-means</b> = centroids + WCSS; needs K; spherical clusters.</li>
+        <li><b>K-medoids</b> = real point centre; robust to outliers.</li>
+        <li><b>Hierarchical</b> = dendrogram; no K needed; slow.</li>
+        <li><b>DBSCAN</b> = dense regions; finds noise; ε + MinPts.</li>
+        <li><b>OPTICS</b> = DBSCAN for varying density.</li>
+        <li><b>DENCLUE</b> = kernel density + attractors.</li>
+        <li><b>Spectral</b> = graph cut + eigenvectors.</li>
+        <li><b>LOF</b> = local density ratio; &gt;1 outlier.</li>
+        <li><b>Isolation forest</b> = anomalies isolated in fewer splits.</li>
+        <li><b>Elbow</b> = knee of WCSS vs K.</li>
+        <li><b>Intrinsic</b> = silhouette/DB/Dunn; <b>extrinsic</b> = purity/ARI/NMI.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h4>Solved examples at a glance</h4>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Example</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>K-means, 7 points, K = 2</td><td>C1 = {(1,1),(1.5,2)}, C2 = {(3,4),(5,7),(3.5,5),(4.5,5),(3.5,4.5)}; WCSS = 8.525</td></tr>
+      <tr><td>Hierarchical [7,10,20,28,35], single link</td><td>Merges at 3, 7, 8, 10; cut at 9 → {7,10}, {20,28,35}</td></tr>
+      <tr><td>Hierarchical, complete link</td><td>Merges at 3, 7, 13, 28</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="book"><b>Source note:</b> answers are built from the supplied scanned technical book <em>Machine Learning</em> (Technical Publications, Unit 5, pages 5-1 to 5-29) for clustering definitions, DBSCAN terms, LOF formulas, dendrograms and evaluation metrics. The K-means and hierarchical examples were recomputed in Python; the book’s example data is used.</div>
+
+  <div class="tip"><b>Exam-day order:</b> K-means with the solved table is the safest 8 marks. Then DBSCAN terms (core/border/noise) and the dendrogram. Keep outlier theory for the end; it is easy to write in bullets.</div>
+</section>
+
+<footer>
+  ML · Unit 5 · built from 6 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410242 · 2019 Pattern<br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+// highlight active sidebar link
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

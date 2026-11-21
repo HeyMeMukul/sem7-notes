@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAA Unit 5 — Amortized Analysis | SPPU 410241</title>
+<style>
+:root{--bg:#080c17;--card:#111a2e;--line:#233252;--txt:#e8eefc;--muted:#9fb0cf;--dim:#6f82a6;--accent:#4fd1c5;--accent2:#7c9cff;--amber:#ffc46b;--pink:#ff7aa2;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1100px 600px at 85% -10%,#16305a55,transparent 60%),radial-gradient(900px 500px at -10% 10%,#1b4d4a44,transparent 55%),var(--bg);color:var(--txt);font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#2b2410);border:1px solid var(--line);border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,#ffc46b33,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #ffc46b66}
+.asked b{color:var(--muted)}
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.freq{font-size:13.5px}.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){.wrap{grid-template-columns:1fr;padding:14px}.side{position:static;max-height:none;order:-1}.side nav{display:flex;flex-wrap:wrap;gap:4px}.side a{font-size:12.5px}.top{display:block}}
+@media print{body{background:#fff;color:#111}.side,.top{display:none}.wrap{display:block;max-width:none;padding:0}.card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}.hero p,.lead,.small,.asked{color:#333}th{background:#eee;color:#111}td{color:#111}pre,.math{background:#f6f6f6;color:#111;border-color:#ccc}.qa-head{background:#f2f2f2}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside class="side">
+  <h3>DAA · Unit 5</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s51">5.1 Amortized analysis — 3 methods</a>
+    <a href="#s52">5.2 Stack: PUSH / POP / MULTIPOP</a>
+    <a href="#s53">5.3 Binary counter</a>
+    <a href="#s54">5.4 Tractable &amp; intractable</a>
+    <a href="#s55">5.5 Randomized algorithms</a>
+    <a href="#s56">5.6 Approximation algorithms</a>
+    <a href="#s57">5.7 Embedded algorithms &amp; scheduling</a>
+    <a href="#s58">5.8 Sorting for embedded systems</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Greedy-and-Dynamic-Programming.html">Unit 3 · Greedy &amp; DP</a>
+  <a href="Unit-4-Backtracking-and-Branch-and-Bound.html">Unit 4 · Backtracking &amp; BnB</a>
+  <a href="Unit-6-Multithreaded-and-Distributed.html">Unit 6 · Multithreaded &amp; Distributed</a>
+  <a href="index.html">↩ DAA home</a>
+</aside>
+
+<main>
+<header class="hero">
+  <div class="kicker">SPPU · B.E. Computer · 2019 Pattern · 410241</div>
+  <h1>Unit 5 — Amortized Analysis, Randomized, Approximation &amp; Embedded Algorithms</h1>
+  <p>All questions below are verbatim from the end-sem papers of <b>2022 Nov, 2023 Nov, 2024 May, 2025 May, 2025 Nov</b>. This unit is largely theory + one standard numerical (stack / binary counter), so it is the easiest unit to score in.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>5</b> end-sem papers</span>
+    <span class="chip">❓ <b>24</b> Unit-5 question instances</span>
+    <span class="chip">🔁 Hottest: <b>Randomized algorithms — 5×</b></span>
+    <span class="chip">✍️ <b>18</b> marks of the paper</span>
+  </div>
+</header>
+
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map</h2>
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question</th><th>Appears in</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">Randomized algorithms — definition, reasons, examples</td><td>2022 Nov Q5b [8]; 2023 Nov Q6c [8]; 2024 May Q5a [8]; 2025 May Q6c [4]; 2025 Nov Q6b [4]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>2</td><td class="l">Amortized analysis — methods / aggregate / accounting / potential</td><td>2022 Nov Q5a [10]; 2023 Nov Q5a [9]; 2024 May Q6a [8]; 2025 May Q6a [6]; 2025 Nov Q5c [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>3</td><td class="l">Stack PUSH / POP / MULTIPOP amortized cost</td><td>2022 Nov Q6a [9]; 2023 Nov Q5b [9]; 2025 Nov Q6a [9]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>4</td><td class="l">Tractable / intractable problems (incl. TSP, searching)</td><td>2022 Nov Q5a [part]; 2025 May Q5b [7]; 2025 Nov Q5b [6], Q6c [4]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>5</td><td class="l">Approximation algorithms + performance ratio / classification</td><td>2022 Nov Q5b [part]; 2023 Nov Q6b [4]; 2024 May Q5b [9]; 2025 May Q6b [7]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>6</td><td class="l">Embedded algorithm + power-optimized scheduling</td><td>2022 Nov Q6b [9]; 2023 Nov Q6a [6]; 2024 May Q6b [9]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>7</td><td class="l">Binary counter amortized O(1) (aggregate / potential)</td><td>2025 May Q5a [6]; 2025 Nov Q5a [5]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>8</td><td class="l">Randomized quicksort — does it improve average case?</td><td>2025 May Q5c [4]; 2025 Nov Q6b [4]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td class="l">Random variable / binomial random variable / maths for randomized algorithms</td><td>2023 Nov Q6c [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>10</td><td class="l">Best sorting algorithm for embedded systems</td><td>2023 Nov Q6a [6]; 2024 May Q6b [9]</td><td><span class="stars">★★</span> 2×</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tip"><b>High-yield:</b> amortized analysis (3 methods) + stack example + binary counter = about 25 marks of options across five papers. Randomized + approximation = another 15. Both are pure theory — prepare them as written answers.</div>
+</section>
+
+<!-- 5.1 -->
+<section class="card" id="s51">
+  <h2>5.1 Amortized analysis — the three methods</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain the methods of amortized analysis with a suitable example.</p>
+      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [10 — short notes on all three] · 2023 Nov Q5(a) [9 — aggregate] · 2024 May Q6(a) [8] · 2025 May Q6(a) [6] · 2025 Nov Q5(c) [6 — any two]</p>
+
+      <h4>What is amortized analysis?</h4>
+      <p>Amortized analysis finds the <b>average cost per operation over a sequence of operations</b>, in the <b>worst case</b>, without using probability. A single operation may be expensive (e.g. MULTIPOP empties the stack), but that cost is "paid for" by many cheap operations before it. Amortized cost is <b>not</b> average-case cost.</p>
+
+      <h4>Method 1 — Aggregate analysis</h4>
+      <p>Show that a sequence of <b>n</b> operations costs <b>T(n)</b> in total; then the amortized cost per operation is <code>T(n)/n</code>.</p>
+      <ul>
+        <li>Stack with MULTIPOP: n operations cost ≤ 2n → <b>O(1)</b> per operation.</li>
+        <li>Binary counter: n increments flip &lt; 2n bits → <b>O(1)</b> per increment.</li>
+      </ul>
+
+      <h4>Method 2 — Accounting method</h4>
+      <p>Charge each operation an <b>amortized cost</b> that may differ from its actual cost. The surplus is stored as <b>credit</b> on data objects. The rule: <b>total credit must never become negative</b>. Then total amortized cost ≥ total actual cost.</p>
+      <ul>
+        <li>PUSH charges 2: 1 pays for the push, 1 is credit stored on the element.</li>
+        <li>POP and MULTIPOP charge 0 and spend the stored credit.</li>
+        <li>Total for n operations = 2n → amortized <b>O(1)</b>.</li>
+      </ul>
+
+      <h4>Method 3 — Potential function method</h4>
+      <p>Define a potential function <code>Φ(D)</code> over data structures, with <code>Φ(D<sub>0</sub>) = 0</code> and <code>Φ(D<sub>i</sub>) ≥ 0</code>. The amortized cost of operation i is:</p>
+      <div class="math">ĉ<sub>i</sub> = c<sub>i</sub> + Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>)</div>
+      <p>Summing over n operations gives total amortized = total actual + Φ(D<sub>n</sub>) − Φ(D<sub>0</sub>) ≥ total actual.</p>
+      <ul>
+        <li>Stack: <code>Φ = size of stack</code> → PUSH amortized 2, POP 0, MULTIPOP 0.</li>
+        <li>Binary counter: <code>Φ = number of 1 bits</code> → INCREMENT amortized 2.</li>
+      </ul>
+
+      <h4>Comparison</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Method</th><th>Idea</th><th>Best used when</th></tr></thead>
+        <tbody>
+          <tr><td>Aggregate</td><td>Total cost / number of operations</td><td>All operations have similar structure and the total is easy to bound</td></tr>
+          <tr><td>Accounting</td><td>Prepay credit; spend later</td><td>Different operations have very different costs</td></tr>
+          <tr><td>Potential</td><td>Formal "energy" stored in the structure</td><td>Need a rigorous proof; complex data structures</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note"><b>Key line for the examiner:</b> amortized analysis averages over a <em>sequence</em>, not over inputs — so it gives a <b>worst-case guarantee</b>, unlike average-case analysis.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.2 -->
+<section class="card" id="s52">
+  <h2>5.2 Stack: PUSH, POP, MULTIPOP <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain amortized analysis using a stack with PUSH, POP and MULTIPOP. Find the amortized cost of each operation using all three methods.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(a) [9] · 2023 Nov Q5(b) [9] · 2025 Nov Q6(a) [9]</p>
+
+      <h4>Operations and actual costs</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Operation</th><th>Action</th><th>Actual cost</th></tr></thead>
+        <tbody>
+          <tr><td>PUSH(S, x)</td><td>push x onto stack S</td><td>1</td></tr>
+          <tr><td>POP(S)</td><td>remove and return top element</td><td>1</td></tr>
+          <tr><td>MULTIPOP(S, k)</td><td>pop min(k, |S|) elements</td><td>min(k, |S|)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>A MULTIPOP of k elements can cost O(k), which looks expensive. But each element can be popped only after it has been pushed, so across any sequence the total pops cannot exceed the total pushes.</p>
+
+      <h4>Method 1 — Aggregate analysis</h4>
+      <p>Start with an empty stack and perform n operations. Each element is pushed at most once, so it can be popped at most once.</p>
+      <div class="math">Total cost of n operations ≤ (number of pushes) + (number of pops) ≤ n + n = 2n<br>
+      Amortized cost per operation = 2n / n = <b>2 = O(1)</b></div>
+
+      <h4>Method 2 — Accounting method</h4>
+      <p>Charge <b>2</b> for PUSH, <b>0</b> for POP, <b>0</b> for MULTIPOP.</p>
+      <ul>
+        <li>PUSH: 1 unit pays for the actual push, the second unit is stored as <b>credit</b> on the pushed element.</li>
+        <li>POP: uses the 1 unit of credit stored on that element.</li>
+        <li>MULTIPOP: each element popped uses its own stored credit.</li>
+      </ul>
+      <p>Credit never goes negative, so total amortized cost = 2n → <b>O(1)</b> per operation.</p>
+
+      <h4>Method 3 — Potential function method</h4>
+      <p>Let <code>Φ(S) = |S|</code>, the number of elements in the stack. Initially Φ = 0 and Φ ≥ 0 always.</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Operation</th><th>Actual c<sub>i</sub></th><th>ΔΦ</th><th>Amortized ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ</th></tr></thead>
+        <tbody>
+          <tr><td>PUSH</td><td>1</td><td>+1</td><td>1 + 1 = <b>2</b></td></tr>
+          <tr><td>POP</td><td>1</td><td>−1</td><td>1 − 1 = <b>0</b></td></tr>
+          <tr><td>MULTIPOP(k)</td><td>k′ = min(k, |S|)</td><td>−k′</td><td>k′ − k′ = <b>0</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="math"><b>All three operations have amortized cost O(1).</b><br>
+      Total for n operations = O(n), even though one MULTIPOP can cost O(n).</div>
+
+      <div class="warn"><b>Common mistake:</b> saying "MULTIPOP is O(n) so the sequence is O(n²)". That is the <em>worst-case per operation</em>, not the amortized bound. The total is O(n) because each element is popped once.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.3 -->
+<section class="card" id="s53">
+  <h2>5.3 Binary counter <span class="b rep" style="font-size:12px;vertical-align:middle">★★ 2×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Prove that the amortized cost per operation of a k-bit binary counter is O(1), using the aggregate method.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q5(a) [6] · 2025 Nov Q5(a) [5]</p>
+
+      <h4>Setup</h4>
+      <p>A k-bit binary counter starts at 0 and supports INCREMENT. INCREMENT flips a suffix of 1-bits to 0 and the next 0-bit to 1. For example:</p>
+      <div class="math">0000 → 0001 (1 flip) → 0010 (2 flips) → 0011 (1) → 0100 (3) → 0101 (1) → 0110 (2) → 0111 (1) → 1000 (4)</div>
+
+      <h4>Aggregate analysis</h4>
+      <p>In n consecutive INCREMENT operations, count how often each bit flips:</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Bit position</th><th>Flips every</th><th>Number of flips in n increments</th></tr></thead>
+        <tbody>
+          <tr><td>bit 0 (LSB)</td><td>1 operation</td><td>n</td></tr>
+          <tr><td>bit 1</td><td>2 operations</td><td>n/2</td></tr>
+          <tr><td>bit 2</td><td>4 operations</td><td>n/4</td></tr>
+          <tr><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>bit k−1</td><td>2<sup>k−1</sup></td><td>n/2<sup>k−1</sup></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="math">Total flips T(n) = n + n/2 + n/4 + … + n/2<sup>k−1</sup> &lt; n · Σ<sub>i≥0</sub> (1/2)<sup>i</sup> = 2n<br>
+      Amortized cost per INCREMENT = T(n)/n &lt; <b>2 = O(1)</b></div>
+
+      <h4>Potential method (alternative, for full marks)</h4>
+      <p>Let <code>Φ = number of 1-bits</code> in the counter. If an INCREMENT flips t trailing 1s to 0 and one 0 to 1:</p>
+      <div class="math">actual cost c<sub>i</sub> = t + 1<br>
+      ΔΦ = (1 − t) &nbsp;&nbsp;(lose t ones, gain one 1)<br>
+      ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ = (t + 1) + (1 − t) = <b>2</b></div>
+      <p>Since Φ ≥ 0 and Φ starts at 0, total amortized cost ≥ total actual cost, so each operation is O(1) amortized.</p>
+
+      <div class="note"><b>Worst case vs amortized:</b> a single INCREMENT can flip all k bits → O(k). But n increments cost O(n), so the amortized cost is O(1).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.4 -->
+<section class="card" id="s54">
+  <h2>5.4 Tractable and intractable problems</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are tractable and non-tractable (intractable) problems? Give examples.</p>
+      <div class="badges"><span class="b marks">6–7 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [part] · 2025 May Q5(b) [7] · 2025 Nov Q5(b) [6]</p>
+
+      <h4>Tractable</h4>
+      <p>A problem is <b>tractable</b> if it can be solved by an algorithm whose running time is a <b>polynomial</b> in the input size, i.e. O(n<sup>k</sup>) for some constant k. Such problems form the class <b>P</b>.</p>
+      <p><b>Examples:</b> sorting (O(n log n)), searching a sorted list (O(log n)), shortest path (Dijkstra O(E log V)), minimum spanning tree, matrix multiplication, linear programming, string matching.</p>
+
+      <h4>Intractable (non-tractable)</h4>
+      <p>A problem is <b>intractable</b> if no polynomial-time algorithm is known and the best known algorithms are exponential or worse. These include <b>NP-hard</b> and <b>NP-complete</b> problems.</p>
+      <p><b>Examples:</b> travelling salesman problem (decision version), 0/1 knapsack (decision version), graph colouring (decision version), Hamiltonian cycle, SAT / 3-SAT, vertex cover, subset sum.</p>
+
+      <h4>Important nuance</h4>
+      <ul>
+        <li>P ⊆ NP. Whether P = NP is still open; most researchers believe P ≠ NP.</li>
+        <li>A problem can be <b>NP-hard but still solvable for small inputs</b> — "intractable" is about asymptotic worst-case growth, not about every instance.</li>
+        <li>Approximation algorithms and heuristics are used for intractable optimisation problems (e.g. 2-approximation for metric TSP).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What are intractable problems? Does the Travelling Salesman Problem belong to this class? Justify.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q5(b) [6]</p>
+      <p><b>Yes.</b> The <b>decision version</b> of TSP ("is there a tour of length ≤ K?") is <b>NP-complete</b>: a candidate tour can be verified in polynomial time, and Hamiltonian cycle reduces to it. The <b>optimisation version</b> ("find the shortest tour") is NP-hard. No polynomial-time exact algorithm is known; brute force is O(n!), and DP (Held–Karp) is O(n²2<sup>n</sup>) — both super-polynomial.</p>
+      <p><b>But:</b> for the <b>metric</b> TSP (triangle inequality) a 2-approximation exists via MST double traversal, and Christofides' algorithm gives 1.5-approximation. So TSP is intractable exactly, but approximable.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Comment: "The problem of searching an ordered list or an unordered list belongs to the class of tractable problems."</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q6(c) [4]</p>
+      <p><b>The statement is true.</b> Searching an unordered list takes O(n) (linear scan) and searching a sorted list takes O(log n) (binary search). Both are polynomial in the input size, hence both belong to <b>P</b> and are tractable. Even the O(n) linear search is linear — well within polynomial time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5.5 -->
+<section class="card" id="s55">
+  <h2>5.5 Randomized algorithms <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★★ 5×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are randomized algorithms? Enlist and explain the primary reasons for using randomized algorithms.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(b) [8] · 2023 Nov Q6(c) [8] · 2024 May Q5(a) [8] · 2025 May Q6(c) [4] · 2025 Nov Q6(b) [4]</p>
+
+      <h4>Definition</h4>
+      <p>A <b>randomized algorithm</b> makes random choices during execution (using a random number generator) rather than following a fixed deterministic path. Its running time or output may be a random variable, and we analyse its <b>expected</b> behaviour over all random choices.</p>
+
+      <h4>Two types</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Guarantee</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Las Vegas</b></td><td>Always correct; running time is random</td><td>Randomized quicksort, randomized min-cut</td></tr>
+          <tr><td><b>Monte Carlo</b></td><td>Fixed running time; may be wrong with small probability</td><td>Miller–Rabin primality test</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Reasons for using randomized algorithms</h4>
+      <ol>
+        <li><b>Avoid worst-case inputs</b> — a random pivot in quicksort prevents an adversarial already-sorted input from causing O(n²).</li>
+        <li><b>Simplicity</b> — randomized algorithms are often much shorter and easier to implement than deterministic ones with the same guarantee (e.g. hashing, min-cut).</li>
+        <li><b>Speed</b> — many randomized algorithms are asymptotically faster or have better constants (e.g. randomized primality testing).</li>
+        <li><b>Symmetry breaking</b> — random choices let distributed processes break ties without coordination (e.g. randomized leader election, contention resolution).</li>
+        <li><b>Hashing</b> — random hash functions give good expected O(1) performance regardless of the key distribution.</li>
+        <li><b>Approximation</b> — randomness helps in sampling, estimation (Monte Carlo integration) and approximation algorithms.</li>
+        <li><b>Security</b> — random keys and nonces are essential in cryptography.</li>
+      </ol>
+
+      <h4>Mathematics used</h4>
+      <ul>
+        <li><b>Random variable X</b> — a function from the sample space to real numbers. Example: X = number of comparisons in quicksort.</li>
+        <li><b>Expected value</b>: <code>E[X] = Σ<sub>x</sub> x · Pr(X = x)</code>; linearity <code>E[X+Y] = E[X] + E[Y]</code> holds even when X and Y are dependent.</li>
+        <li><b>Indicator variable</b>: <code>I<sub>i</sub> = 1</code> if event i occurs, else 0; <code>E[I<sub>i</sub>] = Pr(event i)</code>.</li>
+        <li><b>Binomial random variable</b>: X ~ B(n, p), the number of successes in n independent trials with success probability p. <code>E[X] = np</code>, <code>Var(X) = np(1−p)</code>, <code>Pr(X=k) = <sup>n</sup>C<sub>k</sub> p<sup>k</sup>(1−p)<sup>n−k</sup></code>.</li>
+        <li><b>Markov / Chebyshev / Chernoff bounds</b> — bound the probability that a random variable deviates far from its mean.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Does the randomized algorithm for quicksort improve the average-case time complexity? Discuss.</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q5(c) [4] · 2025 Nov Q6(b) [4]</p>
+      <p><b>No — it does not change the average-case complexity, which remains O(n log n).</b> What it improves is the <b>worst-case behaviour on adversarial inputs</b>.</p>
+      <ul>
+        <li>Deterministic quicksort with first/last pivot is O(n²) on already-sorted input, because every partition is completely unbalanced.</li>
+        <li>Randomized quicksort picks the pivot uniformly at random. For <em>any</em> fixed input, the expected running time over the random choices is <b>O(n log n)</b>.</li>
+        <li>The worst case O(n²) is still possible but has very low probability; no adversary can force it without knowing the random choices.</li>
+      </ul>
+      <div class="math">Expected T(n) = O(n log n) &nbsp;&nbsp;|&nbsp;&nbsp; Worst case = O(n²) with probability ≈ 0</div>
+      <p><b>One-line answer:</b> randomization converts a bad <em>input-dependent</em> worst case into a low-probability event; the average case stays O(n log n).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5.6 -->
+<section class="card" id="s56">
+  <h2>5.6 Approximation algorithms <span class="b rep" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are approximation algorithms? Based on the approximation ratio, classify them. How are performance ratios useful?</p>
+      <div class="badges"><span class="b marks">7–9 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(b) [8] · 2023 Nov Q6(b) [4] · 2024 May Q5(b) [9] · 2025 May Q6(b) [7]</p>
+
+      <h4>Definition</h4>
+      <p>An <b>approximation algorithm</b> runs in polynomial time and returns a <b>feasible</b> solution that is guaranteed to be close to the optimal, for an NP-hard optimisation problem where finding the exact optimum is impractical.</p>
+
+      <h4>Approximation ratio</h4>
+      <p>For a minimisation problem with algorithm cost C and optimal cost C*:</p>
+      <div class="math">ρ(n) = max( C / C*, C* / C ) &nbsp;&nbsp;→&nbsp;&nbsp; ρ(n) ≥ 1<br>
+      An algorithm with ratio ρ(n) is called a <b>ρ(n)-approximation algorithm</b>.</div>
+      <p>For maximisation, C ≤ C*, and the same max formula applies. Smaller ρ = better approximation; ρ = 1 means optimal.</p>
+
+      <h4>Classification by approximation ratio</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Class</th><th>Guarantee</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Constant-factor</b></td><td>ρ(n) = c, a constant</td><td>2-approx vertex cover; 2-approx metric TSP (MST double traversal)</td></tr>
+          <tr><td><b>PTAS</b> (Polynomial-Time Approximation Scheme)</td><td>For every ε &gt; 0, ratio (1+ε); running time polynomial in n for fixed ε</td><td>Euclidean TSP, scheduling on identical machines</td></tr>
+          <tr><td><b>FPTAS</b> (Fully PTAS)</td><td>Ratio (1+ε), running time polynomial in both n and 1/ε</td><td>0/1 knapsack (scaling + DP)</td></tr>
+          <tr><td><b>Logarithmic-factor</b></td><td>ρ(n) = O(log n)</td><td>Set cover — greedy gives H(n) ≈ ln n</td></tr>
+          <tr><td><b>APX-hard / no PTAS</b></td><td>Constant factor possible, but no PTAS unless P = NP</td><td>General TSP, bin packing</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Why performance ratios are useful</h4>
+      <ul>
+        <li>They give a <b>provable worst-case quality guarantee</b>, unlike heuristics which have no guarantee.</li>
+        <li>They let us trade accuracy for speed in a controlled way — choose ε to meet a required quality.</li>
+        <li>They allow comparison of algorithms independently of input instances.</li>
+        <li>They help decide whether an exact algorithm is worth the exponential cost.</li>
+      </ul>
+
+      <h4>Example — vertex cover 2-approximation</h4>
+      <p>Repeatedly pick an uncovered edge (u,v), add both endpoints to the cover, and remove all edges incident to them. The chosen edges form a matching, and any vertex cover must contain at least one endpoint per matching edge, so <code>|C| ≤ 2·|C*|</code> → ratio 2.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5.7 -->
+<section class="card" id="s57">
+  <h2>5.7 Embedded algorithms &amp; power-optimized scheduling <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is an embedded algorithm? Explain embedded system scheduling using a power-optimized scheduling algorithm.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(b) [9] · related: 2023 Nov Q6(a) [6] · 2024 May Q6(b) [9]</p>
+
+      <h4>Embedded algorithm</h4>
+      <p>An <b>embedded algorithm</b> is an algorithm designed to run inside a dedicated embedded system (microcontroller/DSP/SoC) that interacts with the physical world in real time. It must satisfy <b>non-functional constraints</b> along with correctness:</p>
+      <ul>
+        <li><b>Limited memory</b> — small RAM/ROM, no virtual memory; avoid large tables and recursion.</li>
+        <li><b>Low power</b> — battery or thermally constrained devices.</li>
+        <li><b>Real-time deadlines</b> — hard/soft deadlines; worst-case execution time must be predictable.</li>
+        <li><b>Deterministic timing</b> — avoid algorithms with high variance (e.g. quicksort worst case).</li>
+        <li><b>Small code size</b> and no dynamic allocation.</li>
+        <li><b>Reliability</b> — must recover from faults; often fixed-point instead of floating-point arithmetic.</li>
+      </ul>
+
+      <h4>Power-optimized scheduling</h4>
+      <p>The dominant power in CMOS is dynamic power:</p>
+      <div class="math">P<sub>dynamic</sub> = α · C · V² · f</div>
+      <p>where V is supply voltage and f is clock frequency. Since f ∝ V, lowering frequency allows a quadratic reduction in voltage and hence a <b>cubic reduction in power</b>. <b>DVFS</b> (Dynamic Voltage and Frequency Scaling) exploits this.</p>
+      <p>A power-optimized scheduler assigns each task the <b>lowest frequency/voltage</b> that still meets its deadline, using the slack left by earlier tasks.</p>
+      <ol>
+        <li>Sort tasks by deadline (EDF — Earliest Deadline First) or by period (Rate Monotonic).</li>
+        <li>Compute the required execution cycles for each task: <code>C<sub>i</sub></code>.</li>
+        <li>Choose frequency <code>f<sub>i</sub></code> such that <code>C<sub>i</sub>/f<sub>i</sub> ≤ deadline<sub>i</sub> − current time</code>.</li>
+        <li>Run at that frequency; any leftover slack is used to lower the frequency further (slack stealing).</li>
+        <li>If the total utilization <code>Σ C<sub>i</sub>/T<sub>i</sub> ≤ 1</code>, EDF guarantees all deadlines are met.</li>
+      </ol>
+      <div class="math">Energy saved ≈ Σ (P<sub>max</sub> − P<sub>i</sub>) · t<sub>i</sub>, &nbsp; with P<sub>i</sub> ∝ f<sub>i</sub><sup>3</sup></div>
+      <p><b>Example:</b> a task needs 300 ms of work with a 500 ms deadline; running at 60% frequency still meets the deadline and cuts dynamic energy to about 0.6³ ≈ 22% of the maximum.</p>
+      <div class="note"><b>Trade-off:</b> lower frequency increases execution time, so the scheduler must keep enough slack. Too aggressive scaling causes deadline misses; too conservative scaling wastes energy.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5.8 -->
+<section class="card" id="s58">
+  <h2>5.8 Sorting algorithm for embedded systems</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Which sorting algorithm is best for embedded systems? Why? / Suggest a suitable sorting algorithm for a real-time medical device and justify.</p>
+      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q6(a) [6] · 2024 May Q6(b) [9 — medical device scenario]</p>
+
+      <h4>Answer</h4>
+      <p><b>Insertion sort</b> is the best choice for the small data buffers typical of embedded systems. For larger buffers with hard real-time deadlines, <b>heap sort</b> is the safer choice.</p>
+
+      <h4>Why insertion sort for small buffers</h4>
+      <ul>
+        <li><b>In-place</b> — needs only O(1) extra memory, no recursion stack.</li>
+        <li><b>Adaptive</b> — O(n) on nearly sorted data, which is common for sensor streams.</li>
+        <li><b>Low overhead</b> — simple loops, small code size, no function calls.</li>
+        <li><b>Stable</b> — preserves the order of equal readings (useful for timestamps).</li>
+        <li>For n ≤ ~32 it beats O(n log n) algorithms because of cache behaviour and constant factors.</li>
+      </ul>
+
+      <h4>Why heap sort for larger / real-time data</h4>
+      <ul>
+        <li>Guaranteed <b>O(n log n)</b> in the worst case — predictable timing, unlike quicksort's O(n²).</li>
+        <li><b>In-place</b>, O(1) extra memory — unlike merge sort's O(n) buffer.</li>
+        <li>No recursion if implemented iteratively → no stack overflow.</li>
+      </ul>
+
+      <h4>Why not the others</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Algorithm</th><th>Problem in embedded systems</th></tr></thead>
+        <tbody>
+          <tr><td>Quick sort</td><td>Worst case O(n²) and recursion stack → unpredictable latency</td></tr>
+          <tr><td>Merge sort</td><td>O(n) extra memory — too costly on small RAM</td></tr>
+          <tr><td>Bubble / selection</td><td>O(n²) always — too slow for real-time streams</td></tr>
+          <tr><td>Counting / radix</td><td>Needs extra arrays proportional to range; only for integer keys</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Medical device scenario (2024 May)</h4>
+      <p>The device samples timestamps, temperature, heart rate and blood pressure continuously and must display results in real time. The buffer is small and often nearly sorted, so <b>insertion sort</b> is ideal: it is in-place, stable, O(n) on nearly sorted data, and has bounded low overhead. If the buffer grows large, switch to <b>heap sort</b> to keep a hard O(n log n) worst-case guarantee.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Amortized costs to memorise</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Operation</th><th>Aggregate</th><th>Accounting</th><th>Potential</th></tr></thead>
+        <tbody>
+          <tr><td>PUSH</td><td rowspan="3">O(1) each<br>(total 2n)</td><td>2</td><td>2</td></tr>
+          <tr><td>POP</td><td>0</td><td>0</td></tr>
+          <tr><td>MULTIPOP</td><td>0</td><td>0</td></tr>
+          <tr><td>INCREMENT (k-bit)</td><td>O(1)</td><td>2</td><td>2</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>Formula bank</h4>
+      <div class="math">ĉ<sub>i</sub> = c<sub>i</sub> + Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>)<br>
+      ρ(n) = max(C/C*, C*/C)<br>
+      P<sub>dyn</sub> = α C V² f<br>
+      E[X] = Σ x·Pr(X=x), &nbsp; B(n,p): E=np</div>
+    </div>
+    <div>
+      <h4>One-liners</h4>
+      <ul>
+        <li><b>Amortized</b> = average over a sequence, worst case, no probability.</li>
+        <li><b>Aggregate</b> = total/n; <b>Accounting</b> = prepaid credit; <b>Potential</b> = energy function.</li>
+        <li><b>Tractable</b> = polynomial (P); <b>intractable</b> = NP-hard, exponential.</li>
+        <li><b>Las Vegas</b> = always correct, random time; <b>Monte Carlo</b> = fixed time, may err.</li>
+        <li><b>Randomized quicksort</b> = expected O(n log n), avoids adversarial worst case.</li>
+        <li><b>PTAS</b> = (1+ε) for any ε; <b>FPTAS</b> = poly in n and 1/ε.</li>
+        <li><b>Embedded</b> = memory, power, real-time, determinism.</li>
+        <li><b>DVFS</b> = lower f and V → cubic power saving.</li>
+        <li><b>Embedded sort</b> = insertion sort (small) / heap sort (large).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> the supplied DAA book covers Units 1–2 only. Unit 5 answers follow the syllabus-listed references (Cormen et al.; Motwani &amp; Raghavan, <em>Randomized Algorithms</em>; Horowitz &amp; Sahani) and match the PYQ wording.</div>
+
+  <div class="tip"><b>Exam-day order:</b> stack amortized (3 methods) → binary counter → randomized algorithms → approximation → embedded. All are theory; write headings and bullet points, and always include the formula for each method.</div>
+</section>
+
+<footer>
+  DAA · Unit 5 · built from 5 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410241 · 2019 Pattern<br>
+  <span class="small">Questions reproduced from university papers; answers are exam-oriented notes.</span>
+</footer>
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

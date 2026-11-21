@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSDF Unit 4 — Evidence Collection &amp; Seizure | SPPU 410244(C)</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.freq td.l{text-align:left}
+.stars{color:var(--amber);letter-spacing:1px}
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<aside class="side">
+  <h3>CSDF · Unit 4</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s41">4.1 Why collect evidence?</a>
+    <a href="#s42">4.2 Types of evidence</a>
+    <a href="#s43">4.3 Collection options &amp; obstacles</a>
+    <a href="#s44">4.4 Volatile evidence</a>
+    <a href="#s45">4.5 General procedure</a>
+    <a href="#s46">4.6 Methods &amp; collection steps</a>
+    <a href="#s47">4.7 Chain of custody</a>
+    <a href="#s48">4.8 Evidence processing steps</a>
+    <a href="#s49">4.9 Legal aspects</a>
+    <a href="#s410">4.10 Image verification</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Introduction-to-Digital-Forensics.html">Unit 3 · Introduction</a>
+  <a href="Unit-5-Forensic-Analysis-and-Network-Forensics.html">Unit 5 · Analysis &amp; network</a>
+  <a href="Unit-6-Forensic-Tools-and-Email-Investigation.html">Unit 6 · Tools &amp; email</a>
+  <a href="index.html">↩ CSDF home</a>
+</aside>
+
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 4 — Evidence Collection &amp; Data Seizure</h1>
+  <p><b>Subject:</b> Cyber Security and Digital Forensics (410244 C) &nbsp;·&nbsp; <b>Exam:</b> Tuesday, 01 Dec 2026, 2:00 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>The heaviest unit in the paper: <b>Q3 and Q4 are always Unit 4</b>, and 2025 Nov also puts a Unit-4 question in Q8. That makes Q3/Q4 (18 marks) unavoidable, with an extra 9-mark option in the 2025 Nov Q7/Q8 pair.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>7</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>30</b> Unit-4 question instances</span>
+    <span class="chip">🧩 <b>14</b> answer cards</span>
+    <span class="chip">🔁 Highest repeat: <b>processing steps — 5×</b></span>
+    <span class="chip">⏱️ Unit weight = <b>18 marks</b> (Q3 or Q4)</span>
+  </div>
+</header>
+
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — what actually gets asked</h2>
+  <p class="lead">Counted from all seven end-sem papers. The same eight topics rotate; nothing outside this table has been asked from Unit 4.</p>
+
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">Computer evidence processing steps</td><td>2022 May Q4(b) [9]; 2022 Nov Q4(b) [9]; 2023 May Q3(b) [9]; 2024 May Q3(b) [9]; 2025 Nov Q3(b) [9]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>2</td><td class="l">Methods of collecting digital evidence + collection steps</td><td>2023 May Q4(b) [9]; 2023 Nov Q3(b) [8]; 2024 May Q4(b) [9]; 2025 Nov Q4(a) [9]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>3</td><td class="l">Chain of custody + controlling contamination</td><td>2022 May Q3(b) [9]; 2022 Nov Q3(b) [9]; 2023 May Q4(a) [9]; 2025 Nov Q4(b) [9]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>4</td><td class="l">General procedure for evidence collection / collecting &amp; archiving</td><td>2022 May Q4(a) [8]; 2022 Nov Q4(a) [8]; 2025 May Q4(a) [9]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>5</td><td class="l">Types of digital evidence</td><td>2023 Nov Q2(a) [9]; 2023 Nov Q4(a) [8]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>6</td><td class="l">Volatile evidence — what and why collect quickly</td><td>2024 May Q4(a) [8]; 2025 Nov Q8(a) [9]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>7</td><td class="l">Legal aspects of collecting &amp; storing digital evidence</td><td>2023 May Q3(a) [9]; 2025 Nov Q3(a) [9]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>8</td><td class="l">Verify &amp; authenticate computer images (any two)</td><td>2023 Nov Q4(b) [9]; 2025 May Q3(b) [9]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td class="l">What are evidences + reasons + options to collect</td><td>2022 May Q3(a) [8]; 2022 Nov Q3(a) [8]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>10</td><td class="l">Options available for collecting digital evidence</td><td>2024 May Q3(a) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>11</td><td class="l">Obstacles faced when collecting digital evidence</td><td>2025 May Q3(a) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>12</td><td class="l">Primary purpose of collecting evidence</td><td>2023 Nov Q3(a) [9]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>13</td><td class="l">Duplication &amp; preservation of digital evidence</td><td>2025 May Q4(b) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>What this means:</b> if you master only <b>processing steps</b>, <b>collection methods/steps</b> and <b>chain of custody</b>, you can attempt Q3 and Q4 in every paper. Add <b>volatile evidence</b> and <b>legal aspects</b> for the Q8 variations.</div>
+
+  <div class="tip"><b>Mark strategy:</b> 8–9 marks needs <b>8–10 numbered points plus a diagram</b> (collection flow or chain-of-custody flow). This unit is pure procedure — numbered lists score better than paragraphs.</div>
+</section>
+
+<!-- 4.1 -->
+<section class="card" id="s41">
+  <h2>4.1 Why collect evidence?</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are evidences? What are the simple reasons to collect evidences? What are different options for collecting evidences?</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q3(a) [8] · 2022 Nov Q3(a) [8]</p>
+
+      <h4>1. What is evidence?</h4>
+      <p><b>Evidence</b> is any information of supporting value — information that <b>proves something or helps to prove something relevant to the case</b>. In digital forensics it can be a file, an e-mail, a log entry, a screenshot, a disk image or a network packet.</p>
+      <p>Evidence must be <b>relevant</b> to the incident, <b>authentic</b> (shown to be what it claims), and <b>obtained lawfully</b>.</p>
+
+      <h4>2. Simple reasons to collect evidence (book §4.1)</h4>
+      <ol>
+        <li><b>Prevention in the future</b> — you have little chance of stopping someone from repeating the act unless you know what happened.</li>
+        <li><b>Responsibility</b> — the attacker is to blame for the damage, and the only way to bring him to justice is to have sufficient proof to substantiate his acts.</li>
+        <li><b>Social obligation of the victim</b> — information obtained after a hack can be evaluated and used to avoid future attacks.</li>
+        <li><b>To support disciplinary or legal action</b> — proof is needed for dismissal, a civil suit or a criminal prosecution.</li>
+        <li><b>To reconstruct the incident</b> — evidence shows how the attacker entered and what was done.</li>
+        <li><b>To recover losses</b> — insurance claims and asset recovery need documented proof.</li>
+      </ol>
+
+      <h4>3. Options for collecting evidence (book §4.2)</h4>
+      <p>When a compromise is discovered, there are <b>two choices</b>:</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Option</th><th>How it works</th><th>Advantage</th><th>Risk</th></tr></thead>
+        <tbody>
+          <tr><td><b>Remove the system from the network and begin gathering evidence</b></td><td>Isolate the machine, image the disk, then analyse.</td><td>The attacker can no longer change or delete data; a stable image is obtained.</td><td>You may not have enough proof; the attacker may have planted a “dead man switch” that wipes evidence when the machine goes offline.</td></tr>
+          <tr><td><b>Leave it online and try to track the intruder</b></td><td>Monitor the live system and network, record the attacker's actions.</td><td>You can identify the attacker and the method in real time.</td><td>You may inadvertently alert the intruder, who then cleans his tracks and deletes evidence.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small">A third practical option — often used in business — is to capture volatile data first, then isolate and image. That is “live acquisition then shutdown”, covered in Unit 5.</p>
+
+      <div class="tip"><b>8-mark answer:</b> definition (2) + five reasons (3) + two options in a small table (3). The two-option table is exactly what the book gives, so use it.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What is the primary purpose of collecting evidence in digital forensics? Explain in detail.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q3(a) [9]</p>
+
+      <p>The primary purpose is to <b>obtain proof that is relevant, authentic and legally admissible</b>, so that the incident can be explained and the responsible person can be identified and held accountable.</p>
+      <ol>
+        <li><b>Prove that an incident occurred</b> — distinguish a real attack from a system fault or user error.</li>
+        <li><b>Establish the facts</b> — what was accessed, changed, copied or deleted, and when.</li>
+        <li><b>Identify the perpetrator</b> — link an account, device, IP address or physical location to the act.</li>
+        <li><b>Preserve the truth</b> — capture volatile data before it disappears and keep the original unchanged.</li>
+        <li><b>Support legal or disciplinary proceedings</b> — provide evidence that survives cross-examination.</li>
+        <li><b>Enable reconstruction</b> — build a timeline and show the attack path.</li>
+        <li><b>Prevent future incidents</b> — use the findings to close the weakness.</li>
+        <li><b>Protect the innocent</b> — evidence can also exclude a suspect or disprove an allegation.</li>
+      </ol>
+      <div class="note"><b>One-line definition to open with:</b> “The primary purpose is to convert digital data into admissible evidence — proof that a court or employer can rely on.”</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4.2 -->
+<section class="card" id="s42">
+  <h2>4.2 Types of evidence</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What kind of digital evidences can be collected in computer forensics? / Explain the different types of digital evidence that can be collected in computer forensics.</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q2(a) [9] · 2023 Nov Q4(a) [8]</p>
+
+      <h4>1. The four classical types of evidence (book §4.4)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Meaning</th><th>Digital example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Real evidence</b></td><td>Something that can be carried into court and shown to the jury; it “speaks for itself”. The most powerful type.</td><td>The seized hard disk, USB drive, mobile phone, printed circuit board.</td></tr>
+          <tr><td><b>Documentary evidence</b></td><td>Evidence in written form. Must be authenticated; produce the original, not a copy.</td><td>Server logs, e-mail, database records, contracts, chat transcripts.</td></tr>
+          <tr><td><b>Testimonial evidence</b></td><td>The statement of a witness under oath, in court or by deposition.</td><td>Expert examiner's testimony; statement of the system administrator.</td></tr>
+          <tr><td><b>Demonstrative evidence</b></td><td>Recreates or explains other evidence; it does not “talk for itself”.</td><td>Timeline chart, network diagram, animation of the attack, screenshot.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Types of digital evidence by source</h4>
+      <ol>
+        <li><b>Computer-generated records</b> — created by the system without human input: audit logs, event logs, firewall logs, IDS alerts, CPU and login records.</li>
+        <li><b>Computer-stored records</b> — created by a person and stored on the system: Word documents, spreadsheets, e-mail bodies, images, databases.</li>
+        <li><b>E-mail evidence</b> — the message, full header, attachments and server logs.</li>
+        <li><b>File-system evidence</b> — deleted files, file slack, unallocated space, alternate data streams, hidden and encrypted files.</li>
+        <li><b>Network evidence</b> — packet captures, router and firewall logs, NetFlow, proxy logs, DHCP and DNS logs.</li>
+        <li><b>Internet evidence</b> — browser history, cache, cookies, downloads, bookmarks, web-mail.</li>
+        <li><b>Mobile and embedded evidence</b> — call logs, SMS, WhatsApp, GPS tracks, photos with EXIF, smart-device data.</li>
+        <li><b>Metadata</b> — timestamps (created, modified, accessed), author, GPS coordinates, camera model, e-mail routing.</li>
+        <li><b>Volatile evidence</b> — RAM, running processes, open ports, ARP cache, routing table, swap file.</li>
+      </ol>
+
+      <h4>3. How digital evidence is treated by the court</h4>
+      <ul>
+        <li>US courts accept digital evidence as <b>physical evidence</b>; digital data is treated as a tangible object.</li>
+        <li>Computer-generated records are usually considered an <b>exception to the hearsay rule</b> if the program that created the output was functioning correctly.</li>
+        <li>Computer-stored records must be shown to be <b>authentic and trustworthy</b> before admission.</li>
+      </ul>
+
+      <h4>4. Rules of evidence (syllabus context — no direct PYQ)</h4>
+      <p>The book lists five rules that every item of evidence must satisfy. No end-sem paper has asked this as a standalone question, but the five rules are part of the Unit-4 syllabus and can be used inside any “legal aspects” answer.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Rule</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. Admissible</b></td><td>Evidence must be admissible; if it does not hold up in court, you have lost your time and may have allowed a guilty person to go free.</td></tr>
+          <tr><td><b>2. Authentic</b></td><td>Evidence must be genuine; you must be able to show that it relates to the incident in a meaningful way.</td></tr>
+          <tr><td><b>3. Complete</b></td><td>It should be complete, not one-sided. Approach the case without assuming guilt or innocence and exclude other suspects only after an unequivocal judgment.</td></tr>
+          <tr><td><b>4. Reliable</b></td><td>It must be dependable; the foundation of reliability is established by validated forensic equipment and methodology.</td></tr>
+          <tr><td><b>5. Believable</b></td><td>It must be clear and unambiguous, even to non-technical jurors. Other agents using the same procedure should reach the same conclusion.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small">Memory hook: <b>A-A-C-R-B</b> — Admissible, Authentic, Complete, Reliable, Believable.</p>
+
+      <div class="tip"><b>Best structure for 9 marks:</b> 4 classical types in a table (4 marks) + 6 digital sources in a numbered list (4 marks) + one line on admissibility (1 mark).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4.3 -->
+<section class="card" id="s43">
+  <h2>4.3 Collection options &amp; obstacles</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are the various options available for collecting digital evidences? Explain in detail.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q3(a) [8]</p>
+
+      <p>“Options” means the <b>strategic choice</b> made at the moment of detection. The book gives two; in practice there are four.</p>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Option</th><th>When to use</th><th>Method</th><th>Risk</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. Pull the plug / remove from network and seize</b></td><td>The attacker is gone; the priority is preservation.</td><td>Photograph the screen, note connections, power down or isolate, image the disk.</td><td>Loses RAM and running-process evidence; possible dead-man switch.</td></tr>
+          <tr><td><b>2. Leave online and track the intruder</b></td><td>The attacker is still active and attribution matters.</td><td>Monitor traffic, log keystrokes, capture packets, watch new files.</td><td>Attacker may detect the monitoring and destroy evidence.</td></tr>
+          <tr><td><b>3. Live acquisition, then isolate</b></td><td>Business-critical server that cannot be switched off.</td><td>Capture RAM, network state and selected files, then isolate and image.</td><td>Every action changes the system; must be documented and hashed.</td></tr>
+          <tr><td><b>4. Remote acquisition over the network</b></td><td>The system is at a distant site.</td><td>Use a remote acquisition tool (DiskExplorer, HDHOST) to pull an image.</td><td>Bandwidth, encryption and rootkits can corrupt or hide data.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Decision factors</h4>
+      <ul>
+        <li><b>Volatility</b> — if RAM evidence matters, capture it first.</li>
+        <li><b>Business continuity</b> — a production server may have to stay online.</li>
+        <li><b>Legal authority</b> — a warrant may require seizure; company policy may allow only a copy.</li>
+        <li><b>Attacker awareness</b> — if the intruder is still inside, pulling the plug warns him.</li>
+        <li><b>Data volume and distance</b> — remote acquisition may be the only practical route.</li>
+      </ul>
+
+      <div class="note"><b>Never forget:</b> whichever option you choose, <b>document the time, the person, the action and the reason</b>. The defence will attack any undocumented change.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What are some common obstacles faced when collecting digital evidence? Explain in detail.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q3(a) [8]</p>
+
+      <h4>1. Obstacles listed in the book (§4.3)</h4>
+      <ol>
+        <li><b>Speed and distance</b> — computer transactions are quick, can be done from anywhere, and may be encrypted or anonymous.</li>
+        <li><b>No identifying traits</b> — digital acts lack handwriting, signatures, fingerprints or DNA that can identify a person.</li>
+        <li><b>Ephemeral audit trail</b> — any paper trail of computer records can be quickly altered or removed, and may exist only briefly.</li>
+        <li><b>Automatic erasure</b> — when transactions are completed, auditing tools may automatically erase the records left behind.</li>
+        <li><b>Ease of alteration</b> — data can be changed without leaving an obvious mark; transactions can be conducted anonymously.</li>
+        <li><b>Investigative limits</b> — investigators can only follow the norms of evidence collection and be as diligent as is feasible.</li>
+      </ol>
+
+      <h4>2. Technical obstacles</h4>
+      <ul>
+        <li><b>Encryption</b> — full-disk encryption, encrypted containers and encrypted e-mail.</li>
+        <li><b>Steganography</b> — evidence hidden inside images, audio or video.</li>
+        <li><b>Anti-forensics</b> — wiping tools, timestomping, log deletion, rootkits.</li>
+        <li><b>Cloud and remote data</b> — data may be outside the jurisdiction and controlled by a third party.</li>
+        <li><b>Volume</b> — terabytes of data; the examiner must find the relevant fraction.</li>
+        <li><b>Volatility</b> — RAM and network state disappear within seconds or minutes.</li>
+      </ul>
+
+      <h4>3. Legal and organisational obstacles</h4>
+      <ul>
+        <li><b>Jurisdiction</b> — the server may be in another country.</li>
+        <li><b>Privacy law</b> — employee monitoring needs a written policy and consent.</li>
+        <li><b>Warrant scope</b> — evidence outside the warrant may be inadmissible.</li>
+        <li><b>Chain of custody</b> — a single gap can make the evidence unreliable.</li>
+        <li><b>Cost and time</b> — imaging and review are expensive; business downtime is costly.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4.4 -->
+<section class="card" id="s44">
+  <h2>4.4 Volatile evidence</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is volatile evidence in the context of computer forensics, and why is it important to collect it quickly? / What is the volatile evidence?</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q4(a) [8] · 2025 Nov Q8(a) [9]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Volatile data</b> is data that is <b>in a state of change</b> — data that will be <b>lost when the power is switched off</b>. Volatile evidence is present in physical memory, registers, virtual memory, the file-system cache and peripheral device memory.</p>
+
+      <h4>2. Order of volatility (book §4.6)</h4>
+      <p>Collect the <b>most volatile first</b>. A standard order is:</p>
+      <ol>
+        <li>Registers and cache</li>
+        <li>Routing tables</li>
+        <li>ARP cache</li>
+        <li>Process table</li>
+        <li>Kernel statistics and modules</li>
+        <li>Main memory (RAM)</li>
+        <li>Temporary file systems</li>
+        <li>Secondary memory (disk)</li>
+        <li>Router configuration</li>
+        <li>Network topology</li>
+      </ol>
+
+      <h4>3. Why collect quickly?</h4>
+      <ul>
+        <li><b>It disappears on shutdown</b> — pulling the plug destroys RAM, cache and process information forever.</li>
+        <li><b>It changes continuously</b> — every new process, login or network connection overwrites part of it.</li>
+        <li><b>It proves live activity</b> — running malware, open sockets and injected DLLs are visible only in memory.</li>
+        <li><b>It defeats disk encryption</b> — if the disk is encrypted, the decryption keys may exist only in RAM while the machine is running.</li>
+        <li><b>It links the user to the act</b> — logged-in user, open documents and mapped drives.</li>
+        <li><b>It may be the only evidence</b> — a diskless or cloud-only workstation leaves nothing on disk.</li>
+      </ul>
+
+      <h4>4. What to capture</h4>
+      <div class="grid2">
+        <div>
+          <ul>
+            <li>RAM image (full physical memory)</li>
+            <li>Running processes and loaded DLLs</li>
+            <li>Open network connections and listening ports</li>
+            <li>Logged-on users</li>
+            <li>ARP cache and routing table</li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li>Clipboard contents</li>
+            <li>Mapped drives and shares</li>
+            <li>Command history</li>
+            <li>Swap/page file</li>
+            <li>System time and time zone</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="warn"><b>Order matters:</b> capture RAM and network state <b>before</b> running any program that writes to disk. Use a trusted, forensically sound tool from a USB drive and record the hash of the memory image.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4.5 -->
+<section class="card" id="s45">
+  <h2>4.5 General procedure for evidence collection</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is the general procedure for evidence collection?</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q4(a) [8] · 2022 Nov Q4(a) [8]</p>
+
+      <h4>1. The four-stage procedure (book §4.7)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Stage</th><th>What the investigator must do</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. Identification of evidence</b></td><td>Be able to tell legitimate evidence apart from false information. Decide which devices, files and logs are relevant.</td></tr>
+          <tr><td><b>2. Preservation of evidence</b></td><td>Keep the evidence as close to its original condition as feasible. Image before analysis, use a write blocker, seal the original.</td></tr>
+          <tr><td><b>3. Evidence analysis</b></td><td>Requires in-depth familiarity with both what to search for and how to find it.</td></tr>
+          <tr><td><b>4. Evidence presentation</b></td><td>Depends on how it is done and must be intelligible to the average person; a report and, if needed, expert testimony.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Practical step-by-step version</h4>
+      <ol>
+        <li><b>Secure the scene</b> — restrict access, photograph the area and the screen.</li>
+        <li><b>Document the system</b> — make, model, serial number, connections, running state.</li>
+        <li><b>Capture volatile data</b> — RAM, network connections, logged-on users (Unit 5).</li>
+        <li><b>Decide the seizure method</b> — shutdown, live acquisition or remote acquisition.</li>
+        <li><b>Label every item</b> — exhibit number, date, time, place, person who seized it.</li>
+        <li><b>Package and transport</b> — anti-static bags, tamper-evident seals, faraday bag for phones.</li>
+        <li><b>Create a bit-stream image</b> in the laboratory and verify the hash.</li>
+        <li><b>Analyse the copy</b> — never the original.</li>
+        <li><b>Record everything</b> in the evidence notebook and chain-of-custody form.</li>
+        <li><b>Report and present</b> — plain-language report plus exhibits.</li>
+      </ol>
+
+      <div class="tree">Collect → Preserve → Analyse → Present
+   │          │          │          │
+   │          │          │          └── report + expert testimony
+   │          │          └───────────── keyword search, timeline, recovery
+   │          └──────────────────────── bit-stream image + hash + seal
+   └─────────────────────────────────── identify + document + photograph</div>
+
+      <div class="note"><b>Book + practice:</b> the four-stage model is from §4.7. The ten practical steps combine §4.7 with the collection-steps list in §4.11, which is what the examiner expects for an 8-mark answer.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Describe the general procedure for collecting and archiving digital evidence in computer forensics.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q4(a) [9]</p>
+
+      <h4>1. Collection</h4>
+      <ol>
+        <li><b>Identify</b> the devices and data that may contain evidence.</li>
+        <li><b>Document</b> the scene: photographs, serial numbers, cable positions, screen contents.</li>
+        <li><b>Capture volatile data</b> before shutdown.</li>
+        <li><b>Isolate</b> the system from the network so it cannot be changed remotely.</li>
+        <li><b>Image</b> the storage with a write blocker; compute MD5/SHA-1 for source and image.</li>
+        <li><b>Label and seal</b> the original in a tamper-evident bag with an exhibit number.</li>
+      </ol>
+
+      <h4>2. Archiving (book §4.8)</h4>
+      <p>Archiving means keeping the collected evidence in a controlled store so that it remains unchanged and available for the trial.</p>
+      <ul>
+        <li><b>Logs and logging</b> — run a system logging function; safeguard and regularly back up the logs. The harm caused by an attacker can be seen in messages and program logs.</li>
+        <li><b>Monitoring</b> — compile data, watch for anomalies and determine where and how an attacker is coming from. Unusual activity or the sudden arrival of unidentified users is a clear signal that something needs examination.</li>
+        <li><b>Disclaimer</b> — when users log in, a disclaimer should state that monitoring takes place.</li>
+        <li><b>Evidence safe</b> — store the original in a safe room or cupboard accessible only to the appointed evidence custodian.</li>
+        <li><b>Access log</b> — record every entry and exit; evidence should never be left in an unattended location.</li>
+        <li><b>Retention</b> — keep the evidence until the case is finally closed and the appeal period has expired.</li>
+        <li><b>Two copies</b> — keep the original and a verified working copy; store them in separate places where possible.</li>
+      </ul>
+
+      <h4>3. Archiving media</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Media</th><th>Use and caution</th></tr></thead>
+        <tbody>
+          <tr><td><b>CD-R / DVD-R</b></td><td>Good for a permanent copy; write once, verify after burning. Capacity up to about 700 MB / 4.7 GB (dual-layer more).</td></tr>
+          <tr><td><b>Hard disk / SSD</b></td><td>Fast working copy; keep in an anti-static bag; verify the hash periodically.</td></tr>
+          <tr><td><b>Magnetic tape (DAT, DLT, LTO)</b></td><td>Long-term archive; high capacity but slow access. Test by restoring a sample and comparing hashes.</td></tr>
+          <tr><td><b>Evidence bag / faraday bag</b></td><td>For phones and wireless devices; prevents remote wiping and network access.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4.6 -->
+<section class="card" id="s46">
+  <h2>4.6 Methods of collection &amp; collection steps</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are various methods of collecting digital evidence? Enlist the various digital collection steps. / What are the typical steps involved in the collection of digital evidences?</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q4(b) [9] · 2023 Nov Q3(b) [8] · 2024 May Q4(b) [9] · 2025 Nov Q4(a) [9, any four steps]</p>
+
+      <h4>1. Two fundamental methods (book §4.9)</h4>
+      <p><b>(a) Honeypotting.</b> The investigator inserts <b>deceptive information</b> and observes the attacker's response. It is an effective way of finding out the attacker's motivation. A replica system is set up to entice the attacker into more monitoring. The attacker's actions are recorded, and the evidence shows intent and method.</p>
+      <p><b>(b) Freezing the scene.</b> The investigator captures a <b>picture of the system at the moment it is hacked</b>. Crucial data is then copied onto removable non-volatile media in a predetermined manner. A <b>cryptographic message digest</b> is generated for each piece of data, and the digests are cross-checked against the originals to ensure accuracy.</p>
+
+      <h4>2. Other collection methods in practice</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Method</th><th>What is collected</th><th>Tool / example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Live acquisition</b></td><td>RAM, network state, running processes</td><td>Memory dump tool, netstat, trusted USB</td></tr>
+          <tr><td><b>Dead acquisition</b></td><td>Full disk image after shutdown</td><td>Write blocker + FTK Imager / dd</td></tr>
+          <tr><td><b>Remote acquisition</b></td><td>Image over the network</td><td>DiskExplorer, HDHOST</td></tr>
+          <tr><td><b>Logical acquisition</b></td><td>Selected folders, mailboxes, files</td><td>Forensic suite export</td></tr>
+          <tr><td><b>Physical acquisition</b></td><td>Every sector, including slack and unallocated</td><td>dd, SafeBack, FTK Imager</td></tr>
+          <tr><td><b>Network capture</b></td><td>Packets and flows</td><td>tcpdump, Wireshark, Snort</td></tr>
+          <tr><td><b>Mobile acquisition</b></td><td>Call logs, SMS, app data</td><td>Cellebrite, Paraben</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Artifacts (book §4.10)</h4>
+      <ul>
+        <li>Whether they are <b>code snippets, malicious software, active processes or sniffer log files</b>, the attacker nearly always leaves something behind. These traces are called <b>artifacts</b>.</li>
+        <li>Never try to study a piece of evidence on a <b>hacked machine</b> — the attacker may have left a trap or a rootkit that hides or alters what you see.</li>
+        <li>The examiner must ensure that the impact of artifacts is <b>within our control</b>, because they are unpredictable.</li>
+      </ul>
+
+      <h4>4. The six collection steps (book §4.11)</h4>
+      <ol>
+        <li><b>Find the evidence</b> — use a checklist. It helps in gathering evidence and confirms that all the information you want is present.</li>
+        <li><b>Find the relevant data</b> — after locating the evidence, decide what information is pertinent to the case.</li>
+        <li><b>Establish an order of volatility</b> — reduces the loss of uncorrupted evidence and is a useful guide.</li>
+        <li><b>Eliminate external sources of change</b> — refrain from making changes to the original data.</li>
+        <li><b>Gather evidence</b> — use the right resources for the task.</li>
+        <li><b>Document everything</b> — the validity of the collection method may be questioned later. Digital signatures, timestamps and signed statements are all significant.</li>
+      </ol>
+
+      <h4>5. “Explain any four steps” (2025 Nov)</h4>
+      <p>Write steps 1, 3, 4 and 6 with two lines each: checklist and relevance; volatility order (RAM first, disk last); no changes to the original; documentation with hash, time, signature and photographs.</p>
+
+      <div class="tip"><b>Memory hook — F-F-E-E-G-D:</b> <b>F</b>ind evidence, <b>F</b>ind relevant data, <b>E</b>stablish volatility order, <b>E</b>liminate external change, <b>G</b>ather, <b>D</b>ocument. Six steps, six marks plus examples.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4.7 -->
+<section class="card" id="s47">
+  <h2>4.7 Controlling contamination — the chain of custody</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is chain of custody? Explain the process of chain of custody. / How can we control the contamination of digital evidence?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q3(b) [9] · 2022 Nov Q3(b) [9] · 2023 May Q4(a) [9, with contamination] · 2025 Nov Q4(b) [9, with contamination methods]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Chain of custody</b> is the <b>documentation that identifies all changes in the control, handling, custody and ownership of a piece of evidence</b>. It lets you trace the evidence from the instant it was collected to the instant it was presented in a judicial court.</p>
+
+      <h4>2. Why it matters</h4>
+      <ul>
+        <li>Proves the evidence is the <b>same</b> item that was seized.</li>
+        <li>Proves it was <b>not tampered with</b> or contaminated.</li>
+        <li>Makes the evidence <b>admissible</b>; a break in the chain can make it unreliable and excluded.</li>
+        <li>Answers the defence's challenge: “How do we know this file came from that computer?”</li>
+      </ul>
+
+      <h4>3. The chain-of-custody process (book §4.12)</h4>
+      <div class="tree">Data collection → Examination → Analysis → Reporting
+      (media)         (data)       (information)   (evidence)</div>
+      <ol>
+        <li><b>Data collection</b> — identification, labelling, recording and acquisition of data from all relevant sources while maintaining integrity.</li>
+        <li><b>Examination</b> — document the chain-of-custody information and the forensic procedure followed; take screenshots throughout to show what was done and what was found.</li>
+        <li><b>Analysis</b> — use legally justifiable methods and techniques to gather information that answers the questions in the case.</li>
+        <li><b>Reporting</b> — include a statement of the chain of custody, the tools used, how the data sources were analysed, the issues identified, the vulnerabilities discovered and any further forensic measures suggested.</li>
+      </ol>
+
+      <h4>4. Procedure for establishing the chain (book §4.12)</h4>
+      <ol>
+        <li><b>Save the original files.</b></li>
+        <li><b>Photograph the physical evidence.</b></li>
+        <li><b>Take screenshots</b> of the digital evidence.</li>
+        <li><b>Document date, time</b> and any other information about receipt of the evidence.</li>
+        <li><b>Inject forensic computers with a bit-for-bit clone</b> of the digital evidence content.</li>
+        <li><b>Authenticate the working clone</b> by performing a hash test analysis.</li>
+      </ol>
+
+      <h4>5. What the record must contain</h4>
+      <ul>
+        <li>Exhibit number, description and serial number.</li>
+        <li>Date and time of seizure; place; name of the person who seized it.</li>
+        <li>Every transfer: from whom, to whom, date, time, purpose, signature.</li>
+        <li>Every access: who opened the evidence, when, and what was done.</li>
+        <li>Storage location and security (safe, evidence room, locked cabinet).</li>
+      </ul>
+
+      <h4>6. Controlling contamination</h4>
+      <ol>
+        <li><b>Limit access</b> — only authorised persons enter the scene; keep an access log.</li>
+        <li><b>Use tamper-evident packaging</b> — anti-static bags and seals with the officer's signature.</li>
+        <li><b>Wear gloves</b> and avoid touching the disk surface or the gold contacts.</li>
+        <li><b>Use a write blocker</b> — never boot the suspect disk in a normal PC.</li>
+        <li><b>Image first, analyse later</b> — all work on a verified copy.</li>
+        <li><b>Hash before and after</b> — MD5/SHA-1 at seizure, at imaging and before analysis.</li>
+        <li><b>Faraday bag</b> for phones — stops remote wipe and network traffic.</li>
+        <li><b>Keep evidence away from heat, magnets, moisture and static.</b></li>
+        <li><b>Document every action</b> — if it is not written down, it did not happen.</li>
+        <li><b>Store in an evidence safe</b> accessible only to the evidence custodian.</li>
+      </ol>
+
+      <div class="note"><b>For 2023 May / 2025 Nov:</b> the question joins chain of custody with contamination. Answer in two parts: definition + process (5 marks), then the ten contamination controls (4 marks). Explicitly say “chain of custody is both a document and a process”.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4.8 -->
+<section class="card" id="s48">
+  <h2>4.8 Computer evidence processing steps</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are general computer evidence processing steps? Explain in detail. / Enlist and explain different computer evidence processing steps.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q4(b) [9] · 2022 Nov Q4(b) [9] · 2023 May Q3(b) [9] · 2024 May Q3(b) [9, essential steps from the crime scene] · 2025 Nov Q3(b) [9]</p>
+
+      <h4>1. The sixteen steps (book §4.13.2)</h4>
+      <ol>
+        <li><b>Turn the computer off</b> — disconnect or shut down the network computer using the correct procedure; shut down as soon as feasible when time is of the essence.</li>
+        <li><b>Describe the system's hardware setup in writing</b> — photograph it from all sides, document the components and their connections, and label each wire so it can be reconnected.</li>
+        <li><b>Transport the computer to a secure location</b> — unattended confiscated computers are vulnerable; lock it up and never leave it alone.</li>
+        <li><b>Create hard-disk and floppy-disk bit-stream backups</b> — all processing is done on a recovered copy, not the original; the bit-stream backup is an insurance cover.</li>
+        <li><b>Mathematically verify all storage devices' data</b> — demonstrate that you did not change any evidence; law enforcement has used 32-bit mathematical authentication since 1989.</li>
+        <li><b>Record the system's time and date</b> — a wrong clock (e.g. daylight-saving error) changes file timestamps; document the setting to account for discrepancies.</li>
+        <li><b>Create a list of key search words</b> — gather keywords from people who know the case; automated software can then search the drives.</li>
+        <li><b>Examine the Windows swap file</b> — it may contain useful information and leads; it is deleted on shutdown but easy to record and assess.</li>
+        <li><b>Determine the file slack</b> — raw memory dumps that occur when files are closed; a key security-leakage source. Keywords should be searched here too.</li>
+        <li><b>Examine unallocated space (erased files)</b> — search for pertinent keywords that were not found earlier.</li>
+        <li><b>Search files, file slack and unallocated space for keywords</b> — search all relevant drives and diskettes with the keyword list; review and record the results.</li>
+        <li><b>Document file names, dates and times</b> — these may be crucial evidence; record them in a word-processing file.</li>
+        <li><b>Detect irregularities in files, programs and storage</b> — data may be binary, graphic, compressed or encrypted, so a text search cannot find it; manual assessment is necessary.</li>
+        <li><b>Examine the operation of the software</b> — execute applications to determine their function and demonstrate wilfulness when harmful processes are linked to evidence.</li>
+        <li><b>Document your findings</b> — record every piece of software used, its version number, the procedure followed and screenshots of the operating system.</li>
+        <li><b>Retain copies of the software used</b> — provide a copy with the report; if the software was upgraded and the old version was not kept, duplicating findings may be impossible.</li>
+      </ol>
+
+      <h4>2. Compressed version for 9 marks</h4>
+      <p>If you cannot write all sixteen, group them into five phases — this still earns most of the marks:</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Phase</th><th>Steps included</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><b>Preserve</b></td><td>1, 3, 4, 5</td><td>Shutdown, secure transport, bit-stream backup, mathematical verification.</td></tr>
+          <tr><td><b>Document</b></td><td>2, 6, 12, 15, 16</td><td>Hardware setup, system time, file names/dates, findings, software copies.</td></tr>
+          <tr><td><b>Search</b></td><td>7, 8, 9, 10, 11</td><td>Keyword list, swap file, file slack, unallocated space, full search.</td></tr>
+          <tr><td><b>Examine</b></td><td>13, 14</td><td>Irregular/binary/encrypted files and software behaviour.</td></tr>
+          <tr><td><b>Report</b></td><td>15, 16</td><td>Findings, tools, versions, screenshots, reproducible procedure.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="warn"><b>Important nuance:</b> step 1 says “turn the computer off”, but modern practice first captures <b>volatile data</b> (RAM, network state). Write both: “Capture volatile data first where it is relevant; then shut down as step 1 of the traditional procedure.” That single sentence shows you understand the order of volatility.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4.9 -->
+<section class="card" id="s49">
+  <h2>4.9 Legal aspects of collecting &amp; preserving evidence</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Discuss the various legal aspects of collecting and storing digital evidence.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q3(a) [9] · 2025 Nov Q3(a) [9]</p>
+
+      <h4>1. Legal standards are not optional</h4>
+      <p>When gathering evidence, specific legal standards must be followed. These requirements are <b>extensive, intricate and differ from nation to nation</b>. Evidence obtained illegally may be excluded even if it proves the crime.</p>
+
+      <h4>2. Chain of custody as a legal requirement (book §4.14.1)</h4>
+      <ul>
+        <li>Documentation must identify every change in control, handling, custody and ownership.</li>
+        <li>Evidence must be stored in a <b>tamper-proof manner</b> so that unauthorised persons cannot access it.</li>
+        <li>A complete chain-of-custody record is kept for each item.</li>
+        <li>Many police departments and federal agencies have a property department that stores evidence securely.</li>
+        <li>Whenever experts or officers review the evidence, they <b>check it out and check it in</b> on every return to storage.</li>
+        <li>The best evidence is kept in a safe room or cupboard — an <b>“evidence safe”</b> — accessible only to appointed custodians.</li>
+      </ul>
+
+      <h4>3. Proving integrity for electronic evidence</h4>
+      <p>To maintain a chain of custody, it must be demonstrated that:</p>
+      <ol>
+        <li><b>No information has been added or modified.</b></li>
+        <li><b>A full copy was created.</b></li>
+        <li><b>A trustworthy copying procedure was applied.</b></li>
+        <li><b>All media were protected.</b></li>
+      </ol>
+
+      <h4>4. Legal requirements for workplace monitoring (CERT Advisory CA-1992-19)</h4>
+      <p>The advisory suggests wording that should be customised to the corporation's requirements and overseen by legal counsel:</p>
+      <ul>
+        <li>The system is only for authorised users.</li>
+        <li>All activity by users who lack authority, or who use it in excess of their authority, is subject to monitoring and recording by system staff.</li>
+        <li>The actions of authorised users may also be watched while monitoring abusers or doing system maintenance.</li>
+        <li>Anyone using the system expressly agrees to such monitoring and is informed that system staff may give the evidence to law enforcement if it indicates suspected criminal conduct.</li>
+      </ul>
+      <p>Two factors decide whether workplace monitoring is lawful:</p>
+      <ol>
+        <li>The existence of <b>employment policies</b> that permit monitoring.</li>
+        <li>The extent to which those policies have been <b>made known to employees</b>.</li>
+      </ol>
+      <p>Employees should sign a declaration that they have read, understood and agreed to abide by company policy and consent to system monitoring.</p>
+
+      <h4>5. Other legal points to mention</h4>
+      <ul>
+        <li><b>Search warrant / authorization</b> — seizing a device without lawful authority can make the evidence inadmissible.</li>
+        <li><b>Scope</b> — search only what the warrant or policy allows; a broader search needs a broader warrant.</li>
+        <li><b>Privacy</b> — personal data on a company device still attracts privacy protection in many jurisdictions.</li>
+        <li><b>Best evidence rule</b> — produce the original recording or a verified duplicate.</li>
+        <li><b>Hearsay and business-record exception</b> — computer-generated records are usually admissible as business records.</li>
+        <li><b>Retention</b> — keep evidence until the appeal period ends; destroying it early can amount to obstruction.</li>
+      </ul>
+
+      <div class="tip"><b>9-mark structure:</b> legal standards (1) + chain of custody (3) + four integrity statements (2) + workplace monitoring/CERT (2) + two other legal points (1).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4.10 -->
+<section class="card" id="s410">
+  <h2>4.10 Computer image verification &amp; authentication</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What methods &amp; techniques are commonly used to verify &amp; authenticate computer images? Explain any two in detail.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [9] · 2025 May Q3(b) [9]</p>
+
+      <h4>1. Why authentication is needed (book §4.15.1)</h4>
+      <ul>
+        <li>Evidence may be stored on a computer system; confiscating the whole system can breach the concept of <b>innocence until proven guilty</b> by denying an innocent person access to his system.</li>
+        <li>The court has the right to ask that the <b>duplicated evidence</b> be secured against accidental or purposeful change.</li>
+        <li>The investigating authority must show that the copy was made at the time and on the machine in question.</li>
+        <li>What is protected is the <b>integrity of the material</b>, not the content itself.</li>
+      </ul>
+
+      <h4>2. Method 1 — Cryptographic hashing (MD5 / SHA-1 / SHA-256)</h4>
+      <p>A hash is a <b>one-way mathematical function</b> that converts a file or a whole disk image into a fixed-length hexadecimal value. If even one bit changes, the hash changes completely (<b>avalanche effect</b>).</p>
+      <pre><code>Original disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
+Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
+                               ^ identical ⇒ image verified</code></pre>
+      <ul>
+        <li>Compute the hash <b>at seizure</b>, <b>after imaging</b> and <b>before analysis</b>.</li>
+        <li>Record the value in the chain-of-custody form and in the report.</li>
+        <li>MD5 is fast and still widely used; SHA-1/SHA-256 are stronger. For court, quote the algorithm and the exact value.</li>
+        <li>Limitation: a hash proves the <b>copy equals the original</b>, not that the original was true.</li>
+      </ul>
+
+      <h4>3. Method 2 — Known good hash sets and hash databases</h4>
+      <p>The examiner compares the hash of each file on the image with a database of <b>known-good</b> files (operating-system files, standard applications) and <b>known-bad</b> files (child-abuse material, malware).</p>
+      <ul>
+        <li><b>Known-good set</b> — eliminates thousands of standard files so the examiner can focus on the unknown ones (NSRL is a common source).</li>
+        <li><b>Known-bad set</b> — instantly flags contraband or malware without opening every file.</li>
+        <li>This is also a validation technique: it shows that the tool produces the expected hash for a known file.</li>
+      </ul>
+
+      <h4>4. Method 3 — Re-imaging and comparison</h4>
+      <p>Take a second image from the original with a different tool, or re-image the working copy, then compare the two hashes. If they match, the copying procedure is <b>repeatable</b>. If they differ, the original changed or the tool is faulty.</p>
+
+      <h4>5. Method 4 — Digital signatures and certificates</h4>
+      <p>A digital signature uses public-key cryptography: the sender hashes the data and encrypts the hash with his <b>private key</b>; the receiver decrypts it with the <b>public key</b> and compares. A certificate authority (CA) such as VeriSign binds the public key to an identity. This is used for <b>Authenticode</b>, signed reports and signed evidence packages.</p>
+
+      <h4>6. Method 5 — Hex editors and manual verification</h4>
+      <p>A hexadecimal editor shows the raw bytes. The examiner can compare specific sectors, check the file header, and detect hidden or altered data that a normal tool may miss. ProDiscover's <b>Auto Image Checksum Verification</b> performs this comparison automatically when an image is loaded.</p>
+
+      <h4>7. Practical considerations (book §4.15.2–4.15.3)</h4>
+      <ul>
+        <li>Complete, non-software-specific data gathering — prevents software traps and hidden partitions.</li>
+        <li>Rapid, straightforward operation — avoids mistakes and delay.</li>
+        <li>No training needed to operate the gathering system.</li>
+        <li>Only necessary expenses and resources.</li>
+        <li>Digital integrity verification and authentication adapted to the case.</li>
+        <li>Only investigators with a valid digital signature may finalise copies.</li>
+        <li>Minimal dependence on the operator's knowledge; processes must trap hardware faults and map exceptions.</li>
+      </ul>
+
+      <div class="note"><b>“Explain any two” model:</b> choose <b>hashing</b> and <b>known hash sets</b>. Both are easy to draw and both directly answer “verify and authenticate”. Add a one-line example with a real MD5 value (verified above with Python).</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain duplication &amp; preservation of digital evidence.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q4(b) [8]</p>
+
+      <h4>1. Duplication</h4>
+      <p><b>Duplication</b> is making an exact, <b>bit-for-bit copy</b> of the storage media. The copy must include every sector: allocated files, deleted files, file slack and unallocated space.</p>
+      <ol>
+        <li>Connect the original through a <b>write blocker</b>.</li>
+        <li>Create a <b>bit-stream image</b> with a forensic tool (FTK Imager, dd, SafeBack, SnapBack).</li>
+        <li>Compute a <b>hash</b> (MD5/SHA-1) of the original and of the image.</li>
+        <li>Compare the hashes; if equal, the image is verified.</li>
+        <li>Make a <b>second copy</b> for working purposes; store the original and one copy separately.</li>
+        <li>Label both with the case number, exhibit number, date, examiner and hash value.</li>
+      </ol>
+
+      <h4>2. Preservation</h4>
+      <p><b>Preservation</b> means keeping the original evidence unchanged and protected from the moment of seizure until it is produced in court.</p>
+      <ul>
+        <li>Seal the original in a <b>tamper-evident bag</b> and sign the seal.</li>
+        <li>Store in a secure <b>evidence safe</b> with restricted access and an access log.</li>
+        <li>Keep away from heat, moisture, magnetic fields and static electricity.</li>
+        <li>Never analyse, boot or repair the original.</li>
+        <li>Re-verify the hash at every transfer and before analysis.</li>
+        <li>Keep a complete <b>chain-of-custody record</b>.</li>
+        <li>For phones, use a <b>faraday bag</b> to prevent remote wipe.</li>
+      </ul>
+
+      <h4>3. The three essential qualities of a trustworthy copy</h4>
+      <ol>
+        <li>The procedure must be <b>reliable</b> and up to industry requirements.</li>
+        <li>The copies must be <b>tamper-proof</b>.</li>
+        <li>The copies must be able to be <b>independently verified</b>.</li>
+      </ol>
+
+      <h4>4. Why it matters</h4>
+      <p>Digital evidence is <b>weak and vulnerable to change or deletion</b>. If the defence can show that the evidence was accessed by an uninvited party, it may be ruled <b>inadmissible</b>. Duplication and preservation protect the original, allow repeated analysis, and give the defence the same data to examine — which is the strongest answer to any allegation of tampering.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHEAT -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Counts to memorise</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Item</th><th>Count</th></tr></thead>
+        <tbody>
+          <tr><td>Reasons to collect evidence</td><td>2 core + 4 supporting</td></tr>
+          <tr><td>Collection options</td><td>2 (book) / 4 (practice)</td></tr>
+          <tr><td>Types of evidence</td><td>4</td></tr>
+          <tr><td>Rules of evidence</td><td>5 — A-A-C-R-B</td></tr>
+          <tr><td>Order of volatility</td><td>10 levels</td></tr>
+          <tr><td>Collection steps</td><td>6 — F-F-E-E-G-D</td></tr>
+          <tr><td>Computer evidence processing steps</td><td>16</td></tr>
+          <tr><td>Chain-of-custody procedure</td><td>6</td></tr>
+          <tr><td>Contamination controls</td><td>10</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div>
+      <h4>One-line memory hooks</h4>
+      <ul>
+        <li><b>Evidence</b> = information that proves something relevant.</li>
+        <li><b>Two choices</b> = pull the plug or watch the intruder.</li>
+        <li><b>Volatile</b> = vanishes on power-off; RAM first.</li>
+        <li><b>Chain of custody</b> = who had it, when, and what they did.</li>
+        <li><b>Hash</b> = digital fingerprint; one bit change, new value.</li>
+        <li><b>Image</b> = every sector, including slack and unallocated.</li>
+        <li><b>Preserve</b> = seal, safe, log, verify.</li>
+        <li><b>Authenticate</b> = hash, known-good sets, re-image, signature.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> built from the supplied Technical book <i>Cyber Security &amp; Digital Forensics (SPPU)</i>, Unit 4, §§4.1–4.15 (book pages 4-1 to 4-20). The book covers this unit in full, including the 16 processing steps and the CERT advisory wording. The “four practical collection options” and the ten contamination controls are expanded from the book's chain-of-custody section and Nelson et al., <i>Computer Forensics and Investigations</i>.</div>
+
+  <div class="tip"><b>Exam-day order:</b> Q3(b) processing steps and Q4(a)/(b) collection methods are the most repeated. Write the numbered list first, then add the explanation. Do not lose marks for a missing diagram — draw the collection flow (collect → preserve → analyse → present).</div>
+</section>
+
+<footer>
+  CSDF · Unit 4 · built from 7 SPPU end-sem papers (2022 May – 2025 Nov) · 410244(C) · 2019 Pattern<br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

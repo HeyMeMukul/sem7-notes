@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BT Unit 5 — Ethereum &amp; Solidity | SPPU 410243</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<aside class="side">
+  <h3>BT · Unit 5</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s51">5.1 What is Ethereum?</a>
+    <a href="#s52">5.2 Ethereum networks</a>
+    <a href="#s53">5.3 EVM</a>
+    <a href="#s54">5.4 Smart contracts</a>
+    <a href="#s55">5.5 Types of smart contracts</a>
+    <a href="#s56">5.6 Solidity + deployment</a>
+    <a href="#s57">5.7 Swarm</a>
+    <a href="#s58">5.8 Whisper</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Blockchain-Platforms-and-Consensus.html">Unit 3 · Platforms &amp; consensus</a>
+  <a href="Unit-4-Cryptocurrency-and-Bitcoin.html">Unit 4 · Cryptocurrency &amp; Bitcoin</a>
+  <a href="Unit-6-Blockchain-Case-Studies.html">Unit 6 · Case studies</a>
+  <a href="index.html">↩ BT home</a>
+</aside>
+
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 5 — Ethereum &amp; Solidity</h1>
+  <p><b>Subject:</b> Blockchain Technology (410243) &nbsp;·&nbsp; <b>Exam:</b> Saturday, 28 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>Every Ethereum question from the five papers is here: Ethereum features, Mainnet/Testnet/Private, EVM, smart-contract types, gas, Solidity deployment, Swarm and Whisper. Smart contracts are one of the two hottest topics in the whole subject (6 appearances, tied with banking).</p>
+  <div class="meta">
+    <span class="chip">📄 <b>5</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>24</b> Unit-5 instances</span>
+    <span class="chip">🧩 <b>9</b> distinct topics</span>
+    <span class="chip">🔥 Hottest: <b>smart contracts — 6×</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>17–18 marks</b></span>
+  </div>
+</header>
+
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — what actually gets asked</h2>
+  <p class="lead">Five end-sem papers only. A sub-question that combines two topics (e.g. 2025 May Q5b = smart contract + gas) appears in both rows, so the rows add up to more than 24.</p>
+
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th style="text-align:left">Question asked</th><th style="text-align:left">Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td style="text-align:left">Smart contract — concept, example, purpose, types</td><td style="text-align:left">2022 Nov Q6(a) [8] · 2023 Nov Q5(c) [6] · 2024 May Q6(a) [8] · 2025 May Q5(b) [9] · 2025 May Q6(b) [9] · 2025 Nov Q6(a) [8]</td><td><span class="stars">★★★★★</span> 6×</td></tr>
+      <tr><td>2</td><td style="text-align:left">What is Ethereum? Features / differs from traditional crypto</td><td style="text-align:left">2022 Nov Q5(a) [8] · 2023 Nov Q5(a) [6] · 2024 May Q5(a) [8] · 2025 May Q5(a) [9] · 2025 Nov Q5(a) [8]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>3</td><td style="text-align:left">Types of Ethereum networks (Mainnet / Testnet / Private)</td><td style="text-align:left">2023 Nov Q5(a) [6, part] · 2024 May Q5(b) [9] · 2025 May Q5(a) [9, part] · 2025 Nov Q5(b) [9]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>4</td><td style="text-align:left">Swarm — decentralized storage</td><td style="text-align:left">2022 Nov Q5(c) [4] · 2023 Nov Q5(b) [6] · 2024 May Q6(b) [9] · 2025 Nov Q6(b) [9]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>5</td><td style="text-align:left">Whisper — decentralized messaging</td><td style="text-align:left">2022 Nov Q6(b) [6] · 2023 Nov Q6(b) [6] · 2025 May Q6(a) [9]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>6</td><td style="text-align:left">EVM — architecture and significance</td><td style="text-align:left">2022 Nov Q6(c) [4] · 2023 Nov Q6(a) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>7</td><td style="text-align:left">Solidity — language and implementation</td><td style="text-align:left">2022 Nov Q5(b) [6] · 2023 Nov Q6(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>8</td><td style="text-align:left">Role of gas in smart-contract execution</td><td style="text-align:left">2025 May Q5(b) [9, part]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>9</td><td style="text-align:left">Steps to deploy a smart contract</td><td style="text-align:left">2025 May Q6(b) [9, part]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>Guaranteed:</b> a smart-contract question appears in <b>every single paper</b>. Ethereum basics and Swarm appear in four of five. Prepare the smart-contract lifecycle + one code example, and you can answer Q5 or Q6 in full.</div>
+
+  <div class="tip"><b>Marks strategy:</b> 4 marks = definition + 3 points. 6 marks = definition + working + one example. 9 marks = definition + architecture/steps + <b>table or code</b> + benefits/limitations. For any Solidity question, write a small contract — it proves you can implement, not just define.</div>
+</section>
+
+<!-- ================= 5.1 ================= -->
+<section class="card" id="s51">
+  <h2>5.1 What is Ethereum?</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is Ethereum? Explain in detail how it differs from traditional cryptocurrencies. Enlist the features of Ethereum.</p>
+      <div class="badges"><span class="b marks">8 / 6 / 9 marks</span><span class="b rep hot">★★★★★ 5×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [8] · 2023 Nov Q5(a) [6 — with types] · 2024 May Q5(a) [8] · 2025 May Q5(a) [9 — features + networks] · 2025 Nov Q5(a) [8]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Ethereum</b> is an open-source, decentralised, programmable blockchain platform. It runs <b>smart contracts</b> on the <b>Ethereum Virtual Machine (EVM)</b> and lets developers build decentralised applications (DApps). It was proposed by <b>Vitalik Buterin</b> in 2013; the first live version, <b>Frontier</b>, was released in 2015.</p>
+      <p>Its native currency is <b>ether (ETH)</b>. Ether pays for computation (<b>gas</b>) and secures the network through staking.</p>
+
+      <h4>2. Brief history</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Year</th><th>Event</th></tr></thead>
+        <tbody>
+          <tr><td>2013</td><td>Vitalik Buterin describes Ethereum in a white paper.</td></tr>
+          <tr><td>2014</td><td>Crowdsale; Ethereum Switzerland GmbH formed.</td></tr>
+          <tr><td>2015</td><td><b>Frontier</b> — first live network.</td></tr>
+          <tr><td>2016</td><td><b>Homestead</b>; the DAO hack splits the chain into ETH and Ethereum Classic (ETC).</td></tr>
+          <tr><td>2017–2021</td><td>Metropolis, DeFi and NFT growth.</td></tr>
+          <tr><td>2022</td><td><b>The Merge</b> — consensus changes from PoW to PoS.</td></tr>
+          <tr><td>2024</td><td>Dencun upgrade — cheaper Layer-2 data (proto-danksharding).</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Features of Ethereum (2025 May Q5a — 9 marks)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Feature</th><th>Explanation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Ether (ETH)</b></td><td>Native cryptocurrency used to pay gas and to stake.</td></tr>
+          <tr><td><b>Smart contracts</b></td><td>Self-executing programs stored on-chain; code is immutable after deployment.</td></tr>
+          <tr><td><b>EVM</b></td><td>Deterministic, sandboxed virtual machine that executes contract bytecode on every node.</td></tr>
+          <tr><td><b>Accounts</b></td><td>Two types: externally owned accounts (private key) and contract accounts (code + storage).</td></tr>
+          <tr><td><b>Gas</b></td><td>Unit that measures computation; prevents infinite loops and pays validators.</td></tr>
+          <tr><td><b>Solidity</b></td><td>Main high-level language; JavaScript-like, compiles to EVM bytecode.</td></tr>
+          <tr><td><b>Tokens</b></td><td>ERC-20 (fungible), ERC-721 (NFT), ERC-1155 (multi-token).</td></tr>
+          <tr><td><b>DApps</b></td><td>Applications whose backend logic is a smart contract.</td></tr>
+          <tr><td><b>DAOs</b></td><td>Decentralised autonomous organisations governed by token voting and code.</td></tr>
+          <tr><td><b>Proof of Stake</b></td><td>Validators stake 32 ETH; energy use is ~99.95% lower than PoW.</td></tr>
+          <tr><td><b>EVM-compatible chains</b></td><td>Polygon, BNB Chain, Arbitrum, Optimism, Base reuse the same tooling.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. How Ethereum differs from traditional cryptocurrencies (8-mark core)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Bitcoin / traditional crypto</th><th>Ethereum</th></tr></thead>
+        <tbody>
+          <tr><td>Purpose</td><td>Digital money / store of value</td><td>Programmable platform for contracts and DApps</td></tr>
+          <tr><td>Programmability</td><td>Limited Script, non-Turing-complete</td><td>Turing-complete EVM; any deterministic program</td></tr>
+          <tr><td>Ledger model</td><td>UTXO</td><td>Account-based (balance + nonce + code + storage)</td></tr>
+          <tr><td>Native unit</td><td>BTC, capped at 21M</td><td>ETH, no hard cap; used for gas</td></tr>
+          <tr><td>Fees</td><td>Block-space fee to miners</td><td>Gas = gas used × gas price</td></tr>
+          <tr><td>Tokens</td><td>Mostly one asset</td><td>Anyone can issue ERC-20/721 tokens</td></tr>
+          <tr><td>Consensus</td><td>PoW</td><td>PoS since 2022</td></tr>
+          <tr><td>Block time</td><td>~10 minutes</td><td>~12-second slots</td></tr>
+          <tr><td>Applications</td><td>Payments, store of value</td><td>DeFi, NFTs, DAOs, games, identity, supply chain</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>5. Ether, gas and accounts</h4>
+      <ul>
+        <li><b>1 ETH = 10<sup>18</sup> wei</b>; <b>1 gwei = 10<sup>9</sup> wei</b>.</li>
+        <li><b>EOA:</b> controlled by a private key, has a balance and nonce, no code.</li>
+        <li><b>Contract account:</b> has code and persistent storage, no private key; it runs only when called by a transaction.</li>
+        <li><b>Transaction fee</b> = gas used × (base fee + priority fee). A plain ETH transfer uses <b>21,000 gas</b>.</li>
+      </ul>
+
+      <h4>6. Worked gas example</h4>
+      <p>A user sends ETH with a gas price of 20 gwei. Gas used = 21,000.</p>
+      <div class="math">Fee = 21,000 × 20 gwei = 420,000 gwei = 0.00042 ETH</div>
+      <p>If ETH = $3,000, the fee is 0.00042 × 3,000 = <b>$1.26</b>. A complex DeFi swap may use 150,000 gas, so the same gas price costs 150,000 × 20 = 3,000,000 gwei = <b>0.003 ETH</b> = $9.00.</p>
+
+      <h4>7. Real-world applications</h4>
+      <ul>
+        <li><b>DeFi:</b> lending, borrowing, stablecoins, decentralised exchanges.</li>
+        <li><b>NFTs:</b> digital art, tickets, memberships.</li>
+        <li><b>DAOs:</b> community treasuries and voting.</li>
+        <li><b>Supply chain:</b> provenance and tracking.</li>
+        <li><b>Identity:</b> ENS names, verifiable credentials.</li>
+        <li><b>Voting and agreements:</b> transparent, tamper-resistant records.</li>
+      </ul>
+
+      <div class="note"><b>One-line answer:</b> "Bitcoin is digital gold; Ethereum is a world computer." Ethereum adds a Turing-complete VM, accounts, gas and tokens on top of a blockchain.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.2 ================= -->
+<section class="card" id="s52">
+  <h2>5.2 Ethereum networks</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Identify two types of Ethereum networks and explain the purpose of each. Compare Ethereum Mainnet, Testnet and Private networks.</p>
+      <div class="badges"><span class="b marks">9 / 6 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q5(a) [6 — types of Ethereum] · 2024 May Q5(b) [9 — two types] · 2025 May Q5(a) [9, part — Mainnet/Testnet/Private] · 2025 Nov Q5(b) [9 — two types]</p>
+
+      <h4>1. Mainnet</h4>
+      <p><b>Mainnet</b> is the live, production Ethereum blockchain. It uses real ETH, has real economic value and is secured by hundreds of thousands of validators. Chain ID = <b>1</b>. All deployed contracts on Mainnet cost real gas and are permanent.</p>
+      <ul>
+        <li><b>Purpose:</b> real payments, DeFi, NFTs, production DApps.</li>
+        <li><b>Risk:</b> bugs cost real money; gas is expensive during congestion.</li>
+      </ul>
+
+      <h4>2. Testnet</h4>
+      <p>A <b>testnet</b> is a separate public Ethereum network that behaves like Mainnet but uses <b>free test ETH</b> with no real value. Developers deploy and test contracts there before Mainnet.</p>
+      <ul>
+        <li><b>Purpose:</b> testing, debugging, audits, CI pipelines.</li>
+        <li><b>Faucets:</b> free test ETH from a faucet.</li>
+        <li><b>Examples:</b> Sepolia (current PoS testnet), Goerli (deprecated), and historically Ropsten (PoW), Kovan and Rinkeby (PoA).</li>
+        <li><b>Chain IDs:</b> Sepolia = 11155111; Goerli = 5.</li>
+      </ul>
+
+      <h4>3. Private network</h4>
+      <p>A <b>private</b> Ethereum network runs the same EVM but is not connected to Mainnet. One organisation or a consortium controls the validators. It can be permissioned and can use a custom chain ID and consensus (IBFT, Clique PoA, Raft).</p>
+      <ul>
+        <li><b>Purpose:</b> enterprise pilots, internal ledgers, privacy, zero gas cost.</li>
+        <li><b>Examples:</b> GoQuorum (J.P. Morgan), Hyperledger Besu private, Geth private.</li>
+        <li><b>Risk:</b> you must secure and govern it yourself; no public security budget.</li>
+      </ul>
+
+      <h4>4. Comparison table (the 9-mark answer)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Mainnet</th><th>Testnet</th><th>Private</th></tr></thead>
+        <tbody>
+          <tr><td>Purpose</td><td>Production / real value</td><td>Testing / development</td><td>Enterprise / consortium</td></tr>
+          <tr><td>Currency</td><td>Real ETH</td><td>Free test ETH</td><td>Custom / no value</td></tr>
+          <tr><td>Access</td><td>Public</td><td>Public</td><td>Permissioned</td></tr>
+          <tr><td>Who validates</td><td>Permissionless staking</td><td>Public test validators</td><td>Chosen organisation nodes</td></tr>
+          <tr><td>Chain ID</td><td>1</td><td>Sepolia 11155111; Goerli 5</td><td>Custom (e.g. 1337)</td></tr>
+          <tr><td>Gas cost</td><td>Real, market price</td><td>Free</td><td>Zero or fixed</td></tr>
+          <tr><td>Data privacy</td><td>Public</td><td>Public</td><td>Private</td></tr>
+          <tr><td>Examples</td><td>Ethereum</td><td>Sepolia, Goerli</td><td>Quorum, Besu, Geth</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>5. "Two types" short answer (2024 / 2025 Nov)</h4>
+      <p>If the paper asks for <b>two</b>, write <b>Mainnet</b> and <b>Testnet</b>: Mainnet is the live chain with real ETH; Testnet is an identical but valueless chain for testing. Add one line: "A third type, the private network, is used by enterprises and is permissioned."</p>
+
+      <h4>6. ETH vs ETC (if "types of Ethereum" means the fork)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Ethereum (ETH)</th><th>Ethereum Classic (ETC)</th></tr></thead>
+        <tbody>
+          <tr><td>Origin</td><td>Chain that reversed the 2016 DAO hack</td><td>Original chain that kept the hack</td></tr>
+          <tr><td>Consensus</td><td>PoS since 2022</td><td>PoW</td></tr>
+          <tr><td>Community</td><td>Largest, active development</td><td>Smaller, conservative</td></tr>
+          <tr><td>Supply</td><td>No hard cap</td><td>Hard cap ~210 million</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="warn"><b>Never send real ETH to a testnet address</b> (or vice versa). The addresses look the same, but the funds are on different chains and are lost.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.3 ================= -->
+<section class="card" id="s53">
+  <h2>5.3 Ethereum Virtual Machine (EVM)</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Explain the Ethereum Virtual Machine in detail. What is the significance of the EVM?</p>
+      <div class="badges"><span class="b marks">4 / 6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(c) [4] · 2023 Nov Q6(a) [6 — significance]</p>
+
+      <h4>1. Definition</h4>
+      <p>The <b>EVM</b> is the runtime environment of Ethereum. It is a <b>stack-based, deterministic, sandboxed virtual machine</b> that executes smart-contract <b>bytecode</b> on every full node. It is the part of Ethereum that turns a transaction into a state change.</p>
+
+      <h4>2. Key properties</h4>
+      <ul>
+        <li><b>Quasi-Turing-complete:</b> it can compute anything, but every opcode costs gas, so execution always halts.</li>
+        <li><b>256-bit word size:</b> matches the hash and elliptic-curve arithmetic used by Ethereum.</li>
+        <li><b>Stack-based:</b> up to 1024 items; push/pop operations.</li>
+        <li><b>Deterministic:</b> the same code + same input + same state gives the same output on every node.</li>
+        <li><b>Sandboxed:</b> a failed call reverts its state changes; only gas is consumed.</li>
+        <li><b>Single-threaded:</b> contracts execute one after another, not in parallel.</li>
+        <li><b>No system calls or hardware access:</b> it is a pure computation machine.</li>
+      </ul>
+
+      <h4>3. EVM architecture</h4>
+      <pre class="tree">┌─────────────────────────────────────────────────────────┐
+│                      EVM instance                       │
+│                                                         │
+│  ┌──────────────┐   ┌──────────────┐   ┌────────────┐  │
+│  │  CODE (ROM)  │   │    STACK     │   │  MEMORY    │  │
+│  │  bytecode    │   │  1024 words  │   │  volatile  │  │
+│  │  immutable   │   │  256-bit     │   │  zero-init │  │
+│  └──────────────┘   └──────────────┘   └────────────┘  │
+│                                                         │
+│  ┌──────────────┐   ┌──────────────┐   ┌────────────┐  │
+│  │   STORAGE    │   │ PROGRAM      │   │    GAS     │  │
+│  │  persistent  │   │ COUNTER      │   │  remaining │  │
+│  │  key-value   │   │              │   │            │  │
+│  └──────────────┘   └──────────────┘   └────────────┘  │
+│                                                         │
+│  world state: address ──► {balance, nonce, code, root}  │
+└─────────────────────────────────────────────────────────┘</pre>
+
+      <h4>4. Execution cycle</h4>
+      <ol>
+        <li>Fetch the next opcode at the program counter.</li>
+        <li>Decode it and read operands from the stack.</li>
+        <li>Check that enough gas is available; deduct the opcode's gas cost.</li>
+        <li>Execute the operation; write the result to stack/memory/storage.</li>
+        <li>Increment the program counter and repeat.</li>
+        <li>On <code>STOP</code>/<code>RETURN</code>, commit state. On <code>REVERT</code>/out-of-gas, roll back state and keep the gas fee.</li>
+      </ol>
+
+      <h4>5. What the EVM executes</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Opcode group</th><th>Examples</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>Arithmetic</td><td>ADD, MUL, SUB, DIV, EXP</td><td>Math on 256-bit integers</td></tr>
+          <tr><td>Logic / comparison</td><td>AND, OR, XOR, LT, GT, EQ</td><td>Bitwise and boolean logic</td></tr>
+          <tr><td>Stack / memory</td><td>PUSH, POP, MLOAD, MSTORE</td><td>Move data</td></tr>
+          <tr><td>Storage</td><td>SLOAD, SSTORE</td><td>Persistent contract state</td></tr>
+          <tr><td>Control flow</td><td>JUMP, JUMPI, PC</td><td>Loops and branches</td></tr>
+          <tr><td>Calls / create</td><td>CALL, DELEGATECALL, CREATE</td><td>Call other contracts, deploy</td></tr>
+          <tr><td>Logging</td><td>LOG0–LOG4</td><td>Emit events</td></tr>
+          <tr><td>Halting</td><td>STOP, RETURN, REVERT, SELFDESTRUCT</td><td>End execution</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>6. Significance (6-mark answer)</h4>
+      <ul>
+        <li><b>Portability:</b> one contract runs identically on every node and every EVM chain.</li>
+        <li><b>Determinism:</b> all nodes compute the same state root, which is necessary for consensus.</li>
+        <li><b>Safety:</b> gas bounds execution, so a malicious contract cannot loop forever.</li>
+        <li><b>Isolation:</b> sandboxing protects the host node from the contract.</li>
+        <li><b>Programmability:</b> it is the engine behind DeFi, NFTs, DAOs and tokens.</li>
+        <li><b>Standardisation:</b> Solidity, Vyper and tooling target the same bytecode, creating a large ecosystem.</li>
+      </ul>
+
+      <h4>7. EVM vs JVM (one line)</h4>
+      <p>The JVM virtualises a general-purpose computer for Java/Scala; the EVM virtualises only a <b>deterministic calculation and storage machine</b> for smart contracts, with gas metering and no OS/hardware interface.</p>
+
+      <div class="note"><b>4-mark version:</b> definition + stack-based + 256-bit + gas-limited + deterministic. <b>6-mark version:</b> add the architecture diagram and three significance points.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.4 ================= -->
+<section class="card" id="s54">
+  <h2>5.4 Smart contracts</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Explain the concept of a smart contract with an example. Define smart contracts with a real-world scenario and evaluate their benefits. Discuss the role of gas.</p>
+      <div class="badges"><span class="b marks">6 / 8 / 9 marks</span><span class="b rep hot">★★★★★ 6×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q6(a) [8 — concept + example] · 2025 May Q5(b) [9 — real-world example + gas] · 2025 Nov Q6(a) [8 — concept + example] · also part of 2022 Nov Q6(a) [8] and 2023 Nov Q5(c) [6]</p>
+
+      <h4>1. Definition</h4>
+      <p>A <b>smart contract</b> is a program stored on a blockchain that automatically executes the terms of an agreement when predefined conditions are met. The code and the data are immutable after deployment, and every node runs the same code and reaches the same result.</p>
+      <p>The term was coined by <b>Nick Szabo</b> in the 1990s. In Ethereum, a smart contract is a <b>contract account</b> with bytecode and persistent storage.</p>
+
+      <h4>2. Properties</h4>
+      <ul>
+        <li><b>Self-executing:</b> no manual step to enforce the outcome.</li>
+        <li><b>Immutable:</b> code cannot be changed; a new version must be deployed.</li>
+        <li><b>Deterministic:</b> same inputs → same output on every node.</li>
+        <li><b>Transparent:</b> anyone can read the code and the transaction history.</li>
+        <li><b>Permissionless:</b> anyone can call a public function if they pay gas.</li>
+        <li><b>Composable:</b> contracts can call other contracts (DeFi "money legos").</li>
+      </ul>
+
+      <h4>3. Real-world example — flight-delay insurance (2025 May Q5b)</h4>
+      <p>An insurer deploys a contract with a pool of ETH. Travellers pay a premium. The contract reads a trusted flight-status oracle. If the flight is delayed by more than 3 hours, the contract automatically pays the traveller; otherwise the premium stays in the pool.</p>
+      <pre class="tree">traveller ── premium ──► [ Insurance contract ]
+                                  │
+                                  │ reads flight oracle
+                                  ▼
+                    delay &gt; 3 hours ?
+                     │              │
+                    yes             no
+                     │              │
+                     ▼              ▼
+             pay traveller      keep premium
+             (no claim form)    (pool grows)</pre>
+      <p><b>Benefits in this scenario:</b> instant payout, no claim paperwork, no adjuster, transparent rules, cannot be selectively denied, and the pool is auditable.</p>
+
+      <h4>4. Benefits and challenges</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Benefits</th><th>Challenges</th></tr></thead>
+        <tbody>
+          <tr><td><b>Disintermediation:</b> removes brokers and escrow agents.</td><td><b>Immutability:</b> a bug cannot be patched; a new contract is needed.</td></tr>
+          <tr><td><b>Near real-time settlement:</b> payment on the trigger event.</td><td><b>Oracle problem:</b> bad external data gives a wrong outcome.</td></tr>
+          <tr><td><b>Transparency:</b> rules and history are visible to all.</td><td><b>Privacy:</b> public code and state expose business logic.</td></tr>
+          <tr><td><b>Lower cost:</b> less paperwork, audit and manual processing.</td><td><b>Legal uncertainty:</b> enforceability varies by country.</td></tr>
+          <tr><td><b>Accuracy:</b> exact code execution, no human discretion.</td><td><b>Bugs:</b> the 2016 DAO hack drained ~$50M of ETH.</td></tr>
+          <tr><td><b>Composability:</b> contracts can call each other.</td><td><b>Gas cost:</b> complex logic is expensive.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>5. Role of gas (the second half of 2025 May Q5b)</h4>
+      <p><b>Gas</b> is the unit that measures computational work on Ethereum. Every opcode has a fixed gas cost. The sender pays:</p>
+      <div class="math">Transaction fee = gas used × gas price<br>
+      gas price = base fee + priority fee (tip)</div>
+      <ul>
+        <li><b>Prevents infinite loops:</b> execution stops when gas runs out (out-of-gas), so the halting problem cannot stall the chain.</li>
+        <li><b>Pays validators:</b> the fee compensates the nodes that execute and include the transaction.</li>
+        <li><b>Allocates scarce blockspace:</b> users bid more when demand is high.</li>
+        <li><b>Punishes spam:</b> every computation has a real cost.</li>
+        <li><b>Refund:</b> unused gas is returned; a reverted transaction still pays for the work done.</li>
+      </ul>
+      <p><b>Worked example:</b> a contract call uses 50,000 gas at 30 gwei. Fee = 50,000 × 30 = 1,500,000 gwei = <b>0.0015 ETH</b>. At $3,000/ETH that is <b>$4.50</b>. The same call at 100 gwei costs 5,000,000 gwei = 0.005 ETH = $15.00.</p>
+
+      <h4>6. Smart-contract lifecycle</h4>
+      <pre class="tree">write Solidity ──► compile (solc) ──► bytecode + ABI
+                                            │
+                                            ▼
+                                  deploy transaction
+                                  (to address 0x0)
+                                            │
+                                            ▼
+                                  contract address
+                                            │
+                              ┌─────────────┴─────────────┐
+                              ▼                           ▼
+                        call function                 read state
+                        (costs gas)                   (free view)
+                              │
+                              ▼
+                     EVM executes + state update</pre>
+
+      <h4>7. Important limitation</h4>
+      <p>A contract cannot fetch data from the internet by itself. It needs an <b>oracle</b> (Chainlink, API3) to bring off-chain data on-chain. This is the "oracle problem".</p>
+
+      <div class="tip"><b>9-mark structure:</b> definition (2) + flight-insurance example (2) + gas role and formula (2) + worked fee (1) + benefits/challenges table (2).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.5 ================= -->
+<section class="card" id="s55">
+  <h2>5.5 Types of smart contracts</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>What is a smart contract? Explain / discuss its types. Discuss two types commonly used on the Ethereum platform.</p>
+      <div class="badges"><span class="b marks">8 / 6 / 9 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(a) [8] · 2023 Nov Q5(c) [6] · 2025 May Q6(b) [9 — two types + deployment]</p>
+
+      <p>The book classifies self-executing contracts into <b>three</b> types by application. For the 2025 paper, which asks for <b>two</b>, write the first two and mention the third.</p>
+
+      <h4>1. Smart legal contracts</h4>
+      <ul>
+        <li>Legally enforceable contracts whose terms are written in code.</li>
+        <li>The parties are bound to perform; failure can trigger legal action.</li>
+        <li>Example: a supply contract that releases payment when delivery is confirmed by a trusted oracle.</li>
+        <li>Use: trade finance, escrow, insurance, employment agreements.</li>
+      </ul>
+
+      <h4>2. Decentralised Autonomous Organisations (DAOs)</h4>
+      <ul>
+        <li>A blockchain-based organisation whose rules and governance are coded into contracts.</li>
+        <li>Members hold governance tokens; proposals and votes are on-chain; the treasury is controlled by the contract.</li>
+        <li>Example: a DAO that funds open-source projects — members vote, and the contract releases funds automatically.</li>
+        <li>Use: investment clubs, protocol governance, community treasuries.</li>
+      </ul>
+
+      <h4>3. Application Logic Contracts (ALCs)</h4>
+      <ul>
+        <li>Contracts that contain application-specific logic and stay in sync with other blockchain contracts.</li>
+        <li>They allow communication across devices — for example, IoT devices and blockchain.</li>
+        <li>Example: a contract that records sensor readings and triggers a payment when a threshold is crossed.</li>
+        <li>Use: IoT, supply chain, automated machine-to-machine workflows.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Main purpose</th><th>Example</th><th>Key feature</th></tr></thead>
+        <tbody>
+          <tr><td>Smart legal contract</td><td>Enforce a legal agreement</td><td>Escrow / trade finance</td><td>Legal enforceability</td></tr>
+          <tr><td>DAO</td><td>Run an organisation</td><td>Token-voting treasury</td><td>Governance by code</td></tr>
+          <tr><td>ALC</td><td>Connect applications/devices</td><td>IoT sensor payment</td><td>Cross-device logic</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. Two types + deployment (2025 May Q6b — 9 marks)</h4>
+      <p><b>Type 1 — Smart legal contract:</b> codifies a legal agreement; both parties sign; the contract enforces payment or delivery. <b>Type 2 — Application Logic Contract:</b> encodes business/device logic and talks to other contracts. Then write the deployment steps from §5.6 (write → compile → ABI + bytecode → connect wallet → deploy → get address → interact).</p>
+
+      <div class="note"><b>Do not confuse "types of contracts" with "types of accounts".</b> Contracts are smart legal, DAO and ALC. Accounts are EOA and contract account.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.6 ================= -->
+<section class="card" id="s56">
+  <h2>5.6 Solidity — implementation and deployment</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>Explain Solidity in detail. Discuss how smart contracts are implemented using Solidity. Elaborate the basic steps involved in deploying a smart contract on the Ethereum blockchain.</p>
+      <div class="badges"><span class="b marks">6 / 9 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(b) [6] · 2023 Nov Q6(c) [6] · 2025 May Q6(b) [9 — deployment steps]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Solidity</b> is a high-level, statically typed, contract-oriented programming language for writing Ethereum smart contracts. Its syntax is similar to JavaScript, C++ and Java. It compiles to <b>EVM bytecode</b> using the <b>solc</b> compiler. It was created by Gavin Wood and is maintained as an open-source project.</p>
+
+      <h4>2. Features</h4>
+      <ul>
+        <li><b>Contracts</b> — like classes; contain state variables and functions.</li>
+        <li><b>State variables</b> — stored permanently in contract storage.</li>
+        <li><b>Functions</b> — <code>public</code>, <code>private</code>, <code>internal</code>, <code>external</code>; <code>view</code>/<code>pure</code> for reads.</li>
+        <li><b>Modifiers</b> — reusable checks such as <code>onlyOwner</code>.</li>
+        <li><b>Events</b> — cheap logs for off-chain apps.</li>
+        <li><b>Mappings, arrays, structs, enums</b> — data structures.</li>
+        <li><b>Inheritance, interfaces, libraries</b> — code reuse.</li>
+        <li><b>Payable</b> — functions that can receive ETH.</li>
+        <li><b>Error handling</b> — <code>require</code>, <code>revert</code>, <code>assert</code>; custom errors.</li>
+        <li><b>Pragma</b> — compiler version directive.</li>
+      </ul>
+
+      <h4>3. A complete contract</h4>
+      <pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleStorage {
+    uint256 private value;
+
+    event ValueChanged(uint256 newValue);
+
+    function set(uint256 x) public {
+        value = x;
+        emit ValueChanged(x);
+    }
+
+    function get() public view returns (uint256) {
+        return value;
+    }
+}</code></pre>
+
+      <h4>4. A supply-chain style contract</h4>
+      <pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Shipment {
+    enum Status { Created, InTransit, Delivered }
+
+    address public owner;
+    Status public status;
+
+    constructor() {
+        owner = msg.sender;
+        status = Status.Created;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "not owner");
+        _;
+    }
+
+    function ship() public onlyOwner {
+        require(status == Status.Created, "bad state");
+        status = Status.InTransit;
+    }
+
+    function deliver() public onlyOwner {
+        require(status == Status.InTransit, "bad state");
+        status = Status.Delivered;
+    }
+}</code></pre>
+
+      <h4>5. Implementation workflow</h4>
+      <ol>
+        <li><b>Write</b> the contract in a <code>.sol</code> file with a pragma.</li>
+        <li><b>Compile</b> with <code>solc</code>, Remix or Hardhat. Output = <b>bytecode</b> (deployable code) + <b>ABI</b> (function interface).</li>
+        <li><b>Test</b> on a local chain (Hardhat Network, Anvil, Ganache) or a testnet.</li>
+        <li><b>Audit</b> for reentrancy, overflow, access control and oracle risk.</li>
+        <li><b>Deploy</b> to the chosen network (see below).</li>
+        <li><b>Verify</b> the source on Etherscan so users can read it.</li>
+        <li><b>Interact</b> using the ABI and contract address.</li>
+      </ol>
+
+      <h4>6. Deployment steps (2025 May Q6b — 9 marks)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Step</th><th>Action</th><th>Tool</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Create an account and fund it with ETH for gas.</td><td>MetaMask, faucet</td></tr>
+          <tr><td>2</td><td>Write the contract and set the pragma version.</td><td>VS Code, Remix</td></tr>
+          <tr><td>3</td><td>Compile to bytecode and ABI.</td><td><code>solc</code>, Remix, Hardhat</td></tr>
+          <tr><td>4</td><td>Select the network (Mainnet / Sepolia / local).</td><td>MetaMask network selector</td></tr>
+          <tr><td>5</td><td>Send a <b>contract creation transaction</b> (to address <code>0x0</code>) with bytecode as data and gas.</td><td>Remix "Deploy", <code>ethers.js</code></td></tr>
+          <tr><td>6</td><td>Receive the <b>contract address</b> from the receipt.</td><td>Etherscan, receipt logs</td></tr>
+          <tr><td>7</td><td>Interact using the ABI + address; verify source on Etherscan.</td><td>DApp, block explorer</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <pre class="tree">Solidity source (.sol)
+        │  solc / Hardhat / Remix
+        ▼
+   ┌─────────────┬─────────────┐
+   │  bytecode   │     ABI     │
+   └─────────────┴─────────────┘
+        │               │
+        ▼               ▼
+ deploy tx         call functions
+ (to 0x0)          (from a DApp)
+        │
+        ▼
+ contract address ──► Etherscan verification</pre>
+
+      <h4>7. Deployment tools</h4>
+      <ul>
+        <li><b>Remix IDE:</b> browser IDE; best for learning and quick deploys.</li>
+        <li><b>Hardhat:</b> Node.js dev environment; testing, scripts, local network.</li>
+        <li><b>Truffle:</b> older suite with migrations and Ganache.</li>
+        <li><b>Foundry:</b> fast Rust-based toolchain with Solidity tests.</li>
+        <li><b>ethers.js / web3.js:</b> JavaScript libraries to deploy and call from an app.</li>
+      </ul>
+
+      <div class="tip"><b>6-mark version:</b> definition + 5 features + one code snippet. <b>9-mark version:</b> add the seven deployment steps and the diagram.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.7 ================= -->
+<section class="card" id="s57">
+  <h2>5.7 Swarm — decentralized storage</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Discuss Swarm, the decentralized storage platform. How does Swarm contribute to decentralized storage in the Ethereum ecosystem?</p>
+      <div class="badges"><span class="b marks">4 / 6 / 9 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(c) [4] · 2023 Nov Q5(b) [6] · 2024 May Q6(b) [9] · 2025 Nov Q6(b) [9]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Swarm</b> is Ethereum's <b>decentralised storage platform</b>. It stores large data — DApp front-ends, images, NFT metadata, documents — <b>off-chain</b> across a peer-to-peer network. It is one of the three pillars of Web3: <b>Ethereum contracts</b> (logic), <b>Swarm</b> (storage) and <b>Whisper</b> (messaging).</p>
+
+      <h4>2. Why it is needed</h4>
+      <ul>
+        <li>Storing large data on-chain is extremely expensive (every node replicates it forever).</li>
+        <li>DApps need a place for front-end files and media.</li>
+        <li>Centralised servers create a single point of failure and censorship.</li>
+        <li>IPFS does not guarantee that content stays available unless the original host keeps serving it.</li>
+      </ul>
+
+      <h4>3. Architecture</h4>
+      <ol>
+        <li>A file is split into <b>chunks</b> of at most <b>4 KB</b>.</li>
+        <li>Each chunk is hashed; the <b>32-byte hash</b> is its address.</li>
+        <li>Chunks are distributed across the P2P network; nodes store the chunks they are responsible for.</li>
+        <li>To retrieve a file, the user asks for the root hash; the network resolves the chunks.</li>
+        <li><b>ENS</b> (Ethereum Name Service) maps a human-readable name to the hash.</li>
+        <li>An <b>incentive layer</b> pays node operators for storage and bandwidth.</li>
+      </ol>
+
+      <pre class="tree">             file (e.g. 10 KB)
+                    │
+        ┌───────────┼───────────┐
+        ▼           ▼           ▼
+     chunk 1     chunk 2     chunk 3     (max 4 KB each)
+     24B1A9      341A0D      FFO19A
+        │           │           │
+        ▼           ▼           ▼
+     node 1      node 2      node 3      (P2P swarm)
+        │           │           │
+        └───────────┴───────────┘
+                    │
+              root hash + ENS name
+                    │
+                    ▼
+             DApp front-end / NFT metadata</pre>
+
+      <h4>4. Contribution to the Ethereum ecosystem (9-mark answer)</h4>
+      <ul>
+        <li><b>Off-chain scaling:</b> keeps bulk data off the expensive chain while the hash/anchor stays on-chain.</li>
+        <li><b>DApp hosting:</b> front-end HTML/CSS/JS can be served from Swarm, so the whole DApp is decentralised.</li>
+        <li><b>NFT metadata:</b> images and JSON live on Swarm; the token stores the hash.</li>
+        <li><b>Censorship resistance:</b> no central server to take down.</li>
+        <li><b>Redundancy:</b> chunks are replicated; a single node failure does not lose the file.</li>
+        <li><b>Ethereum integration:</b> uses the Geth client and an Ethereum account; ENS naming; payment layer.</li>
+        <li><b>Content integrity:</b> the hash proves the data was not modified.</li>
+      </ul>
+
+      <h4>5. Swarm vs IPFS</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Swarm</th><th>IPFS</th></tr></thead>
+        <tbody>
+          <tr><td>Main goal</td><td>Ethereum's storage layer</td><td>General content-addressed storage</td></tr>
+          <tr><td>Availability</td><td>Incentive layer pays nodes to store</td><td>Content available only while a node pins/serves it</td></tr>
+          <tr><td>Naming</td><td>ENS integration</td><td>IPNS / DNSLink</td></tr>
+          <tr><td>Ethereum coupling</td><td>Geth, account, payments</td><td>Independent</td></tr>
+          <tr><td>Chunk size</td><td>4 KB</td><td>Variable block size</td></tr>
+          <tr><td>Best for</td><td>DApp front-ends, NFT data</td><td>General file sharing</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>6. How to use Swarm</h4>
+      <ol>
+        <li>Run a Geth node with an account.</li>
+        <li>Install the Swarm client.</li>
+        <li>Start it with <code>swarm --bzzaccount &lt;account&gt;</code>.</li>
+        <li>Open <code>http://localhost:8500</code> and upload a file.</li>
+        <li>Share the resulting hash or ENS name.</li>
+      </ol>
+
+      <div class="note"><b>4-mark version:</b> definition + chunking + off-chain storage + one benefit. <b>9-mark version:</b> add the architecture diagram, the Web3 pillars and the IPFS comparison.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.8 ================= -->
+<section class="card" id="s58">
+  <h2>5.8 Whisper — decentralized messaging</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>List decentralized messaging platforms. Discuss Whisper and its purpose in the Ethereum ecosystem.</p>
+      <div class="badges"><span class="b marks">6 / 9 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(b) [6] · 2023 Nov Q6(b) [6] · 2025 May Q6(a) [9 — list + purpose]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Whisper</b> is Ethereum's <b>decentralised messaging protocol</b>. It lets DApps and nodes send encrypted peer-to-peer messages without a central server. It is the third pillar of Web3, alongside Ethereum contracts (logic) and Swarm (storage).</p>
+
+      <h4>2. Purpose in the Ethereum ecosystem</h4>
+      <ul>
+        <li><b>DApp-to-DApp communication:</b> chat, notifications, order books, OTC negotiation.</li>
+        <li><b>Off-chain messages:</b> not every message should be a permanent, paid transaction.</li>
+        <li><b>Privacy:</b> message content and metadata are hidden from observers.</li>
+        <li><b>No central server:</b> no single point of failure or censorship.</li>
+        <li><b>Node discovery and signalling:</b> peers can exchange control messages.</li>
+      </ul>
+
+      <h4>3. Features</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Feature</th><th>Explanation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Encryption</b></td><td>Asymmetric (public/private key) for one-to-one; symmetric for one-to-many.</td></tr>
+          <tr><td><b>"Darkness"</b></td><td>Hides message content, sender and receiver from outside observers.</td></tr>
+          <tr><td><b>TTL</b></td><td>Time-to-live; messages expire, which reduces storage and replay risk.</td></tr>
+          <tr><td><b>Max size</b></td><td>64 KB per message.</td></tr>
+          <tr><td><b>Transport</b></td><td>Runs on RLPx, the same transport Ethereum nodes use.</td></tr>
+          <tr><td><b>Anti-spam</b></td><td>The sender must do a small proof of work, scaled to message size and TTL.</td></tr>
+          <tr><td><b>Latency</b></td><td>Designed for &lt;5 s, but not real-time audio/video.</td></tr>
+          <tr><td><b>Broadcast</b></td><td>Messages propagate through the network; recipients decrypt only what is for them.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. How it works</h4>
+      <pre class="tree">sender                         Whisper network                  receiver
+  │                                  │                              │
+  │ encrypt with receiver's          │                              │
+  │ public key (asymmetric)          │                              │
+  ├────────── message ──────────────►│                              │
+  │          + TTL + PoW             │  gossip to peers             │
+  │                                  ├─────────────────────────────►│
+  │                                  │                              │
+  │                                  │        decrypt with private key
+  │                                  │                              │
+  │                                  │        read + expire after TTL</pre>
+
+      <h4>5. List of decentralized messaging platforms (2025 May Q6a)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Platform</th><th>What it is</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td><b>Whisper</b></td><td>Ethereum's native P2P messaging protocol</td><td>Part of the original Web3 stack</td></tr>
+          <tr><td><b>Waku</b></td><td>Successor to Whisper, built by Status</td><td>Scalable, modular, used by Status</td></tr>
+          <tr><td><b>Status</b></td><td>Decentralised messenger and wallet</td><td>Uses Waku</td></tr>
+          <tr><td><b>Matrix</b></td><td>Open federated chat protocol</td><td>Federated, not fully P2P</td></tr>
+          <tr><td><b>IPFS PubSub</b></td><td>Publish/subscribe over IPFS</td><td>Topic-based messaging</td></tr>
+          <tr><td><b>libp2p GossipSub</b></td><td>Gossip protocol used by many chains</td><td>Building block, not an app</td></tr>
+          <tr><td><b>OrbitDB</b></td><td>P2P database with pub/sub</td><td>Built on IPFS/libp2p</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>6. Limitations</h4>
+      <ul>
+        <li>Not designed for real-time voice/video (latency, bandwidth).</li>
+        <li>Messages are ephemeral — not a permanent audit log.</li>
+        <li>PoW anti-spam costs energy on low-power devices.</li>
+        <li>Whisper development has slowed; <b>Waku</b> is the modern replacement.</li>
+        <li>No built-in identity/contact discovery; DApps must handle it.</li>
+      </ul>
+
+      <h4>7. The three Web3 pillars</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Pillar</th><th>Component</th><th>Job</th></tr></thead>
+        <tbody>
+          <tr><td>Logic</td><td>Ethereum smart contracts</td><td>Rules and state</td></tr>
+          <tr><td>Storage</td><td>Swarm</td><td>Files and large data</td></tr>
+          <tr><td>Messaging</td><td>Whisper / Waku</td><td>Private peer-to-peer messages</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note"><b>6-mark version:</b> definition + purpose + 4 features. <b>9-mark version:</b> add the platform list, the diagram and the three-pillar table.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Numbers and names</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Item</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Ethereum proposed</td><td>2013, Vitalik Buterin</td></tr>
+          <tr><td>Frontier launch</td><td>2015</td></tr>
+          <tr><td>Merge to PoS</td><td>2022</td></tr>
+          <tr><td>Mainnet chain ID</td><td>1</td></tr>
+          <tr><td>Sepolia chain ID</td><td>11155111</td></tr>
+          <tr><td>Slot time</td><td>12 s</td></tr>
+          <tr><td>Validator stake</td><td>32 ETH</td></tr>
+          <tr><td>Plain transfer gas</td><td>21,000</td></tr>
+          <tr><td>1 gwei</td><td>10<sup>9</sup> wei</td></tr>
+          <tr><td>EVM word size</td><td>256 bits</td></tr>
+          <tr><td>EVM stack limit</td><td>1024 items</td></tr>
+          <tr><td>Swarm chunk</td><td>4 KB, 32-byte hash</td></tr>
+          <tr><td>Whisper max message</td><td>64 KB</td></tr>
+          <tr><td>Swarm endpoint</td><td>localhost:8500</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div>
+      <h4>One-line memory hooks</h4>
+      <ul>
+        <li><b>Ethereum</b> = blockchain + EVM + smart contracts + ether.</li>
+        <li><b>Mainnet</b> = real money. <b>Testnet</b> = free test ETH. <b>Private</b> = permissioned.</li>
+        <li><b>EVM</b> = stack-based, 256-bit, gas-limited, deterministic, sandboxed.</li>
+        <li><b>Smart contract</b> = code + state at an address; runs only when called.</li>
+        <li><b>Gas</b> = gas used × gas price; stops infinite loops; pays validators.</li>
+        <li><b>Solidity</b> → <code>solc</code> → bytecode + ABI → deploy to <code>0x0</code> → address.</li>
+        <li><b>Swarm</b> = storage (chunks + hash + ENS).</li>
+        <li><b>Whisper</b> = messaging (encrypted + TTL + 64 KB + PoW anti-spam).</li>
+        <li><b>Web3 pillars</b> = contracts + Swarm + Whisper.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> definitions, features, EVM architecture, smart-contract types, Swarm chunking and Whisper details follow the supplied Technical Publications book, Unit V (§5.1–5.7). Gas fee numbers and deployment tooling are standard Ethereum documentation values, checked against the current network rules.</div>
+
+  <div class="tip"><b>Exam-day order:</b> Q5/Q6 is Unit 5. If smart contracts appear, write the definition + flight-insurance example + gas formula first. Then add the lifecycle diagram. This alone can secure 9 marks before you touch Swarm or Whisper.</div>
+</section>
+
+<footer>
+  BT · Unit 5 · built from 5 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410243 · 2019 Pattern<br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

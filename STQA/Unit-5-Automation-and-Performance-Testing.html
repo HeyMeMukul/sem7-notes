@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STQA Unit 5 — Automation &amp; Performance Testing | SPPU 410245D</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+/* ---------- cards ---------- */
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+/* ---------- Q&A ---------- */
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+/* ---------- code / tables ---------- */
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+/* ---------- callouts ---------- */
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+/* ---------- frequency table ---------- */
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+/* ---------- tree drawing ---------- */
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+/* footer */
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+
+.freq td:nth-child(2),.freq td:nth-child(3){text-align:left}
+
+main{min-width:0}
+.tbl-wrap{max-width:100%}
+.card,.qa{min-width:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="side">
+  <h3>STQA · Unit 5</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s51">5.1 Automation fundamentals</a>
+    <a href="#s52">5.2 Selenium tool suite</a>
+    <a href="#s53">5.3 RPA &amp; performance testing</a>
+    <a href="#s54">5.4 Syllabus-only tools</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Test-Case-Design-Techniques.html">Unit 3 · Test case design</a>
+  <a href="Unit-4-SQA-and-Quality-Control.html">Unit 4 · SQA &amp; QC</a>
+  <a href="Unit-6-Testing-Framework-and-SQA-Tools.html">Unit 6 · Testing framework &amp; SQA</a>
+  <a href="index.html">↩ STQA home</a>
+</aside>
+
+<!-- ================= MAIN ================= -->
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 5 — Automation &amp; Performance Testing</h1>
+  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>This is the <b>highest-yield unit</b>. Its questions fill Q4, Q5 and Q6 in every paper. All questions are reproduced from the six end-sem papers (2022 Nov – 2025 Nov); counts include exact repeats.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>38</b> Unit-5 question instances</span>
+    <span class="chip">🧩 <b>14</b> Q&amp;A cards</span>
+    <span class="chip">🔁 Highest repeat: <b>process / IDE / RPA — 5×</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>12–18 marks</b></span>
+  </div>
+</header>
+
+<!-- ================= FREQUENCY MAP ================= -->
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — Unit 5</h2>
+  <p class="lead">Unit 5 is the <b>most repeated</b> unit in the paper. Its questions appear in Q4, Q5 and Q6 every year. Counted from all six end-sem papers.</p>
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">Automated testing process</td><td>2022 Nov Q5(c) [6]; 2023 May Q6(b) [6]; 2023 Nov Q6(a) [6]; 2024 May Q6(b) [6]; 2025 Nov Q5(c) [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>2</td><td class="l">Selenium IDE</td><td>2022 Nov Q4(b) [6], Q5(a) [6]; 2023 May Q5(b) [6]; 2025 May Q3(b) [6]; 2025 Nov Q6(c) [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>3</td><td class="l">Robotic Process Automation (RPA)</td><td>2022 Nov Q5(b) [6]; 2023 May Q6(c) [6]; 2023 Nov Q5(c) [6]; 2025 May Q6(a) [6]; 2025 Nov Q6(b) [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>4</td><td class="l">Benefits of automation testing</td><td>2022 Nov Q6(b) [6]; 2023 May Q6(a) [6]; 2024 May Q5(b) [6]; 2025 Nov Q5(a) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>5</td><td class="l">Selenium tool suite</td><td>2022 Nov Q6(a) [6]; 2023 Nov Q5(b) [6]; 2025 May Q5(b) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>6</td><td class="l">Selenium WebDriver</td><td>2022 Nov Q6(c) [6]; 2023 May Q5(c) [6]; 2025 May Q5(c) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>7</td><td class="l">Performance testing — what and uses</td><td>2024 May Q5(c) [6]; 2025 May Q5(a) [6]; 2025 Nov Q5(b) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>8</td><td class="l">Automation testing — what is it, with example</td><td>2023 May Q5(a) [6]; 2024 May Q6(a) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td class="l">How to choose an automation tool</td><td>2023 Nov Q5(a) [6]; 2025 May Q6(b) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>10</td><td class="l">Selenium Grid</td><td>2023 Nov Q6(c) [6]; 2025 May Q6(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>11</td><td class="l">Manual vs automation testing</td><td>2024 May Q5(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>12</td><td class="l">Manual testing process</td><td>2025 Nov Q6(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>13</td><td class="l">Selenium RC</td><td>2023 Nov Q6(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>14</td><td class="l">Apache JMeter — aim, working, advantages</td><td>2024 May Q6(c) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note"><b>Exact-repeat check:</b> the automated testing process is word-for-word in <b>4</b> papers (2024 May adds “with neat diagram”); benefits is word-for-word in <b>4</b>; Selenium IDE appears <b>5</b> times, but 2023 May and 2025 Nov print “IQE” instead of “IDE”.</div>
+  <div class="note"><b>This is the unit to master first.</b> Three questions are repeated 5 times each, and “benefits” is repeated 4 times. If you learn the automated testing process, Selenium IDE, RPA, benefits and the Selenium suite, you can answer <b>almost every</b> Q5/Q6 option in all six papers.</div>
+  <div class="tip"><b>Marks split for 6 marks:</b> definition (1) + 5 numbered points or a table (4) + one example/diagram (1). Always name the tool version and one real command or component.</div>
+</section>
+
+<!-- ================= 5.1 ================= -->
+<section class="card" id="s51">
+  <h2>5.1 Automation testing fundamentals</h2>
+  <p class="lead">Syllabus: <em>What is automation testing, automated testing process, automation frameworks, benefits, how to choose automation testing tools.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is automation testing in software testing? Explain in brief. / Explain it with an example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q5(a) [6] · 2024 May Q6(a) [6]</p>
+      <p><b>Definition:</b> Automation testing uses <b>software tools and scripts</b> to execute test cases, compare actual and expected results, and report outcomes — with little or no manual intervention. The tester designs the test; the tool runs it repeatedly.</p>
+      <h4>1. How it works</h4>
+      <ol>
+        <li>Select the test cases that are stable, repetitive and high-risk.</li>
+        <li>Choose a tool (Selenium, JMeter, TestNG, Appium, etc.).</li>
+        <li>Write or record a script with input data and assertions.</li>
+        <li>Run the script manually, on a schedule, or from CI after every build.</li>
+        <li>Compare actual vs expected; log pass/fail and defects.</li>
+        <li>Maintain the scripts when the application changes.</li>
+      </ol>
+      <h4>2. Example — login with 100 user records</h4>
+      <p>A data-driven Selenium script reads 100 username/password pairs from an Excel file, enters them on the login page, clicks Submit, and asserts the expected page title for each row. The report shows 97 pass and 3 fail in 4 minutes. Manually this would take about 2 hours.</p>
+      <h4>3. What can be automated</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Tool example</th><th>Good candidate?</th></tr></thead>
+        <tbody>
+          <tr><td>Unit tests</td><td>JUnit, TestNG, PyTest</td><td>Yes — fast and stable</td></tr>
+          <tr><td>API tests</td><td>Rest Assured, Postman, SoapUI</td><td>Yes — less UI flakiness</td></tr>
+          <tr><td>UI / regression</td><td>Selenium WebDriver, Playwright, Cypress</td><td>Yes — repetitive flows</td></tr>
+          <tr><td>Performance</td><td>JMeter, LoadRunner</td><td>Yes — needs many virtual users</td></tr>
+          <tr><td>Mobile</td><td>Appium</td><td>Yes — device matrix</td></tr>
+          <tr><td>Exploratory / usability</td><td>—</td><td>No — needs human judgement</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Not everything should be automated:</b> one-off tests, rapidly changing screens and tests that need human look-and-feel judgement are better manual.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Differentiate between Manual Testing and Automation Testing.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q5(a) [6]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Manual testing</th><th>Automation testing</th></tr></thead>
+        <tbody>
+          <tr><td>Who executes</td><td>Human tester</td><td>Tool/script</td></tr>
+          <tr><td>Speed</td><td>Slow; minutes per case</td><td>Very fast; hundreds per hour</td></tr>
+          <tr><td>Repeatability</td><td>Same steps may vary</td><td>Exactly repeatable</td></tr>
+          <tr><td>Initial cost</td><td>Low</td><td>High — tool, framework, skills</td></tr>
+          <tr><td>Long-term cost</td><td>High for regression</td><td>Low after scripts are stable</td></tr>
+          <tr><td>Coverage</td><td>Limited by time</td><td>Large data sets and parallel runs</td></tr>
+          <tr><td>Best for</td><td>Exploratory, usability, one-off, changing UI</td><td>Regression, load, data-driven, CI/CD</td></tr>
+          <tr><td>Error chance</td><td>Human fatigue and oversight</td><td>Tool is consistent; script bugs possible</td></tr>
+          <tr><td>Reporting</td><td>Manual notes</td><td>Automatic dashboards and logs</td></tr>
+          <tr><td>Setup</td><td>Minimal</td><td>Environment, drivers, CI, maintenance</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Conclusion:</b> manual and automation are complementary. Use manual testing to learn the product and test usability; use automation for stable, repetitive regression and performance checks.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Identify / list and explain different benefits of Automation testing.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(b) [6] · 2023 May Q6(a) [6] · 2024 May Q5(b) [6] · 2025 Nov Q5(a) [6]</p>
+      <ol>
+        <li><b>Speed:</b> a suite that takes days manually runs in minutes or hours. This shortens the release cycle.</li>
+        <li><b>Repeatability:</b> the same script runs exactly the same way every time, removing human variation.</li>
+        <li><b>Wider coverage:</b> data-driven scripts test hundreds of input combinations, browsers and devices.</li>
+        <li><b>Parallel execution:</b> Selenium Grid or cloud grids run tests on many machines at once.</li>
+        <li><b>24×7 execution:</b> scheduled runs at night or on every commit; no tester overtime.</li>
+        <li><b>Regression safety:</b> old features are checked after every change, catching side effects early.</li>
+        <li><b>Accurate reporting:</b> tools produce pass/fail logs, screenshots, videos and trend dashboards.</li>
+        <li><b>Long-term cost saving:</b> high setup cost is recovered after repeated regression cycles; rework and production defects fall.</li>
+        <li><b>CI/CD support:</b> automated gates decide whether a build can move to the next stage (DevOps).</li>
+        <li><b>Better use of people:</b> testers spend time on exploratory and usability testing instead of repeating steps.</li>
+      </ol>
+      <h4>Limitations (write one line for balance)</h4>
+      <p>High initial cost, tool licensing, script maintenance, flaky UI tests and inability to judge look-and-feel. Automation does <b>not</b> replace manual testing; it complements it.</p>
+      <p><b>ROI rule of thumb:</b> automate a test if it will run at least 5–10 times and the application is stable.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Construct / explain / illustrate the different automated testing process (with neat diagram).</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(c) [6] · 2023 May Q6(b) [6] · 2023 Nov Q6(a) [6] · 2024 May Q6(b) [6] · 2025 Nov Q5(c) [6]</p>
+      <p><b>Definition:</b> The automated testing process (Automated Test Life Cycle, ATLC) is the sequence of activities used to decide what to automate, build the scripts, run them and maintain them.</p>
+      <h4>1. Diagram (draw this)</h4>
+<pre class="tree">1 Decide scope &amp; ROI
+        │
+        ▼
+2 Select tool &amp; design framework
+        │
+        ▼
+3 Create test scripts + test data
+        │
+        ▼
+4 Execute (manual / CI / schedule)
+        │
+        ▼
+5 Analyse results &amp; log defects
+        │
+        ▼
+6 Maintain scripts &amp; reports
+        │
+        └──── feedback to step 1</pre>
+
+      <h4>2. Steps in detail</h4>
+      <ol>
+        <li><b>Decide scope and ROI:</b> list candidate tests; choose stable, repetitive, high-risk cases. Estimate manual effort vs automation effort.</li>
+        <li><b>Select the tool:</b> check application technology, browser/device support, language, budget, reporting and integration (see Q6).</li>
+        <li><b>Design the framework:</b> choose linear, modular, data-driven, keyword-driven or hybrid; define folder structure, naming, object repository, assertions and reporting.</li>
+        <li><b>Create scripts and data:</b> record or code the steps; separate test data from logic; use version control. Example: Selenium + TestNG + Excel data.</li>
+        <li><b>Execute:</b> run locally, on a schedule, or from Jenkins/GitHub Actions after every build. Use parallel runs where possible.</li>
+        <li><b>Analyse and report:</b> compare actual vs expected; capture screenshots/logs; raise defects; publish pass rate and coverage.</li>
+        <li><b>Maintain:</b> update locators, data and scripts when the UI or requirements change; remove obsolete tests. Maintenance is the largest long-term cost.</li>
+      </ol>
+      <h4>3. Example</h4>
+      <p>A retail project automates 120 regression cases. Selenium scripts run nightly on Grid (Chrome, Firefox, Edge). The report shows 116 pass, 4 fail; two are real defects, two are broken locators. The team fixes locators and logs the defects — then repeats the cycle next build.</p>
+      <p class="small">If asked “construct”, draw the six boxes and label the feedback arrow. That alone earns 2 marks.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Explain different manual testing process.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q6(a) [6]</p>
+      <p><b>Manual testing</b> is testing performed by a human without automation scripts. The process is systematic even though execution is manual.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Step</th><th>Activity</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>1. Requirement analysis</td><td>Read SRS, identify testable requirements and gaps.</td><td>Requirement traceability matrix</td></tr>
+          <tr><td>2. Test planning</td><td>Scope, approach, resources, schedule, risks, entry/exit criteria.</td><td>Test plan</td></tr>
+          <tr><td>3. Test case design</td><td>Write steps, data, expected results; apply BVA/ECP.</td><td>Test cases and test data</td></tr>
+          <tr><td>4. Environment setup</td><td>Install build, configure DB, browsers, users and test data.</td><td>Ready test environment</td></tr>
+          <tr><td>5. Execution</td><td>Run cases, observe behaviour, mark pass/fail.</td><td>Actual results</td></tr>
+          <tr><td>6. Defect logging</td><td>Report steps, severity, priority, screenshots; track to closure.</td><td>Defect report</td></tr>
+          <tr><td>7. Retest and regression</td><td>Verify fixes; re-run affected and critical tests.</td><td>Updated results</td></tr>
+          <tr><td>8. Closure</td><td>Test summary, coverage, open defects, lessons learned.</td><td>Test closure report</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Example:</b> for a login page, the tester writes cases for valid login, wrong password, blank fields, account lock and SQL injection; executes them in Chrome and Firefox; logs a defect for the blank-password crash; retests after the fix.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>How to choose an Automation tool / automation testing tools? Explain briefly.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q5(a) [6] · 2025 May Q6(b) [6]</p>
+      <p>Tool selection is a <b>cost-benefit decision</b>, not a popularity contest. Check these criteria:</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Criterion</th><th>Questions to ask</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><b>Application technology</b></td><td>Web, mobile, desktop, API, mainframe?</td><td>A web tool cannot test a native desktop app.</td></tr>
+          <tr><td><b>Platform support</b></td><td>Which browsers, OS versions, devices?</td><td>Coverage of the real user matrix.</td></tr>
+          <tr><td><b>Scripting skill</b></td><td>Does the team know Java/Python? Is codeless needed?</td><td>Wrong skill match slows the project.</td></tr>
+          <tr><td><b>Licensing and cost</b></td><td>Open source or paid? Per-seat or per-parallel-run?</td><td>Total cost includes training and maintenance.</td></tr>
+          <tr><td><b>Object recognition</b></td><td>Can it identify dynamic elements, iframes, shadow DOM?</td><td>Reduces flaky tests.</td></tr>
+          <tr><td><b>Integration</b></td><td>JIRA, Jenkins, Git, test-management, cloud grid?</td><td>Fits the existing DevOps pipeline.</td></tr>
+          <tr><td><b>Reporting and debugging</b></td><td>Screenshots, logs, video, dashboards, retries?</td><td>Faster failure analysis.</td></tr>
+          <tr><td><b>Parallel and distributed runs</b></td><td>Can it run on multiple machines?</td><td>Cuts regression time.</td></tr>
+          <tr><td><b>Vendor support and community</b></td><td>Docs, training, active forum, paid support?</td><td>Reduces risk and onboarding time.</td></tr>
+          <tr><td><b>Maintenance effort</b></td><td>How often do locators/scripts break?</td><td>Long-term cost driver.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>Selection method</h4>
+      <ol>
+        <li>List must-have and nice-to-have criteria.</li>
+        <li>Give each criterion a weight (e.g. technology 25%, cost 20%, skills 15%).</li>
+        <li>Score 2–3 shortlisted tools in a table.</li>
+        <li>Run a <b>proof of concept (POC)</b> on 10–20 real test cases.</li>
+        <li>Compare effort, stability and cost; then buy/licence.</li>
+      </ol>
+      <p><b>Example:</b> a Java web team with Jenkins chooses Selenium WebDriver + TestNG (open source, strong Java support, Grid); a mobile team chooses Appium; an API team chooses Rest Assured/Postman.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.2 ================= -->
+<section class="card" id="s52">
+  <h2>5.2 Selenium tool suite</h2>
+  <p class="lead">Syllabus: <em>Selenium IDE, Selenium RC, Selenium WebDriver, Selenium Grid.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Illustrate Selenium tool suite in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(a) [6] · 2023 Nov Q5(b) [6] · 2025 May Q5(b) [6]</p>
+      <p><b>Selenium</b> is a free, open-source suite for automating <b>web browsers</b>. It supports Chrome, Firefox, Edge, Safari and others, and languages such as Java, Python, C#, Ruby and JavaScript.</p>
+      <h4>1. Components</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Component</th><th>What it does</th><th>Best for</th><th>Limitation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Selenium IDE</b></td><td>Browser extension that records and replays user actions; exports code.</td><td>Quick prototypes, learning, simple smoke tests.</td><td>No real programming; weak reporting; not for complex suites.</td></tr>
+          <tr><td><b>Selenium RC</b></td><td>Older “Remote Control” server; injects JavaScript into the browser; client libraries drive it.</td><td>Legacy projects; browsers without native drivers.</td><td>Slow, JavaScript-dependent, deprecated.</td></tr>
+          <tr><td><b>Selenium WebDriver</b></td><td>Speaks directly to the browser through its driver (chromedriver, geckodriver); W3C standard.</td><td>All modern web automation and regression suites.</td><td>Needs programming; no built-in reporting (use TestNG).</td></tr>
+          <tr><td><b>Selenium Grid</b></td><td>Hub + nodes; runs tests in parallel on many machines, browsers and OS.</td><td>Large cross-browser regression and CI.</td><td>Setup and infrastructure cost.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Architecture</h4>
+<pre class="tree">Test code (Java/Python)
+        │
+        ▼
+Selenium client library  ──►  JSON / W3C protocol
+        │
+        ▼
+Browser driver (chromedriver / geckodriver)
+        │
+        ▼
+Real browser (Chrome / Firefox / Edge)</pre>
+      <p>For Grid, the client sends the request to the <b>Hub</b>, which forwards it to a matching <b>Node</b>.</p>
+      <h4>3. Version history (one line)</h4>
+      <ul>
+        <li><b>Selenium 1</b> = IDE + RC.</li>
+        <li><b>Selenium 2</b> = WebDriver merged with RC.</li>
+        <li><b>Selenium 3</b> = WebDriver only; RC deprecated.</li>
+        <li><b>Selenium 4</b> = W3C WebDriver, relative locators, CDP, Grid 4.</li>
+      </ul>
+      <h4>4. Example</h4>
+<pre><code>WebDriver driver = new ChromeDriver();
+driver.get("https://example.com/login");
+driver.findElement(By.id("user")).sendKeys("admin");
+driver.findElement(By.id("pass")).sendKeys("secret");
+driver.findElement(By.id("login")).click();
+Assert.assertEquals(driver.getTitle(), "Dashboard");
+driver.quit();</code></pre>
+      <p><b>Limitation of the suite:</b> web only. It cannot test native mobile apps (use Appium) or desktop apps (use WinAppDriver/Tosca).</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>Illustrate Selenium's IDE and explain in detail. (Also printed as “IQE” in some papers.)</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(b) [6] · 2022 Nov Q5(a) [6] · 2023 May Q5(b) [6, printed “IQE”] · 2025 May Q3(b) [6] · 2025 Nov Q6(c) [6, printed “IQE”]</p>
+      <p><b>Definition:</b> Selenium IDE (Integrated Development Environment) is a <b>record-and-playback</b> tool for creating Selenium test cases without programming. It runs as a browser extension (Chrome/Firefox).</p>
+      <h4>1. Main features</h4>
+      <ul>
+        <li><b>Record:</b> captures clicks, typing, selection and navigation as commands.</li>
+        <li><b>Playback:</b> re-runs the recorded script in the browser; failures are highlighted.</li>
+        <li><b>Selenese commands:</b> <code>open</code>, <code>click</code>, <code>type</code>, <code>select</code>, <code>assertText</code>, <code>verifyTitle</code>, <code>waitForElementPresent</code>.</li>
+        <li><b>Test suites:</b> groups several test cases and runs them in order.</li>
+        <li><b>Debugging:</b> breakpoints, step execution, speed control and log pane.</li>
+        <li><b>Export:</b> converts the script to Java/JUnit/TestNG, Python/Pytest, C# or Ruby for WebDriver.</li>
+      </ul>
+      <h4>2. How to use it (steps)</h4>
+      <ol>
+        <li>Install the IDE extension and open it from the browser toolbar.</li>
+        <li>Click <b>Record</b>, enter a base URL and perform the business flow.</li>
+        <li>Stop recording; edit commands, add assertions and test data.</li>
+        <li>Run the case; fix broken locators; add waits for dynamic elements.</li>
+        <li>Save the suite; export to code if it must join the CI pipeline.</li>
+      </ol>
+      <h4>3. Example</h4>
+      <p>Record a login: <code>open /login</code> → <code>type id=user admin</code> → <code>type id=pass secret</code> → <code>click id=login</code> → <code>assertTitle Dashboard</code>. Save as “ValidLogin”. Add a second case with a wrong password and <code>assertText</code> for the error message.</p>
+      <h4>4. Advantages and limitations</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Limitations</th></tr></thead>
+        <tbody>
+          <tr><td>No programming needed; very fast to start.</td><td>Not suitable for large, complex suites.</td></tr>
+          <tr><td>Good for learning Selenium commands and locators.</td><td>Limited looping, branching and data-driven support (older versions).</td></tr>
+          <tr><td>Exports to WebDriver code.</td><td>Weak reporting and integration; browser-specific.</td></tr>
+          <tr><td>Useful for quick smoke and bug-reproduction scripts.</td><td>Recorded locators break easily; maintenance is high.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Verdict:</b> use IDE for <b>prototyping and simple checks</b>; move to WebDriver + TestNG for real regression.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q9</span>How would you explain Selenium WebDriver? Explain it.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(c) [6] · 2023 May Q5(c) [6] · 2025 May Q5(c) [6]</p>
+      <p><b>Definition:</b> Selenium WebDriver is a <b>browser-automation API</b> that sends commands directly to a real browser through its native driver. It is the core of modern Selenium and follows the <b>W3C WebDriver</b> standard.</p>
+      <h4>1. Architecture</h4>
+<pre class="tree">Test script (Java/Python/C#)
+        │  findElement, click, sendKeys
+        ▼
+Selenium client library
+        │  W3C HTTP/JSON request
+        ▼
+Browser driver (chromedriver, geckodriver, msedgedriver)
+        │  native browser automation
+        ▼
+Real browser + web page</pre>
+      <h4>2. Key features</h4>
+      <ul>
+        <li>Works with real browsers — no JavaScript injection into the page.</li>
+        <li>Supports <b>locators</b>: id, name, className, tagName, linkText, partialLinkText, CSS selector, XPath.</li>
+        <li>Handles alerts, frames, multiple windows, cookies, dropdowns, mouse and keyboard actions.</li>
+        <li>Supports <b>headless</b> mode and parallel execution through Grid.</li>
+        <li>Can take screenshots and execute JavaScript when needed.</li>
+      </ul>
+      <h4>3. Example</h4>
+<pre><code>WebDriver driver = new FirefoxDriver();
+driver.get("https://example.com");
+WebElement search = driver.findElement(By.name("q"));
+search.sendKeys("software testing");
+search.submit();
+System.out.println(driver.getTitle());
+driver.quit();</code></pre>
+      <h4>4. WebDriver vs Selenium RC</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>WebDriver</th><th>Selenium RC</th></tr></thead>
+        <tbody>
+          <tr><td>Communication</td><td>Direct to browser driver (W3C)</td><td>Via RC server; JavaScript injection</td></tr>
+          <tr><td>Speed</td><td>Fast</td><td>Slow</td></tr>
+          <tr><td>Same-origin policy</td><td>Not an issue</td><td>Workarounds needed</td></tr>
+          <tr><td>API</td><td>Object-oriented, modern</td><td>Older, method-heavy</td></tr>
+          <tr><td>Status</td><td>Current standard</td><td>Deprecated</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Limitation:</b> no built-in test framework or reporting — pair it with TestNG/JUnit and a reporting library (Extent, Allure).</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q10</span>What is Selenium RC? Explain in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q6(b) [6]</p>
+      <p><b>Definition:</b> Selenium Remote Control (RC) was the original Selenium 1 tool. A <b>Java server (Selenium Server)</b> receives commands from a client library and drives the browser by <b>injecting JavaScript</b> into the page.</p>
+      <h4>1. Architecture</h4>
+<pre class="tree">Test program (Java/Python/Ruby)
+        │  HTTP request
+        ▼
+Selenium RC Server (launches browser)
+        │  JavaScript injection
+        ▼
+Browser + AUT (application under test)</pre>
+      <h4>2. How it works</h4>
+      <ol>
+        <li>The client sends a command such as <code>click(element)</code> to the RC server.</li>
+        <li>The server launches the chosen browser and opens the application.</li>
+        <li>It injects a JavaScript “Selenium core” into the page.</li>
+        <li>The JavaScript executes the command in the browser and returns the result.</li>
+        <li>The client asserts the result.</li>
+      </ol>
+      <h4>3. Advantages</h4>
+      <ul>
+        <li>Supported many browsers and languages through one server.</li>
+        <li>Could run tests on a remote machine.</li>
+        <li>Worked when native drivers were not available.</li>
+      </ul>
+      <h4>4. Limitations</h4>
+      <ul>
+        <li><b>Slow</b> — every command goes through JavaScript and HTTP.</li>
+        <li><b>Same-origin policy</b> problems; needed a proxy.</li>
+        <li>JavaScript injection is blocked or behaves differently on some pages.</li>
+        <li>Cannot handle native OS dialogs, file uploads or complex mouse actions well.</li>
+        <li><b>Deprecated in Selenium 2 and removed in Selenium 3</b> — use WebDriver instead.</li>
+      </ul>
+      <p><b>Exam line:</b> RC = server + JavaScript injection; WebDriver = direct native driver. RC is history, but it is still asked to test whether you know the evolution.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q11</span>What do you understand by Selenium Grid? Explain it.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q6(c) [6] · 2025 May Q6(c) [6]</p>
+      <p><b>Definition:</b> Selenium Grid is a <b>distributed test-execution component</b> of Selenium. It runs the same test suite in <b>parallel</b> on many machines, browsers and operating systems, controlled by a central <b>Hub</b>.</p>
+      <h4>1. Architecture</h4>
+<pre class="tree">          ┌────────────┐
+          │    HUB     │  receives test requests
+          └──┬───┬───┬─┘
+             │   │   │
+      ┌──────┘   │   └──────┐
+      ▼          ▼          ▼
+   Node 1     Node 2     Node 3
+ Chrome/    Firefox/    Edge/
+ Windows    Linux       macOS</pre>
+      <ul>
+        <li><b>Hub:</b> central server; knows which nodes are free and matches the requested browser/OS.</li>
+        <li><b>Node:</b> a machine with a browser and driver; registers with the hub and runs tests.</li>
+        <li><b>Desired capabilities:</b> the requested browser name, version and platform.</li>
+      </ul>
+      <h4>2. How it works</h4>
+      <ol>
+        <li>Start the hub: <code>java -jar selenium-server.jar hub</code>.</li>
+        <li>Start nodes and register them with the hub URL.</li>
+        <li>The test sends <code>DesiredCapabilities</code> (e.g. Chrome 120 on Windows 11).</li>
+        <li>The hub queues the test and forwards it to a free matching node.</li>
+        <li>Results return to the client; the node becomes free for the next test.</li>
+      </ol>
+      <h4>3. Benefits</h4>
+      <ul>
+        <li><b>Speed:</b> 100 tests on 10 nodes finish in about one-tenth of the time.</li>
+        <li><b>Cross-browser/cross-OS coverage</b> from one suite.</li>
+        <li>Better utilisation of machines; central management.</li>
+        <li>Scales by adding nodes; integrates with CI (Jenkins).</li>
+      </ul>
+      <h4>4. Limitations</h4>
+      <p>Infrastructure and maintenance cost, network latency, node version drift, and flaky tests caused by shared environments. Grid 4 simplifies setup with a single jar and Docker support.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.3 ================= -->
+<section class="card" id="s53">
+  <h2>5.3 RPA and performance testing</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q12</span>Explain Robotic Process Automation (RPA) in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(b) [6] · 2023 May Q6(c) [6] · 2023 Nov Q5(c) [6] · 2025 May Q6(a) [6] · 2025 Nov Q6(b) [6]</p>
+      <p><b>Definition:</b> Robotic Process Automation uses <b>software bots</b> to mimic human actions on a computer — clicking, typing, copying data, opening e-mail and reading files — to automate <b>repetitive, rule-based business processes</b>.</p>
+      <h4>1. How RPA works</h4>
+      <ol>
+        <li><b>Identify</b> a high-volume, rule-based process (invoice entry, data migration, ticket triage).</li>
+        <li><b>Record</b> the human steps or design a workflow in an RPA tool.</li>
+        <li><b>Add rules</b> for decisions, exceptions and validation.</li>
+        <li><b>Run</b> the bot attended (human triggers) or unattended (scheduled/background).</li>
+        <li><b>Monitor</b> success rate, exceptions and time saved; improve the bot.</li>
+      </ol>
+      <h4>2. Types</h4>
+      <ul>
+        <li><b>Attended RPA:</b> bot works alongside a human, triggered on demand (e.g. a call-centre agent's screen pop).</li>
+        <li><b>Unattended RPA:</b> bot runs on a server at scheduled times without a human (e.g. nightly invoice processing).</li>
+        <li><b>Hybrid:</b> a combination of both, often with human approval for exceptions.</li>
+      </ul>
+      <h4>3. Tools</h4>
+      <p>UiPath, Automation Anywhere, Blue Prism, Microsoft Power Automate Desktop, WorkFusion.</p>
+      <h4>4. Example — invoice processing</h4>
+      <p>A bot reads invoices from an e-mail inbox, extracts the vendor, amount and PO number, checks the PO in the ERP, enters the invoice, and routes mismatches to a human. It processes 800 invoices per day with 99% accuracy.</p>
+      <h4>5. Benefits and limitations</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Benefits</th><th>Limitations</th></tr></thead>
+        <tbody>
+          <tr><td>Low code; fast to deploy; works with existing UI.</td><td>Brittle when the UI or document format changes.</td></tr>
+          <tr><td>Reduces manual effort and errors; runs 24×7.</td><td>Not suitable for judgement-heavy or creative work.</td></tr>
+          <tr><td>Improves compliance and audit logs.</td><td>Licensing and bot-maintenance cost.</td></tr>
+          <tr><td>Frees people for higher-value work.</td><td>Security/governance risk if credentials are poorly managed.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>6. RPA vs test automation</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>RPA</th><th>Test automation</th></tr></thead>
+        <tbody>
+          <tr><td>Goal</td><td>Perform a business process</td><td>Verify software behaviour</td></tr>
+          <tr><td>Assertions</td><td>Usually none; it completes work</td><td>Compares actual vs expected and fails</td></tr>
+          <tr><td>Users</td><td>Operations/business team</td><td>QA/test team</td></tr>
+          <tr><td>Example</td><td>Enter 500 invoices</td><td>Check that invoice entry validates amount</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q13</span>What is Performance testing? Explain the uses of it as well.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q5(c) [6] · 2025 May Q5(a) [6] · 2025 Nov Q5(b) [6]</p>
+      <p><b>Definition:</b> Performance testing is a <b>non-functional test</b> that measures <b>speed, responsiveness, throughput and stability</b> of a system under a specified workload. It answers “how well”, not “does it work”.</p>
+      <h4>1. Types of performance testing</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Load</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><b>Load</b></td><td>Expected peak</td><td>Verify SLA at normal busy load.</td></tr>
+          <tr><td><b>Stress</b></td><td>Beyond peak until failure</td><td>Find breaking point and graceful degradation.</td></tr>
+          <tr><td><b>Spike</b></td><td>Sudden increase</td><td>Check recovery from a traffic burst.</td></tr>
+          <tr><td><b>Endurance / soak</b></td><td>Normal load for hours</td><td>Find memory leaks and resource exhaustion.</td></tr>
+          <tr><td><b>Volume</b></td><td>Large data set</td><td>Check DB and batch performance.</td></tr>
+          <tr><td><b>Scalability</b></td><td>Increasing users/nodes</td><td>Check whether capacity grows as expected.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Metrics</h4>
+      <ul>
+        <li><b>Response time</b> — average and 95th percentile (p95).</li>
+        <li><b>Throughput</b> — requests or transactions per second.</li>
+        <li><b>Error rate</b> — failed requests ÷ total requests.</li>
+        <li><b>Resource use</b> — CPU, memory, disk I/O, network, DB connections.</li>
+        <li><b>Concurrent users</b> and <b>think time</b>.</li>
+      </ul>
+      <h4>3. Uses</h4>
+      <ol>
+        <li><b>Validate SLAs/NFRs</b> — “p95 &lt; 2 s at 1,000 users”.</li>
+        <li><b>Capacity planning</b> — how many servers/users are needed for a launch.</li>
+        <li><b>Find bottlenecks</b> — slow query, memory leak, thread-pool limit.</li>
+        <li><b>Compare versions/hardware</b> — did the new release slow down?</li>
+        <li><b>Test failover and recovery</b> — behaviour when a node dies under load.</li>
+        <li><b>Reduce production risk</b> — avoid outages during sales or peak events.</li>
+      </ol>
+      <h4>4. Example</h4>
+      <p>An online exam portal expects 10,000 students at 10:00 AM. JMeter ramps 0 → 10,000 users over 15 minutes, holds 60 minutes, and measures login, question load and submit. Result: p95 = 4.2 s against a 3 s target, with DB CPU at 98%. The team adds a read replica and retests.</p>
+      <p><b>Tools:</b> Apache JMeter, LoadRunner, Gatling, k6, Locust.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q14</span>Describe Apache JMeter based on: (i) Aim/Purpose (ii) Working (iii) Advantages.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q6(c) [6]</p>
+      <h4>(i) Aim / purpose</h4>
+      <p>Apache JMeter is a free, open-source, <b>Java</b> tool for <b>load, stress, functional and performance testing</b> of web applications, APIs, databases, FTP and JMS. It simulates many virtual users and reports response time and throughput.</p>
+      <h4>(ii) Working</h4>
+      <ol>
+        <li><b>Test Plan</b> — the root container for the test.</li>
+        <li><b>Thread Group</b> — number of virtual users, ramp-up period and loop count.</li>
+        <li><b>Samplers</b> — the request type: HTTP Request, JDBC Request, SOAP, FTP.</li>
+        <li><b>Config elements</b> — CSV Data Set, HTTP Cookie Manager, headers, CSV of test data.</li>
+        <li><b>Assertions</b> — check response code, body or duration.</li>
+        <li><b>Timers</b> — think time between requests (constant, random, Gaussian).</li>
+        <li><b>Listeners</b> — view results tree, summary report, aggregate report, graphs.</li>
+      </ol>
+<pre class="tree">Test Plan
+ └── Thread Group (500 users, ramp 60 s, loop 10)
+      ├── HTTP Cookie Manager
+      ├── CSV Data Set (users.csv)
+      ├── HTTP Request: POST /login
+      ├── Response Assertion: code = 200
+      └── Summary Report / Graph</pre>
+      <h4>(iii) Advantages</h4>
+      <ul>
+        <li>Free and open source; large community and plugins.</li>
+        <li>Cross-platform (Java) and supports many protocols.</li>
+        <li>GUI for test design plus <b>CLI/non-GUI mode</b> for heavy load.</li>
+        <li>Distributed testing (master + slaves) for very high load.</li>
+        <li>CI integration (Jenkins) and HTML dashboard reports.</li>
+        <li>Reusable test plans; CSV/data-driven testing.</li>
+      </ul>
+      <p><b>Limitations:</b> GUI mode is resource-heavy (use CLI), less accurate for complex browser-side JavaScript, and report customisation needs plugins.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5.4 ================= -->
+<section class="card" id="s54">
+  <h2>5.4 Syllabus-only automation tools</h2>
+  <div class="note"><b>Not asked directly in the six papers:</b> automation frameworks (linear, modular, data-driven, keyword-driven, hybrid), SoapUI, Tosca and Appium. They are in the syllabus; learn one line each in case a 3–4 mark part appears.</div>
+  <div class="tbl-wrap">
+  <table class="left">
+    <thead><tr><th>Topic</th><th>Exam-ready answer</th></tr></thead>
+    <tbody>
+      <tr><td><b>Linear framework</b></td><td>Scripts are recorded/written step by step; no reuse. Good for small projects, poor for maintenance.</td></tr>
+      <tr><td><b>Modular framework</b></td><td>Split the app into modules; each module has reusable scripts. Easier maintenance.</td></tr>
+      <tr><td><b>Data-driven framework</b></td><td>Test data lives in Excel/CSV/DB; the same script runs for many data sets.</td></tr>
+      <tr><td><b>Keyword-driven framework</b></td><td>Keywords such as Login/Click/Verify are written in a table; non-programmers can build tests.</td></tr>
+      <tr><td><b>Hybrid framework</b></td><td>Combines modular + data-driven + keyword-driven; most common in industry.</td></tr>
+      <tr><td><b>SoapUI</b></td><td>Open-source API testing tool for SOAP/REST, with assertions, mock services and load tests.</td></tr>
+      <tr><td><b>Tosca</b></td><td>Commercial, model-based, codeless test automation for web, desktop, mobile, API and SAP.</td></tr>
+      <tr><td><b>Appium</b></td><td>Open-source mobile automation for Android/iOS native, hybrid and web apps; uses WebDriver protocol.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet — Unit 5</h2>
+  <div class="grid2">
+    <div>
+      <h4>Selenium in one table</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Tool</th><th>Memory hook</th></tr></thead>
+        <tbody>
+          <tr><td>IDE</td><td>Record &amp; playback, no code.</td></tr>
+          <tr><td>RC</td><td>Server + JavaScript injection; dead.</td></tr>
+          <tr><td>WebDriver</td><td>Direct native driver; W3C; current.</td></tr>
+          <tr><td>Grid</td><td>Hub + nodes; parallel cross-browser.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>Automation process (6 steps)</h4>
+      <div class="math">Scope/ROI → Tool → Framework → Scripts → Execute → Report/Maintain</div>
+    </div>
+    <div>
+      <h4>Numbers and facts</h4>
+      <ul>
+        <li><b>JMeter:</b> Java, open source, Thread Group = users, Sampler = request, Listener = report.</li>
+        <li><b>Grid:</b> 100 tests / 10 nodes ≈ 10× faster.</li>
+        <li><b>RPA:</b> attended vs unattended; UiPath, Automation Anywhere, Blue Prism.</li>
+        <li><b>ROI:</b> automate tests that run 5–10+ times.</li>
+        <li><b>Performance metrics:</b> p95 response, throughput, error rate, CPU/memory.</li>
+      </ul>
+      <h4>One-line differences</h4>
+      <ul>
+        <li><b>RPA vs test automation:</b> does the work vs checks the work.</li>
+        <li><b>Load vs stress:</b> expected peak vs beyond peak until failure.</li>
+        <li><b>Soak vs spike:</b> long steady run vs sudden burst.</li>
+        <li><b>IDE vs WebDriver:</b> record/playback vs programmable suite.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> the supplied STQA “TechKnowledge” book covers <b>Units 1–2 only</b>. Unit 5 is built from the syllabus-listed reference texts — M. G. Limaye, <em>Software Testing: Principles, Techniques and Tools</em>; Srinivasan Desikan &amp; Gopal Swamy Ramesh, <em>Software Testing: Principles and Practices</em>; Naresh Chauhan, <em>Software Testing: Principles and Practices</em> — plus the official Selenium and Apache JMeter documentation, matched to the exact PYQ wording.</div>
+
+  <div class="tip"><b>Exam-day order:</b> automated testing process (5×), Selenium IDE (5×), RPA (5×), benefits (4×), Selenium suite/WebDriver (3× each), performance testing (3×). Write the diagram first, then the bullets.</div>
+</section>
+
+
+<footer>
+  STQA · Unit 5 · built from 6 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410245D · 2019 Pattern<br><span class="small">Source: syllabus-listed texts — Limaye; Desikan &amp; Ramesh; Chauhan. The supplied TechKnowledge book covers Units 1–2 only.</span><br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+// highlight active sidebar link
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

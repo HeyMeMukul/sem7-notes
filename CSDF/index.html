@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSDF — Cyber Security &amp; Digital Forensics | SPPU 410244(C) Notes</title>
+<style>
+:root{--bg:#080c17;--card:#111a2e;--line:#233252;--txt:#e8eefc;--muted:#9fb0cf;--dim:#6f82a6;--accent:#4fd1c5;--accent2:#7c9cff;--amber:#ffc46b;--pink:#ff7aa2;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1100px 600px at 85% -10%,#16305a55,transparent 60%),radial-gradient(900px 500px at -10% 10%,#1b4d4a44,transparent 55%),var(--bg);color:var(--txt);font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+.wrap{max-width:1150px;margin:0 auto;padding:30px 20px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);border-radius:20px;padding:30px;margin-bottom:24px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+h1{margin:0 0 10px;font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.02em}
+.hero p{color:var(--muted);margin:8px 0;max-width:860px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.unit{display:block;background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:20px 22px;transition:.2s;color:inherit}
+.unit:hover{border-color:#4fd1c577;transform:translateY(-2px);text-decoration:none}
+.unit .n{font-family:var(--mono);font-size:12px;color:var(--accent2);letter-spacing:.1em}
+.unit h2{margin:4px 0 8px;font-size:20px;color:#e9f1ff}
+.unit p{margin:0;color:var(--muted);font-size:14px}
+.tags{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;background:#ff7aa21a;color:#ffb3c9;border:1px solid #ff7aa233}
+.note{background:#ffc46b0e;border:1px solid #ffc46b35;color:#ffe6bd;border-radius:14px;padding:14px 18px;margin:22px 0;font-size:14.5px}
+.note b{color:#fff}
+.tip{background:#6ee7a810;border:1px solid #6ee7a835;color:#c9f7de;border-radius:14px;padding:14px 18px;margin:22px 0;font-size:14.5px}
+.tip b{color:#fff}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:30px 0 50px}
+.back{display:inline-block;margin-bottom:16px;font-size:14px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../index.html">← All subjects</a>
+
+<header class="hero">
+  <div class="kicker">SPPU · B.E. Computer Engineering · Semester VII · 2019 Pattern</div>
+  <h1>Cyber Security &amp; Digital Forensics</h1>
+  <p><b>410244(C)</b> · Elective III · End-sem 70 marks · Exam: <b>Tuesday, 01 December 2026, 2:00 PM</b></p>
+  <p>Question-answer notes for Units 3–6, built from every available end-sem paper (2022 May, 2022 Nov, 2023 May, 2023 Nov, 2024 May, 2025 May, 2025 Nov). The 2022 May and 2022 Nov papers are identical and both are counted. Each question carries a repetition badge and an answer written to its mark weight.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>7</b> end-sem papers</span>
+    <span class="chip">❓ <b>110</b> question instances mapped</span>
+    <span class="chip">📚 4 units</span>
+    <span class="chip">🎯 <b>70</b> marks</span>
+    <span class="chip">📖 Technical book: <b>Units 3–6 read</b></span>
+  </div>
+</header>
+
+<div class="grid">
+  <a class="unit" href="Unit-3-Introduction-to-Digital-Forensics.html">
+    <div class="n">UNIT 3</div>
+    <h2>Introduction to Digital Forensics</h2>
+    <p>Definition, law enforcement, HR assistance, forensic services, professional methodology, specialist steps, military / law-enforcement / business technology, data recovery and backup.</p>
+    <div class="tags"><span class="tag">Services ★★★★★</span><span class="tag">Backup ★★★★★</span><span class="tag">Law enforcement ★★★★★</span></div>
+  </a>
+
+  <a class="unit" href="Unit-4-Evidence-Collection-and-Seizure.html">
+    <div class="n">UNIT 4</div>
+    <h2>Evidence Collection &amp; Data Seizure</h2>
+    <p>Why collect, options, obstacles, types and rules of evidence, volatile evidence, general procedure, methods, collection steps, chain of custody, 16 processing steps, legal aspects, image authentication.</p>
+    <div class="tags"><span class="tag">Processing steps ★★★★★</span><span class="tag">Collection steps ★★★★</span><span class="tag">Chain of custody ★★★★</span></div>
+  </a>
+
+  <a class="unit" href="Unit-5-Forensic-Analysis-and-Network-Forensics.html">
+    <div class="n">UNIT 5</div>
+    <h2>Forensic Analysis, Validation &amp; Network Forensics</h2>
+    <p>What data to collect, validation, data hiding, remote and live acquisition, network forensics, standard procedures, tools, honeynet, identifying and seizing evidence, scene security, digital hash.</p>
+    <div class="tags"><span class="tag">Validation ★★★★★</span><span class="tag">Seizing ★★★★★</span><span class="tag">Honeynet ★★★</span></div>
+  </a>
+
+  <a class="unit" href="Unit-6-Forensic-Tools-and-Email-Investigation.html">
+    <div class="n">UNIT 6</div>
+    <h2>Current Tools &amp; E-mail Investigation</h2>
+    <p>Evaluating tool needs, software tools, hardware tools, validation and testing, NIST CFTT, e-mail role, client/server, e-mail crimes, servers, headers, specialised e-mail tools. Includes the 18-mark short-note bank.</p>
+    <div class="tags"><span class="tag">Software tools ★★★★★</span><span class="tag">Validation ★★★★★</span><span class="tag">Hardware tools ★★★★</span></div>
+  </a>
+</div>
+
+<section class="note">
+  <b>Coverage at a glance.</b> Unit 3 — 27 question instances (10 answer cards). Unit 4 — 30 instances (14 answer cards). Unit 5 — 28 instances (13 answer cards). Unit 6 — 25 sub-questions (12 answer cards). Total <b>110 instances across 7 papers</b>. Every sub-question of every paper is listed in an “Asked in” line; no question has been invented.
+</section>
+
+<section class="tip">
+  <b>How to use these notes in two days.</b> Day 1: Unit 4 processing steps + collection steps + chain of custody, then Unit 3 services + law enforcement + backup. Day 2: Unit 5 validation + seizing + honeynet, then Unit 6 five tools + validation + e-mail investigation. Each page ends with a last-minute sheet; revise only that on exam morning.
+</section>
+
+<div class="tbl-wrap">
+<table class="left">
+  <thead><tr><th>Paper</th><th>Code on paper</th><th>Unit-3 Qs</th><th>Unit-4 Qs</th><th>Unit-5 Qs</th><th>Unit-6 Qs</th></tr></thead>
+  <tbody>
+    <tr><td>2022 May</td><td>PA-1663</td><td>Q1(a,b), Q2(a,b)</td><td>Q3(a,b), Q4(a,b)</td><td>Q5(a,b), Q6(a,b)</td><td>Q7(a,b), Q8(a,b)</td></tr>
+    <tr><td>2022 Nov</td><td>PA-1663 (identical)</td><td>Q1(a,b), Q2(a,b)</td><td>Q3(a,b), Q4(a,b)</td><td>Q5(a,b), Q6(a,b)</td><td>Q7(a,b), Q8(a,b)</td></tr>
+    <tr><td>2023 May</td><td>P550</td><td>Q1(a,b), Q2(a,b)</td><td>Q3(a,b), Q4(a,b)</td><td>Q5(a,b), Q6(a,b)</td><td>Q7(a,b), Q8(a,b)</td></tr>
+    <tr><td>2023 Nov</td><td>P-6556</td><td>Q1(a,b), Q2(b)</td><td>Q2(a), Q3(a,b), Q4(a,b)</td><td>Q5(a,b), Q6(a,b)</td><td>Q7(a,b), Q8(a,b)</td></tr>
+    <tr><td>2024 May</td><td>PB2248</td><td>Q1(a,b), Q2(a,b)</td><td>Q3(a,b), Q4(a,b)</td><td>Q5(a,b), Q6(a,b)</td><td>Q7(a,b), Q8 (any two)</td></tr>
+    <tr><td>2025 May</td><td>PD4581</td><td>Q1(a,b), Q2(a,b)</td><td>Q3(a,b), Q4(a,b)</td><td>Q5(a,b), Q6(a,b)</td><td>Q7(a,b), Q8 (any two)</td></tr>
+    <tr><td>2025 Nov</td><td>PE-2197</td><td>Q1(a,b), Q2(a,b)</td><td>Q3(a,b), Q4(a,b), Q8(a)</td><td>Q5(a,b), Q6(a,b)</td><td>Q7(a,b), Q8(b)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<footer>
+  CSDF · 410244(C) · notes generated from SPPU end-sem papers · 2019 Pattern<br>
+  <span style="font-size:12px">Questions are reproduced from university papers; answers are exam-oriented study notes, not official solutions. Technical book: <i>Cyber Security &amp; Digital Forensics (SPPU)</i>, Units 3–6.</span>
+</footer>
+</div>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

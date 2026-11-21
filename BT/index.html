@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blockchain Technology — SPPU 410243 Notes</title>
+<style>
+:root{--bg:#080c17;--card:#111a2e;--line:#233252;--txt:#e8eefc;--muted:#9fb0cf;--dim:#6f82a6;--accent:#4fd1c5;--accent2:#7c9cff;--amber:#ffc46b;--pink:#ff7aa2;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1100px 600px at 85% -10%,#16305a55,transparent 60%),radial-gradient(900px 500px at -10% 10%,#1b4d4a44,transparent 55%),var(--bg);color:var(--txt);font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:30px 20px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);border-radius:20px;padding:30px;margin-bottom:24px}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+h1{margin:0 0 10px;font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.02em}
+.hero p{color:var(--muted);margin:8px 0;max-width:820px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.unit{display:block;background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:20px 22px;transition:.2s;color:inherit}
+.unit:hover{border-color:#4fd1c577;transform:translateY(-2px);text-decoration:none}
+.unit .n{font-family:var(--mono);font-size:12px;color:var(--accent2);letter-spacing:.1em}
+.unit h2{margin:4px 0 8px;font-size:20px;color:#e9f1ff}
+.unit p{margin:0;color:var(--muted);font-size:14px}
+.tags{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;background:#ff7aa21a;color:#ffb3c9;border:1px solid #ff7aa233}
+.tag.t{background:#4fd1c51a;color:#a9f0e8;border-color:#4fd1c533}
+.note{background:#ffc46b0e;border:1px solid #ffc46b35;color:#ffe6bd;border-radius:14px;padding:14px 18px;margin:22px 0;font-size:14.5px}
+.note b{color:#fff}
+.panel{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:18px 0}
+.panel h2{margin:0 0 10px;font-size:21px}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+th{background:#182742;color:#dce8ff;font-weight:600}
+tr:nth-child(even) td{background:#ffffff05}
+td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:30px 0 50px}
+.back{display:inline-block;margin-bottom:16px;font-size:14px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../index.html">← All subjects</a>
+
+<header class="hero">
+  <div class="kicker">SPPU · B.E. Computer Engineering · Semester VII · 2019 Pattern</div>
+  <h1>Blockchain Technology</h1>
+  <p><b>410243</b> · End-sem 70 marks · Exam: <b>Saturday, 28 November 2026, 2:00–4:30 PM</b></p>
+  <p>Question-answer notes for Units 3–6, built from every available end-sem paper (2022 Nov, 2023 Nov, 2024 May, 2025 May, 2025 Nov). Each question carries a repetition badge and a mark-appropriate answer. The 2024 May and 2025 Nov papers are near-identical; both are counted separately.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>5</b> end-sem papers</span>
+    <span class="chip">❓ <b>102</b> question instances mapped</span>
+    <span class="chip">📚 <b>4</b> units</span>
+    <span class="chip">🎯 <b>70</b> marks</span>
+    <span class="chip">🔥 Hottest: <b>smart contracts &amp; banking — 6× each</b></span>
+  </div>
+</header>
+
+<div class="grid">
+  <a class="unit" href="Unit-3-Blockchain-Platforms-and-Consensus.html">
+    <div class="n">UNIT 3 · 28 INSTANCES</div>
+    <h2>Blockchain Platforms &amp; Consensus</h2>
+    <p>Public / private / consortium, Bitcoin, Ethereum, Hyperledger, IOTA, Corda, R3; consensus approach and elements; PoW, PoS, PoA, PoB, PoET; Byzantine Generals.</p>
+    <div class="tags"><span class="tag">Proof of Work ★★★★★</span><span class="tag">PoS ★★★★</span><span class="tag">Byzantine ★★★★</span><span class="tag t">Corda</span></div>
+  </a>
+
+  <a class="unit" href="Unit-4-Cryptocurrency-and-Bitcoin.html">
+    <div class="n">UNIT 4 · 26 INSTANCES</div>
+    <h2>Cryptocurrency &amp; Bitcoin</h2>
+    <p>Crypto basics and types, usage, Zerocoin/Zerocash, wallets, custodial vs non-custodial, hot vs cold, MetaMask, Coinbase vs Binance, Bitcoin in detail.</p>
+    <div class="tags"><span class="tag">Crypto types ★★★★★</span><span class="tag">MetaMask ★★★★★</span><span class="tag">Coinbase vs Binance ★★★★</span><span class="tag t">Bitcoin</span></div>
+  </a>
+
+  <a class="unit" href="Unit-5-Ethereum-and-Solidity.html">
+    <div class="n">UNIT 5 · 24 INSTANCES</div>
+    <h2>Ethereum &amp; Solidity</h2>
+    <p>Ethereum features, Mainnet/Testnet/Private, EVM architecture, smart contracts and types, gas, Solidity code and deployment, Swarm storage, Whisper messaging.</p>
+    <div class="tags"><span class="tag">Smart contracts ★★★★★</span><span class="tag">Ethereum ★★★★★</span><span class="tag">Swarm ★★★★</span><span class="tag t">EVM</span></div>
+  </a>
+
+  <a class="unit" href="Unit-6-Blockchain-Case-Studies.html">
+    <div class="n">UNIT 6 · 24 INSTANCES</div>
+    <h2>Blockchain Case Studies</h2>
+    <p>Prominent applications and architecture, retail, banking and financial services, government, healthcare, IoT, energy, integration with cloud/IoT, voting, digital identity.</p>
+    <div class="tags"><span class="tag">Banking ★★★★★</span><span class="tag">Government ★★★★★</span><span class="tag">Healthcare ★★★★</span><span class="tag t">Voting</span></div>
+  </a>
+</div>
+
+<section class="panel">
+  <h2>📊 Where the marks are</h2>
+  <table>
+    <thead><tr><th>Unit</th><th>Question in paper</th><th>Instances</th><th>Most repeated topic</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>Unit 3</td><td>Q1 <em>or</em> Q2 (17–18 marks)</td><td>28</td><td>Proof of Work</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>Unit 4</td><td>Q3 <em>or</em> Q4 (17 marks)</td><td>26</td><td>Types of cryptocurrency / MetaMask</td><td><span class="stars">★★★★★</span> 5× each</td></tr>
+      <tr><td>Unit 5</td><td>Q5 <em>or</em> Q6 (17–18 marks)</td><td>24</td><td>Smart contracts</td><td><span class="stars">★★★★★</span> 6×</td></tr>
+      <tr><td>Unit 6</td><td>Q7 <em>or</em> Q8 (17–18 marks)</td><td>24</td><td>Banking &amp; financial services</td><td><span class="stars">★★★★★</span> 6×</td></tr>
+      <tr><th>Total</th><th>70 marks</th><th>102</th><th>—</th><th>—</th></tr>
+    </tbody>
+  </table>
+  <p class="small" style="color:var(--dim);font-size:13px;margin:6px 0 0">Counts include multi-part questions. A sub-question that lists four algorithms is counted once per algorithm, so the topic rows on the unit pages add up to more than the unit total.</p>
+</section>
+
+<section class="panel">
+  <h2>🎯 Last-48-hours plan</h2>
+  <table>
+    <thead><tr><th>Priority</th><th>Topic</th><th>Why</th><th>Time</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Smart contracts + gas (Unit 5)</td><td>Appears in every paper; 6–9 marks.</td><td>45 min</td></tr>
+      <tr><td>2</td><td>Proof of Work + PoS + Byzantine (Unit 3)</td><td>Three of the top four Unit-3 topics; one full question.</td><td>45 min</td></tr>
+      <tr><td>3</td><td>Types of crypto + MetaMask + Coinbase/Binance (Unit 4)</td><td>Wallets are guaranteed; three comparison tables.</td><td>40 min</td></tr>
+      <tr><td>4</td><td>Banking + government (Unit 6)</td><td>Covers 11 of 24 case-study appearances.</td><td>40 min</td></tr>
+      <tr><td>5</td><td>Ethereum networks + Swarm (Unit 5)</td><td>4 appearances each; easy 9-mark tables.</td><td>30 min</td></tr>
+      <tr><td>6</td><td>Voting + digital identity (Unit 6)</td><td>The two “new” 2024–2025 questions.</td><td>25 min</td></tr>
+      <tr><td>7</td><td>IOTA + Corda (Unit 3)</td><td>Likely alternate-platform question.</td><td>20 min</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="note"><b>How to use these notes:</b> each unit page starts with a <b>PYQ frequency map</b> — read that first and pick the starred topics. Then read the Q&amp;A cards; each one shows the exact year, question number and marks. The <b>last-minute sheet</b> at the end of every unit is for the morning of the exam. Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</div>
+
+<footer>
+  Blockchain Technology · 410243 · SPPU 2019 Pattern · 5 end-sem papers (2022 Nov – 2025 Nov)<br>
+  <span style="font-size:12px">Built for the 28 Nov 2026 exam. Verify any figure against the paper before quoting it.</span>
+</footer>
+</div>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

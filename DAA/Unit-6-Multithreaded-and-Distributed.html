@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAA Unit 6 — Multithreaded, Distributed &amp; String Matching | SPPU 410241</title>
+<style>
+:root{--bg:#080c17;--card:#111a2e;--line:#233252;--txt:#e8eefc;--muted:#9fb0cf;--dim:#6f82a6;--accent:#4fd1c5;--accent2:#7c9cff;--amber:#ffc46b;--pink:#ff7aa2;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1100px 600px at 85% -10%,#16305a55,transparent 60%),radial-gradient(900px 500px at -10% 10%,#1b4d4a44,transparent 55%),var(--bg);color:var(--txt);font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#10283a);border:1px solid var(--line);border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,#7c9cff33,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #7c9cff66}
+.asked b{color:var(--muted)}
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.freq{font-size:13.5px}.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+.tree{font-family:var(--mono);white-space:pre;line-height:1.5;color:#cfe3ff;background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){.wrap{grid-template-columns:1fr;padding:14px}.side{position:static;max-height:none;order:-1}.side nav{display:flex;flex-wrap:wrap;gap:4px}.side a{font-size:12.5px}.top{display:block}}
+@media print{body{background:#fff;color:#111}.side,.top{display:none}.wrap{display:block;max-width:none;padding:0}.card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}.hero p,.lead,.small,.asked{color:#333}th{background:#eee;color:#111}td{color:#111}pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}.qa-head{background:#f2f2f2}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside class="side">
+  <h3>DAA · Unit 6</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s61">6.1 Multithreaded fundamentals</a>
+    <a href="#s62">6.2 Multithreaded matrix multiplication</a>
+    <a href="#s63">6.3 Multithreaded merge sort</a>
+    <a href="#s64">6.4 Distributed BFS</a>
+    <a href="#s65">6.5 Distributed MST</a>
+    <a href="#s66">6.6 Naive string matching</a>
+    <a href="#s67">6.7 Rabin–Karp algorithm</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Greedy-and-Dynamic-Programming.html">Unit 3 · Greedy &amp; DP</a>
+  <a href="Unit-4-Backtracking-and-Branch-and-Bound.html">Unit 4 · Backtracking &amp; BnB</a>
+  <a href="Unit-5-Amortized-Analysis.html">Unit 5 · Amortized Analysis</a>
+  <a href="index.html">↩ DAA home</a>
+</aside>
+
+<main>
+<header class="hero">
+  <div class="kicker">SPPU · B.E. Computer · 2019 Pattern · 410241</div>
+  <h1>Unit 6 — Multithreaded &amp; Distributed Algorithms, String Matching</h1>
+  <p>All questions are verbatim from the end-sem papers of <b>2022 Nov, 2023 Nov, 2024 May, 2025 May, 2025 Nov</b>. Rabin–Karp and multithreaded merge sort are the highest-repeat items — master those first.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>5</b> end-sem papers</span>
+    <span class="chip">❓ <b>21</b> Unit-6 question instances</span>
+    <span class="chip">🔁 Hottest: <b>Rabin–Karp — 5×</b></span>
+    <span class="chip">✍️ <b>18</b> marks of the paper</span>
+  </div>
+</header>
+
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map</h2>
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question</th><th>Appears in</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">Rabin–Karp string matching — algorithm + numerical / complexity</td><td>2022 Nov Q7a, Q8b; 2023 Nov Q7a, Q8b; 2024 May Q7a; 2025 May Q8b; 2025 Nov Q7a</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>2</td><td class="l">Multithreaded merge sort — pseudocode + parallel merging advantage</td><td>2022 Nov Q7a, Q8a; 2023 Nov Q8a; 2024 May Q7b</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>3</td><td class="l">Distributed BFS — algorithm + numerical / advantage</td><td>2022 Nov Q7a; 2024 May Q8a; 2025 May Q8a</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>4</td><td class="l">Multithreaded matrix multiplication (incl. row-wise vs block-wise)</td><td>2022 Nov Q7a; 2025 May Q7a; 2025 Nov Q7b</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>5</td><td class="l">Analyzing multithreaded algorithms, parallel loops, race conditions</td><td>2022 Nov Q7b; 2023 Nov Q7b; 2025 May Q7b</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>6</td><td class="l">spawn and sync keywords</td><td>2024 May Q8b; 2025 May Q7c</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>7</td><td class="l">Naive string matching — pseudocode + trace</td><td>2022 Nov Q8b; 2025 Nov Q8a</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>8</td><td class="l">Distributed minimum spanning tree</td><td>2023 Nov Q7a; 2025 Nov Q8b</td><td><span class="stars">★★</span> 2×</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tip"><b>High-yield:</b> Rabin–Karp appears in <b>every</b> paper. Learn the rolling-hash formula, the algorithm, and the two solved traces (spurious hits with q = 11, and hash 4133124 with q = 13). That alone is 8–10 marks.</div>
+</section>
+
+<!-- 6.1 -->
+<section class="card" id="s61">
+  <h2>6.1 Multithreaded fundamentals</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>With respect to multithreaded algorithms explain: analyzing multithreaded algorithms, parallel loops, race conditions.</p>
+      <div class="badges"><span class="b marks">7 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(b) [7] · 2023 Nov Q7(b) [7] · related: 2025 May Q7(b) [4 — race condition]</p>
+
+      <h4>(a) Analysing multithreaded algorithms</h4>
+      <p>Two quantities describe a multithreaded computation:</p>
+      <ul>
+        <li><b>Work T<sub>1</sub></b> — total time on one processor (sum of all operations).</li>
+        <li><b>Span T<sub>∞</sub></b> — critical-path length, i.e. the longest chain of dependencies (time on infinitely many processors).</li>
+      </ul>
+      <div class="math">T<sub>P</sub> ≥ T<sub>1</sub>/P &nbsp;&nbsp;and&nbsp;&nbsp; T<sub>P</sub> ≥ T<sub>∞</sub><br>
+      Idealised bound: T<sub>P</sub> = T<sub>1</sub>/P + T<sub>∞</sub><br>
+      Speedup = T<sub>1</sub>/T<sub>P</sub> &nbsp;&nbsp;|&nbsp;&nbsp; Parallelism = T<sub>1</sub>/T<sub>∞</sub></div>
+      <p>If <code>T<sub>1</sub>/T<sub>∞</sub> = Θ(P)</code>, the algorithm scales linearly with P (linear speedup). For matrix multiplication: T<sub>1</sub> = Θ(n³), T<sub>∞</sub> = Θ(n), parallelism = Θ(n²).</p>
+
+      <h4>(b) Parallel loops</h4>
+      <p>The construct <code>parallel for</code> runs all iterations concurrently. It is compiled into recursive <code>spawn</code>/<code>sync</code> pairs (divide-and-conquer):</p>
+<pre><code>parallel for i = 1 to n
+    body(i)
+
+// equivalent to
+P-FOR(1, n)
+  if lo &lt; hi then
+     mid = ⌊(lo+hi)/2⌋
+     spawn P-FOR(lo, mid)
+     P-FOR(mid+1, hi)
+     sync</code></pre>
+      <p>Iterations must be <b>independent</b>. Span is O(log n) for the loop control; total work is n × work(body).</p>
+
+      <h4>(c) Race conditions</h4>
+      <p>A <b>race condition</b> occurs when two threads access the same shared memory location, at least one writes, and there is no synchronisation. The result then depends on the unpredictable interleaving.</p>
+      <div class="math">Thread 1: x = x + 1 &nbsp;&nbsp;&nbsp; Thread 2: x = x + 1<br>
+      Both read x = 5 → both write 6 → <b>lost update</b> (expected 7)</div>
+      <p><b>Prevention:</b> locks/mutexes, atomic operations, <code>sync</code> barriers, or making the computation local and combining at the end (reduction).</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What do you understand by the <code>spawn</code> and <code>sync</code> keywords used in multithreaded programming? Explain with a suitable example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q8(b) · 2025 May Q7(c) [6]</p>
+      <dl>
+        <dt><b>spawn</b></dt>
+        <dd>Creates a new logical thread of execution that runs a specified subroutine <b>in parallel</b> with the calling thread. The parent continues immediately; it does not wait.</dd>
+        <dt><b>sync</b></dt>
+        <dd>Waits for <b>all</b> spawned children of the current thread to finish. It is the join/barrier point; memory written by children before <code>sync</code> is visible after it.</dd>
+      </dl>
+      <h4>Example — parallel Fibonacci</h4>
+<pre><code>P-FIB(n)
+  if n ≤ 1 then return n
+  x = spawn P-FIB(n−1)     // run in parallel
+  y = P-FIB(n−2)           // run in the current thread
+  sync                     // wait for the spawned child
+  return x + y</code></pre>
+      <p>Without <code>spawn</code>, the two recursive calls are serial. With <code>spawn</code>, one runs concurrently; <code>sync</code> ensures <code>x</code> is computed before it is added.</p>
+      <div class="note"><b>Nested rule:</b> a <code>sync</code> waits only for children spawned by the <em>same</em> thread since its last <code>sync</code>, not for all threads in the program.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6.2 -->
+<section class="card" id="s62">
+  <h2>6.2 Multithreaded matrix multiplication <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write a simple multithreaded matrix multiplication algorithm based on parallelising the relevant loops of the conventional procedure.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q7(a) [8] · short note: 2022 Nov Q7(a) [10]</p>
+
+      <h4>Conventional algorithm</h4>
+<pre><code>MATRIX-MULT(A, B, C, n)
+  for i = 1 to n
+     for j = 1 to n
+        C[i][j] = 0
+        for k = 1 to n
+           C[i][j] = C[i][j] + A[i][k] * B[k][j]</code></pre>
+      <p>Work = Θ(n³). The two outer loops are independent, so they can be parallelised.</p>
+
+      <h4>Parallel version</h4>
+<pre><code>P-MATRIX-MULT(A, B, C, n)
+  parallel for i = 1 to n              // each i is independent
+     parallel for j = 1 to n           // each (i,j) is independent
+        C[i][j] = 0
+        for k = 1 to n
+           C[i][j] = C[i][j] + A[i][k] * B[k][j]</code></pre>
+      <p>Each of the n² entries is computed by an independent thread; the inner k-loop remains serial within a thread.</p>
+
+      <h4>Analysis</h4>
+      <div class="math">T<sub>1</sub> = Θ(n³) &nbsp;&nbsp;|&nbsp;&nbsp; T<sub>∞</sub> = Θ(n) &nbsp;&nbsp;|&nbsp;&nbsp; parallelism = T<sub>1</sub>/T<sub>∞</sub> = Θ(n²)<br>
+      T<sub>P</sub> = Θ(n³/P + n)</div>
+      <p>With P = n² processors, T<sub>P</sub> = Θ(n) — near-perfect speedup.</p>
+
+      <h4>Cache improvement — blocked version</h4>
+      <p>The naive version accesses B column-wise, causing poor cache locality. Blocked multiplication processes <code>b×b</code> tiles that fit in cache:</p>
+<pre><code>for i = 1 to n step b
+  for j = 1 to n step b
+     for k = 1 to n step b
+        multiply blocks A[i..i+b][k..k+b] × B[k..k+b][j..j+b]</code></pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Compare and contrast row-wise and block-wise approaches in multithreaded matrix multiplication with respect to division of work, communication overhead and cache efficiency.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q7(b)</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Row-wise</th><th>Block-wise</th></tr></thead>
+        <tbody>
+          <tr><td><b>Division of work</b></td><td>One thread per row of C (or per row-pair). Each thread computes n entries. Simple static partition.</td><td>Matrix divided into √P × √P tiles; each thread computes one or more tiles. Balanced, tunable tile size.</td></tr>
+          <tr><td><b>Communication overhead</b></td><td>Each thread needs a full row of A and <b>all columns of B</b> → B is read by every thread → high shared-memory traffic.</td><td>A tile of A and a tile of B are reused for b² outputs → far fewer global reads, lower communication.</td></tr>
+          <tr><td><b>Cache efficiency</b></td><td>Poor: B is traversed column-wise, so consecutive accesses are far apart → cache misses.</td><td>High: tiles fit in cache and are reused → spatial and temporal locality.</td></tr>
+          <tr><td><b>Scalability</b></td><td>Limited by memory bandwidth.</td><td>Scales well; standard choice for high-performance BLAS.</td></tr>
+          <tr><td><b>Complexity</b></td><td>Simple to implement.</td><td>More index arithmetic, but much faster for large n.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note"><b>One-line answer:</b> row-wise is simple but memory-bound; block-wise exploits cache reuse and is the preferred parallel decomposition.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6.3 -->
+<section class="card" id="s63">
+  <h2>6.3 Multithreaded merge sort <span class="b rep" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write and explain the pseudocode for multithreaded merge sort. How does parallel merging give a significant parallelism advantage over ordinary merge sort?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(a) [9] · 2023 Nov Q8(a) [9] · 2024 May Q7(b) [8] · short note: 2022 Nov Q7(a)</p>
+
+      <h4>Step 1 — parallel merge sort</h4>
+<pre><code>P-MERGE-SORT(A, p, r)
+  if p &lt; r then
+     q = ⌊(p + r) / 2⌋
+     spawn P-MERGE-SORT(A, p, q)     // sort left half in parallel
+     P-MERGE-SORT(A, q+1, r)         // sort right half in current thread
+     sync                            // wait for left half
+     P-MERGE(A, p, q, r)             // merge the two halves</code></pre>
+
+      <h4>Step 2 — parallel merge (the key idea)</h4>
+      <p>Ordinary merge scans both halves sequentially: Θ(n). Parallel merge instead computes, <b>for every element, its final rank</b> in the merged output, then scatters all elements to their positions at once.</p>
+<pre><code>P-MERGE(A, p, q, r)          // merge sorted A[p..q] and A[q+1..r]
+  for each element x = A[i], i = p..q, in parallel do
+      rank[i] = (i − p) + COUNT-LESS(A, q+1, r, x)
+      // COUNT-LESS = binary search: how many elements of the right half are &lt; x
+
+  for each element y = A[j], j = q+1..r, in parallel do
+      rank[j] = (j − q − 1) + COUNT-LESS(A, p, q, y)
+
+  for each element in parallel do
+      B[ rank[i] ] = A[i]       // scatter directly to final position
+
+  copy B[p..r] back to A[p..r]</code></pre>
+      <p>Each <code>COUNT-LESS</code> is a binary search, so it costs O(log n). All ranks are computed concurrently.</p>
+
+      <h4>Why this gives a parallelism advantage</h4>
+      <ul>
+        <li>Ordinary merge is a <b>single serial scan</b>: T<sub>∞</sub>(merge) = Θ(n). Even with infinitely many processors, the merge remains a bottleneck.</li>
+        <li>Parallel merge computes all ranks concurrently and scatters in one step. Its span is:</li>
+      </ul>
+      <div class="math">T<sub>∞</sub>(P-MERGE) = Θ(log n)</div>
+      <ul>
+        <li>Sorting: T<sub>1</sub> = Θ(n log n), T<sub>∞</sub> = Θ(log² n) → parallelism = Θ(n / log n).</li>
+        <li>Serial merge sort: T<sub>∞</sub> = Θ(n) → parallelism only Θ(log n).</li>
+      </ul>
+      <p>So parallel merging lifts the available parallelism from logarithmic to nearly linear, which is what allows the sort to use many cores effectively.</p>
+
+      <div class="note"><b>For 9 marks:</b> write P-MERGE-SORT, explain the binary-search split in P-MERGE, then give the T<sub>1</sub>/T<sub>∞</sub> comparison. Draw the recursion tree showing the two halves merging concurrently.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6.4 -->
+<section class="card" id="s64">
+  <h2>6.4 Distributed breadth-first search <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write the distributed breadth-first search algorithm. What is its advantage over the conventional approach?</p>
+      <div class="badges"><span class="b marks">8–10 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [short note] · 2024 May Q8(a) [10 — with graph] · 2025 May Q8(a) [8]</p>
+
+      <h4>Idea — level-synchronous BFS</h4>
+      <p>The graph is distributed across processors: each vertex (or partition) runs on one processor and knows only its own adjacency list. BFS proceeds in <b>rounds</b>; in each round the current <b>frontier</b> sends a message to all neighbours.</p>
+
+      <h4>Algorithm (per vertex v)</h4>
+<pre><code>// Initially: dist[v] = ∞ for all v, dist[source] = 0
+// frontier = {source}
+
+DistributedBFS(G, source)
+{
+    dist[source] = 0;
+    frontier = {source};
+    level = 0;
+
+    while (frontier is not empty) do
+    {
+        nextFrontier = ∅;
+
+        // all vertices in the frontier work in parallel
+        for each v in frontier (in parallel) do
+        {
+            for each neighbour u of v do
+            {
+                if (dist[u] == ∞) then
+                {
+                    dist[u] = level + 1;
+                    add u to nextFrontier;
+                }
+            }
+        }
+
+        // global barrier: wait for all vertices of this level
+        synchronize();
+        frontier = nextFrontier;
+        level = level + 1;
+    }
+}</code></pre>
+
+      <h4>Trace on the 7-vertex graph (2024 May)</h4>
+      <p>Edges: A–B, A–C, B–D, B–E, C–F, C–G.</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Round</th><th>Frontier</th><th>Messages sent</th><th>Newly discovered</th><th>dist</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>{A}</td><td>A→B, A→C</td><td>B, C</td><td>B=1, C=1</td></tr>
+          <tr><td>1</td><td>{B, C}</td><td>B→D, B→E; C→F, C→G</td><td>D, E, F, G</td><td>D=E=F=G=2</td></tr>
+          <tr><td>2</td><td>{D, E, F, G}</td><td>all neighbours already visited</td><td>—</td><td>—</td></tr>
+          <tr><td>3</td><td>∅</td><td>stop</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="math">BFS tree: A → {B, C}; B → {D, E}; C → {F, G}<br>
+      Distances: A=0, B=C=1, D=E=F=G=2</div>
+
+      <h4>Complexity</h4>
+      <ul>
+        <li><b>Rounds</b> = graph diameter D (longest shortest path).</li>
+        <li><b>Messages</b> = O(V + E) total (each edge is examined once from each endpoint).</li>
+        <li>With an adjacency <b>matrix</b>, each vertex scans a row of length n → O(V²) work per level, O(D·V²) total.</li>
+        <li>Memory per processor = O(degree) + O(V) for distances.</li>
+      </ul>
+
+      <h4>Advantages over conventional BFS</h4>
+      <ul>
+        <li><b>Scalability</b> — handles graphs too large for one machine's memory.</li>
+        <li><b>Parallelism</b> — all vertices of a level are processed simultaneously.</li>
+        <li><b>Locality</b> — each processor only reads its local adjacency list; no global shared queue.</li>
+        <li><b>Fault tolerance</b> — the level-synchronous structure allows checkpointing between rounds.</li>
+      </ul>
+      <p><b>Cost:</b> global synchronisation per level and message latency; performance depends on the graph diameter (a long chain → many rounds).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6.5 -->
+<section class="card" id="s65">
+  <h2>6.5 Distributed minimum spanning tree</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain an algorithm for distributed minimum spanning tree.</p>
+      <div class="badges"><span class="b marks">8–10 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(a)(i) [10 — part of the distributed short-note question] · 2025 Nov Q8(b) [8]</p>
+
+      <h4>Problem</h4>
+      <p>Given a connected weighted graph distributed across processors (each vertex knows only its incident edges), find an MST without a central coordinator, using only local messages.</p>
+
+      <h4>GHS algorithm (Gallager–Humblet–Spira)</h4>
+      <p>It is a distributed version of Borůvka's algorithm. It works in <b>phases</b>:</p>
+      <ol>
+        <li><b>Initialise</b> — every vertex is its own <b>fragment</b> with a unique fragment ID and level 0.</li>
+        <li><b>Find minimum outgoing edge (MOE)</b> — each vertex finds its minimum-weight edge leaving its fragment. Vertices exchange messages along fragment edges to compute the fragment's overall minimum outgoing edge.</li>
+        <li><b>Merge fragments</b> — fragments connected by the chosen MOE combine:
+          <ul>
+            <li>if both have the same level, the new level = level + 1 and the new ID = weight of the chosen edge;</li>
+            <li>if levels differ, the lower-level fragment adopts the higher level and ID.</li>
+          </ul>
+        </li>
+        <li><b>Repeat</b> until one fragment remains. The selected edges form the MST.</li>
+      </ol>
+
+      <h4>Message complexity</h4>
+      <div class="math">Each phase merges fragments, so there are O(log V) phases.<br>
+      Messages per phase = O(E) → total <b>O(E log V)</b> messages.</div>
+
+      <h4>Why fragment IDs/levels are needed</h4>
+      <p>They prevent cycles: an edge is added only when it connects two <b>distinct</b> fragments. Without IDs, two fragments could both select the same edge or form a cycle.</p>
+
+      <h4>Simpler alternative (for short answers)</h4>
+      <p><b>Distributed Borůvka:</b> in each round every component selects its cheapest outgoing edge and all selected edges are added simultaneously. Repeat for O(log V) rounds. MST is the union of selected edges. This is easier to describe and has the same O(E log V) message bound.</p>
+
+      <div class="note"><b>Key property (cut property):</b> the minimum-weight edge crossing any cut is safe to include in some MST. Both GHS and Borůvka repeatedly apply this rule locally.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6.6 -->
+<section class="card" id="s66">
+  <h2>6.6 Naive string matching</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write the naive string-matching algorithm and trace it for T = "KITCHEN", P = "HEN".</p>
+      <div class="badges"><span class="b marks">8–10 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q8(a) [10] · pseudocode + analysis: 2022 Nov Q8(b) [8]</p>
+
+      <h4>Algorithm</h4>
+<pre><code>NAIVE-STRING-MATCHER(T, P)
+  n = T.length
+  m = P.length
+  for s = 0 to n − m do            // every possible shift
+  {
+      if T[s+1 .. s+m] == P[1..m] then
+          print "Pattern occurs with shift" s
+  }</code></pre>
+      <p>It checks every alignment character by character. Worst case O((n−m+1)·m) = <b>O(nm)</b>; best case O(n) when the first character mismatches immediately.</p>
+
+      <h4>Trace: T = K I T C H E N, P = H E N (n = 7, m = 3)</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Shift s</th><th>Window</th><th>Comparison</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>K I T</td><td>K ≠ H</td><td>mismatch at 1st char</td></tr>
+          <tr><td>1</td><td>I T C</td><td>I ≠ H</td><td>mismatch at 1st char</td></tr>
+          <tr><td>2</td><td>T C H</td><td>T ≠ H</td><td>mismatch at 1st char</td></tr>
+          <tr><td>3</td><td>C H E</td><td>C ≠ H</td><td>mismatch at 1st char</td></tr>
+          <tr><td>4</td><td><b>H E N</b></td><td>H=H, E=E, N=N</td><td>✅ <b>match at shift 4</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="math"><b>Pattern found at index 4 (5th position).</b><br>
+      Comparisons = 4 mismatches × 1 + 3 matches = <b>7 character comparisons</b>.</div>
+      <p>In the worst case, e.g. T = "AAAAAA", P = "AAA", every window matches m characters before failing → O(nm).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6.7 -->
+<section class="card" id="s67">
+  <h2>6.7 Rabin–Karp algorithm <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★★ 5×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write the Rabin–Karp string-matching algorithm. For a text of length n and pattern of length m, give the expected and worst-case running times.</p>
+      <div class="badges"><span class="b marks">8–10 marks</span><span class="b rep">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(b) [8] · 2023 Nov Q7(a)(ii) [10 — part of the short-note question] · 2024 May Q7(a) [10] · 2025 May Q8(b) [10] · 2025 Nov Q7(a) [10]</p>
+
+      <h4>Idea</h4>
+      <p>Instead of comparing characters at every shift, compare <b>hash values</b>. Compute the hash of the pattern and of the first window of the text; then use a <b>rolling hash</b> to update the window hash in O(1) per shift. Only when the hashes match do we verify the characters (to rule out <b>spurious hits</b>).</p>
+
+      <h4>Hash function</h4>
+      <p>Interpret a string of m characters as a base-<code>d</code> number modulo a prime <code>q</code>:</p>
+      <div class="math">h = ( c<sub>1</sub>·d<sup>m−1</sup> + c<sub>2</sub>·d<sup>m−2</sup> + … + c<sub>m</sub>·d<sup>0</sup> ) mod q</div>
+      <p>Rolling update when the window slides by one character:</p>
+      <div class="math">h<sub>new</sub> = ( d · (h<sub>old</sub> − c<sub>old</sub>·d<sup>m−1</sup>) + c<sub>new</sub> ) mod q</div>
+
+      <h4>Algorithm</h4>
+<pre><code>RABIN-KARP-MATCHER(T, P, d, q)
+  n = T.length;  m = P.length
+  h = d^(m−1) mod q
+  p = 0;  t = 0
+
+  // preprocessing: hash of pattern and first window
+  for i = 1 to m do
+  {
+      p = (d·p + P[i]) mod q
+      t = (d·t + T[i]) mod q
+  }
+
+  for s = 0 to n − m do
+  {
+      if p == t then                    // possible match
+          if P[1..m] == T[s+1 .. s+m] then
+              print "Pattern occurs at shift" s
+
+      // rolling hash for next window
+      if s &lt; n − m then
+          t = ( d·(t − T[s+1]·h) + T[s+m+1] ) mod q
+  }</code></pre>
+
+      <h4>Complexity</h4>
+      <div class="math">Preprocessing = Θ(m)<br>
+      Matching = Θ(n − m + 1) hash comparisons<br>
+      <b>Expected total = O(n + m)</b> &nbsp;&nbsp;|&nbsp;&nbsp; <b>Worst case = O((n − m + 1)·m) = O(nm)</b></div>
+      <p>The worst case occurs when many windows have the same hash as the pattern (many spurious hits), forcing full comparisons at every shift.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>With modulus q = 11, how many spurious hits does Rabin–Karp encounter in T = 31415926535, given P mod q = 4?</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q8(b) [8]</p>
+      <p>The pattern hash is 4, and the pattern is the two-digit string whose value is 26 (since 26 mod 11 = 4). Windows of length 2:</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Window</th><th>31</th><th>14</th><th>41</th><th>15</th><th>59</th><th>92</th><th>26</th><th>65</th><th>53</th><th>35</th></tr></thead>
+        <tbody>
+          <tr><td>mod 11</td><td>9</td><td>3</td><td>8</td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td>10</td><td>9</td><td>2</td></tr>
+          <tr><td>Match?</td><td>—</td><td>—</td><td>—</td><td>spurious</td><td>spurious</td><td>spurious</td><td>✅ real</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="math">Hash matches = 4 windows: 15, 59, 92, 26<br>
+      Real matches = 1 (the substring "26")<br>
+      <b>Spurious hits = 4 − 1 = 3</b></div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Text hash code = 4133124, pattern hash code = 124, q = 13. Apply Rabin–Karp step by step and give the time complexity.</p>
+      <div class="badges"><span class="b marks">10 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q7(a) [10]</p>
+      <p>Both strings are decimal digit strings. Pattern length m = 3, so windows are 3 digits long. Pattern hash = 124 mod 13 = <b>7</b>.</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Shift s</th><th>Window</th><th>Value</th><th>mod 13</th><th>Hash = 7?</th><th>Character check</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>413</td><td>413</td><td>10</td><td>No</td><td>—</td></tr>
+          <tr><td>1</td><td>133</td><td>133</td><td>3</td><td>No</td><td>—</td></tr>
+          <tr><td>2</td><td>331</td><td>331</td><td>6</td><td>No</td><td>—</td></tr>
+          <tr><td>3</td><td>312</td><td>312</td><td>0</td><td>No</td><td>—</td></tr>
+          <tr><td>4</td><td><b>124</b></td><td>124</td><td><b>7</b></td><td><b>Yes</b></td><td>✅ "124" = "124" → match</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="math">413 mod 13 = 10<br>
+      133 mod 13 = 3<br>
+      331 mod 13 = 6<br>
+      312 mod 13 = 0<br>
+      124 mod 13 = <b>7</b> = pattern hash → verify → <b>match at shift 4</b></div>
+      <p><b>No spurious hits</b> in this example. Time complexity: O(n + m) expected, O(nm) worst case.</p>
+      <p class="small">Rolling check: t<sub>new</sub> = (10·(t<sub>old</sub> − old_digit·100) + new_digit) mod 13. E.g. from 413 → 133: 10·(10 − 4·100) + 3 = 10·(−390) + 3 = −3897 → mod 13 = 3. ✓</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Complexities</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Algorithm</th><th>T<sub>1</sub> / time</th><th>T<sub>∞</sub></th></tr></thead>
+        <tbody>
+          <tr><td>P-MATRIX-MULT</td><td>Θ(n³)</td><td>Θ(n)</td></tr>
+          <tr><td>P-MERGE-SORT</td><td>Θ(n log n)</td><td>Θ(log² n)</td></tr>
+          <tr><td>Distributed BFS</td><td>O(V + E) messages</td><td>O(D) rounds</td></tr>
+          <tr><td>Distributed MST (GHS)</td><td>O(E log V)</td><td>O(V log V)</td></tr>
+          <tr><td>Naive string match</td><td>O(nm)</td><td>—</td></tr>
+          <tr><td>Rabin–Karp</td><td>O(n + m) expected</td><td>O(nm) worst</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>Formula bank</h4>
+      <div class="math">T<sub>P</sub> = T<sub>1</sub>/P + T<sub>∞</sub><br>
+      speedup = T<sub>1</sub>/T<sub>P</sub>, parallelism = T<sub>1</sub>/T<sub>∞</sub><br>
+      h = Σ c<sub>i</sub> d<sup>m−i</sup> mod q<br>
+      h<sub>new</sub> = (d(h<sub>old</sub> − c<sub>old</sub>d<sup>m−1</sup>) + c<sub>new</sub>) mod q</div>
+    </div>
+    <div>
+      <h4>Solved answers to memorise</h4>
+      <ul>
+        <li><b>BFS graph A–G</b> → distances 0,1,1,2,2,2,2 (3 levels).</li>
+        <li><b>Rabin–Karp q=11</b> → <b>3 spurious hits</b> (15, 59, 92).</li>
+        <li><b>Rabin–Karp 4133124 / 124 / q=13</b> → match at shift <b>4</b>, no spurious hits.</li>
+        <li><b>KITCHEN / HEN</b> → match at index <b>4</b>, 7 comparisons.</li>
+        <li><b>spawn</b> = start parallel child; <b>sync</b> = wait for children.</li>
+        <li><b>race condition</b> = unsynchronised shared write; lost update.</li>
+        <li><b>parallel merge</b> → T<sub>∞</sub> = Θ(log² n).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> the supplied DAA book covers Units 1–2 only. Unit 6 answers follow the syllabus-listed references (Cormen et al., <em>Introduction to Algorithms</em>, parallel/string chapters) and match the exact PYQ wording.</div>
+
+  <div class="tip"><b>Exam-day order:</b> Rabin–Karp numerical → multithreaded merge sort → distributed BFS → matrix multiplication → distributed MST. Rabin–Karp is in every paper; do not skip it.</div>
+</section>
+
+<footer>
+  DAA · Unit 6 · built from 5 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410241 · 2019 Pattern<br>
+  <span class="small">Questions reproduced from university papers; answers are exam-oriented notes.</span>
+</footer>
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

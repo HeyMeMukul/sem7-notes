@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BT Unit 4 — Cryptocurrency &amp; Bitcoin | SPPU 410243</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<aside class="side">
+  <h3>BT · Unit 4</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s41">4.1 Cryptocurrency basics</a>
+    <a href="#s42">4.2 Types + safety + Zerocoin</a>
+    <a href="#s43">4.3 Crypto wallets</a>
+    <a href="#s44">4.4 Custodial / hot / cold</a>
+    <a href="#s45">4.5 MetaMask</a>
+    <a href="#s46">4.6 Coinbase vs Binance</a>
+    <a href="#s47">4.7 MetaMask vs Coinbase Wallet</a>
+    <a href="#s48">4.8 Bitcoin in detail</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Blockchain-Platforms-and-Consensus.html">Unit 3 · Platforms &amp; consensus</a>
+  <a href="Unit-5-Ethereum-and-Solidity.html">Unit 5 · Ethereum &amp; Solidity</a>
+  <a href="Unit-6-Blockchain-Case-Studies.html">Unit 6 · Case studies</a>
+  <a href="index.html">↩ BT home</a>
+</aside>
+
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 4 — Cryptocurrency &amp; Bitcoin</h1>
+  <p><b>Subject:</b> Blockchain Technology (410243) &nbsp;·&nbsp; <b>Exam:</b> Saturday, 28 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>This unit is the <b>wallet unit</b>: types of cryptocurrency, MetaMask, Coinbase vs Binance, custodial vs non-custodial and hot vs cold storage. The 2025 papers made wallets worth 8–9 marks each, so every card includes a comparison table.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>5</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>26</b> Unit-4 instances</span>
+    <span class="chip">🧩 <b>12</b> distinct topics</span>
+    <span class="chip">🔥 Hottest: <b>crypto types &amp; MetaMask — 5× each</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>17 marks</b></span>
+  </div>
+</header>
+
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — what actually gets asked</h2>
+  <p class="lead">Five end-sem papers only. 2024 May and 2025 Nov are near-identical; both are counted. One sub-question can cover two topics (e.g. 2025 May Q4(b) asks hot/cold <em>and</em> MetaMask), so the rows below add up to slightly more than 26.</p>
+
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th style="text-align:left">Question asked</th><th style="text-align:left">Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td style="text-align:left">Types of cryptocurrency</td><td style="text-align:left">2022 Nov Q3(a) [6] · 2023 Nov Q3(b) [6] · 2024 May Q3(b) [8] · 2025 May Q3(a) [9] · 2025 Nov Q3(b) [8]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>2</td><td style="text-align:left">MetaMask — what it is, features, importance</td><td style="text-align:left">2022 Nov Q3(b) [6] · 2023 Nov Q3(c) [5] · 2024 May Q3(a) [9] · 2025 May Q4(b) [9, part] · 2025 Nov Q3(a) [9]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>3</td><td style="text-align:left">Coinbase vs Binance</td><td style="text-align:left">2022 Nov Q3(c) [5] · 2023 Nov Q4(a) [6] · 2024 May Q4(a) [8] · 2025 Nov Q4(a) [8]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>4</td><td style="text-align:left">Bitcoin — concept and detail</td><td style="text-align:left">2022 Nov Q4(c) [5] · 2023 Nov Q4(c) [5] · 2024 May Q1(c) [4] · 2025 Nov Q1(c) [4]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>5</td><td style="text-align:left">Crypto wallets — concept and types</td><td style="text-align:left">2022 Nov Q4(b) [6] · 2023 Nov Q3(a) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>6</td><td style="text-align:left">MetaMask vs Coinbase wallet</td><td style="text-align:left">2024 May Q4(b) [9] · 2025 Nov Q4(b) [9]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>7</td><td style="text-align:left">What is cryptocurrency?</td><td style="text-align:left">2022 Nov Q4(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>8</td><td style="text-align:left">Relevance / usage of cryptocurrency with example</td><td style="text-align:left">2023 Nov Q4(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>9</td><td style="text-align:left">Custodial vs non-custodial wallets</td><td style="text-align:left">2025 May Q4(a) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>10</td><td style="text-align:left">Hot vs cold wallet storage</td><td style="text-align:left">2025 May Q4(b) [9]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>11</td><td style="text-align:left">Zerocoin and Zerocash</td><td style="text-align:left">2025 May Q3(b) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>12</td><td style="text-align:left">Is cryptocurrency safe? (opinion + justification)</td><td style="text-align:left">2025 May Q3(a) [9, part]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>Clear pattern:</b> the paper recycles <b>types + MetaMask + Coinbase/Binance</b> every year, then adds one new wallet concept (custodial/hot-cold in 2025). Prepare the three comparison tables — they are guaranteed marks.</div>
+
+  <div class="tip"><b>Marks strategy:</b> 5–6 marks = definition + 4 points + one example. 8–9 marks = definition + working/features + <b>comparison table</b> + benefits/limitations. For wallet questions, always mention <b>who holds the private key</b> — that single line earns marks.</div>
+</section>
+
+<!-- ================= 4.1 ================= -->
+<section class="card" id="s41">
+  <h2>4.1 Cryptocurrency basics</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is cryptocurrency? Explain in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [6]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Cryptocurrency</b> is digital or virtual money that uses <b>cryptography</b> to secure transactions, control the creation of new units and verify transfers. It runs on a <b>decentralised</b> blockchain, so no central bank or government issues it.</p>
+
+      <h4>2. Key properties</h4>
+      <ul>
+        <li><b>Digital:</b> exists only as data; no notes or coins.</li>
+        <li><b>Decentralised:</b> a peer-to-peer network maintains the ledger; there is no single administrator.</li>
+        <li><b>Cryptographically secured:</b> public/private keys and hash functions protect ownership.</li>
+        <li><b>Immutable:</b> once confirmed, a transaction is very hard to reverse.</li>
+        <li><b>Pseudo-anonymous:</b> addresses are visible, real names are not.</li>
+        <li><b>Programmable:</b> some currencies (ETH) also run smart contracts.</li>
+        <li><b>Volatile:</b> prices can move sharply because supply and demand are not managed by a central bank.</li>
+      </ul>
+
+      <h4>3. How it works</h4>
+      <ol>
+        <li>A user creates a wallet with a <b>public key</b> (address) and a <b>private key</b> (signature).</li>
+        <li>The sender signs a transaction with the private key and broadcasts it.</li>
+        <li>Nodes check the signature and the balance.</li>
+        <li>Miners/validators put the transaction into a block and reach consensus.</li>
+        <li>The block is appended to the blockchain; the receiver sees the funds after confirmations.</li>
+      </ol>
+
+      <pre class="tree">sender wallet                     receiver wallet
+ public key + private key          public key (address)
+        │                                  ▲
+        │ sign transaction                 │
+        ▼                                  │
+ [ transaction ] ──► mempool ──► block ────┘
+                        │
+                        ▼
+              consensus + append to chain</pre>
+
+      <h4>4. Advantages and disadvantages</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>Low transaction cost, especially cross-border</td><td>High price volatility</td></tr>
+          <tr><td>Fast settlement, 24×7</td><td>No central bank protection or insurance</td></tr>
+          <tr><td>No intermediary needed</td><td>Irreversible — lost keys mean lost funds</td></tr>
+          <tr><td>Transparent public ledger</td><td>Exchange hacks, scams and phishing</td></tr>
+          <tr><td>Financial inclusion for the unbanked</td><td>Unclear regulation in many countries</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>5. Examples</h4>
+      <p>Bitcoin (BTC), Ether (ETH), Tether (USDT), XRP, Binance Coin (BNB), Solana (SOL), Cardano (ADA), Monero (XMR).</p>
+
+      <div class="note"><b>Exam line:</b> "Cryptocurrency is not issued by a central bank; it is created by mining or staking and recorded on a distributed ledger secured by cryptography."</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What is the relevance of crypto usage? Discuss with an example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [6]</p>
+
+      <h4>1. Why businesses and users adopt crypto</h4>
+      <ul>
+        <li><b>New customers:</b> crypto-paying users are often new customers and spend more per order.</li>
+        <li><b>Cheaper cross-border payments:</b> no correspondent bank chain, so fees and settlement time fall.</li>
+        <li><b>New capital and liquidity:</b> tokenised assets open new investor pools.</li>
+        <li><b>Programmable money:</b> smart contracts enable automatic revenue sharing and reconciliation.</li>
+        <li><b>Treasury diversification:</b> crypto can act as an inflation hedge or a balancing asset.</li>
+        <li><b>Competitive pressure:</b> clients and vendors may want to pay or be paid in crypto.</li>
+      </ul>
+
+      <h4>2. Two adoption paths</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Path</th><th>How it works</th><th>Risk / effort</th></tr></thead>
+        <tbody>
+          <tr><td><b>Hands-off</b></td><td>A third-party processor converts crypto to fiat at checkout; crypto never sits on the company balance sheet.</td><td>Lowest effort; vendor fee; limited control.</td></tr>
+          <tr><td><b>Hands-on</b></td><td>The company holds crypto, manages its own wallet/keys and may use it for treasury and payments.</td><td>Higher effort; custody, accounting and volatility risk.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Example</h4>
+      <p>A coffee chain accepts BTC through a payment processor. The customer pays 0.0002 BTC; the processor instantly converts it to rupees and credits the chain's bank account. The chain gains new customers and avoids chargebacks, while never holding bitcoin itself. This is the <b>hands-off</b> model.</p>
+
+      <h4>4. Relevance in India</h4>
+      <ul>
+        <li>Remittances from workers abroad can be cheaper and faster.</li>
+        <li>Small exporters can receive payment without heavy bank charges.</li>
+        <li>Investors use crypto as an asset class (taxed as a virtual digital asset).</li>
+        <li>However, price volatility and regulatory uncertainty limit everyday retail payments.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.2 ================= -->
+<section class="card" id="s42">
+  <h2>4.2 Types of cryptocurrency, safety, Zerocoin / Zerocash</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>List and explain the types of cryptocurrency. / Enlist and discuss types of cryptocurrency — "Is cryptocurrency safe?" Justify your opinion.</p>
+      <div class="badges"><span class="b marks">6 / 8 / 9 marks</span><span class="b rep hot">★★★★★ 5×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(a) [6] · 2023 Nov Q3(b) [6] · 2024 May Q3(b) [8] · 2025 May Q3(a) [9 — with safety opinion] · 2025 Nov Q3(b) [8]</p>
+
+      <h4>1. Two ways to classify</h4>
+      <p><b>(a) By purpose:</b> coins, tokens, stablecoins, privacy coins, utility tokens, governance tokens.<br>
+      <b>(b) By name:</b> the book lists Bitcoin, Ethereum, Tether, XRP, Binance Coin and Solana. For 8–9 marks, give both — the categories first, then five named examples.</p>
+
+      <h4>2. Categories with examples</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>What it is</th><th>Example</th><th>Key point</th></tr></thead>
+        <tbody>
+          <tr><td><b>Bitcoin / store-of-value coin</b></td><td>First cryptocurrency; fixed supply; mainly a store of value and payment asset.</td><td>BTC</td><td>21 million cap; PoW.</td></tr>
+          <tr><td><b>Platform coin</b></td><td>Native currency of a programmable blockchain; used to pay gas.</td><td>ETH, SOL, ADA</td><td>Also runs smart contracts.</td></tr>
+          <tr><td><b>Stablecoin</b></td><td>Value pegged to a fiat currency or basket (usually USD).</td><td>USDT, USDC, DAI</td><td>Low volatility; needs reserves.</td></tr>
+          <tr><td><b>Exchange / utility token</b></td><td>Token issued by an exchange or platform for fees, discounts or services.</td><td>BNB</td><td>Demand tied to the platform.</td></tr>
+          <tr><td><b>Payment / remittance coin</b></td><td>Built for fast, cheap cross-border transfer.</td><td>XRP, XLM</td><td>Focus on settlement speed.</td></tr>
+          <tr><td><b>Privacy coin</b></td><td>Hides sender, receiver and/or amount.</td><td>Monero (XMR), Zcash (ZEC)</td><td>Strong privacy; regulatory scrutiny.</td></tr>
+          <tr><td><b>Meme coin</b></td><td>Community-driven, high speculation, little utility.</td><td>DOGE, SHIB</td><td>Very high risk.</td></tr>
+          <tr><td><b>Governance token</b></td><td>Gives voting rights in a DAO or protocol.</td><td>UNI, AAVE</td><td>Utility is governance, not money.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. "Is cryptocurrency safe?" — balanced answer (2025 May Q3a)</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Where it is safe</h4>
+          <ul>
+            <li><b>Cryptography:</b> a transaction cannot be forged without the private key.</li>
+            <li><b>Immutability:</b> confirmed blocks are very hard to rewrite.</li>
+            <li><b>Decentralisation:</b> no single server to switch off.</li>
+            <li><b>Transparency:</b> anyone can audit the ledger.</li>
+            <li><b>Self-custody:</b> with a hardware wallet, the user controls the keys.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Where it is risky</h4>
+          <ul>
+            <li><b>Key loss:</b> lost seed phrase = permanent loss.</li>
+            <li><b>Exchange failure:</b> Mt. Gox, FTX and others froze user funds.</li>
+            <li><b>Phishing and malware:</b> fake wallets and approvals drain accounts.</li>
+            <li><b>Smart-contract bugs:</b> the 2016 DAO hack moved ~$50M of ETH.</li>
+            <li><b>Volatility and scams:</b> pump-and-dump, rug pulls, fake tokens.</li>
+            <li><b>Regulation:</b> rules change; tax and legal status vary by country.</li>
+          </ul>
+        </div>
+      </div>
+      <p><b>Opinion line:</b> "The <em>technology</em> is cryptographically safe, but the <em>user journey</em> is not. Safety depends on self-custody, a hardware wallet, verified contracts and small allocations. I would call crypto safe only for a user who understands key management, not for a first-time investor using an unregulated exchange."</p>
+
+      <div class="tip"><b>9-mark structure:</b> 6 categories with examples (4) + safety table (3) + opinion (1) + conclusion (1).</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Describe Zerocoin and its successor Zerocash in detail.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q3(b) [8]</p>
+
+      <h4>1. Why they exist</h4>
+      <p>Bitcoin is <b>pseudonymous</b>, not anonymous. Every transaction is public, so chain analysis can link addresses and reveal identities. Zerocoin and Zerocash add <b>financial privacy</b> on top of a public ledger.</p>
+
+      <h4>2. Zerocoin (2013)</h4>
+      <ul>
+        <li>Proposed by Miers, Garman, Green and Rubin as an <b>extension to Bitcoin</b>.</li>
+        <li>A user <b>mints</b> a zerocoin by locking some BTC and receives a zero-knowledge proof.</li>
+        <li>Later the user <b>spends</b> the zerocoin to redeem BTC at a new address. The proof shows the coin is valid without revealing which mint created it.</li>
+        <li><b>Hides:</b> the link between the mint and the spend (the sender's identity).</li>
+        <li><b>Does not hide:</b> the amount, or the receiver's address in full.</li>
+        <li>Fixed denominations and no trusted setup.</li>
+      </ul>
+
+      <h4>3. Zerocash (2014) — the successor</h4>
+      <ul>
+        <li>Proposed by Sasson, Chiesa, Garman, Green, Miers, Tromer and Virza.</li>
+        <li>Uses <b>zk-SNARKs</b> (zero-knowledge succinct non-interactive arguments of knowledge).</li>
+        <li>Supports <b>shielded transactions</b>: the sender, receiver <b>and amount</b> are hidden.</li>
+        <li>Users hold shielded addresses; the ledger stores only a commitment and a nullifier to stop double-spending.</li>
+        <li>Implemented as <b>Zcash (ZEC)</b>, launched in 2016.</li>
+        <li>Cost: a <b>trusted setup</b> ceremony and heavier computation than Bitcoin.</li>
+      </ul>
+
+      <h4>4. Comparison</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Zerocoin</th><th>Zerocash</th></tr></thead>
+        <tbody>
+          <tr><td>Year</td><td>2013</td><td>2014</td></tr>
+          <tr><td>Base</td><td>Extension to Bitcoin</td><td>New protocol / Zcash</td></tr>
+          <tr><td>Cryptography</td><td>Zero-knowledge proofs (no trusted setup)</td><td>zk-SNARKs (trusted setup)</td></tr>
+          <tr><td>Hides sender</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Hides receiver</td><td>Partly</td><td>Yes</td></tr>
+          <tr><td>Hides amount</td><td>No</td><td>Yes</td></tr>
+          <tr><td>Transaction size</td><td>Smaller</td><td>Larger</td></tr>
+          <tr><td>Real deployment</td><td>Mostly research</td><td>Zcash</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <pre class="tree">Zerocash shielded transaction
+
+  sender ──► [ commitment ] ──► shielded pool ──► [ nullifier ] ──► receiver
+                    │                                      │
+             hides sender,                        proves the coin
+             receiver, amount                     was not spent twice
+                    │
+             zk-SNARK proof (valid without revealing details)</pre>
+
+      <div class="note"><b>One-line answer:</b> Zerocoin hides <em>who</em> spent the coin; Zerocash hides <em>who, to whom and how much</em> using zk-SNARKs, and became Zcash.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.3 ================= -->
+<section class="card" id="s43">
+  <h2>4.3 Crypto wallets</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Explain in detail crypto wallets. / Discuss the concept of cryptowallets.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(b) [6] · 2023 Nov Q3(a) [6]</p>
+
+      <h4>1. Definition</h4>
+      <p>A <b>crypto wallet</b> is software or hardware that stores the <b>public and private keys</b> needed to receive, send and manage cryptocurrency. The coins themselves live on the blockchain; the wallet controls the keys that prove ownership.</p>
+
+      <h4>2. The two keys</h4>
+      <ul>
+        <li><b>Public key / address:</b> like an account number. Share it to receive funds.</li>
+        <li><b>Private key:</b> like a digital signature. It authorises spending. Never share it.</li>
+        <li><b>Seed phrase (recovery phrase):</b> 12 or 24 words that can rebuild the wallet. Anyone with the phrase owns the funds.</li>
+      </ul>
+
+      <pre class="tree">seed phrase (12/24 words)
+        │
+        ▼
+   master private key
+        │
+        ├──► private key 1 ──► public key 1 ──► address 1
+        ├──► private key 2 ──► public key 2 ──► address 2
+        └──► ...
+
+wallet = key manager, not a coin bank</pre>
+
+      <h4>3. Types of wallet (book's classification)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Where keys live</th><th>Examples</th><th>Security</th><th>Convenience</th></tr></thead>
+        <tbody>
+          <tr><td><b>Desktop wallet</b></td><td>Installed on a laptop/PC</td><td>Electrum, Exodus desktop</td><td>High until the PC is infected</td><td>Medium</td></tr>
+          <tr><td><b>Mobile wallet</b></td><td>Phone app</td><td>Trust Wallet, MetaMask mobile</td><td>Medium; phone can be lost</td><td>High</td></tr>
+          <tr><td><b>Online / web wallet</b></td><td>Cloud, often third-party</td><td>Exchange wallets</td><td>Lower; third party holds keys</td><td>Very high</td></tr>
+          <tr><td><b>Hardware wallet</b></td><td>Offline USB-like device</td><td>Ledger, Trezor</td><td>Very high</td><td>Lower</td></tr>
+          <tr><td><b>Paper wallet</b></td><td>Printed public/private keys</td><td>Printed QR sheet</td><td>High if stored safely</td><td>Very low</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. Two more useful classifications</h4>
+      <ul>
+        <li><b>Custodial vs non-custodial:</b> who holds the private key — a third party or you. (See §4.4.)</li>
+        <li><b>Hot vs cold:</b> whether the key is connected to the internet. (See §4.4.)</li>
+      </ul>
+
+      <h4>5. How a wallet sends a transaction</h4>
+      <ol>
+        <li>Enter the receiver's address and amount.</li>
+        <li>The wallet builds the transaction and shows the network fee.</li>
+        <li>The user confirms; the wallet signs with the private key.</li>
+        <li>The signed transaction is broadcast to the blockchain.</li>
+        <li>The wallet shows a pending balance until confirmation.</li>
+      </ol>
+
+      <div class="note"><b>Golden rule:</b> "Not your keys, not your coins." A custodial wallet is convenient but the exchange controls the funds.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.4 ================= -->
+<section class="card" id="s44">
+  <h2>4.4 Custodial vs non-custodial, hot vs cold</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>Compare custodial and non-custodial cryptowallets.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q4(a) [8]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Custodial wallet:</b> a third party (exchange or bank) holds the private keys and manages the wallet on your behalf.<br>
+      <b>Non-custodial wallet:</b> you hold the private key/seed phrase; no third party can move the funds.</p>
+
+      <h4>2. Comparison table</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Custodial</th><th>Non-custodial</th></tr></thead>
+        <tbody>
+          <tr><td>Key holder</td><td>Exchange / service provider</td><td>The user</td></tr>
+          <tr><td>Control</td><td>Provider approves withdrawals</td><td>User signs every transaction</td></tr>
+          <tr><td>Recovery</td><td>Password reset / support ticket</td><td>Seed phrase only; no support</td></tr>
+          <tr><td>KYC</td><td>Usually required</td><td>Not required by the wallet</td></tr>
+          <tr><td>Security risk</td><td>Exchange hack, freeze, insolvency</td><td>Phishing, key loss, malware</td></tr>
+          <tr><td>Insurance</td><td>Sometimes offered</td><td>None</td></tr>
+          <tr><td>Convenience</td><td>High: buy/sell in one app</td><td>Medium: manage keys and gas</td></tr>
+          <tr><td>Examples</td><td>Coinbase exchange, Binance exchange</td><td>MetaMask, Ledger, Trust Wallet</td></tr>
+          <tr><td>Best for</td><td>Beginners, active traders</td><td>Long-term holders, privacy users</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Trade-off</h4>
+      <p>Custodial = <b>convenience over control</b>. Non-custodial = <b>control over convenience</b>. The FTX collapse (2022) is the standard example of custodial risk; a lost seed phrase is the standard example of non-custodial risk.</p>
+
+      <div class="tip"><b>8-mark structure:</b> two definitions (2) + table (4) + one example each (1) + conclusion (1).</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Define hot wallet storage and cold wallet storage. Discuss MetaMask and its importance, benefits and drawbacks.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q4(b) [9]</p>
+
+      <h4>1. Hot wallet</h4>
+      <p>A <b>hot wallet</b> is a wallet whose private keys are stored on a device that is <b>connected to the internet</b>. It can sign and send transactions immediately.</p>
+      <ul>
+        <li><b>Examples:</b> MetaMask, Trust Wallet, exchange wallets, mobile wallets.</li>
+        <li><b>Good for:</b> daily spending, trading, DeFi, NFTs.</li>
+        <li><b>Risk:</b> malware, phishing, fake dApp approvals, exchange hacks.</li>
+      </ul>
+
+      <h4>2. Cold wallet</h4>
+      <p>A <b>cold wallet</b> keeps the private keys <b>offline</b>. The key is generated and stored on a device that never touches the internet, or on paper.</p>
+      <ul>
+        <li><b>Examples:</b> Ledger, Trezor, air-gapped laptop, paper wallet.</li>
+        <li><b>Good for:</b> long-term savings ("HODL"), large amounts.</li>
+        <li><b>Risk:</b> physical loss, fire/water damage, forgotten PIN, no quick trades.</li>
+      </ul>
+
+      <h4>3. Hot vs cold comparison</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Hot wallet</th><th>Cold wallet</th></tr></thead>
+        <tbody>
+          <tr><td>Internet connection</td><td>Always online</td><td>Offline</td></tr>
+          <tr><td>Key storage</td><td>Phone, browser, exchange server</td><td>Hardware device / paper</td></tr>
+          <tr><td>Speed</td><td>Instant</td><td>Slow (plug in, confirm)</td></tr>
+          <tr><td>Security</td><td>Lower</td><td>Higher</td></tr>
+          <tr><td>Convenience</td><td>High</td><td>Low</td></tr>
+          <tr><td>Typical amount</td><td>Spending money</td><td>Savings / large holdings</td></tr>
+          <tr><td>Examples</td><td>MetaMask, Trust Wallet</td><td>Ledger, Trezor, paper wallet</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. MetaMask — importance, benefits and drawbacks</h4>
+      <p><b>MetaMask</b> is a free, non-custodial wallet and DApp browser made by ConsenSys. It runs as a browser extension (Chrome, Firefox, Brave, Edge) and a mobile app. It stores the seed phrase locally and connects to Ethereum and EVM-compatible networks.</p>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Benefits</h4>
+          <ul>
+            <li>Self-custody of keys.</li>
+            <li>One-click connection to DApps, DeFi and NFT marketplaces.</li>
+            <li>Supports ETH, ERC-20 tokens and EVM chains (Polygon, BNB, Arbitrum).</li>
+            <li>Built-in swap and bridge.</li>
+            <li>Custom gas fee and network settings.</li>
+            <li>Free and open source; huge user base.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Drawbacks</h4>
+          <ul>
+            <li>Hot wallet: exposed to phishing and malicious approvals.</li>
+            <li>No recovery if the seed phrase is lost.</li>
+            <li>Ethereum-centric; no native Bitcoin support.</li>
+            <li>Fake MetaMask extensions and fake airdrops are common.</li>
+            <li>Users must understand gas and network switching.</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre class="tree">MetaMask flow
+
+ user ──► extension/mobile ──► seed phrase (local)
+                 │
+                 ├──► connect to DApp
+                 ├──► sign transaction
+                 └──► broadcast to RPC node
+                              │
+                              ▼
+                     Ethereum / EVM chain</pre>
+
+      <p class="small">For the full MetaMask feature list, setup steps and importance, see §4.5 — the 9-mark 2025 May Q4(b) combines this hot/cold table with that section.</p>
+
+      <div class="warn"><b>Safety rule:</b> MetaMask support will never ask for your seed phrase. Store it offline; never type it into a website.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.5 ================= -->
+<section class="card" id="s45">
+  <h2>4.5 MetaMask in detail</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>What is MetaMask? Illustrate in detail. Discuss its features and importance.</p>
+      <div class="badges"><span class="b marks">5 / 6 / 9 marks</span><span class="b rep hot">★★★★★ 5×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6] · 2023 Nov Q3(c) [5] · 2024 May Q3(a) [9] · 2025 May Q4(b) [9, part] · 2025 Nov Q3(a) [9]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>MetaMask</b> is a non-custodial cryptocurrency wallet and gateway to blockchain apps. It was launched in 2016 by <b>ConsenSys</b>. It is available as a browser extension and a mobile app. It generates and stores the user's private keys on the device, and it lets the user interact with Ethereum and EVM-compatible networks.</p>
+
+      <h4>2. Why it is needed</h4>
+      <ul>
+        <li>A normal browser is centralised; it has no wallet and cannot sign blockchain transactions.</li>
+        <li>DApps need a bridge between the web page and the blockchain.</li>
+        <li>Users need to hold <b>ether</b> to pay gas.</li>
+        <li>Users need a safe place for ERC-20 tokens and NFTs.</li>
+      </ul>
+
+      <h4>3. Key features (2024 May Q3a — 9 marks)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Feature</th><th>Explanation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Non-custodial key storage</b></td><td>The seed phrase and private keys stay on the user's device. ConsenSys cannot move funds.</td></tr>
+          <tr><td><b>Browser extension + mobile app</b></td><td>Works on Chrome, Firefox, Brave, Edge and Android/iOS.</td></tr>
+          <tr><td><b>DApp browser</b></td><td>Injects <code>window.ethereum</code> into web pages so DApps can request accounts and signatures.</td></tr>
+          <tr><td><b>Multi-network</b></td><td>Ethereum Mainnet plus Polygon, BNB Chain, Arbitrum, Optimism, Avalanche and custom RPCs.</td></tr>
+          <tr><td><b>Token management</b></td><td>Adds ERC-20 tokens automatically; shows NFTs.</td></tr>
+          <tr><td><b>Swap and bridge</b></td><td>Built-in token swap and cross-chain bridge (via partners).</td></tr>
+          <tr><td><b>Gas control</b></td><td>Low / market / aggressive gas presets and advanced fee editing.</td></tr>
+          <tr><td><b>HD wallet</b></td><td>One seed phrase derives many accounts (BIP-32/44).</td></tr>
+          <tr><td><b>Hardware wallet support</b></td><td>Can connect to Ledger/Trezor for cold signing.</td></tr>
+          <tr><td><b>Multilingual UI</b></td><td>Supports many languages and has a simple onboarding flow.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. How to set up and use MetaMask</h4>
+      <ol>
+        <li>Install the extension from the official site or the mobile app from the official store.</li>
+        <li>Create a new wallet; set a strong password.</li>
+        <li>Write the <b>12-word seed phrase</b> on paper and store it offline.</li>
+        <li>Fund the account with ETH (from an exchange or another wallet).</li>
+        <li>Connect to a DApp; approve the connection request.</li>
+        <li>Confirm the transaction and gas fee in the MetaMask pop-up.</li>
+        <li>Track the transaction on Etherscan.</li>
+      </ol>
+
+      <h4>5. Importance</h4>
+      <ul>
+        <li>It is the <b>default entry point</b> to Ethereum DeFi, NFTs and DAOs.</li>
+        <li>It makes self-custody usable for non-technical people.</li>
+        <li>It standardised the DApp connection flow (<code>eth_requestAccounts</code>).</li>
+        <li>It supports multiple EVM chains with one wallet.</li>
+        <li>It is free and has a large developer ecosystem.</li>
+      </ul>
+
+      <pre class="tree">DApp (web page)
+      │  "connect wallet"
+      ▼
+MetaMask pop-up ──► user approves accounts
+      │
+      ▼
+DApp builds transaction ──► MetaMask shows gas
+      │
+      ▼
+user confirms ──► wallet signs with private key
+      │
+      ▼
+RPC node ──► Ethereum network ──► block explorer</pre>
+
+      <div class="tip"><b>3-mark version:</b> definition + non-custodial + browser extension/DApp gateway. <b>9-mark version:</b> add the feature table, setup steps and importance.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.6 ================= -->
+<section class="card" id="s46">
+  <h2>4.6 Coinbase vs Binance</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q9</span>Differentiate / compare and contrast Coinbase and Binance.</p>
+      <div class="badges"><span class="b marks">5 / 6 / 8 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [5] · 2023 Nov Q4(a) [6] · 2024 May Q4(a) [8] · 2025 Nov Q4(a) [8]</p>
+
+      <h4>1. One-line definitions</h4>
+      <p><b>Coinbase</b> is a US-based, regulated cryptocurrency exchange and custodial wallet service, known for a simple interface and beginner-friendly compliance.<br>
+      <b>Binance</b> is a global cryptocurrency exchange, the largest by daily trading volume, known for a huge altcoin list, low fees and the BNB Chain ecosystem.</p>
+
+      <h4>2. Comparison table</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Coinbase</th><th>Binance</th></tr></thead>
+        <tbody>
+          <tr><td>Founded</td><td>2012, San Francisco, USA</td><td>2017, Changpeng Zhao; registered in Cayman Islands</td></tr>
+          <tr><td>Type</td><td>Regulated exchange + custodial wallet</td><td>Global exchange + Binance Wallet / Trust Wallet</td></tr>
+          <tr><td>Best for</td><td>Beginners, US/Europe users, compliance</td><td>Active traders, altcoin access, low fees</td></tr>
+          <tr><td>Coin selection</td><td>Fewer, vetted coins</td><td>Hundreds of coins and pairs</td></tr>
+          <tr><td>Fees</td><td>Higher (simple mode); lower in Advanced Trade</td><td>Low spot fees; discount when paying in BNB</td></tr>
+          <tr><td>Custody</td><td>Exchange holds keys; Coinbase Wallet is separate and non-custodial</td><td>Exchange holds keys; Binance Wallet / Trust Wallet for self-custody</td></tr>
+          <tr><td>Regulation</td><td>US-listed company; strong KYC/AML</td><td>Faced investigations and restrictions in several countries</td></tr>
+          <tr><td>Products</td><td>Staking, Earn, NFT, Coinbase Wallet, Base L2</td><td>Spot, futures, staking, Launchpad, BNB Chain, Pay</td></tr>
+          <tr><td>Interface</td><td>Simple and clean</td><td>Feature-rich, denser</td></tr>
+          <tr><td>Availability</td><td>Limited in some countries</td><td>Widely available but banned/restricted in some</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Which one to choose?</h4>
+      <ul>
+        <li><b>Coinbase</b> if you want regulation, insurance-like safeguards, simple UI and are happy with major coins.</li>
+        <li><b>Binance</b> if you want low fees, many altcoins and advanced trading tools — but accept higher regulatory and counterparty risk.</li>
+        <li>For long-term holding, withdraw to a <b>non-custodial wallet</b> (MetaMask, Ledger) instead of leaving funds on either exchange.</li>
+      </ul>
+
+      <div class="note"><b>5-mark version:</b> five rows — founding, type, fees, coin list, regulation. Do not write a full page.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.7 ================= -->
+<section class="card" id="s47">
+  <h2>4.7 MetaMask vs Coinbase Wallet</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q10</span>Differentiate between MetaMask and Coinbase wallet.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q4(b) [9] · 2025 Nov Q4(b) [9]</p>
+
+      <p class="small">Note: <b>Coinbase Wallet</b> is the self-custody wallet app, not the Coinbase exchange account. The question compares these two wallets.</p>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>MetaMask</th><th>Coinbase Wallet</th></tr></thead>
+        <tbody>
+          <tr><td>Company</td><td>ConsenSys (2016)</td><td>Coinbase (2018 as Toshi)</td></tr>
+          <tr><td>Custody</td><td>Non-custodial</td><td>Non-custodial</td></tr>
+          <tr><td>Key storage</td><td>Local seed phrase</td><td>Local seed phrase / cloud backup option</td></tr>
+          <tr><td>Main strength</td><td>Deep DApp/DeFi integration</td><td>Simple UI and easy fiat on-ramp</td></tr>
+          <tr><td>Chains</td><td>Ethereum + many EVM chains + custom RPC</td><td>Ethereum, Base, Polygon, Solana, Bitcoin and more</td></tr>
+          <tr><td>DApp browser</td><td>Best-in-class</td><td>Built-in explorer</td></tr>
+          <tr><td>NFT support</td><td>Yes</td><td>Yes, with a gallery</td></tr>
+          <tr><td>KYC</td><td>Not required by the wallet</td><td>Not required for the wallet; required for Coinbase on-ramp</td></tr>
+          <tr><td>Fees</td><td>Network gas + swap fee</td><td>Network gas + swap fee</td></tr>
+          <tr><td>Hardware wallet</td><td>Ledger/Trezor support</td><td>Ledger support</td></tr>
+          <tr><td>Best for</td><td>Power users, DeFi, developers</td><td>Beginners who want a clean app</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Similarities</h4>
+      <ul>
+        <li>Both are free, non-custodial, EVM-compatible wallets.</li>
+        <li>Both use a 12-word seed phrase and support ERC-20 tokens and NFTs.</li>
+        <li>Both can connect to DApps and hardware wallets.</li>
+        <li>Both are hot wallets, so they carry online risk.</li>
+      </ul>
+
+      <div class="tip"><b>9-mark structure:</b> 8-row table (5) + 4 similarities (2) + conclusion: MetaMask for DeFi power users, Coinbase Wallet for beginners (2).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.8 ================= -->
+<section class="card" id="s48">
+  <h2>4.8 Bitcoin in detail</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q11</span>Explain in detail Bitcoin. / What is bitcoin? / Explain the concept of Bitcoin in Blockchain Technology.</p>
+      <div class="badges"><span class="b marks">4 / 5 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [5] · 2023 Nov Q4(c) [5] · 2024 May Q1(c) [4] · 2025 Nov Q1(c) [4]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Bitcoin (BTC)</b> is the first cryptocurrency and a peer-to-peer electronic cash system. It was described in a 2008 whitepaper by the pseudonymous <b>Satoshi Nakamoto</b> and released as open-source software in <b>2009</b>. It lets two parties transfer value directly without a bank or other intermediary.</p>
+
+      <h4>2. Key facts</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Property</th><th>Value / detail</th></tr></thead>
+        <tbody>
+          <tr><td>Launched</td><td>2009 (whitepaper 2008)</td></tr>
+          <tr><td>Supply cap</td><td>21,000,000 BTC</td></tr>
+          <tr><td>Block time</td><td>~10 minutes</td></tr>
+          <tr><td>Consensus</td><td>Proof of Work (SHA-256)</td></tr>
+          <tr><td>Ledger model</td><td>UTXO (unspent transaction output)</td></tr>
+          <tr><td>Block reward (2024–28)</td><td>3.125 BTC, halves every 210,000 blocks</td></tr>
+          <tr><td>Smallest unit</td><td>1 satoshi = 0.00000001 BTC</td></tr>
+          <tr><td>Scripting</td><td>Limited, non-Turing-complete Script</td></tr>
+          <tr><td>Privacy</td><td>Pseudonymous, public ledger</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. How Bitcoin works</h4>
+      <ol>
+        <li>A user creates a wallet with a public address and a private key.</li>
+        <li>To pay, the user signs a transaction that spends one or more UTXOs.</li>
+        <li>The transaction is broadcast to the peer-to-peer network and waits in the mempool.</li>
+        <li>Miners select transactions, build a block and solve the PoW puzzle.</li>
+        <li>The winning miner broadcasts the block; other nodes verify it.</li>
+        <li>The block is appended to the chain; the receiver sees confirmations.</li>
+        <li>After several confirmations, the payment is treated as final.</li>
+      </ol>
+
+      <pre class="tree">wallet A                       network                      wallet B
+   │                              │                              │
+   │ sign tx (private key)        │                              │
+   ├──────── broadcast ──────────►│                              │
+   │                              ▼                              │
+   │                         mempool                           │
+   │                              │                              │
+   │                       miner builds block                   │
+   │                              │                              │
+   │                         PoW puzzle                          │
+   │                              │                              │
+   │                              ▼                              │
+   │                        block appended ──────► receive BTC   │
+   │                              │                              │
+   │                        confirmations                       │</pre>
+
+      <h4>4. UTXO model (one-mark differentiator)</h4>
+      <p>There are no "balances" inside Bitcoin. A wallet balance is the sum of all <b>unspent outputs</b> that the wallet can unlock. When you pay 0.6 BTC from a 1 BTC UTXO, the transaction creates a 0.6 BTC output to the receiver and a ~0.4 BTC change output back to you (minus fee).</p>
+
+      <h4>5. Significance of Bitcoin (5-mark version)</h4>
+      <ul>
+        <li>First successful solution to the <b>double-spending</b> problem without a central authority.</li>
+        <li>Enables cheap international payments and censorship-resistant value transfer.</li>
+        <li>Fixed supply makes it <b>deflationary</b>; often called "digital gold".</li>
+        <li>Open-source and auditable by anyone.</li>
+        <li>Introduced the blockchain data structure and PoW mining.</li>
+      </ul>
+
+      <h4>6. Mining and reward schedule</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Period</th><th>Reward per block</th><th>Halving year</th></tr></thead>
+        <tbody>
+          <tr><td>2009–2012</td><td>50 BTC</td><td>—</td></tr>
+          <tr><td>2012–2016</td><td>25 BTC</td><td>2012</td></tr>
+          <tr><td>2016–2020</td><td>12.5 BTC</td><td>2016</td></tr>
+          <tr><td>2020–2024</td><td>6.25 BTC</td><td>2020</td></tr>
+          <tr><td>2024–2028</td><td>3.125 BTC</td><td>2024</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Worked example:</b> at 3.125 BTC reward and BTC = $60,000, one block earns 3.125 × 60,000 = <b>$187,500</b> before costs. With 0.05 BTC fees, total = 3.175 × 60,000 = <b>$190,500</b>.</p>
+
+      <h4>7. Advantages and limitations</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Advantages</h4>
+          <ul>
+            <li>Decentralised — no central bank.</li>
+            <li>Fixed supply, inflation-resistant.</li>
+            <li>Borderless and censorship-resistant.</li>
+            <li>Transparent, immutable ledger.</li>
+            <li>Divisible to 8 decimals.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Limitations</h4>
+          <ul>
+            <li>High price volatility.</li>
+            <li>Slow (~7 tx/s) and energy-heavy.</li>
+            <li>Irreversible transactions; lost keys are gone.</li>
+            <li>Pseudonymous, not fully private.</li>
+            <li>Regulatory uncertainty.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note"><b>For 4 marks (2024/2025 Nov Q1c):</b> definition + Satoshi/2009 + 21M cap + PoW + one line on UTXO. Do not write the full mining section.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Numbers and names</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Item</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Bitcoin whitepaper</td><td>2008, Satoshi Nakamoto</td></tr>
+          <tr><td>Bitcoin launch</td><td>2009</td></tr>
+          <tr><td>Bitcoin cap</td><td>21 million BTC</td></tr>
+          <tr><td>Block time</td><td>~10 min</td></tr>
+          <tr><td>Reward 2024–28</td><td>3.125 BTC</td></tr>
+          <tr><td>Halving interval</td><td>210,000 blocks</td></tr>
+          <tr><td>1 satoshi</td><td>0.00000001 BTC</td></tr>
+          <tr><td>MetaMask maker</td><td>ConsenSys, 2016</td></tr>
+          <tr><td>Coinbase founded</td><td>2012, USA</td></tr>
+          <tr><td>Binance founded</td><td>2017, Changpeng Zhao</td></tr>
+          <tr><td>Zerocoin</td><td>2013, Miers et al.</td></tr>
+          <tr><td>Zerocash / Zcash</td><td>2014 / 2016, zk-SNARKs</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div>
+      <h4>One-line memory hooks</h4>
+      <ul>
+        <li><b>Crypto</b> = digital money secured by cryptography on a decentralised ledger.</li>
+        <li><b>Coin</b> = own blockchain; <b>token</b> = built on another chain.</li>
+        <li><b>Stablecoin</b> = pegged to fiat (USDT). <b>Privacy coin</b> = hides details (XMR, ZEC).</li>
+        <li><b>Custodial</b> = exchange holds keys. <b>Non-custodial</b> = you hold keys.</li>
+        <li><b>Hot</b> = online, convenient. <b>Cold</b> = offline, safe.</li>
+        <li><b>MetaMask</b> = non-custodial Ethereum wallet + DApp gateway.</li>
+        <li><b>Coinbase</b> = regulated, beginner-friendly. <b>Binance</b> = low fees, many coins.</li>
+        <li><b>Zerocoin</b> hides sender. <b>Zerocash</b> hides sender + receiver + amount.</li>
+        <li><b>Not your keys, not your coins.</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> definitions and the six-coin list follow the supplied Technical Publications book, Unit IV (§4.1–4.5). Custodial/non-custodial, hot/cold, Zerocoin and Zerocash are 2025 additions that the book does not cover in depth; those answers use the standard references (Zerocoin 2013; Zerocash 2014; wallet documentation) and are matched to the exact PYQ wording.</div>
+
+  <div class="tip"><b>Exam-day order:</b> Q3/Q4 is Unit 4. Start with the types table (guaranteed), then MetaMask (guaranteed), then Coinbase vs Binance. If the paper asks hot/cold, draw the two-column table first — it is the fastest way to secure 8–9 marks.</div>
+</section>
+
+<footer>
+  BT · Unit 4 · built from 5 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410243 · 2019 Pattern<br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

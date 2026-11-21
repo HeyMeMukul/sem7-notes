@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BT Unit 6 — Blockchain Case Studies | SPPU 410243</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<aside class="side">
+  <h3>BT · Unit 6</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s61">6.1 Prominent applications + architecture</a>
+    <a href="#s62">6.2 Retail</a>
+    <a href="#s63">6.3 Banking &amp; financial services</a>
+    <a href="#s64">6.4 Government</a>
+    <a href="#s65">6.5 Healthcare</a>
+    <a href="#s66">6.6 IoT</a>
+    <a href="#s67">6.7 Energy &amp; utilities</a>
+    <a href="#s68">6.8 Integration with other domains</a>
+    <a href="#s69">6.9 Voting</a>
+    <a href="#s610">6.10 Digital identity</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Blockchain-Platforms-and-Consensus.html">Unit 3 · Platforms &amp; consensus</a>
+  <a href="Unit-4-Cryptocurrency-and-Bitcoin.html">Unit 4 · Cryptocurrency &amp; Bitcoin</a>
+  <a href="Unit-5-Ethereum-and-Solidity.html">Unit 5 · Ethereum &amp; Solidity</a>
+  <a href="index.html">↩ BT home</a>
+</aside>
+
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 6 — Blockchain Case Studies</h1>
+  <p><b>Subject:</b> Blockchain Technology (410243) &nbsp;·&nbsp; <b>Exam:</b> Saturday, 28 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>The easiest unit to score in — the same seven sectors repeat every year. Banking and financial services is the hottest (6 appearances), followed by government (5). Every 9-mark answer below has a use-case table and an architecture diagram.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>5</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>24</b> Unit-6 instances</span>
+    <span class="chip">🧩 <b>10</b> distinct topics</span>
+    <span class="chip">🔥 Hottest: <b>banking — 6×</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>17–18 marks</b></span>
+  </div>
+</header>
+
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — what actually gets asked</h2>
+  <p class="lead">Five end-sem papers only. Some questions combine two sectors (2022 Nov Q7a = retail + banking; 2025 May Q8b = IoT + banking), so they appear in two rows. The unit still has only 24 real instances.</p>
+
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th style="text-align:left">Question asked</th><th style="text-align:left">Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td style="text-align:left">Banking and financial services</td><td style="text-align:left">2022 Nov Q7(a) [6, with retail] · 2022 Nov Q8(b) [6] · 2023 Nov Q8(b) [6] · 2024 May Q7(a) [9] · 2025 May Q8(b) [9, with IoT] · 2025 Nov Q7(a) [9]</td><td><span class="stars">★★★★★</span> 6×</td></tr>
+      <tr><td>2</td><td style="text-align:left">Government sector</td><td style="text-align:left">2022 Nov Q8(c) [5] · 2023 Nov Q8(c) [5] · 2024 May Q7(b) [9] · 2025 May Q8(a) [9] · 2025 Nov Q7(b) [9]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>3</td><td style="text-align:left">Healthcare</td><td style="text-align:left">2022 Nov Q7(c) [5] · 2023 Nov Q7(c) [5] · 2024 May Q8(a) [9] · 2025 Nov Q8(a) [9]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>4</td><td style="text-align:left">IoT</td><td style="text-align:left">2022 Nov Q7(b) [6] · 2023 Nov Q8(a) [6] · 2025 May Q8(b) [9, with banking] · 2025 Nov Q8(b) [9, with banking]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>5</td><td style="text-align:left">Integration with other domains</td><td style="text-align:left">2022 Nov Q8(a) [6] · 2023 Nov Q7(a) [6 — cloud] · 2023 Nov Q8(a) [6 — IoT]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>6</td><td style="text-align:left">Voting — challenges and benefits</td><td style="text-align:left">2024 May Q8(b) [9] · 2025 Nov Q8(b) [9]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>7</td><td style="text-align:left">Retail</td><td style="text-align:left">2022 Nov Q7(a) [6, with banking]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>8</td><td style="text-align:left">Energy and utilities</td><td style="text-align:left">2023 Nov Q7(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>9</td><td style="text-align:left">Prominent applications + one architecture</td><td style="text-align:left">2025 May Q7(a) [9]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>10</td><td style="text-align:left">Digital identity / reducing cyber hacks</td><td style="text-align:left">2025 May Q7(b) [9]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>Pattern:</b> 2022–2023 asked 5–6 marks across three sectors; 2024–2025 switched to two 9-mark questions. So prepare <b>two sectors deeply</b> rather than five shallowly. Banking + government covers 11 of 24 appearances.</div>
+
+  <div class="tip"><b>Marks strategy:</b> 5–6 marks = 5 use cases + 2 benefits. 9 marks = 6–8 use cases + a <b>sector architecture diagram</b> + benefits + 3 challenges. Every answer should mention one real platform (Hyperledger Fabric, R3 Corda, IBM Food Trust) to sound concrete.</div>
+</section>
+
+<!-- ================= 6.1 ================= -->
+<section class="card" id="s61">
+  <h2>6.1 Prominent blockchain applications + one architecture</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>List the prominent blockchain applications. Explain in detail any one with its architecture.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q7(a) [9]</p>
+
+      <h4>1. The list (book's 14 + 3 useful additions)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>#</th><th>Application</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Money transfers</td><td>Cross-border payments and remittances without correspondent banks.</td></tr>
+          <tr><td>2</td><td>Financial exchanges</td><td>Tokenised securities, trading and settlement.</td></tr>
+          <tr><td>3</td><td>Lending</td><td>DeFi lending pools and collateralised loans.</td></tr>
+          <tr><td>4</td><td>Insurance</td><td>Parametric policies and automatic claims.</td></tr>
+          <tr><td>5</td><td>Real estate</td><td>Land titles, fractional ownership, escrow.</td></tr>
+          <tr><td>6</td><td>Secure personal information</td><td>Digital identity and verifiable credentials.</td></tr>
+          <tr><td>7</td><td>Voting</td><td>Tamper-evident ballots and auditable tallies.</td></tr>
+          <tr><td>8</td><td>Government benefits</td><td>Direct benefit transfer without leakage.</td></tr>
+          <tr><td>9</td><td>Medical information</td><td>Patient-controlled health records.</td></tr>
+          <tr><td>10</td><td>Artist royalties</td><td>Automatic royalty split on every resale.</td></tr>
+          <tr><td>11</td><td>Non-fungible tokens</td><td>Proof of ownership for digital and physical assets.</td></tr>
+          <tr><td>12</td><td>Logistics and supply chain</td><td>Provenance, custody and recall tracking.</td></tr>
+          <tr><td>13</td><td>Secure IoT networks</td><td>Device identity and data integrity.</td></tr>
+          <tr><td>14</td><td>Data storage</td><td>Swarm/IPFS-style decentralised storage.</td></tr>
+          <tr><td>15</td><td>Energy trading</td><td>Peer-to-peer solar power and RECs.</td></tr>
+          <tr><td>16</td><td>Education credentials</td><td>Verifiable degrees and certificates.</td></tr>
+          <tr><td>17</td><td>Digital identity</td><td>Self-sovereign identity and KYC reuse.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Chosen architecture — supply-chain traceability</h4>
+      <p><b>Problem:</b> a food or pharma batch passes through farmer → processor → shipper → warehouse → retailer. Each party keeps its own records, so provenance is slow to verify and recalls are expensive.</p>
+      <p><b>Solution:</b> a permissioned Hyperledger Fabric network with one node per participant and a smart contract for custody and payment.</p>
+
+      <pre class="tree">LAYER 4  Application / dashboard / mobile app
+         ┌──────────────────────────────────────────────┐
+         │ consumer QR scan · auditor view · alerts     │
+         └──────────────────────▲───────────────────────┘
+                                │ API
+LAYER 3  Blockchain network (Hyperledger Fabric)
+         ┌──────────────────────────────────────────────┐
+         │ supplier node · factory node · logistics     │
+         │ node · retailer node · regulator node        │
+         │ smart contract: provenance + payment + recall│
+         └──────────────────────▲───────────────────────┘
+                                │ events
+LAYER 2  Identity + sensors + oracles
+         ┌──────────────────────────────────────────────┐
+         │ MSP certificates · IoT temperature sensor    │
+         │ GPS · QR/RFID scanner · timestamp oracle     │
+         └──────────────────────▲───────────────────────┘
+                                │
+LAYER 1  Physical goods
+         ┌──────────────────────────────────────────────┐
+         │ farm batch → pallet → container → shelf      │
+         └──────────────────────────────────────────────┘</pre>
+
+      <h4>3. End-to-end flow</h4>
+      <ol>
+        <li>The farmer registers a batch; a unique ID and QR code are created on-chain.</li>
+        <li>Every custody change is a signed transaction; the IoT sensor posts temperature and location.</li>
+        <li>The smart contract checks that the temperature stayed within range. If not, it flags the batch.</li>
+        <li>The retailer scans the QR; the customer sees the full journey.</li>
+        <li>On delivery, the contract releases payment automatically.</li>
+        <li>For a recall, the regulator queries the batch ID and finds every affected pallet in seconds.</li>
+      </ol>
+
+      <h4>4. Benefits and challenges</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Benefits</h4>
+          <ul>
+            <li>End-to-end provenance and faster recalls.</li>
+            <li>Less counterfeiting and paperwork.</li>
+            <li>Automatic payment and audit trail.</li>
+            <li>Shared truth between competitors.</li>
+            <li>Consumer trust through QR verification.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Challenges</h4>
+          <ul>
+            <li>Every participant must digitise its records.</li>
+            <li>Sensor/oracle data can be wrong ("garbage in, garbage out").</li>
+            <li>Governance and cost-sharing across companies.</li>
+            <li>Privacy of commercial data.</li>
+            <li>Integration with legacy ERP systems.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tip"><b>9-mark structure:</b> list of 10–12 applications (3) + one architecture diagram (3) + flow (1.5) + benefits/challenges (1.5).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.2 ================= -->
+<section class="card" id="s62">
+  <h2>6.2 Retail</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain blockchain applications in retail and banking services.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [6 — retail + banking; banking is in §6.3]</p>
+
+      <h4>1. Retail use cases</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Use case</th><th>How blockchain helps</th></tr></thead>
+        <tbody>
+          <tr><td><b>Provenance and anti-counterfeit</b></td><td>Each product batch has an on-chain ID; the customer scans a QR to see farm/factory, date and custody chain.</td></tr>
+          <tr><td><b>Supply-chain finance</b></td><td>A supplier can prove delivery and get paid early; the smart contract releases funds on receipt.</td></tr>
+          <tr><td><b>Loyalty programmes</b></td><td>Points become tokens that can be transferred or used across brands; no closed database.</td></tr>
+          <tr><td><b>Payments</b></td><td>Crypto or stablecoin checkout with lower card fees; no chargebacks.</td></tr>
+          <tr><td><b>Returns and warranty</b></td><td>A token proves ownership and warranty status; resale keeps the history.</td></tr>
+          <tr><td><b>Inventory visibility</b></td><td>Retailer, warehouse and shipper share one ledger, reducing stock-outs.</td></tr>
+          <tr><td><b>Artist royalties / NFTs</b></td><td>Creators earn a programmed percentage on every resale.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Real example</h4>
+      <p><b>Walmart + IBM Food Trust:</b> tracing a packet of mangoes used to take about <b>7 days</b> of phone calls and paperwork. On the shared ledger it took about <b>2.2 seconds</b>. The same network is used for leafy greens and other suppliers.</p>
+
+      <h4>3. Benefits</h4>
+      <ul>
+        <li>Faster recalls and fewer counterfeit goods.</li>
+        <li>Lower payment and reconciliation cost.</li>
+        <li>Better customer trust through QR provenance.</li>
+        <li>New revenue from tokenised loyalty and NFTs.</li>
+      </ul>
+
+      <h4>4. Challenges</h4>
+      <ul>
+        <li>Small suppliers cannot afford the digitisation.</li>
+        <li>Data entry errors at the first mile.</li>
+        <li>Privacy of pricing and supplier terms.</li>
+        <li>No common standards across retailers.</li>
+      </ul>
+
+      <div class="note"><b>6-mark split for 2022 Q7a:</b> 3 retail use cases (3 marks) + 3 banking use cases (3 marks, from §6.3). Do not write only retail — the question says "retail &amp; banking".</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.3 ================= -->
+<section class="card" id="s63">
+  <h2>6.3 Banking and financial services</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Explain blockchain applications in financial services. Describe the role / significance of blockchain in the banking and financial sector.</p>
+      <div class="badges"><span class="b marks">6 / 9 marks</span><span class="b rep hot">★★★★★ 6×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [6, part] · 2022 Nov Q8(b) [6] · 2023 Nov Q8(b) [6] · 2024 May Q7(a) [9] · 2025 May Q8(b) [9, part] · 2025 Nov Q7(a) [9]</p>
+
+      <h4>1. Why banks need it</h4>
+      <p>Banking runs on <b>reconciliation</b>: each institution keeps its own ledger, and intermediaries (clearing houses, correspondent banks, custodians) reconcile them. This is slow, expensive and error-prone. A shared ledger gives one version of the truth and lets smart contracts automate settlement.</p>
+
+      <h4>2. Applications table (the core of the answer)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Use case</th><th>Problem today</th><th>Blockchain solution</th></tr></thead>
+        <tbody>
+          <tr><td><b>Cross-border payments</b></td><td>2–5 days, multiple fees, opaque FX</td><td>Direct P2P settlement in minutes; transparent FX rate; fewer intermediaries.</td></tr>
+          <tr><td><b>Trade finance</b></td><td>Paper bills of lading, duplicate financing, fraud</td><td>Tokenised documents; one shared record; smart-contract release of payment.</td></tr>
+          <tr><td><b>Syndicated loans</b></td><td>Many banks, manual ownership records</td><td>Tokenised loan shares; automatic interest distribution.</td></tr>
+          <tr><td><b>KYC / AML</b></td><td>Each bank repeats the same checks</td><td>Reusable verified credentials; audit trail of checks without exposing raw data.</td></tr>
+          <tr><td><b>Clearing and settlement</b></td><td>T+2 settlement, central counterparty risk</td><td>Near-instant atomic settlement (delivery-versus-payment).</td></tr>
+          <tr><td><b>Securities / bonds</b></td><td>Fragmented registries, slow transfer</td><td>Tokenised securities; programmable coupon and redemption.</td></tr>
+          <tr><td><b>Insurance</b></td><td>Manual claims, fraud</td><td>Parametric policies; oracle-triggered payout.</td></tr>
+          <tr><td><b>Digital assets / custody</b></td><td>New asset class, new custody risk</td><td>Regulated custody, proof of reserves, tokenised deposits.</td></tr>
+          <tr><td><b>Fraud detection</b></td><td>Data silos; fraudsters reuse documents</td><td>Shared fraud registry with privacy-preserving hashes.</td></tr>
+          <tr><td><b>Loan syndication / SCF</b></td><td>Slow onboarding of suppliers</td><td>On-chain invoices; early payment against verified receivables.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. The book's three benefits</h4>
+      <ul>
+        <li><b>Operational simplification:</b> multi-party tracking of guarantees and letters of credit in real time.</li>
+        <li><b>Automated compliance:</b> faster, accurate reporting from immutable records.</li>
+        <li><b>Faster settlement:</b> near real-time point-to-point transfer between institutions.</li>
+      </ul>
+
+      <h4>4. Real examples</h4>
+      <ul>
+        <li><b>R3 Corda:</b> used by banks for trade finance, insurance and digital identity. SWIFT integrated Corda for cross-border payments (2019).</li>
+        <li><b>we.trade:</b> a consortium trade-finance network built on IBM Blockchain; connects buyers, sellers and banks.</li>
+        <li><b>BBVA:</b> closed a €170 million syndicated loan using a blockchain platform with Red Eléctrica.</li>
+        <li><b>ANZ:</b> part of a consortium using blockchain to reduce fraud in bank guarantees.</li>
+        <li><b>DTCC:</b> tracks tens of trillions of dollars of assets; exploring distributed-ledger settlement.</li>
+        <li><b>JPMCoin / Onyx:</b> a permissioned deposit token for institutional payments.</li>
+      </ul>
+
+      <h4>5. Architecture — trade finance on Corda</h4>
+      <pre class="tree"> buyer ── purchase order ──► seller
+   │                           │
+   │      ┌────────────────────┘
+   ▼      ▼
+[ Corda network ]
+   │  states: PurchaseOrder, Invoice, BillOfLading
+   │  contracts: check signatures + amount + documents
+   │  flows: request, sign, notarise
+   │
+   ├──► buyer's bank ──► issues letter of credit
+   ├──► seller's bank ──► discounts invoice
+   └──► notary ──► prevents double-financing
+                     │
+                     ▼
+             payment released on delivery</pre>
+
+      <h4>6. Benefits and challenges</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Benefits</h4>
+          <ul>
+            <li>Faster settlement (minutes vs days).</li>
+            <li>Lower reconciliation and intermediary cost.</li>
+            <li>Reduced fraud and duplicate financing.</li>
+            <li>Transparent audit trail for regulators.</li>
+            <li>New products: tokenised deposits, bonds, funds.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Challenges</h4>
+          <ul>
+            <li>Legacy core-banking integration.</li>
+            <li>Privacy: banks cannot broadcast customer data.</li>
+            <li>Regulation and cross-border law.</li>
+            <li>Consortium governance and cost sharing.</li>
+            <li>Scalability and finality requirements.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note"><b>9-mark structure:</b> why banks need it (1.5) + 6-row table (3) + 2 real examples (1.5) + architecture (1.5) + benefits/challenges (1.5).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.4 ================= -->
+<section class="card" id="s64">
+  <h2>6.4 Government sector</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Elaborate the use of blockchain technology in the government sector — which are the different blockchain-based applications available/proposed for it? Explain the role of blockchain in the government sector.</p>
+      <div class="badges"><span class="b marks">5 / 9 marks</span><span class="b rep hot">★★★★★ 5×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(c) [5] · 2023 Nov Q8(c) [5 — any one] · 2024 May Q7(b) [9] · 2025 May Q8(a) [9] · 2025 Nov Q7(b) [9]</p>
+
+      <h4>1. What a blockchain-based government can do (book)</h4>
+      <ul>
+        <li><b>Protect data</b> — citizen and government records are encrypted and replicated.</li>
+        <li><b>Streamline processes</b> — one shared ledger replaces inter-department paperwork.</li>
+        <li><b>Reduce fraud</b> — duplicate beneficiaries and forged documents are visible.</li>
+        <li><b>Reduce waste</b> — automated payments and audits.</li>
+        <li><b>Increase trust</b> — citizens can verify records without trusting a clerk.</li>
+        <li><b>Remove a single point of failure</b> — no central database to breach or lose.</li>
+      </ul>
+
+      <h4>2. Applications (the 9 from the book + extras)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>#</th><th>Application</th><th>What is recorded</th><th>Benefit</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Digital currency / payments</td><td>CBDC or government disbursements</td><td>Direct benefit transfer, less leakage</td></tr>
+          <tr><td>2</td><td>Land registration</td><td>Title, survey number, transfer history</td><td>Stops multiple sales of the same plot</td></tr>
+          <tr><td>3</td><td>Identity management</td><td>DID, verifiable credentials</td><td>One identity, user-controlled disclosure</td></tr>
+          <tr><td>4</td><td>Supply-chain traceability</td><td>Public distribution, medicines, food</td><td>Stops diversion and counterfeits</td></tr>
+          <tr><td>5</td><td>Healthcare</td><td>Vaccination, insurance, records</td><td>Portable health history</td></tr>
+          <tr><td>6</td><td>Corporate registration</td><td>Company ownership, filings</td><td>Faster incorporation, less fraud</td></tr>
+          <tr><td>7</td><td>Taxation</td><td>Invoices, deductions, payments</td><td>Automated matching, less evasion</td></tr>
+          <tr><td>8</td><td>Voting</td><td>Encrypted ballots, tally</td><td>Auditable elections</td></tr>
+          <tr><td>9</td><td>Legal entities management</td><td>Licences, court orders, property</td><td>Single source of truth</td></tr>
+          <tr><td>10</td><td>Education credentials</td><td>Degrees, marksheets</td><td>Instant verification, no fake degrees</td></tr>
+          <tr><td>11</td><td>Vaccination tracking</td><td>Doses, dates, issuer</td><td>Safe travel and school entry</td></tr>
+          <tr><td>12</td><td>Student loans and grants</td><td>Eligibility, disbursement, repayment</td><td>Smart-contract release of funds</td></tr>
+          <tr><td>13</td><td>Payroll tax collection</td><td>Salary, deductions, remittance</td><td>Automatic tax calculation</td></tr>
+          <tr><td>14</td><td>Smart cities</td><td>Utilities, transport, permits</td><td>Efficient, transparent services</td></tr>
+          <tr><td>15</td><td>Central banking / RTGS</td><td>Interbank settlements</td><td>Faster real-time gross settlement</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Architecture — land registry</h4>
+      <pre class="tree"> citizen / buyer
+       │  application + documents
+       ▼
+ [ registrar node ] ── verifies identity + survey no.
+       │
+       ▼
+ [ permissioned blockchain ]
+   title state: owner, plot, encumbrance, hash of deed
+   contract: transfer allowed only if
+             (a) seller is current owner
+             (b) dues are paid
+             (c) both parties sign
+       │
+       ├──► bank node (mortgage check)
+       ├──► court node (dispute flag)
+       └──► auditor node (read-only)
+       │
+       ▼
+ new title + public verification portal</pre>
+
+      <h4>4. Real / proposed examples</h4>
+      <ul>
+        <li><b>Estonia:</b> e-government and blockchain-backed health/justice records (often cited as the earliest national deployment).</li>
+        <li><b>Dubai:</b> blockchain strategy for government documents and land registry.</li>
+        <li><b>India:</b> state-level land-record pilots (Andhra Pradesh, Telangana) and CBDC pilots by RBI.</li>
+        <li><b>Vaccination certificates:</b> verifiable credentials for cross-border travel.</li>
+      </ul>
+
+      <h4>5. Benefits and challenges</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Benefits</h4>
+          <ul>
+            <li>Less corruption and document forgery.</li>
+            <li>Faster citizen services.</li>
+            <li>Auditable spending and benefits.</li>
+            <li>Inter-department data sharing.</li>
+            <li>Citizen trust through verifiability.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Challenges</h4>
+          <ul>
+            <li>Legacy systems and departmental silos.</li>
+            <li>Digital divide and accessibility.</li>
+            <li>Privacy law and data localisation.</li>
+            <li>Identity of officials and key management.</li>
+            <li>Procurement and political continuity.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note"><b>5-mark version (2022/2023):</b> list five applications + two benefits. <b>9-mark version:</b> add the land-registry architecture and three challenges.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.5 ================= -->
+<section class="card" id="s65">
+  <h2>6.5 Healthcare</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Explain the role of blockchain in healthcare. Discuss the use of blockchain in the health sector.</p>
+      <div class="badges"><span class="b marks">5 / 9 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(c) [5] · 2023 Nov Q7(c) [5] · 2024 May Q8(a) [9] · 2025 Nov Q8(a) [9]</p>
+
+      <h4>1. The problem</h4>
+      <p>Patient records sit in separate hospital, lab, pharmacy and insurer databases. The patient has no complete history, doctors repeat tests, and records can be lost or altered. Drug supply chains are also easy to counterfeit.</p>
+
+      <h4>2. Applications</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Use case</th><th>How blockchain helps</th></tr></thead>
+        <tbody>
+          <tr><td><b>Patient-centric EHR</b></td><td>The patient holds a key; hospitals request access; every access is logged on-chain.</td></tr>
+          <tr><td><b>Interoperable health records</b></td><td>Standard hashes/pointers let different EHR systems share data without a central broker.</td></tr>
+          <tr><td><b>Supply-chain transparency</b></td><td>Track a drug from factory to pharmacy; detect counterfeits and recalls.</td></tr>
+          <tr><td><b>Clinical trials</b></td><td>Pre-registered protocol and timestamped results reduce data manipulation.</td></tr>
+          <tr><td><b>Insurance claims</b></td><td>Smart contracts validate policy, treatment and payout; less fraud and paperwork.</td></tr>
+          <tr><td><b>Medical credential verification</b></td><td>Verify doctors' degrees, licences and experience instantly.</td></tr>
+          <tr><td><b>Remote monitoring / IoT</b></td><td>Signed sensor data from wearables; tamper-evident vital signs.</td></tr>
+          <tr><td><b>Genomics</b></td><td>Patient-controlled access to genomic data; consent tracking.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Architecture — health record exchange</h4>
+      <pre class="tree"> patient (wallet + key)
+     │  grants consent (time-limited)
+     ▼
+ [ permissioned health chain ]
+   ├── hospital node ── writes encounter hash
+   ├── lab node ─────── writes test hash
+   ├── pharmacy node ── writes dispense record
+   ├── insurer node ─── reads claim proof
+   └── regulator node ─ read-only audit
+     │
+     ▼
+ off-chain storage (encrypted EHR file / IPFS / Swarm)
+     │
+     ▼
+ doctor queries hash ──► patient decrypts ──► record shown</pre>
+
+      <h4>4. Benefits</h4>
+      <ul>
+        <li><b>Security:</b> encrypted, replicated, tamper-evident records.</li>
+        <li><b>Interoperability:</b> one patient history across hospitals.</li>
+        <li><b>Consent and audit:</b> the patient sees who accessed what and when.</li>
+        <li><b>Less fraud:</b> duplicate claims and counterfeit drugs are easier to detect.</li>
+        <li><b>Faster claims:</b> smart contracts automate validation and payout.</li>
+        <li><b>Clinical-trial integrity:</b> timestamped, immutable results.</li>
+      </ul>
+
+      <h4>5. Challenges</h4>
+      <ul>
+        <li><b>Privacy law:</b> health data is highly sensitive (HIPAA, DPDP Act); on-chain data is hard to delete.</li>
+        <li><b>Consent management:</b> revocation must be handled carefully.</li>
+        <li><b>Identity:</b> patients, doctors and institutions need trusted keys.</li>
+        <li><b>Interoperability:</b> HL7/FHIR standards and legacy EHR vendors.</li>
+        <li><b>Cost and scalability:</b> imaging data cannot go on-chain.</li>
+        <li><b>Liability:</b> who is responsible if a smart contract pays the wrong claim?</li>
+      </ul>
+
+      <div class="note"><b>5-mark version:</b> five use cases + two benefits. <b>9-mark version:</b> add the architecture and three challenges. Mention that only <b>hashes/pointers</b> go on-chain, not the full record.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.6 ================= -->
+<section class="card" id="s66">
+  <h2>6.6 Internet of Things (IoT)</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>Explain the role of blockchain in IoT. Discuss the impact made by blockchain with IoT.</p>
+      <div class="badges"><span class="b marks">6 / 9 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(b) [6] · 2023 Nov Q8(a) [6 — integration use case] · 2025 May Q8(b) [9, part] · 2025 Nov Q8(b) [9, part]</p>
+
+      <h4>1. Why IoT needs blockchain</h4>
+      <p>IoT devices are cheap, numerous and often unattended. They need <b>identity</b>, <b>data integrity</b> and <b>automatic payments</b>. A central IoT cloud is a single point of failure and a honeypot for attackers. Blockchain gives a shared, tamper-evident record and device-level identity.</p>
+
+      <h4>2. The three properties (book)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Property</th><th>What it gives IoT</th><th>Surveillance-camera example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Distribution</b></td><td>Data is replicated across many nodes</td><td>An attacker must compromise many cameras, not one server.</td></tr>
+          <tr><td><b>Immutability</b></td><td>Recorded data cannot be silently changed</td><td>A burglar cannot claim the video was forged; any edit is detectable.</td></tr>
+          <tr><td><b>Decentralisation</b></td><td>No central controller</td><td>Access logs and permissions are stored on-chain; no single admin.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Applications</h4>
+      <ul>
+        <li><b>Supply chain and logistics:</b> temperature, location and custody of goods.</li>
+        <li><b>Automotive:</b> charging, parking, insurance and vehicle identity.</li>
+        <li><b>Smart homes:</b> device identity and secure automation.</li>
+        <li><b>Pharmacy:</b> cold-chain compliance for vaccines.</li>
+        <li><b>Agriculture:</b> soil, weather and crop traceability.</li>
+        <li><b>Water management:</b> meter readings and leak detection.</li>
+        <li><b>Sharing economy:</b> pay-per-use scooters, tools, parking.</li>
+        <li><b>Energy:</b> smart meters and P2P trading (see §6.7).</li>
+      </ul>
+
+      <h4>4. Architecture — IoT + blockchain</h4>
+      <pre class="tree"> sensors / actuators (device identity)
+        │  signed data
+        ▼
+ edge gateway ── filters + batches data
+        │
+        ▼
+ blockchain network (permissioned or IOTA Tangle)
+   ├── device registry (DID / public key)
+   ├── data hash + timestamp
+   ├── access-control contract
+   └── micropayment contract
+        │
+        ▼
+ cloud analytics / dashboard / insurer / utility</pre>
+
+      <h4>5. Benefits</h4>
+      <ul>
+        <li><b>Device identity:</b> each device has a key; rogue devices can be blocked.</li>
+        <li><b>Data integrity:</b> signed, timestamped readings.</li>
+        <li><b>Micropayments:</b> machines can pay each other (IOTA is feeless).</li>
+        <li><b>Automation:</b> smart contracts trigger actions on sensor events.</li>
+        <li><b>No central honeypot:</b> distributed storage reduces breach impact.</li>
+        <li><b>Auditability:</b> regulators can verify compliance.</li>
+      </ul>
+
+      <h4>6. Challenges</h4>
+      <ul>
+        <li><b>Resource limits:</b> sensors have little CPU, memory and power; heavy consensus is impossible.</li>
+        <li><b>Scalability:</b> billions of devices produce huge transaction volume.</li>
+        <li><b>Privacy:</b> on-chain data is permanent; personal data must stay off-chain.</li>
+        <li><b>Connectivity:</b> intermittent networks.</li>
+        <li><b>Standards:</b> many device protocols and no common identity standard.</li>
+        <li><b>Oracle problem:</b> a compromised sensor writes bad data.</li>
+      </ul>
+
+      <div class="note"><b>Which platform to name:</b> IOTA (Tangle, feeless, IoT-focused) for device micropayments; Hyperledger Fabric for a permissioned enterprise IoT network; Ethereum + Chainlink for oracle-driven automation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.7 ================= -->
+<section class="card" id="s67">
+  <h2>6.7 Energy and utilities</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Explain the use of blockchain in energy and utilities.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [6]</p>
+
+      <h4>1. Why energy needs it</h4>
+      <p>Energy is moving from a few large power plants to millions of small producers (rooftop solar, batteries, EV chargers). Settling thousands of small trades through a utility's central billing system is slow and expensive. Blockchain gives a shared meter-to-money record.</p>
+
+      <h4>2. Five use cases (book)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Use case</th><th>How it works</th><th>Benefit</th></tr></thead>
+        <tbody>
+          <tr><td><b>Peer-to-peer energy trading</b></td><td>A rooftop-solar household sells excess units directly to a neighbour; the trade is recorded on-chain.</td><td>Better price for the seller, cheaper power for the buyer, less grid loss.</td></tr>
+          <tr><td><b>Renewable Energy Certificates (RECs)</b></td><td>Each MWh of green power gets a token; the token is traded and retired on-chain.</td><td>Stops double-counting and certificate fraud; instant verification.</td></tr>
+          <tr><td><b>Automatic settlement of trades</b></td><td>Smart contracts settle generation and consumption data from meters.</td><td>No clearing house or broker; faster, cheaper settlement.</td></tr>
+          <tr><td><b>Microgrids</b></td><td>A local grid balances generation and demand; the ledger records who supplied what.</td><td>Less transmission loss, reliable backup power.</td></tr>
+          <tr><td><b>Smart meters</b></td><td>Meters send signed readings at fixed intervals; billing is automatic.</td><td>Accurate bills, no estimated readings, tamper detection.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Architecture — P2P solar trading</h4>
+      <pre class="tree"> rooftop solar + battery
+        │  smart meter reading (kWh)
+        ▼
+ [ local energy market contract ]
+   ├── seller offers 5 kWh at ₹4/unit
+   ├── buyer accepts
+   ├── contract checks meter data
+   └── payment settles instantly
+        │
+        ▼
+ distribution grid operator (read-only)
+        │
+        ▼
+ REC token issued / retired</pre>
+
+      <h4>4. Benefits</h4>
+      <ul>
+        <li>Lower cost and faster settlement.</li>
+        <li>Transparent REC trading.</li>
+        <li>More renewable adoption.</li>
+        <li>Better grid balancing and outage response.</li>
+        <li>Audit trail for regulators.</li>
+      </ul>
+
+      <h4>5. Challenges</h4>
+      <ul>
+        <li>Meter and oracle trust.</li>
+        <li>Grid codes and utility regulation.</li>
+        <li>High transaction volume from smart meters.</li>
+        <li>Cybersecurity of critical infrastructure.</li>
+        <li>Consumer protection and price volatility.</li>
+      </ul>
+
+      <div class="tip"><b>6-mark structure:</b> one-line problem (1) + five use cases (4) + one benefit/challenge (1).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.8 ================= -->
+<section class="card" id="s68">
+  <h2>6.8 Blockchain integration with other domains</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>Discuss the integration of blockchain with other domains. Discuss any use case of blockchain integration with another domain such as cloud or IoT.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(a) [6] · 2023 Nov Q7(a) [6 — cloud] · 2023 Nov Q8(a) [6 — IoT]</p>
+
+      <h4>1. Domains that integrate with blockchain</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Domain</th><th>Integration</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Cloud</b></td><td>Blockchain-as-a-Service (BaaS): managed nodes, templates, identity.</td><td>IBM Blockchain Platform, AWS Managed Blockchain, Azure.</td></tr>
+          <tr><td><b>IoT</b></td><td>Device identity, signed sensor data, micropayments.</td><td>IOTA Tangle, IBM Food Trust sensors.</td></tr>
+          <tr><td><b>AI / ML</b></td><td>Auditable training data, model provenance, federated learning rewards.</td><td>Ocean Protocol, SingularityNET.</td></tr>
+          <tr><td><b>Big data</b></td><td>Data marketplace with on-chain access control and payment.</td><td>Data unions, tokenised datasets.</td></tr>
+          <tr><td><b>Supply chain</b></td><td>Shared custody and provenance across companies.</td><td>TradeLens (discontinued), Food Trust, we.trade.</td></tr>
+          <tr><td><b>Telecom</b></td><td>Call-record integrity, roaming settlement, SIM identity.</td><td>Telecom consortium ledgers.</td></tr>
+          <tr><td><b>DNS</b></td><td>Decentralised domain names and ownership records.</td><td>ENS, Handshake.</td></tr>
+          <tr><td><b>Digital assets</b></td><td>Tokenised stocks, bonds, land titles, frequent-flyer miles.</td><td>Security tokens, real-estate tokens.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Cloud + blockchain (2023 Q7a)</h4>
+      <p><b>BaaS</b> lets a company deploy a blockchain network without building nodes, storage and identity from scratch. The cloud provider runs the infrastructure; the company writes contracts and defines governance.</p>
+      <ul>
+        <li><b>IBM Blockchain Platform:</b> managed Hyperledger Fabric; used by Food Trust and trade-finance networks.</li>
+        <li><b>AWS Managed Blockchain:</b> supports Hyperledger Fabric and Ethereum; integrates with VPC, IAM and CloudWatch.</li>
+        <li><b>Azure:</b> Azure Confidential Ledger and consortium templates.</li>
+      </ul>
+
+      <h4>3. Architecture — IoT + cloud + blockchain</h4>
+      <pre class="tree"> sensors ──► edge gateway ──► blockchain (hash + event)
+                                    │
+                                    ├──► cloud data lake (raw data)
+                                    │        │
+                                    │        ▼
+                                    │   ML analytics / alerts
+                                    │        │
+                                    └──► smart contract triggers payment
+                                             │
+                                             ▼
+                                      dashboard / regulator</pre>
+
+      <h4>4. Benefits of integration</h4>
+      <ul>
+        <li><b>Trust layer</b> for data produced by other systems.</li>
+        <li><b>Shared truth</b> between organisations that do not trust each other.</li>
+        <li><b>Automation</b> across systems via smart contracts and APIs.</li>
+        <li><b>Auditability</b> for AI decisions and sensor data.</li>
+        <li><b>New business models:</b> tokenised assets, data marketplaces, pay-per-use.</li>
+      </ul>
+
+      <h4>5. Challenges</h4>
+      <ul>
+        <li>Latency and throughput mismatch between blockchain and real-time systems.</li>
+        <li>Identity federation across cloud, IoT and chain.</li>
+        <li>Data privacy and residency.</li>
+        <li>Vendor lock-in in BaaS.</li>
+        <li>Cost of writing every event on-chain — use hashes and batching.</li>
+      </ul>
+
+      <div class="note"><b>6-mark structure:</b> four domains with one line each (3) + one use case in detail (2) + one challenge (1). The cloud and IoT use cases above are exactly what 2023 asked.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.9 ================= -->
+<section class="card" id="s69">
+  <h2>6.9 Voting — challenges and benefits</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q9</span>Discuss the potential challenges and benefits of implementing blockchain in a voting system.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q8(b) [9] · 2025 Nov Q8(b) [9]</p>
+
+      <h4>1. Why blockchain for voting</h4>
+      <p>A blockchain ballot is append-only, timestamped and replicated. Each vote is signed, so it cannot be changed or deleted without breaking the hash chain. Voters and auditors can verify the tally without trusting a central server.</p>
+
+      <h4>2. Benefits</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Benefit</th><th>Explanation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Transparency</b></td><td>Anyone can audit the ledger and the tally rules.</td></tr>
+          <tr><td><b>Tamper resistance</b></td><td>Changing a vote changes every later hash; the network rejects it.</td></tr>
+          <tr><td><b>Verifiability</b></td><td>The voter gets a receipt; a public bulletin board lets them confirm their vote was included.</td></tr>
+          <tr><td><b>Remote voting</b></td><td>Soldiers, NRIs and disabled voters can vote without travelling.</td></tr>
+          <tr><td><b>Lower cost</b></td><td>Less printing, transport and manual counting.</td></tr>
+          <tr><td><b>Faster results</b></td><td>Automatic tally; fewer recounts.</td></tr>
+          <tr><td><b>Audit trail</b></td><td>Every step from registration to tally is logged.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Challenges</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Challenge</th><th>Why it is hard</th></tr></thead>
+        <tbody>
+          <tr><td><b>Voter identity</b></td><td>One person, one vote requires a trusted identity system; fake identities break the election.</td></tr>
+          <tr><td><b>Coercion and vote buying</b></td><td>If a voter can prove how they voted, they can be bribed or pressured. Receipts must not reveal the choice.</td></tr>
+          <tr><td><b>Privacy vs auditability</b></td><td>The public must verify the tally, but no one should see individual votes. Zero-knowledge proofs are needed.</td></tr>
+          <tr><td><b>Key management</b></td><td>Lost keys = lost vote; stolen keys = stolen vote.</td></tr>
+          <tr><td><b>Scalability</b></td><td>National elections mean hundreds of millions of votes in a short window.</td></tr>
+          <tr><td><b>Endpoint security</b></td><td>The voter's phone/laptop can be infected; the chain cannot fix a hacked client.</td></tr>
+          <tr><td><b>Digital divide</b></td><td>Not everyone has a smartphone or connectivity.</td></tr>
+          <tr><td><b>Legal recognition</b></td><td>Election law may require paper ballots or a specific recount procedure.</td></tr>
+          <tr><td><b>Insider / admin power</b></td><td>Whoever registers voters and issues keys can still manipulate the election.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. Architecture</h4>
+      <pre class="tree"> voter identity (Aadhaar / election ID / DID)
+        │  verified once
+        ▼
+ [ permissioned election chain ]
+   ├── registration contract (one vote per ID)
+   ├── ballot contract (encrypted choice)
+   ├── nullifier (prevents double voting)
+   └── tally contract (homomorphic / ZK tally)
+        │
+        ├──► observer nodes (parties, NGOs)
+        ├──► audit bulletin board (public)
+        └──► result published with proof
+        │
+        ▼
+ voter receipt (verifies inclusion, not choice)</pre>
+
+      <h4>5. Real examples</h4>
+      <ul>
+        <li><b>Estonia:</b> national digital identity and the KSI blockchain for government records; its internet voting is not blockchain-based but is often cited as a digital-election reference.</li>
+        <li><b>Sierra Leone and US state pilots:</b> blockchain used as an audit/tally layer for a limited region or for absentee ballots — not as the official ballot.</li>
+        <li><b>DAOs:</b> token-based on-chain voting is routine, but it is not a secret ballot.</li>
+      </ul>
+
+      <h4>6. Conclusion</h4>
+      <p>Blockchain is strongest as an <b>audit and tally layer</b>, not as a replacement for the entire election. The best design is a permissioned chain with verified identity, encrypted ballots, zero-knowledge proofs and a paper backup.</p>
+
+      <div class="tip"><b>9-mark structure:</b> benefits table (3.5) + challenges table (3.5) + architecture (1) + conclusion (1).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.10 ================= -->
+<section class="card" id="s610">
+  <h2>6.10 Digital identity — reducing cyber hacks</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q10</span>Discuss in brief how cyber hacks can be reduced for digital identity using blockchain.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q7(b) [9]</p>
+
+      <h4>1. Why central identity databases get hacked</h4>
+      <ul>
+        <li>One database holds millions of records — a single breach exposes everyone.</li>
+        <li>Passwords are reused; phishing steals credentials.</li>
+        <li>KYC documents are copied to many servers.</li>
+        <li>Insiders can alter or delete records.</li>
+        <li>Users cannot see who accessed their data.</li>
+      </ul>
+
+      <h4>2. Blockchain identity model</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Building block</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><b>DID (Decentralised Identifier)</b></td><td>A user-controlled ID anchored on-chain; no central registrar.</td></tr>
+          <tr><td><b>Verifiable Credential (VC)</b></td><td>A signed claim ("this person is a graduate") issued by a trusted authority.</td></tr>
+          <tr><td><b>Public/private key pair</b></td><td>The user signs; the verifier checks the signature.</td></tr>
+          <tr><td><b>Zero-knowledge proof</b></td><td>Prove a fact (age &gt; 18) without revealing the birth date.</td></tr>
+          <tr><td><b>Revocation registry</b></td><td>Issuers can revoke a lost or compromised credential.</td></tr>
+          <tr><td><b>Immutable audit log</b></td><td>Every access or change is timestamped and traceable.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. How each hack vector is reduced</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Attack</th><th>Blockchain defence</th></tr></thead>
+        <tbody>
+          <tr><td>Central database breach</td><td>No single honeypot; credentials are held by the user and verified cryptographically.</td></tr>
+          <tr><td>Phishing / password theft</td><td>No password to steal; the attacker needs the private key, ideally on a hardware wallet.</td></tr>
+          <tr><td>Document forgery</td><td>Issuer signature + on-chain hash; any change breaks verification.</td></tr>
+          <tr><td>Insider tampering</td><td>Append-only log; edits are visible to all nodes.</td></tr>
+          <tr><td>Over-sharing of personal data</td><td>Selective disclosure / ZK proofs reveal only the needed fact.</td></tr>
+          <tr><td>Identity takeover</td><td>Revocation registry + multi-signature recovery.</td></tr>
+          <tr><td>Replay across services</td><td>Domain-bound credentials and nonces.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. Architecture</h4>
+      <pre class="tree"> issuer (university / bank / government)
+        │  signs credential
+        ▼
+ [ identity blockchain ]
+   ├── DID document (public key)
+   ├── credential hash / VC anchor
+   ├── revocation registry
+   └── access audit log
+        │
+        ▼
+ holder wallet (private key + credentials)
+        │  presents proof
+        ▼
+ verifier (bank / employer / airport)
+   checks signature + revocation + ZK proof
+        │
+        ▼
+ access granted without copying the document</pre>
+
+      <h4>5. Benefits</h4>
+      <ul>
+        <li><b>No central honeypot:</b> a breach of one verifier does not expose the whole population.</li>
+        <li><b>User control:</b> consent and selective disclosure.</li>
+        <li><b>Instant verification:</b> no phone calls to universities or employers.</li>
+        <li><b>Auditability:</b> every access is logged.</li>
+        <li><b>Portability:</b> the same credential works across borders and services.</li>
+        <li><b>Less KYC duplication:</b> banks can reuse a verified credential.</li>
+      </ul>
+
+      <h4>6. Challenges</h4>
+      <ul>
+        <li><b>Key recovery:</b> losing the private key means losing the identity; social recovery is immature.</li>
+        <li><b>Privacy:</b> on-chain anchors must not leak personal data.</li>
+        <li><b>Issuer trust:</b> a fake issuer can sign fake credentials; trust registries are needed.</li>
+        <li><b>Standards:</b> W3C DID/VC adoption is still growing.</li>
+        <li><b>Usability:</b> wallets and recovery are hard for ordinary users.</li>
+        <li><b>Regulation:</b> eIDAS, DPDP Act and AML rules must be satisfied.</li>
+      </ul>
+
+      <div class="note"><b>One-line answer:</b> blockchain does not make identity "unhackable"; it removes the central database, makes credentials verifiable and gives the user control of disclosure. That shrinks the attack surface from "millions of records in one server" to "one key per user".</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet</h2>
+  <div class="grid2">
+    <div>
+      <h4>Sector → 3 use cases</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Sector</th><th>Three use cases</th></tr></thead>
+        <tbody>
+          <tr><td><b>Retail</b></td><td>Provenance, loyalty tokens, supply-chain finance</td></tr>
+          <tr><td><b>Banking</b></td><td>Cross-border payments, trade finance, KYC/AML</td></tr>
+          <tr><td><b>Government</b></td><td>Land registry, digital ID, benefits / voting</td></tr>
+          <tr><td><b>Healthcare</b></td><td>EHR, drug supply chain, insurance claims</td></tr>
+          <tr><td><b>IoT</b></td><td>Device identity, data integrity, micropayments</td></tr>
+          <tr><td><b>Energy</b></td><td>P2P trading, RECs, smart meters</td></tr>
+          <tr><td><b>Voting</b></td><td>Audit trail, remote voting, automatic tally</td></tr>
+          <tr><td><b>Identity</b></td><td>DID, verifiable credentials, ZK disclosure</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div>
+      <h4>One-line memory hooks</h4>
+      <ul>
+        <li><b>Retail</b> = provenance + loyalty. Example: Walmart mangoes 7 days → 2.2 s.</li>
+        <li><b>Banking</b> = settlement + trade finance + KYC. Example: R3 Corda, we.trade, BBVA.</li>
+        <li><b>Government</b> = land + ID + benefits. Example: Estonia, Dubai.</li>
+        <li><b>Healthcare</b> = records + drugs + claims. Only hashes on-chain.</li>
+        <li><b>IoT</b> = distribution + immutability + decentralisation. IOTA for feeless devices.</li>
+        <li><b>Energy</b> = P2P + REC + microgrid + smart meter.</li>
+        <li><b>Voting</b> = audit layer, not the whole election; privacy vs auditability.</li>
+        <li><b>Identity</b> = remove the central honeypot; user holds the key.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> sector lists, benefits and the government/healthcare/IoT/energy details follow the supplied Technical Publications book, Unit VI (§6.1–6.7). Voting, digital identity, Walmart's 2.2-second trace and the named bank pilots are standard case-study references used to match the 2024–2025 PYQ wording.</div>
+
+  <div class="tip"><b>Exam-day order:</b> Q7/Q8 is Unit 6. Pick banking for Q7 and government or healthcare for Q8. Draw the architecture first — it takes 4 minutes and anchors the whole answer. Then add use cases and two challenges. This unit is the easiest place to recover marks if Unit 5 went badly.</div>
+</section>
+
+<footer>
+  BT · Unit 6 · built from 5 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410243 · 2019 Pattern<br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

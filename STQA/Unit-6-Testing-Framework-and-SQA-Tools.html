@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STQA Unit 6 — Testing Framework &amp; SQA Tools | SPPU 410245D</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+/* ---------- cards ---------- */
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+/* ---------- Q&A ---------- */
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+/* ---------- code / tables ---------- */
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+/* ---------- callouts ---------- */
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+/* ---------- frequency table ---------- */
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+/* ---------- tree drawing ---------- */
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+/* footer */
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+
+.freq td:nth-child(2),.freq td:nth-child(3){text-align:left}
+
+main{min-width:0}
+.tbl-wrap{max-width:100%}
+.card,.qa{min-width:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="side">
+  <h3>STQA · Unit 6</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s61">6.1 Six Sigma &amp; TQM</a>
+    <a href="#s62">6.2 Ishikawa 7 tools</a>
+    <a href="#s63">6.3 SQA tasks, metrics, maintenance</a>
+    <a href="#s64">6.4 ISO 9000 &amp; SQA plan</a>
+    <a href="#s65">6.5 Syllabus-only concepts</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Test-Case-Design-Techniques.html">Unit 3 · Test case design</a>
+  <a href="Unit-4-SQA-and-Quality-Control.html">Unit 4 · SQA &amp; QC</a>
+  <a href="Unit-5-Automation-and-Performance-Testing.html">Unit 5 · Automation &amp; performance</a>
+  <a href="index.html">↩ STQA home</a>
+</aside>
+
+<!-- ================= MAIN ================= -->
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 6 — Testing Framework &amp; SQA Tools</h1>
+  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>This is the “quality tools” unit. It owns Q7 and Q8 in most papers. All questions are reproduced from the six end-sem papers (2022 Nov – 2025 Nov); repeats include the duplicate Six Sigma question inside the 2022 Nov paper.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>36</b> Unit-6 question instances</span>
+    <span class="chip">🧩 <b>13</b> Q&amp;A cards</span>
+    <span class="chip">🔁 Highest repeat: <b>Six Sigma — 6×</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>12–18 marks</b></span>
+  </div>
+</header>
+
+<!-- ================= FREQUENCY MAP ================= -->
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — Unit 6</h2>
+  <p class="lead">Unit 6 owns Q7 and Q8 in most papers. It is the <b>most predictable</b> unit: Six Sigma, Ishikawa tools, TQM, SQA maintenance and “achieving quality” repeat almost every year.</p>
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">Six Sigma characteristics / strategy of SQA</td><td>2022 Nov Q7(b) [6], Q8(a) [6]; 2023 May Q7(a) [6]; 2024 May Q7(b) [6]; 2025 May Q7(a) [6]; 2025 Nov Q7(c) [6]</td><td><span class="stars">★★★★★</span> 6×</td></tr>
+      <tr><td>2</td><td class="l">How to maintain SQA</td><td>2022 Nov Q7(c) [5]; 2023 May Q8(a) [6]; 2025 May Q7(b) [6]; 2025 Nov Q7(a) [5]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>3</td><td class="l">Ishikawa's flow chart vs histogram</td><td>2022 Nov Q7(a) [6]; 2023 May Q7(b) [6]; 2025 May Q8(a) [6]; 2025 Nov Q7(b) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>4</td><td class="l">Activities / parameters / facts to achieve software quality</td><td>2023 May Q7(c) [5]; 2023 Nov Q8(b) [6]; 2024 May Q7(a) [8]; 2025 Nov Q8(c) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>5</td><td class="l">Total Quality Management (TQM)</td><td>2022 Nov Q8(b) [6]; 2023 Nov Q7(a) [6]; 2025 May Q8(b) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>6</td><td class="l">Ishikawa's 7 basic tools / basic tools for QC</td><td>2023 Nov Q7(b) [6]; 2024 May Q8(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>7</td><td class="l">Histogram, flowchart and control chart (brief)</td><td>2024 May Q7(c) [3]; 2025 Nov Q8(b) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>8</td><td class="l">Run chart vs control chart</td><td>2022 Nov Q8(c) [5]; 2025 May Q8(c) [5]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td class="l">SQA tasks, goals and metrics</td><td>2023 May Q8(b) [6]; 2023 Nov Q8(c) [5]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>10</td><td class="l">Defect Removal Effectiveness (DRE)</td><td>2023 May Q8(c) [5]; 2025 May Q7(c) [5]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>11</td><td class="l">ISO 9000 standard in detail</td><td>2024 May Q8(a) [6]; 2025 Nov Q8(a) [5]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>12</td><td class="l">Flow chart, run charts, control charts</td><td>2023 Nov Q8(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>13</td><td class="l">Software maintenance</td><td>2023 Nov Q7(c) [5]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>14</td><td class="l">Software Quality Assurance (SQA) plan</td><td>2024 May Q8(b) [5]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note"><b>Exact-repeat check:</b> “six sigma characteristics” is word-for-word in <b>5</b> sub-questions (2022 Nov has it twice); 2024 May asks the same content as “Six Sigma strategy of SQA”, so the row totals 6 instances. “Maintain SQA” is word-for-word 4 times.</div>
+  <div class="note"><b>The “big four” of Unit 6:</b> Six Sigma (6×), maintain SQA (4×), Ishikawa flow chart vs histogram (4×) and achieving quality (4×) = <b>18 of 36</b> instances. Prepare these before anything else.</div>
+  <div class="tip"><b>Marks strategy:</b> for 5 marks write definition + 5 points. For 6 marks add a table or diagram. For the 8-mark “activities to achieve quality”, write a lifecycle table with 8 activities and one example each.</div>
+</section>
+
+<!-- ================= 6.1 ================= -->
+<section class="card" id="s61">
+  <h2>6.1 Six Sigma and TQM</h2>
+  <p class="lead">Syllabus: <em>Six Sigma for Software Engineering, Total Quality Management, achieving software quality.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain in detail the Six Sigma characteristics (strategy of software quality assurance).</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★★ 6×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(b) [6] · 2022 Nov Q8(a) [6] · 2023 May Q7(a) [6] · 2024 May Q7(b) [6] · 2025 May Q7(a) [6] · 2025 Nov Q7(c) [6]</p>
+      <p><b>Definition:</b> Six Sigma is a <b>data-driven, customer-focused, process-improvement methodology</b> that reduces variation and defects to <b>3.4 defects per million opportunities (DPMO)</b> — a 99.99966% success rate.</p>
+      <h4>1. Sigma levels</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Level</th><th>Defects per million</th><th>Yield</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>1σ</td><td>690,000</td><td>31%</td><td>Chaotic</td></tr>
+          <tr><td>2σ</td><td>308,000</td><td>69%</td><td>Poor</td></tr>
+          <tr><td>3σ</td><td>66,800</td><td>93.3%</td><td>Average industry</td></tr>
+          <tr><td>4σ</td><td>6,210</td><td>99.38%</td><td>Good</td></tr>
+          <tr><td>5σ</td><td>233</td><td>99.977%</td><td>Excellent</td></tr>
+          <tr><td><b>6σ</b></td><td><b>3.4</b></td><td><b>99.99966%</b></td><td>World class</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Characteristics</h4>
+      <ol>
+        <li><b>Customer-focused:</b> quality is defined by the customer's critical-to-quality (CTQ) requirements.</li>
+        <li><b>Data-driven:</b> decisions use measured data, not opinions; “In God we trust, all others bring data.”</li>
+        <li><b>Process-focused:</b> defects are symptoms; the process is the root cause and must be improved.</li>
+        <li><b>Project-based:</b> improvement happens through defined projects with charters, owners and savings targets.</li>
+        <li><b>Statistical:</b> uses control charts, capability indices (Cp, Cpk), Pareto and hypothesis tests to reduce variation.</li>
+        <li><b>Breakthrough improvement:</b> targets large reductions (e.g. 50% defects), not small incremental changes.</li>
+        <li><b>Belt system:</b> Champions, Master Black Belts, Black Belts and Green Belts lead projects and training.</li>
+        <li><b>Top-management commitment:</b> leadership selects projects, allocates resources and reviews results.</li>
+      </ol>
+      <h4>3. DMAIC — the Six Sigma method</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Phase</th><th>Activity</th><th>Software example</th></tr></thead>
+        <tbody>
+          <tr><td><b>D</b>efine</td><td>Define problem, customer, goal and scope.</td><td>“Reduce payment failures from 6% to 1%.”</td></tr>
+          <tr><td><b>M</b>easure</td><td>Measure current performance; validate data.</td><td>Baseline 6.2% failures over 3 months.</td></tr>
+          <tr><td><b>A</b>nalyse</td><td>Find root causes with data.</td><td>70% failures from gateway timeout on retry.</td></tr>
+          <tr><td><b>I</b>mprove</td><td>Implement and verify the fix.</td><td>Add idempotency and retry with backoff; failure → 0.9%.</td></tr>
+          <tr><td><b>C</b>ontrol</td><td>Standardise and monitor.</td><td>Control chart on failure rate; alert above 1.2%.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>DMADV/DFSS</b> is used for new products: Define, Measure, Analyse, Design, Verify.</p>
+      <p><b>Limitation:</b> Six Sigma needs good data and trained people; it is weaker for innovative design and very small projects.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain in detail Total Quality Management (TQM).</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(b) [6] · 2023 Nov Q7(a) [6] · 2025 May Q8(b) [6]</p>
+      <p><b>Definition:</b> Total Quality Management is a <b>management philosophy</b> in which <b>every member</b> of the organisation continuously improves quality at <b>every stage</b> to meet customer needs. “Total” = everyone and everything; “Quality” = fitness for use; “Management” = leadership and continuous improvement.</p>
+      <h4>1. Principles</h4>
+      <ol>
+        <li><b>Customer focus:</b> internal and external customers define quality.</li>
+        <li><b>Top-management leadership:</b> quality is a strategic goal, not a QA department task.</li>
+        <li><b>Employee involvement:</b> every person is responsible for quality; empowerment and teamwork.</li>
+        <li><b>Process approach:</b> improve the process, not blame the person.</li>
+        <li><b>Continuous improvement:</b> small, never-ending improvements (Kaizen) plus breakthrough projects.</li>
+        <li><b>Fact-based decisions:</b> use data and statistical tools.</li>
+        <li><b>Supplier partnership:</b> quality of bought-in components matters.</li>
+        <li><b>Training and culture:</b> invest in skills and a blame-free quality culture.</li>
+      </ol>
+      <h4>2. Elements / building blocks</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Element</th><th>What it means in software</th></tr></thead>
+        <tbody>
+          <tr><td>Quality policy</td><td>Top management's written commitment and measurable objectives.</td></tr>
+          <tr><td>Quality planning</td><td>Define standards, reviews, tests and metrics for the project.</td></tr>
+          <tr><td>Quality control</td><td>Reviews, testing and defect tracking.</td></tr>
+          <tr><td>Quality assurance</td><td>Process definition, audits and training.</td></tr>
+          <tr><td>Quality improvement</td><td>Root-cause analysis, PDCA, benchmark and reuse.</td></tr>
+          <tr><td>People and culture</td><td>Training, teams, recognition, no blame for reporting defects.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>3. TQM in software — example</h4>
+      <p>A company sets a policy “zero critical defects at release”. It trains developers in reviews, measures defect density, holds weekly quality circles, audits the test process and updates checklists after every escape. Every team member can stop a release on a quality concern.</p>
+      <h4>4. Benefits and barriers</h4>
+      <ul>
+        <li><b>Benefits:</b> fewer defects, lower rework, happier customers, better morale, continuous improvement.</li>
+        <li><b>Barriers:</b> management indifference, short-term cost pressure, blame culture, lack of training, difficulty measuring soft benefits.</li>
+      </ul>
+      <p><b>TQM vs Six Sigma:</b> TQM is a broad management philosophy and culture; Six Sigma is a focused, data-driven project methodology with a specific defect target. TQM provides the culture; Six Sigma provides the method.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Explain the activities / parameters / facts to achieve high software quality in detail.</p>
+      <div class="badges"><span class="b marks">5–8 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q7(c) [5, parameters] · 2023 Nov Q8(b) [6, facts] · 2024 May Q7(a) [8, activities] · 2025 Nov Q8(c) [6, activities]</p>
+      <p>Software quality is not achieved by testing alone. It is built into the <b>people, process, product and measurement</b> across the lifecycle.</p>
+      <h4>1. Activities across the lifecycle (use this table for 8 marks)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Phase</th><th>Quality activity</th><th>Example / output</th></tr></thead>
+        <tbody>
+          <tr><td>Requirements</td><td>Elicit, review and baseline requirements; build a traceability matrix.</td><td>Every requirement has an owner, acceptance criterion and test ID.</td></tr>
+          <tr><td>Planning</td><td>Write the quality plan; estimate effort; identify risks and quality gates.</td><td>Coverage target 80%, p95 &lt; 2 s, review schedule.</td></tr>
+          <tr><td>Design</td><td>Design reviews, checklists, prototyping, complexity analysis.</td><td>Peer review finds a missing interface before coding.</td></tr>
+          <tr><td>Coding</td><td>Coding standards, static analysis, peer review, unit tests.</td><td>No merge without review and green unit tests.</td></tr>
+          <tr><td>Testing</td><td>Risk-based test design, layered testing, regression, automation.</td><td>Defects found before release; coverage measured.</td></tr>
+          <tr><td>Release</td><td>Entry/exit criteria, defect triage, UAT, installation and smoke tests.</td><td>No open critical/high defects; signed acceptance.</td></tr>
+          <tr><td>Maintenance</td><td>Impact analysis, regression, root-cause analysis, metrics review.</td><td>Recurring defects eliminated by process change.</td></tr>
+          <tr><td>Organisation</td><td>Training, quality culture, standards, tools, audits, continual improvement.</td><td>Certified QMS; trained testers; measured process capability.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Key parameters / facts</h4>
+      <ol>
+        <li><b>Management commitment</b> and a written quality policy.</li>
+        <li><b>Clear, testable requirements</b> and traceability.</li>
+        <li><b>Defined process</b> with entry/exit criteria and standards.</li>
+        <li><b>Reviews and inspections</b> at every phase — defects removed early.</li>
+        <li><b>Layered testing</b> with measurable coverage.</li>
+        <li><b>Metrics</b> — defect density, DRE, MTBF, coverage, customer satisfaction.</li>
+        <li><b>Skilled, trained people</b> and a blame-free culture.</li>
+        <li><b>Tools and automation</b> — version control, CI, static analysis, test automation.</li>
+        <li><b>Configuration and change management</b> — test the right version.</li>
+        <li><b>Continual improvement</b> — root-cause analysis and process updates.</li>
+      </ol>
+      <p><b>One-line conclusion:</b> quality is <b>prevented in, not inspected in</b>. The cheapest defect is the one stopped at the requirements review.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.2 ================= -->
+<section class="card" id="s62">
+  <h2>6.2 Ishikawa's 7 basic tools</h2>
+  <p class="lead">Syllabus: <em>Flow chart, checklists, Pareto diagrams, histogram, run charts, scatter diagrams, control chart, cause-effect diagram.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Illustrate Ishikawa's 7 basic tools in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [6] · 2024 May Q8(c) [6, basic tools for quality control]</p>
+      <p>Kaoru Ishikawa popularised seven simple graphical tools that any team can use to find, analyse and control quality problems. They are called the <b>7 QC tools</b>.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>#</th><th>Tool</th><th>Purpose</th><th>How to read / example</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>Cause-effect (fishbone) diagram</b></td><td>Find root causes of a problem.</td><td>Effect on the right; 6M branches: Man, Machine, Method, Material, Measurement, Environment. Ask “why” five times.</td></tr>
+          <tr><td>2</td><td><b>Check sheet / checklist</b></td><td>Collect data in a structured way.</td><td>Tally marks for defect type per day; shows frequency and location.</td></tr>
+          <tr><td>3</td><td><b>Pareto chart</b></td><td>Separate the “vital few” from the “trivial many”.</td><td>Bars in descending order + cumulative % line; 80% of defects from 20% of causes.</td></tr>
+          <tr><td>4</td><td><b>Histogram</b></td><td>Show the distribution of continuous data.</td><td>Bars of response-time ranges; shape shows centre, spread, skew and outliers.</td></tr>
+          <tr><td>5</td><td><b>Flow chart</b></td><td>Map the process steps and decision points.</td><td>Oval = start/end, rectangle = process, diamond = decision; find loops, waits and rework.</td></tr>
+          <tr><td>6</td><td><b>Scatter diagram</b></td><td>Show the relationship between two variables.</td><td>Plot module size vs defect count; upward trend = positive correlation.</td></tr>
+          <tr><td>7</td><td><b>Control chart</b></td><td>Monitor whether a process is stable over time.</td><td>Time-ordered points with mean, UCL and LCL at ±3σ; points outside limits = special cause.</td></tr>
+          <tr><td>8*</td><td><b>Run chart</b></td><td>Show trends, shifts and cycles over time.</td><td>Time-ordered line with a median; no control limits. Often added as the eighth tool.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small">*Different textbooks list stratification instead of run chart. In SPPU papers, run chart and control chart are asked together, so learn both.</p>
+      <h4>Quick example</h4>
+      <p>A team sees 120 defects in a release. A <b>check sheet</b> records them by type. A <b>Pareto</b> shows 78% come from “payment” and “login”. A <b>fishbone</b> on payment finds the root cause: retry logic. A <b>flow chart</b> shows the retry loop. After the fix, a <b>control chart</b> tracks weekly payment defects and stays inside limits.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Compare the Ishikawa's flow chart and Histogram tool.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [6] · 2023 May Q7(b) [6] · 2025 May Q8(a) [6] · 2025 Nov Q7(b) [6]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Flow chart</th><th>Histogram</th></tr></thead>
+        <tbody>
+          <tr><td>Purpose</td><td>Show the <b>sequence of steps</b> and decisions in a process.</td><td>Show the <b>distribution</b> of measured data.</td></tr>
+          <tr><td>Data type</td><td>Process steps, events, decisions (qualitative).</td><td>Continuous numeric data (time, size, defects).</td></tr>
+          <tr><td>Display</td><td>Boxes, arrows, diamonds, start/end ovals.</td><td>Adjacent bars on a number line; x = class interval, y = frequency.</td></tr>
+          <tr><td>What it reveals</td><td>Rework loops, bottlenecks, missing steps, unclear ownership.</td><td>Centre, spread, skew, bimodal shape, outliers, capability.</td></tr>
+          <tr><td>Question answered</td><td>“How does the process actually work?”</td><td>“How is the data distributed?”</td></tr>
+          <tr><td>Use in SQA</td><td>Map the test/defect process; find unnecessary approvals and loops.</td><td>Check response-time distribution or defect counts per module.</td></tr>
+          <tr><td>Limitation</td><td>Does not quantify variation.</td><td>Does not show time order or root cause.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>Example</h4>
+      <p><b>Flow chart:</b> “defect reported → triage → assign → fix → review → retest → close”, with a decision diamond “fix verified?” that loops back to assign.</p>
+      <p><b>Histogram:</b> 500 login response times grouped into 0.5 s bins. Most fall in 1.0–1.5 s, with a small tail at 4–5 s — showing a slow subset that needs investigation.</p>
+      <p><b>One-line answer:</b> a flow chart shows <b>process flow</b>; a histogram shows <b>data distribution</b>. Use the flow chart to find where work goes wrong, and the histogram to measure how much variation exists.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>Explain in brief: Histogram, Flowchart and Control chart.</p>
+      <div class="badges"><span class="b marks">3–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q7(c) [3] · 2025 Nov Q8(b) [6] · 2023 Nov Q8(a) [6, flow chart + run chart + control chart]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Tool</th><th>Definition</th><th>How to draw / read</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Histogram</b></td><td>A bar chart of the frequency distribution of continuous data.</td><td>Divide data into equal class intervals; bar height = frequency. Look at centre, spread, skew and outliers.</td><td>Distribution of 300 test execution times; most 2–3 s, a few 10 s.</td></tr>
+          <tr><td><b>Flow chart</b></td><td>A diagram of the steps, decisions and flow of a process.</td><td>Oval = start/end, rectangle = activity, diamond = decision, arrow = flow.</td><td>Defect lifecycle from report to closure, including the retest loop.</td></tr>
+          <tr><td><b>Control chart</b></td><td>A time-ordered chart with a centre line and upper/lower control limits (±3σ).</td><td>Plot each sample; investigate points outside limits, runs of 7+ on one side, or trends.</td><td>Weekly defect density with UCL 5.2 and LCL 0.4; a point at 7.1 is a special cause.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>If the question asks flow chart + run chart + control chart (2023 Nov Q8a):</b> define the flow chart and control chart as above, then add — a <b>run chart</b> is a time-ordered line graph with a median line but <b>no control limits</b>; it shows trends, shifts and cycles. It is the simpler cousin of the control chart.</p>
+      <p><b>Relationship:</b> the flow chart shows <b>how</b> the process works, the histogram shows <b>what</b> the output looks like, and the run/control chart shows whether the process is <b>stable over time</b>.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Compare Run charts and Control chart in detail.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(c) [5] · 2025 May Q8(c) [5]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Run chart</th><th>Control chart</th></tr></thead>
+        <tbody>
+          <tr><td>Definition</td><td>Line graph of data in time order with a median line.</td><td>Line graph with a mean and statistically calculated control limits (UCL/LCL).</td></tr>
+          <tr><td>Limits</td><td>No control limits.</td><td>UCL and LCL, usually mean ±3σ.</td></tr>
+          <tr><td>Purpose</td><td>Spot trends, shifts, cycles and unusual patterns.</td><td>Distinguish common-cause variation from special-cause variation.</td></tr>
+          <tr><td>Statistical basis</td><td>Simple; no distribution assumption.</td><td>Based on process variation and probability.</td></tr>
+          <tr><td>Decision power</td><td>Indicates a change; cannot confirm statistical control.</td><td>Can decide whether the process is in control.</td></tr>
+          <tr><td>Cost / skill</td><td>Low; anyone can draw it.</td><td>Higher; needs data and formulas.</td></tr>
+          <tr><td>Use</td><td>First look at defect trend; daily team review.</td><td>Formal SPC; release gate; supplier quality.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>Example</h4>
+      <p><b>Run chart:</b> weekly defects 12, 10, 14, 9, 8, 11, 7 — a downward trend, but no limits, so we cannot say whether the last point is statistically unusual.</p>
+      <p><b>Control chart:</b> same data with mean 10.1, UCL 16.2, LCL 4.0. All points lie inside, so the process is in control; the downward trend is common-cause variation, not a special event.</p>
+      <p><b>Memory hook:</b> run chart = <b>time + median</b>; control chart = <b>time + mean + 3σ limits</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.3 ================= -->
+<section class="card" id="s63">
+  <h2>6.3 SQA tasks, metrics and maintenance</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>Can you explain how to maintain SQA?</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(c) [5] · 2023 May Q8(a) [6] · 2025 May Q7(b) [6] · 2025 Nov Q7(a) [5]</p>
+      <p><b>Meaning:</b> Maintaining SQA means keeping the quality system <b>alive and effective</b> after it is defined — auditing it, measuring it, updating it and improving it as the product and organisation change.</p>
+      <h4>1. Activities</h4>
+      <ol>
+        <li><b>Keep the process current:</b> review the SDLC, standards and checklists after every major change; retire obsolete steps.</li>
+        <li><b>Conduct audits:</b> internal and external audits check that the process is actually followed; record nonconformities and corrective actions.</li>
+        <li><b>Track metrics:</b> defect density, DRE, coverage, defect leakage, MTBF, schedule variance. Compare with targets and trends.</li>
+        <li><b>Review defects and root causes:</b> Pareto and fishbone analysis; fix the process, not only the bug.</li>
+        <li><b>Maintain the test assets:</b> update test cases, data, automation scripts and environments as the product changes.</li>
+        <li><b>Train and certify people:</b> new tools, standards and domain knowledge; keep skills current.</li>
+        <li><b>Manage tools and configuration:</b> version control, CI, defect tracker, test-management tool; keep them integrated.</li>
+        <li><b>Management review:</b> periodic review of quality objectives, audit results, customer feedback and improvement actions (ISO 9001 clause 9).</li>
+        <li><b>Continual improvement:</b> PDCA — plan an improvement, implement, check the metric, standardise.</li>
+        <li><b>Documentation:</b> keep the quality manual, procedures and records up to date and accessible.</li>
+      </ol>
+      <h4>2. Example</h4>
+      <p>A quarterly review finds defect leakage rose from 4% to 9%. The team audits the review process, finds that code reviews are being skipped under schedule pressure, adds a CI gate, retrains reviewers, and tracks leakage monthly until it returns below 5%.</p>
+      <p><b>One-line answer:</b> maintain SQA by <b>auditing, measuring, updating and improving</b> the process and its assets — not by filing the quality manual once and forgetting it.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q9</span>Illustrate different tasks, goals and metrics in SQA.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q8(b) [6] · 2023 Nov Q8(c) [5]</p>
+      <h4>1. SQA tasks</h4>
+      <ul>
+        <li>Prepare the <b>SQA/quality plan</b> and quality objectives.</li>
+        <li>Define and maintain <b>processes, standards and templates</b>.</li>
+        <li>Plan and conduct <b>reviews, inspections and audits</b>.</li>
+        <li>Oversee <b>test planning and execution</b>; check entry/exit criteria.</li>
+        <li>Collect and analyse <b>metrics</b>; publish quality reports.</li>
+        <li>Manage <b>defects, change requests and configuration</b>.</li>
+        <li>Conduct <b>training</b> and promote quality awareness.</li>
+        <li>Drive <b>root-cause analysis and continual improvement</b>.</li>
+      </ul>
+      <h4>2. SQA goals</h4>
+      <ul>
+        <li><b>Prevent</b> defects rather than detect them late.</li>
+        <li><b>Meet</b> functional and non-functional requirements.</li>
+        <li><b>Reduce</b> cost of quality and rework.</li>
+        <li><b>Improve</b> process capability and predictability.</li>
+        <li><b>Achieve</b> customer satisfaction and compliance (ISO/CMM).</li>
+      </ul>
+      <h4>3. Metrics</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Metric</th><th>Formula / meaning</th><th>Target example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Defect density</b></td><td>Defects ÷ size (KLOC or function points)</td><td>&lt; 1 per KLOC</td></tr>
+          <tr><td><b>Defect removal effectiveness (DRE)</b></td><td>Defects found before release ÷ total defects × 100</td><td>&gt; 95%</td></tr>
+          <tr><td><b>Defect leakage</b></td><td>Defects found after release ÷ total defects × 100</td><td>&lt; 5%</td></tr>
+          <tr><td><b>Test coverage</b></td><td>Requirements or code covered ÷ total × 100</td><td>≥ 80% branch</td></tr>
+          <tr><td><b>Test case productivity</b></td><td>Test cases designed ÷ person-day</td><td>Project baseline</td></tr>
+          <tr><td><b>MTBF</b></td><td>Total operating time ÷ number of failures</td><td>Increasing</td></tr>
+          <tr><td><b>MTTR</b></td><td>Total repair time ÷ number of repairs</td><td>Decreasing</td></tr>
+          <tr><td><b>Schedule / effort variance</b></td><td>(Actual − planned) ÷ planned × 100</td><td>Within ±10%</td></tr>
+          <tr><td><b>Customer satisfaction</b></td><td>CSAT / NPS from surveys</td><td>≥ 4.2/5 or NPS +30</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Goal–question–metric (GQM):</b> start from a goal (“reduce payment defects”), ask questions (“where do they occur?”), then choose metrics (“defects per payment module”). This keeps measurement purposeful.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q10</span>Explain Defect Removal Effectiveness (DRE) in detail. (Printed as “Detect Removal Effectiveness” in 2025 May.)</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q8(c) [5] · 2025 May Q7(c) [5]</p>
+      <p><b>Definition:</b> Defect Removal Effectiveness measures how well the quality process <b>removes defects before delivery</b>. It is the percentage of all defects that are found and fixed before the product reaches the customer.</p>
+      <div class="math">DRE (%) = (defects found before delivery ÷ (defects found before delivery + defects found after delivery)) × 100</div>
+      <p>Equivalently: <b>DRE = 1 − defect leakage</b>.</p>
+      <h4>1. Solved example</h4>
+      <p>A release has <b>90</b> defects found in reviews and testing, and customers report <b>10</b> defects after release.</p>
+      <div class="math">DRE = 90 ÷ (90 + 10) × 100 = <b>90%</b><br>Defect leakage = 10 ÷ 100 × 100 = <b>10%</b></div>
+      <p>Target for critical software is usually <b>&gt; 95%</b>.</p>
+      <h4>2. Phase-wise DRE</h4>
+      <p>DRE can be calculated for each phase to find the weak gate:</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Phase</th><th>Defects found</th><th>Defects escaping to next phase</th><th>Phase effectiveness</th></tr></thead>
+        <tbody>
+          <tr><td>Requirements review</td><td>50</td><td>50</td><td>50/100 = 50%</td></tr>
+          <tr><td>Design review</td><td>30</td><td>20</td><td>30/50 = 60%</td></tr>
+          <tr><td>Code review + unit test</td><td>12</td><td>8</td><td>12/20 = 60%</td></tr>
+          <tr><td>System test</td><td>6</td><td>2</td><td>6/8 = 75%</td></tr>
+          <tr><td>Post-release</td><td>2</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Start with 100 defects. Pre-release removal = 50 + 30 + 12 + 6 = <b>98</b>; post-release = <b>2</b>.</p>
+      <p>Overall DRE = 98 ÷ (98 + 2) = 98 ÷ 100 = <b>98%</b>; leakage = <b>2%</b>.</p>
+      <h4>3. How to improve DRE</h4>
+      <ul>
+        <li>Add or strengthen reviews at the phase with the lowest effectiveness.</li>
+        <li>Use checklists based on past escape defects.</li>
+        <li>Increase test coverage and add regression tests for every escape.</li>
+        <li>Perform root-cause analysis on defects found after release.</li>
+        <li>Track DRE per release and set a quality gate (e.g. ≥ 95%).</li>
+      </ul>
+      <p><b>Why it matters:</b> DRE measures the <b>process</b>, not individual tester skill. A low DRE shows that defects are slipping through the quality gates and that prevention must improve.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q11</span>What do you understand by software maintenance? Explain in detail.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(c) [5]</p>
+      <p><b>Definition:</b> Software maintenance is the work done on a delivered product to <b>correct defects, adapt to a changed environment, improve performance or prevent future problems</b>. It usually consumes <b>50–70%</b> of total lifecycle cost.</p>
+      <h4>1. Types</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Purpose</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Corrective</b></td><td>Fix defects found after delivery.</td><td>Patch a wrong tax calculation.</td></tr>
+          <tr><td><b>Adaptive</b></td><td>Adapt to a new OS, browser, database or law.</td><td>Support Windows 11 or a new GST rate.</td></tr>
+          <tr><td><b>Perfective</b></td><td>Improve performance, maintainability or add minor enhancements.</td><td>Optimise a slow query; refactor a module.</td></tr>
+          <tr><td><b>Preventive</b></td><td>Reduce future failure risk.</td><td>Add logging, upgrade a library, add regression tests.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Maintenance process</h4>
+      <ol>
+        <li><b>Request</b> — bug report or change request.</li>
+        <li><b>Impact analysis</b> — which modules, interfaces, tests and data are affected.</li>
+        <li><b>Approval and planning</b> — priority, effort, release window.</li>
+        <li><b>Change</b> — modify code/design and update documentation.</li>
+        <li><b>Testing</b> — unit, integration, regression and UAT.</li>
+        <li><b>Release and monitor</b> — deploy, verify, close the request.</li>
+      </ol>
+      <h4>3. SQA role in maintenance</h4>
+      <ul>
+        <li>Enforce change control and configuration management.</li>
+        <li>Require impact analysis and regression testing for every change.</li>
+        <li>Track defect recurrence and MTBF.</li>
+        <li>Keep documentation and test cases current.</li>
+        <li>Use root-cause analysis to move from corrective to preventive work.</li>
+      </ul>
+      <p><b>Example:</b> a bank changes its interest rule (adaptive). The team analyses the affected calculation and report modules, changes the code, runs the full regression suite, and releases a patch with updated documentation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.4 ================= -->
+<section class="card" id="s64">
+  <h2>6.4 ISO 9000 and the SQA plan</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q12</span>Explain ISO 9000 Standard in detail.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q8(a) [6] · 2025 Nov Q8(a) [5]</p>
+      <p><b>Definition:</b> ISO 9000 is a family of <b>international standards for quality management systems (QMS)</b>, published by ISO. It gives a common vocabulary, requirements and guidance so that organisations can consistently meet customer and regulatory requirements.</p>
+      <h4>1. The ISO 9000 family</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Standard</th><th>Purpose</th><th>Certifiable?</th></tr></thead>
+        <tbody>
+          <tr><td><b>ISO 9000</b></td><td>Fundamentals and vocabulary; defines the concepts and terms.</td><td>No</td></tr>
+          <tr><td><b>ISO 9001</b></td><td>Requirements for a QMS; the standard against which organisations are certified.</td><td><b>Yes</b></td></tr>
+          <tr><td><b>ISO 9004</b></td><td>Guidance for sustained success and performance improvement.</td><td>No</td></tr>
+          <tr><td><b>ISO 19011</b></td><td>Guidelines for auditing management systems.</td><td>No</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Seven quality management principles</h4>
+      <ol>
+        <li>Customer focus</li>
+        <li>Leadership</li>
+        <li>Engagement of people</li>
+        <li>Process approach</li>
+        <li>Improvement</li>
+        <li>Evidence-based decision making</li>
+        <li>Relationship management</li>
+      </ol>
+      <h4>3. ISO 9001:2015 clauses</h4>
+      <p><b>4</b> Context · <b>5</b> Leadership · <b>6</b> Planning · <b>7</b> Support · <b>8</b> Operation · <b>9</b> Performance evaluation · <b>10</b> Improvement. The model runs on <b>PDCA</b>.</p>
+      <h4>4. Benefits and limitations</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Benefits</th><th>Limitations</th></tr></thead>
+        <tbody>
+          <tr><td>Consistent, documented process; fewer defects.</td><td>Certifies the process, not the product.</td></tr>
+          <tr><td>Customer and tender confidence; international recognition.</td><td>Can become paperwork for its own sake.</td></tr>
+          <tr><td>Clear responsibilities and records.</td><td>Cost and time for certification and audits.</td></tr>
+          <tr><td>Continual improvement and corrective action.</td><td>Does not prescribe specific software techniques.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>ISO 9000 vs ISO 9001:</b> 9000 explains the <b>concepts and vocabulary</b>; 9001 states the <b>auditable requirements</b> for certification. In exams, write the family table and then the clauses.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q13</span>Write a note on Software Quality Assurance (SQA) plan.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q8(b) [5]</p>
+      <p><b>Definition:</b> An SQA plan defines <b>how quality assurance will be performed</b> for a specific project — the activities, responsibilities, standards, reviews, tests, metrics and records. IEEE 730 is the standard template.</p>
+      <h4>Contents</h4>
+      <ol>
+        <li><b>Purpose and scope</b> — project, release and quality objectives.</li>
+        <li><b>Reference documents</b> — SRS, design, standards, contract.</li>
+        <li><b>Management and organisation</b> — QA roles, responsibilities, reporting.</li>
+        <li><b>Documentation</b> — which documents are produced, reviewed and stored.</li>
+        <li><b>Standards, practices and metrics</b> — coding standards, review checklists, coverage and defect targets.</li>
+        <li><b>Reviews and audits</b> — type, schedule, participants, entry/exit criteria.</li>
+        <li><b>Test plan</b> — levels, environments, data, tools, automation and acceptance criteria.</li>
+        <li><b>Problem reporting and corrective action</b> — defect workflow, severity, escalation.</li>
+        <li><b>Tools and configuration management</b> — version control, CI, defect tracker, test tool.</li>
+        <li><b>Records, training and risks</b> — audit evidence, skill plan, risk list.</li>
+      </ol>
+      <h4>Example quality gate</h4>
+      <p>No release unless: 100% requirements traced, 80% branch coverage, zero open critical/high defects, performance targets met, and the test summary report is approved.</p>
+      <p><b>SQA plan vs quality plan:</b> the quality plan is the broader project quality document; the SQA plan focuses on the <b>assurance activities</b> — reviews, audits, standards and evidence — that prove the process is working.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6.5 ================= -->
+<section class="card" id="s65">
+  <h2>6.5 Syllabus-only SQA concepts</h2>
+  <div class="note"><b>Not directly asked as a full question:</b> software quality dilemma, elements of SQA, formal approaches to SQA, statistical SQA, product quality metrics and in-process quality metrics. Learn one short paragraph each.</div>
+  <div class="tbl-wrap">
+  <table class="left">
+    <thead><tr><th>Topic</th><th>Exam-ready answer</th></tr></thead>
+    <tbody>
+      <tr><td><b>Software quality dilemma</b></td><td>Quality competes with cost, schedule and scope. Adding quality work raises short-term cost and time; skipping it raises long-term rework and failure cost. The dilemma is resolved by risk-based investment in prevention.</td></tr>
+      <tr><td><b>Elements of SQA</b></td><td>Standards, reviews and audits, testing, metrics, defect management, configuration management, training, tools and documentation.</td></tr>
+      <tr><td><b>Formal approaches</b></td><td>Mathematical specification and verification (Z, VDM, B-method, model checking) to prove properties; used in safety-critical systems.</td></tr>
+      <tr><td><b>Statistical SQA</b></td><td>Collect defect data by phase, fit a distribution, find the phase with the highest defect rate and improve it; use control charts and Pareto analysis.</td></tr>
+      <tr><td><b>Product quality metrics</b></td><td>Defect density, MTBF, customer-reported defects, reliability growth, severity distribution.</td></tr>
+      <tr><td><b>In-process quality metrics</b></td><td>Review effectiveness, test coverage, defect removal effectiveness, phase yield, schedule/effort variance, test case productivity.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet — Unit 6</h2>
+  <div class="grid2">
+    <div>
+      <h4>Six Sigma numbers</h4>
+      <ul>
+        <li><b>6σ = 3.4 DPMO</b> = 99.99966% yield.</li>
+        <li><b>DMAIC</b> = Define, Measure, Analyse, Improve, Control.</li>
+        <li><b>DMADV</b> = Define, Measure, Analyse, Design, Verify.</li>
+        <li>Belts: Champion → Master Black Belt → Black Belt → Green Belt.</li>
+      </ul>
+      <h4>Ishikawa 7 tools</h4>
+      <div class="math">Fishbone · Check sheet · Pareto · Histogram · Flow chart · Scatter · Control chart (+ Run chart)</div>
+    </div>
+    <div>
+      <h4>One-line differences</h4>
+      <ul>
+        <li><b>Flow chart vs histogram:</b> process steps vs data distribution.</li>
+        <li><b>Run vs control chart:</b> median, no limits vs mean ±3σ limits.</li>
+        <li><b>Pareto:</b> 80% of defects from 20% of causes.</li>
+        <li><b>Scatter:</b> relationship between two variables.</li>
+        <li><b>Fishbone:</b> root cause using 6M.</li>
+      </ul>
+      <h4>DRE</h4>
+      <div class="math">DRE = pre-release defects ÷ (pre-release + post-release) × 100</div>
+      <p class="small">90 pre + 10 post → 90%. Target &gt; 95%.</p>
+    </div>
+  </div>
+
+  <h4>Must-write comparison: TQM vs Six Sigma</h4>
+  <div class="tbl-wrap">
+  <table class="left">
+    <thead><tr><th>Point</th><th>TQM</th><th>Six Sigma</th></tr></thead>
+    <tbody>
+      <tr><td>Nature</td><td>Broad management philosophy and culture</td><td>Focused, data-driven project methodology</td></tr>
+      <tr><td>Scope</td><td>Whole organisation, every process</td><td>Specific high-impact projects</td></tr>
+      <tr><td>Target</td><td>Continuous improvement</td><td>3.4 DPMO / breakthrough improvement</td></tr>
+      <tr><td>Tools</td><td>7 QC tools, PDCA, quality circles</td><td>DMAIC, statistics, control charts, belts</td></tr>
+      <tr><td>People</td><td>Everyone</td><td>Trained belts + champions</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="book"><b>Source note:</b> the supplied STQA “TechKnowledge” book covers <b>Units 1–2 only</b>. Unit 6 is built from the syllabus-listed reference texts — M. G. Limaye, <em>Software Testing: Principles, Techniques and Tools</em>; Srinivasan Desikan &amp; Gopal Swamy Ramesh, <em>Software Testing: Principles and Practices</em>; Naresh Chauhan, <em>Software Testing: Principles and Practices</em> — and matched to the exact PYQ wording and mark weights.</div>
+
+  <div class="tip"><b>Exam-day order:</b> Six Sigma (6×) → maintain SQA (4×) → Ishikawa flow chart vs histogram (4×) → achieving quality (4×) → TQM (3×). If Q7/Q8 combine two units, answer the Unit-6 part with a table and the Unit-4 part with a definition.</div>
+</section>
+
+
+<footer>
+  STQA · Unit 6 · built from 6 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410245D · 2019 Pattern<br><span class="small">Source: syllabus-listed texts — Limaye; Desikan &amp; Ramesh; Chauhan. The supplied TechKnowledge book covers Units 1–2 only.</span><br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+// highlight active sidebar link
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>

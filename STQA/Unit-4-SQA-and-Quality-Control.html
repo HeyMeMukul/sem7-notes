@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STQA Unit 4 — SQA and Quality Control | SPPU 410245D</title>
+<style>
+:root{
+  --bg:#080c17; --bg2:#0d1424; --card:#111a2e; --card2:#16213a;
+  --line:#233252; --txt:#e8eefc; --muted:#9fb0cf; --dim:#6f82a6;
+  --accent:#4fd1c5; --accent2:#7c9cff; --amber:#ffc46b; --pink:#ff7aa2;
+  --green:#6ee7a8; --red:#ff8b8b;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1100px 600px at 85% -10%, #16305a55, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #1b4d4a44, transparent 55%),
+    var(--bg);
+  color:var(--txt); font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1500px;margin:0 auto;gap:26px;padding:22px}
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:18px;align-self:start;max-height:calc(100vh - 36px);overflow:auto;
+  background:linear-gradient(180deg,#0f172acc,#0b1220cc);border:1px solid var(--line);border-radius:16px;padding:16px}
+.side h3{margin:2px 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent}
+.side a:hover{background:#ffffff0d;color:var(--txt);text-decoration:none}
+.side a.active{background:#4fd1c51f;color:var(--accent);border-left-color:var(--accent)}
+.side .sub{padding-left:12px;font-size:13px;color:var(--dim)}
+.side .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#4fd1c51f;color:var(--accent);margin-left:6px}
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,#122040,#0f1a30 55%,#0e2b2a);border:1px solid var(--line);
+  border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,#4fd1c533,transparent 65%)}
+.kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{margin:0 0 8px;font-size:clamp(26px,3.4vw,40px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--muted)}
+.chip b{color:var(--txt)}
+/* ---------- cards ---------- */
+.card{background:linear-gradient(180deg,var(--card),#0f1729);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+.card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.01em}
+.card h3{margin:22px 0 8px;font-size:18.5px;color:#dbe7ff}
+.card h4{margin:16px 0 6px;font-size:15.5px;color:var(--accent);letter-spacing:.02em}
+.lead{color:var(--muted)}
+.small{font-size:13.5px;color:var(--dim)}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
+/* ---------- Q&A ---------- */
+.qa{border:1px solid var(--line);border-radius:14px;background:#0e1729;margin:18px 0;overflow:hidden}
+.qa-head{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;
+  padding:14px 18px;background:linear-gradient(90deg,#142238,#111a2c);border-bottom:1px solid var(--line)}
+.qtitle{font-weight:650;font-size:16.5px;line-height:1.5;margin:0;flex:1 1 420px}
+.qtitle .qno{color:var(--accent2);font-family:var(--mono);font-size:13px;margin-right:6px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.b.marks{background:#ffc46b1a;color:var(--amber);border-color:#ffc46b40}
+.b.rep{background:#ff7aa21a;color:var(--pink);border-color:#ff7aa240}
+.b.rep.hot{background:#ff7aa233;color:#ffd0de;border-color:#ff7aa280}
+.b.unit{background:#7c9cff1a;color:var(--accent2);border-color:#7c9cff40}
+.qa-body{padding:16px 18px}
+.asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #4fd1c566}
+.asked b{color:var(--muted)}
+/* ---------- code / tables ---------- */
+pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;
+  font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
+code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+th{background:#182742;color:#dce8ff;font-weight:600}
+td{color:#cfdcf5}
+tr:nth-child(even) td{background:#ffffff05}
+table.left td,table.left th{text-align:left}
+.tbl-wrap{overflow-x:auto}
+.math{font-family:var(--mono);background:#0a1220;border:1px solid #1e2d4a;border-radius:10px;padding:10px 14px;margin:10px 0;color:#cfe3ff;overflow-x:auto}
+/* ---------- callouts ---------- */
+.note,.warn,.tip,.book{border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14.5px;border:1px solid}
+.note{background:#7c9cff12;border-color:#7c9cff35;color:#c9d7ff}
+.warn{background:#ff8b8b10;border-color:#ff8b8b35;color:#ffd0d0}
+.tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
+.book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
+.note b,.warn b,.tip b,.book b{color:#fff}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:2px 14px;font-size:14.5px}
+.kv div{padding:4px 0;border-bottom:1px solid #ffffff08}
+.kv div:nth-child(odd){color:var(--dim)}
+/* ---------- frequency table ---------- */
+.freq{font-size:13.5px}
+.freq td:last-child{text-align:center}
+.stars{color:var(--amber);letter-spacing:1px}
+/* ---------- tree drawing ---------- */
+.tree{font-family:var(--mono);white-space:pre;line-height:1.45;color:#cfe3ff;background:#070c16;
+  border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px}
+/* footer */
+footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
+.top{position:fixed;right:22px;bottom:22px;background:#4fd1c5;color:#04110f;border:0;border-radius:50%;
+  width:44px;height:44px;font-size:19px;cursor:pointer;box-shadow:0 8px 24px #4fd1c544;display:none}
+@media(max-width:1050px){
+ .wrap{grid-template-columns:1fr;padding:14px}
+ .side{position:static;max-height:none;order:-1}
+ .side nav{display:flex;flex-wrap:wrap;gap:4px}
+ .side a{font-size:12.5px}
+ .top{display:block}
+}
+@media print{
+ body{background:#fff;color:#111}
+ .side,.top{display:none}
+ .wrap{display:block;max-width:none;padding:0}
+ .card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}
+ .hero p,.lead,.small,.asked,.side a{color:#333}
+ th{background:#eee;color:#111} td{color:#111}
+ pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}
+ .qa-head{background:#f2f2f2}
+}
+
+.freq td:nth-child(2),.freq td:nth-child(3){text-align:left}
+
+main{min-width:0}
+.tbl-wrap{max-width:100%}
+.card,.qa{min-width:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="side">
+  <h3>STQA · Unit 4</h3>
+  <nav id="toc">
+    <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s41">4.1 SQA, QC and QMS</a>
+    <a href="#s42">4.2 Defects &amp; product characteristics</a>
+    <a href="#s43">4.3 Quality planning, control, ISO/CMM</a>
+    <a href="#s44">4.4 Process, customer, quality context</a>
+    <a href="#s45">4.5 Syllabus-only topics</a>
+    <a href="#cheat">⚡ Last-minute sheet</a>
+  </nav>
+  <hr class="sep">
+  <h3>Other units</h3>
+  <a href="Unit-3-Test-Case-Design-Techniques.html">Unit 3 · Test case design</a>
+  <a href="Unit-5-Automation-and-Performance-Testing.html">Unit 5 · Automation &amp; performance</a>
+  <a href="Unit-6-Testing-Framework-and-SQA-Tools.html">Unit 6 · Testing framework &amp; SQA</a>
+  <a href="index.html">↩ STQA home</a>
+</aside>
+
+<!-- ================= MAIN ================= -->
+<main>
+
+<header class="hero">
+  <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
+  <h1>Unit 4 — SQA and Quality Control</h1>
+  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p>All questions are taken <b>verbatim from the six end-sem papers</b> (2022 Nov – 2025 Nov). Unit 4 is the “quality management” half of the paper: QA/QC, QMS, defects, ISO 9001, CMM, quality planning and customer satisfaction.</p>
+  <div class="meta">
+    <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
+    <span class="chip">❓ <b>34</b> Unit-4 question instances</span>
+    <span class="chip">🧩 <b>18</b> Q&amp;A cards</span>
+    <span class="chip">🔁 Highest repeat: <b>ISO 9001 — 4×</b></span>
+    <span class="chip">⏱️ Unit weight ≈ <b>10–16 marks</b></span>
+  </div>
+</header>
+
+<!-- ================= FREQUENCY MAP ================= -->
+<section class="card" id="map">
+  <h2>📊 PYQ frequency map — Unit 4</h2>
+  <p class="lead">Counted from the same six end-sem papers. Unit 4 carries roughly <b>10–16 marks</b> per paper and mixes with Unit 6 (quality models, ISO, CMM) in Q3/Q4.</p>
+  <div class="tbl-wrap">
+  <table class="freq">
+    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">ISO 9001 standard and its importance in software testing</td><td>2022 Nov Q4(a) [6]; 2023 May Q3(c) [5]; 2025 May Q4(a) [6]; 2025 Nov Q4(a) [5]</td><td><span class="stars">★★★★</span> 4×</td></tr>
+      <tr><td>2</td><td class="l">Why software has defects</td><td>2022 Nov Q3(c) [5]; 2023 Nov Q4(a) [6]; 2025 May Q4(c) [5]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>3</td><td class="l">Levels of CMM</td><td>2022 Nov Q4(c) [5]; 2023 Nov Q3(c) [5]; 2025 May Q3(c) [5]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>4</td><td class="l">Customer satisfaction</td><td>2023 May Q4(c) [5]; 2024 May Q3(c) [5]; 2025 Nov Q3(a) [5]</td><td><span class="stars">★★★</span> 3×</td></tr>
+      <tr><td>5</td><td class="l">Quality Assurance vs Quality Control</td><td>2022 Nov Q3(a) [6]; 2023 Nov Q4(b) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>6</td><td class="l">Quality management system</td><td>2022 Nov Q3(b) [6]; 2025 May Q3(a) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>7</td><td class="l">Quality control and two methods of QC</td><td>2023 May Q4(b) [6]; 2025 Nov Q4(b) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>8</td><td class="l">Quality plan in detail</td><td>2023 May Q3(b) [6]; 2025 Nov Q3(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td class="l">Limitations of CMM</td><td>2024 May Q4(c) [3]; 2025 Nov Q4(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>10</td><td class="l">Problematic areas in software development life cycle</td><td>2024 May Q4(b) [6]; 2025 Nov Q3(b) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>11</td><td class="l">Impact of defect in different phases</td><td>2023 May Q3(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>12</td><td class="l">Important aspects of quality management</td><td>2023 May Q4(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>13</td><td class="l">Pillars of Quality Management System</td><td>2023 Nov Q4(c) [5]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>14</td><td class="l">Characteristics of software</td><td>2023 Nov Q3(a) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>15</td><td class="l">Steps in software development process</td><td>2023 Nov Q3(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>16</td><td class="l">Requirements of a product (stated/implied, present/future)</td><td>2024 May Q3(a) [4]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>17</td><td class="l">Waterfall model with diagram and limitations</td><td>2024 May Q3(b) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>18</td><td class="l">Types of products based on criticality</td><td>2024 May Q4(a) [8]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>19</td><td class="l">Explain Quality Assurance</td><td>2025 May Q4(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note"><b>Priority:</b> ISO 9001 (4×), why defects (3×), CMM levels (3×) and customer satisfaction (3×) cover <b>13 of 34</b> Unit-4 instances. Learn ISO 9001 clauses and the five CMM levels word-perfect — they are almost free marks.</div>
+</section>
+
+<!-- ================= 4.1 ================= -->
+<section class="card" id="s41">
+  <h2>4.1 SQA, QC and QMS</h2>
+  <p class="lead">Syllabus: <em>Software Quality Assurance — introduction, constraints, quality-productivity relationship, requirements, characteristics, development process, types of products, criticality, SQM, defects, processes, QMS structure, pillars, important aspects.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Differentiate between Quality Assurance and Quality Control.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(a) [6] · 2023 Nov Q4(b) [6]</p>
+      <p><b>Quality Assurance (QA)</b> is <b>process-oriented</b>: it builds a process that prevents defects. <b>Quality Control (QC)</b> is <b>product-oriented</b>: it inspects and tests the product to detect defects.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Quality Assurance (QA)</th><th>Quality Control (QC)</th></tr></thead>
+        <tbody>
+          <tr><td>Focus</td><td>Process — how work is done</td><td>Product — what is produced</td></tr>
+          <tr><td>Goal</td><td><b>Prevent</b> defects</td><td><b>Detect and correct</b> defects</td></tr>
+          <tr><td>Nature</td><td>Proactive</td><td>Reactive / detective</td></tr>
+          <tr><td>Timing</td><td>Starts with requirements; runs throughout</td><td>After work products exist; during reviews and testing</td></tr>
+          <tr><td>Activities</td><td>Process definition, standards, training, audits, reviews, metrics</td><td>Inspections, testing, defect logging, retesting, SPC</td></tr>
+          <tr><td>Responsibility</td><td>Everyone; managed by QA group</td><td>Test/QC team, sometimes developers</td></tr>
+          <tr><td>Output</td><td>Process improvement, audit report, prevention plan</td><td>Test report, defect report, accepted/rejected product</td></tr>
+          <tr><td>Success measure</td><td>Fewer defects injected; process capability</td><td>Defects found and removed; pass rate</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Example:</b> QA defines a mandatory code-review checklist and trains developers (prevents defects). QC runs the review and the unit tests, logs 12 defects and verifies the fixes (detects defects).</p>
+      <p><b>Relationship:</b> QA without QC cannot prove quality; QC without QA keeps finding the same defects again. Both are needed under a QMS.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Can you clarify Quality Assurance.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q4(b) [6]</p>
+      <p><b>Definition:</b> Quality Assurance is the set of <b>planned and systematic activities</b> that create confidence that the software process will produce a product meeting its quality requirements. It is <b>process-focused and preventive</b>.</p>
+      <h4>1. Main QA activities</h4>
+      <ol>
+        <li><b>Define the process</b> — SDLC model, entry/exit criteria, templates.</li>
+        <li><b>Set standards</b> — coding standards, documentation standards, naming conventions.</li>
+        <li><b>Plan quality</b> — quality plan, metrics, review schedule.</li>
+        <li><b>Conduct reviews and audits</b> — check that the process is actually followed.</li>
+        <li><b>Train people</b> — skills, tools, standards.</li>
+        <li><b>Measure and improve</b> — collect metrics, find root causes, update the process.</li>
+        <li><b>Manage tools and configuration</b> — version control, defect tracking, CI.</li>
+      </ol>
+      <h4>2. QA vs testing</h4>
+      <p>Testing is one <b>QC</b> activity. QA asks “Is our process good enough to prevent defects?” Testing asks “Does this build work?” QA can start before a single line of code is written; testing needs an executable product.</p>
+      <h4>3. Benefits</h4>
+      <ul>
+        <li>Lower cost of quality — defects are prevented, not repaired late.</li>
+        <li>Predictable delivery and fewer release delays.</li>
+        <li>Compliance with ISO 9001 / CMM and customer contracts.</li>
+        <li>Higher customer confidence and repeat business.</li>
+      </ul>
+      <p><b>Example:</b> a team defines “no code merge without peer review and 80% branch coverage”. This is QA. The review and coverage report are the checks that prove the process is working.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Can you clarify Quality Management System (QMS).</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6] · 2025 May Q3(a) [6]</p>
+      <p><b>Definition:</b> A Quality Management System is the <b>organisational structure, processes, procedures, resources and documentation</b> used to implement quality management. It turns quality policy into daily practice and provides evidence that requirements are met.</p>
+      <h4>1. Structure of a QMS</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Layer</th><th>Contents</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Quality policy</td><td>Top-management commitment and objectives</td><td>“Zero critical defects at release.”</td></tr>
+          <tr><td>Quality manual</td><td>Scope, processes, interaction of processes</td><td>QMS manual mapped to ISO 9001 clauses.</td></tr>
+          <tr><td>Procedures</td><td>Who does what, when, with which records</td><td>Code review procedure, defect procedure.</td></tr>
+          <tr><td>Work instructions</td><td>Step-by-step guidance for a task</td><td>How to run the regression suite.</td></tr>
+          <tr><td>Records</td><td>Evidence that the process ran</td><td>Review minutes, test reports, audit logs.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Process model — PDCA</h4>
+      <p><b>Plan</b> objectives and process → <b>Do</b> implement → <b>Check</b> measure and audit → <b>Act</b> improve. ISO 9001 and most QMS models are built on this continual-improvement cycle.</p>
+      <h4>3. Benefits</h4>
+      <ul>
+        <li>Consistent work and fewer defects; clear responsibilities.</li>
+        <li>Evidence for audits and customer contracts.</li>
+        <li>Faster onboarding and easier root-cause analysis.</li>
+        <li>Continual improvement through measured objectives.</li>
+      </ul>
+      <p><b>Example:</b> a company documents its test process, keeps test reports as records, audits twice a year and updates the process when defect trends rise.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>With respect to quality management system explain important aspects of quality management.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q4(a) [6]</p>
+      <p>Quality management is not only testing. It covers <b>people, process, product and measurement</b>. The important aspects are:</p>
+      <ol>
+        <li><b>Customer focus:</b> understand stated and implied needs; measure satisfaction. Example: a bank app must be fast and also accessible to elderly users.</li>
+        <li><b>Leadership:</b> top management sets a quality policy, provides resources and does not reward “ship at any cost”.</li>
+        <li><b>Engagement of people:</b> trained, motivated developers and testers; quality is everyone's job, not only the QA team's.</li>
+        <li><b>Process approach:</b> define inputs, activities, outputs and owners for each process; measure process performance.</li>
+        <li><b>Continual improvement:</b> use defect data, audits and customer feedback to change the process (PDCA).</li>
+        <li><b>Evidence-based decisions:</b> decide from metrics — defect density, test coverage, MTBF — not opinions.</li>
+        <li><b>Relationship management:</b> manage suppliers, third-party APIs and contractors; their quality becomes your quality.</li>
+      </ol>
+      <p>Supporting aspects: <b>cost of quality</b> (prevention, appraisal, internal failure, external failure), <b>documentation</b>, <b>configuration management</b> and <b>risk management</b>.</p>
+      <div class="note"><b>Exam tip:</b> write the 7 ISO quality principles with one software example each. That is enough for 6 marks.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Explain in detail the Pillars of Quality Management System.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(c) [5]</p>
+      <p>A QMS stands on four <b>quality-management pillars</b>, supported by people, process, technology and documentation.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Pillar</th><th>Meaning</th><th>Software example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Quality planning</b></td><td>Decide which quality attributes, standards, metrics and reviews are needed before work starts.</td><td>Write the test strategy and quality plan; set “p95 response &lt; 2 s, zero critical defects”.</td></tr>
+          <tr><td><b>Quality control</b></td><td>Inspect and test the product; compare with requirements; remove defects.</td><td>Code review, unit test, system test, defect log.</td></tr>
+          <tr><td><b>Quality assurance</b></td><td>Build and audit the process so defects are prevented.</td><td>Define the SDLC, coding standards, audits and training.</td></tr>
+          <tr><td><b>Quality improvement</b></td><td>Use data to change the process permanently.</td><td>Root-cause analysis of repeated defects; update the checklist.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Supporting pillars:</b> <b>people</b> (skills and culture), <b>process</b> (defined and measured), <b>technology</b> (tools, automation, CI) and <b>documentation</b> (policy, procedures, records).</p>
+      <p><b>One-line answer:</b> plan quality, control the product, assure the process, and improve continuously — with people, process, technology and records as the base.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.2 ================= -->
+<section class="card" id="s42">
+  <h2>4.2 Defects and product characteristics</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>Why software has defects? Explain in detail.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [5] · 2023 Nov Q4(a) [6] · 2025 May Q4(c) [5]</p>
+      <p><b>Definitions:</b> an <b>error</b> is a human mistake; a <b>defect (bug)</b> is a flaw in a work product caused by the error; a <b>failure</b> is the visible incorrect behaviour when the defect executes.</p>
+      <div class="math">Error (person) → Defect (code/document) → Failure (run-time behaviour)</div>
+      <h4>1. Main causes</h4>
+      <ol>
+        <li><b>Requirements problems:</b> incomplete, ambiguous, contradictory or constantly changing requirements. Example: “fast response” with no number.</li>
+        <li><b>Design problems:</b> wrong architecture, missing edge cases, poor database design, ignored concurrency.</li>
+        <li><b>Coding problems:</b> logic errors, off-by-one, null handling, copy-paste, ignored exceptions, poor standards.</li>
+        <li><b>Testing problems:</b> insufficient coverage, late testing, wrong test data, no regression suite.</li>
+        <li><b>Communication gaps:</b> developer, tester and customer understand the same word differently.</li>
+        <li><b>Complexity:</b> many modules, states, integrations and configurations — humans cannot see every interaction.</li>
+        <li><b>Schedule and cost pressure:</b> shortcuts in review and testing to meet a date.</li>
+        <li><b>Environment and tools:</b> compiler bugs, library version mismatch, different OS/browser, bad configuration.</li>
+        <li><b>People factors:</b> fatigue, skill gap, high attrition, unclear ownership.</li>
+        <li><b>Data problems:</b> bad migration, duplicate records, invalid legacy data.</li>
+      </ol>
+      <h4>2. Example</h4>
+      <p>Requirement says “discount for orders above ₹1,000”. Developer writes <code>if (total &gt; 1000)</code>; tester assumes <code>&gt;= 1000</code>. An order of exactly ₹1,000 gets no discount — a <b>requirements ambiguity</b> that becomes a defect and then a customer complaint (failure).</p>
+      <p><b>Prevention:</b> clear requirements, design reviews, coding standards, static analysis, layered testing, root-cause analysis and a blame-free defect culture.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>What is impact of defect in different phases of software development?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q3(a) [6]</p>
+      <p>The <b>later</b> a defect is found, the <b>more expensive</b> it is to fix. The common industry rule is the <b>1 : 10 : 100</b> cost multiplier.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Phase found</th><th>Typical defect</th><th>Impact</th><th>Relative cost</th></tr></thead>
+        <tbody>
+          <tr><td>Requirements</td><td>Missing or ambiguous rule</td><td>Rework of design, code and tests; scope creep</td><td>1×</td></tr>
+          <tr><td>Design</td><td>Wrong architecture, missing interface</td><td>Redesign, rewritten modules, integration failures</td><td>5–10×</td></tr>
+          <tr><td>Coding</td><td>Logic or data error</td><td>Local fix plus unit/regression tests</td><td>10×</td></tr>
+          <tr><td>Testing</td><td>Defect found in system test</td><td>Build, retest, regression, schedule slip</td><td>20–50×</td></tr>
+          <tr><td>Maintenance / production</td><td>Defect seen by users</td><td>Hotfix, data repair, support cost, SLA penalty, reputation loss</td><td>100–200×</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>Impact beyond cost</h4>
+      <ul>
+        <li><b>Schedule:</b> late discovery blocks release and consumes test cycles.</li>
+        <li><b>Quality:</b> quick fixes introduce new defects (regression).</li>
+        <li><b>Business:</b> lost revenue, legal penalty, safety risk, damaged trust.</li>
+        <li><b>Team:</b> overtime, low morale, blame culture.</li>
+      </ul>
+      <p><b>Conclusion:</b> invest in reviews and early testing. A defect caught in a requirements review may cost minutes; the same defect in production may cost a full emergency release.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>Illustrate different characteristics of software in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q3(a) [6]</p>
+      <p>Software is <b>logical, not physical</b>. It does not wear out, but it is complex and easy to change — and every change can break something else.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Characteristic</th><th>Meaning</th><th>Testing implication</th></tr></thead>
+        <tbody>
+          <tr><td><b>Intangibility</b></td><td>Cannot be seen or touched; only behaviour is visible.</td><td>Need requirements, models and measurable acceptance criteria.</td></tr>
+          <tr><td><b>Complexity</b></td><td>Many states, paths and interactions.</td><td>Risk-based and structural coverage; automation.</td></tr>
+          <tr><td><b>Flexibility / changeability</b></td><td>Easy to modify, so change is constant.</td><td>Strong regression suite and configuration management.</td></tr>
+          <tr><td><b>No wear-out</b></td><td>Does not degrade with use; defects are designed in.</td><td>Reliability comes from process, not spare parts.</td></tr>
+          <tr><td><b>Functionality</b></td><td>Does it provide the required functions?</td><td>Functional testing against SRS.</td></tr>
+          <tr><td><b>Reliability</b></td><td>Probability of failure-free operation for a time period.</td><td>MTBF, defect density, soak testing.</td></tr>
+          <tr><td><b>Usability</b></td><td>Ease of learning and use.</td><td>Usability tests, accessibility checks.</td></tr>
+          <tr><td><b>Efficiency</b></td><td>Response time and resource use.</td><td>Performance and memory testing.</td></tr>
+          <tr><td><b>Maintainability</b></td><td>Ease of analysis, change and retest.</td><td>Code review, complexity metrics, documentation.</td></tr>
+          <tr><td><b>Portability</b></td><td>Ease of moving to another environment.</td><td>Compatibility and installation testing.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>ISO 9126 / ISO 25010</b> groups these into functionality, reliability, usability, efficiency, maintainability and portability (plus security and compatibility in ISO 25010).</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q9</span>Explain the following requirements of a product: (i) Stated / Implied requirements (ii) Present / Future requirements.</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q3(a) [4]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Pair</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Stated requirement</b></td><td>Written or explicitly told by the customer; appears in the SRS/contract.</td><td>“The app must support UPI payment.”</td></tr>
+          <tr><td><b>Implied requirement</b></td><td>Not written but expected by users or required by law/standards/common sense.</td><td>Passwords must be encrypted; the app must not crash on Back.</td></tr>
+          <tr><td><b>Present requirement</b></td><td>Needed in the current release.</td><td>Login, cart and checkout for launch.</td></tr>
+          <tr><td><b>Future requirement</b></td><td>Expected later; design should allow it without major rework.</td><td>Multi-currency support next year; keep currency as a field now.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Why it matters:</b> testing only stated/present requirements misses what users assume and what the product will need. Good SQA reviews both pairs and records assumptions.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q10</span>Give types of products based on the basis of criticality to the user. Explain each type with proper example.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q4(a) [8]</p>
+      <p><b>Criticality</b> is the degree of damage if the product fails. It decides the amount of review, testing, documentation and formal proof needed.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Definition</th><th>Failure effect</th><th>Examples</th><th>Testing level</th></tr></thead>
+        <tbody>
+          <tr><td><b>Safety-critical</b></td><td>Failure can injure or kill people or damage the environment.</td><td>Catastrophic</td><td>Flight control, pacemaker, nuclear plant, ABS brakes, medical infusion pump</td><td>Formal methods, MC/DC, independent V&amp;V, certification (DO-178C, IEC 62304)</td></tr>
+          <tr><td><b>Mission-critical</b></td><td>Failure stops the main mission or business operation.</td><td>Severe — mission fails</td><td>Banking settlement, defence system, airline booking, stock exchange</td><td>High coverage, redundancy, recovery and performance tests</td></tr>
+          <tr><td><b>Business-critical</b></td><td>Failure causes major financial or reputation loss but not mission failure.</td><td>High — revenue/reputation</td><td>E-commerce checkout, ERP, payroll, CRM</td><td>Risk-based functional + regression + security tests</td></tr>
+          <tr><td><b>Non-critical</b></td><td>Failure causes minor inconvenience; easy workaround.</td><td>Low</td><td>Game, wallpaper app, demo tool, internal utility</td><td>Basic functional and smoke tests</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Another scheme — defect severity classes:</b> Class A catastrophic, Class B critical, Class C marginal, Class D negligible. Use the four product types above for the 8-mark answer; add the severity classes as a closing note.</p>
+      <p><b>Why criticality matters:</b> you cannot test every product equally. Criticality sets the test depth, the review level, the documentation and the release gate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.3 ================= -->
+<section class="card" id="s43">
+  <h2>4.3 Quality planning, control and standards</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q11</span>Can you explain quality plan in details.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q3(b) [6] · 2025 Nov Q3(c) [6]</p>
+      <p><b>Definition:</b> A quality plan is a project-level document that defines <b>which quality activities, standards, resources and metrics</b> will be used, and <b>when</b>, to meet the quality objectives of that project. IEEE 730 is the standard for software quality assurance plans.</p>
+      <h4>Contents of a quality plan</h4>
+      <ol>
+        <li><b>Purpose and scope</b> — which product, which release, which quality goals.</li>
+        <li><b>References</b> — SRS, standards (ISO 9001, IEEE 730), contracts.</li>
+        <li><b>Organisation</b> — QA team, responsibilities, reporting line.</li>
+        <li><b>Standards and conventions</b> — coding, documentation, naming, tools.</li>
+        <li><b>Reviews and audits</b> — which artefacts, review type, schedule, entry/exit criteria.</li>
+        <li><b>Test plan</b> — levels, environments, test data, coverage targets, automation.</li>
+        <li><b>Metrics</b> — defect density, DRE, coverage, MTBF, schedule variance; how collected.</li>
+        <li><b>Problem reporting and corrective action</b> — defect workflow, severity, escalation.</li>
+        <li><b>Configuration and change control</b> — versioning, baselines, change approval.</li>
+        <li><b>Risks, records and training</b> — risk list, audit records, skill plan.</li>
+      </ol>
+      <h4>Example</h4>
+      <p>For a 3-month banking release: 100% review of requirements, 80% branch coverage, 2 security scans, performance target p95 &lt; 2 s, defect density &lt; 1 per KLOC, and a quality gate before UAT.</p>
+      <p><b>Who writes it:</b> QA manager with the project manager; approved by top management; reviewed at each milestone.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q12</span>What do you understand regarding quality control &amp; explain two methods of quality control.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q4(b) [6] · 2025 Nov Q4(b) [6]</p>
+      <p><b>Definition:</b> Quality control is the set of <b>operational techniques</b> used to check the product against requirements and remove defects. It is <b>detective and corrective</b>, and it produces measurable evidence (test reports, review logs).</p>
+      <h4>Method 1 — Review and inspection (static QC)</h4>
+      <ul>
+        <li>Examine requirements, design, code and test cases <b>without execution</b>.</li>
+        <li>Use checklists, peers and a moderator; log defects with severity.</li>
+        <li>Finds logic errors, standards violations and missing requirements early.</li>
+        <li><b>Example:</b> a 60-minute code inspection finds a null-pointer path before unit testing.</li>
+      </ul>
+      <h4>Method 2 — Software testing (dynamic QC)</h4>
+      <ul>
+        <li>Execute the product with controlled input and compare actual with expected output.</li>
+        <li>Levels: unit → integration → system → acceptance; plus regression.</li>
+        <li>Types: functional, performance, security, compatibility, recovery.</li>
+        <li><b>Example:</b> run 250 test cases; 12 fail; log and retest after fixes.</li>
+      </ul>
+      <h4>Supporting method — statistical process control (SPC)</h4>
+      <p>Plot defect density or test pass rate on a control chart. Points outside the control limits show an unstable process and trigger root-cause analysis.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Review / inspection</th><th>Testing</th></tr></thead>
+        <tbody>
+          <tr><td>Executes code?</td><td>No</td><td>Yes</td></tr>
+          <tr><td>Finds</td><td>Document/logic defects early</td><td>Behaviour and run-time defects</td></tr>
+          <tr><td>Cost</td><td>Low per defect</td><td>Higher; needs environment</td></tr>
+          <tr><td>When</td><td>From requirements onward</td><td>After a build exists</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q13</span>Explain why ISO 9001 standard and its importance in software testing.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [6] · 2023 May Q3(c) [5] · 2025 May Q4(a) [6] · 2025 Nov Q4(a) [5]</p>
+      <p><b>What it is:</b> <b>ISO 9001</b> is the international standard for a <b>quality management system (QMS)</b>. It specifies what an organisation must do to consistently meet customer and regulatory requirements and improve continually. It is the <b>only certifiable</b> standard in the ISO 9000 family.</p>
+      <h4>1. Main clauses (ISO 9001:2015)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Clause</th><th>Requirement</th><th>Software testing link</th></tr></thead>
+        <tbody>
+          <tr><td>4. Context</td><td>Understand the organisation, interested parties and QMS scope.</td><td>Identify customers, regulators and critical systems.</td></tr>
+          <tr><td>5. Leadership</td><td>Top management sets policy, roles and responsibility.</td><td>Quality policy includes release criteria.</td></tr>
+          <tr><td>6. Planning</td><td>Risks, opportunities, quality objectives.</td><td>Risk-based test plan and measurable targets.</td></tr>
+          <tr><td>7. Support</td><td>Resources, competence, awareness, communication, documented information.</td><td>Skilled testers, tools, test records.</td></tr>
+          <tr><td>8. Operation</td><td>Plan and control delivery, requirements, design, external providers.</td><td>Test process, entry/exit criteria, supplier testing.</td></tr>
+          <tr><td>9. Performance evaluation</td><td>Monitor, measure, audit, management review.</td><td>Test metrics, audits, defect trends.</td></tr>
+          <tr><td>10. Improvement</td><td>Nonconformity, corrective action, continual improvement.</td><td>Root-cause analysis and process fixes.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Importance in software testing</h4>
+      <ul>
+        <li>Makes testing a <b>documented, repeatable process</b>, not ad hoc work.</li>
+        <li>Requires <b>records</b> — test plans, results, defect logs — which prove due diligence.</li>
+        <li>Forces <b>risk-based planning</b> and measurable quality objectives.</li>
+        <li>Requires <b>competence and training</b> for testers.</li>
+        <li>Mandates <b>corrective action</b>, so repeated defects lead to process change.</li>
+        <li>Gives customers and auditors <b>confidence</b>; often a contract/tender requirement.</li>
+      </ul>
+      <p><b>Limitation:</b> ISO 9001 certifies the <b>process</b>, not the product. A certified company can still ship a buggy release. It must be combined with product-level testing and metrics.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q14</span>Can you clarify different levels of CMM. / List and explain limitations of CMM.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★ 3× + CMM limits 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [5] · 2023 Nov Q3(c) [5] · 2025 May Q3(c) [5] · limitations: 2024 May Q4(c) [3] · 2025 Nov Q4(c) [6]</p>
+      <p><b>CMM (Capability Maturity Model)</b> is a process-improvement framework that rates an organisation's software process maturity on five levels. Higher levels mean more predictable quality and schedule.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Level</th><th>Name</th><th>Character</th><th>Key practices</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>Initial</b></td><td>Ad hoc, chaotic; success depends on heroes.</td><td>No defined process; firefighting.</td></tr>
+          <tr><td>2</td><td><b>Repeatable / Managed</b></td><td>Basic project management; earlier success can be repeated.</td><td>Requirements management, project planning, tracking, subcontract management, QA, configuration management.</td></tr>
+          <tr><td>3</td><td><b>Defined</b></td><td>Organisation-wide standard process; projects tailor it.</td><td>Process definition and focus, training, integrated software management, product engineering, peer reviews.</td></tr>
+          <tr><td>4</td><td><b>Managed / Quantitatively Managed</b></td><td>Process measured with numbers and controlled.</td><td>Quantitative process management, software quality management.</td></tr>
+          <tr><td>5</td><td><b>Optimizing</b></td><td>Continuous process improvement from data.</td><td>Defect prevention, technology change management, process change management.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>Limitations of CMM</h4>
+      <ol>
+        <li><b>Expensive and slow:</b> training, consultants, audits and documentation take years.</li>
+        <li><b>Heavy documentation</b> can become bureaucracy and reduce agility.</li>
+        <li><b>Designed for large organisations/projects;</b> difficult for small teams and start-ups.</li>
+        <li><b>Process, not product:</b> a level rating does not guarantee a quality product.</li>
+        <li><b>Appraisal is a snapshot</b> and can be gamed; assessor judgement varies.</li>
+        <li><b>Does not prescribe “how”</b> — it says what to do, not which technique to use.</li>
+        <li><b>Poor fit with Agile/DevOps</b> unless tailored; can slow feedback loops.</li>
+        <li><b>Costly to maintain</b> the evidence needed for a formal appraisal.</li>
+      </ol>
+      <p><b>Note:</b> CMMI is the later integrated model (for software, systems and services). For SPPU, write “CMM/CMMI” and the five levels.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.4 ================= -->
+<section class="card" id="s44">
+  <h2>4.4 Process, customer and quality context</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q15</span>Write a note on Customer Satisfaction.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q4(c) [5, why measure] · 2024 May Q3(c) [5] · 2025 Nov Q3(a) [5]</p>
+      <p><b>Definition:</b> Customer satisfaction is the gap between what the customer <b>expected</b> and what the product <b>delivered</b>. If perceived performance meets or exceeds expectation, the customer is satisfied.</p>
+      <h4>1. Why measure it</h4>
+      <ul>
+        <li>It is the final test of quality — the product may pass all tests and still fail users.</li>
+        <li>Predicts retention, repeat business and referrals.</li>
+        <li>Finds requirements that the SRS missed (implied needs).</li>
+        <li>Gives a benchmark against competitors and across releases.</li>
+        <li>Provides evidence for ISO 9001 clause 9 (performance evaluation).</li>
+      </ul>
+      <h4>2. Metrics</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Metric</th><th>What it measures</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>CSAT</b></td><td>Satisfaction with a specific interaction/product (1–5 survey).</td><td>4.2 / 5 after a support call.</td></tr>
+          <tr><td><b>NPS</b></td><td>Willingness to recommend (0–10); promoters minus detractors.</td><td>+35 NPS.</td></tr>
+          <tr><td><b>CES</b></td><td>Effort needed to complete a task.</td><td>“Very easy” on checkout.</td></tr>
+          <tr><td><b>Churn / retention</b></td><td>Customers who stay or leave.</td><td>2% monthly churn.</td></tr>
+          <tr><td><b>Complaint rate</b></td><td>Defects experienced by users.</td><td>12 tickets per 1,000 orders.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>3. How to measure</h4>
+      <p>Post-release surveys, in-app feedback, interviews, support-ticket analysis, app-store reviews, beta programs and user-group meetings.</p>
+      <p><b>Kano model:</b> <b>must-be</b> features (absence causes dissatisfaction), <b>performance</b> features (more is better) and <b>delighters</b> (unexpected features create satisfaction). Test must-be features first; delighters differentiate the product.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q16</span>Identify different steps involved in Software Development Process.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q3(b) [6]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Step</th><th>Main activity</th><th>Deliverable</th><th>Quality check</th></tr></thead>
+        <tbody>
+          <tr><td>1. Communication</td><td>Talk to the customer; understand the problem and constraints.</td><td>Project vision, stakeholder list</td><td>Review of scope</td></tr>
+          <tr><td>2. Requirements analysis</td><td>Elicit, analyse, prioritise and document requirements.</td><td>SRS, use cases</td><td>Requirements review, traceability</td></tr>
+          <tr><td>3. Planning</td><td>Estimate effort, cost, schedule and risks; plan quality.</td><td>Project plan, quality plan</td><td>Plan review, risk workshop</td></tr>
+          <tr><td>4. Design</td><td>Architecture, database, interfaces, detailed design.</td><td>Design document, models</td><td>Design review, prototyping</td></tr>
+          <tr><td>5. Construction</td><td>Code, unit test, integrate.</td><td>Source code, build</td><td>Code review, static analysis, unit tests</td></tr>
+          <tr><td>6. Testing</td><td>Integration, system, acceptance and regression testing.</td><td>Test reports, defect log</td><td>Coverage, defect closure, exit criteria</td></tr>
+          <tr><td>7. Deployment</td><td>Install, migrate data, train users, go live.</td><td>Release, user manual</td><td>Installation and smoke tests</td></tr>
+          <tr><td>8. Maintenance</td><td>Fix, adapt, improve and retire.</td><td>Patches, new versions</td><td>Regression, impact analysis</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>These steps may be sequential (waterfall) or repeated in iterations (Agile/Spiral). In every model, <b>quality activities must start at step 1</b>, not at step 6.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q17</span>With neat diagram discuss waterfall model of software development. Also explain its limitations.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q3(b) [8]</p>
+      <p><b>Waterfall model</b> is a <b>sequential, plan-driven</b> SDLC. Each phase finishes before the next begins, and each phase produces a document that becomes the input to the next.</p>
+      <h4>1. Diagram (draw this)</h4>
+<pre class="tree">Requirements
+    │
+    ▼
+Analysis  ──────► SRS
+    │
+    ▼
+Design   ──────► Design document
+    │
+    ▼
+Coding   ──────► Source code
+    │
+    ▼
+Testing  ──────► Test report
+    │
+    ▼
+Deployment
+    │
+    ▼
+Maintenance  ◄── feedback / change requests</pre>
+      <p>Draw it as a staircase descending to the right, with a feedback arrow from Maintenance back to Requirements.</p>
+      <h4>2. Phases and outputs</h4>
+      <ol>
+        <li><b>Requirements</b> — collect and freeze what the customer needs → SRS.</li>
+        <li><b>Analysis</b> — check feasibility, model the system → analysis models.</li>
+        <li><b>Design</b> — architecture, database and detailed design → design document.</li>
+        <li><b>Coding</b> — implement and unit test → code/build.</li>
+        <li><b>Testing</b> — integration, system and acceptance → test report.</li>
+        <li><b>Deployment and maintenance</b> — release, fix and enhance.</li>
+      </ol>
+      <h4>3. Advantages</h4>
+      <ul>
+        <li>Simple to understand and manage; clear milestones and deliverables.</li>
+        <li>Heavy documentation makes audits and handovers easy.</li>
+        <li>Works when requirements are stable and well understood.</li>
+      </ul>
+      <h4>4. Limitations</h4>
+      <ul>
+        <li><b>No going back:</b> a late requirement change is expensive; rework cascades through all phases.</li>
+        <li><b>Customer sees the product only at the end</b> — risk of building the wrong thing.</li>
+        <li><b>Testing is late</b>, so defects are found when they are costly.</li>
+        <li><b>Assumes requirements are frozen</b>, which is rare in real projects.</li>
+        <li><b>Poor fit for long, complex or innovative projects</b>; no early risk reduction.</li>
+        <li><b>Documentation-heavy</b> and slow for small teams.</li>
+      </ul>
+      <p><b>When to use:</b> small, well-defined projects with stable requirements and fixed contracts (e.g. a payroll rule change or a compliance report).</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q18</span>Discuss problematic areas in software development life cycle.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q4(b) [6] · 2025 Nov Q3(b) [6]</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Area</th><th>Typical problem</th><th>SQA response</th></tr></thead>
+        <tbody>
+          <tr><td><b>Requirements</b></td><td>Vague, missing, changing; no user involvement.</td><td>Reviews, prototypes, traceability, change control.</td></tr>
+          <tr><td><b>Planning and estimation</b></td><td>Unrealistic schedule, no buffer, ignored risks.</td><td>Historical data, risk plan, milestone reviews.</td></tr>
+          <tr><td><b>Design</b></td><td>No architecture review; missing interfaces; over-complex design.</td><td>Design reviews, checklists, complexity metrics.</td></tr>
+          <tr><td><b>Coding</b></td><td>No standards, copy-paste, hidden assumptions, poor exception handling.</td><td>Coding standards, static analysis, peer review, unit tests.</td></tr>
+          <tr><td><b>Testing</b></td><td>Late start, insufficient coverage, no regression, test data missing.</td><td>Test plan early, coverage targets, automation, entry/exit criteria.</td></tr>
+          <tr><td><b>Communication</b></td><td>Developer, tester and customer use different assumptions.</td><td>Single glossary, daily stand-up, review records.</td></tr>
+          <tr><td><b>Configuration management</b></td><td>Wrong version tested; lost changes; no baseline.</td><td>Version control, baselines, build automation.</td></tr>
+          <tr><td><b>Maintenance</b></td><td>Undocumented fixes, regression failures, key-person dependency.</td><td>Impact analysis, regression suite, documentation.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Root cause:</b> most problematic areas are <b>process and communication</b> problems, not only technical ones. SQA must fix the process, not just the last bug.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4.5 ================= -->
+<section class="card" id="s45">
+  <h2>4.5 Syllabus-only SQA/QC topics</h2>
+  <div class="note"><b>Not directly asked in the six papers:</b> constraints of product quality assessment, quality–productivity relationship, software quality management (SQM), processes related to quality, quality models, quality measurement and metrics, CASE tools, reliability, QMS models and complexity metrics. Learn one paragraph each for a possible part question.</div>
+  <div class="tbl-wrap">
+  <table class="left">
+    <thead><tr><th>Topic</th><th>Exam-ready one-liner</th></tr></thead>
+    <tbody>
+      <tr><td>Constraints of quality assessment</td><td>Cannot measure quality directly; depends on requirements, budget, schedule, technology and user perception.</td></tr>
+      <tr><td>Quality–productivity</td><td>Short term, quality work costs time; long term, it raises productivity by reducing rework. Rework can be 40–50% of effort in low-maturity teams.</td></tr>
+      <tr><td>Software Quality Management</td><td>Planning, assurance, control and improvement of quality across the product lifecycle.</td></tr>
+      <tr><td>Processes related to quality</td><td>Requirements management, review, testing, defect management, configuration management, change control and measurement.</td></tr>
+      <tr><td>Quality implementation and documentation</td><td>Put the quality plan into practice; keep the quality manual, procedures, standards and records available and current.</td></tr>
+      <tr><td>Quality models</td><td>McCall, Boehm, ISO 9126 / ISO 25010, CMM/CMMI, Six Sigma — each defines quality attributes or process maturity.</td></tr>
+      <tr><td>QMS models</td><td>ISO 9001, CMM/CMMI, Six Sigma, Deming PDCA and TQM — frameworks for organising quality management.</td></tr>
+      <tr><td>Quality metrics</td><td>Defect density, DRE, MTBF, test coverage, cyclomatic complexity, customer satisfaction, schedule variance.</td></tr>
+      <tr><td>CASE tools</td><td>Computer-aided software engineering tools for modelling, coding, testing, configuration and metrics.</td></tr>
+      <tr><td>Reliability</td><td>Probability of failure-free operation for a stated time and environment; measured by MTBF and failure rate.</td></tr>
+      <tr><td>Complexity metrics</td><td>Cyclomatic complexity V(G), Halstead volume, LOC, fan-in/fan-out; high values predict testing and maintenance risk.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="card" id="cheat">
+  <h2>⚡ Last-minute revision sheet — Unit 4</h2>
+  <div class="grid2">
+    <div>
+      <h4>Must-write tables</h4>
+      <ul>
+        <li><b>QA vs QC:</b> process vs product; prevent vs detect; proactive vs reactive.</li>
+        <li><b>QA vs testing:</b> QA builds confidence in the process; testing checks the build.</li>
+        <li><b>Validation vs verification:</b> right product vs product built right.</li>
+        <li><b>Error → defect → failure:</b> human mistake → code flaw → wrong behaviour.</li>
+      </ul>
+      <h4>CMM ladder</h4>
+      <div class="math">1 Initial → 2 Repeatable → 3 Defined → 4 Managed → 5 Optimizing</div>
+      <h4>ISO 9001 clauses</h4>
+      <div class="math">4 Context · 5 Leadership · 6 Planning · 7 Support · 8 Operation · 9 Performance · 10 Improvement</div>
+    </div>
+    <div>
+      <h4>Numbers to quote</h4>
+      <ul>
+        <li><b>1 : 10 : 100</b> — cost multiplier for defects found in requirements : design : production.</li>
+        <li><b>3.4 DPMO</b> — Six Sigma defect rate (Unit 6 link).</li>
+        <li><b>5 levels</b> — CMM/CMMI.</li>
+        <li><b>7 principles</b> — ISO 9001 quality management.</li>
+        <li><b>4 pillars</b> — plan, control, assure, improve.</li>
+      </ul>
+      <h4>One-line answers</h4>
+      <ul>
+        <li><b>QMS</b> = policy + manual + procedures + records, run by PDCA.</li>
+        <li><b>Quality plan</b> = project-specific standards, reviews, tests, metrics and responsibilities.</li>
+        <li><b>Customer satisfaction</b> = perceived performance minus expectation; measure CSAT/NPS/CES.</li>
+        <li><b>Criticality</b> = safety → mission → business → non-critical.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="book"><b>Source note:</b> the supplied STQA “TechKnowledge” book covers <b>Units 1–2 only</b>. Unit 4 is built from the syllabus-listed reference texts — M. G. Limaye, <em>Software Testing: Principles, Techniques and Tools</em>; Srinivasan Desikan &amp; Gopal Swamy Ramesh, <em>Software Testing: Principles and Practices</em>; Naresh Chauhan, <em>Software Testing: Principles and Practices</em> — and matched to the exact PYQ wording and mark weights.</div>
+
+  <div class="tip"><b>Exam-day order:</b> ISO 9001 first (4×), then why defects, CMM levels, customer satisfaction, QA vs QC. For 4–5 marks give definition + 5 bullets + one example; do not exceed one page.</div>
+</section>
+
+
+<footer>
+  STQA · Unit 4 · built from 6 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410245D · 2019 Pattern<br><span class="small">Source: syllabus-listed texts — Limaye; Desikan &amp; Ramesh; Chauhan. The supplied TechKnowledge book covers Units 1–2 only.</span><br>
+  <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
+</footer>
+
+</main>
+</div>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+// highlight active sidebar link
+const links=[...document.querySelectorAll('#toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id));
+  }});
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script>
+<button class="printbtn" onclick="window.print()" title="Print or save as PDF">🖨️ Print / Save PDF</button>
+<style>
+.printbtn{position:fixed;left:22px;bottom:22px;z-index:9999;background:#ffc46b;color:#221703;border:0;
+border-radius:999px;padding:11px 18px;font:600 13.5px/1 "Segoe UI",system-ui,sans-serif;cursor:pointer;
+box-shadow:0 8px 24px #00000066}
+.printbtn:hover{background:#ffd79a}
+@media print{.printbtn{display:none!important}}
+</style>
+</body>
+</html>
