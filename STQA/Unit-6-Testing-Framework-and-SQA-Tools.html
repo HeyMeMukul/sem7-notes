@@ -129,6 +129,17 @@ main{min-width:0}
 .tbl-wrap{max-width:100%}
 .card,.qa{min-width:0}
 </style>
+<style id="print-fixes">
+@media print{
+  .chip,.b,.tag,.u,.date,.badge,.stars{color:#111!important;background:#f2f2f2!important;border-color:#aaa!important;text-shadow:none!important}
+  .chip b,.b b{color:#000!important}
+  .hero::after,.side,.top,.printbtn{display:none!important}
+  .hero{box-shadow:none!important}
+  .qa-head{background:#f2f2f2!important}
+  a{color:#0b57d0!important}
+  .card,.qa,.hero{box-shadow:none!important}
+}
+</style>
 </head>
 <body>
 <div class="wrap">

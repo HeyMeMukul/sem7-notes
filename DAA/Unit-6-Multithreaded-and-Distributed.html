@@ -68,6 +68,17 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 @media(max-width:1050px){.wrap{grid-template-columns:1fr;padding:14px}.side{position:static;max-height:none;order:-1}.side nav{display:flex;flex-wrap:wrap;gap:4px}.side a{font-size:12.5px}.top{display:block}}
 @media print{body{background:#fff;color:#111}.side,.top{display:none}.wrap{display:block;max-width:none;padding:0}.card,.hero,.qa{background:#fff;border-color:#bbb;break-inside:avoid}.hero p,.lead,.small,.asked{color:#333}th{background:#eee;color:#111}td{color:#111}pre,.math,.tree{background:#f6f6f6;color:#111;border-color:#ccc}.qa-head{background:#f2f2f2}}
 </style>
+<style id="print-fixes">
+@media print{
+  .chip,.b,.tag,.u,.date,.badge,.stars{color:#111!important;background:#f2f2f2!important;border-color:#aaa!important;text-shadow:none!important}
+  .chip b,.b b{color:#000!important}
+  .hero::after,.side,.top,.printbtn{display:none!important}
+  .hero{box-shadow:none!important}
+  .qa-head{background:#f2f2f2!important}
+  a{color:#0b57d0!important}
+  .card,.qa,.hero{box-shadow:none!important}
+}
+</style>
 </head>
 <body>
 <div class="wrap">
