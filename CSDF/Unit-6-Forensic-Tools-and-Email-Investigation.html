@@ -139,7 +139,24 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 .prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
 .side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
-</style></head>
+</style>
+<style id="explain-css">
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
+@media print{
+  .simple,.analogy,.confuse{background:#f7f7f7!important;border-color:#aaa!important;color:#222!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+  h3,h4{color:#111!important}
+}
+</style><style id="print-simple">
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 
@@ -181,6 +198,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   </div>
 </header>
 
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every procedure is broken into numbered steps. No prior forensics background needed.</div>
+
 <section class="card" id="map">
   <h2>📊 PYQ frequency map — what actually gets asked</h2>
   <p class="lead">Counted from all seven end-sem papers. Short-note questions list their individual items so you can prepare exactly what is asked.</p>
@@ -219,7 +238,50 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2022 May Q7(b) [9] · 2022 Nov Q7(b) [9] · 2023 May Q7(a) [9] · 2024 May Q7(b) [9] · 2025 May Q8(c) [9, short note]</p>
+
+      <div class="simple"><b>In simple words:</b> Forensic software tools do different jobs. Some boot a ready-made forensic system, some analyse a disk image, some capture memory and some rebuild network traffic. In the exam, name five tools from five different categories, not five versions of the same tool.</div>
+
+      <h4>Why we do this</h4>
+      <p>No single program can acquire, repair, search, reconstruct and report everything. Knowing which tool does which job shows that you understand the forensic workflow, and it stops you using an imaging tool where an analysis tool is needed.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Live CD</b> — a bootable disc or USB stick with forensic tools, used so the suspect operating system never starts.</li>
+        <li><b>Forensic suite</b> — a package that combines imaging, searching, analysis and reporting.</li>
+        <li><b>GUI</b> — a graphical user interface: menus and windows instead of typed commands.</li>
+        <li><b>E01</b> — the Expert Witness Format, a common forensic image file that stores metadata and checksums.</li>
+        <li><b>AFF</b> — the Advanced Forensic Format, an open image format.</li>
+        <li><b>RAW</b> — a plain byte-for-byte image with no extra container structure.</li>
+        <li><b>Memory dump</b> — a copy of the contents of RAM.</li>
+        <li><b>Carving</b> — rebuilding files from raw disk space by recognising file signatures.</li>
+        <li><b>Hash filtering</b> — removing known safe files or flagging known bad files by their hash.</li>
+        <li><b>Timeline</b> — a time-ordered view of file and system events.</li>
+        <li><b>Open-source</b> — software whose source code is available, usually free to use and modify.</li>
+        <li><b>Commercial</b> — paid software supplied and supported by a company.</li>
+        <li><b>Network forensic tool</b> — software that rebuilds application data from captured network traffic.</li>
+        <li><b>SMTP / POP3 / IMAP</b> — the protocols used to send mail and to collect it from a mailbox.</li>
+        <li><b>Registry hive</b> — a file that stores part of the Windows registry.</li>
+        <li><b>Process ID</b> — the unique number the operating system gives to a running process.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">The steps below show where each tool sits in a real case.</p>
+      <ol>
+        <li><b>Boot a live CD such as SANS SIFT.</b> It gives you a trusted forensic environment without starting the suspect's operating system.</li>
+        <li><b>Image the drive with FTK Imager.</b> It creates a verified copy in E01 or RAW format and records MD5 or SHA-1 hashes.</li>
+        <li><b>Analyse the image with The Sleuth Kit and Autopsy.</b> They read the file system, recover deleted files, build timelines and run keyword searches.</li>
+        <li><b>Capture and examine RAM with Volatility.</b> Memory holds running processes, network sockets and keys that are missing from the disk.</li>
+        <li><b>Rebuild network traffic with Xplico.</b> It extracts e-mail and web content from a packet capture when the case involves network communication.</li>
+        <li><b>Verify every hash and write the report.</b> A tool result is only useful if another examiner can reproduce it and see that the evidence stayed unchanged.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A forensic toolkit is like a carpenter's toolbox: a saw, a drill and a screwdriver each do one job well. You would not try to build a cupboard with five screwdrivers.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “Five software tools” does not mean five disk suites. Choose five different categories — a live CD, a suite, an imager, a memory tool and a network tool. Also, do not claim a preview tool performs full analysis; FTK Imager acquires and previews, while Autopsy analyses.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Five tools with features (write exactly five)</h4>
       <div class="tbl-wrap">
@@ -234,6 +296,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> each tool answers a different question. SIFT gives you the environment, FTK Imager makes the copy, Sleuth Kit/Autopsy reads the disk, Volatility reads memory and Xplico reads the network. Together they cover the whole case.</p>
 
       <h4>2. Alternative five (if you prefer)</h4>
       <ul>
@@ -241,8 +304,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>HxD</b> — user-friendly hex editor; low-level editing of raw disk or RAM; search and replace, checksums, file shredder, concatenation and splitting.</li>
         <li><b>Bulk Extractor</b> — scans a disk image for credit-card numbers, domains, e-mail addresses, URLs and ZIP files; writes results to text files.</li>
         <li><b>DEFT</b> — Linux Live CD with mobile, network, data-recovery and hashing tools.</li>
-        <li><b>HELIX3</b> — Linux Live CD for incident response, forensics and e-discovery; hex editors, data carving, password cracking.</li>
-        <li><b>Paladin</b> — Ubuntu Live CD with 80+ tools in 25 categories (imaging, malware analysis, social media, hashing).</li>
+        <li><b>HELIX3</b> — Linux Live CD for incident response, forensics and e-discovery; hex editors, data carving and password cracking.</li>
+        <li><b>Paladin</b> — Ubuntu Live CD with 80+ tools in 25 categories (imaging, malware analysis, social media and hashing).</li>
         <li><b>USB Historian</b> — parses USB information from the Windows registry: drive name, serial number, mount time and user account.</li>
         <li><b>Last Activity View</b> — shows user actions and machine events; exports to CSV/XML/HTML.</li>
       </ul>
@@ -259,7 +322,49 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2022 May Q7(a) [8] · 2022 Nov Q7(a) [8] · 2023 May Q7(b)(i) [9, short note]</p>
+
+      <div class="simple"><b>In simple words:</b> Forensic tools can be grouped by physical form, interface, function, scope and licence. Whatever the label, they perform five tasks: acquire the data, validate it, extract useful content, reconstruct events and report the findings.</div>
+
+      <h4>Why we do this</h4>
+      <p>Grouping tools helps you choose the right one for each stage and explain the workflow in an exam. It also stops you expecting one program to do everything from copying a drive to writing a court report.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Acquisition</b> — making a copy of the original data without changing it.</li>
+        <li><b>Validation and discrimination</b> — checking that the copy is accurate and separating relevant data from noise.</li>
+        <li><b>Extraction</b> — pulling useful data out of the image, such as deleted files or keywords.</li>
+        <li><b>Reconstruction</b> — rebuilding the sequence of events or the file system.</li>
+        <li><b>Reporting</b> — presenting the findings in a form a court can follow.</li>
+        <li><b>Command-line interface (CLI)</b> — a tool controlled by typed commands rather than menus.</li>
+        <li><b>GUI</b> — a graphical user interface with windows and menus.</li>
+        <li><b>All-in-one suite</b> — one product that covers several forensic stages.</li>
+        <li><b>Open-source</b> — software whose code is available, usually free.</li>
+        <li><b>Commercial</b> — paid software with vendor support.</li>
+        <li><b>Bit-stream copy</b> — an exact copy of every byte on the drive.</li>
+        <li><b>Carving</b> — rebuilding a file from raw data by recognising its file signature.</li>
+        <li><b>Timeline</b> — a time-ordered list of events.</li>
+        <li><b>PST / MBOX</b> — mailbox files used by Outlook and by Unix mail tools.</li>
+        <li><b>Allocated space</b> — disk space currently assigned to files.</li>
+        <li><b>Slack space</b> — the unused tail of a file's last cluster.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">The five steps below are the book's five task categories.</p>
+      <ol>
+        <li><b>Acquire.</b> Make a physical or logical copy, verify it, and use command-line, GUI or remote acquisition as the situation requires. Without a clean copy, later analysis has no trustworthy source.</li>
+        <li><b>Validate and discriminate.</b> Check that the copy matches the original, then filter the data and hash known files. This stops the examiner wasting time on system files and proves the copy is sound.</li>
+        <li><b>Extract.</b> View, search, decompress, carve, decrypt and bookmark relevant items. This is where the useful evidence comes out of the image.</li>
+        <li><b>Reconstruct.</b> Rebuild deleted partitions, file-system structures and the order of events. A timeline turns isolated files into a story.</li>
+        <li><b>Report.</b> Present the findings with tools, versions, hashes and an audit trail. A result that cannot be explained to a court is not a finished result.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> It is like cooking a meal. You buy the ingredients (acquire), check they are fresh (validate), chop and prepare them (extract), cook them in the right order (reconstruct), and plate the dish (report).</div>
+
+      <div class="confuse"><b>Common confusion:</b> Acquisition and extraction are not the same. Acquisition copies the whole drive; extraction pulls specific useful data out of that copy. If you mix them up, your answer describes the wrong stage of the workflow.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Types of tools</h4>
       <div class="tbl-wrap">
@@ -274,14 +379,16 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the same tool can sit in more than one group. FTK is a commercial GUI suite; <code>dd</code> is a free command-line acquisition tool. The grouping depends on the question you are asking.</p>
 
       <h4>2. The five task categories (book §6, Fig.)</h4>
+      <p>The five categories are the five steps above. The book's sub-functions are:</p>
       <ol>
-        <li><b>Acquisition</b> — create a replica of the original drive. Sub-functions: physical and logical copies, format for acquiring data, verification, command-line acquisition, GUI acquisition, remote acquisition.</li>
-        <li><b>Validation and discrimination</b> — verify the accuracy of the duplicate and sort the data. Sub-functions: filtering, hashing, investigating file headers.</li>
-        <li><b>Extraction</b> — recover data from the image. Sub-functions: data viewing, keyword search, decompression, carving, decryption, bookmarking.</li>
-        <li><b>Reconstruction</b> — rebuild the sequence of events, file system and deleted partitions; timeline analysis.</li>
-        <li><b>Reporting</b> — present the findings in a court-ready form, with the tools, versions, hashes and audit trail.</li>
+        <li><b>Acquisition</b> — physical and logical copies, format for acquiring data, verification, command-line acquisition, GUI acquisition and remote acquisition.</li>
+        <li><b>Validation and discrimination</b> — filtering, hashing and investigating file headers.</li>
+        <li><b>Extraction</b> — data viewing, keyword search, decompression, carving, decryption and bookmarking.</li>
+        <li><b>Reconstruction</b> — rebuilding the sequence of events, the file system and deleted partitions; timeline analysis.</li>
+        <li><b>Reporting</b> — presenting the findings in court-ready form with the tools, versions, hashes and audit trail.</li>
       </ol>
 
       <h4>3. Task performed — one line each</h4>
@@ -311,21 +418,54 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2022 May Q8(b) [9] · 2022 Nov Q8(b) [9] · 2024 May Q8(b) [9, short note] · 2025 May Q8(a) [9, short note] · 2025 Nov Q7(a)(i) [9, short note]</p>
+
+      <div class="simple"><b>In simple words:</b> Before trusting a forensic tool, test it on data whose answer you already know. Run it on a known file, a known drive and a deleted file, then compare the result with what should happen. NIST CFTT gives a six-step method; ISO 17025 checks that the lab can produce reliable, repeatable results.</div>
+
+      <h4>Why we do this</h4>
+      <p>A tool that misses deleted files, changes timestamps or produces a wrong hash can destroy a case. Validation proves, with records, that the tool does what it claims and that your lab can repeat the result under cross-examination.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Validation</b> — proving that a tool or procedure produces correct, reliable results for its intended use.</li>
+        <li><b>Testing</b> — running the tool against known data and comparing the output with the expected answer.</li>
+        <li><b>NIST</b> — the US National Institute of Standards and Technology, which publishes forensic test methods and reports.</li>
+        <li><b>CFTT</b> — the Computer Forensics Tool Testing programme run by NIST.</li>
+        <li><b>ISO 17025</b> — the international standard for the competence of testing and calibration laboratories.</li>
+        <li><b>Repeatability</b> — the same lab, equipment and operator produce the same result.</li>
+        <li><b>Reproducibility</b> — a different lab or operator produces the same result.</li>
+        <li><b>Test claim</b> — a statement that a test will prove or disprove a tool's ability to meet a requirement.</li>
+        <li><b>Test case</b> — a specific sample and procedure used to check one requirement.</li>
+        <li><b>Known-file test</b> — hashing a file with a published value and checking that the tool gives the same value.</li>
+        <li><b>False positive</b> — a tool reporting evidence that is not actually there.</li>
+        <li><b>Audit log</b> — a record of every action the tool performed.</li>
+        <li><b>ISO 5725</b> — a standard that defines accuracy and precision for measurement methods.</li>
+        <li><b>Known-drive test</b> — imaging a drive with known contents and checking that every file and hash matches.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">The six steps below are the NIST CFTT method.</p>
+      <ol>
+        <li><b>Create classifications for computer forensic tools.</b> Put tools into categories such as e-mail retrieval or disk imaging, so each tool is tested against the right requirements.</li>
+        <li><b>Identify the requirements for the category.</b> State what a tool in that category must be able to do, in plain technical terms.</li>
+        <li><b>Create test claims.</b> Write tests that show whether the tool meets each requirement. A claim must be something the test can actually prove or disprove.</li>
+        <li><b>Determine test cases.</b> Choose sample data and a procedure; test a new tool against a closed case made with a reliable tool.</li>
+        <li><b>Develop a test strategy.</b> Decide how to run the test, taking the tool's function and design into account.</li>
+        <li><b>Report the findings.</b> Write the result to the ISO 17025 standard: accurate, transparent, unambiguous and impartial.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> It is like testing a new thermometer in ice water and boiling water before using it on patients. You already know the correct temperatures, so a wrong reading proves the thermometer is faulty.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Testing a tool once does not validate it forever. A new version, a new operating system or a new file system can change the result, so the tool must be re-tested after a significant change.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Why validate a tool?</h4>
       <p>Once you have decided which tools to use, you must confirm that the material you gather and examine <b>may be used as evidence in court</b>. A tool that produces a wrong hash, misses deleted files or changes timestamps will destroy the case. Validation proves that the tool does what it claims, reliably and repeatably.</p>
 
       <h4>2. NIST CFTT — the standard route</h4>
-      <p>The <b>National Institute of Standards and Technology (NIST)</b> publishes papers, offers tools and develops methods for evaluating and verifying computer forensics software. To oversee research, NIST sponsored the <b>Computer Forensics Tool Testing (CFTT)</b> initiative.</p>
-      <ol>
-        <li><b>Create classifications for computer forensic tools</b> — software for forensics should be categorised, such as forensic tools for e-mail retrieval and tracking.</li>
-        <li><b>Identify the requirements for the category</b> — describe the technological requirements that a tool must meet.</li>
-        <li><b>Create test claims</b> — tests that demonstrate or refute the tool's capacity to satisfy the requirements.</li>
-        <li><b>Determine test cases</b> — find or design categories to look into using the tool, and decide what data should be extracted from a sample drive. Test a new tool in the same category against a closed case file made with a reliable tool.</li>
-        <li><b>Develop a test strategy</b> — decide how to test the tool, taking into account its function and design.</li>
-        <li><b>Report test findings</b> — state the results in a report in accordance with <b>ISO 17025</b>, which calls for accurate, transparent, unambiguous and impartial test reports.</li>
-      </ol>
+      <p>The <b>National Institute of Standards and Technology (NIST)</b> publishes papers, offers tools and develops methods for evaluating and verifying computer forensics software. To oversee research, NIST sponsored the <b>Computer Forensics Tool Testing (CFTT)</b> initiative. The six steps are listed above; together they turn “the tool seems fine” into a documented, repeatable test.</p>
 
       <h4>3. ISO 17025 — repeatability and reproducibility</h4>
       <ul>
@@ -334,12 +474,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>ISO 5725 requires precision for all parts of the testing procedure.</li>
         <li>The report must state the tool, version, settings, sample, expected result and actual result.</li>
       </ul>
+      <p class="small"><b>What this means:</b> repeatability is “I can do it again”; reproducibility is “someone else can do it again.” A court is much more comfortable when both are true.</p>
 
       <h4>4. Practical validation tests you can run</h4>
       <ol>
         <li><b>Known-file test</b> — hash a known file and compare with the published MD5/SHA-1.</li>
         <li><b>Known-drive test</b> — image a test drive with known contents; confirm every file is recovered and the hash matches.</li>
-        <li><b>Deleted-file test</b> — delete known files, image the drive, and check that the tool recovers them.</li>
+        <li><b>Deleted-file test</b> — delete known files, image the drive and check that the tool recovers them.</li>
         <li><b>Slack/unallocated test</b> — plant a keyword in slack space; check that the search finds it.</li>
         <li><b>Cross-tool test</b> — run two tools on the same image; the findings must agree.</li>
         <li><b>Negative test</b> — confirm that the tool does <b>not</b> report files that are not there (false positives).</li>
@@ -365,7 +506,45 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 May Q8(b)(iii) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> NIST is a US standards laboratory. It publishes test methods and reports for forensic tools (CFTT), guides for incident response and mobile forensics, and a database of known file hashes (NSRL). NIST tests tools; it does not certify them.</div>
+
+      <h4>Why we do this</h4>
+      <p>Courts and laboratories need independent evidence that a tool works. NIST gives them published test reports and reference data, so a tool's performance can be checked instead of taken on trust.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>NIST</b> — the US National Institute of Standards and Technology, a government laboratory that develops standards and test methods.</li>
+        <li><b>CFTT</b> — the Computer Forensics Tool Testing programme, which publishes test specifications and reports.</li>
+        <li><b>SP 800-86</b> — a NIST guide for integrating forensic techniques into incident response.</li>
+        <li><b>SP 800-101</b> — a NIST guide for mobile-device forensics.</li>
+        <li><b>NSRL</b> — the National Software Reference Library, a database of known file hashes.</li>
+        <li><b>CFReDS</b> — Computer Forensic Reference Data Sets: sample images with known answers for testing tools.</li>
+        <li><b>Test report</b> — a published record of what was tested, how and with what result.</li>
+        <li><b>Certification</b> — a formal approval that a product meets a standard; NIST does not issue this for forensic tools.</li>
+        <li><b>Validation</b> — proving in your own laboratory that the tool works for your intended use.</li>
+        <li><b>SWGDE</b> — the Scientific Working Group on Digital Evidence, which publishes forensic guidance.</li>
+        <li><b>ENFSI</b> — the European Network of Forensic Science Institutes, which publishes guidance for European labs.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">The steps below show how a laboratory puts NIST guidance into practice.</p>
+      <ol>
+        <li><b>Pick the tool category.</b> Decide whether you need disk imaging, a write blocker, mobile acquisition or e-mail recovery.</li>
+        <li><b>Read the CFTT requirements and test report.</b> Check what NIST tested and what limitations it found.</li>
+        <li><b>Run the relevant test in-house.</b> NIST's report is evidence about the tool; your own test proves it works in your lab.</li>
+        <li><b>Use CFReDS sample images.</b> These have known answers, so you can check that your tool finds what it should.</li>
+        <li><b>Record the tool, version and NIST reference.</b> Put them in the forensic report so the court can trace the claim.</li>
+        <li><b>Keep the quality system.</b> Use ISO/IEC 17025 for the laboratory and NIST CFTT for the tool; they answer different questions.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> NIST is like a consumer testing magazine for forensic tools. It runs the tests and publishes the results; it does not hand the manufacturer a government licence.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “NIST certified” is the wrong phrase. NIST publishes test reports; it does not certify tools. The laboratory must still validate the tool in its own environment.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Who NIST is and why it matters</h4>
       <p>The <b>National Institute of Standards and Technology (NIST)</b> is a US government laboratory that develops standards and test methods. In digital forensics it provides the <b>independent, published testing</b> that courts and laboratories rely on to show that a tool is fit for purpose.</p>
@@ -383,6 +562,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> CFTT tests the tool, SP 800-86 explains the process, SP 800-101 covers phones, NSRL filters known files and CFReDS gives practice data. Each document answers a different question.</p>
 
       <h4>3. The CFTT testing model</h4>
       <ol>
@@ -417,7 +597,44 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★ 4×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 May Q8(a) [9] · 2024 May Q8(a) [9, short note] · 2025 May Q7(b) [9, role + difference] · 2025 Nov Q7(b) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> Hardware tools are the physical side of forensics: a forensic workstation, a write blocker, a duplicator, a phone kit and a crime-scene kit. They acquire and protect evidence. Software then analyses the verified copy.</div>
+
+      <h4>Why we do this</h4>
+      <p>Simply connecting a suspect drive to a normal computer can change it. Hardware tools provide a safe physical path — read without writing, copy without altering and carry without damage — so the evidence arrives at the software exactly as it was found.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Forensic workstation</b> — a powerful, dedicated computer used to examine images and run forensic software.</li>
+        <li><b>Write blocker</b> — a hardware device that allows reads but blocks every write to a suspect drive.</li>
+        <li><b>Duplicator</b> — a device that copies one drive to another without a full computer.</li>
+        <li><b>Bit-stream clone</b> — an exact copy of every byte on the source drive.</li>
+        <li><b>Mobile acquisition kit</b> — cables, adapters and software for extracting data from phones and GPS units.</li>
+        <li><b>Crime-scene kit</b> — a pre-packed set of bags, labels, gloves, camera and storage media for field work.</li>
+        <li><b>IDE / SATA / SCSI</b> — older and newer standards for connecting internal drives.</li>
+        <li><b>Hash authentication</b> — using a hash to prove that a clone matches its source.</li>
+        <li><b>eSATA</b> — an external version of the SATA drive connection.</li>
+        <li><b>PDA</b> — a small handheld computer used before modern smartphones.</li>
+        <li><b>Audit trail</b> — a record of every action performed during acquisition or analysis.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Photograph and document the device.</b> Record the make, model, serial number and connections before anything is unplugged.</li>
+        <li><b>Connect the drive through a write blocker.</b> The blocker is the one-way valve that stops your workstation from writing to the evidence.</li>
+        <li><b>Clone or image the drive.</b> Use a duplicator for speed or an imaging tool for a file-based image, depending on the case.</li>
+        <li><b>Verify the hash.</b> Compare the source and the copy; a matching hash proves the clone is faithful.</li>
+        <li><b>Label and seal the original.</b> The original goes into safe storage; the copy goes to the analysis bench.</li>
+        <li><b>Analyse the copy with software.</b> Keep the original untouched, so the analysis can be repeated if needed.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A write blocker is a one-way valve. Data can flow out of the suspect drive to the examiner, but nothing can flow back in to change the evidence.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Hardware tools do not analyse the data. They acquire, protect and connect. The analysis — deleted-file recovery, keyword search and timeline building — is done by software on the verified copy.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Role of hardware tools</h4>
       <p>Hardware tools provide the <b>physical capability</b> to acquire, preserve and examine digital evidence. They do not analyse data by themselves; they make sure the data reaches the software in an unaltered state. They are used for <b>imaging, write protection, cloning, mobile acquisition and scene documentation</b>.</p>
@@ -437,6 +654,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the workstation is the bench, the write blocker is the safety guard, the duplicator makes the copy, and the kits let you work at a phone or a crime scene. Each one removes a different physical risk.</p>
 
       <h4>3. Hardware vs software tools</h4>
       <div class="tbl-wrap">
@@ -467,21 +685,62 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★ 4×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2022 May Q8(a) [8] · 2022 Nov Q8(a) [8] · 2023 May Q8(b)(i) [9] · 2025 Nov Q8(b)(i) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> The e-mail client is the app you use — Gmail, Outlook or Thunderbird. The e-mail server is the computer that stores and forwards mail. The client writes and reads; the server transports and keeps the authoritative copy. Investigators need evidence from both.</div>
+
+      <h4>Why we do this</h4>
+      <p>The client shows what the user saw and saved, while the server shows the real route, time and account. A message can be deleted from the client but still exist on the server, so examining only one side gives an incomplete picture.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>E-mail client</b> — the program or web page a user opens to compose, send and read mail.</li>
+        <li><b>E-mail server</b> — a computer that receives, stores, forwards and delivers mail for a domain.</li>
+        <li><b>SMTP</b> — Simple Mail Transfer Protocol, used to send mail between clients and servers.</li>
+        <li><b>POP3</b> — Post Office Protocol 3, used to download mail from a server, often deleting it afterwards.</li>
+        <li><b>IMAP</b> — Internet Message Access Protocol, used to keep mail on the server and synchronise it with the client.</li>
+        <li><b>MAPI</b> — the Microsoft Exchange protocol that works like IMAP.</li>
+        <li><b>Mailbox</b> — the storage area on the server that holds one user's messages.</li>
+        <li><b>Relay</b> — passing a message from one mail server to the next.</li>
+        <li><b>MX record</b> — a DNS entry that tells a sender which server receives mail for a domain.</li>
+        <li><b>Header</b> — the hidden envelope information at the top of a message, showing route, time and IDs.</li>
+        <li><b>PST / OST / MBOX</b> — common files in which mail clients store local mailboxes.</li>
+        <li><b>Webmail</b> — mail read and sent through a browser rather than a desktop client.</li>
+        <li><b>Port</b> — a numbered channel that identifies which service a connection is for.</li>
+        <li><b>DNS</b> — the system that translates domain names into IP addresses.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">Follow one message from the sender's client to the recipient's mailbox.</p>
+      <ol>
+        <li><b>The sender composes the message in the client.</b> The client adds the recipients, subject, body and attachments.</li>
+        <li><b>The client sends it to the outgoing SMTP server.</b> SMTP is the protocol for handing mail to the mail system.</li>
+        <li><b>The server finds the recipient's domain through DNS.</b> It looks up the MX record, which says which server accepts mail for that domain.</li>
+        <li><b>The message travels server to server.</b> Each hop adds a <b>Received</b> header, so the route is recorded.</li>
+        <li><b>The recipient's server stores the message in the mailbox.</b> This copy may survive even if the user later deletes it locally.</li>
+        <li><b>The recipient's client retrieves it.</b> POP3 downloads it and often deletes it from the server; IMAP synchronises it and keeps it on the server.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> The client is the person writing and reading a letter. The server is the post office that receives the letter, sorts it, forwards it and keeps a record of delivery. The header is the envelope with the postmarks.</div>
+
+      <div class="confuse"><b>Common confusion:</b> POP3 and IMAP are not interchangeable. POP3 usually downloads mail and removes it from the server; IMAP keeps the mailbox on the server and synchronises every device. This difference decides whether a server copy exists for the investigator.</div>
+
+      <h3>Full exam answer</h3>
+
       <h4>1. The client</h4>
-      <p>The <b>e-mail client</b> is the application the user runs: Outlook, Thunderbird, Apple Mail, Yahoo Mail, Gmail web interface. It composes, sends, receives and stores mail.</p>
+      <p>The <b>e-mail client</b> is the application the user runs: Outlook, Thunderbird, Apple Mail, Yahoo Mail or the Gmail web interface. It composes, sends, receives and stores mail.</p>
       <ul>
         <li><b>Compose</b> — create the message, add recipients, subject, body and attachments.</li>
         <li><b>Send</b> — hand the message to the outgoing SMTP server.</li>
         <li><b>Retrieve</b> — connect to the mailbox with POP3 or IMAP and download or synchronise messages.</li>
-        <li><b>Display</b> — list the mailbox, show the header, sender, date and size.</li>
-        <li><b>Manage</b> — view, compose, delete, move to folders, search.</li>
+        <li><b>Display</b> — list the mailbox, header, sender, date and size.</li>
+        <li><b>Manage</b> — view, compose, delete, move to folders and search.</li>
         <li><b>Store</b> — keep a local copy (PST, OST, MBOX) that can become evidence.</li>
       </ul>
 
       <h4>2. The server</h4>
-      <p>The <b>e-mail server</b> is a computer (Unix, Windows or other OS) running mail-server software. It stores and forwards messages and manages the accounts.</p>
+      <p>The <b>e-mail server</b> is a computer (Unix, Windows or another OS) running mail-server software. It stores and forwards messages and manages the accounts.</p>
       <ul>
         <li><b>Receive</b> — accept mail from the client or another server via SMTP.</li>
         <li><b>Store</b> — keep the message in the recipient's mailbox until it is collected.</li>
@@ -502,14 +761,6 @@ Sender's mail server ──► DNS/MX lookup ──► Receiver's mail server
                                               │
                                               ▼
                                         Local mailbox</div>
-      <ol>
-        <li>The sender composes the message in the client.</li>
-        <li>The client sends it to the <b>outgoing SMTP server</b>.</li>
-        <li>The server finds the recipient's domain through DNS (MX record).</li>
-        <li>The message travels server-to-server; each hop adds a <b>Received</b> header.</li>
-        <li>The recipient's server stores the message in the mailbox.</li>
-        <li>The recipient's client retrieves it with <b>POP3</b> (download and often delete) or <b>IMAP</b> (synchronise and keep on server).</li>
-      </ol>
 
       <h4>4. Protocols to name</h4>
       <div class="tbl-wrap">
@@ -524,6 +775,7 @@ Sender's mail server ──► DNS/MX lookup ──► Receiver's mail server
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> SMTP moves mail between servers, POP3 pulls it down and IMAP keeps it in sync. If the case needs a server-side copy, an IMAP account is usually more helpful than a POP3 account.</p>
 
       <h4>5. Forensic significance</h4>
       <ul>
@@ -547,31 +799,64 @@ Sender's mail server ──► DNS/MX lookup ──► Receiver's mail server
       <div class="badges"><span class="b marks">9–18 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 May Q7(b)(iii) [9] · 2024 May Q8(c) [9, any two] · 2025 May Q8(b) [9, any two]</p>
 
-      <h4>1. The seven-step e-mail investigation (book §6.5.3)</h4>
+      <div class="simple"><b>In simple words:</b> E-mail investigation means preserving the message, reading its full header, checking the attachments, and tracing the sender through IP addresses and server logs. The From line alone proves nothing, because anyone can type a false name. The header and the server records show the real route.</div>
+
+      <h4>Why we do this</h4>
+      <p>E-mail is easy to fake and easy to delete. A careful investigation preserves the original message, proves it has not changed and connects it to a real account, device or IP address. Without that chain, the message is just an anonymous claim.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>E-mail header</b> — the hidden delivery information at the top of a message, including the route and time.</li>
+        <li><b>Received chain</b> — the list of mail servers the message passed through, one line per hop.</li>
+        <li><b>X-Originating-IP</b> — a header added by some web-mail providers showing the sender's IP address.</li>
+        <li><b>Message-ID</b> — a unique code created by the sending server, used to match the message to server logs.</li>
+        <li><b>Return-Path</b> — the address where bounced mail is sent; it often reveals the real envelope sender.</li>
+        <li><b>ARIN / whois</b> — services that show which organisation owns an IP address or domain.</li>
+        <li><b>Server log</b> — a record kept by a mail server of logins, senders, recipients and times.</li>
+        <li><b>PST / OST / MBOX</b> — files in which Outlook, Exchange and Thunderbird store mailboxes.</li>
+        <li><b>Sandbox</b> — an isolated environment where a suspicious attachment can be opened safely.</li>
+        <li><b>Subpoena</b> — a legal order requiring a person or company to provide evidence or testimony.</li>
+        <li><b>Hash</b> — a digital fingerprint used to prove that the message file has not changed.</li>
+        <li><b>Whois</b> — a service that shows who owns a domain name or IP address.</li>
+        <li><b>Reverse DNS</b> — a lookup that turns an IP address back into a host name.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li><b>Examine the e-mail message</b> — the evidence may be on the victim's computer. Take an image of the machine, obtain the password, print the message with its header, and examine the sender's server IP.</li>
-        <li><b>Copy the e-mail message</b> to a USB key.</li>
-        <li><b>Take a printout</b> of the message using the mail program's print option.</li>
-        <li><b>View the mail header</b> — open the mail, right-click, choose “view full header”.</li>
-        <li><b>Examine the e-mail header</b> — the message header and the subject body contain the origin information; the <code>X-Originating-IP</code>, return path and receiver mail ID are visible.</li>
-        <li><b>Examine the attachments</b> — copy and print them; hash them; open them only in a sandbox.</li>
-        <li><b>Trace the e-mail</b> — use the originating IP and domain tools (ARIN, freeality.com) to find the owner; validate the evidence because the address may be fake.</li>
+        <li><b>Examine the message on the victim's computer.</b> Take an image of the machine, obtain the password if lawful, print the message with its header, and examine the sender's server IP. The local copy may contain attachments and deleted items that the server no longer has.</li>
+        <li><b>Copy the message to a USB key.</b> Keep a working copy so the original can stay preserved.</li>
+        <li><b>Print the message with the mail program's print option.</b> The printout should include the full header, not just the visible message.</li>
+        <li><b>View the full header.</b> Open the mail, right-click and choose “view full header”, or use the equivalent option in the client.</li>
+        <li><b>Read the header carefully.</b> The message header and subject body contain the origin information; look for <code>X-Originating-IP</code>, the return path and the receiver mail ID.</li>
+        <li><b>Examine the attachments.</b> Copy and print them, hash them and open them only in a sandbox. An attachment can carry malware or hidden metadata.</li>
+        <li><b>Trace the message.</b> Use the originating IP and domain tools (ARIN, freeality.com) to find the owner, then validate the evidence because the address may be fake.</li>
       </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> The header is the envelope, and the mail servers are the post offices along the route. Each post office stamps the envelope, so the final recipient can see where the letter actually travelled — even if the return address is false.</div>
+
+      <div class="confuse"><b>Common confusion:</b> The <code>From:</code> line is not proof of the sender. It is trivially spoofed. Read the <b>Received</b> chain from the bottom up and match the Message-ID with server logs before you name a suspect.</div>
+
+      <h3>Full exam answer</h3>
+
+      <h4>1. The seven-step e-mail investigation (book §6.5.3)</h4>
+      <p>The seven steps above are the exam list. The key order is <b>preserve → read the header → trace → verify</b>.</p>
 
       <h4>2. Techniques</h4>
       <ul>
         <li><b>Header analysis</b> — reconstruct the route from the Received lines.</li>
         <li><b>Server-log correlation</b> — match Message-ID and timestamps with SMTP, POP and IMAP logs.</li>
-        <li><b>Hash comparison</b> — hash the message file and compare with the copy; any change is detected.</li>
-        <li><b>Attachment analysis</b> — file type, metadata, malware scan, hash lookup.</li>
-        <li><b>Database recovery</b> — Outlook PST/OST, Thunderbird MBOX, Exchange EDB, Lotus NSF.</li>
+        <li><b>Hash comparison</b> — hash the message file and compare it with the copy; any change is detected.</li>
+        <li><b>Attachment analysis</b> — file type, metadata, malware scan and hash lookup.</li>
+        <li><b>Database recovery</b> — Outlook PST/OST, Thunderbird MBOX, Exchange EDB and Lotus NSF.</li>
         <li><b>Deleted-mail recovery</b> — recover mail files from unallocated space and the recycle bin.</li>
-        <li><b>Domain/IP lookup</b> — whois, ARIN, reverse DNS, geolocation.</li>
+        <li><b>Domain/IP lookup</b> — whois, ARIN, reverse DNS and geolocation.</li>
         <li><b>Timeline analysis</b> — order messages and events.</li>
         <li><b>Legal process</b> — subpoena or warrant to the mail provider for account and login records.</li>
       </ul>
+      <p class="small"><b>What this means:</b> the message content is only the starting point. The real proof comes from combining the header, the attachment hash, the provider's records and the server logs.</p>
 
       <h4>3. A short worked example</h4>
       <p>A company receives a threatening e-mail. The examiner images the recipient's PC, exports the message with full headers, and notes <code>X-Originating-IP: 209.85.213.54</code> and a Gmail <code>Message-ID</code>. ARIN/whois shows the IP belongs to Google, so the sender used Gmail web-mail. A subpoena to Google yields the account creation IP and login times; the office firewall logs then match one of those logins to an employee's workstation. The attachment hash matches a file found on that workstation. The case is proved by the <b>header + provider records + firewall log + file hash</b>, not by the From line.</p>
@@ -585,7 +870,49 @@ Sender's mail server ──► DNS/MX lookup ──► Receiver's mail server
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 Nov Q7(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> E-mail is often the best record of what people said and planned. Its header is the envelope: it shows the route, the servers, the time and sometimes the sender's IP. The From line is easy to fake; the Received chain and server logs are much harder to fake.</div>
+
+      <h4>Why we do this</h4>
+      <p>A message can prove intent, show a threat, reveal a data leak or place a person at a computer at a certain time. The header and server records turn an anonymous message into evidence that can be tested in court.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Header field</b> — one labelled line in the hidden part of an e-mail, such as <code>From:</code> or <code>Received:</code>.</li>
+        <li><b>From</b> — the sender address shown to the reader; easy to forge.</li>
+        <li><b>Return-Path</b> — the address where bounced mail goes; often the real envelope sender.</li>
+        <li><b>Received</b> — a line added by each mail server the message passed through, with time and IP.</li>
+        <li><b>X-Originating-IP</b> — the sender's IP address, added by some web-mail providers.</li>
+        <li><b>Message-ID</b> — a unique identifier created by the sending server.</li>
+        <li><b>Date</b> — the date and time the message was sent, including the time zone.</li>
+        <li><b>Reply-To</b> — the address that will receive replies, which may differ from From.</li>
+        <li><b>SPF</b> — Sender Policy Framework, a check that a server is allowed to send mail for a domain.</li>
+        <li><b>DKIM</b> — DomainKeys Identified Mail, a cryptographic signature on a message.</li>
+        <li><b>DMARC</b> — a policy that tells receivers what to do when SPF or DKIM fails.</li>
+        <li><b>MIME</b> — the standard that describes a message's format and attachments.</li>
+        <li><b>X-Mailer</b> — the mail program that created the message.</li>
+        <li><b>Whois</b> — a service that shows who owns a domain name or IP address.</li>
+        <li><b>Reverse DNS</b> — a lookup that turns an IP address back into a host name.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Open the full header.</b> The normal view hides the delivery information; the full header is where the evidence sits.</li>
+        <li><b>Read the Received lines from the bottom up.</b> The bottom line is the first server that handled the message, so the route makes sense in that direction.</li>
+        <li><b>Write down every IP, server name and timestamp.</b> These are the anchors for the timeline.</li>
+        <li><b>Check the authentication results.</b> SPF, DKIM and DMARC show whether the sending server was authorised; a failure is a warning sign, not automatic proof of guilt.</li>
+        <li><b>Look up the IP owner.</b> Use whois, ARIN or reverse DNS to identify the provider or organisation.</li>
+        <li><b>Correlate with server logs.</b> Match the Message-ID and times with SMTP, POP and IMAP records to link the message to an account.</li>
+        <li><b>Preserve the message with its header.</b> Export it, hash it and record the hash, so the court can see it was not edited.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> The header is the envelope showing where a letter came from and which post offices handled it. The message body is the letter inside. A liar can write any return address on the envelope, but the postmarks are added by the postal service.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Do not read the Received lines from top to bottom. The top is the last hop (closest to you); the bottom is where the message started. Reading in the wrong direction reverses the route and can point to the wrong server.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Role of e-mail in investigations</h4>
       <ul>
@@ -620,6 +947,7 @@ Sender's mail server ──► DNS/MX lookup ──► Receiver's mail server
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the From line tells you what the sender wanted you to believe. The Received chain, Message-ID and Authentication-Results tell you what actually happened.</p>
 
       <h4>3. Example header analysis</h4>
       <pre><code>From: Suvarna Pansambal Tue Feb 2 12:16:14 2016
@@ -647,7 +975,48 @@ Subject: Threat mail</code></pre>
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 May Q8(b)(ii) [9, short note] · 2024 May Q7(a) [9, any one] · 2025 Nov Q7(a)(ii) [9, short note]</p>
+
+      <div class="simple"><b>In simple words:</b> E-mail crimes include spam, phishing, spoofing, harassment, scams, malware and data theft. Phishing is the usual “explain one” choice: a fake message pretends to be a bank or service, then steals passwords or installs malware. Investigators follow the header, the link, the attachment and the server logs.</div>
+
+      <h4>Why we do this</h4>
+      <p>Different crimes leave different traces. Knowing the type tells you whether to look at the header, the attachment, the link, the mailbox or the money trail. It also helps you explain the harm in court.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Spam</b> — unsolicited bulk e-mail, often carrying scams or malware.</li>
+        <li><b>Phishing</b> — a fake message that impersonates a trusted organisation to steal credentials or deliver malware.</li>
+        <li><b>Spoofing</b> — forging the sender address so the message appears to come from someone else.</li>
+        <li><b>419 / Nigerian scam</b> — a fraud that asks the victim to pay a small fee to release a large sum.</li>
+        <li><b>Harassment</b> — repeated abusive or threatening messages.</li>
+        <li><b>Cyber stalking</b> — persistent unwanted contact that frightens the victim.</li>
+        <li><b>Mail bomb</b> — a huge volume of mail or oversized attachments designed to crash a mailbox or server.</li>
+        <li><b>Malware</b> — software designed to damage, spy or take control, often spread by attachments or links.</li>
+        <li><b>Social engineering</b> — manipulating a person into revealing information or performing an unsafe action.</li>
+        <li><b>SPF / DKIM / DMARC</b> — three e-mail authentication checks that help detect forged senders.</li>
+        <li><b>Multi-factor authentication (MFA)</b> — a login that needs more than a password, such as a code from a phone.</li>
+        <li><b>Ransomware</b> — malware that encrypts files and demands payment to unlock them.</li>
+        <li><b>Trojan</b> — malware disguised as a legitimate program.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">The steps below show how a phishing attack works and how it is investigated.</p>
+      <ol>
+        <li><b>The attacker registers a look-alike domain.</b> For example, <code>paypa1.com</code> uses the digit one instead of the letter l, so a quick glance misses it.</li>
+        <li><b>The attacker sends an urgent message.</b> It uses the real logo and a threat such as “your account will be suspended”, to make the victim act before thinking.</li>
+        <li><b>The link opens a fake login page.</b> The page captures the user name and password, or the attachment installs malware.</li>
+        <li><b>The stolen credentials are used immediately.</b> The attacker may also install malware that gives long-term access.</li>
+        <li><b>The investigator examines the header.</b> Compare From and Return-Path, follow the Received chain and check Authentication-Results for SPF, DKIM or DMARC failures.</li>
+        <li><b>The investigator checks the link and attachment.</b> Compare the visible link text with the real destination, check the domain age, hash the attachment and open it only in a sandbox.</li>
+        <li><b>The investigator uses the server logs.</b> Find who clicked, when and from which IP, then connect that to an account and a device.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Phishing is a thief wearing a bank uniform and standing behind a fake counter. The uniform looks right, the forms look official, and the victim hands over the password without checking whether the branch is real.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A professional-looking logo does not make an e-mail genuine. Phishing pages can copy a brand perfectly. Check the actual link destination, the domain name and the authentication results — not the picture.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Common e-mail crimes and violations</h4>
       <div class="tbl-wrap">
@@ -671,13 +1040,14 @@ Subject: Threat mail</code></pre>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the list is long, but the investigative question is always the same: what did the message contain, where did it really come from, and what did the recipient do next?</p>
 
       <h4>2. One crime in detail — phishing</h4>
-      <p><b>Definition:</b> phishing is a form of social engineering in which the attacker sends an e-mail that appears to come from a trusted organisation and persuades the victim to reveal credentials, card numbers or to run an attachment.</p>
+      <p><b>Definition:</b> phishing is a form of social engineering in which the attacker sends an e-mail that appears to come from a trusted organisation and persuades the victim to reveal credentials or card numbers, or to run an attachment.</p>
       <p><b>How it works:</b></p>
       <ol>
         <li>The attacker registers a look-alike domain (for example <code>paypa1.com</code>).</li>
-        <li>The e-mail uses the real logo and a urgent message (“your account will be suspended”).</li>
+        <li>The e-mail uses the real logo and an urgent message (“your account will be suspended”).</li>
         <li>The link goes to a fake login page that captures the user name and password.</li>
         <li>The credentials are used immediately, or the attachment installs malware.</li>
       </ol>
@@ -688,12 +1058,12 @@ Subject: Threat mail</code></pre>
         <li><b>URL</b> — the link text and the actual <code>href</code> differ; the domain is newly registered.</li>
         <li><b>Authentication-Results</b> — SPF/DKIM/DMARC often fail.</li>
         <li><b>Attachment</b> — hash, file type and macro content.</li>
-        <li><b>Server logs</b> — who clicked, when, from which IP.</li>
+        <li><b>Server logs</b> — who clicked, when and from which IP.</li>
       </ul>
       <p><b>Prevention:</b> SPF, DKIM and DMARC; user awareness; link inspection; multi-factor authentication; mail filtering.</p>
 
       <h4>3. The 419 / Nigerian scam in brief</h4>
-      <p>One of the most notable e-mail frauds. It started as a chain letter from Nigeria and moved to e-mail to save international postage. The message uses a standard writing style, capital letters and a few recognisable tricks: a large sum is trapped and the victim must pay a small fee or give bank details to release it. Modern variants are more sophisticated but the structure is the same. Investigators trace the header, the receiving bank account and the money-transfer records.</p>
+      <p>One of the most notable e-mail frauds. It started as a chain letter from Nigeria and moved to e-mail to save international postage. The message uses a standard writing style, capital letters and a few recognisable tricks: a large sum is trapped and the victim must pay a small fee or give bank details to release it. Modern variants are more sophisticated, but the structure is the same. Investigators trace the header, the receiving bank account and the money-transfer records.</p>
 
       <div class="tip"><b>“Any one in detail”:</b> choose phishing. It has a clear definition, a four-step mechanism, six investigative points and a prevention list — enough for 9 marks without padding.</div>
     </div>
@@ -705,44 +1075,78 @@ Subject: Threat mail</code></pre>
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 Nov Q8(a) [9]</p>
 
-      <h4>1. Function of an e-mail server</h4>
-      <p>An e-mail server is a computer running mail-server software that <b>receives, stores, forwards and delivers</b> e-mail for a domain. It is the central point between the sender's client and the recipient's client.</p>
+      <div class="simple"><b>In simple words:</b> An e-mail server is the post office: it receives mail, checks the address, queues it if the next server is down, delivers it to the mailbox and stores it until the user collects it. Its logs and mailbox copies are strong evidence because the user cannot simply delete them.</div>
+
+      <h4>Why we do this</h4>
+      <p>The server sees every message that enters or leaves a domain, even when the user deletes the local copy. Its logs can prove who sent what, to whom and when, which is often the missing link in an e-mail case.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>E-mail server</b> — a computer that receives, stores, forwards and delivers mail for a domain.</li>
+        <li><b>SMTP</b> — the protocol used to send and relay mail between servers.</li>
+        <li><b>Queue</b> — a holding area for messages waiting to be delivered when the destination is unavailable.</li>
+        <li><b>Relay</b> — passing a message from one server to another.</li>
+        <li><b>Mailbox store</b> — the file or database that holds one user's messages.</li>
+        <li><b>EDB / NSF</b> — database formats used by Microsoft Exchange and Lotus Notes.</li>
+        <li><b>Maildir / mbox</b> — Unix mailbox formats: one file per message, or one file for many messages.</li>
+        <li><b>Journaling</b> — keeping a separate copy of every message for legal or compliance purposes.</li>
+        <li><b>Circular logging</b> — overwriting the oldest log when a size or time limit is reached.</li>
+        <li><b>Retention</b> — how long the server keeps logs or messages.</li>
+        <li><b>Message tracking</b> — following a message's path through the server logs.</li>
+        <li><b>Password hash</b> — a one-way fingerprint of a password, stored instead of the password itself.</li>
+        <li><b>Quota</b> — the maximum mailbox size a user is allowed.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">Follow one message through the server's eight jobs.</p>
       <ol>
-        <li><b>Accept mail</b> from clients and other servers via SMTP.</li>
-        <li><b>Authenticate</b> users and check whether the recipient exists.</li>
-        <li><b>Queue</b> messages when the destination is unavailable and retry later.</li>
-        <li><b>Deliver</b> to the local mailbox or relay to another server.</li>
-        <li><b>Store</b> messages until the user retrieves them.</li>
-        <li><b>Provide access</b> through POP3, IMAP, MAPI or web-mail.</li>
-        <li><b>Filter</b> spam and malware, and apply business policy.</li>
-        <li><b>Log</b> every transaction for audit and investigation.</li>
+        <li><b>Accept mail.</b> The server receives the message from a client or another server over SMTP.</li>
+        <li><b>Authenticate the user and check the recipient.</b> It confirms the login and whether the address exists, so mail is not accepted for a non-existent account.</li>
+        <li><b>Queue the message if the destination is unavailable.</b> The server retries later instead of losing the mail.</li>
+        <li><b>Deliver or relay.</b> It places the message in a local mailbox or passes it to the next server.</li>
+        <li><b>Store the message.</b> The mailbox keeps it until the user retrieves it, even if the user later deletes the local copy.</li>
+        <li><b>Provide access.</b> POP3, IMAP, MAPI or web-mail lets the client collect or synchronise the mail.</li>
+        <li><b>Filter spam and malware.</b> The server applies policy before the message reaches the user.</li>
+        <li><b>Log every transaction.</b> The log records the sender, recipient, time, IP and message ID for audit and investigation.</li>
       </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> The server is the post office. It receives letters, sorts them, holds them when the delivery route is closed, delivers them to the right box, and keeps a delivery book that the recipient cannot erase.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Deleting a message in the mail client does not always delete it from the server. Backups, journaling mailboxes and retention policies may keep a copy that the user never sees.</div>
+
+      <h3>Full exam answer</h3>
+
+      <h4>1. Function of an e-mail server</h4>
+      <p>An e-mail server is a computer running mail-server software that <b>receives, stores, forwards and delivers</b> e-mail for a domain. It is the central point between the sender's client and the recipient's client. The eight functions are the step-by-step list above.</p>
 
       <h4>2. How it stores mail</h4>
       <ul>
         <li><b>Mailbox store</b> — one mailbox per account, often a database file or a directory of files.</li>
         <li><b>Database-backed</b> — Microsoft Exchange uses EDB; Lotus Notes uses NSF; some servers use SQL.</li>
         <li><b>Flat-file</b> — Unix <code>maildir</code> or <code>mbox</code>; one file per message or one file per mailbox.</li>
-        <li><b>User profile</b> — the server keeps a text file or database record for each account: user name, password hash, quota, forwarding rules.</li>
+        <li><b>User profile</b> — the server keeps a text file or database record for each account: user name, password hash, quota and forwarding rules.</li>
         <li><b>Attachments</b> — stored inside the message or as separate objects referenced by the database.</li>
         <li><b>Backup</b> — server backups and journaling mailboxes keep copies for compliance.</li>
       </ul>
+      <p class="small"><b>What this means:</b> the format decides which tool can open the mailbox. A PST tool will not read an Exchange EDB, and a Unix mbox is not a Microsoft database.</p>
 
       <h4>3. How it manages mail</h4>
       <ul>
         <li><b>Accounts and quotas</b> — create, disable and limit mailbox size.</li>
-        <li><b>Folders</b> — Inbox, Sent, Drafts, Deleted Items, custom folders.</li>
+        <li><b>Folders</b> — Inbox, Sent, Drafts, Deleted Items and custom folders.</li>
         <li><b>Rules</b> — forwarding, auto-reply, filtering and retention.</li>
         <li><b>Journaling</b> — a copy of every message for legal hold.</li>
-        <li><b>Logs</b> — SMTP, POP, IMAP and system logs; the administrator can turn logging off or use circular logging, which overwrites the oldest log when a size or time limit is reached.</li>
+        <li><b>Logs</b> — SMTP, POP, IMAP and system logs. The administrator can turn logging off or use circular logging, which overwrites the oldest log when a size or time limit is reached.</li>
         <li><b>Retention</b> — the server may keep logs for one day plus six days (Mon.log … Sun.log), or longer under policy.</li>
       </ul>
+      <p class="small"><b>What this means:</b> logging is not automatic or permanent. Ask the administrator how long logs are kept and whether circular logging has already overwritten the period you need.</p>
 
       <h4>4. Forensic value of the server</h4>
       <ul>
-        <li><b>Message tracking</b> — who sent what to whom, when, and from which IP.</li>
+        <li><b>Message tracking</b> — who sent what to whom, when and from which IP.</li>
         <li><b>Mailbox contents</b> — messages the user deleted locally may still be on the server.</li>
         <li><b>Logs</b> — prove delivery, login and relay; <b>Use.log</b> and <b>a.db</b> are examples from the book.</li>
         <li><b>Journal archive</b> — an independent copy that the user cannot delete.</li>
@@ -763,7 +1167,47 @@ Subject: Threat mail</code></pre>
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 May Q7(b)(ii) [9] · 2023 Nov Q8(b)(i) [9, any one] · 2025 Nov Q8(b)(ii) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> E-mail forensic tools open mailbox files, recover deleted messages, show full headers, search many mailboxes and export court-ready reports. Examples are FTK, Paraben E-Mail Examiner, FINALeMAIL, R-Mail and Xplico. A specialised tool often recovers more than a general forensic suite.</div>
+
+      <h4>Why we do this</h4>
+      <p>Mail is stored in many formats — PST, OST, MBOX, EDB, NSF and DBX — and each has its own structure. A tool built for e-mail understands those formats, finds deleted items and preserves the header and attachments that make the message usable as evidence.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>PST / OST</b> — Outlook mailbox files; PST is a local store, OST is an offline Exchange cache.</li>
+        <li><b>MBOX</b> — a Unix mailbox format that stores many messages in one file.</li>
+        <li><b>EDB</b> — the Microsoft Exchange mailbox database format.</li>
+        <li><b>NSF</b> — the Lotus Notes database format.</li>
+        <li><b>DBX</b> — the Outlook Express mailbox format.</li>
+        <li><b>Deleted-mail recovery</b> — finding messages that the user removed but that still exist in the file or unallocated space.</li>
+        <li><b>Header extraction</b> — pulling the full delivery information out of a message.</li>
+        <li><b>Hash</b> — a fingerprint used to prove that the exported message has not changed.</li>
+        <li><b>Audit log</b> — a record of what the tool did, so the result can be checked.</li>
+        <li><b>E-discovery</b> — the legal process of identifying and exchanging electronic evidence.</li>
+        <li><b>Mailbox file</b> — a file that stores one or more e-mail messages in a particular format.</li>
+        <li><b>Corrupted file</b> — a file whose internal structure is damaged and may not open normally.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Identify the mail store.</b> Find out whether the case involves PST, OST, MBOX, EDB, NSF or DBX; the format decides which tool can open it.</li>
+        <li><b>Acquire the evidence.</b> Image the disk or copy the mailbox file through a write blocker, and hash the source.</li>
+        <li><b>Open the file in the tool.</b> Load the mailbox without modifying the original, and work on a copy.</li>
+        <li><b>Recover deleted messages.</b> Search the file structure and unallocated space for items the user tried to remove.</li>
+        <li><b>Extract headers and attachments.</b> The header proves the route; the attachment may carry the payload or the stolen data.</li>
+        <li><b>Search across mailboxes.</b> Use sender, recipient, subject, date, keyword and attachment type to narrow the review.</li>
+        <li><b>Export with a hash and audit log.</b> The export must be reproducible and visibly unchanged.</li>
+        <li><b>Verify and document.</b> Another examiner should be able to open the export and get the same result.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> An e-mail forensic tool is a specialist locksmith. A general carpenter can open some doors, but a locksmith knows every lock type and can open a damaged lock without breaking the door.</div>
+
+      <div class="confuse"><b>Common confusion:</b> An e-mail tool is not just a viewer. It must preserve metadata, recover deleted items and produce a verifiable export. If it only displays the message, it is not enough for court.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. What e-mail forensic tools do</h4>
       <ul>
@@ -807,6 +1251,7 @@ Subject: Threat mail</code></pre>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> some tools open a mailbox file; others rebuild mail from network traffic. Choose the tool that matches where the evidence actually lives.</p>
 
       <h4>4. One tool in detail — Paraben E-Mail Examiner</h4>
       <p>Paraben E-Mail Examiner opens PST, OST, DBX, MBOX and Exchange EDB files. It recovers deleted messages, shows the full header, searches across multiple mailboxes, extracts attachments and produces a report. It is used when the investigator needs a <b>dedicated</b> e-mail tool rather than a full forensic suite, and when several mail formats must be handled in one case.</p>
@@ -834,23 +1279,64 @@ Subject: Threat mail</code></pre>
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [9] · 2025 May Q7(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> Choose a forensic tool based on the case: the file system, the amount of data, encryption, the analysis you need, the budget and whether the tool will survive court. The cheapest or most popular tool is not automatically the right one.</div>
+
+      <h4>Why we do this</h4>
+      <p>A tool that cannot read the file system, handle the volume or prove its results may miss evidence or produce findings the court rejects. Matching the tool to the case saves time and protects the investigation.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>File system</b> — the way a disk organises files, such as FAT, NTFS, ext4, HFS+ or APFS.</li>
+        <li><b>RAID</b> — a group of disks combined for speed, size or redundancy.</li>
+        <li><b>SSD</b> — a solid-state drive with no moving parts, which may erase deleted data automatically.</li>
+        <li><b>TRIM</b> — an SSD command that marks deleted blocks for erasure, sometimes destroying recoverable data.</li>
+        <li><b>Encryption</b> — scrambling data so it cannot be read without a key.</li>
+        <li><b>Anti-forensics</b> — techniques used to hide, destroy or fake evidence.</li>
+        <li><b>Acquisition</b> — making a copy of the evidence without changing the source.</li>
+        <li><b>CFTT</b> — the NIST Computer Forensics Tool Testing programme.</li>
+        <li><b>Licensing</b> — the legal terms and cost of using a tool, such as per-seat or dongle licences.</li>
+        <li><b>Audit trail</b> — a record of every action taken with the tool.</li>
+        <li><b>Dongle</b> — a physical USB key that must be plugged in for licensed software to run.</li>
+        <li><b>Indexing</b> — building a searchable list of file contents so keyword searches run quickly.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>List the case facts.</b> Note whether it is criminal, civil, HR or incident response, because each has different legal and reporting needs.</li>
+        <li><b>Match the media and file system.</b> Confirm the tool supports FAT, NTFS, ext4, HFS+, APFS, RAID, SSD and mobile devices as needed.</li>
+        <li><b>Estimate the volume.</b> A single laptop and 50 TB of server storage need different hardware, indexing time and licences.</li>
+        <li><b>Check encryption and anti-forensics.</b> Ask whether the tool can detect encrypted containers, hidden partitions and rootkits.</li>
+        <li><b>Check the analysis features.</b> You may need deleted-file recovery, keyword search, timelines, hash filtering, e-mail parsing and registry or browser artefacts.</li>
+        <li><b>Check reporting and validation.</b> The tool must produce a court-ready report, an audit trail and results that have been tested (for example by NIST CFTT).</li>
+        <li><b>Check cost, training and support.</b> A powerful tool nobody on the team can use is not a good purchase.</li>
+        <li><b>Test it on a sample first.</b> Run a small known case before trusting the tool with the real evidence.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> It is like choosing a vehicle. A van moves furniture, a motorbike beats traffic and a truck carries heavy loads. The job decides the vehicle, not the other way round.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A tool that works on one file system may fail on another. NTFS support does not mean ext4, HFS+, APFS or RAID support. Check the exact formats in the case instead of assuming.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. The factors</h4>
       <ol>
         <li><b>Nature of the case</b> — criminal, civil, HR or incident response. A criminal case needs court-accepted tools and full documentation; an HR case may need only e-mail review.</li>
-        <li><b>Type of media and file system</b> — FAT, NTFS, ext2/3/4, HFS+, APFS, RAID, SSD, mobile. The tool must support the file system it will meet.</li>
-        <li><b>Volume of data</b> — a single laptop or 50 TB of server storage; this decides the hardware, the indexing time and the licence.</li>
+        <li><b>Type of media and file system</b> — FAT, NTFS, ext2/3/4, HFS+, APFS, RAID, SSD or mobile. The tool must support the file system it will meet.</li>
+        <li><b>Volume of data</b> — a single laptop or 50 TB of server storage; this decides the hardware, indexing time and licence.</li>
         <li><b>Encryption and anti-forensics</b> — can the tool detect and handle encrypted containers, hidden partitions and rootkits?</li>
-        <li><b>Acquisition capability</b> — physical, logical, live, remote, mobile. Does it image without changing the source?</li>
+        <li><b>Acquisition capability</b> — physical, logical, live, remote or mobile. Does it image without changing the source?</li>
         <li><b>Analysis features</b> — deleted-file recovery, keyword search, timeline, hash filtering, e-mail parsing, registry and browser artefacts.</li>
-        <li><b>Reporting</b> — court-ready reports, export formats, audit trail of every action.</li>
+        <li><b>Reporting</b> — court-ready reports, export formats and an audit trail of every action.</li>
         <li><b>Validation and court acceptance</b> — has the tool been tested (NIST CFTT)? Has it been accepted in court before?</li>
-        <li><b>Cost and licensing</b> — open-source vs commercial; per-seat, dongle or enterprise licence.</li>
+        <li><b>Cost and licensing</b> — open-source versus commercial; per-seat, dongle or enterprise licence.</li>
         <li><b>Training and support</b> — can the team use it? Is vendor support available at short notice?</li>
-        <li><b>Hardware requirements</b> — CPU, RAM, disk, write blockers, forensic workstation.</li>
-        <li><b>Speed and reliability</b> — indexing time, stability on large images, ability to resume.</li>
+        <li><b>Hardware requirements</b> — CPU, RAM, disk, write blockers and forensic workstation.</li>
+        <li><b>Speed and reliability</b> — indexing time, stability on large images and the ability to resume.</li>
       </ol>
+      <p class="small"><b>What this means:</b> the twelve factors are not a wish list. They are checks: if the tool fails the media, volume, validation or reporting check, it is the wrong tool for this case.</p>
 
       <h4>2. Factor in detail — validation and court acceptance</h4>
       <p>A tool is only useful if its output survives cross-examination. Before selecting it, check:</p>
@@ -864,6 +1350,7 @@ Subject: Threat mail</code></pre>
 
       <h4>3. Factor in detail — type of media and file system</h4>
       <p>A tool that handles NTFS may fail on ext4, HFS+, APFS or a RAID array. Mobile phones need a separate acquisition kit. SSDs need TRIM-aware handling because deleted data may already be gone. The examiner must match the tool to the evidence, not the other way round.</p>
+      <p class="small"><b>What this means:</b> ask “what exactly am I reading?” before “which tool do I like?” The evidence format is the first technical constraint.</p>
 
       <div class="tip"><b>9-mark answer:</b> list 8 factors in one line each (5 marks) + explain any two (4 marks). The two easiest to explain are <b>validation/court acceptance</b> and <b>media/file-system support</b>.</div>
     </div>

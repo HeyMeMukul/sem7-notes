@@ -87,6 +87,10 @@ table.left td,table.left th{text-align:left}
 .tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
 .book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
 .note b,.warn b,.tip b,.book b{color:#fff}
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
 ul,ol{margin:8px 0 8px 22px;padding:0}
 li{margin:5px 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -140,6 +144,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
   .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
 
 }
 </style>
@@ -147,7 +153,13 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 .prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
 .side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
-</style></head>
+</style><style id="print-simple">
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 
@@ -187,6 +199,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <span class="chip">⏱️ Unit weight ≈ <b>17–18 marks</b></span>
   </div>
 </header>
+
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every term is defined, and every formula is explained line by line. No prior ML background needed.</div>
 
 <!-- ================= FREQUENCY MAP ================= -->
 <section class="card" id="map">
@@ -231,12 +245,44 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep hot">★★★★★★ 6×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [6 — simple/advanced] · 2023 May Q3(b) [6] · 2023 Nov Q3(b) [9] · 2024 May Q3(a) [5 — why] · 2025 May Q3(b) [6 — example] · 2025 Nov Q4(c) [6 — why]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [6 — simple/advanced] · 2023 May Q3(b) [6] · 2023 Nov Q3(b) [9] · 2024 May Q3(a) [5 — why] · 2025 May Q3(b) [6 — example] · 2025 Nov Q4(c) [6 — why]</p>
+
+      <div class="simple"><b>In simple words:</b> An ensemble asks many models and combines their answers.<br>
+      One model may be wrong, but the group vote is usually steadier.<br>
+      It is the machine-learning version of “ask several experts, then go with the majority”.</div>
+
+      <h4>Why we do this</h4>
+      <p>Different models make different mistakes. If their errors are not identical, combining them cancels part of the error. A group can therefore be more accurate and more stable than any single model, without inventing a new algorithm.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Ensemble</b> — a group of models whose predictions are combined into one answer.</li>
+        <li><b>Base learner</b> — one model inside the ensemble.</li>
+        <li><b>Weak learner</b> — a model that is only slightly better than guessing, such as a one-split tree.</li>
+        <li><b>Voting</b> — choosing the label that most base learners predict.</li>
+        <li><b>Averaging</b> — taking the mean of the base learners' numeric outputs.</li>
+        <li><b>Bagging</b> — training models in parallel on random samples and averaging them.</li>
+        <li><b>Boosting</b> — training models in sequence, each one fixing the previous model's errors.</li>
+        <li><b>Stacking</b> — training a second-level model to combine the base models' outputs.</li>
+        <li><b>Variance</b> — how much predictions change when the training data changes.</li>
+        <li><b>Bias</b> — error caused by a model that is too simple.</li>
+        <li><b>Mode</b> — the most frequent value; the label with the most votes.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Train several models on the same problem.</b> Why: you need more than one opinion before you can combine anything.</li>
+        <li><b>Make them different.</b> Why: if every model sees the same data and makes the same error, voting just repeats that error.</li>
+        <li><b>Collect their predictions for the new point.</b> Why: each model contributes one vote or one number.</li>
+        <li><b>Combine by majority vote for labels, or by average for numbers.</b> Why: the combination is the ensemble's final answer.</li>
+        <li><b>Evaluate the ensemble as one model.</b> Why: a group is only useful if its combined score beats the individual scores.</li>
+      </ol>
 
       <h4>Definition</h4>
       <p>Ensemble learning trains <b>multiple models</b> (called base learners) and combines their predictions by voting (classification) or averaging (regression). The combined model is usually more accurate and more stable than any single model.</p>
       <div class="math">Classification: ŷ = mode(h<sub>1</sub>(x), h<sub>2</sub>(x), …, h<sub>M</sub>(x))<br>
       Regression: ŷ = (1/M) Σ h<sub>m</sub>(x)</div>
+      <p><b>What this means:</b> for a label, take the answer that appears most often. For a number, take the mean of the M model outputs.</p>
 
       <h4>Why ensembles are used</h4>
       <ol>
@@ -258,6 +304,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> “simple” means one algorithm repeated and combined by a fixed rule. “Advanced” means different algorithms, a learned combiner, or a sequence that corrects itself.</p>
 
       <h4>Example</h4>
       <p>Three decision trees classify a loan applicant: Tree 1 = reject, Tree 2 = reject, Tree 3 = approve. Majority vote → <b>reject</b>. If each tree is only 70% accurate but makes different errors, the majority is often more accurate than any single tree.</p>
@@ -269,6 +316,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Stacking</b> — train a meta-model on the outputs of several base models.</li>
         <li><b>Voting</b> — hard vote (labels) or soft vote (probabilities).</li>
       </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> Five doctors look at the same scan. Two say “healthy”, three say “check further”. You go with the majority. No single doctor is perfect, but the group is less likely to be fooled by one unusual reading.</div>
+
+      <div class="confuse"><b>Common confusion:</b> An ensemble is not automatically better. If all the models are trained on the same data and make the same mistake, voting just repeats it. The gain comes from <b>diversity</b> — different samples, features, or algorithms.</div>
     </div>
   </div>
 
@@ -278,7 +329,35 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">5–9 marks</span><span class="b rep">★★★★ 4×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [5] · 2023 May Q4(b)(i) [6] · 2023 Nov Q3(b) [9] · 2025 Nov Q4(a) [5]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [5] · 2023 May Q4(b)(i) [6] · 2023 Nov Q3(b) [9] · 2025 Nov Q4(a) [5]</p>
+
+      <div class="simple"><b>In simple words:</b> A random forest is a crowd of decision trees.<br>
+      Each tree learns from a different random sample and sees a random subset of features at each split.<br>
+      The forest combines their votes into one answer.</div>
+
+      <h4>Why we do this</h4>
+      <p>One deep decision tree can memorise its training sample, noise included. Many trees, each trained on a slightly different sample and forced to consider different features, make different mistakes. Averaging those mistakes away gives a much more stable model.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Decision tree</b> — a model that repeatedly splits the data on yes/no questions.</li>
+        <li><b>Bootstrap sample</b> — a random sample of the same size as the original, drawn <b>with replacement</b>, so some rows repeat and some are left out.</li>
+        <li><b>Feature subset</b> — a small random group of input columns considered at one split.</li>
+        <li><b>Majority vote</b> — the label predicted by most trees.</li>
+        <li><b>Pruning</b> — cutting back branches after a tree is built; random forest usually skips this.</li>
+        <li><b>Hyperparameter</b> — a setting chosen before training, such as the number of trees.</li>
+        <li><b>Out-of-bag (OOB) error</b> — an error estimate using the rows each tree did not sample.</li>
+        <li><b>Decorrelate</b> — make the trees less similar so their errors do not all point the same way.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Choose the number of trees T and the number of features m to try at each split.</b> Why: these control the size and diversity of the forest.</li>
+        <li><b>Draw a bootstrap sample for each tree.</b> Why: each tree sees a slightly different world, so their errors differ.</li>
+        <li><b>Grow a tree, but at every node consider only m randomly chosen features.</b> Why: this stops one dominant feature from making every tree identical.</li>
+        <li><b>Let each tree grow deep without pruning.</b> Why: individual trees may overfit, but the average of many decorrelated trees does not.</li>
+        <li><b>Combine the trees by majority vote or average.</b> Why: the group answer is steadier than any single tree.</li>
+      </ol>
 
       <h4>Definition</h4>
       <p>Random forest is an ensemble of <b>decision trees</b>. Each tree is trained on a bootstrap sample, and at every split only a <b>random subset of features</b> is considered. The forest combines the trees by majority vote (classification) or average (regression).</p>
@@ -295,6 +374,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 3. Predict:
      classification -&gt; majority vote over T trees
      regression     -&gt; average of T tree outputs</code></pre>
+      <p class="small"><b>What this means:</b> randomness enters twice — once in the rows each tree sees, and once in the features each split is allowed to use.</p>
 
       <h4>Diagram</h4>
       <div class="tree">                 Training data
@@ -313,6 +393,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
                  Majority vote
                        |
                     Class A</div>
+      <p class="small"><b>What this means:</b> each tree sees a different sample and a different feature menu. Two vote A and one votes B, so the forest predicts A.</p>
 
       <h4>Example</h4>
       <p>Predict whether a customer will buy a product using age, income, city and previous purchases. Each tree sees a different bootstrap sample and a different random subset of features at each split. Tree 1 says “buy”, Tree 2 says “buy”, Tree 3 says “not buy” → forest predicts <b>buy</b> (2 out of 3).</p>
@@ -336,9 +417,14 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> you trade simplicity and speed for accuracy and robustness. If you must explain every decision to a human, a single small tree is easier; if you need accuracy, the forest is usually better.</p>
 
       <h4>Hyperparameters</h4>
       <p><code>n_estimators</code> (number of trees), <code>max_features</code> (m), <code>max_depth</code>, <code>min_samples_leaf</code>, <code>oob_score</code> (out-of-bag error).</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> Ask 100 doctors for a diagnosis, but give each doctor a different set of test results and let each one look at only a few symptoms at a time. Then take the majority diagnosis. The variety stops them from copying the same mistake.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A random forest is not “one very big tree”. The randomness is in the <b>rows</b> (bootstrap samples) and the <b>features</b> (random subsets), not in the labels. Also, more trees usually improve stability, but they cost time and memory.</div>
     </div>
   </div>
 
@@ -348,7 +434,37 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">4–6 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q3(b) [6] · 2023 Nov Q3(a) [4] · 2025 May Q4(c) [6]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q3(b) [6] · 2023 Nov Q3(a) [4] · 2025 May Q4(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Bagging trains many models side by side on different random samples, then averages them.<br>
+      Boosting trains models one after another, and each new model focuses on the previous one's mistakes.<br>
+      Bagging calms an unstable model; boosting strengthens a weak one.</div>
+
+      <h4>Why we do this</h4>
+      <p>Both methods build a group, but they attack different problems. If your model is unstable — small changes in data cause big changes in predictions — bagging helps. If your model is too simple and consistently misses the pattern, boosting helps. Choosing the wrong one wastes effort.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Bootstrap sample</b> — a random sample drawn with replacement, so it can contain duplicates.</li>
+        <li><b>With replacement</b> — after picking a row, you put it back before picking the next one.</li>
+        <li><b>Parallel</b> — all models train independently at the same time.</li>
+        <li><b>Sequential</b> — each model waits for the previous one to finish.</li>
+        <li><b>Weak learner</b> — a simple model that is only slightly better than random, such as a decision stump.</li>
+        <li><b>Stump</b> — a decision tree with a single split.</li>
+        <li><b>Weight</b> — how much attention an example or a model receives.</li>
+        <li><b>Variance</b> — instability caused by sensitivity to the training sample.</li>
+        <li><b>Bias</b> — error caused by a model that is too simple.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Bagging: draw M bootstrap samples from the training set.</b> Why: each sample is slightly different, so each model sees a different version of the data.</li>
+        <li><b>Train one base model on each sample, all in parallel.</b> Why: the models do not depend on each other, so the work can be done at once.</li>
+        <li><b>Combine them by majority vote or average.</b> Why: averaging cancels the random errors that differ between models.</li>
+        <li><b>Boosting: train the first weak model on the full data.</b> Why: it provides a starting point, even if it is only slightly better than guessing.</li>
+        <li><b>Give more weight to the examples it got wrong, then train the next model.</b> Why: the next model is forced to concentrate on the hard cases.</li>
+        <li><b>Combine the models with weights based on their accuracy.</b> Why: better models should have more say in the final vote.</li>
+      </ol>
 
       <h4>Bagging (Bootstrap Aggregating)</h4>
       <ul>
@@ -382,8 +498,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> bagging is a crowd of independent opinions with equal say. Boosting is a relay where each runner is chosen to fix the last runner's weakness, and stronger runners get a louder voice.</p>
 
       <div class="note"><b>One-line memory:</b> bagging = <em>many independent opinions, averaged</em>; boosting = <em>a sequence of students, each fixing the previous one’s mistakes</em>.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> Bagging is asking ten friends who each read a different newspaper, then taking the majority. Boosting is a study group where each session focuses on the questions the group failed last time.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Bagging mainly reduces variance; boosting mainly reduces bias. They are not interchangeable. Also, “with replacement” means the same row can appear more than once in a bootstrap sample — that is intended, not a bug.</div>
     </div>
   </div>
 
@@ -393,7 +514,36 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q4(b)(ii) [6]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q4(b)(ii) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> AdaBoost builds small weak models one at a time.<br>
+      After each round, the examples that were answered wrong get more weight.<br>
+      The next model is forced to pay attention to them, and the final answer is a weighted vote.</div>
+
+      <h4>Why we do this</h4>
+      <p>A single stump — a tree with one split — is barely useful. But a sequence of stumps, each one trained on the mistakes of the last, can form a strong classifier. AdaBoost is the classic proof that many weak learners can add up to a strong one.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>AdaBoost</b> — Adaptive Boosting, a sequential ensemble method.</li>
+        <li><b>Weak learner</b> — a model only slightly better than random guessing.</li>
+        <li><b>Stump</b> — a decision tree with one split and two leaves.</li>
+        <li><b>Sample weight (w<sub>i</sub>)</b> — how much example i matters in the next round.</li>
+        <li><b>Weighted error (ε)</b> — the total weight of the examples a learner got wrong.</li>
+        <li><b>Learner weight (α)</b> — how much voting power a learner gets in the final decision.</li>
+        <li><b>Normalise</b> — rescale the weights so they add up to 1.</li>
+        <li><b>Sign</b> — +1 or −1, used to turn a weighted sum into a class label.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Give every training example the same weight, 1/n.</b> Why: no example is more important at the start.</li>
+        <li><b>Train a weak learner on the weighted data.</b> Why: it produces the first set of predictions.</li>
+        <li><b>Compute the weighted error ε.</b> Why: this measures how much of the total weight the learner got wrong.</li>
+        <li><b>Compute the learner's voting power α = ½ ln((1−ε)/ε).</b> Why: a learner that is right more often than chance gets a positive, larger vote.</li>
+        <li><b>Increase the weights of misclassified examples and decrease the rest, then normalise.</b> Why: the next learner will focus on the hard cases.</li>
+        <li><b>Repeat for T rounds and combine with a weighted vote.</b> Why: the final decision uses all the weak learners, weighted by their quality.</li>
+      </ol>
 
       <h4>Definition</h4>
       <p>AdaBoost (Adaptive Boosting) combines many <b>weak learners</b> (usually decision stumps — one-split trees) sequentially. Each new learner focuses on the samples that the previous learners misclassified.</p>
@@ -411,6 +561,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
      e. Normalise weights so they sum to 1.
 3. Final prediction:
      H(x) = sign( sum alpha_t * h_t(x) ).</code></pre>
+      <p class="small"><b>What this means:</b> step (d) raises the weight when the prediction is wrong and lowers it when it is right. Alpha decides how loudly that learner speaks in the final vote.</p>
 
       <h4>Key points</h4>
       <ul>
@@ -424,7 +575,12 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <h4>Small example</h4>
       <p>Three samples, all weight 1/3. Learner h<sub>1</sub> misclassifies one sample: ε<sub>1</sub> = 1/3.</p>
       <div class="math">α<sub>1</sub> = ½ ln((1 − 1/3)/(1/3)) = ½ ln(2) = <b>0.3466</b></div>
-      <p>The misclassified sample’s weight becomes (1/3)e<sup>0.3466</sup> ≈ 0.471, and the correct ones become (1/3)e<sup>−0.3466</sup> ≈ 0.236. After normalisation, the hard sample has about <b>0.5</b> of the total weight, so the next learner is forced to focus on it.</p>
+      <p>The misclassified sample's weight becomes (1/3)e<sup>0.3466</sup> ≈ 0.471, and the correct ones become (1/3)e<sup>−0.3466</sup> ≈ 0.236. After normalisation, the hard sample has about <b>0.5</b> of the total weight, so the next learner is forced to focus on it.</p>
+      <p class="small"><b>What this means:</b> one third of the data was wrong, but after reweighting that one example carries half the total importance. The next stump cannot ignore it.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A coach reviews a practice test and notices which questions you keep failing. The next practice round is packed with those questions. Easier questions you already know get less attention.</div>
+
+      <div class="confuse"><b>Common confusion:</b> α is the learner's voting power, not the learning rate. Also, AdaBoost's habit of increasing weights on hard examples is helpful for genuine hard cases but harmful for noisy outliers — it can end up chasing mislabelled data.</div>
     </div>
   </div>
 </section>
@@ -438,7 +594,37 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q3(c) [6] · 2024 May Q4(a) [5] · 2025 May Q3(a) [5 — binary vs multiclass] · 2025 Nov Q3(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q3(c) [6] · 2024 May Q4(a) [5] · 2025 May Q3(a) [5 — binary vs multiclass] · 2025 Nov Q3(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Binary classification chooses between two labels, such as spam or not spam.<br>
+      Multiclass classification chooses among three or more labels, such as apple, mango, or banana.<br>
+      OvA trains one classifier per class; OvO trains one classifier per pair of classes.</div>
+
+      <h4>Why we do this</h4>
+      <p>Many real problems have more than two answers. A fruit grader cannot be built from a single yes/no question. We reuse binary classifiers by arranging them into a tournament: one class against the rest, or every pair against each other.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Binary classification</b> — choosing between exactly two labels.</li>
+        <li><b>Multiclass classification</b> — choosing one label from three or more classes.</li>
+        <li><b>Classifier</b> — a model that assigns a label.</li>
+        <li><b>Decision boundary</b> — the border in input space where the predicted label changes.</li>
+        <li><b>Hyperplane</b> — a flat boundary; a line in 2-D, a plane in 3-D.</li>
+        <li><b>OvA / OvR</b> — One-vs-All, also called One-vs-Rest: each class against all the others.</li>
+        <li><b>OvO</b> — One-vs-One: one classifier for every pair of classes.</li>
+        <li><b>Confidence score</b> — a number saying how strongly a classifier favours its choice.</li>
+        <li><b>Majority vote</b> — the label with the most individual votes.</li>
+        <li><b>Support</b> — the number of true examples of a class.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Count the classes.</b> Why: two classes use a binary model directly; three or more need a multiclass strategy.</li>
+        <li><b>Choose OvA or OvO.</b> Why: OvA needs fewer classifiers; OvO gives each pair a balanced, simpler problem.</li>
+        <li><b>Train the required binary classifiers.</b> Why: each one learns a single yes/no boundary.</li>
+        <li><b>At prediction time, run all the classifiers.</b> Why: each produces a vote or a confidence score.</li>
+        <li><b>Combine the results.</b> Why: OvA takes the highest confidence; OvO takes the majority vote.</li>
+      </ol>
 
       <h4>Binary vs multiclass</h4>
       <div class="tbl-wrap">
@@ -454,6 +640,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> binary is one border; multiclass is a map divided into several regions. The metrics also grow from four counts to a C×C table.</p>
 
       <h4>Variants of multiclass classification</h4>
 
@@ -487,9 +674,14 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> OvA is cheaper when there are many classes. OvO is cheaper per classifier and often better for SVMs, but the number of pairs grows quickly.</p>
 
       <h4>Example with 4 classes</h4>
       <p>For A, B, C, D: OvA needs <b>4</b> classifiers; OvO needs 4×3/2 = <b>6</b> classifiers. If a new point gets OvO votes A=3, B=1, C=1, D=0, the prediction is <b>A</b>.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> OvA is asking “is this a cat?” “is this a dog?” “is this a fish?” for every animal and taking the most confident yes. OvO is asking “cat or dog?”, “cat or fish?”, “dog or fish?” and counting wins in a mini tournament.</div>
+
+      <div class="confuse"><b>Common confusion:</b> OvO needs C(C−1)/2 classifiers, not C². Also, OvA trains each classifier on the full dataset, so it is not “smaller data” — it is fewer classifiers, each seeing everything.</div>
     </div>
   </div>
 
@@ -499,7 +691,39 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q4(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2025 May Q4(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Imbalanced data means one class has far more examples than the others.<br>
+      A lazy model can score 95% by always picking the big class and still be useless for the small ones.<br>
+      The fix is to change the data, the weights, the threshold, or the metric.</div>
+
+      <h4>Why we do this</h4>
+      <p>Accuracy rewards the majority class. In fraud detection or rare-disease screening, the events we care about are rare, so a model can look excellent while missing every important case. We need methods that force the model to notice the minority classes.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Class imbalance</b> — the classes have very different numbers of examples.</li>
+        <li><b>Majority class</b> — the class with the most examples.</li>
+        <li><b>Minority class</b> — a class with far fewer examples.</li>
+        <li><b>Oversampling</b> — adding copies or synthetic examples of the minority class.</li>
+        <li><b>Undersampling</b> — removing examples from the majority class.</li>
+        <li><b>SMOTE</b> — Synthetic Minority Over-sampling Technique; it creates new minority points between existing ones.</li>
+        <li><b>Class weight</b> — a penalty multiplier that makes errors on a class count more.</li>
+        <li><b>Threshold</b> — the probability cut-off used to turn a score into a label.</li>
+        <li><b>Macro F1</b> — the plain average of per-class F1 scores, so every class counts equally.</li>
+        <li><b>PR-AUC</b> — area under the precision–recall curve; useful when positives are rare.</li>
+        <li><b>Balanced accuracy</b> — the average of per-class recall, instead of overall accuracy.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Count the examples in each class.</b> Why: you cannot fix an imbalance you have not measured.</li>
+        <li><b>Split into train and test before doing anything else.</b> Why: resampling first would let copies of the same example appear in both sets.</li>
+        <li><b>Resample only the training set.</b> Why: the test set must reflect the real-world imbalance.</li>
+        <li><b>Add class weights or cost-sensitive penalties.</b> Why: this makes minority mistakes expensive without changing the data.</li>
+        <li><b>Tune the decision threshold per class.</b> Why: the default 0.5 cut-off is arbitrary and usually favours the majority.</li>
+        <li><b>Report macro F1, per-class recall, or PR-AUC.</b> Why: these expose minority performance that accuracy hides.</li>
+      </ol>
 
       <h4>Problem</h4>
       <p>Imbalanced data has very different class frequencies (e.g. 95% class A, 5% classes B/C/D). A model can predict the majority class always and still get 95% accuracy, while completely failing on the minority classes. Multiclass imbalance is harder because there can be several minority classes.</p>
@@ -521,11 +745,17 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>One-vs-rest with calibration</b> — train each class against the rest and calibrate probabilities.</li>
         <li><b>Data collection</b> — the best long-term fix is to collect more minority samples.</li>
       </ol>
+      <p class="small"><b>What this means:</b> techniques 1–4 change what the model sees or how much it is punished; techniques 5–7 change how you judge or combine it; technique 8 fixes the root cause.</p>
 
       <div class="warn"><b>Do not resample before splitting.</b> Split train/test first, then resample only the training set. Otherwise the same sample can appear in both sets and the test score becomes optimistic.</div>
 
       <h4>Example</h4>
       <p>For classes A (950), B (30), C (20), plain accuracy is misleading. After class weighting and SMOTE, macro F1 might rise from 0.35 to 0.72 even though overall accuracy drops slightly — that is the correct trade-off.</p>
+      <p class="small"><b>What this means:</b> a small drop in accuracy can hide a large gain on the classes you actually care about. Judge the model by the minority-class numbers.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A fire alarm that never rings is 99.9% accurate on ordinary days, but useless on the one day there is a fire. You would rather accept a few false alarms than miss the real event.</div>
+
+      <div class="confuse"><b>Common confusion:</b> High accuracy does not mean good minority performance. Also, never resample before splitting the data — that leaks copies into the test set and gives a fake, optimistic score.</div>
     </div>
   </div>
 </section>
@@ -540,7 +770,39 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(a) [5] · 2025 May Q3(c) [6]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q3(a) [5] · 2025 May Q3(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> A classifier is judged by how its yes/no answers compare with the truth.<br>
+      The confusion matrix counts the four possible outcomes.<br>
+      Accuracy, precision, recall and F1 are all built from those four counts.</div>
+
+      <h4>Why we do this</h4>
+      <p>“90% accurate” can describe a useful model or a useless one. It depends on which mistakes it makes and how the classes are distributed. Evaluation metrics force you to say exactly what the model gets right and what it gets wrong.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>TP (true positive)</b> — the model said positive and the truth is positive.</li>
+        <li><b>TN (true negative)</b> — the model said negative and the truth is negative.</li>
+        <li><b>FP (false positive)</b> — the model said positive but the truth is negative; a false alarm.</li>
+        <li><b>FN (false negative)</b> — the model said negative but the truth is positive; a missed case.</li>
+        <li><b>Accuracy</b> — the fraction of all predictions that are correct.</li>
+        <li><b>Precision</b> — of the cases called positive, the fraction that really are positive.</li>
+        <li><b>Recall</b> — of the real positives, the fraction the model found.</li>
+        <li><b>F1-score</b> — the harmonic mean of precision and recall.</li>
+        <li><b>Specificity</b> — of the real negatives, the fraction correctly called negative.</li>
+        <li><b>ROC curve</b> — a plot of true-positive rate against false-positive rate at every threshold.</li>
+        <li><b>AUC</b> — area under the ROC curve; 0.5 is random, 1.0 is perfect.</li>
+        <li><b>Cross-validation</b> — repeated train/test splits used to estimate performance on unseen data.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Build the confusion matrix from the test predictions.</b> Why: it records both kinds of error instead of collapsing them into one number.</li>
+        <li><b>Compute accuracy for the overall picture.</b> Why: it is easy to explain, but only trustworthy when classes are balanced.</li>
+        <li><b>Compute precision and recall for the two error types.</b> Why: they answer “how often is a positive alarm correct?” and “how many real positives did we catch?”.</li>
+        <li><b>Combine them with F1 when both matter.</b> Why: F1 is low if either precision or recall is weak.</li>
+        <li><b>Confirm with cross-validation or a held-out test set.</b> Why: a single split can be lucky or unlucky.</li>
+      </ol>
 
       <h4>1. Confusion matrix</h4>
       <p>A 2×2 table for binary classification with TP, TN, FP, FN. Every other metric is computed from these four numbers.</p>
@@ -553,22 +815,27 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the diagonal (TP, TN) is where the model is right. The off-diagonal (FN, FP) is where it is wrong, and the two cells are different mistakes.</p>
 
       <h4>2. Accuracy</h4>
       <div class="math">Accuracy = (TP + TN) / (TP + TN + FP + FN)</div>
       <p>Fraction of all predictions that are correct. Misleading when classes are imbalanced.</p>
+      <p class="small"><b>What this means:</b> correct answers divided by all answers. A model that always says “negative” scores high if negatives are common.</p>
 
       <h4>3. Precision</h4>
       <div class="math">Precision = TP / (TP + FP)</div>
       <p>Of all samples the model labelled positive, how many really are positive. Important when a false alarm is costly (spam filter).</p>
+      <p class="small"><b>What this means:</b> the denominator is everyone the model <b>accused</b>. Precision asks how many of those accusations were fair.</p>
 
       <h4>4. Recall (Sensitivity / TPR)</h4>
       <div class="math">Recall = TP / (TP + FN)</div>
       <p>Of all actual positives, how many the model found. Important when missing a positive is costly (cancer detection).</p>
+      <p class="small"><b>What this means:</b> the denominator is everyone who <b>actually</b> had the condition. Recall asks how many of them were caught.</p>
 
       <h4>5. F1-score</h4>
       <div class="math">F1 = 2 × Precision × Recall / (Precision + Recall)</div>
       <p>Harmonic mean of precision and recall. High only when both are high.</p>
+      <p class="small"><b>What this means:</b> a plain average could let a perfect precision hide a terrible recall. The harmonic mean punishes that imbalance.</p>
 
       <h4>6. Other methods</h4>
       <ul>
@@ -579,6 +846,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Macro / micro / weighted averages</b> for multiclass.</li>
         <li><b>Cross-validation</b> — estimates performance on unseen data.</li>
       </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> A security guard at a gate. TP = catches a real thief. FP = stops an innocent visitor. FN = lets a thief through. TN = lets an honest person pass. Accuracy counts all correct decisions; precision asks how often a stop was justified; recall asks how many thieves were caught.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Accuracy is not enough when classes are imbalanced. Precision and recall are not interchangeable: precision is about the reliability of a positive alarm, recall is about coverage of the real positives.</div>
     </div>
   </div>
 
@@ -588,7 +859,37 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [8]</p>
+<p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> Accuracy is the overall score. Precision asks how often a positive alarm is right.<br>
+      Recall asks how many real positives were caught. F-score balances the two.<br>
+      All four come from the same four counts in the confusion matrix.</div>
+
+      <h4>Why we do this</h4>
+      <p>A single accuracy number hides which mistakes the model makes. In some problems a false alarm is annoying; in others a missed case is dangerous. These four metrics let you describe the error profile instead of just the overall hit rate.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>TP</b> — correctly predicted positive.</li>
+        <li><b>TN</b> — correctly predicted negative.</li>
+        <li><b>FP</b> — predicted positive, actually negative; a false alarm.</li>
+        <li><b>FN</b> — predicted negative, actually positive; a missed case.</li>
+        <li><b>Precision</b> — TP divided by all predicted positives.</li>
+        <li><b>Recall</b> — TP divided by all actual positives.</li>
+        <li><b>F-score</b> — the harmonic mean of precision and recall.</li>
+        <li><b>Harmonic mean</b> — a special average that is pulled down by the smaller of the two values.</li>
+        <li><b>Class imbalance</b> — one class has far more examples than the other.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Count TP, TN, FP and FN from the test set.</b> Why: every formula is just a different ratio of these four numbers.</li>
+        <li><b>Compute accuracy as the overall correct fraction.</b> Why: it gives the big picture before you look at the error types.</li>
+        <li><b>Compute precision from the predicted positives.</b> Why: it tells you how much to trust a positive alarm.</li>
+        <li><b>Compute recall from the actual positives.</b> Why: it tells you how many real cases were missed.</li>
+        <li><b>Compute F1 to combine them.</b> Why: it gives one number that stays low if either precision or recall is weak.</li>
+        <li><b>Choose the metric that matches the cost of each error.</b> Why: the “best” model depends on whether a false alarm or a missed case hurts more.</li>
+      </ol>
 
       <p>Use the same four quantities from the confusion matrix. Write the formula, the meaning in one line, and when to use it.</p>
       <div class="tbl-wrap">
@@ -602,6 +903,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> read the third column as the plain-English question each formula answers. That is usually worth a mark on its own.</p>
 
       <h4>Worked example</h4>
       <p>TP = 40, TN = 50, FP = 10, FN = 0.</p>
@@ -610,8 +912,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       Recall = 40/40 = 1.00<br>
       F1 = 2×0.8×1.0/(1.8) = <b>0.8889</b></div>
       <p>Recall is perfect because there are no false negatives, but precision is only 0.80 because 10 negatives were wrongly flagged. F1 = 0.889 captures both facts; accuracy 0.90 alone hides the false alarms.</p>
+      <p class="small"><b>What this means:</b> the model caught every real positive but raised 10 false alarms. Whether that is good depends on the cost of a false alarm.</p>
 
       <div class="note"><b>Accuracy paradox:</b> with 95 negatives and 5 positives, a model that always says “negative” gets 95% accuracy but recall = 0. Always report precision/recall/F1 on imbalanced data.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> Fishing with a net. Precision is “of the things in my net, how many are actually fish?” Recall is “of all the fish in the pond, how many did I catch?” A huge net catches every fish but also every boot.</div>
+
+      <div class="confuse"><b>Common confusion:</b> F1 is the harmonic mean, not the ordinary average. A model with precision 1.0 and recall 0 has F1 = 0, not 0.5. Also, precision divides by predicted positives, while recall divides by actual positives.</div>
     </div>
   </div>
 
@@ -621,7 +928,35 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q4(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> A confusion matrix is a scoreboard of mistakes.<br>
+      It shows what the model predicted for each true class, so you can see which classes it mixes up.<br>
+      Accuracy gives one number; the matrix shows where that number comes from.</div>
+
+      <h4>Why we do this</h4>
+      <p>Two models can both be 90% accurate and behave completely differently. One may raise false alarms; the other may miss real cases. The confusion matrix separates those errors, which lets you choose the model that is safer for the problem.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Actual label</b> — the true class of an example.</li>
+        <li><b>Predicted label</b> — the class the model chose.</li>
+        <li><b>False positive (FP)</b> — a false alarm; predicted positive, actually negative.</li>
+        <li><b>False negative (FN)</b> — a missed case; predicted negative, actually positive.</li>
+        <li><b>Class imbalance</b> — one class has far more examples than another.</li>
+        <li><b>Threshold</b> — the cut-off used to convert a probability into a label.</li>
+        <li><b>Multiclass matrix</b> — a C×C table where rows are actual classes and columns are predictions.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Draw a table with actual classes as rows and predicted classes as columns.</b> Why: every cell then represents one kind of outcome.</li>
+        <li><b>Fill each cell with the number of test examples.</b> Why: the counts are the raw evidence behind every metric.</li>
+        <li><b>Read the diagonal.</b> Why: diagonal cells are correct predictions.</li>
+        <li><b>Read the off-diagonal cells.</b> Why: they show exactly which classes are being confused with which.</li>
+        <li><b>Compute precision, recall and F1 from the cells.</b> Why: the matrix is the source; the metrics are summaries.</li>
+        <li><b>Change the threshold or model and compare matrices.</b> Why: this shows whether a fix reduced the right kind of error.</li>
+      </ol>
 
       <h4>What it is</h4>
       <p>A confusion matrix is a table that compares <b>actual</b> class labels with <b>predicted</b> labels. For two classes it has four cells: TP, TN, FP, FN.</p>
@@ -635,9 +970,15 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Multiclass diagnosis</b> — a 4×4 matrix shows which classes are confused with which (e.g. class A predicted as B).</li>
         <li><b>Threshold tuning</b> — changing the decision threshold changes FP and FN; the matrix shows the trade-off.</li>
       </ol>
+      <p class="small"><b>What this means:</b> points 1–3 explain why the matrix is more informative than accuracy; points 4–6 explain how you use it to make decisions.</p>
 
       <h4>Example</h4>
       <p>Model A: 90% accuracy with 0 FP and 20 FN. Model B: 90% accuracy with 20 FP and 0 FN. Accuracy is identical, but the matrices show completely different behaviour. For cancer screening, B (no missed cases) is better; for spam filtering, A may be better.</p>
+      <p class="small"><b>What this means:</b> the same score can hide opposite risks. Always inspect the error cells before choosing a model.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A teacher's marking sheet that shows not just “18 out of 20 correct”, but which wrong answer the student chose for each question. The pattern of mistakes is more useful than the total.</div>
+
+      <div class="confuse"><b>Common confusion:</b> The confusion matrix is not a single metric; it is the table from which metrics are computed. Also, a high-accuracy model can still have a terrible minority-class recall, and the matrix is what exposes that.</div>
     </div>
   </div>
 
@@ -647,10 +988,41 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q3(c) [6]</p>
+<p class="asked"><b>Asked in:</b> 2025 Nov Q3(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> The four counts are given: 120 true positives, 45 true negatives, 10 false positives and 5 false negatives.<br>
+      We plug them into the accuracy, precision, recall and F1 formulas.<br>
+      Then we say what each number means in plain English.</div>
+
+      <h4>Why we do this</h4>
+      <p>This is the safest numerical in Unit 4. The formulas are short, the arithmetic is simple, and the examiner gives step marks for writing the formula before substituting. The only skill is keeping the denominators straight.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>TP</b> — correctly predicted positive; here 120.</li>
+        <li><b>TN</b> — correctly predicted negative; here 45.</li>
+        <li><b>FP</b> — predicted positive but actually negative; here 10.</li>
+        <li><b>FN</b> — predicted negative but actually positive; here 5.</li>
+        <li><b>Total</b> — TP + TN + FP + FN, the number of test examples.</li>
+        <li><b>Accuracy</b> — correct predictions divided by total predictions.</li>
+        <li><b>Precision</b> — TP divided by all predicted positives (TP + FP).</li>
+        <li><b>Recall</b> — TP divided by all actual positives (TP + FN).</li>
+        <li><b>F1</b> — the harmonic mean of precision and recall.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Add all four counts to get the total.</b> Why: accuracy needs the total number of predictions.</li>
+        <li><b>Compute accuracy from the two correct cells.</b> Why: this is the overall hit rate.</li>
+        <li><b>Compute precision using predicted positives.</b> Why: it measures trust in a positive alarm.</li>
+        <li><b>Compute recall using actual positives.</b> Why: it measures coverage of the real cases.</li>
+        <li><b>Compute F1 from precision and recall.</b> Why: it gives one balanced score.</li>
+        <li><b>Interpret each number in a sentence.</b> Why: the interpretation often carries the final mark.</li>
+      </ol>
 
       <h4>Step 1 — total</h4>
       <div class="math">Total = TP + TN + FP + FN = 120 + 45 + 10 + 5 = 180</div>
+      <p class="small"><b>What this means:</b> the test set has 180 examples. Every denominator below will use either this total, the predicted positives, or the actual positives.</p>
 
       <h4>Step 2 — metrics</h4>
       <div class="math">Accuracy = (TP + TN)/Total = (120 + 45)/180 = 165/180 = <b>0.9167 = 91.67%</b><br><br>
@@ -658,6 +1030,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       Recall = TP/(TP + FN) = 120/(120 + 5) = 120/125 = <b>0.9600 = 96.00%</b><br><br>
       F1 = 2PR/(P + R) = 2×0.9231×0.96/(0.9231 + 0.96)<br>
       F1 = 1.7723/1.8831 = <b>0.9412 = 94.12%</b></div>
+      <p class="small"><b>What this means:</b> precision divides by 130 because the model made 130 positive predictions. Recall divides by 125 because there were 125 actual positives. Mixing up those two denominators is the main way to lose marks.</p>
 
       <h4>Step 3 — interpretation</h4>
       <ul>
@@ -667,6 +1040,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>F1 94.12% — high because both precision and recall are high.</li>
       </ul>
       <p class="small">Exam tip: write the formula first, then substitute, then the percentage. Step marks are given for the formula even if arithmetic slips.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A quality check on 180 parts. 165 pass inspection correctly, 10 good parts are wrongly rejected, and 5 bad parts slip through. Accuracy is the overall correct rate; precision is how often a rejection is justified; recall is how many bad parts were caught.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Precision and recall use different denominators. Precision: TP/(TP+FP). Recall: TP/(TP+FN). Do not swap FP and FN, and do not divide by the total for either one.</div>
     </div>
   </div>
 
@@ -676,7 +1053,36 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q4(a) [6]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q4(a) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Compute precision, recall and F1 for each class separately.<br>
+      Then take a plain average across the classes — that is the macro average.<br>
+      Every class counts equally, even a tiny one.</div>
+
+      <h4>Why we do this</h4>
+      <p>In multiclass problems, one big class can dominate overall accuracy while the small classes fail. Macro averaging gives each class the same weight, so a model that ignores a rare class cannot hide behind the big one.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Multiclass confusion matrix</b> — a C×C table; rows are actual classes, columns are predicted classes.</li>
+        <li><b>Diagonal cell</b> — correct predictions for a class; its TP.</li>
+        <li><b>Row total</b> — all actual examples of that class; TP + FN.</li>
+        <li><b>Column total</b> — all predictions for that class; TP + FP.</li>
+        <li><b>Macro average</b> — the unweighted mean of a metric across classes.</li>
+        <li><b>Micro average</b> — computed after pooling all TP, FP and FN; dominated by the largest class.</li>
+        <li><b>Weighted average</b> — each class is weighted by how many examples it has (its support).</li>
+        <li><b>Support</b> — the number of true examples in a class.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Read the matrix with rows as actual and columns as predicted.</b> Why: reversing them silently swaps FP and FN.</li>
+        <li><b>For each class, take TP from the diagonal.</b> Why: the diagonal is the count of correct predictions.</li>
+        <li><b>Compute FP as the column total minus TP.</b> Why: everyone predicted as this class but belonging to another class is a false positive.</li>
+        <li><b>Compute FN as the row total minus TP.</b> Why: everyone in this class predicted as another class is a false negative.</li>
+        <li><b>Compute precision, recall and F1 for each class.</b> Why: these are the per-class building blocks.</li>
+        <li><b>Average the per-class values with equal weight.</b> Why: that is exactly what “macro” means.</li>
+      </ol>
 
       <h4>Given matrix</h4>
       <div class="tbl-wrap">
@@ -690,6 +1096,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the diagonal has 100, 9, 8 and 9 correct predictions. Class A has 200 examples; classes B, C and D have only 10 each. That is a severe imbalance.</p>
 
       <h4>Step 1 — per-class TP, FP, FN</h4>
       <p>For class X: TP = diagonal cell; FP = column sum − TP; FN = row sum − TP.</p>
@@ -704,16 +1111,22 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> class A is never wrongly predicted as another class (FP = 0), but 100 of its 200 examples are predicted as B (FN = 100). Class B is predicted far too often — 82 of its 91 positive predictions are actually class A.</p>
 
       <h4>Step 2 — macro averages</h4>
       <div class="math">Macro precision = (1.0000 + 0.0989 + 0.4444 + 0.4286)/4 = 1.9719/4 = <b>0.4930 = 49.30%</b><br><br>
       Macro recall = (0.5000 + 0.9000 + 0.8000 + 0.9000)/4 = 3.1000/4 = <b>0.7750 = 77.50%</b><br><br>
       Macro F1 = (0.6667 + 0.1782 + 0.5714 + 0.5806)/4 = 1.9969/4 = <b>0.4992 = 49.92%</b></div>
+      <p class="small"><b>What this means:</b> the macro precision is only 49.3% even though class A has perfect precision. The small classes pull the average down, which is exactly the point of macro averaging.</p>
 
       <h4>Step 3 — interpretation</h4>
       <p>Macro averages give every class <b>equal weight</b>, so small classes B, C, D matter as much as class A. Class A has perfect precision but only 50% recall (80 A’s were predicted as B). Class B has high recall but terrible precision because 80 A’s were wrongly called B. The low macro precision (49.3%) exposes this; plain accuracy would be 126/230 = 54.8% and would hide it.</p>
 
       <div class="note"><b>Macro vs micro:</b> macro = unweighted mean of per-class metrics. Micro = pool all TP/FP/FN first, then compute; micro is dominated by the largest class. Weighted average weights each class by its support (row total).</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> A school averages subject scores equally, even if two students take music and two hundred take maths. The music result still counts as one full subject in the macro average.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Rows are actual and columns are predicted. Swapping them swaps FP and FN. Also, macro is not micro: macro treats classes equally, while micro is dominated by the biggest class.</div>
     </div>
   </div>
 
@@ -723,7 +1136,34 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q3(c) [4]</p>
+<p class="asked"><b>Asked in:</b> 2023 Nov Q3(c) [4]</p>
+
+      <div class="simple"><b>In simple words:</b> Precision asks “when I say yes, how often am I right?”<br>
+      Recall asks “of all the real yes cases, how many did I find?”<br>
+      Lowering the threshold usually catches more positives but raises false alarms, so the two pull in opposite directions.</div>
+
+      <h4>Why we do this</h4>
+      <p>Most classifiers output a probability, and you choose the cut-off for saying “positive”. That choice decides the balance between false alarms and missed cases. Understanding the trade-off lets you set the cut-off to match the real cost of each mistake.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Threshold</b> — the probability above which the model predicts positive.</li>
+        <li><b>Trade-off</b> — improving one quantity usually makes the other worse.</li>
+        <li><b>False positive (FP)</b> — a false alarm.</li>
+        <li><b>False negative (FN)</b> — a missed positive.</li>
+        <li><b>Precision</b> — TP/(TP+FP), the trustworthiness of a positive prediction.</li>
+        <li><b>Recall</b> — TP/(TP+FN), the coverage of real positives.</li>
+        <li><b>F1</b> — the harmonic mean of precision and recall.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Start with a low threshold.</b> Why: many cases are called positive, so almost every real positive is caught, but false alarms rise.</li>
+        <li><b>Record TP, FP and FN at that threshold.</b> Why: precision and recall can only be computed from the counts.</li>
+        <li><b>Raise the threshold gradually.</b> Why: the model becomes more selective, so precision usually rises and recall falls.</li>
+        <li><b>Plot precision and recall against the threshold.</b> Why: the curve shows the available trade-offs at a glance.</li>
+        <li><b>Choose the point where the cost of FP and FN is acceptable.</b> Why: there is no universally best threshold; it depends on the application.</li>
+      </ol>
 
       <h4>Relation</h4>
       <p>Precision and recall usually move in <b>opposite directions</b> when the decision threshold changes. This is the <b>precision–recall trade-off</b>.</p>
@@ -732,6 +1172,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Raise the threshold</b> → fewer positives → precision rises, recall falls (more false negatives).</li>
         <li>F1 combines both: <code>F1 = 2PR/(P+R)</code>.</li>
       </ul>
+      <p class="small"><b>What this means:</b> you can trade a false alarm for a missed case, but you cannot usually reduce both at the same threshold. F1 gives one summary of where you landed.</p>
 
       <h4>Example — cancer screening</h4>
       <div class="tbl-wrap">
@@ -744,6 +1185,11 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       </table>
       </div>
       <p>At the low threshold we catch almost all cancers (recall 96%) but many healthy people are flagged (precision 61.5%). At the high threshold precision is 94.6% but 15 cancers are missed (recall 70%). The doctor must choose the threshold based on the cost of each error.</p>
+      <p class="small"><b>What this means:</b> the low threshold is safer for patients because it misses only 2 cases; the high threshold is more precise but misses 15. In screening, recall usually matters more.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A smoke alarm. Make it very sensitive and it catches every fire but also screams at burnt toast. Make it dull and it stays quiet, but it may sleep through a real fire. The right sensitivity depends on what a false alarm costs versus a missed fire.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Precision and recall are not mathematically forced to move in opposite directions for every possible model, but changing the threshold on one model usually trades one for the other. A better model can improve both at once.</div>
     </div>
   </div>
 
@@ -753,7 +1199,35 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(a) [9]</p>
+<p class="asked"><b>Asked in:</b> 2023 Nov Q4(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> K-fold cross-validation cuts the data into K equal parts.<br>
+      It trains K times; each time a different part is held out for testing.<br>
+      The final score is the average of the K test scores.</div>
+
+      <h4>Why we do this</h4>
+      <p>A single train/test split can be lucky or unlucky. If the test set happens to be easy, the model looks better than it is. Cross-validation uses every row for testing exactly once, so the estimate is more reliable without wasting data.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Fold</b> — one of the K equal chunks of the dataset.</li>
+        <li><b>Cross-validation</b> — repeatedly training and testing on different splits.</li>
+        <li><b>Stratified</b> — each fold keeps roughly the same class proportions as the full data.</li>
+        <li><b>Leave-one-out (LOO)</b> — K equals n; each test set is a single row.</li>
+        <li><b>Bias of the estimate</b> — how far the estimated score is from the true performance, on average.</li>
+        <li><b>Variance of the estimate</b> — how much the estimated score changes from one split to another.</li>
+        <li><b>Nested cross-validation</b> — an inner loop tunes settings and an outer loop estimates final performance.</li>
+        <li><b>Forward chaining</b> — time-ordered splits where training only uses the past.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Shuffle the data, keeping class proportions if it is a classification problem.</b> Why: random folds should look like the whole dataset.</li>
+        <li><b>Split into K equal folds.</b> Why: each fold must get a turn as the test set.</li>
+        <li><b>Train on K−1 folds and test on the remaining fold.</b> Why: the test fold is unseen, so the score is honest.</li>
+        <li><b>Repeat until every fold has been the test set once.</b> Why: every row contributes to the estimate.</li>
+        <li><b>Average the K scores.</b> Why: one number summarises expected performance; the spread shows stability.</li>
+      </ol>
 
       <h4>Definition</h4>
       <p>K-fold cross-validation splits the dataset into <b>K equal folds</b>. The model is trained K times; each time one fold is the test set and the other K−1 folds are the training set. The final score is the average of the K scores.</p>
@@ -766,6 +1240,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       test on Fi
       record score Si
 4. Final score = (S1 + S2 + ... + SK) / K</code></pre>
+      <p class="small"><b>What this means:</b> each round uses (K−1)/K of the data for training and 1/K for testing. Every row is tested exactly once across the K rounds.</p>
 
       <h4>Diagram (K = 5)</h4>
       <div class="tree">Round 1  [ TEST ][ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ]
@@ -773,6 +1248,7 @@ Round 2  [ TRAIN ][ TEST ][ TRAIN ][ TRAIN ][ TRAIN ]
 Round 3  [ TRAIN ][ TRAIN ][ TEST ][ TRAIN ][ TRAIN ]
 Round 4  [ TRAIN ][ TRAIN ][ TRAIN ][ TEST ][ TRAIN ]
 Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
+      <p class="small"><b>What this means:</b> the TEST block moves one step to the right each round. Nothing is tested twice, and nothing is always in training.</p>
 
       <h4>When K is too large</h4>
       <ul>
@@ -788,6 +1264,7 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
         <li>Fewer folds → higher variance in the estimated score; the result depends on how the split happened.</li>
         <li>Example: K = 2 is cheap but unreliable; K = 3 is the minimum for a reasonable estimate.</li>
       </ul>
+      <p class="small"><b>What this means:</b> large K means less bias but more compute and more variance; small K means cheaper runs but a gloomier, less stable estimate.</p>
 
       <h4>How to choose K</h4>
       <ul>
@@ -800,6 +1277,10 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       </ul>
 
       <div class="tip"><b>9-mark structure:</b> definition (2) + procedure/diagram (2) + too-large K (2) + too-small K (2) + how to choose (1).</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> Tasting a dish from five different spoons instead of trusting one spoon. Each spoon samples a different part of the pot, and the average tells you what the whole pot tastes like.</div>
+
+      <div class="confuse"><b>Common confusion:</b> K here is the number of folds, not the K in KNN. Also, the held-out fold must never be used for training or tuning in that round; otherwise the test score is no longer honest.</div>
     </div>
   </div>
 </section>
@@ -814,7 +1295,34 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q4(c) [5] · 2025 May Q4(a) [5]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q4(c) [5] · 2025 May Q4(a) [5]</p>
+
+      <div class="simple"><b>In simple words:</b> KNN stores all the training points.<br>
+      To classify a new point, it finds the K closest stored points and lets them vote.<br>
+      For regression, it returns the average of their values instead of a vote.</div>
+
+      <h4>Why we do this</h4>
+      <p>Sometimes the simplest assumption is the best one: points that are close together probably have the same answer. KNN turns that intuition into an algorithm without fitting any equation. It is easy to explain and naturally handles curved boundaries.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>K</b> — the number of neighbours consulted.</li>
+        <li><b>Neighbour</b> — a stored training point that is close to the query point.</li>
+        <li><b>Distance metric</b> — the ruler used to measure closeness, usually Euclidean distance.</li>
+        <li><b>Query point</b> — the new example you want to classify.</li>
+        <li><b>Lazy learner</b> — a model that does almost no work at training time and all the work at prediction time.</li>
+        <li><b>Non-parametric</b> — the model does not assume a fixed equation with a fixed number of parameters.</li>
+        <li><b>Majority vote</b> — the label chosen by most of the K neighbours.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Choose K and a distance metric.</b> Why: these two choices define what “near” means and how many opinions count.</li>
+        <li><b>Compute the distance from the query point to every training point.</b> Why: KNN has no equation to consult, so it must compare directly.</li>
+        <li><b>Sort the distances and keep the K smallest.</b> Why: those are the nearest neighbours.</li>
+        <li><b>Count their labels, or average their values.</b> Why: the neighbours provide the evidence for the prediction.</li>
+        <li><b>Assign the majority label, or the average for regression.</b> Why: this is the final output.</li>
+      </ol>
 
       <h4>Definition</h4>
       <p>KNN classifies a new point by finding the <b>K nearest training points</b> and assigning the <b>majority class</b> among them. For regression it returns the average of the K neighbours.</p>
@@ -825,6 +1333,7 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
 3. Sort the distances and pick the K smallest.
 4. Count the class labels of those K neighbours.
 5. Assign the majority class (or average for regression).</code></pre>
+      <p class="small"><b>What this means:</b> there is no training phase beyond storing the data. All the computation happens when a prediction is requested.</p>
 
       <h4>Example</h4>
       <p>Training points: (1,1) A, (2,2) A, (4,4) B, (5,5) B. Query q = (2.5, 2.5), K = 3.</p>
@@ -840,6 +1349,7 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       </table>
       </div>
       <p>The 3 nearest are (2,2) A, (1,1) A, (4,4) B → 2 votes A, 1 vote B → <b>q is classified as A</b>.</p>
+      <p class="small"><b>What this means:</b> (1,1) and (4,4) are tied at distance 2.12, but both fit inside K = 3. The closest point (2,2) is A, and A also wins the vote.</p>
 
       <h4>Choosing K</h4>
       <ul>
@@ -847,6 +1357,10 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
         <li><b>Large K</b> → smoother boundary, but may mix distant classes and underfit.</li>
         <li>Use odd K for two classes to avoid ties; choose K by cross-validation.</li>
       </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> You move to a new town and ask your three nearest neighbours which bus to take. If two say route 5 and one says route 7, you take route 5.</div>
+
+      <div class="confuse"><b>Common confusion:</b> K is the number of neighbours, not the number of classes. Feature scale matters: a salary column in thousands will dominate a distance unless you normalise the features first.</div>
     </div>
   </div>
 
@@ -856,7 +1370,35 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q3(c) [6] · 2025 Nov Q4(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2024 May Q3(c) [6] · 2025 Nov Q4(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> A distance metric is a ruler.<br>
+      KNN needs one to decide which stored points are “near”.<br>
+      Different rulers suit different data: straight-line, city-block, direction-only, or mismatch-count.</div>
+
+      <h4>Why we do this</h4>
+      <p>KNN has no equation; its entire notion of similarity comes from the distance function. Change the ruler and the nearest neighbours change, so the prediction can change too. Choosing a ruler that matches the data is therefore part of building the model.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Euclidean distance (L2)</b> — the straight-line distance between two points.</li>
+        <li><b>Manhattan distance (L1)</b> — the distance travelled along grid lines, like a city taxi.</li>
+        <li><b>Minkowski distance (Lp)</b> — a family that includes Euclidean and Manhattan as special cases.</li>
+        <li><b>Chebyshev distance (L∞)</b> — the largest difference along any one coordinate.</li>
+        <li><b>Cosine distance</b> — one minus the cosine of the angle between two vectors; it compares direction, not length.</li>
+        <li><b>Hamming distance</b> — the number of positions at which two strings differ.</li>
+        <li><b>Mahalanobis distance</b> — a distance that accounts for feature correlation and scale.</li>
+        <li><b>Normalisation</b> — rescaling features so no column dominates because of its units.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Look at the data type: numbers, categories, or text vectors.</b> Why: Hamming is for strings, cosine is for direction-based vectors, Euclidean is for ordinary numeric points.</li>
+        <li><b>Normalise the numeric features.</b> Why: otherwise a feature measured in thousands will dominate a feature measured in single digits.</li>
+        <li><b>Choose a metric that matches the meaning of “similar”.</b> Why: two points can be close in one ruler and far in another.</li>
+        <li><b>Compute distances to all stored points.</b> Why: KNN ranks neighbours by this number.</li>
+        <li><b>Check whether the ranking makes sense on a few examples.</b> Why: a bad ruler silently produces bad neighbours.</li>
+      </ol>
 
       <div class="tbl-wrap">
       <table class="left">
@@ -872,6 +1414,7 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the table is a menu, not a ranking. Euclidean is the default; Manhattan is steadier with outliers; cosine ignores length; Hamming is for strings; Mahalanobis is the most careful about correlated features.</p>
 
       <h4>Worked comparison</h4>
       <p>For p = (1,2) and q = (4,6):</p>
@@ -880,6 +1423,11 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       Chebyshev = max(3,4) = <b>4</b><br>
       Minkowski with p = 3 = (3³ + 4³)<sup>1/3</sup> = (27+64)<sup>1/3</sup> = 91<sup>1/3</sup> = <b>4.498</b></div>
       <p class="small">Always normalise features before using distance-based methods, otherwise a feature with a large range dominates the distance.</p>
+      <p class="small"><b>What this means:</b> the same two points get four different distances. Euclidean cuts the diagonal, Manhattan follows the grid, Chebyshev only cares about the worse coordinate, and Minkowski with p = 3 sits between Euclidean and Chebyshev.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> Euclidean is a drone flying straight to the target. Manhattan is a taxi that must follow the street grid. Chebyshev is “how far apart are the buildings on the worst axis?”. Cosine compares which direction you are facing, not how far away you are.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Euclidean distance is not scale-free. A salary column in rupees will drown out age in years unless you normalise first. Also, cosine distance ignores magnitude: a short vector and a long vector pointing the same way are “close”.</div>
     </div>
   </div>
 <div class="qa">
@@ -888,7 +1436,32 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> A new student scored 6 in Physics and 8 in Chemistry.<br>
+      We measure the distance from this student to every stored student, take the 3 nearest, and let them vote.<br>
+      All three nearest students passed, so the prediction is Pass.</div>
+
+      <h4>Why we do this</h4>
+      <p>This is the standard KNN numerical. It tests the full pipeline: compute distances, rank them, pick K, count votes. The arithmetic is easy; the marks are in showing the table and the vote clearly.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Query point q</b> — the new student (6, 8).</li>
+        <li><b>Euclidean distance</b> — √[(x₁−x₂)² + (y₁−y₂)²].</li>
+        <li><b>K</b> — the number of nearest neighbours used; here K = 3.</li>
+        <li><b>Rank</b> — the position of a point when sorted from nearest to farthest.</li>
+        <li><b>Majority vote</b> — the label held by most of the K neighbours.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Write the query point and the five training points.</b> Why: every distance is computed from the same query.</li>
+        <li><b>Compute the Euclidean distance to each training point.</b> Why: KNN ranks neighbours by distance.</li>
+        <li><b>Sort the distances and mark the smallest K.</b> Why: only the K nearest get a vote.</li>
+        <li><b>Count the labels among those K.</b> Why: the majority label is the prediction.</li>
+        <li><b>State the prediction and the vote count.</b> Why: the examiner looks for the final label and evidence.</li>
+      </ol>
 
       <h4>Step 1 — Euclidean distances to q = (6,8)</h4>
       <div class="tbl-wrap">
@@ -903,14 +1476,20 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> students 2 and 3 are both at distance 1.0, so they share the top two ranks. Student 5 is next at 2.0. The two failing students are farther away.</p>
 
       <h4>Step 2 — three nearest neighbours</h4>
       <p>K = 3 → student 2 (Pass, d = 1), student 3 (Pass, d = 1), student 5 (Pass, d = 2).</p>
 
       <h4>Step 3 — majority vote</h4>
-      <div class="math">Pass = 3 votes    Fail = 0 votes   →   <b>Prediction: PASS</b></div>
+      <div class="math">Pass = 3 votes   Fail = 0 votes   →   <b>Prediction: PASS</b></div>
+      <p class="small"><b>What this means:</b> the vote is unanimous, so there is no tie to break. The new student is predicted to pass.</p>
 
       <div class="tip"><b>Presentation:</b> draw the table with distances, circle the three smallest, write the vote count. That is the full 6 marks. A tie would need a distance-weighted vote or a smaller K.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> You join a new class and want to know whether you will pass. You look at the three students whose marks are closest to yours. All three passed, so you predict that you will pass too.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Sort by distance, not by row number. Also, K = 3 means three neighbours, not “three marks”. And if two classes tie, you need a tie-break rule such as a distance-weighted vote.</div>
     </div>
   </div>
 
@@ -920,7 +1499,34 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q3(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2024 May Q3(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> KNN is simple and flexible, but it stores everything and thinks hard only when asked.<br>
+      Prediction is slow and memory-heavy because it compares the new point with every stored point.<br>
+      It also needs scaled features, and it struggles when there are many dimensions.</div>
+
+      <h4>Why we do this</h4>
+      <p>Every algorithm has a trade-off. KNN's “no training” is attractive until you have a million rows and need a fast answer. Knowing its limits tells you when to use it — small, clean, low-dimensional data — and when to choose something else.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Lazy learning</b> — no real training; the data is stored and used at prediction time.</li>
+        <li><b>Non-parametric</b> — no fixed equation with a fixed number of parameters.</li>
+        <li><b>Curse of dimensionality</b> — in high dimensions, distances become similar and “nearest” loses meaning.</li>
+        <li><b>Normalisation</b> — rescaling features so no column dominates the distance.</li>
+        <li><b>O(n·d)</b> — time proportional to the number of stored points n times the number of features d.</li>
+        <li><b>Outlier</b> — a point far from the rest that can distort a local vote.</li>
+        <li><b>Feature importance</b> — a score saying which inputs matter most.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Normalise the features.</b> Why: distance depends on scale, and unscaled columns silently dominate.</li>
+        <li><b>Choose K by cross-validation.</b> Why: small K overfits noise; large K smooths away real detail.</li>
+        <li><b>Store the training data and labels.</b> Why: KNN needs the raw points at prediction time.</li>
+        <li><b>At query time, compute distances and vote.</b> Why: this is where all the work happens.</li>
+        <li><b>Use a spatial index or approximate search for large data.</b> Why: a full scan of every point is too slow at scale.</li>
+      </ol>
 
       <div class="grid2">
         <div>
@@ -947,6 +1553,11 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
           </ul>
         </div>
       </div>
+      <p class="small"><b>What this means:</b> the advantages are about simplicity and flexibility; the disadvantages are about cost and reliability at scale. KNN is a good first model, not always a good production model.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> Asking your neighbours for advice works in a small village. In a giant skyscraper, everyone is far away, the “nearest” person may be on another floor, and you have to knock on every door to find them.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “No training” does not mean “free”. KNN pays the cost at prediction time, and that cost grows with the dataset. Also, K = 1 is not the most accurate default; it is the most sensitive to noise.</div>
     </div>
   </div>
 
@@ -962,17 +1573,47 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [6 — separating hyperplane, margin] · 2025 Nov Q3(a) [5 — principles, support vectors, optimal hyperplane]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [6 — separating hyperplane, margin] · 2025 Nov Q3(a) [5 — principles, support vectors, optimal hyperplane]</p>
+
+      <div class="simple"><b>In simple words:</b> SVM draws the widest possible road between two groups.<br>
+      The road's centre line is the decision boundary, and the gap between the edges is the margin.<br>
+      The points sitting on the edges are the support vectors, and they alone decide where the road goes.</div>
+
+      <h4>Why we do this</h4>
+      <p>Many lines can separate two groups. A line squeezed close to one group may misclassify a new point that lands slightly on the wrong side. The widest road leaves the most room for error, so it usually generalises better.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Hyperplane</b> — the decision boundary; a line in 2-D, a plane in 3-D, a flat surface in higher dimensions.</li>
+        <li><b>Margin</b> — the gap between the boundary and the closest points of either class.</li>
+        <li><b>Support vector</b> — a training point that lies on the margin edge (or violates it in the soft-margin case).</li>
+        <li><b>Linearly separable</b> — a straight boundary can separate the classes perfectly.</li>
+        <li><b>Slack variable (ξ)</b> — how far a point is allowed to sit on the wrong side of its margin.</li>
+        <li><b>C</b> — the penalty for allowing slack; large C means few violations.</li>
+        <li><b>Convex</b> — a bowl-shaped problem with a single global minimum.</li>
+        <li><b>Kernel</b> — a shortcut for handling non-linear boundaries without explicitly mapping the data.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Plot the two classes.</b> Why: you need to see whether a straight boundary can separate them.</li>
+        <li><b>Find the boundary with the largest gap to both classes.</b> Why: a wider margin leaves more room for new points near the border.</li>
+        <li><b>Identify the points touching the margin.</b> Why: these support vectors are the only points that determine the boundary.</li>
+        <li><b>If the data is messy, allow some points inside the margin using slack and C.</b> Why: perfect separation may overfit noise.</li>
+        <li><b>If a straight boundary cannot work, use a kernel.</b> Why: the kernel lets SVM separate curved regions without manually adding dimensions.</li>
+      </ol>
 
       <h4>Separating hyperplane</h4>
       <p>A hyperplane is a decision boundary that separates the classes. In 2-D it is a line; in 3-D it is a plane; in n-D it is an (n−1)-dimensional flat surface.</p>
       <div class="math">w · x + b = 0</div>
       <p><code>w</code> is the normal vector (direction perpendicular to the plane); <code>b</code> is the bias (offset from the origin).</p>
+      <p class="small"><b>What this means:</b> the dot product w·x measures which side of the boundary a point is on. Changing b slides the boundary without rotating it.</p>
 
       <h4>Margin</h4>
       <p>The margin is the distance between the hyperplane and the closest points of either class. For the canonical hyperplanes <code>w·x+b = +1</code> and <code>w·x+b = −1</code>:</p>
       <div class="math">Margin = 2 / ‖w‖</div>
       <p>SVM chooses the hyperplane with the <b>maximum margin</b> — the “widest street”.</p>
+      <p class="small"><b>What this means:</b> making w smaller makes the margin wider. That is why the SVM optimisation minimises ‖w‖.</p>
 
       <h4>Support vectors</h4>
       <p>The training points that lie exactly on the margin (or violate it in the soft-margin case). They are the only points that determine <code>w</code> and <code>b</code>; removing any other point does not change the boundary.</p>
@@ -990,20 +1631,23 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
          +---------------- x1
    o = class +1, x = class -1
    circled points on dashed lines = support vectors</div>
+      <p class="small"><b>What this means:</b> the solid middle line is the decision boundary. The two outer lines are the edges of the street, and the margin is the distance between them.</p>
 
       <h4>Optimisation problem (hard margin)</h4>
-      <div class="math">Minimise  ½‖w‖²<br>
-      subject to  y<sub>i</sub>(w·x<sub>i</sub> + b) ≥ 1   for all i</div>
+      <div class="math">Minimise  ½‖w‖²<br>
+      subject to  y<sub>i</sub>(w·x<sub>i</sub> + b) ≥ 1   for all i</div>
       <p>Minimising ‖w‖ maximises the margin 2/‖w‖. This is a convex quadratic program, so it has a unique global optimum.</p>
+      <p class="small"><b>What this means:</b> the constraint says every point must be on the correct side and outside the street. Among all such streets, pick the widest.</p>
 
       <h4>Soft margin</h4>
       <p>Real data is not perfectly separable. Add slack variables ξ<sub>i</sub> ≥ 0 and a penalty C:</p>
-      <div class="math">Minimise  ½‖w‖² + C Σξ<sub>i</sub><br>
-      subject to  y<sub>i</sub>(w·x<sub>i</sub> + b) ≥ 1 − ξ<sub>i</sub></div>
+      <div class="math">Minimise  ½‖w‖² + C Σξ<sub>i</sub><br>
+      subject to  y<sub>i</sub>(w·x<sub>i</sub> + b) ≥ 1 − ξ<sub>i</sub></div>
       <ul>
         <li><b>C large</b> → few training errors allowed → narrow margin → overfitting risk.</li>
         <li><b>C small</b> → wide margin, more errors allowed → underfitting risk.</li>
       </ul>
+      <p class="small"><b>What this means:</b> C is the strictness dial. Strict C insists on classifying every training point correctly, even if the street becomes narrow and wiggly.</p>
 
       <h4>Why SVM is popular</h4>
       <ul>
@@ -1012,6 +1656,10 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
         <li>Kernel trick handles non-linear boundaries.</li>
         <li>Only support vectors matter → efficient.</li>
       </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> You draw the widest possible road between two rows of houses. The houses touching each kerb are the support vectors. Move any other house and the road does not change; move a kerb-side house and the whole road shifts.</div>
+
+      <div class="confuse"><b>Common confusion:</b> The margin is the gap between the two edges of the road, not the distance from the origin. Support vectors are data points, not direction arrows. Also, “support vector” does not mean a vector in the physics sense — it is a feature vector that supports the boundary.</div>
     </div>
   </div>
 
@@ -1021,7 +1669,34 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q3(a) [5]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q3(a) [5]</p>
+
+      <div class="simple"><b>In simple words:</b> SVR is SVM for predicting numbers instead of labels.<br>
+      It fits a tube around the line and ignores small errors inside the tube.<br>
+      Only points outside the tube push the line, so SVR is tolerant of small noise.</div>
+
+      <h4>Why we do this</h4>
+      <p>In regression, chasing every tiny fluctuation is a waste of effort. If a prediction is off by less than a tolerable amount, we may not care. SVR lets you define that tolerance explicitly and focuses the model on the errors that actually matter.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>SVR</b> — Support Vector Regression, the regression version of SVM.</li>
+        <li><b>ε (epsilon)</b> — the half-width of the tolerance tube.</li>
+        <li><b>ε-insensitive loss</b> — loss that is zero when the error is within ε.</li>
+        <li><b>Slack variable (ξ, ξ*)</b> — how far a point lies outside the tube.</li>
+        <li><b>C</b> — the penalty for points outside the tube.</li>
+        <li><b>Kernel</b> — a similarity function that lets SVR fit curves instead of straight lines.</li>
+        <li><b>Support vector</b> — a training point outside the tube, which influences the fit.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Choose the tube width ε.</b> Why: it defines how large an error must be before the model cares.</li>
+        <li><b>Fit a line (or curve) that keeps as many points inside the tube as possible.</b> Why: points inside contribute no loss.</li>
+        <li><b>Penalise points outside the tube using slack and C.</b> Why: large errors should pull the line toward them.</li>
+        <li><b>Tune ε and C by cross-validation.</b> Why: a wide tube gives a smoother fit; a narrow tube chases noise.</li>
+        <li><b>Use a kernel if the trend is curved.</b> Why: a straight tube cannot follow a bent relationship.</li>
+      </ol>
 
       <h4>Idea</h4>
       <p>SVR applies the SVM idea to regression. Instead of a separating line, it fits a tube of width <b>2ε</b> around the predicted function. Points inside the tube incur <b>no loss</b>; only points outside are penalised.</p>
@@ -1029,25 +1704,32 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       <h4>ε-insensitive loss</h4>
       <div class="math">L<sub>ε</sub>(y, f(x)) = max(0, |y − f(x)| − ε)</div>
       <p>If the error is smaller than ε, the loss is zero. This makes SVR robust to small noise.</p>
+      <p class="small"><b>What this means:</b> subtract ε from the absolute error and keep only the positive part. Inside the tube the result is zero; outside it grows linearly.</p>
 
       <h4>Optimisation</h4>
-      <div class="math">Minimise  ½‖w‖² + C Σ(ξ<sub>i</sub> + ξ<sub>i</sub>*)<br>
-      subject to  y<sub>i</sub> − (w·x<sub>i</sub> + b) ≤ ε + ξ<sub>i</sub><br>
-                 (w·x<sub>i</sub> + b) − y<sub>i</sub> ≤ ε + ξ<sub>i</sub>*<br>
-                 ξ<sub>i</sub>, ξ<sub>i</sub>* ≥ 0</div>
+      <div class="math">Minimise  ½‖w‖² + C Σ(ξ<sub>i</sub> + ξ<sub>i</sub>*)<br>
+      subject to  y<sub>i</sub> − (w·x<sub>i</sub> + b) ≤ ε + ξ<sub>i</sub><br>
+               (w·x<sub>i</sub> + b) − y<sub>i</sub> ≤ ε + ξ<sub>i</sub>*<br>
+               ξ<sub>i</sub>, ξ<sub>i</sub>* ≥ 0</div>
       <ul>
         <li><b>ξ, ξ*</b> — slack variables for points above/below the tube.</li>
         <li><b>C</b> — trade-off between a flat function and fitting the data.</li>
         <li><b>ε</b> — tube width; larger ε → fewer support vectors, smoother fit.</li>
       </ul>
+      <p class="small"><b>What this means:</b> the objective wants a flat function (small ‖w‖) and few violations (small slack). C decides which goal it protects more.</p>
 
       <h4>Example</h4>
       <p>House price prediction from area. With ε = 5 (lakh), a prediction 3 lakh away from the true price is ignored. A prediction 12 lakh away is outside the tube and contributes a loss of 12 − 5 = 7, which pushes the line towards it. The final model is a straight line (or kernel curve) that stays inside the tube wherever possible.</p>
+      <p class="small"><b>What this means:</b> the model does not waste effort on small misses. Only the 12-lakh error is treated as a real problem.</p>
 
       <h4>Kernel SVR</h4>
       <p>Replace <code>w·x</code> with a kernel <code>K(x<sub>i</sub>, x)</code> (RBF is common). The prediction becomes:</p>
       <div class="math">f(x) = Σ α<sub>i</sub> K(x<sub>i</sub>, x) + b</div>
       <p>Only support vectors (points outside the tube) have α<sub>i</sub> &gt; 0.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A pizza shop promises delivery “within 10 minutes”. Being 3 minutes late is within tolerance and nobody complains. Being 25 minutes late is a real failure and triggers action. SVR works the same way with prediction errors.</div>
+
+      <div class="confuse"><b>Common confusion:</b> SVR predicts a number; SVM classifies a label. Also, ε is the tolerated error, not the learning rate. A very large ε makes the tube so wide that the model ignores almost everything and underfits.</div>
     </div>
   </div>
 
@@ -1057,11 +1739,40 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q4(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2024 May Q4(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> A kernel is a shortcut for comparing points as if they were moved into a higher dimension.<br>
+      In that higher dimension, a straight boundary can separate groups that looked tangled in the original space.<br>
+      The kernel computes the comparison without ever building the extra coordinates.</div>
+
+      <h4>Why we do this</h4>
+      <p>A linear SVM can only draw a straight boundary. Many real datasets are curved, ring-shaped, or interleaved. Mapping every point into a higher dimension by hand would be slow and memory-heavy. The kernel trick gives the benefit of that mapping at the cost of a simple similarity calculation.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Kernel</b> — a function that measures similarity between two points as if they were mapped to a higher-dimensional space.</li>
+        <li><b>Kernel trick</b> — computing dot products in that space without explicitly calculating the coordinates.</li>
+        <li><b>Mapping φ (phi)</b> — the function that sends a point into the higher-dimensional space.</li>
+        <li><b>Linearly separable</b> — a straight boundary can separate the classes.</li>
+        <li><b>RBF / Gaussian kernel</b> — a similarity that depends on distance and can create smooth local boundaries.</li>
+        <li><b>γ (gamma)</b> — the RBF width parameter; large γ makes the boundary wiggly and local.</li>
+        <li><b>Polynomial kernel</b> — a kernel that allows curved boundaries up to a chosen degree.</li>
+        <li><b>PSD (positive semi-definite)</b> — a mathematical property that guarantees the kernel corresponds to a valid inner product.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Try a linear SVM first.</b> Why: if the data is already separable by a straight boundary, a kernel adds cost for no benefit.</li>
+        <li><b>If the boundary is curved, choose a non-linear kernel.</b> Why: the kernel implicitly maps the data to a space where a flat boundary works.</li>
+        <li><b>Compute the kernel value for each pair of points.</b> Why: SVM only needs these similarities, not the mapped coordinates.</li>
+        <li><b>Tune the kernel parameters and C by cross-validation.</b> Why: γ and C control flexibility and can easily overfit or underfit.</li>
+        <li><b>Check the result on unseen data.</b> Why: a kernel can fit the training data perfectly and still generalise poorly.</li>
+      </ol>
 
       <h4>Why kernels are needed</h4>
       <p>A linear SVM can only draw a straight boundary. Many datasets are not linearly separable. The <b>kernel trick</b> maps the data into a higher-dimensional space where a linear boundary exists, without explicitly computing the coordinates.</p>
       <div class="math">K(x<sub>i</sub>, x<sub>j</sub>) = φ(x<sub>i</sub>) · φ(x<sub>j</sub>)</div>
+      <p><b>What this means:</b> the kernel returns the dot product of the mapped points. SVM can work with that number directly, so the mapping never has to be stored.</p>
 
       <h4>Common kernels</h4>
       <div class="tbl-wrap">
@@ -1075,9 +1786,11 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> linear is the safe default for text; polynomial adds controlled curvature; RBF is the default for smooth non-linear data; sigmoid is rarely the first choice because it is not always a valid kernel.</p>
 
       <h4>Example</h4>
       <p>Points inside a circle (class A) and outside (class B) cannot be separated by a line in 2-D. Map <code>(x,y) → (x, y, x²+y²)</code>. In 3-D the classes are separated by a horizontal plane. The RBF kernel does this mapping implicitly and measures similarity by distance.</p>
+      <p class="small"><b>What this means:</b> adding the squared radius as a third coordinate turns “inside versus outside” into “below versus above a plane”. The kernel gives the same effect without you computing x²+y² for every point.</p>
 
       <h4>Choosing a kernel</h4>
       <ul>
@@ -1085,6 +1798,10 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
         <li>Use <b>RBF</b> as the default for non-linear, low-to-medium-dimensional data.</li>
         <li>Tune <code>C</code> and <code>γ</code> by cross-validation. Large γ → wiggly boundary (overfit); small γ → smooth (underfit).</li>
       </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> Two rings lie flat on a table, one inside the other. No straight line on the table can separate them. Lift the inner ring into the air and a flat sheet can slide between the two. The kernel lifts the data without you physically moving it.</div>
+
+      <div class="confuse"><b>Common confusion:</b> The kernel does not literally transform and store the data; it computes the dot product as if the transformation had happened. Also, a large γ does not mean a “better” kernel — it makes the boundary local and wiggly, which can overfit badly.</div>
     </div>
   </div>
 </section>

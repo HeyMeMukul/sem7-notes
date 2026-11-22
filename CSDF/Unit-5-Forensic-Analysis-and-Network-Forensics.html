@@ -139,7 +139,24 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 .prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
 .side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
-</style></head>
+</style>
+<style id="explain-css">
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
+@media print{
+  .simple,.analogy,.confuse{background:#f7f7f7!important;border-color:#aaa!important;color:#222!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+  h3,h4{color:#111!important}
+}
+</style><style id="print-simple">
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 
@@ -183,6 +200,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   </div>
 </header>
 
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every procedure is broken into numbered steps. No prior forensics background needed.</div>
+
 <section class="card" id="map">
   <h2>📊 PYQ frequency map — what actually gets asked</h2>
   <p class="lead">Counted from all seven end-sem papers. Q6(a) in 2025 May (“digital hash”) and Q6(b) in 2025 Nov (“standard procedures”) are the newest additions — both are below.</p>
@@ -222,9 +241,54 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2022 May Q6(a) [9] · 2022 Nov Q6(a) [9] · 2023 May Q5(b) [8] · 2023 Nov Q6(b) [9] · 2025 Nov Q5(b) [8]</p>
 
-      <h4>1. Two legal settings</h4>
+      <div class="simple"><b>In simple words:</b> Seizing means taking a device legally and safely so its data can be examined later. You secure the area, photograph the scene, write down what is running, then decide whether to switch off or copy memory. Every item is labelled, sealed and logged so the court can see that nobody changed it.</div>
+
+      <h4>Why we do this</h4>
+      <p>A computer starts changing the moment it is touched, booted or unplugged. A careless seizure can destroy the very evidence the case depends on, and the defence can then argue that the copy is not the original. A calm, recorded seizure keeps the data usable in court.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Digital evidence</b> — any data stored or sent by a device that can help prove a fact in a case.</li>
+        <li><b>Seizure</b> — legally taking control of a device or data so that it can be examined.</li>
+        <li><b>Search warrant</b> — a judge's written permission to search a place and take specific items.</li>
+        <li><b>Volatile data</b> — data that disappears when the power goes off, such as RAM and open network connections.</li>
+        <li><b>Live acquisition</b> — copying data from a machine while it is still running.</li>
+        <li><b>Write blocker</b> — a device that lets an examiner read a drive but blocks every attempt to write to it.</li>
+        <li><b>Bit-stream image</b> — an exact byte-for-byte copy of a drive, including deleted and empty space.</li>
+        <li><b>Chain of custody</b> — the written record of who handled the evidence, when and why.</li>
+        <li><b>Faraday bag</b> — a metal-lined bag that stops a phone from sending or receiving radio signals.</li>
+        <li><b>RAM</b> — the computer's working memory, which loses its contents when the power goes off.</li>
+        <li><b>ARP cache</b> — a table that maps IP addresses to hardware addresses on a local network.</li>
+        <li><b>Anti-static bag</b> — a protective bag that stops static electricity from damaging a drive or circuit board.</li>
+        <li><b>Tamper-evident tape</b> — tape that shows a visible mark if a seal is broken.</li>
+        <li><b>FOIA</b> — the Freedom of Information Act, a law that lets the public request government records.</li>
+        <li><b>Patriot Act</b> — a US anti-terrorism law that changed some search and surveillance rules.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Secure the scene.</b> Use barrier tape, guards and an entry log. This stops people from deleting files or walking away with devices.</li>
+        <li><b>Photograph before touching anything.</b> Capture the screen, cables, ports and labels. The photo proves the original arrangement if someone later questions it.</li>
+        <li><b>Record the system state.</b> Note the make, model, serial number, operating system, logged-on user, running programs and network connections. This is evidence in its own right.</li>
+        <li><b>Choose the shutdown method.</b> Pulling the plug keeps the disk unchanged but loses RAM. A normal shutdown changes timestamps. Live acquisition saves memory first. Record the reason for your choice.</li>
+        <li><b>Capture volatile data if it matters.</b> Copy RAM, the ARP cache and network connections before they vanish.</li>
+        <li><b>Label every item.</b> Write the exhibit number, date, time, place and officer on the label. A label turns an object into court evidence.</li>
+        <li><b>Package correctly.</b> Use anti-static bags for circuit boards and drives, a Faraday bag for phones, and tamper-evident tape across the seal.</li>
+        <li><b>Transport safely.</b> Keep devices away from heat, magnets, shock and water, and never leave them unattended.</li>
+        <li><b>Record every transfer.</b> The chain-of-custody form must show every person who handled the evidence.</li>
+        <li><b>Image in the lab.</b> Make a bit-stream copy, hash it, compare the hash with the original, and analyse the copy — never the original.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Seizing a computer is like sealing a room after a burglary. You guard the door, photograph everything in place, list each item, and only then carry it out with a signed receipt.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Many people think the first job is to switch the computer off. Pulling the plug destroys RAM, may lose encryption keys and can trigger a wipe. Sometimes you must copy memory before any shutdown.</div>
+
+      <h3>Full exam answer</h3>
+
+      <h4>1. Two legal settings (book §5.5.2)</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Setting</th><th>Power to seize</th><th>Typical approach</th></tr></thead>
@@ -234,37 +298,29 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the technical steps are similar, but the legal power is not. Police can take the whole machine under a warrant; a company investigator usually copies the drive and must respect employee privacy and company policy.</p>
 
       <h4>2. Private-sector vs law-enforcement incident scenes (book §5.5.2)</h4>
       <ul>
-        <li>Businesses and government entities that are <b>not involved in law enforcement</b> are private-sector organisations. They must make some documents accessible as public records under the Freedom of Information Act (FOIA) and state disclosure requirements.</li>
-        <li><b>State public records</b> are open for review; a divorce recorded in a public place becomes public information unless a judge orders the paperwork sealed.</li>
-        <li><b>ISPs</b> are a special category: they may look into employee-committed computer misuse, but they must protect customer privacy, particularly where e-mail is concerned.</li>
-        <li>The <b>Patriot Act</b> and Homeland Security legislation changed some provisions; “emergency circumstances” means immediate danger of death or serious physical harm, such as a bomb threat.</li>
-        <li>The practical difference: police can seize the whole system under a warrant; a corporate investigator usually images or copies the drive and must stay within company policy.</li>
+        <li>Businesses and government bodies that are <b>not</b> part of law enforcement are private-sector organisations. Some of their documents must be made accessible as public records under the Freedom of Information Act (FOIA) and state disclosure rules.</li>
+        <li><b>State public records</b> are open for review. A divorce recorded in a public place becomes public information unless a judge orders the paperwork sealed.</li>
+        <li><b>ISPs</b> are a special case: they may investigate computer misuse by their own employees, but they must protect customer privacy, especially for e-mail.</li>
+        <li>The <b>Patriot Act</b> and Homeland Security legislation changed some rules. “Emergency circumstances” means an immediate danger of death or serious physical harm, such as a bomb threat.</li>
+        <li>The practical difference: police can seize the whole system under a warrant; a corporate investigator usually images or copies the drive and must stay inside company policy.</li>
       </ul>
+      <p class="small"><b>What this means:</b> before you touch anything, ask who has legal authority and what the policy or warrant allows. The same laptop can be handled in two very different ways.</p>
 
-      <h4>3. The seizure process (book §5.5.6)</h4>
-      <ol>
-        <li><b>Secure the scene</b> — barricade, guards, access log (see Q2).</li>
-        <li><b>Photograph</b> the computer, the screen, the connections and the surrounding area before touching anything.</li>
-        <li><b>Record the system state</b> — make, model, serial number, OS, running programs, network connections, logged-on user.</li>
-        <li><b>Decide the shutdown method</b> — normal shutdown, pull the plug, or live acquisition first. Record the reason.</li>
-        <li><b>Capture volatile data</b> if it is relevant (RAM, ARP cache, netstat).</li>
-        <li><b>Label every item</b> — exhibit number, date, time, place, officer.</li>
-        <li><b>Package</b> — anti-static bags for boards and drives; faraday bag for phones; seal with tamper-evident tape.</li>
-        <li><b>Transport</b> — keep away from heat, magnets and shock; never leave evidence unattended.</li>
-        <li><b>Chain of custody</b> — record every transfer and store in the evidence safe.</li>
-        <li><b>Image in the lab</b> — bit-stream copy, hash, verify, analyse the copy.</li>
-      </ol>
+      <h4>3. The ten-step seizure process (book §5.5.6)</h4>
+      <p>The numbered list above is the exam answer. Remember it as <b>secure → photograph → record → decide → capture → label → package → transport → log → image</b>.</p>
 
       <h4>4. Approaches to the shutdown decision</h4>
       <ul>
-        <li><b>Pull the plug</b> — preserves the disk exactly but loses RAM. Use when the machine is idle and disk evidence is the priority.</li>
-        <li><b>Normal shutdown</b> — lets the OS flush caches, but changes timestamps and may trigger deletion of swap/temp files. Avoid unless necessary.</li>
-        <li><b>Live acquisition then shutdown</b> — best for servers and encrypted disks; capture RAM first.</li>
-        <li><b>Network isolation</b> — unplug the network cable rather than power off, to stop remote wiping while preserving RAM.</li>
+        <li><b>Pull the plug</b> — preserves the disk exactly but loses RAM. Use it when the machine is idle and disk evidence is the priority.</li>
+        <li><b>Normal shutdown</b> — lets the operating system flush caches, but changes timestamps and may delete swap or temporary files. Avoid it unless it is necessary.</li>
+        <li><b>Live acquisition then shutdown</b> — best for servers and encrypted disks: capture RAM first, then switch off.</li>
+        <li><b>Network isolation</b> — unplug the network cable rather than the power, to stop remote wiping while keeping RAM intact.</li>
       </ul>
+      <p class="small"><b>What this means:</b> the shutdown choice is itself evidence. Write down what you did and why, because another examiner must be able to judge whether your choice preserved or destroyed data.</p>
 
       <div class="note"><b>Legal caution:</b> a badly written warrant can cause the court to dismiss the evidence. Discuss the wording with the prosecutor before the search; keep the seizure within the warrant's scope.</div>
     </div>
@@ -276,32 +332,60 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2024 May Q6(a) [8]</p>
 
-      <h4>1. Precautions</h4>
+      <div class="simple"><b>In simple words:</b> Evidence must stay exactly as it was found. Do not boot the machine, run antivirus, open the case or let anyone write to the disk. Photograph it, isolate it from the network, capture memory if needed, seal it, and hash it before and after transport.</div>
+
+      <h4>Why we do this</h4>
+      <p>One write can change a timestamp, delete a log or start malware. If that happens, the defence can say the item in court is not the item found at the scene. These precautions keep the original untouched and the copy provably identical.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Data alteration</b> — any change to the content, time or structure of evidence.</li>
+        <li><b>Boot</b> — starting a computer's operating system, which writes to the disk and runs startup programs.</li>
+        <li><b>Write blocker</b> — hardware or software that allows reads but blocks all writes to a drive.</li>
+        <li><b>Anti-static protection</b> — a mat, wrist strap or bag that prevents static electricity from damaging components.</li>
+        <li><b>Volatile data</b> — data that is lost when power is removed, such as RAM and open connections.</li>
+        <li><b>Tamper-evident bag</b> — a bag that shows clearly if it has been opened.</li>
+        <li><b>Hash</b> — a short digital fingerprint that changes if the data changes.</li>
+        <li><b>Chain of custody</b> — the written history of who handled the evidence and when.</li>
+        <li><b>Faraday bag</b> — a signal-blocking bag used for phones and wireless devices.</li>
+        <li><b>Swap file</b> — disk space the operating system uses as extra memory, which can change at boot.</li>
+        <li><b>Booby trap</b> — a hidden program or device that destroys data when someone interferes with the machine.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li><b>Photograph before touching</b> — the screen, cables, ports and device labels.</li>
-        <li><b>Do not boot the suspect computer</b> — booting changes timestamps, runs malware and may destroy evidence. Use a write blocker or a forensic boot CD.</li>
-        <li><b>Do not open the case</b> unless trained; handle drives by the edges and use anti-static protection.</li>
-        <li><b>Do not run antivirus or scandisk</b> on the evidence disk.</li>
-        <li><b>Capture volatile data first</b> if the machine is running.</li>
-        <li><b>Isolate from the network</b> — unplug the cable or use a faraday bag for wireless devices.</li>
-        <li><b>Use tamper-evident bags and seals</b>; sign across the seal.</li>
-        <li><b>Keep a chain-of-custody record</b> for every item.</li>
-        <li><b>Store in a cool, dry, magnetic-free place</b>; never leave evidence unattended.</li>
-        <li><b>Hash before and after</b> transport and before analysis.</li>
+        <li><b>Photograph before touching.</b> Capture the screen, cables, ports and device labels. The photo proves the scene before any hand touched it.</li>
+        <li><b>Do not boot the suspect computer.</b> Booting changes timestamps, runs malware and may destroy evidence. Use a write blocker or a forensic boot CD instead.</li>
+        <li><b>Do not open the case</b> unless you are trained. Handle drives by the edges and use anti-static protection, because a static spark can kill a drive.</li>
+        <li><b>Do not run antivirus or scandisk</b> on the evidence disk. Both programs write to the disk and may quarantine or “repair” the evidence.</li>
+        <li><b>Capture volatile data first</b> if the machine is running. RAM and network state disappear when the power goes off.</li>
+        <li><b>Isolate the machine from the network.</b> Unplug the cable or use a Faraday bag, so the suspect cannot remotely wipe data.</li>
+        <li><b>Use tamper-evident bags and seals.</b> Sign across the seal so any later opening is visible.</li>
+        <li><b>Keep a chain-of-custody record</b> for every item. The court must see an unbroken history.</li>
+        <li><b>Store evidence in a cool, dry, magnetic-free place.</b> Heat, moisture and magnets can destroy data.</li>
+        <li><b>Hash before and after transport and before analysis.</b> Matching hashes prove the item did not change on the way.</li>
       </ol>
 
-      <h4>2. One precaution in detail — never boot the suspect computer</h4>
+      <div class="analogy"><b>Real-life analogy:</b> This is like preserving a fingerprint at a crime scene. You photograph it, cover it, and never touch it with bare hands. Every person who lifts the cover is written into the log.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “I only looked; I did not change anything” is not safe. Opening a file changes its last-access time, and booting the operating system can start malware. Even a preview must go through a write blocker.</div>
+
+      <h3>Full exam answer</h3>
+
+      <h4>One precaution in detail — never boot the suspect computer</h4>
       <p>Booting a suspect machine is one of the most common and most damaging mistakes. When Windows starts, it:</p>
       <ul>
         <li>Updates the <b>last-access time</b> of files, destroying the timeline.</li>
-        <li>Creates, modifies or deletes <b>swap and temp files</b>.</li>
+        <li>Creates, modifies or deletes <b>swap and temporary files</b>.</li>
         <li>Runs <b>startup programs and malware</b>, which may delete logs or contact a remote server.</li>
-        <li>Mounts the disk read-write, so the OS can write to it.</li>
+        <li>Mounts the disk read-write, so the operating system can write to it.</li>
         <li>May trigger a <b>booby trap</b> or “dead man switch” that wipes the drive.</li>
       </ul>
-      <p><b>Correct procedure:</b> remove the drive (or boot from a trusted forensic CD/USB), connect it through a <b>hardware write blocker</b>, and image it with a tool that reads every sector. Verify the image hash against the source. Only then boot the image in a virtual machine, never the original.</p>
+      <p><b>Correct procedure:</b> remove the drive, or boot from a trusted forensic CD/USB, connect it through a <b>hardware write blocker</b>, and image it with a tool that reads every sector. Verify the image hash against the source. Only then boot the <i>image</i> in a virtual machine — never the original.</p>
+      <p class="small"><b>What this means:</b> the safest rule is “read the disk, do not run it.” If you must run something, run it on a verified copy in a controlled environment, and record exactly what you did.</p>
     </div>
   </div>
 
@@ -311,37 +395,77 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2025 May Q5(a) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> Before searching, make the area private and safe. Put up tape, post a guard, keep an entry log, and stop anyone from touching the computer. Then photograph the screen and write down what is running.</div>
+
+      <h4>Why we do this</h4>
+      <p>An unsecured scene lets people delete files, unplug devices or leak the investigation. A controlled scene keeps the evidence trustworthy and stops the case from being compromised before the search even starts.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Perimeter</b> — the boundary around the scene that only authorised people may cross.</li>
+        <li><b>Barrier tape</b> — coloured tape that marks the boundary and warns people to stay out.</li>
+        <li><b>Access log</b> — a written list of who entered, when and why.</li>
+        <li><b>Legitimate cause</b> — a lawful, work-related reason for a person to be inside the scene.</li>
+        <li><b>Volatile data</b> — data that disappears when power is lost, such as RAM and network connections.</li>
+        <li><b>Faraday bag</b> — a metal-lined bag that blocks phone signals.</li>
+        <li><b>Chain of custody</b> — the written record of every transfer of evidence.</li>
+        <li><b>Warrant scope</b> — the places and items the warrant actually allows you to search and seize.</li>
+        <li><b>Evidence kit</b> — the prepared set of bags, labels, gloves, camera, write blockers and other tools needed at a scene.</li>
+        <li><b>Scribe</b> — the team member who writes down every action and every person who enters the scene.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Set an outer perimeter.</b> Use tape and guards so onlookers cannot reach the devices.</li>
+        <li><b>Control the entrance.</b> Allow only people with a legitimate cause, and write every name into the access log.</li>
+        <li><b>Make the perimeter wider than you need.</b> It is easy to shrink a scene later; it is embarrassing and unsafe to enlarge it after people have walked through.</li>
+        <li><b>Freeze the device.</b> Tell everyone not to touch the keyboard or mouse, and do not close an open session. The screen itself may be evidence.</li>
+        <li><b>Photograph the screen and the connections.</b> The photo preserves what was displayed before anything changed.</li>
+        <li><b>Record the running state.</b> Note open programs, windows, logged-on users and network connections.</li>
+        <li><b>Isolate the network.</b> Unplug the network cable rather than the power, and put phones in Faraday bags.</li>
+        <li><b>Protect the physical scene.</b> Keep it cool and dry, and keep liquids and heavy equipment away from devices.</li>
+        <li><b>Brief the team and assign roles.</b> Scene security, photography, evidence collection and the scribe should know exactly what they own.</li>
+        <li><b>Start the paperwork.</b> Open the evidence notebook and chain-of-custody form, and record the date, time, place, case number and everyone present.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> It is like sealing a building after a fire. Nobody enters except the investigator, every entry is written down, and the scene stays exactly as the fire left it until the examination begins.</div>
+
+      <div class="confuse"><b>Common confusion:</b> More people do not mean more security. Every extra person is a contamination risk and must be logged. The best scene is the one with the fewest people who have a real reason to be there.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Secure the perimeter (book §5.5.5)</h4>
       <ul>
-        <li>Protect the evidence and the privacy of those involved; the inquiry may be compromised if information becomes public.</li>
+        <li>Protect the evidence and the privacy of the people involved. The inquiry can be compromised if information becomes public.</li>
         <li>Use <b>yellow barrier tape</b> to keep onlookers away from a crime or computer incident scene.</li>
-        <li>Use <b>police officers or security guards</b> to keep people out. Trespass law and obstruction law provide legal grounds to exclude them.</li>
-        <li>Allow entry only to individuals with a <b>legitimate cause</b> to be there.</li>
-        <li><b>Extend the perimeter</b> beyond the immediate vicinity — it is easier to reduce the scene than to increase it later.</li>
-        <li>Computer investigators are often not in charge of perimeter security; work with the officer or detective who is.</li>
+        <li>Use <b>police officers or security guards</b> to keep people out. Trespass and obstruction law provide legal grounds to exclude them.</li>
+        <li>Allow entry only to people with a <b>legitimate cause</b> to be there.</li>
+        <li><b>Extend the perimeter</b> beyond the immediate area. It is easier to reduce the scene than to increase it later.</li>
+        <li>Computer investigators are often not in charge of perimeter security. Work with the officer or detective who is.</li>
       </ul>
 
       <h4>2. Protect the digital evidence</h4>
       <ol>
-        <li><b>Do not touch the keyboard or mouse</b> — a screensaver or open session may be evidence.</li>
+        <li><b>Do not touch the keyboard or mouse.</b> A screensaver or open session may be evidence.</li>
         <li><b>Photograph the screen</b> before anything changes.</li>
         <li><b>Note running programs, open windows and network connections.</b></li>
-        <li><b>Disconnect the network cable</b> (not the power) to stop remote access and wiping.</li>
-        <li><b>Place phones in a faraday bag</b> and switch off wireless where lawful.</li>
+        <li><b>Disconnect the network cable</b> — not the power — to stop remote access and wiping.</li>
+        <li><b>Place phones in a Faraday bag</b> and switch off wireless where the law allows.</li>
         <li><b>Prevent bystanders from using the machine</b> or deleting files.</li>
         <li><b>Record who enters and leaves</b> the scene and what they touch.</li>
-        <li><b>Keep the scene cool and dry</b>; protect devices from shocks and liquids.</li>
+        <li><b>Keep the scene cool and dry</b>, and protect devices from shocks and liquids.</li>
       </ol>
 
       <h4>3. Before the search begins</h4>
       <ul>
         <li>Brief the team on the warrant scope and the plan.</li>
-        <li>Assign roles: scene security, photography, evidence collection, scribe.</li>
-        <li>Prepare the evidence kit: bags, seals, labels, gloves, camera, write blockers, faraday bags, forensic laptop.</li>
+        <li>Assign roles: scene security, photography, evidence collection and scribe.</li>
+        <li>Prepare the evidence kit: bags, seals, labels, gloves, camera, write blockers, Faraday bags and a forensic laptop.</li>
         <li>Start the <b>evidence notebook</b> and the <b>chain-of-custody form</b>.</li>
-        <li>Record the date, time, place, case number and names of all persons present.</li>
+        <li>Record the date, time, place, case number and the names of all people present.</li>
       </ul>
 
       <div class="tree">OUTER PERIMETER  ── tape + guard + access log
@@ -349,6 +473,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 INNER SCENE      ── only authorised examiners
         ↓
 DEVICE           ── photograph → note state → isolate network → seize</div>
+      <p class="small"><b>What this means:</b> work from the outside in. Secure the people and the boundary first, then the device. If you start with the device, the room behind you is still uncontrolled.</p>
     </div>
   </div>
 </section>
@@ -362,34 +487,74 @@ DEVICE           ── photograph → note state → isolate network → seize<
       <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2022 May Q5(b) [9] · 2022 Nov Q5(b) [9] · 2023 May Q5(a) [9] · 2023 Nov Q6(a) [8] · 2025 Nov Q5(a) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> Validation proves that the copy you analyse is exactly the same as the original. You compare digital fingerprints called hashes, use known-file databases, inspect raw bytes, and repeat the work with a second tool. When the values match, the copy is safe to use in court.</div>
+
+      <h4>Why we do this</h4>
+      <p>Courts do not accept “trust me, I copied it carefully.” They need proof that the evidence was not altered and that the tool itself works correctly. Validation gives that proof, and it exposes a bad copy or a faulty tool before the case reaches court.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Validation</b> — proving that a tool or procedure produces correct, reliable results for its intended use.</li>
+        <li><b>Verification</b> — proving that this particular copy or result is correct in this case.</li>
+        <li><b>Hash</b> — a fixed-length digital fingerprint calculated from a file or disk.</li>
+        <li><b>MD5</b> — a 128-bit hashing algorithm; fast and common, but old.</li>
+        <li><b>SHA-1 / SHA-256</b> — stronger hashing algorithms, preferred for new reports.</li>
+        <li><b>Known-good hash set</b> — a database of hashes for safe, standard files such as operating-system files.</li>
+        <li><b>Hex editor</b> — a tool that displays and edits the raw bytes of a file or disk.</li>
+        <li><b>Checksum</b> — a value computed from data so that any change can be detected.</li>
+        <li><b>Re-imaging</b> — making a second image from the same original for comparison.</li>
+        <li><b>Reproducibility</b> — another examiner, in another lab, gets the same result.</li>
+        <li><b>NSRL</b> — the National Software Reference Library, a large database of known-good file hashes.</li>
+        <li><b>ISO 17025</b> — the international standard for the competence of testing laboratories.</li>
+        <li><b>Repeatability</b> — the same lab, equipment and operator produce the same result.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Hash the original before copying.</b> This records the starting fingerprint while the source is still untouched.</li>
+        <li><b>Create the image through a write blocker.</b> The blocker prevents your tool from changing the source.</li>
+        <li><b>Hash the image with the same algorithm.</b> A matching value proves the copy is byte-for-byte identical.</li>
+        <li><b>Compare known files with a hash database.</b> This removes thousands of harmless system files and highlights unknown or known-bad files.</li>
+        <li><b>Inspect the raw bytes if something does not match.</b> A hex editor can show whether the header, content or extension has been altered.</li>
+        <li><b>Repeat with a second tool or a fresh image.</b> Two independent methods agreeing is much stronger than one tool's word.</li>
+        <li><b>Document the tool, version, settings, date, time and result.</b> Another examiner must be able to repeat your work and get the same answer.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A hash is a file's fingerprint. Comparing the fingerprint of the original and the copy is like checking that a passport photo and the person in front of you match — a single different detail means it is not the same.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A matching hash does <b>not</b> prove that the tool is correct; it only proves that the copy matches the original. The tool itself must be validated separately. Also, validation and verification are not the same word: validation is about the tool or method, verification is about this copy.</div>
+
+      <h3>Full exam answer</h3>
+
       <h4>1. Why validation is crucial</h4>
-      <p>Validating digital evidence is one of the most important components of computer forensics because it is necessary to <b>ensure the integrity of the data</b> gathered, in order to present it in court. Validation proves that the copy analysed is identical to the original and that the tool used produced correct results. Without it, the defence can argue that the evidence was altered.</p>
+      <p>Validating digital evidence is one of the most important parts of computer forensics because it <b>ensures the integrity of the data</b> gathered for court. Validation proves that the copy analysed is identical to the original and that the tool used produced correct results. Without it, the defence can argue that the evidence was altered.</p>
 
       <h4>2. Approach 1 — Hashing</h4>
-      <p>A cryptographic hash converts the data into a fixed-length value. The examiner computes the hash of the original, the image and the working copy. If all values match, the data is validated.</p>
+      <p>A cryptographic hash converts data into a fixed-length value. The examiner computes the hash of the original, the image and the working copy. If all values match, the data is validated.</p>
       <ul>
-        <li><b>MD5</b> (128-bit) — fast, widely accepted, still common in forensic tools.</li>
+        <li><b>MD5</b> (128-bit) — fast and widely accepted; still common in forensic tools.</li>
         <li><b>SHA-1</b> (160-bit) and <b>SHA-256</b> — stronger; preferred for new reports.</li>
         <li>Record the algorithm and value in the report and on the evidence bag.</li>
         <li>Re-hash after every transfer or restoration.</li>
       </ul>
 
-      <h4>3. Approach 2 — Known good hash sets / hash databases</h4>
-      <p>Compare each file's hash with a database of known files. Known-good sets (such as the NSRL) eliminate operating-system and application files; known-bad sets flag contraband or malware. This both speeds up the review and validates that the tool recognises known files correctly.</p>
+      <h4>3. Approach 2 — Known-good hash sets and hash databases</h4>
+      <p>Compare each file's hash with a database of known files. Known-good sets such as the <b>NSRL</b> remove operating-system and application files from the review; known-bad sets flag contraband or malware. This speeds up the review and checks that the tool recognises known files correctly.</p>
 
       <h4>4. Approach 3 — Hexadecimal editors</h4>
-      <p>Many functions, such as hashing a specific file or sector, are not available in some forensic programs but are available in advanced hex editors. A hex editor shows the raw bytes, so the examiner can:</p>
+      <p>Some functions, such as hashing a specific file or sector, are missing from some forensic programs but available in advanced hex editors. A hex editor shows the raw bytes, so the examiner can:</p>
       <ul>
-        <li>Locate a specific file, even if its name was changed.</li>
+        <li>Locate a specific file even if its name was changed.</li>
         <li>Compare two files with different names but the same content.</li>
         <li>Obtain a hash quickly and verify it manually.</li>
         <li>Inspect a file header to see whether the extension is appropriate.</li>
       </ul>
 
       <h4>5. Approach 4 — Tool-generated checksum verification</h4>
-      <p>Tools such as ProDiscover, X-Ways, FTK and EnCase compute a hash when an image is imported and compare it with the hash recorded when the image was created. ProDiscover shows an <b>Auto Image Checksum Verification</b> dialogue when the image is loaded. If the values differ, the image is corrupt or was modified.</p>
+      <p>Tools such as ProDiscover, X-Ways, FTK and EnCase compute a hash when an image is imported and compare it with the hash recorded when the image was created. ProDiscover shows an <b>Auto Image Checksum Verification</b> dialog when the image is loaded. If the values differ, the image is corrupt or was modified.</p>
 
       <h4>6. Approach 5 — Re-imaging and cross-tool comparison</h4>
       <ul>
@@ -411,6 +576,7 @@ DEVICE           ── photograph → note state → isolate network → seize<
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> “Is the tool good?” is validation. “Is this copy good?” is verification. A court answer should mention both, because one does not prove the other.</p>
 
       <div class="tip"><b>9-mark structure:</b> definition/why (2) + hashing (2) + known hash sets (1) + hex editor (1) + tool checksum (1) + re-imaging (1) + documentation (1). Name a real tool in each approach — that is what separates a 6 from a 9.</div>
     </div>
@@ -426,43 +592,74 @@ DEVICE           ── photograph → note state → isolate network → seize<
       <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2022 May Q6(b) [9] · 2022 Nov Q6(b) [9] · 2024 May Q5(a) [8, any one in detail]</p>
 
-      <p><b>Data hiding</b> is the process of altering or modifying a file to hide information. Partitions may be concealed, file properties changed, extensions altered, bits shifted, encryption applied or password security set.</p>
+      <div class="simple"><b>In simple words:</b> People hide data by making it invisible to normal tools. They hide partitions, mark clusters as “bad”, shuffle bits, hide files inside images, encrypt them, rename extensions, or use alternate streams and slack space. An investigator has to know all these tricks to find what was hidden.</div>
 
-      <h4>1. The techniques (book §5.3)</h4>
+      <h4>Why we do this</h4>
+      <p>Hidden data is often the strongest evidence in a case, and an attacker who hides it is trying to stop you finding it. If you only look at visible files and folders, you will miss the hidden partition, the picture that carries a secret file or the encrypted container.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Data hiding</b> — changing or storing data so that normal users and normal tools do not notice it.</li>
+        <li><b>Partition</b> — a section of a disk that the operating system treats as a separate drive.</li>
+        <li><b>Partition table</b> — the map that tells the operating system where each partition starts and ends.</li>
+        <li><b>Slack space</b> — the unused tail of the last cluster of a file, which can hold hidden data.</li>
+        <li><b>Bad cluster</b> — a disk block the operating system has marked as unusable and will not read.</li>
+        <li><b>Bit-shifting</b> — moving every bit in a file left or right so the content becomes unreadable.</li>
+        <li><b>Steganography</b> — hiding a secret file inside an ordinary-looking image, audio or video file.</li>
+        <li><b>Encryption</b> — scrambling data with a key so that it cannot be read without the key.</li>
+        <li><b>File extension</b> — the letters after the dot in a name, such as <code>.jpg</code>, which suggest the file type.</li>
+        <li><b>Alternate Data Stream (ADS)</b> — an extra hidden data stream attached to a normal file on an NTFS disk.</li>
+        <li><b>Hex editor</b> — a tool that shows raw bytes and can change them directly.</li>
+        <li><b>Boot manager</b> — software that chooses which operating system or partition starts at boot.</li>
+        <li><b>Disk editor</b> — a tool that can view and change raw disk structures such as the partition table.</li>
+        <li><b>Unallocated space</b> — disk space not assigned to any file, which may still hold deleted data.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">The ten techniques below are the exam list (book §5.3).</p>
       <ol>
-        <li><b>Hiding partitions</b> — create a partition and manually erase all references to it using a disc editor such as Norton Disk Edit, or update the partition table to restore the links. When the machine restarts, the hidden partition resurfaces. A boot manager such as G Disk, Partition Magic, System Commander or GRUB can also conceal a partition by removing it from the boot menu.</li>
-        <li><b>Marking bad clusters</b> — place sensitive data in open or slack space and label the clusters “bad”. The OS then regards them as useless and will not read them; the attacker converts them back to good clusters with a disc editor when needed.</li>
-        <li><b>Bit-shifting</b> — use an assembler program (macro) to reorder the bits in a file, making it unreadable in a text editor or word processor. A second program restores the original sequence. This can make it impossible for an investigator to examine the data on a suspicious disk.</li>
-        <li><b>Steganography</b> — hide data inside an image, audio or video file; the carrier looks normal but contains a secret payload.</li>
-        <li><b>Encryption</b> — encrypt files, containers or the whole disk; without the key the content is unreadable.</li>
-        <li><b>File-extension changes</b> — rename <code>.doc</code> to <code>.jpg</code> or <code>.txt</code>; the file header no longer matches the extension, and a superficial review misses it.</li>
-        <li><b>Hidden files and folders</b> — set the hidden attribute, or use a name that users do not notice.</li>
-        <li><b>Alternate Data Streams (ADS)</b> — on NTFS, attach a hidden stream to a normal file; the visible file looks unchanged.</li>
-        <li><b>Slack space</b> — store data in the unused tail of the last cluster of a file.</li>
-        <li><b>Password-protected archives</b> — ZIP/RAR with encryption; the examiner needs the password or a cracking tool.</li>
+        <li><b>Hide a partition.</b> Create a partition, then erase its entry from the partition table with a disk editor such as Norton Disk Edit, or remove it from the boot menu with G Disk, Partition Magic, System Commander or GRUB. The data remains on disk but the operating system no longer mounts it.</li>
+        <li><b>Mark clusters as bad.</b> Put sensitive data in open or slack space, then label those clusters “bad”. The operating system treats them as useless and does not read them; the attacker can turn them back into good clusters later.</li>
+        <li><b>Bit-shift the file.</b> Use a small assembler program or macro to reorder the bits, so a text editor or word processor shows garbage. A second program restores the original order.</li>
+        <li><b>Use steganography.</b> Hide the payload inside an image, audio or video file. The carrier looks normal, but it contains a secret file.</li>
+        <li><b>Encrypt the data.</b> Encrypt files, containers or the whole disk. Without the key, the content is unreadable.</li>
+        <li><b>Change the extension.</b> Rename <code>.doc</code> to <code>.jpg</code> or <code>.txt</code>. The file header no longer matches the name, so a quick review skips it.</li>
+        <li><b>Hide files and folders.</b> Set the hidden attribute or use a name that users ignore, such as a system-looking folder.</li>
+        <li><b>Use Alternate Data Streams.</b> On NTFS, attach a hidden stream to a normal file. The visible file looks unchanged.</li>
+        <li><b>Use slack space.</b> Store data in the unused tail of a file's last cluster, where normal file listings do not look.</li>
+        <li><b>Password-protect an archive.</b> Put the data in an encrypted ZIP or RAR file. The examiner needs the password or a cracking tool.</li>
       </ol>
 
-      <h4>2. Bit-shifting in detail (the book's worked example)</h4>
+      <div class="analogy"><b>Real-life analogy:</b> Hiding data is like hiding valuables in a house: a false wall (hidden partition), a drawer marked “broken” (bad clusters), a secret compartment inside a book (steganography), or a locked safe (encryption). The object is still there; you just have to know where to look.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Changing a file's extension does not change what is inside it. A file named <code>holiday.jpg</code> can still be a Word document or an executable. Always check the file header, not just the name.</div>
+
+      <h3>Full exam answer — two techniques in detail</h3>
+
+      <h4>1. Bit-shifting in detail (the book's worked example)</h4>
       <p>Bit-shifting changes the position of every bit in a byte. For example, shifting the 8-bit value <code>00000001</code> one place to the left gives <code>00000010</code>; the byte now means a different character. Apply this to the whole file and it looks like garbage.</p>
       <ol>
         <li>Open the file in a hex editor (Hex Workshop).</li>
         <li>Select <b>Data Operations → Shift Left</b>.</li>
         <li>Choose the operand size (16-bit unsigned short) and byte ordering (little-endian).</li>
-        <li>Apply to the selection or the entire file; save as a new file (for example <code>Bit shift left.txt</code>).</li>
+        <li>Apply it to the selection or the entire file; save as a new file, for example <code>Bit shift left.txt</code>.</li>
         <li>To restore, apply <b>Shift Right</b> the same number of bits; the original text reappears.</li>
         <li>Compute MD5 of the original, the shifted file and the restored file. The shifted file has a different hash; the restored file must have the original hash.</li>
       </ol>
       <p><b>Why attackers use it:</b> antivirus and keyword search do not recognise the shifted content. Some malware bit-shifts an executable hidden at the end of a Word document and reverses it when the document is opened.</p>
+      <p class="small"><b>What this means:</b> a file that looks like nonsense may not be damaged. If the case involves a suspicious file, try reversing a simple shift before you conclude that the data is unrecoverable.</p>
 
-      <h4>3. Hiding partitions in detail</h4>
+      <h4>2. Hiding partitions in detail</h4>
       <p>A partition is described by an entry in the partition table. If the entry is removed or marked as an unknown type, the operating system no longer mounts it, but the data remains on disk. Disk Manager may show a gap, a partition with no drive letter, or non-sequential drive letters (C, E, F — D missing). The examiner recovers it by:</p>
       <ul>
-        <li>Comparing the total disk size with the sum of visible partitions.</li>
-        <li>Looking for a partition gap larger than the normal 63/128 sectors.</li>
-        <li>Using a disc editor or forensic tool (ProDiscover, FTK, WinHex) to view the partition table and carve data from the gap.</li>
+        <li>Comparing the total disk size with the sum of the visible partitions.</li>
+        <li>Looking for a partition gap larger than the normal 63 or 128 sectors.</li>
+        <li>Using a disk editor or forensic tool (ProDiscover, FTK, WinHex) to view the partition table and carve data from the gap.</li>
       </ul>
+      <p class="small"><b>What this means:</b> a missing drive letter is a clue, not a formatting error. If the numbers do not add up, part of the disk is unaccounted for.</p>
 
       <div class="note"><b>Book example:</b> a 5.38 GB disk shows a 109.8 MB primary DOS partition, a 5381.1 MB extended partition and a 5116.5 MB logical drive. The mismatch and the missing drive letter reveal the hidden partition (Fig. 5.3.1).</div>
     </div>
@@ -478,20 +675,55 @@ DEVICE           ── photograph → note state → isolate network → seize<
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2022 May Q5(a) [9] · 2022 Nov Q5(a) [9] · 2024 May Q6(b) [9, challenges &amp; best practices]</p>
+
+      <div class="simple"><b>In simple words:</b> Live acquisition copies a running computer before you switch it off, so RAM and encryption keys are not lost. Remote acquisition does the same job over a network when the machine is far away. You capture memory first, then the disk, and hash everything you copy.</div>
+
+      <h4>Why we do this</h4>
+      <p>Some evidence exists only while the machine is on: running processes, network connections and keys held in memory. Some servers cannot be shut down at all. Live and remote acquisition let you preserve that evidence without stopping the business or tipping off the suspect.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Live acquisition</b> — copying evidence from a system while it is still running.</li>
+        <li><b>Remote acquisition</b> — copying evidence from a computer over a network instead of sitting at the machine.</li>
+        <li><b>Volatile data</b> — data that disappears when power is lost, such as RAM, running processes and network connections.</li>
+        <li><b>Order of volatility</b> — the rule that the fastest-changing evidence must be collected first.</li>
+        <li><b>RAM</b> — the computer's working memory, which holds running programs and often encryption keys.</li>
+        <li><b>Rootkit</b> — malware that hides files, processes or network connections from the operating system.</li>
+        <li><b>Encryption key</b> — the secret value needed to unlock encrypted data.</li>
+        <li><b>Write blocker</b> — a device that allows reading but blocks writing to a drive.</li>
+        <li><b>HDHOST</b> — a Runtime Software tool that lets two computers communicate so a remote drive can be examined.</li>
+        <li><b>DiskExplorer</b> — a Runtime Software tool that reads FAT or NTFS drives and creates an image.</li>
+        <li><b>Bit-stream image</b> — an exact byte-for-byte copy of a drive.</li>
+        <li><b>Live CD</b> — a bootable disc that runs a trusted operating system without using the suspect's installed system.</li>
+        <li><b>Network drive</b> — a shared storage folder on another computer that you can save evidence to.</li>
+        <li><b>Process</b> — a running program and the resources it is using.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Get legal authority.</b> A warrant, consent or company policy must cover the machine and the data you are about to copy.</li>
+        <li><b>Prepare and test your tools.</b> Test the bootable forensic CD or USB on a lab machine first, and add the network tools you will need. A tool that fails at the scene wastes the only chance you have.</li>
+        <li><b>Record every action.</b> Write down both what you did and why, because the defence will ask how the evidence was handled.</li>
+        <li><b>Choose a safe output location.</b> Save to a network drive if possible. If you must use a USB thumb drive, record that action in your journal.</li>
+        <li><b>Capture RAM and running processes.</b> Memory holds evidence that vanishes at shutdown, including passwords and encryption keys.</li>
+        <li><b>Check for a rootkit.</b> If an intrusion is suspected, run a tool such as Root Kit Revealer. A rootkit may hide files from your acquisition tool.</li>
+        <li><b>Image the drive.</b> Take a drive image over the network, or shut down and perform a static acquisition if that is safer.</li>
+        <li><b>Hash every file and the final image.</b> A forensically sound hash proves that the copy matches the source and lets you detect later changes.</li>
+        <li><b>Verify and seal.</b> Compare the hashes, record the result, seal the image and analyse only the copy.</li>
+      </ol>
+      <p class="small"><b>For a remote machine:</b> follow the same order, but connect with <b>HDHOST</b> and use <b>DiskExplorer</b> to read the remote FAT or NTFS drive. The eight-line remote procedure is printed below.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> Live acquisition is like taking a photograph of a running factory before you stop the machines. Remote acquisition is like inspecting a branch office through a secure video link instead of flying there — cheaper and faster, but the link can drop.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “Live” does not mean “less careful.” A live system is changing while you copy it, so you must record every command, capture the most volatile data first and hash the result. Remote acquisition is harder, not easier, because the network and the suspect operating system sit between you and the evidence.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Live acquisition</h4>
       <p>A <b>live acquisition</b> captures data from a running system. It is used when the system cannot be switched off (a production server), when encryption keys exist only in RAM, or when volatile evidence would otherwise be lost.</p>
-      <p><b>Order of volatility:</b> collect RAM and active processes first, then disk. The book's steps:</p>
-      <ol>
-        <li><b>Test a bootable forensic CD</b> before using it on a suspect system. Add the proper network tools to your workstation if the suspect is on the network.</li>
-        <li><b>Record everything you do</b> — both the action and the reason.</li>
-        <li>Save the data to a <b>network drive</b> if possible.</li>
-        <li>Connect a <b>USB thumb drive</b> to the suspicious machine to gather data if no network drive is available; record this action in the journal.</li>
-        <li><b>Copy physical memory (RAM)</b> next. Microsoft provides built-in tools; free tools include Back and mem fetch.</li>
-        <li>If an intrusion is suspected, use <b>Root Kit Revealer</b> to check for a rootkit; then take a drive image over the network, or shut down and do a static acquisition.</li>
-        <li>Obtain a <b>forensically sound digital hash</b> for every file recovered, so that later changes can be detected.</li>
-      </ol>
+      <p><b>Order of volatility:</b> collect RAM and active processes first, then the disk. The book's steps are the nine steps above; the key exam point is <b>memory before disk</b>.</p>
 
       <h4>2. Tools for live acquisition</h4>
       <div class="tbl-wrap">
@@ -506,6 +738,7 @@ DEVICE           ── photograph → note state → isolate network → seize<
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> a memory tool captures RAM; a live CD gives you a trusted environment to run it. Use both together, and never install a new program on the suspect machine just to take the copy.</p>
 
       <h4>3. Remote acquisition</h4>
       <p><b>Remote acquisition</b> means imaging a computer that is far away, or imaging without the suspect knowing. It saves time and money and is useful when the machine is at a branch office or in another city.</p>
@@ -513,7 +746,7 @@ DEVICE           ── photograph → note state → isolate network → seize<
       <ul>
         <li><b>DiskExplorer for FAT</b> — raw or segmented image of a FAT drive.</li>
         <li><b>DiskExplorer for NTFS</b> — raw or segmented image of an NTFS drive.</li>
-        <li><b>HDHOST</b> — lets two computers communicate remotely; the examiner runs DiskExplorer on the local machine and connects to the suspect machine over the network. Best on the same LAN or router with little traffic.</li>
+        <li><b>HDHOST</b> — lets two computers communicate remotely. The examiner runs DiskExplorer on the local machine and connects to the suspect machine over the network. It works best on the same LAN or router with little traffic.</li>
       </ul>
 
       <h4>4. Example procedure (remote)</h4>
@@ -528,14 +761,15 @@ DEVICE           ── photograph → note state → isolate network → seize<
 
       <h4>5. Challenges</h4>
       <ul>
-        <li><b>Bandwidth</b> — a full image may be hundreds of GB; the link may be too slow.</li>
+        <li><b>Bandwidth</b> — a full image may be hundreds of GB, and the link may be too slow.</li>
         <li><b>Encryption</b> — the remote disk may be encrypted and the key unavailable.</li>
-        <li><b>Rootkits</b> — the remote OS may hide files or processes from the acquisition tool.</li>
-        <li><b>Alteration</b> — every command changes the remote system (access time, logs, network connections).</li>
+        <li><b>Rootkits</b> — the remote operating system may hide files or processes from the acquisition tool.</li>
+        <li><b>Alteration</b> — every command changes the remote system: access times, logs and network connections.</li>
         <li><b>Attacker detection</b> — the intruder may notice the connection and destroy evidence.</li>
         <li><b>Legal authority</b> — remote access across a jurisdiction may need a local warrant.</li>
         <li><b>Network instability</b> — a dropped link produces an incomplete image.</li>
       </ul>
+      <p class="small"><b>What this means:</b> remote acquisition trades speed for control. You save travel time, but you add bandwidth, encryption, detection and legal risks, so the procedure and the logging must be even tighter.</p>
 
       <h4>6. Best practices</h4>
       <ul>
@@ -544,7 +778,7 @@ DEVICE           ── photograph → note state → isolate network → seize<
         <li>Capture <b>volatile data first</b>; hash every file and the final image.</li>
         <li>Image to a <b>dedicated evidence drive</b>, never to the suspect disk.</li>
         <li>Verify the image by re-hashing; keep a second copy.</li>
-        <li>Use a <b>trusted bootable CD/USB</b> so the remote OS cannot tamper with the tool.</li>
+        <li>Use a <b>trusted bootable CD/USB</b> so the remote operating system cannot tamper with the tool.</li>
         <li>Work on a quiet network segment to avoid packet loss.</li>
       </ul>
     </div>
@@ -560,10 +794,50 @@ DEVICE           ── photograph → note state → isolate network → seize<
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 Nov Q5(b) [9] · 2024 May Q5(b) [9] · 2025 May Q5(b) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> A honeypot is a fake computer that looks valuable but holds no real data. A honeynet is a network of these fakes. Investigators watch what attackers do to them, so they can learn new attack methods without putting real systems at risk.</div>
+
+      <h4>Why we do this</h4>
+      <p>You cannot study an attacker if you chase them off immediately. A honeynet gives them a safe target, records every move, and turns the attack into research that protects real networks.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Honeypot</b> — a decoy computer that looks like a normal machine but holds no valuable data.</li>
+        <li><b>Honeynet</b> — a network made of several honeypots.</li>
+        <li><b>Honewall</b> — a monitoring device that watches what happens to the honeypots and controls outgoing traffic.</li>
+        <li><b>Forensic image</b> — an exact copy of a machine's disk taken before and after an attack.</li>
+        <li><b>Production network</b> — the real network that runs the organisation's work.</li>
+        <li><b>Zero-day</b> — an attack that exploits a flaw nobody has fixed or published yet.</li>
+        <li><b>Botnet</b> — a group of infected machines controlled by one attacker.</li>
+        <li><b>Zombie</b> — a single infected machine that follows an attacker's commands.</li>
+        <li><b>DDoS</b> — a distributed denial-of-service attack, where many machines flood a target at once.</li>
+        <li><b>Command and control (C2)</b> — the channel an attacker uses to send orders to infected machines.</li>
+        <li><b>Attribution</b> — working out who or what was responsible for an attack.</li>
+        <li><b>IRC</b> — Internet Relay Chat, an old text chat system often used for command-and-control.</li>
+        <li><b>Entrapment</b> — persuading someone to commit a crime they were not already inclined to commit.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Load the decoy with standard software.</b> It must look like a real machine on the production network, or attackers will ignore it.</li>
+        <li><b>Take a forensic image before deployment.</b> This is the clean “before” picture that later comparison depends on.</li>
+        <li><b>Deploy it as bait.</b> Put it on the network and leave it alone; it is not used for real work.</li>
+        <li><b>Monitor every action.</b> The honewall records connections, downloads and commands while controlling what leaves the network.</li>
+        <li><b>If it is compromised, take it offline and image it again.</b> The “after” image captures the attacker's changes.</li>
+        <li><b>Compare the two images.</b> The difference shows the method of attack and which files were added or altered.</li>
+        <li><b>Store both images in a research database.</b> Other investigators can study the attack and improve detection.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A honeynet is a fake shop set up to catch thieves. The shelves look real, but there is no cash inside. Police watch what the thieves do, learn their methods, and use that knowledge to protect the real shops on the street.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A honeypot is not a firewall. It does not block an attack; it invites and observes one. It also sees only what is aimed at it, so a quiet honeypot does not prove that the real network was never attacked.</div>
+
+      <h3>Full exam answer</h3>
+
       <h4>1. Definition</h4>
-      <p>The <b>Honeynet Project</b> is a research project that makes information about honeypots, honeynets and honewalls available in order to <b>thwart Internet and network attackers</b>. Its aims are to create awareness, provide information on how to protect against threats, explain how attackers operate and communicate, and give people tools and methods for their own research.</p>
+      <p>The <b>Honeynet Project</b> is a research project that makes information about honeypots, honeynets and honewalls available in order to <b>thwart Internet and network attackers</b>. Its aims are to create awareness, explain how to protect against threats, show how attackers operate and communicate, and give people tools and methods for their own research.</p>
 
       <h4>2. Key components</h4>
       <div class="tbl-wrap">
@@ -576,32 +850,27 @@ DEVICE           ── photograph → note state → isolate network → seize<
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> remember the three words in order — one decoy is a honeypot, many decoys form a honeynet, and the monitor that watches them is the honewall.</p>
 
       <h4>3. How a honeynet works</h4>
-      <ol>
-        <li>The original machine is loaded with the same standard software as the production network.</li>
-        <li>A <b>forensic image</b> of the machine is created before deployment.</li>
-        <li>The machine is deployed on the network and left as bait. It is not used for real work.</li>
-        <li>If it is compromised, it is taken offline and <b>another image is made</b>.</li>
-        <li>The two images are compared to determine the <b>method of attack</b> and which files were altered or added.</li>
-        <li>Both images are stored in a database for research.</li>
-      </ol>
+      <p>The seven-step cycle above is the exam answer. The important idea is the <b>before-and-after image comparison</b>: it shows exactly what the attacker changed.</p>
 
       <h4>4. Contribution to network forensics</h4>
       <ul>
-        <li><b>Early warning</b> — reveals new attack tools and zero-day techniques before they hit production.</li>
-        <li><b>Behaviour capture</b> — records the full sequence of an attack: scanning, exploit, download, command-and-control.</li>
-        <li><b>Attribution data</b> — source IPs, malware samples, IRC/C2 channels, file hashes.</li>
-        <li><b>Evidence preservation</b> — before/after images provide a controlled comparison, which is exactly what a forensic report needs.</li>
+        <li><b>Early warning</b> — reveals new attack tools and zero-day techniques before they reach production.</li>
+        <li><b>Behaviour capture</b> — records the full sequence of an attack: scanning, exploit, download and command-and-control.</li>
+        <li><b>Attribution data</b> — source IPs, malware samples, IRC/C2 channels and file hashes.</li>
+        <li><b>Evidence preservation</b> — before-and-after images provide a controlled comparison, which is exactly what a forensic report needs.</li>
         <li><b>Research database</b> — shared with the community, improving detection signatures.</li>
         <li><b>DDoS and zero-day research</b> — the project studies distributed denial-of-service and zero-day attacks, including botnets and “zombies”.</li>
       </ul>
+      <p class="small"><b>What this means:</b> a honeynet is both a trap and a laboratory. It produces evidence of the attack and intelligence that helps every other network defend itself.</p>
 
       <h4>5. Limitations (good for the last 2 marks)</h4>
       <ul>
         <li>A honeypot sees only what is directed at it; it cannot prove that a production system was not attacked.</li>
         <li>It must be isolated, or it becomes a launch point for attacks on others.</li>
-        <li>Legal and ethical issues: entrapment and privacy concerns.</li>
+        <li>Legal and ethical issues arise: entrapment and privacy concerns.</li>
         <li>Skilled attackers can fingerprint a honeypot and avoid it.</li>
       </ul>
 
@@ -619,33 +888,61 @@ DEVICE           ── photograph → note state → isolate network → seize<
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 May Q6(a) [9] · 2025 Nov Q6(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> Identifying evidence means finding every device and data source that could answer the case questions. You survey the scene, list the devices, decide what is relevant and legally allowed, then preserve it before analysis. If you miss the right source, the rest of the investigation has nothing to work on.</div>
+
+      <h4>Why we do this</h4>
+      <p>Digital evidence can sit in a phone, a router, a cloud account or a backup tape, not only in the obvious laptop. A planned identification process makes sure the important sources are found, legally covered and preserved before anyone can change them.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Digital evidence</b> — information stored or transmitted in digital form that can be used in court.</li>
+        <li><b>Computer-generated record</b> — a record created by a program without a human writing it, such as a log entry.</li>
+        <li><b>Computer-stored record</b> — a record typed or saved by a person, such as a document or e-mail.</li>
+        <li><b>Hearsay</b> — a statement made outside court and offered to prove its content; courts usually restrict it.</li>
+        <li><b>Business-record exception</b> — a rule that allows routine business records as evidence even though they are hearsay.</li>
+        <li><b>Chain of custody</b> — the written record of who handled the evidence and when.</li>
+        <li><b>Relevance</b> — the connection between the evidence and a fact the case must prove.</li>
+        <li><b>Artefact</b> — a small trace left by user or system activity, such as a browser entry or a registry key.</li>
+        <li><b>Metadata</b> — data about data, such as a file's author, creation time or size.</li>
+        <li><b>Warrant scope</b> — the places and items the warrant allows you to search and seize.</li>
+        <li><b>FOIA</b> — the Freedom of Information Act, a law that lets the public request government records.</li>
+        <li><b>Testimonial evidence</b> — evidence given by a witness in words, rather than by an object.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Understand the case.</b> Read the complaint, warrant or policy and list the questions the evidence must answer. This stops you collecting interesting but irrelevant data.</li>
+        <li><b>Survey the scene.</b> Look for every device that may hold data: PCs, laptops, servers, phones, tablets, USB drives, external disks, printers, cameras, routers and smart devices.</li>
+        <li><b>Document the scene.</b> Photograph the area, screen, cable connections and labels, and record serial numbers and the system time. The photo and notes prove the original state.</li>
+        <li><b>Identify potential sources.</b> Consider the local disk, RAM, network shares, cloud accounts, e-mail server, logs, backup tapes and CCTV. Evidence is not always inside the computer case.</li>
+        <li><b>Decide relevance and legal scope.</b> Ask which sources fall within the warrant or policy and which are likely to hold the answer. Relevance without legal authority still cannot be seized.</li>
+        <li><b>Preserve before touching.</b> Capture volatile data, isolate the device, use a write blocker and hash the data. Preservation must happen before analysis.</li>
+        <li><b>Record the chain of custody.</b> Log every item, every transfer and every access, so the court can follow the evidence's history.</li>
+        <li><b>Classify the evidence.</b> Separate computer-generated records from computer-stored records, and real, documentary, testimonial or demonstrative evidence. The class affects how you prove it is authentic.</li>
+        <li><b>Prepare for analysis.</b> Image the media, verify the hash and load the image into the forensic tool. Only then does the detailed examination begin.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> It is like searching a house for a missing document. You list every room and cupboard, decide which ones could hold the document, seal each one before searching, and write down every item you remove.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Digital evidence is not only the files a user can see. Deleted files, logs, RAM, metadata and backup copies can all be evidence, and they are often more reliable than the visible document.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. What digital evidence is</h4>
       <p><b>Digital evidence</b> is any information stored or transmitted in digital form that can be used in court. US courts accept digital evidence as <b>physical evidence</b>; digital data is treated as a tangible object.</p>
 
-      <h4>2. The identification process</h4>
-      <ol>
-        <li><b>Understand the case</b> — read the complaint, warrant or policy; list the questions the evidence must answer.</li>
-        <li><b>Survey the scene</b> — identify every device that may hold data: PCs, laptops, servers, phones, tablets, USB drives, external disks, printers, cameras, routers, smart devices.</li>
-        <li><b>Document the scene</b> — photograph the area, the screen, the cable connections and the device labels; record serial numbers and the system time.</li>
-        <li><b>Identify potential sources of evidence</b> — local disk, RAM, network shares, cloud accounts, e-mail server, logs, backup tapes, CCTV.</li>
-        <li><b>Decide relevance</b> — which sources fall within the warrant or policy, and which are likely to contain the answers.</li>
-        <li><b>Preserve before touching</b> — capture volatile data, isolate the device, use a write blocker, hash the data.</li>
-        <li><b>Record the chain of custody</b> — every item, every transfer, every access.</li>
-        <li><b>Classify the evidence</b> — computer-generated records vs computer-stored records; real, documentary, testimonial or demonstrative.</li>
-        <li><b>Prepare for analysis</b> — image the media, verify the hash, and load the image into the forensic tool.</li>
-      </ol>
-
-      <h4>3. General tasks performed by investigators</h4>
+      <h4>2. General tasks performed by investigators</h4>
       <ul>
         <li><b>Identify</b> digital information or artefacts that can be used as evidence.</li>
         <li><b>Collect, preserve and document</b> evidence.</li>
-        <li><b>Analyse, identify and organize</b> evidence.</li>
+        <li><b>Analyse, identify and organise</b> evidence.</li>
         <li><b>Rebuild evidence or repeat a situation</b> to verify that the results can be reproduced reliably.</li>
       </ul>
 
-      <h4>4. Rules to follow while identifying evidence</h4>
+      <h4>3. Rules to follow while identifying evidence</h4>
       <ul>
         <li>Consistent practices verify your work and enhance your credibility.</li>
         <li>Comply with the state's rules of evidence or the Federal Rules of Evidence.</li>
@@ -656,6 +953,7 @@ DEVICE           ── photograph → note state → isolate network → seize<
         <li>Computer-generated records are authentic if the program that created the output was functioning correctly.</li>
         <li>Computer-stored records must be shown to be authentic and trustworthy; file metadata can identify the author.</li>
       </ul>
+      <p class="small"><b>What this means:</b> finding the file is only half the job. You must also show that it is genuine, that it came from the right machine and that the court is allowed to hear it.</p>
 
       <div class="tip"><b>9-mark answer:</b> definition (1) + 7–9 identification steps (5) + four general tasks (2) + two rules-of-evidence points (1). Use the phrase “identify → preserve → document → analyse → reproduce”.</div>
     </div>
@@ -671,7 +969,54 @@ DEVICE           ── photograph → note state → isolate network → seize<
       <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 May Q6(b) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> Network forensics is studying network traffic to rebuild an attack — like reviewing CCTV footage of a network. Order of volatility is the rule for what to collect first: the data that disappears fastest, such as RAM and routing tables, before slower-changing evidence such as the disk. Collect the fast-changing evidence before it vanishes.</div>
+
+      <h4>Why we do this</h4>
+      <p>An attacker may never leave a file on the disk, but the traffic still shows the connection, the commands and the stolen data. Network evidence also changes by the second, so the order in which you collect it decides whether there is anything left to analyse.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Network forensics</b> — gathering and analysing raw network data to find out how an attack or event happened.</li>
+        <li><b>Raw network data</b> — the actual packets travelling on the wire, before any application interprets them.</li>
+        <li><b>Packet capture</b> — recording network packets for later analysis.</li>
+        <li><b>IDS / IPS</b> — an intrusion detection system warns about suspicious traffic; an intrusion prevention system can also block it.</li>
+        <li><b>Firewall log</b> — a record of connections that were allowed or blocked.</li>
+        <li><b>NetFlow</b> — summary records of who talked to whom, how much and when, without the full packet content.</li>
+        <li><b>DHCP log</b> — a record of which device received which IP address.</li>
+        <li><b>DNS log</b> — a record of which domain names were looked up.</li>
+        <li><b>Order of volatility</b> — the rule that the most perishable evidence is collected first.</li>
+        <li><b>ARP cache</b> — a table that maps IP addresses to hardware (MAC) addresses on a local network.</li>
+        <li><b>Routing table</b> — the list that tells a computer or router where to send traffic.</li>
+        <li><b>Kernel</b> — the core part of the operating system that manages memory, processes and hardware.</li>
+        <li><b>Network topology</b> — the map of how devices and links are arranged.</li>
+        <li><b>Payload</b> — the actual content of a packet, such as a message or a file.</li>
+        <li><b>MAC address</b> — the hardware address of a network card, used to identify a device on a local network.</li>
+        <li><b>MAC table</b> — a switch's list of which MAC address is reachable on which port.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">The ten levels below are collected from most volatile to least volatile.</p>
+      <ol>
+        <li><b>Registers and cache.</b> These live inside the CPU and change every clock cycle, so they are the most perishable evidence.</li>
+        <li><b>Routing tables.</b> Routes can change when a link fails or an attacker redirects traffic, so copy them early.</li>
+        <li><b>ARP cache.</b> The IP-to-MAC mapping changes within seconds as devices join or leave, so record it before pulling cables.</li>
+        <li><b>Process table.</b> Running processes end when the machine shuts down, taking their command lines and network ports with them.</li>
+        <li><b>Kernel statistics and modules.</b> Loaded modules and kernel data live only in memory and can reveal a rootkit.</li>
+        <li><b>Main memory (RAM).</b> RAM holds open files, passwords and encryption keys, and it is lost at power-off.</li>
+        <li><b>Temporary file systems.</b> Temporary files are often deleted automatically at shutdown.</li>
+        <li><b>Secondary memory.</b> The disk is slower to change and survives a shutdown, so it can wait until the volatile data is safe.</li>
+        <li><b>Router configuration.</b> Configuration changes less often, but it is still easier to copy before the device is moved or reset.</li>
+        <li><b>Network topology.</b> The physical and logical map changes slowest, so it is documented last.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Network forensics is reviewing CCTV footage of a network. The order of volatility is the rule that says grab the live camera feed and the temporary recordings first, because the permanent archive will still be there tomorrow.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Order of volatility is not the same as order of importance. The disk may hold the most data, but RAM disappears first, so RAM is collected first. “Most important” and “most perishable” are two different questions.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Network forensics — definition</h4>
       <p><b>Network forensics</b> is the act of <b>gathering and analysing raw network data and tracing network traffic</b> regularly, in order to determine how an attack was executed or how an event took place on a network.</p>
@@ -700,21 +1045,10 @@ DEVICE           ── photograph → note state → isolate network → seize<
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> no single log tells the whole story. Firewall, DNS, DHCP and packet data must be combined to link an IP address to a device and a person.</p>
 
       <h4>4. Order of volatility for a computer system</h4>
-      <p>Collect the most volatile evidence first. The book's list (also Unit 4) is:</p>
-      <ol>
-        <li>Registers and cache</li>
-        <li>Routing tables</li>
-        <li>ARP cache</li>
-        <li>Process table</li>
-        <li>Kernel statistics and modules</li>
-        <li>Main memory</li>
-        <li>Temporary file systems</li>
-        <li>Secondary memory</li>
-        <li>Router configuration</li>
-        <li>Network topology</li>
-      </ol>
+      <p>Collect the most volatile evidence first. The ten-level list is the step-by-step section above.</p>
 
       <div class="tree">most volatile
    registers / cache
@@ -725,6 +1059,7 @@ DEVICE           ── photograph → note state → isolate network → seize<
    disk
    router config / topology
 least volatile</div>
+      <p class="small"><b>What this means:</b> start at the top of the ladder and work down. If you image the disk first, the RAM, ARP cache and routing table may already be gone.</p>
 
       <div class="note"><b>Network-specific volatility:</b> the ARP cache and routing table change within seconds; a switch's MAC table ages out in minutes. Capture them before pulling any cable.</div>
     </div>
@@ -736,24 +1071,53 @@ least volatile</div>
       <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2025 Nov Q6(b) [8]</p>
 
-      <h4>1. Why a standard procedure is needed</h4>
-      <p>Network forensics is a <b>time-consuming, labour-intensive</b> procedure and the investigation can rapidly become fruitless. A written procedure ensures that evidence is collected the same way every time, that volatile data is not lost, and that the result is defensible.</p>
+      <div class="simple"><b>In simple words:</b> A standard procedure is a fixed checklist so every investigator collects network evidence the same way. You keep a clean installation image, capture RAM before shutdown, image the disk, compare files with the clean image, and document every tool and action.</div>
 
-      <h4>2. The standard procedure (book §5.4.3)</h4>
+      <h4>Why we do this</h4>
+      <p>Network evidence is easy to lose and hard to defend if the method changes from case to case. A written procedure makes the work repeatable, stops volatile data being lost, and gives the court a clear record of what was done.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Standard installation image</b> — a clean copy of the standard operating system and applications used on the network, kept for comparison.</li>
+        <li><b>Bit-stream image</b> — an exact byte-for-byte copy of a drive, including deleted and empty space.</li>
+        <li><b>Baseline</b> — the known-good state of a system before an incident.</li>
+        <li><b>Hash</b> — a digital fingerprint used to prove that a file has not changed.</li>
+        <li><b>Volatile data</b> — data that disappears at power-off, such as RAM and running processes.</li>
+        <li><b>Live acquisition</b> — copying data from a running machine.</li>
+        <li><b>Forensic image</b> — a verified copy of a drive used for analysis instead of the original.</li>
+        <li><b>Rootkit</b> — malware that hides its files and processes from the operating system.</li>
+        <li><b>Packet capture</b> — recording raw network traffic for analysis.</li>
+        <li><b>Flow analysis</b> — studying summary records of network connections rather than every packet.</li>
+        <li><b>Chain of custody</b> — the written history of who handled the evidence.</li>
+        <li><b>DLL</b> — a shared library file that programs load to use common code.</li>
+        <li><b>Volatility</b> — how quickly data disappears if the machine loses power.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li><b>Use a standard installation image</b> for systems on the network. The image contains all commonly used standard applications; it is <b>not</b> a bit-stream image. Keep MD5 and SHA-1 hash values for all OS and application files.</li>
-        <li><b>As soon as an intrusion is detected</b>, check whether the vulnerability has been addressed, to stop further exploitation.</li>
-        <li><b>Before shutting the system off</b>, retrieve all volatile data by performing a live acquisition of RAM and active processes.</li>
-        <li><b>Acquire the infected drive</b> and create a forensic image of it.</li>
-        <li><b>Compare the files on the forensic image</b> with the installation image's original files. Check the hashes of popular files, including <code>win.exe</code> and common DLLs, to see whether they changed.</li>
-        <li><b>Work from the image</b> — deleted or hidden files and partitions may be found by examining the physical disk; occasionally restore the image to a drive to run applications.</li>
-        <li><b>Recover the disk</b> in a controlled way and examine the system functions that the attacker modified.</li>
-        <li><b>Document</b> the tools, versions, settings, timestamps and every action.</li>
+        <li><b>Keep a standard installation image.</b> It contains all commonly used standard applications; it is <b>not</b> a bit-stream image. Store MD5 and SHA-1 values for every OS and application file, so you can later prove what the clean system looked like.</li>
+        <li><b>Check the vulnerability as soon as an intrusion is detected.</b> If the hole is still open, the attacker can keep exploiting it while you collect evidence.</li>
+        <li><b>Capture volatile data before shutdown.</b> Perform a live acquisition of RAM and active processes, because that evidence disappears when the machine powers off.</li>
+        <li><b>Acquire the infected drive.</b> Create a forensic image through a write blocker, so the original is never changed.</li>
+        <li><b>Compare the image with the installation image.</b> Check the hashes of popular files, including <code>win.exe</code> and common DLLs, to see what the attacker changed.</li>
+        <li><b>Work from the image.</b> Examine deleted or hidden files and partitions on the copy; occasionally restore the image to a drive to run applications.</li>
+        <li><b>Recover the disk in a controlled way.</b> Examine the system functions the attacker modified, without overwriting evidence.</li>
+        <li><b>Document everything.</b> Record the tools, versions, settings, timestamps and every action, so another examiner can repeat the work.</li>
       </ol>
 
-      <h4>3. Tools used at each stage</h4>
+      <div class="analogy"><b>Real-life analogy:</b> It is like a recipe in a restaurant. Every cook follows the same steps with the same ingredients, so the dish tastes the same every night and any cook can take over without guessing.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A standard installation image is not the same as a forensic image. The installation image is a clean baseline for comparison; the forensic image is the verified copy of the suspect drive. Mixing them up makes the comparison meaningless.</div>
+
+      <h3>Full exam answer</h3>
+
+      <h4>1. Why a standard procedure is needed (book §5.4.3)</h4>
+      <p>Network forensics is a <b>time-consuming, labour-intensive</b> procedure, and an investigation can rapidly become fruitless. A written procedure ensures that evidence is collected the same way every time, that volatile data is not lost, and that the result is defensible in court.</p>
+
+      <h4>2. Tools used at each stage</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Stage</th><th>Tool</th><th>Purpose</th></tr></thead>
@@ -768,6 +1132,7 @@ least volatile</div>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> match the tool to the stage. A memory tool cannot image a disk, and an imaging tool cannot recover a running process. The table is the “who does what” of the procedure.</p>
 
       <div class="tip"><b>8-mark answer:</b> 1 line on why + 8 numbered procedure steps + a 4-row tool table. The examiner is looking for the words <b>standard installation image</b>, <b>hash values</b>, <b>volatile data first</b> and <b>compare with the image</b>.</div>
     </div>
@@ -779,7 +1144,50 @@ least volatile</div>
       <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2025 May Q6(b) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> Network forensic tools capture and inspect traffic. Windows Sysinternals tools show processes, registry activity and open files; Linux tools such as tcpdump and Snort capture packets and detect intrusions. Snort is a common IDS that matches traffic against a rule set.</div>
+
+      <h4>Why we do this</h4>
+      <p>You cannot analyse traffic that was never captured, and you cannot find an intruder by staring at a cable. Tools turn raw packets and system activity into records that an investigator can search, compare and present in court.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Packet</b> — a small unit of data sent across a network.</li>
+        <li><b>Packet sniffer</b> — a tool that records packets travelling on a network.</li>
+        <li><b>IDS</b> — an intrusion detection system that watches traffic and raises alerts.</li>
+        <li><b>IPS</b> — an intrusion prevention system that can also block suspicious traffic.</li>
+        <li><b>Sysinternals</b> — a set of free Windows troubleshooting and forensic tools from Microsoft.</li>
+        <li><b>Registry</b> — the Windows database of system and application settings.</li>
+        <li><b>Process</b> — a running program and the resources it is using.</li>
+        <li><b>SID</b> — a security identifier, the unique code Windows uses for a user or computer account.</li>
+        <li><b>DLL</b> — a shared library file that programs load to use common code.</li>
+        <li><b>Service</b> — a background program that runs without a user opening it.</li>
+        <li><b>Rule set</b> — the list of patterns an IDS compares against traffic.</li>
+        <li><b>TCP stream</b> — a conversation between two computers, reassembled from individual packets.</li>
+        <li><b>Port</b> — a numbered channel that identifies which service a packet is for.</li>
+        <li><b>Rootkit</b> — malware that hides its presence from the operating system.</li>
+        <li><b>Span port</b> — a switch port configured to receive a copy of all traffic passing through the switch.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <p class="small">The steps below show how one common tool, Snort, is used in a case.</p>
+      <ol>
+        <li><b>Install Snort on a monitored host or a span port.</b> It must see the traffic you want to examine; a tool that sees nothing proves nothing.</li>
+        <li><b>Download and manage the rules.</b> Use oinkmaster to choose which rules to ignore and which should raise alarms, so alerts stay useful.</li>
+        <li><b>Choose the mode.</b> Sniffer mode prints packets, logger mode writes them to disk, and IDS mode applies the rules and raises alerts.</li>
+        <li><b>Capture traffic.</b> Let Snort record the session while the suspicious activity happens, because the packets are the primary evidence.</li>
+        <li><b>Read the alerts.</b> Each alert shows the rule, source, destination, port and time, giving you a timeline of the attack.</li>
+        <li><b>Replay the capture in Wireshark.</b> Reassembling the TCP stream lets you see the actual content, such as a downloaded file or a login.</li>
+        <li><b>Document the tool, version, rules, time and findings.</b> Another examiner must be able to reproduce the detection.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A packet sniffer is a security camera for data. Snort is the guard watching the camera who knows what suspicious behaviour looks like and writes an incident note when it appears.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Snort is not a firewall. It detects traffic and can prevent some of it in IPS mode, but it does not replace the firewall's job of controlling which connections are allowed.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Windows tools (Sysinternals)</h4>
       <div class="tbl-wrap">
@@ -819,6 +1227,7 @@ least volatile</div>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> Windows tools mostly explain what the machine is doing; Linux tools mostly capture and inspect network traffic. A network case usually needs both sides.</p>
 
       <h4>3. One tool in detail — Snort</h4>
       <p><b>Snort</b> is an open-source <b>intrusion detection and prevention system</b>. It captures packets in real time, reassembles TCP streams and matches the traffic against a rule set.</p>
@@ -843,7 +1252,47 @@ least volatile</div>
       <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2023 Nov Q5(a) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> You do not copy everything blindly. First read the complaint or warrant, list the questions, and choose the sources, keywords and date range that can answer them. Then collect only what is relevant and legally allowed.</div>
+
+      <h4>Why we do this</h4>
+      <p>Too little data misses the proof; too much data wastes time, costs money and may go beyond the warrant. A clear plan keeps the investigation focused and defensible.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Civil investigation</b> — a dispute between people or companies, often controlled by a court order for discovery.</li>
+        <li><b>Criminal investigation</b> — an investigation of an offence, limited by the search warrant.</li>
+        <li><b>Corporate / HR investigation</b> — an internal inquiry into a breach of company policy.</li>
+        <li><b>Discovery</b> — the legal process in which each side must share relevant evidence.</li>
+        <li><b>Search warrant</b> — a judge's written permission to search and seize specific items.</li>
+        <li><b>Scope creep</b> — the investigation slowly grows beyond the original plan because new information appears.</li>
+        <li><b>Keyword list</b> — the names, addresses, account numbers and dates you will search for.</li>
+        <li><b>Date range</b> — the period in which the incident happened.</li>
+        <li><b>Logical copy</b> — a copy of the files and folders, without the deleted or empty space.</li>
+        <li><b>Physical image</b> — a byte-for-byte copy of the whole drive, including slack and unallocated space.</li>
+        <li><b>Unallocated space</b> — disk space that is not currently assigned to any file and may still hold deleted data.</li>
+        <li><b>CMOS</b> — a small battery-backed memory that stores a PC's clock and basic hardware settings.</li>
+        <li><b>Slack space</b> — the unused tail of a file's last cluster, which can still hold data.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Read the complaint or warrant.</b> Write down exactly what is alleged and what the law allows you to search. This is the boundary of the whole case.</li>
+        <li><b>List the questions to answer.</b> Use who, what, when, where and how. Every source you collect should help answer at least one question.</li>
+        <li><b>Identify likely sources.</b> Consider the PC, server, mobile phone, cloud account, USB drive, printer and router. The answer may be on a device nobody thought to mention.</li>
+        <li><b>Build a keyword list.</b> Include names, e-mail addresses, account numbers, project names and dates. Good keywords save hours of manual review.</li>
+        <li><b>Define the date range.</b> Focus on the period of the incident, so the review does not drown in years of unrelated files.</li>
+        <li><b>Define the file types.</b> Decide whether you need documents, spreadsheets, images, databases or chat logs.</li>
+        <li><b>Decide the depth.</b> A logical copy may be enough for a simple policy case; a full physical image is needed when deleted or hidden data matters.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> It is like packing for a trip with a strict luggage limit. You choose what the trip actually needs, not everything in the wardrobe, because extra weight slows you down and may cost more.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Collecting more data is not automatically safer. Scope creep can take the search beyond the warrant, make the evidence inadmissible and turn a small case into an expensive review.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. Start from the type of investigation</h4>
       <p>The <b>type of investigation</b> and the <b>volume of data</b> determine how the evidence is examined:</p>
@@ -853,18 +1302,7 @@ least volatile</div>
         <li><b>Corporate / HR investigation</b> — focuses on <b>infringements of corporate policy</b>, often only e-mail or a few specified topics.</li>
       </ul>
 
-      <h4>2. Build a case strategy</h4>
-      <ol>
-        <li><b>Read the complaint / warrant</b> — what exactly is alleged, and what is the legal scope?</li>
-        <li><b>List the questions to answer</b> — who, what, when, where, how.</li>
-        <li><b>Identify likely sources</b> — PC, server, mobile, cloud account, USB, printer, router.</li>
-        <li><b>Set a keyword list</b> — names, e-mail addresses, account numbers, project names, dates.</li>
-        <li><b>Define the date range</b> — the period in which the incident occurred.</li>
-        <li><b>Define file types</b> — documents, spreadsheets, images, databases, chat logs.</li>
-        <li><b>Decide depth</b> — logical files only, or full physical image including slack and unallocated space.</li>
-      </ol>
-
-      <h4>3. Control scope creep</h4>
+      <h4>2. Control scope creep</h4>
       <p><b>Scope creep</b> is when an investigation broadens beyond what was originally planned because unexpected information is found, leading the lawyer to request a search of other places. It increases time and cost. The book's advice:</p>
       <ul>
         <li>Document every request for more inquiry.</li>
@@ -872,18 +1310,20 @@ least volatile</div>
         <li>Keep the search <b>comprehensive enough</b> to include all pertinent evidence, but <b>not so extensive</b> that time and money are wasted on irrelevant data.</li>
         <li>Start with a strategy, but be prepared to modify it when the evidence points elsewhere.</li>
       </ul>
+      <p class="small"><b>What this means:</b> scope creep is not always wrong, but it must be deliberate and recorded. If the case grows, the paperwork must grow with it.</p>
 
-      <h4>4. The 8-step examination method (book §5.1)</h4>
+      <h4>3. The 8-step examination method (book §5.1)</h4>
       <ol>
         <li>Use only recently erased, reformatted and virus-checked media for target drives.</li>
         <li>List the components of the suspect's computer and record its state at seizure.</li>
         <li>If possible, remove the original disk before checking the CMOS date and time for a static acquisition.</li>
         <li>Note how the data was obtained, including every step used to produce the bit-stream image and the tools employed.</li>
         <li>Be methodical and logical: list every folder and file, and note where specific evidence is located.</li>
-        <li>Start at the root directory of the partition and look through all folders (limited search in a civil case).</li>
+        <li>Start at the root directory of the partition and look through all folders (a limited search in a civil case).</li>
         <li>Recover the contents of password-protected files that may be relevant.</li>
         <li>Determine each executable's purpose by its hash value and known-file comparison.</li>
       </ol>
+      <p class="small"><b>What this means:</b> the examination is a documented sweep, not a random hunt. Start at the root, go folder by folder, and record where each piece of evidence was found.</p>
 
       <div class="note"><b>Example to quote:</b> a worker is accused of running a side business in office hours. The strategy is to focus on <b>temporary Internet files, Internet history and e-mail</b> within the relevant date range — not on the entire disk.</div>
     </div>
@@ -899,7 +1339,47 @@ least volatile</div>
       <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
+
       <p class="asked"><b>Asked in:</b> 2025 May Q6(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> A hash is a file's fingerprint: a short code made from its contents. If one byte changes, the hash changes completely. Investigators hash the original and the copy; when the values match, the copy is verified. Then they store the evidence safely and record where it is.</div>
+
+      <h4>Why we do this</h4>
+      <p>The court must be able to check that the evidence was not altered between seizure and trial. A recorded hash lets any examiner re-check the data years later. Safe storage protects the original from heat, moisture, magnets and accidental overwriting.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Hash</b> — a fixed-length digital fingerprint calculated from data; also called a message digest.</li>
+        <li><b>MD5</b> — a 128-bit hashing algorithm, fast and common in older forensic tools.</li>
+        <li><b>SHA-1 / SHA-256</b> — stronger hashing algorithms; SHA-256 is preferred for new work.</li>
+        <li><b>One-way function</b> — a calculation that is easy to perform but practically impossible to reverse.</li>
+        <li><b>Avalanche effect</b> — a tiny change in the input produces a completely different hash.</li>
+        <li><b>CRC-32</b> — a simple checksum used to detect accidental changes; it is not strong enough to be a forensic hash.</li>
+        <li><b>Write blocker</b> — a device that allows reading but blocks writing to a drive.</li>
+        <li><b>Bit-stream image</b> — an exact byte-for-byte copy of a drive.</li>
+        <li><b>Verification</b> — comparing the hash of the copy with the hash of the original.</li>
+        <li><b>Chain of custody</b> — the written record of who handled the evidence.</li>
+        <li><b>Hexadecimal</b> — base-16 notation, used to write hash values as letters and digits.</li>
+        <li><b>Partition</b> — a section of a disk treated as a separate drive.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Connect the evidence drive through a write blocker.</b> The blocker makes sure the hashing tool cannot change the source.</li>
+        <li><b>Open the forensic tool.</b> Use FTK Imager, EnCase, ProDiscover, <code>md5sum</code> or <code>sha1sum</code>. A trusted tool is part of the evidence.</li>
+        <li><b>Select the source.</b> Choose a single file, a folder or the entire physical disk, depending on what must be proved.</li>
+        <li><b>Choose the algorithm.</b> MD5 is 128-bit, SHA-1 is 160-bit and SHA-256 is 256-bit. Record the choice, because a hash value means nothing without its algorithm.</li>
+        <li><b>Run the hash.</b> The tool reads every byte and produces a hexadecimal value. Reading every byte is what makes the fingerprint reliable.</li>
+        <li><b>Record the value, algorithm, date, time and tool version.</b> This record lets another examiner repeat the check.</li>
+        <li><b>Create the image and hash the image.</b> Use the same algorithm, so the two values can be compared directly.</li>
+        <li><b>Compare the values.</b> Equal hashes mean the copy is verified; different hashes mean the copy is corrupt or was changed.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A hash is a file's fingerprint. Two copies of a document can have different names and dates, but if their fingerprints match, you know they are the same content. Change one letter and the fingerprint is completely different.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A hash is not encryption. You cannot “decrypt” a hash back into the file; it is a one-way fingerprint. It proves whether data changed, not what the data says.</div>
+
+      <h3>Full exam answer</h3>
 
       <h4>1. What a digital hash is</h4>
       <p>A <b>hash</b> (message digest) is a fixed-length hexadecimal value produced by a one-way mathematical function from a file or a whole disk. The same input always gives the same hash; a one-bit change gives a completely different value. It is the digital equivalent of a fingerprint.</p>
@@ -909,25 +1389,17 @@ least volatile</div>
         <li><b>Integrity</b> — proves that the image is identical to the original.</li>
         <li><b>Admissibility</b> — gives the court a verifiable value that can be re-checked at any time.</li>
         <li><b>Detects alteration</b> — if anyone changes a byte, the hash no longer matches.</li>
-        <li><b>Chain of custody support</b> — the hash is recorded at seizure, imaging, transfer and analysis.</li>
+        <li><b>Chain-of-custody support</b> — the hash is recorded at seizure, imaging, transfer and analysis.</li>
         <li><b>Identification</b> — two files with different names but the same content have the same hash; known-bad databases rely on this.</li>
         <li><b>Reproducibility</b> — a second examiner can confirm the result independently.</li>
       </ul>
 
       <h4>3. How it is generated</h4>
-      <ol>
-        <li>Connect the evidence drive through a <b>write blocker</b>.</li>
-        <li>Open the forensic tool (FTK Imager, EnCase, ProDiscover, <code>md5sum</code>, <code>sha1sum</code>).</li>
-        <li>Select the source — a single file, a folder or the entire physical disk.</li>
-        <li>Choose the algorithm — <b>MD5</b> (128-bit), <b>SHA-1</b> (160-bit) or <b>SHA-256</b> (256-bit).</li>
-        <li>Run the hash; the tool reads every byte and produces a hexadecimal value.</li>
-        <li>Record the value, the algorithm, the date/time and the tool version.</li>
-        <li>Create the image and hash the image with the same algorithm.</li>
-        <li>Compare the two values. <b>Equal = verified.</b></li>
-      </ol>
+      <p>The eight steps above are the exam procedure. The key sentence is: <b>hash the original, hash the image, compare; equal means verified.</b></p>
 
       <div class="math">MD5("hello") = 5d41402abc4b2a76b9719d911017c592<br>MD5("Hello") = 8b1a9953c4611296a827abf8c47804d7</div>
       <p class="small">One changed letter produces a completely different hash — this is the avalanche effect. Values verified with Python <code>hashlib</code>.</p>
+      <p class="small"><b>What this means:</b> changing capital “h” to lower-case “h” is enough to change the entire fingerprint. That is why even a tiny edit cannot hide from a hash comparison.</p>
 
       <h4>4. Hash values used in the book</h4>
       <ul>
@@ -940,13 +1412,14 @@ least volatile</div>
       <h4>5. Storing digital evidence (book §5.5.7)</h4>
       <ul>
         <li>Choose the storage medium according to how long the evidence must be kept.</li>
-        <li><b>CD-R / DVD-R</b> — good for a permanent copy; verify after burning.</li>
-        <li><b>Hard disk</b> — fast working copy; 200 GB drives are typical, DVDs hold only about 17 GB (dual-layer).</li>
-        <li><b>Magnetic tape (4-mm DAT, DLT, LTO)</b> — long-term archive; test by restoring a sample and comparing hashes.</li>
+        <li><b>CD-R / DVD-R</b> — good for a permanent copy; verify it after burning.</li>
+        <li><b>Hard disk</b> — fast working copy; 200 GB drives are typical, while DVDs hold only about 17 GB (dual-layer).</li>
+        <li><b>Magnetic tape (4-mm DAT, DLT, LTO)</b> — long-term archive; test it by restoring a sample and comparing hashes.</li>
         <li>Keep <b>two copies</b>; store them in separate locations if possible.</li>
-        <li>Label with case number, exhibit number, date and hash.</li>
+        <li>Label with the case number, exhibit number, date and hash.</li>
         <li>Store in a secure, cool, dry, magnetic-free evidence safe with an access log.</li>
       </ul>
+      <p class="small"><b>What this means:</b> a hash proves integrity, but storage protects the physical medium. Keep the original, keep a verified copy and keep the label and log that connect them.</p>
 
       <div class="tip"><b>9-mark structure:</b> definition (2) + six reasons (3) + eight generation steps (3) + one real hash example (1). Mention “equal hash = verified image”; that is the sentence examiners look for.</div>
     </div>

@@ -87,6 +87,10 @@ table.left td,table.left th{text-align:left}
 .tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
 .book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
 .note b,.warn b,.tip b,.book b{color:#fff}
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
 ul,ol{margin:8px 0 8px 22px;padding:0}
 li{margin:5px 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -140,6 +144,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
   .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
 
 }
 </style>
@@ -147,7 +153,13 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 .prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
 .side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
-</style></head>
+</style><style id="print-simple">
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 
@@ -189,6 +201,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   </div>
 </header>
 
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every term is defined, and every formula is explained line by line. No prior ML background needed.</div>
+
 <!-- ================= FREQUENCY MAP ================= -->
 <section class="card" id="map">
   <h2>📊 PYQ frequency map — what actually gets asked</h2>
@@ -228,37 +242,67 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep hot">★★★★★★★ 7×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(c) [6] · 2022 Nov Q2(c) [6] · 2023 May Q2(b) [6] · 2023 Nov Q2(b) [9] · 2024 May Q2(a) [6 — R²] · 2025 May Q2(a) [6 — importance] · 2025 Nov Q1(a) [6 — R²]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q1(c) [6] · 2022 Nov Q2(c) [6] · 2023 May Q2(b) [6] · 2023 Nov Q2(b) [9] · 2024 May Q2(a) [6 — R²] · 2025 May Q2(a) [6 — importance] · 2025 Nov Q1(a) [6 — R²]</p>
 
-      <h4>Why evaluation metrics are needed</h4>
-      <p>A model can fit training data and still fail on new data. Metrics give a <b>number</b> to compare models, tune hyperparameters, and decide whether the model is useful. Different metrics punish different kinds of error, so the choice of metric must match the business cost.</p>
+      <div class="simple"><b>In simple words:</b> A metric is a report card for a model.<br>
+      MAE tells you the average miss. RMSE is the same idea but shouts louder about big misses.<br>
+      R² tells you how much of the pattern in the data the model actually captured.</div>
 
-      <h4>(i) Mean Absolute Error (MAE)</h4>
+      <h4>Why we do this</h4>
+      <p>A model can look perfect on the data it studied and still fail on new data. A metric turns “looks good” into a number, so you can compare two models, tune settings, and decide whether the model is useful in the real world.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Model</b> — the rule that turns input x into a predicted output ŷ.</li>
+        <li><b>Prediction (ŷ, “y-hat”)</b> — the number the model outputs for one input.</li>
+        <li><b>Error or residual</b> — the gap y − ŷ between the true value and the prediction.</li>
+        <li><b>Absolute value</b> — the size of a number after removing its sign, so −3 becomes 3.</li>
+        <li><b>Mean</b> — the ordinary average: add the values and divide by how many there are.</li>
+        <li><b>Square</b> — a number multiplied by itself; it makes a big error grow much faster than a small one.</li>
+        <li><b>Outlier</b> — a data point that sits far away from the rest.</li>
+        <li><b>Variance</b> — how spread out the y values are around their mean.</li>
+        <li><b>R² (coefficient of determination)</b> — the fraction of that spread which the model explains.</li>
+        <li><b>Differentiable</b> — smooth enough to have a slope, which training algorithms need.</li>
+        <li><b>Hyperparameter</b> — a setting chosen before training, such as λ (lambda) or K.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Train the model and get one prediction per row.</b> Why: you can only compare a prediction with the answer that belongs to the same row.</li>
+        <li><b>Subtract the prediction from the true value.</b> Why: this gives the size and direction of each miss.</li>
+        <li><b>For MAE, remove the sign and average the misses.</b> Why: every error counts once, in the original unit of y.</li>
+        <li><b>For RMSE, square each miss, average, then take the square root.</b> Why: squaring makes large misses dominate; the root brings the answer back to the original unit.</li>
+        <li><b>For R², compare your squared misses with the misses of always guessing the mean.</b> Why: this gives a unit-free score of “how much better than lazy”.</li>
+        <li><b>Choose the metric that matches the cost of being wrong.</b> Why: a 10-unit miss may be cheap in one problem and dangerous in another.</li>
+      </ol>
+
+      <h4>The three metrics, one by one</h4>
+      <p><b>(i) Mean Absolute Error (MAE)</b></p>
       <div class="math">MAE = (1/n) Σ<sub>i=1..n</sub> | y<sub>i</sub> − ŷ<sub>i</sub> |</div>
+      <p><b>What this means:</b> add the sizes of all misses and divide by n. The answer is in the same unit as y, so you can say “we are off by 4.2 marks on average”.</p>
       <ul>
-        <li>Average of the absolute errors, in the <b>same unit</b> as y.</li>
-        <li>Easy to explain: “on average we are off by 4.2 marks”.</li>
-        <li>Treats all errors equally; less sensitive to outliers than RMSE.</li>
-        <li>Not differentiable at zero, so harder to optimise directly.</li>
+        <li>Easy to explain to a non-technical person.</li>
+        <li>Treats every error equally, so one huge outlier does not dominate the score.</li>
+        <li>Not smooth at zero, so it is harder to optimise directly with gradient descent.</li>
       </ul>
 
-      <h4>(ii) Root Mean Squared Error (RMSE)</h4>
-      <div class="math">MSE = (1/n) Σ (y<sub>i</sub> − ŷ<sub>i</sub>)²      RMSE = √MSE</div>
+      <p><b>(ii) Root Mean Squared Error (RMSE)</b></p>
+      <div class="math">MSE = (1/n) Σ (y<sub>i</sub> − ŷ<sub>i</sub>)²     RMSE = √MSE</div>
+      <p><b>What this means:</b> square the misses first, average them, then undo the square. Because of the square, a single large miss can raise RMSE far more than it raises MAE.</p>
       <ul>
-        <li>Square root of the average squared error; same unit as y.</li>
-        <li><b>Punishes large errors</b> heavily because of the square.</li>
-        <li>Sensitive to outliers; useful when big errors are costly.</li>
-        <li>Differentiable, so it is a common loss function for training.</li>
+        <li>Same unit as y, like MAE, so it is readable.</li>
+        <li>Punishes large errors heavily; useful when a big miss is much worse than several small misses.</li>
+        <li>Smooth, so it is a common loss function for training.</li>
       </ul>
 
-      <h4>(iii) Coefficient of determination (R²)</h4>
+      <p><b>(iii) Coefficient of determination (R²)</b></p>
       <div class="math">R² = 1 − SS<sub>res</sub> / SS<sub>tot</sub><br>
-      SS<sub>res</sub> = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)²    SS<sub>tot</sub> = Σ(y<sub>i</sub> − ȳ)²</div>
+      SS<sub>res</sub> = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)²   SS<sub>tot</sub> = Σ(y<sub>i</sub> − ȳ)²</div>
+      <p><b>What this means:</b> SS<sub>res</sub> is the squared error left after using the model. SS<sub>tot</sub> is the squared error you would have if you ignored x and always guessed the average ȳ. R² is one minus the ratio, so it says what fraction of the spread you removed.</p>
       <ul>
-        <li>Proportion of the variance in y explained by the model.</li>
-        <li>Range: <b>−∞ to 1</b>. R² = 1 is perfect; R² = 0 means the model is no better than predicting the mean; negative means worse than the mean.</li>
-        <li>Unit-free, so it is easy to compare different datasets.</li>
-        <li><b>Adjusted R²</b> penalises unnecessary features: R²<sub>adj</sub> = 1 − (1−R²)(n−1)/(n−p−1).</li>
+        <li>Range: <b>−∞ to 1</b>. R² = 1 is a perfect fit; R² = 0 is no better than predicting the mean; a negative value is worse than the mean (possible on test data).</li>
+        <li>Unit-free, so it is easy to compare models on different datasets.</li>
+        <li><b>Adjusted R²</b> penalises useless features: R²<sub>adj</sub> = 1 − (1−R²)(n−1)/(n−p−1), where p is the number of input features.</li>
       </ul>
 
       <h4>Worked evaluation — 2022 Nov data</h4>
@@ -275,11 +319,16 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the four absolute misses add up to 1.0, and the four squared misses add up to 0.30. Everything else is just division and a square root.</p>
       <div class="math">MAE = 1.0/4 = <b>0.25</b><br>
-      MSE = 0.30/4 = 0.075  →  RMSE = √0.075 = <b>0.2739</b><br>
+      MSE = 0.30/4 = 0.075  →  RMSE = √0.075 = <b>0.2739</b><br>
       ȳ = 19/4 = 4.75; SS<sub>tot</sub> = (3−4.75)² + (4−4.75)² + (5−4.75)² + (7−4.75)² = 8.75<br>
       R² = 1 − 0.30/8.75 = 1 − 0.0343 = <b>0.9657</b></div>
-      <p>Interpretation: the line is typically off by 0.25 units, and it explains 96.6% of the variation in y.</p>
+      <p><b>Interpretation:</b> the line is typically off by 0.25 units, and it explains 96.6% of the variation in y.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> Think of a weather app. MAE is “the forecast is usually off by 2°C”. RMSE is the boss who gets angry about the one day it was off by 10°C. R² is “how much of the day-to-day temperature change did the app predict, instead of just saying ‘about average’ every day?”</div>
+
+      <div class="confuse"><b>Common confusion:</b> R² = 0.96 does not mean 96% of predictions are correct. It means 96% of the variation is explained. Also, MAE and RMSE are in the unit of y, so never compare their raw values across datasets measured in different units.</div>
     </div>
   </div>
 
@@ -289,13 +338,42 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [6] · 2025 Nov Q1(a) [6]</p>
+<p class="asked"><b>Asked in:</b> 2024 May Q2(a) [6] · 2025 Nov Q1(a) [6]</p>
 
-      <h4>Definition</h4>
+      <div class="simple"><b>In simple words:</b> R² answers one question: how much better is my line than always guessing the average?<br>
+      1 means perfect. 0 means no better than the average. A negative value means worse than the average.</div>
+
+      <h4>Why we do this</h4>
+      <p>MAE and RMSE tell you the size of the miss, but they depend on the unit — rupees, marks, kilograms. R² gives a unit-free score, so you can compare a model on house prices with a model on exam marks, and you can say how much of the pattern was captured.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Dependent variable (y)</b> — the number you are trying to predict.</li>
+        <li><b>Mean (ȳ)</b> — the average of all the true y values.</li>
+        <li><b>Total variation (SS<sub>tot</sub>)</b> — the total squared distance of the y values from their mean.</li>
+        <li><b>Residual variation (SS<sub>res</sub>)</b> — the squared distance still left after the model makes its predictions.</li>
+        <li><b>Baseline</b> — the simplest possible guess; here, always predicting the mean.</li>
+        <li><b>Feature</b> — an input column used to make the prediction.</li>
+        <li><b>Adjusted R²</b> — a corrected R² that charges a small penalty for every extra feature.</li>
+        <li><b>Causation</b> — the claim that changing x actually causes y to change, not just that they move together.</li>
+        <li><b>Extrapolation</b> — predicting outside the range of x values seen in training.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Make a prediction ŷ for every row.</b> Why: R² compares the model against the data row by row.</li>
+        <li><b>Compute the leftover error SS<sub>res</sub> = Σ(y − ŷ)².</b> Why: this is what the model failed to explain.</li>
+        <li><b>Compute the total spread SS<sub>tot</sub> = Σ(y − ȳ)².</b> Why: this is the error of the laziest possible model, the mean.</li>
+        <li><b>Divide and subtract from 1.</b> Why: if the model is perfect, SS<sub>res</sub> = 0 and R² = 1; if it is only as good as the mean, the ratio is 1 and R² = 0.</li>
+        <li><b>Interpret the number in context.</b> Why: a high R² on training data can still hide overfitting.</li>
+      </ol>
+
+      <h4>Definition and formula</h4>
       <p>R² (coefficient of determination) measures how much of the total variation in the dependent variable is explained by the regression model.</p>
       <div class="math">R² = 1 − Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² / Σ(y<sub>i</sub> − ȳ)² = 1 − SS<sub>res</sub>/SS<sub>tot</sub></div>
+      <p><b>What this means:</b> the fraction SS<sub>res</sub>/SS<sub>tot</sub> is the part of the spread you still got wrong. Subtracting it from 1 leaves the part you got right.</p>
 
-      <h4>Interpretation</h4>
+      <h4>How to read the value</h4>
       <div class="tbl-wrap">
       <table>
         <thead><tr><th>R² value</th><th>Meaning</th></tr></thead>
@@ -307,22 +385,27 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> R² is a ratio, not a percentage of correct predictions. A value of 0.8 is good or bad only after you know the problem; some noisy fields rarely exceed 0.3.</p>
 
       <h4>Why R² is required</h4>
       <ul>
-        <li><b>Scale-free</b> — MAE and RMSE depend on the unit of y; R² does not, so different models/datasets can be compared.</li>
-        <li><b>Goodness of fit</b> — it says how well the line explains the data, not just how large the error is.</li>
-        <li><b>Baseline comparison</b> — it directly compares the model with the “predict the mean” baseline.</li>
-        <li><b>Model selection</b> — used with adjusted R² to compare models with different numbers of features.</li>
+        <li><b>Scale-free:</b> MAE and RMSE depend on the unit of y; R² does not, so different models and datasets can be compared.</li>
+        <li><b>Goodness of fit:</b> it says how well the line explains the data, not just how large the error is.</li>
+        <li><b>Baseline comparison:</b> it directly compares the model with the “predict the mean” baseline.</li>
+        <li><b>Model selection:</b> used with adjusted R² to compare models that have different numbers of features.</li>
       </ul>
 
       <h4>Limitations</h4>
       <ul>
-        <li>R² always increases when features are added, even useless ones → use adjusted R².</li>
+        <li>R² always increases when features are added, even useless ones, so use adjusted R².</li>
         <li>A high R² does not prove causation.</li>
-        <li>It can be misleading for non-linear models or extrapolation.</li>
+        <li>It can mislead for non-linear models or when predicting outside the observed range.</li>
       </ul>
       <p class="small">Worked value: for the 2022 Nov data, R² = 0.9657 (see Q1).</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A student scores 80 in every practice test. A tutor tries to predict each score from study hours. R² measures how much better the tutor is than just writing “80” on every answer sheet.</div>
+
+      <div class="confuse"><b>Common confusion:</b> R² is not “percentage accuracy”. A model can have R² = 0.9 and still make large errors on individual rows. And adding more columns can never lower R² on training data, which is exactly why adjusted R² exists.</div>
     </div>
   </div>
 </section>
@@ -337,28 +420,61 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★★ 5×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [6] · 2023 May Q1(b) [6] · 2025 May Q2(b) [6] · related: 2023 Nov Q2(a) [9 — Ridge concept] · 2025 Nov Q1(c) [6 — purpose of L2 term]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [6] · 2023 May Q1(b) [6] · 2025 May Q2(b) [6] · related: 2023 Nov Q2(a) [9 — Ridge concept] · 2025 Nov Q1(c) [6 — purpose of L2 term]</p>
 
-      <h4>Common idea</h4>
+      <div class="simple"><b>In simple words:</b> Ridge and Lasso are linear regression with a brake.<br>
+      The brake stops the weights from becoming huge. Ridge shrinks every weight a little.<br>
+      Lasso can shrink some weights all the way to zero, which deletes those features.</div>
+
+      <h4>Why we do this</h4>
+      <p>With many features, ordinary regression can memorise noise and assign wild weights. A model with huge weights is fragile: a small change in the input causes a large change in the prediction. The penalty keeps the model calm and helps it work on new data.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Ordinary least squares (OLS)</b> — plain linear regression that only minimises squared error.</li>
+        <li><b>Weight or coefficient (w)</b> — how strongly one feature pushes the prediction.</li>
+        <li><b>Regularization</b> — adding a penalty to the training objective to keep the model simple.</li>
+        <li><b>Penalty term</b> — the extra cost added for large weights.</li>
+        <li><b>λ (lambda)</b> — the knob that sets how strong the penalty is.</li>
+        <li><b>L1 norm</b> — the sum of absolute weights, Σ|w|; used by Lasso.</li>
+        <li><b>L2 norm</b> — the sum of squared weights, Σw²; used by Ridge.</li>
+        <li><b>Multicollinearity</b> — two or more input features carry almost the same information.</li>
+        <li><b>Sparse model</b> — a model where many weights are exactly zero.</li>
+        <li><b>Feature selection</b> — automatically keeping the useful columns and dropping the rest.</li>
+        <li><b>Closed form</b> — a direct formula for the answer, with no repeated guessing.</li>
+        <li><b>Cross-validation</b> — testing a setting on several different train/test splits before choosing it.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Start with the ordinary least-squares error.</b> Why: this is the “fit the data” part that both methods keep.</li>
+        <li><b>Add a penalty for large weights.</b> Why: the model must now pay for every unit of weight, so it prefers smaller, safer values.</li>
+        <li><b>Choose the penalty shape: squares for Ridge, absolute values for Lasso.</b> Why: squares shrink smoothly, while absolute values create sharp corners where weights can hit exactly zero.</li>
+        <li><b>Pick λ.</b> Why: λ = 0 gives plain OLS; a very large λ gives a nearly constant model.</li>
+        <li><b>Fit the model and check it with cross-validation.</b> Why: you want the λ that works on unseen data, not just on the training set.</li>
+      </ol>
+
+      <h4>The common idea</h4>
       <p>Ordinary least squares minimises only the squared error. With many features or correlated features, the weights become large and the model overfits. Regularisation adds a <b>penalty term</b> controlled by λ:</p>
       <div class="math">J(w) = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² + λ · penalty(w)</div>
+      <p><b>What this means:</b> training now has two goals — fit the points and keep the weights small. λ decides which goal wins when they disagree.</p>
 
       <h4>Ridge regression (L2)</h4>
       <div class="math">J(w) = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² + λ Σ w<sub>j</sub>²</div>
       <ul>
-        <li>Adds the <b>sum of squared weights</b> (L2 norm).</li>
-        <li>Shrinks weights <b>close to zero</b>, but never exactly zero.</li>
-        <li>Handles <b>multicollinearity</b> well: correlated features share the weight.</li>
+        <li>Adds the <b>sum of squared weights</b> (the L2 norm).</li>
+        <li>Shrinks weights <b>close to zero</b>, but rarely exactly zero.</li>
+        <li>Handles <b>multicollinearity</b> well: correlated features share the weight instead of fighting over it.</li>
         <li>The solution is stable and has a closed form: w = (XᵀX + λI)⁻¹Xᵀy.</li>
       </ul>
 
       <h4>Lasso regression (L1)</h4>
       <div class="math">J(w) = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² + λ Σ |w<sub>j</sub>|</div>
       <ul>
-        <li>Adds the <b>sum of absolute weights</b> (L1 norm).</li>
-        <li>Can make some weights <b>exactly zero</b> → automatic feature selection.</li>
-        <li>Produces a <b>sparse</b> model, easier to interpret.</li>
-        <li>With correlated features it may keep one and discard the others arbitrarily.</li>
+        <li>Adds the <b>sum of absolute weights</b> (the L1 norm).</li>
+        <li>Can make some weights <b>exactly zero</b>, which gives automatic feature selection.</li>
+        <li>Produces a <b>sparse</b> model that is easier to explain.</li>
+        <li>With correlated features it may keep one and discard the others almost arbitrarily.</li>
       </ul>
 
       <h4>Difference table</h4>
@@ -376,8 +492,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> if every feature carries a little useful signal, choose Ridge. If most columns are noise and only a few matter, choose Lasso, because it can switch the noise columns off.</p>
 
       <div class="note"><b>λ (lambda):</b> λ = 0 gives ordinary least squares. As λ increases, weights shrink and the model becomes simpler. Choose λ by cross-validation.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> You have a page of exam notes. Ridge shrinks every note a little so no single note dominates. Lasso crosses out the unimportant notes completely, leaving a short, clean sheet.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Ridge does not remove features; it only makes their weights small. Lasso is the one that can set weights to exactly zero. Also, λ here is the penalty strength, not the learning rate used by gradient descent.</div>
     </div>
   </div>
 
@@ -387,16 +508,44 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q1(c) [6]</p>
+<p class="asked"><b>Asked in:</b> 2025 Nov Q1(c) [6]</p>
 
-      <h4>Purpose</h4>
-      <p>The L2 term <code>λΣw<sub>j</sub>²</code> penalises large coefficients. It forces the model to use <b>small, spread-out weights</b> instead of relying heavily on one feature.</p>
+      <div class="simple"><b>In simple words:</b> The L2 term is a tax on large weights.<br>
+      It forces the model to spread its trust across many features instead of leaning hard on one.<br>
+      The result is a calmer model that usually works better on new data.</div>
+
+      <h4>Why we do this</h4>
+      <p>When two input columns carry almost the same information, plain regression can give one a huge positive weight and the other a huge negative weight. They cancel each other on the training data but explode on new data. The L2 term makes that kind of wild solution expensive, so the model chooses a stable one.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>L2 term</b> — the penalty λΣw<sub>j</sub>² added to the Ridge cost.</li>
+        <li><b>Coefficient or weight</b> — the number that says how much a feature affects the output.</li>
+        <li><b>Overfitting</b> — fitting the training noise so closely that new data performs badly.</li>
+        <li><b>Variance</b> — how much the model's predictions change when the training data changes.</li>
+        <li><b>Multicollinearity</b> — features that are highly correlated with each other.</li>
+        <li><b>Numerical stability</b> — the calculation gives a reliable answer instead of blowing up due to tiny rounding errors.</li>
+        <li><b>Invertible</b> — a matrix that has an inverse, so the equation can be solved directly.</li>
+        <li><b>Identity matrix (I)</b> — a matrix with 1s on the diagonal and 0s elsewhere; it behaves like the number 1 in matrix maths.</li>
+        <li><b>Eigenvalue</b> — a number that describes how a matrix stretches a direction; adding λ to every eigenvalue keeps the matrix invertible.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li><b>Reduce overfitting</b> — large weights make the model sensitive to noise; shrinking them lowers variance.</li>
-        <li><b>Handle multicollinearity</b> — when two features are correlated, OLS gives unstable, opposite large weights. L2 stabilises them.</li>
-        <li><b>Improve numerical stability</b> — adding λI makes XᵀX invertible even when features are linearly dependent.</li>
-        <li><b>Keep all features</b> — unlike Lasso, Ridge shrinks weights but does not remove features.</li>
+        <li><b>Add λΣw² to the squared-error cost.</b> Why: every large weight now adds extra cost, so the optimiser avoids it unless the fit improves a lot.</li>
+        <li><b>Solve the resulting equation.</b> Why: Ridge has a direct solution, w = (XᵀX + λI)⁻¹Xᵀy, so no iterative guessing is needed.</li>
+        <li><b>Increase λ and watch the weights.</b> Why: larger λ means stronger shrinkage and a simpler model.</li>
+        <li><b>Validate on unseen data.</b> Why: a very large λ can shrink the model so much that it underfits.</li>
       </ol>
+
+      <h4>What the L2 term actually does</h4>
+      <p>The L2 term <code>λΣw<sub>j</sub>²</code> penalises large coefficients. It forces the model to use <b>small, spread-out weights</b> instead of relying heavily on one feature.</p>
+      <ul>
+        <li><b>Reduces overfitting</b> — large weights make the model sensitive to noise; shrinking them lowers variance.</li>
+        <li><b>Handles multicollinearity</b> — when two features are correlated, OLS gives unstable, opposite large weights; L2 stabilises them.</li>
+        <li><b>Improves numerical stability</b> — adding λI makes XᵀX invertible even when features are linearly dependent.</li>
+        <li><b>Keeps all features</b> — unlike Lasso, Ridge shrinks weights but does not remove features.</li>
+      </ul>
 
       <h4>Effect of λ</h4>
       <div class="tbl-wrap">
@@ -409,8 +558,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> λ is a dial, not a switch. Start at 0 to see plain regression, then turn it up until validation error is lowest.</p>
       <div class="math">Ridge solution: w = (XᵀX + λI)⁻¹ Xᵀy</div>
       <p>The identity matrix I is added to the diagonal, so every eigenvalue increases by λ and the inverse always exists.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A group project where one student tries to do everything. Ridge gently spreads the work across the team instead of letting one person carry all the weight — and possibly drop it.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Ridge keeps every feature; it only makes the weights small. It does not perform feature selection. And more regularisation is not always better: a very large λ produces an almost constant model that underfits.</div>
     </div>
   </div>
 </section>
@@ -425,13 +579,43 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★ 4×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q2(a) [6] · 2024 May Q1(a) [6 — define different regression models] · 2023 Nov Q2(a) [9 — linear regression + ridge] · 2025 May Q1(a) [6]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q2(a) [6] · 2024 May Q1(a) [6 — define different regression models] · 2023 Nov Q2(a) [9 — linear regression + ridge] · 2025 May Q1(a) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Regression predicts a number, such as price, temperature or marks.<br>
+      Linear regression does it by drawing the straight line that sits closest to the data points.<br>
+      The line is then used to guess the output for a new input.</div>
+
+      <h4>Why we do this</h4>
+      <p>Many real questions have numeric answers: “How much will this house sell for?”, “How many units will we sell next month?” Classification cannot answer those because it only picks a label. Regression learns a numeric relationship from past examples so you can estimate a number you have not seen yet.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Supervised learning</b> — learning from examples where the correct answer is already known.</li>
+        <li><b>Label</b> — the known correct answer in a training example.</li>
+        <li><b>Feature</b> — an input column, such as area or number of bedrooms.</li>
+        <li><b>Continuous output</b> — a number that can take any value in a range, not just a category.</li>
+        <li><b>Line of best fit</b> — the straight line that comes closest to all the points overall.</li>
+        <li><b>Intercept (a)</b> — the predicted y when x = 0.</li>
+        <li><b>Slope (b)</b> — how much y changes when x increases by one unit.</li>
+        <li><b>Polynomial regression</b> — regression with x, x², x³ … terms, so the curve can bend.</li>
+        <li><b>Logistic regression</b> — a classification method that predicts a probability, despite the word “regression” in its name.</li>
+        <li><b>Underfitting</b> — the model is too simple to capture the real pattern.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Collect pairs of input and numeric answer.</b> Why: supervised learning needs examples with known answers.</li>
+        <li><b>Plot the data to see its shape.</b> Why: a straight line is only a good choice if the cloud of points looks roughly straight.</li>
+        <li><b>Choose a model family: simple linear, multiple linear, polynomial, and so on.</b> Why: each family makes a different assumption about the relationship.</li>
+        <li><b>Fit the model by least squares.</b> Why: this chooses the coefficients that make the total squared error as small as possible.</li>
+        <li><b>Predict a new value and check the error.</b> Why: a model is only useful if it works on data it did not train on.</li>
+      </ol>
 
       <h4>Definition</h4>
       <p><b>Regression</b> is a supervised learning method that predicts a <b>continuous numeric output</b> from one or more input variables. It learns the relationship <code>y = f(x)</code> from labelled data.</p>
       <ul>
-        <li>Output is a number, not a class: price, temperature, sales, marks.</li>
-        <li>It finds the <b>line/curve of best fit</b> by minimising the error between actual and predicted values.</li>
+        <li>The output is a number, not a class: price, temperature, sales, marks.</li>
+        <li>It finds the <b>line or curve of best fit</b> by minimising the error between actual and predicted values.</li>
         <li>Example: predict the price of a house from its area, bedrooms and location.</li>
       </ul>
 
@@ -449,9 +633,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> all of these are still regression except logistic regression, which is used for yes/no classification. The table is a menu; pick the simplest row that matches the shape of your data.</p>
 
       <h4>Linear regression</h4>
-      <div class="math">ŷ = a + bx     where b = slope, a = intercept</div>
+      <div class="math">ŷ = a + bx     where b = slope, a = intercept</div>
       <p>The model assumes a straight-line relationship. It is trained by the <b>least-squares method</b>: choose a and b so that the sum of squared vertical distances <code>Σ(y<sub>i</sub> − ŷ<sub>i</sub>)²</code> is minimum.</p>
       <ul>
         <li>Simple to train and interpret.</li>
@@ -459,6 +644,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>Fails on curved or highly non-linear data (underfits).</li>
       </ul>
       <p class="small">For 2023 Nov Q2(a) [9], add the Ridge paragraph from §3.3 after this definition.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> You plot study hours against marks on graph paper. Regression draws the single straight line that passes as close as possible to all the dots. Then you use that line to guess the mark for someone who studied 7 hours.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Logistic regression is a classification method, not a regression method, even though its name says “regression”. Also, regression predicts a number; it does not assign a category.</div>
     </div>
   </div>
 
@@ -468,26 +657,62 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q2(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2024 May Q2(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Least squares picks the line whose vertical misses, squared and added up, are as small as possible.<br>
+      Squaring stops positive and negative misses from cancelling each other.<br>
+      It also punishes one big miss more than several small ones.</div>
+
+      <h4>Why we do this</h4>
+      <p>Any two points can be joined by a line, but with many points there is no line that touches all of them. We need a fair rule for choosing the “best” line. Least squares gives that rule, and it has a direct formula, so a computer can solve it quickly.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Residual</b> — the vertical gap y<sub>i</sub> − ŷ<sub>i</sub> between a true point and the line.</li>
+        <li><b>Minimise</b> — make a quantity as small as possible.</li>
+        <li><b>Squared error</b> — a residual multiplied by itself.</li>
+        <li><b>Normal equations</b> — the two equations obtained by setting the derivatives to zero.</li>
+        <li><b>Derivative</b> — the slope of a function; at a minimum, this slope is zero.</li>
+        <li><b>Intercept (a)</b> — where the line crosses the y-axis.</li>
+        <li><b>Slope (b)</b> — the rise in y for a one-unit rise in x.</li>
+        <li><b>Closed-form solution</b> — a direct formula for the answer, with no trial and error.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Write the candidate line as ŷ = a + bx.</b> Why: the line is fully described by two numbers, a and b.</li>
+        <li><b>For every point, compute the vertical residual y − ŷ.</b> Why: this measures how far the line misses that point.</li>
+        <li><b>Square each residual and add them up.</b> Why: squaring removes the sign and makes large misses count much more.</li>
+        <li><b>Differentiate the total with respect to a and b, and set both derivatives to zero.</b> Why: a minimum occurs where the slope of the total error is flat in both directions.</li>
+        <li><b>Solve the two normal equations for a and b.</b> Why: this gives the unique best line for a straight-line model.</li>
+        <li><b>Use the line to predict and inspect the residuals.</b> Why: a small total error does not guarantee that the pattern is captured.</li>
+      </ol>
 
       <h4>Principle</h4>
       <p>The least-squares method chooses the line that makes the <b>sum of squared residuals</b> as small as possible. Squaring removes the sign and punishes large errors more than small ones.</p>
-      <div class="math">Minimise  S(a,b) = Σ<sub>i=1..n</sub> (y<sub>i</sub> − a − b x<sub>i</sub>)²</div>
+      <div class="math">Minimise  S(a,b) = Σ<sub>i=1..n</sub> (y<sub>i</sub> − a − b x<sub>i</sub>)²</div>
+      <p><b>What this means:</b> S is the total badness of a candidate line. We search over every possible a and b for the pair that makes S smallest.</p>
 
       <h4>Normal equations</h4>
       <p>Differentiate S with respect to a and b and set both derivatives to zero:</p>
       <div class="math">Σy = n a + b Σx<br>
       Σxy = a Σx + b Σx²</div>
+      <p><b>What this means:</b> these are two ordinary equations with two unknowns, a and b. All the messy sums come from the data; the unknowns are easy to isolate.</p>
 
       <h4>Solution</h4>
       <div class="math">b = ( nΣxy − ΣxΣy ) / ( nΣx² − (Σx)² )<br>
       a = ( Σy − bΣx ) / n = ȳ − b x̄</div>
+      <p><b>What this means:</b> compute five sums from the table — n, Σx, Σy, Σxy and Σx² — then substitute. The intercept formula guarantees that the line passes through the point (x̄, ȳ).</p>
 
       <h4>Small example</h4>
       <p>For (1,3), (2,4), (3,5), (4,7): Σx = 10, Σy = 19, Σxy = 54, Σx² = 30, n = 4.</p>
       <div class="math">b = (4×54 − 10×19) / (4×30 − 100) = 26/20 = <b>1.3</b><br>
-      a = (19 − 1.3×10)/4 = <b>1.5</b>   →   <b>ŷ = 1.5 + 1.3x</b></div>
+      a = (19 − 1.3×10)/4 = <b>1.5</b>   →   <b>ŷ = 1.5 + 1.3x</b></div>
       <p>The same numbers are used in the full solved numerical below (2022 Nov Q1b).</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> Imagine stretching a rubber band from each data point to a candidate line. The further the point, the more energy the band stores — and the energy grows with the square of the distance. The best line is the one with the least total stored energy.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Least squares measures <b>vertical</b> distance, not the shortest perpendicular distance from the point to the line. Also, squaring is not the same as taking absolute values: one large residual can dominate the whole total.</div>
     </div>
   </div>
 
@@ -497,7 +722,32 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q1(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> We have four pairs of x and y. The job is to find the slope and intercept of the straight line that fits them best.<br>
+      Then we write the line and use it to predict y for a new x.</div>
+
+      <h4>Why we do this</h4>
+      <p>This is the standard 6-mark regression sum. Every year SPPU changes the numbers but keeps the same three steps: build a sum table, substitute into the slope/intercept formulas, then interpret the line. Learning the pattern once covers every version.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>n</b> — the number of data points.</li>
+        <li><b>Σ (sigma)</b> — “add up all the values in this column”.</li>
+        <li><b>Slope (b)</b> — how much y changes for each one-unit change in x.</li>
+        <li><b>Intercept (a)</b> — the predicted y when x = 0.</li>
+        <li><b>Regression line</b> — the fitted equation ŷ = a + bx.</li>
+        <li><b>Prediction (ŷ)</b> — the y value the line gives for a chosen x.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Build columns for x² and xy, then add each column.</b> Why: the formulas only need five totals, so the table prevents arithmetic mistakes.</li>
+        <li><b>Substitute the totals into the slope formula.</b> Why: the slope tells you the direction and steepness of the line.</li>
+        <li><b>Substitute the slope into the intercept formula.</b> Why: the intercept anchors the line at the right height.</li>
+        <li><b>Write the final line and interpret both numbers.</b> Why: the examiner gives marks for meaning, not just arithmetic.</li>
+        <li><b>Predict by putting the new x into the line.</b> Why: this turns the equation into a usable answer.</li>
+      </ol>
 
       <h4>Step 1 — table</h4>
       <div class="tbl-wrap">
@@ -512,6 +762,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the last column is a check. The residuals add to roughly zero, which is what a least-squares line with an intercept should do.</p>
 
       <h4>Step 2 — slope and intercept</h4>
       <div class="math">n = 4<br>
@@ -520,6 +771,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       a = (Σy − bΣx)/n = (19 − 1.3×10)/4 = 6/4 = <b>1.5</b></div>
 
       <div class="math"><b>Regression line: ŷ = 1.5 + 1.3x</b></div>
+      <p><b>What this means:</b> start at 1.5 and add 1.3 for every step in x. The line does not pass through every point, but it is the closest straight line in the least-squares sense.</p>
 
       <h4>Step 3 — interpretation</h4>
       <ul>
@@ -528,6 +780,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>For x = 5, ŷ = 1.5 + 6.5 = <b>8.0</b>.</li>
       </ul>
       <p class="small">Check: R² = 0.9657, MAE = 0.25, RMSE = 0.2739 (computed below in §3.5).</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A taxi meter. The intercept is the starting fare, and the slope is the charge per kilometre. The total fare is “start plus rate times distance”.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Do not plug y into the line and solve for x unless the question asks for that. The line is built to predict y from x. Also, an intercept can be meaningless if x = 0 is far outside the observed data.</div>
     </div>
   </div>
 
@@ -537,8 +793,33 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q1(b) [8]</p>
+<p class="asked"><b>Asked in:</b> 2023 Nov Q1(b) [8]</p>
       <div class="note"><b>Source note:</b> the scanned table prints the first Y as “12” with the last digit under the watermark. The standard dataset for this question is <b>120</b>; using 120 gives R² = 0.995, which confirms the reading. The method is identical if your copy prints 12.</div>
+
+      <div class="simple"><b>In simple words:</b> Six foods give carbohydrates and calories. We fit a straight line to the six pairs.<br>
+      Then we use the line to estimate calories for a food with 12 grams of carbohydrates.</div>
+
+      <h4>Why we do this</h4>
+      <p>This is the same least-squares sum as the previous card, but with six points and decimals. The question also asks for a prediction beyond the largest observed x, which is a good reminder that a regression line is an estimate, not a guarantee.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Carbohydrates (x)</b> — the input feature in this dataset.</li>
+        <li><b>Calories (y)</b> — the numeric output we want to predict.</li>
+        <li><b>Slope (b)</b> — the extra calories predicted for one extra gram of carbohydrate.</li>
+        <li><b>Intercept (a)</b> — the predicted calories when carbohydrates are zero.</li>
+        <li><b>Extrapolation</b> — predicting outside the range of x values used to fit the line.</li>
+        <li><b>R²</b> — the fraction of the variation in calories that the line explains.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Build the x² and xy columns and total them.</b> Why: the slope formula needs Σx, Σy, Σxy and Σx².</li>
+        <li><b>Compute the slope with the normal-equation formula.</b> Why: the slope captures how strongly calories rise with carbohydrates.</li>
+        <li><b>Compute the intercept from the slope and the totals.</b> Why: this places the line at the correct average height.</li>
+        <li><b>Substitute x = 12 into the line.</b> Why: this answers the prediction part of the question.</li>
+        <li><b>Report R² and comment on extrapolation.</b> Why: the fit quality and the range limit both affect how much you should trust the number.</li>
+      </ol>
 
       <h4>Step 1 — table</h4>
       <div class="tbl-wrap">
@@ -555,6 +836,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the residuals are small and mixed in sign, so the line passes close to all six points without a systematic bias.</p>
 
       <h4>Step 2 — normal equations</h4>
       <div class="math">n = 6, Σx = 44.5, Σy = 663, Σxy = 5273, Σx² = 355.25<br><br>
@@ -563,12 +845,18 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       a = (663 − 14.1124×44.5)/6 = (663 − 628.00)/6 = <b>5.8331</b></div>
 
       <div class="math"><b>Regression line: ŷ = 5.8331 + 14.1124x</b></div>
+      <p><b>What this means:</b> each extra gram of carbohydrate is associated with about 14.1 extra calories, starting from a baseline of about 5.8 calories.</p>
 
       <h4>Step 3 — prediction for X = 12</h4>
       <div class="math">ŷ(12) = 5.8331 + 14.1124×12 = 5.8331 + 169.3488 = <b>175.18 calories</b></div>
 
       <h4>Step 4 — fit</h4>
       <p>R² = <b>0.9954</b>. About 99.5% of the variation in calories is explained by carbohydrates, so the line is an excellent fit. The prediction is an extrapolation beyond the largest observed X (10), so treat it as an estimate.</p>
+      <p class="small"><b>What this means:</b> a high R² says the six training points lie close to the line. It does not prove that the same straight trend continues beyond x = 10.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A food label gives carbohydrate grams and calories. You fit a rule of thumb — “about 14 calories per gram of carbohydrate, plus a small base” — and then use it for a portion size you have never measured.</div>
+
+      <div class="confuse"><b>Common confusion:</b> 175.18 is a predicted value, not a measured one. Predicting at x = 12 is extrapolation because the data stops at x = 10. Also, a high R² does not make the extrapolation safe.</div>
     </div>
   </div>
 
@@ -578,7 +866,31 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q1(c) [6]</p>
+<p class="asked"><b>Asked in:</b> 2024 May Q1(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Five months of expenditure are given. We fit a straight line through them.<br>
+      Then we extend the line one month forward to estimate month 6.</div>
+
+      <h4>Why we do this</h4>
+      <p>Businesses plan budgets from trends. A regression line turns five noisy monthly numbers into a simple rule: “spending rises by about this much each month”. The rule can then be used for next month's estimate.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Expenditure (y)</b> — the amount spent, in the same units as the table.</li>
+        <li><b>Month number (x)</b> — the time index: 1 for the first month, 6 for the sixth.</li>
+        <li><b>Slope (b)</b> — the average increase in expenditure per month.</li>
+        <li><b>Intercept (a)</b> — the line's starting height at x = 0.</li>
+        <li><b>Trend</b> — the overall direction of the data once short-term noise is ignored.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Build the x² and xy columns and total them.</b> Why: the slope and intercept formulas need these sums.</li>
+        <li><b>Compute b, then a.</b> Why: b gives the monthly change; a anchors the line.</li>
+        <li><b>Write the regression equation.</b> Why: this is the model you will use for prediction.</li>
+        <li><b>Put x = 6 into the equation.</b> Why: month 6 is the next point after the observed months 1–5.</li>
+        <li><b>Comment on the fit.</b> Why: R² tells you how much confidence the estimate deserves.</li>
+      </ol>
 
       <h4>Step 1 — table</h4>
       <div class="tbl-wrap">
@@ -594,6 +906,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the fitted values in the last column stay within about one unit of the actual values, so the straight-line summary is reasonable here.</p>
 
       <h4>Step 2 — slope and intercept</h4>
       <div class="math">b = (5×510 − 15×142)/(5×55 − 15²)<br>
@@ -601,10 +914,16 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       a = (142 − 8.4×15)/5 = (142 − 126)/5 = <b>3.2</b></div>
 
       <div class="math"><b>ŷ = 3.2 + 8.4x</b></div>
+      <p><b>What this means:</b> expenditure is estimated to grow by 8.4 units every month, starting from 3.2 at month zero.</p>
 
       <h4>Step 3 — prediction</h4>
       <div class="math">ŷ(6) = 3.2 + 8.4×6 = 3.2 + 50.4 = <b>53.6</b></div>
       <p>The expected expenditure in month 6 is <b>53.6 units</b>. R² = 0.9977, so the straight line explains almost all the variation.</p>
+      <p class="small"><b>What this means:</b> the prediction is one step beyond the data, and the very high R² suggests the monthly pattern is close to a straight line. Even so, a real budget should allow for unusual events.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> Your monthly pocket money has been rising steadily. You plot the last five months, draw a line, and use it to guess next month's amount before the actual figure arrives.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Month 6 means x = 6, not y = 6. Also, the line predicts the <b>average</b> expenditure for that month, not a guaranteed exact bill.</div>
     </div>
   </div>
 
@@ -614,7 +933,32 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q2(c) [6]</p>
+<p class="asked"><b>Asked in:</b> 2025 May Q2(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Four RAM sizes and their prices are given. We fit a straight line to the four pairs.<br>
+      Then we use the line to estimate the price of a 32 GB stick.</div>
+
+      <h4>Why we do this</h4>
+      <p>Prices often rise roughly linearly with capacity. A regression line summarises that pattern and gives a quick estimate for a size that is not in the table. The question also tests whether you notice that 32 GB is far outside the observed range.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Capacity (X)</b> — the input feature, measured in GB.</li>
+        <li><b>Cost (Y)</b> — the output we want to predict, in dollars.</li>
+        <li><b>Slope</b> — the extra cost predicted for each extra GB.</li>
+        <li><b>Intercept</b> — the predicted cost when capacity is zero.</li>
+        <li><b>Extrapolation</b> — predicting outside the range of the training data.</li>
+        <li><b>R²</b> — the fraction of price variation explained by capacity.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Build X² and XY columns and total them.</b> Why: the least-squares formulas need these sums.</li>
+        <li><b>Compute the slope, then the intercept.</b> Why: the slope gives the price per GB; the intercept sets the base price.</li>
+        <li><b>Write the line in the form requested by the question.</b> Why: the paper asks for Y = aX + b, so keep its naming.</li>
+        <li><b>Substitute X = 32.</b> Why: this is the estimate the question asks for.</li>
+        <li><b>Comment on R² and the range.</b> Why: a good fit inside the data does not guarantee a good estimate far outside it.</li>
+      </ol>
 
       <h4>Step 1 — table</h4>
       <div class="tbl-wrap">
@@ -629,6 +973,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the fitted values in the last column are close to the actual prices, so the straight-line summary is reasonable within the observed range.</p>
 
       <h4>Step 2 — coefficients</h4>
       <div class="math">n = 4, ΣX = 30, ΣY = 118, ΣX² = 340, ΣXY = 1304<br><br>
@@ -638,10 +983,16 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       b = (ΣY − aΣX)/n = (118 − 3.6435×30)/4 = (118 − 109.304)/4 = <b>2.1739</b></div>
 
       <div class="math"><b>Regression line: Y = 3.6435X + 2.1739</b></div>
+      <p><b>What this means:</b> each extra GB adds about $3.64, and the base part of the price is about $2.17.</p>
 
       <h4>Step 3 — cost of 32 GB</h4>
       <div class="math">Y(32) = 3.6435×32 + 2.1739 = 116.591 + 2.174 = <b>$118.77</b></div>
       <p>R² = 0.9868. The line fits the four points well, but 32 GB is far outside the observed range (2–16 GB), so the estimate assumes the same linear trend continues.</p>
+      <p class="small"><b>What this means:</b> $118.77 is a model-based estimate, not a shop price. Beyond 16 GB, bulk discounts or premium pricing could bend the real curve away from the line.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> You check the price of 2, 4, 8 and 16 GB USB drives. Each doubling adds roughly a fixed amount, so you draw a line and use it to guess what a 32 GB drive would cost.</div>
+
+      <div class="confuse"><b>Common confusion:</b> In this question the line is written Y = aX + b, so <b>a is the slope</b> and <b>b is the intercept</b> — the opposite of the y = a + bx convention used in other cards. Read the question's form before labelling your answer. Also, 32 GB is extrapolation.</div>
     </div>
   </div>
 
@@ -651,7 +1002,32 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q2(b) [6]</p>
+<p class="asked"><b>Asked in:</b> 2025 Nov Q2(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Eleven months of advertising spend and sales are given. We fit a straight line and use it to guess sales at ₹10,800 spend.<br>
+      The arithmetic gives a number, but the fit is very poor, so the number is not trustworthy.</div>
+
+      <h4>Why we do this</h4>
+      <p>This question is a trap. It tests whether you can compute the line correctly <b>and</b> notice that the line explains almost none of the sales pattern. A good answer gives the calculation and then says clearly that the prediction is unreliable.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Ad spend (x)</b> — the money spent on advertising in a month.</li>
+        <li><b>Sales (y)</b> — the revenue in that month.</li>
+        <li><b>Least-squares line</b> — the straight line with the smallest total squared vertical error.</li>
+        <li><b>R²</b> — the fraction of sales variation explained by ad spend.</li>
+        <li><b>Noise</b> — random month-to-month variation that the input does not explain.</li>
+        <li><b>Outlier</b> — a point that does not follow the general pattern.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Build the x² and xy columns and total all four columns.</b> Why: the slope formula needs the sums, and the table keeps 11 rows manageable.</li>
+        <li><b>Compute the slope from the full-precision sums.</b> Why: the table shows x² and xy in millions; using the rounded values would lose accuracy.</li>
+        <li><b>Compute the intercept.</b> Why: it sets the line's height at zero spend.</li>
+        <li><b>Substitute x = 10,800.</b> Why: this is the requested prediction.</li>
+        <li><b>Check R² before trusting the answer.</b> Why: a line can be mathematically correct and still have no predictive power.</li>
+      </ol>
 
       <h4>Step 1 — table</h4>
       <div class="tbl-wrap">
@@ -674,6 +1050,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       </table>
       </div>
       <p class="small">The x² and xy columns are shown in millions (×10⁶) only to keep the table narrow. Use the full values in the formula: Σx² = 971,235,825.512 and Σxy = 2,427,169,524.57.</p>
+      <p class="small"><b>What this means:</b> the rows are wildly inconsistent. A similar spend of about ₹12,000 produces sales anywhere from ₹20,745 to ₹39,154. That is a warning sign before any formula is used.</p>
 
       <h4>Step 2 — coefficients</h4>
       <div class="math">n = 11<br>
@@ -683,11 +1060,16 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       a = (281249 − 0.4928×90589.24)/11 = <b>21509.77</b></div>
 
       <div class="math"><b>Regression line: ŷ = 21509.77 + 0.4928x</b></div>
+      <p><b>What this means:</b> the line says each extra rupee of ad spend is associated with about ₹0.49 of extra sales. That sounds plausible, but R² will show that the line does not actually track the months.</p>
 
       <h4>Step 3 — prediction</h4>
       <div class="math">ŷ(10800) = 21509.77 + 0.4928×10800 = 21509.77 + 5322.14 = <b>₹26,831.91</b></div>
 
       <div class="warn"><b>Interpretation matters:</b> R² = 0.023, so ad spend explains only ~2% of the variation in sales. The data has huge month-to-month noise (e.g. Mar-23 and Jul-22 both sold 5,750). The calculated line is correct for the least-squares method, but the prediction is <b>not reliable</b>. Write this comment — it often carries a mark.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> You plot the number of umbrellas sold against the number of hot chocolates sold. You can draw a line through the dots, but the two are driven by weather, not by each other. The line exists; the useful relationship does not.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A least-squares line is always computable, even when the variables are unrelated. “I calculated it” is not the same as “it predicts well”. Always quote R² or an error metric before presenting the prediction.</div>
     </div>
   </div>
 </section>
@@ -702,24 +1084,55 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q1(a) [6] · 2023 Nov Q1(a) [6 — differentiate overfitting and underfitting] · 2025 May Q1(b) [6 — differentiate with example]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q1(a) [6] · 2023 Nov Q1(a) [6 — differentiate overfitting and underfitting] · 2025 May Q1(b) [6 — differentiate with example]</p>
+
+      <div class="simple"><b>In simple words:</b> Bias is being wrong in a consistent way because the model is too simple.<br>
+      Variance is being unstable because the model is too sensitive to the training data.<br>
+      Underfitting is too simple; overfitting is too memorised.</div>
+
+      <h4>Why we do this</h4>
+      <p>Two models can both get things wrong, but for opposite reasons. One may ignore the real pattern; the other may learn the noise. Naming the problem correctly tells you which fix to apply — and the exam asks for exactly that diagnosis.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Bias</b> — the average error caused by the model's simplifying assumptions.</li>
+        <li><b>Variance</b> — how much the model's predictions jump around when the training data changes.</li>
+        <li><b>Expected prediction</b> — the average prediction the model would make over many different training sets.</li>
+        <li><b>Underfitting</b> — the model is too simple to capture the pattern; it does badly on both training and test data.</li>
+        <li><b>Overfitting</b> — the model memorises the training noise; it does well on training data and badly on new data.</li>
+        <li><b>Model complexity</b> — how flexible the model is; a straight line is simple, a deep tree is complex.</li>
+        <li><b>Noise</b> — random variation in the data that no model can predict.</li>
+        <li><b>Training error</b> — error measured on the data used to fit the model.</li>
+        <li><b>Test error</b> — error measured on data the model has never seen.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Fit a simple model first and measure training and test error.</b> Why: this gives a baseline for judging whether the model is too simple.</li>
+        <li><b>If both errors are high, the model is underfitting.</b> Why: it cannot even fit the data it has seen, so the problem is bias.</li>
+        <li><b>Increase complexity gradually and watch the two errors.</b> Why: training error will fall, but test error may start to rise.</li>
+        <li><b>If training error is very low but test error is high, the model is overfitting.</b> Why: the gap between the two is the signature of variance.</li>
+        <li><b>Choose the complexity where test error is lowest.</b> Why: that is the practical balance between bias and variance.</li>
+      </ol>
 
       <h4>(i) Bias</h4>
       <p>Bias is the error caused by the <b>simplifying assumptions</b> of a model. It is the difference between the expected prediction of the model and the true value.</p>
       <div class="math">Bias = E[ f̂(x) ] − f(x)</div>
+      <p><b>What this means:</b> imagine training the same model on many different samples and averaging its predictions. If that average still misses the true value, the model has bias.</p>
       <ul>
         <li><b>High bias</b> → the model is too simple; it ignores the real pattern. This causes <b>underfitting</b>.</li>
-        <li><b>Low bias</b> → the model can represent the true pattern. Complex models such as decision trees and KNN have low bias.</li>
+        <li><b>Low bias</b> → the model can represent the true pattern. Complex models such as deep trees and KNN have low bias.</li>
         <li>Example: fitting a straight line to a curved dataset. The line can never follow the curve, so bias is high.</li>
       </ul>
 
       <h4>(ii) Variance</h4>
-      <p>Variance is the change in the model’s prediction when the <b>training data changes</b>. A high-variance model memorises the training set, including its noise.</p>
+      <p>Variance is the change in the model's prediction when the <b>training data changes</b>. A high-variance model memorises the training set, including its noise.</p>
       <div class="math">Variance = E[ ( f̂(x) − E[f̂(x)] )² ]</div>
+      <p><b>What this means:</b> train the same algorithm on two slightly different samples. If the two models give very different predictions at the same x, variance is high.</p>
       <ul>
-        <li><b>High variance</b> → small change in training data gives a very different model. This causes <b>overfitting</b>.</li>
+        <li><b>High variance</b> → a small change in training data gives a very different model. This causes <b>overfitting</b>.</li>
         <li><b>Low variance</b> → stable predictions. Linear regression has low variance.</li>
-        <li>Example: a deep decision tree that grows until every training point is pure. Change one point and the tree changes.</li>
+        <li>Example: a deep decision tree grown until every training point is pure. Change one point and the tree changes.</li>
       </ul>
 
       <h4>(iii) Underfitting and overfitting</h4>
@@ -737,7 +1150,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the fastest diagnosis is the pair of errors. High–high means underfit; low–high means overfit; low–low means you have a useful model.</p>
+
       <div class="tip"><b>One-line answer:</b> underfitting = model too simple (high bias); overfitting = model too complex (high variance). The best model balances both — this is the bias–variance trade-off.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> One student learns only a single formula and applies it to every question (high bias, underfit). Another memorises the exact answers to last year's paper (high variance, overfit). The good student learns the method and practices enough variety to handle a new paper.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “Bias” here does not mean unfairness or prejudice; it means systematic error from a too-simple model. Also, near-zero training error is not proof of a good model — it is often the first warning sign of overfitting.</div>
     </div>
   </div>
 
@@ -747,11 +1166,38 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2023 Nov Q1(c) [4] · 2025 Nov Q2(a) [6]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2023 Nov Q1(c) [4] · 2025 Nov Q2(a) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> There is a tug of war. A more flexible model lowers bias but raises variance.<br>
+      A simpler model lowers variance but raises bias.<br>
+      The best model sits where the total error is lowest, not where either part is smallest.</div>
+
+      <h4>Why we do this</h4>
+      <p>You cannot make a model infinitely flexible and expect it to stay stable. Every choice about complexity trades one kind of error for another. Understanding the trade-off stops you from “fixing” overfitting by making a model uselessly simple, or fixing underfitting by making it wildly complex.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Expected test error</b> — the average error you would get on many fresh test sets.</li>
+        <li><b>Irreducible noise</b> — error that comes from randomness in the data and cannot be removed by any model.</li>
+        <li><b>Model complexity</b> — how much freedom the model has to bend.</li>
+        <li><b>Sweet spot</b> — the complexity where validation or test error is lowest.</li>
+        <li><b>Validation error</b> — error on a held-out set used to choose settings, not to report final performance.</li>
+        <li><b>Bias–variance decomposition</b> — the splitting of expected error into bias², variance and noise.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Train models of increasing complexity.</b> Why: you need to see how bias and variance actually behave on this dataset.</li>
+        <li><b>Measure validation error for each one.</b> Why: training error always improves with complexity and cannot reveal the turning point.</li>
+        <li><b>Watch the shape of the curve.</b> Why: it typically falls, bottoms out, then rises as variance takes over.</li>
+        <li><b>Pick the complexity at the bottom of the curve.</b> Why: that is the best balance for this data, not a universal law.</li>
+        <li><b>Re-check with more data if possible.</b> Why: more data usually lowers variance and can move the sweet spot.</li>
+      </ol>
 
       <h4>Definition</h4>
       <p>The expected test error of a model can be split into three parts:</p>
       <div class="math">Total error = Bias² + Variance + Irreducible noise</div>
+      <p><b>What this means:</b> bias² is the error from being too rigid; variance is the error from being too jumpy; noise is the part no model can remove.</p>
       <p>The <b>trade-off</b> means: if we reduce bias by making the model more complex, variance usually increases; if we reduce variance by making it simpler, bias increases. We cannot minimise both at the same time.</p>
 
       <h4>Why the trade-off happens</h4>
@@ -771,9 +1217,14 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> only the middle row is useful in practice. The left row cannot learn; the right row learns the wrong thing.</p>
 
       <div class="math">Underfitting ← high bias → increase complexity → <b>optimum</b> → increase complexity → high variance → Overfitting</div>
       <p class="small">Draw this as a U-shaped test-error curve with bias falling and variance rising. That single diagram answers most of the 6 marks.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> Buying clothes. Too tight (high bias) and you cannot move; too loose (high variance) and the outfit flaps around and changes with every gust. The right fit is in between.</div>
+
+      <div class="confuse"><b>Common confusion:</b> The trade-off is a tendency, not an absolute law. Adding more training data can reduce variance without increasing bias. Also, the “best” complexity depends on the dataset size and noise level, so there is no single number that works everywhere.</div>
     </div>
   </div>
 
@@ -783,31 +1234,66 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [6 — both] · 2024 May Q1(b) [6 — underfitting only] · 2025 Nov Q2(c) [6 — overfitting only]</p>
+<p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [6 — both] · 2024 May Q1(b) [6 — underfitting only] · 2025 Nov Q2(c) [6 — overfitting only]</p>
+
+      <div class="simple"><b>In simple words:</b> Underfitting needs more power: a richer model, better features, or less penalty.<br>
+      Overfitting needs more restraint: more data, regularization, pruning, or early stopping.<br>
+      The two problems look similar, but the fixes pull in opposite directions.</div>
+
+      <h4>Why we do this</h4>
+      <p>“The model is bad” is not a diagnosis. If it is bad on both training and test data, it is too simple. If it is excellent on training but bad on test, it is too memorised. Each diagnosis has its own set of remedies, and using the wrong set makes things worse.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Regularization</b> — a penalty that discourages large weights and keeps the model simple.</li>
+        <li><b>λ (lambda)</b> — the strength of that penalty.</li>
+        <li><b>Pruning</b> — cutting weak branches from a decision tree after it is built.</li>
+        <li><b>Early stopping</b> — stopping training when validation error starts to rise.</li>
+        <li><b>Dropout</b> — randomly switching off neurons during training so the network cannot rely on any one of them.</li>
+        <li><b>Ensemble</b> — a group of models whose predictions are combined.</li>
+        <li><b>Cross-validation</b> — testing on several different held-out splits to detect overfitting.</li>
+        <li><b>Epoch</b> — one complete pass through the training data.</li>
+        <li><b>Feature</b> — an input column that the model can use.</li>
+        <li><b>Dimensionality reduction</b> — compressing many features into fewer, less noisy ones.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Compare training error with validation error.</b> Why: the pair tells you which problem you have before you change anything.</li>
+        <li><b>If both are high, treat it as underfitting.</b> Why: the model cannot even represent the training pattern, so you need more capacity or better inputs.</li>
+        <li><b>If training is low but validation is high, treat it as overfitting.</b> Why: the model has learned details that do not generalise.</li>
+        <li><b>Change one thing at a time and re-measure.</b> Why: several simultaneous changes make it impossible to know what helped.</li>
+        <li><b>Stop when validation error is lowest.</b> Why: that is the model that is most likely to work on unseen data.</li>
+      </ol>
 
       <h4>A. Techniques to reduce underfitting (high bias)</h4>
       <ol>
-        <li><b>Increase model complexity</b> — add layers/neurons, use a polynomial instead of a straight line, use a deeper tree.</li>
+        <li><b>Increase model complexity</b> — add layers or neurons, use a polynomial instead of a straight line, or use a deeper tree.</li>
         <li><b>Add more useful features</b> — the model may be missing the variable that explains the output.</li>
-        <li><b>Reduce regularization</b> — a large λ forces weights to zero and makes the model too simple.</li>
-        <li><b>Train longer</b> — stop early only when validation error starts rising; an underfitted model may need more epochs.</li>
-        <li><b>Reduce bias in the algorithm</b> — use a non-linear model (KNN, SVM-RBF, random forest) instead of a linear one.</li>
-        <li><b>Check data quality</b> — wrong labels or missing features look like underfitting.</li>
+        <li><b>Reduce regularization</b> — a large λ forces weights toward zero and makes the model too simple.</li>
+        <li><b>Train longer</b> — an underfitted model may need more epochs; do not stop early before it has learned the pattern.</li>
+        <li><b>Use a less biased algorithm</b> — try a non-linear model such as KNN, an RBF-kernel SVM, or a random forest instead of a linear one.</li>
+        <li><b>Check data quality</b> — wrong labels or missing features can look exactly like underfitting.</li>
       </ol>
 
       <h4>B. Techniques to reduce overfitting (high variance)</h4>
       <ol>
         <li><b>More training data</b> — the best cure; noise gets averaged out.</li>
-        <li><b>Cross-validation</b> — detects overfitting and helps choose hyperparameters.</li>
-        <li><b>Regularization</b> — L1 (Lasso), L2 (Ridge), elastic net; penalises large weights.</li>
+        <li><b>Cross-validation</b> — detects overfitting and helps choose settings.</li>
+        <li><b>Regularization</b> — L1 (Lasso), L2 (Ridge), or elastic net; penalises large weights.</li>
         <li><b>Pruning</b> — cut weak branches of a decision tree.</li>
         <li><b>Early stopping</b> — stop training when validation loss starts increasing.</li>
         <li><b>Dropout</b> — randomly switch off neurons in a neural network.</li>
         <li><b>Ensemble methods</b> — bagging and random forest average many models and reduce variance.</li>
-        <li><b>Feature selection / dimensionality reduction</b> — remove irrelevant and noisy features.</li>
+        <li><b>Feature selection or dimensionality reduction</b> — remove irrelevant and noisy features.</li>
       </ol>
+      <p class="small"><b>What this means:</b> list A adds capacity; list B removes or restrains capacity. If you apply list B to an underfitted model, you make it even simpler and the error gets worse.</p>
 
       <div class="note"><b>Exam pairing:</b> if the question says “under fitting and over fitting” (2022 Nov), write both lists. If it says only one (2024 May, 2025 Nov), write that list in detail and add one line about the other for completeness.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> Underfitting is a student who studied only one page and cannot answer anything. Overfitting is a student who memorised last year's exact paper and cannot handle a new question. One needs more material; the other needs better study habits, not more memorisation.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Do not apply overfitting remedies when the model is underfitting. Adding regularization or pruning to a model that is already too simple makes it worse. More data also does not fix high bias; it mainly helps high variance.</div>
     </div>
   </div>
 </section>
@@ -822,12 +1308,41 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q1(c) [6] · 2025 Nov Q1(b) [6 — cost function and its role]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q1(c) [6] · 2025 Nov Q1(b) [6 — cost function and its role]</p>
+
+      <div class="simple"><b>In simple words:</b> Gradient descent is trial and error with direction.<br>
+      It takes a small step downhill on the error curve, checks the new error, and repeats.<br>
+      When the error stops falling, the model has found a good set of parameters.</div>
+
+      <h4>Why we do this</h4>
+      <p>For a simple straight line, we can solve for the best parameters with a formula. For more complex models, no direct formula exists. Gradient descent is the general method that still works: it improves the parameters a little at a time, using only the local slope of the error.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Cost function J</b> — a single number that measures how wrong the model is.</li>
+        <li><b>Gradient</b> — the slope of the cost with respect to each parameter; it points uphill.</li>
+        <li><b>Learning rate (η, “eta”)</b> — the size of each step.</li>
+        <li><b>Iteration</b> — one update of the parameters.</li>
+        <li><b>Convergence</b> — the point where the parameters stop changing much because the cost is near a minimum.</li>
+        <li><b>Derivative</b> — the slope of a function at a point.</li>
+        <li><b>Parameter</b> — a number the model learns, such as a or b in a regression line.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Initialise the parameters, usually to zero.</b> Why: you need a starting point before you can improve it.</li>
+        <li><b>Make predictions with the current parameters.</b> Why: the error can only be measured after predicting.</li>
+        <li><b>Compute the cost.</b> Why: one number tells you whether the last step helped.</li>
+        <li><b>Compute the gradient of the cost for each parameter.</b> Why: the gradient gives the direction of steepest increase, so the opposite direction goes downhill.</li>
+        <li><b>Update each parameter by a small step against the gradient.</b> Why: this lowers the cost, provided the step is not too large.</li>
+        <li><b>Repeat until the cost stops improving.</b> Why: each iteration should move closer to a minimum.</li>
+      </ol>
 
       <h4>Cost function</h4>
       <p>A cost function measures how wrong the model is. For linear regression the usual cost is the mean squared error:</p>
       <div class="math">J(a,b) = (1/2n) Σ (y<sub>i</sub> − (a + b x<sub>i</sub>))²</div>
       <p>The factor 1/2 is added so that the derivative becomes simpler. The goal of training is to find a, b that minimise J.</p>
+      <p class="small"><b>What this means:</b> J is the average squared miss, halved for convenience. A smaller J means the line passes closer to the points.</p>
 
       <h4>Algorithm</h4>
 <pre><code>1. Initialise a, b (usually 0) and learning rate η.
@@ -838,12 +1353,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
      b = b − η · (1/n) Σ error_i · x_i
 3. Return a, b.</code></pre>
       <div class="math">General update: θ<sub>j</sub> := θ<sub>j</sub> − η · ∂J/∂θ<sub>j</sub></div>
+      <p><b>What this means:</b> the derivative ∂J/∂θ tells you which way and how steeply the cost rises. Subtracting it, scaled by η, moves the parameter downhill.</p>
 
       <h4>Role of the learning rate η</h4>
       <ul>
         <li><b>Too small</b> → many iterations, slow training.</li>
-        <li><b>Too large</b> → overshoots the minimum, cost may diverge.</li>
-        <li>Good η → smooth decrease of J towards the minimum.</li>
+        <li><b>Too large</b> → overshoots the minimum, and the cost may diverge.</li>
+        <li>A good η makes J decrease smoothly toward the minimum.</li>
       </ul>
 
       <h4>Small worked example</h4>
@@ -859,8 +1375,14 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
-      <p>After more iterations a → 0.667 and b → 2, which is the true line y = 2x. (Values rounded; the point is the downward march of the cost.)</p>
+      <p>After more iterations a → 0 and b → 2, which gives the true line y = 2x. The intercept a first rises (peaking near 0.68), then slowly settles back to 0; b climbs toward 2. (Values rounded; the point is the downward march of the cost.)</p>
+      <p class="small"><b>What this means:</b> every row has a lower J than the row before it. The parameters are moving toward the true line, and the step size controls how quickly.</p>
+
       <div class="tip"><b>6-mark structure:</b> cost function (2) + update rule/algorithm (2) + learning-rate bullets (1) + tiny example (1).</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> You are on a foggy hill and want to reach the valley. You cannot see far, so you feel the slope under your feet and take a small step downhill. Repeat until the ground is flat.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Gradient descent finds <b>a</b> low point, not necessarily the global lowest point, unless the cost surface is convex. A learning rate that is too large can make the cost grow instead of shrink — bigger steps are not better.</div>
     </div>
   </div>
 
@@ -870,11 +1392,39 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q2(c) [6 — batch vs stochastic] · 2024 May Q2(c) [6 — short note on SGD]</p>
+<p class="asked"><b>Asked in:</b> 2023 May Q2(c) [6 — batch vs stochastic] · 2024 May Q2(c) [6 — short note on SGD]</p>
+
+      <div class="simple"><b>In simple words:</b> Batch gradient descent looks at every training example before taking one step.<br>
+      Stochastic gradient descent looks at one example per step.<br>
+      Mini-batch looks at a small group, which is the usual practical compromise.</div>
+
+      <h4>Why we do this</h4>
+      <p>The direction of a downhill step is only an estimate. Using more data gives a steadier estimate but costs more time. Using less data is faster but noisier. The three variants are three answers to the same speed-versus-stability question.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Batch</b> — the set of examples used to compute one update.</li>
+        <li><b>Epoch</b> — one full pass through the entire training set.</li>
+        <li><b>Iteration</b> — one parameter update.</li>
+        <li><b>Stochastic</b> — involving randomness; here, picking one example at random.</li>
+        <li><b>Mini-batch</b> — a small fixed group of examples, such as 32 or 64.</li>
+        <li><b>Convergence</b> — the point where the cost stops improving much.</li>
+        <li><b>Local minimum</b> — a dip that is lower than its neighbours but not the lowest point overall.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Batch GD: compute the gradient over all n examples, then update once.</b> Why: the average gradient is stable and points reliably downhill.</li>
+        <li><b>SGD: pick one example, compute its gradient, update immediately.</b> Why: each step is cheap, so you can make many updates in the time batch makes one.</li>
+        <li><b>Mini-batch GD: compute the gradient over a small batch, then update.</b> Why: it balances stable direction with fast progress and uses hardware efficiently.</li>
+        <li><b>Track the cost curve.</b> Why: batch should fall smoothly; SGD will be noisy but should trend downward.</li>
+        <li><b>Reduce the learning rate over time for SGD.</b> Why: a fixed large step keeps bouncing around the minimum instead of settling.</li>
+      </ol>
 
       <h4>Gradient descent</h4>
       <p>Gradient descent is an iterative optimisation algorithm. It computes the gradient (slope) of the cost function and moves the parameters in the <b>opposite direction</b> of the gradient, with step size η.</p>
       <div class="math">θ := θ − η ∇J(θ)</div>
+      <p><b>What this means:</b> ∇J is the uphill direction. Subtracting it moves downhill; η decides how far.</p>
 
       <h4>Batch gradient descent (BGD)</h4>
       <ul>
@@ -907,9 +1457,14 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> batch is a careful accountant, SGD is a fast trader. Batch gives a cleaner path; SGD gives more updates per second and can shake itself out of shallow dips.</p>
 
       <h4>Mini-batch gradient descent</h4>
       <p>The practical compromise: use a batch of 16–256 samples. It gives vectorised speed and a reasonably smooth path. Most deep-learning libraries use mini-batch SGD.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> You want the class's opinion. Batch asks every student before deciding (slow but stable). SGD asks one random student (fast but noisy). Mini-batch asks a group of five (a good compromise).</div>
+
+      <div class="confuse"><b>Common confusion:</b> An epoch is one full pass over the data; an iteration is one update. With SGD there are many iterations in a single epoch. Also, SGD's noisy path is not a bug — the noise is what helps it escape shallow local minima.</div>
     </div>
   </div>
 </section>
@@ -923,20 +1478,50 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q1(c) [6]</p>
+<p class="asked"><b>Asked in:</b> 2025 May Q1(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Training error is your score on the practice questions you have already seen.<br>
+      Generalization error is your score on the real exam.<br>
+      A small gap between them means the model actually learned the subject.</div>
+
+      <h4>Why we do this</h4>
+      <p>A model that only performs well on its training data is useless in production. We need to know how it will behave on tomorrow's data, which it has never seen. Separating training error from generalization error is the basic habit that prevents self-deception.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Training error</b> — average loss on the examples used to fit the model.</li>
+        <li><b>Generalization error</b> — expected loss on new data drawn from the same source.</li>
+        <li><b>Unseen data</b> — examples the model did not use during training or tuning.</li>
+        <li><b>Distribution</b> — the statistical pattern from which the data is drawn.</li>
+        <li><b>Generalization gap</b> — test error minus training error.</li>
+        <li><b>Hold-out test set</b> — a portion of data kept aside until the very end.</li>
+        <li><b>Cross-validation</b> — repeatedly training and testing on different splits to estimate generalization.</li>
+        <li><b>Overfitting</b> — low training error but high test error.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Train the model on the training set.</b> Why: this is the only data the model is allowed to learn from.</li>
+        <li><b>Measure the loss on that same training set.</b> Why: this gives the training error.</li>
+        <li><b>Evaluate on a separate test set that was never used.</b> Why: this estimates how the model will behave on new data.</li>
+        <li><b>Compare the two numbers.</b> Why: the gap tells you whether the model is generalising or memorising.</li>
+        <li><b>Diagnose: high–high means underfit, low–high means overfit, low–low means good.</b> Why: the pair is more informative than either number alone.</li>
+      </ol>
 
       <h4>Training error</h4>
       <p>The error measured on the <b>same data used to train the model</b>.</p>
       <div class="math">E<sub>train</sub> = (1/n) Σ<sub>i=1..n</sub> L(y<sub>i</sub>, f̂(x<sub>i</sub>))</div>
+      <p><b>What this means:</b> average the loss over the n training examples. It is a measure of fit, not of future performance.</p>
       <ul>
         <li>Shows how well the model fits the seen data.</li>
-        <li>Always decreases as model complexity increases (can reach zero).</li>
+        <li>Always decreases as model complexity increases, and can reach zero.</li>
         <li>A low training error alone does <b>not</b> mean a good model.</li>
       </ul>
 
       <h4>Generalization error</h4>
       <p>The expected error on <b>new, unseen data</b> drawn from the same distribution.</p>
       <div class="math">E<sub>gen</sub> = E<sub>(x,y)~D</sub>[ L(y, f̂(x)) ]</div>
+      <p><b>What this means:</b> imagine drawing fresh examples from the same real-world source and averaging the loss. That average is what you actually care about.</p>
       <ul>
         <li>Shows how well the model will perform in the real world.</li>
         <li>Estimated by a hold-out test set or cross-validation.</li>
@@ -954,10 +1539,15 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> you want the third row. The first row needs a more powerful model; the second needs more data or more restraint.</p>
 
       <h4>Generalization gap</h4>
       <div class="math">Generalization gap = E<sub>test</sub> − E<sub>train</sub></div>
-      <p>A small gap is good. A very small training error with a large gap is the classic signature of overfitting. Reduce the gap with more data, regularization, simpler models, or early stopping.</p>
+      <p>A small gap is good. A very small training error with a large gap is the classic signature of overfitting. Reduce the gap with more data, regularization, a simpler model, or early stopping.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A student who memorises past papers scores 100% on the practice book and 40% on a new exam. Another student scores 70% on practice and 68% on the new exam. The second student learned the subject; the first only memorised the answers.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Low training error is not evidence of success; it is often evidence of overfitting. Also, the test set must stay completely untouched during training and tuning. If you tune on it, your “generalization” score becomes just another training score.</div>
     </div>
   </div>
 </section>

@@ -148,7 +148,23 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 .prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
 .side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
-</style></head>
+</style>
+<style id="explain-blocks">
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important;break-inside:avoid}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style><style id="print-simple">
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 
@@ -191,6 +207,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   </div>
 </header>
 
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every procedure is broken into numbered steps. No prior forensics background needed.</div>
+
 <!-- ================= FREQUENCY MAP ================= -->
 <section class="card" id="map">
   <h2>📊 PYQ frequency map — what actually gets asked</h2>
@@ -231,6 +249,42 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 May Q1(a) [9, second part] · 2022 Nov Q1(a) [9, second part] · 2023 May Q2(b) [9] · 2025 May Q1(b) [9] · 2025 Nov Q2(b) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> Computer forensics helps the police turn a seized computer into proof a court will accept.<br>Experts recover deleted files, read the traces left behind, and rebuild what happened.<br>They also tell officers which devices to take and how to take them without damage.</div>
+
+      <h4>Why we do this</h4>
+      <p>Police often have a suspect and a device but no clear story. Forensics supplies the story and the proof, and keeps that proof usable in court.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Computer forensics</b> — the careful, documented study of a computer to find evidence.</li>
+        <li><b>Law enforcement</b> — the police, cyber-crime cells and prosecutors who investigate and charge crimes.</li>
+        <li><b>Deleted file</b> — a file the user removed; its data often stays on disk until something overwrites it.</li>
+        <li><b>Unallocated space</b> — disk space that no current file is using, where old data can survive.</li>
+        <li><b>Artefact</b> — any small trace left by the operating system, an app or a user, such as a log entry or timestamp.</li>
+        <li><b>Hidden file</b> — a file marked so normal views do not show it; it can still hold evidence.</li>
+        <li><b>String search</b> — searching raw data for a word, name or e-mail address.</li>
+        <li><b>Seizure</b> — legally taking a device into police custody.</li>
+        <li><b>Write blocker</b> — a device or tool that lets a computer read a disk but blocks every write, so nothing changes.</li>
+        <li><b>Image</b> — an exact sector-by-sector copy of a disk, including deleted and hidden data.</li>
+        <li><b>Expert witness</b> — a specialist who explains technical findings to a court.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Secure the device.</b> Stop anyone from using it, photograph the screen and note the cables. Why: every click can change timestamps.</li>
+        <li><b>Copy the disk through a write blocker.</b> Why: the original must stay untouched, so all work is done on a copy.</li>
+        <li><b>Verify the copy with a hash.</b> Why: a matching fingerprint proves the copy equals the original.</li>
+        <li><b>Recover deleted and hidden data.</b> Why: suspects often try to remove the strongest evidence.</li>
+        <li><b>Run keyword searches.</b> Why: names, e-mail addresses and account numbers quickly narrow a huge disk to a few useful files.</li>
+        <li><b>Build a timeline.</b> Why: the order of events is what tells the story.</li>
+        <li><b>Link person, device and act.</b> Why: a file only matters if you can show who used the account or drive.</li>
+        <li><b>Write a plain report and testify.</b> Why: the court must understand the finding without technical training.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Think of a detective at a digital crime scene. The detective photographs the room, bags each item, makes a verified copy of the computer, and only then studies the copy. The original stays sealed like evidence in a police locker.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Students think law-enforcement forensics is only “recovering deleted files”. The bigger job is making the evidence admissible: seizing it lawfully, copying it exactly, and recording every handover. A recovered file with a broken record can be thrown out.</div>
+
       <h4>1. Core uses given in the book (§3.2)</h4>
       <ol>
         <li><b>Recovery of deleted files</b> — papers, graphics and images that the accused removed from the disk.</li>
@@ -259,6 +313,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Forensic workstations and write blockers</b> — image the drive without changing a single bit.</li>
       </ul>
 
+      <p class="small"><b>What this means:</b> the first list is what examiners find, the second is how they help the case, and the third is the kit they use. In an exam, keep those three groups separate so the answer reads as a complete system, not a random list.</p>
+
       <div class="tip"><b>8–9 mark structure:</b> 5 book uses (3 marks) + 4 wider roles (3 marks) + 3 technologies such as CFX-2000 / SI-FI / DEBs (3 marks). This covers all three versions of the question with the same material.</div>
     </div>
   </div>
@@ -274,6 +330,42 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 May Q1(b) [9] · 2022 Nov Q1(b) [9] · 2023 May Q1(a) [8, with military applications] · 2024 May Q1(a) [9, any two] · 2025 Nov Q2(a) [8, with health-care applications]</p>
+
+      <div class="simple"><b>In simple words:</b> Forensics is sold as a set of services, not one magic test.<br>The core ones are seizing data, copying it safely, recovering lost data, searching documents, converting old media and explaining findings in court.<br>Clients pick a service level, much like choosing a repair plan.</div>
+
+      <h4>Why we do this</h4>
+      <p>A case needs different help at different stages. Naming the service tells the client what will be done, how fast, and what it will cost.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Data seizure</b> — legally taking storage devices that may hold evidence.</li>
+        <li><b>Duplication</b> — making an exact, verified copy of the data for analysis.</li>
+        <li><b>Bit-stream image</b> — a copy of every sector on a disk, including empty and deleted areas.</li>
+        <li><b>Write blocker</b> — a one-way valve: it allows reading but blocks writing, so the original cannot change.</li>
+        <li><b>Hash</b> — a file fingerprint; matching hashes prove two copies are identical.</li>
+        <li><b>Data recovery</b> — getting back data that was deleted, damaged or locked.</li>
+        <li><b>Document search</b> — using software to find relevant files among thousands or millions.</li>
+        <li><b>Media conversion</b> — copying data from old or unreadable media into a modern, usable format.</li>
+        <li><b>Expert witness</b> — a specialist who explains technical evidence to a judge and jury.</li>
+        <li><b>Service level</b> — the agreed speed and hours of work, such as standard, priority or weekend.</li>
+        <li><b>Chain of custody</b> — the signed record of everyone who handled the evidence.</li>
+        <li><b>EHR</b> — electronic health record, a patient's digital medical file.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Agree the service level.</b> Why: a murder case and a small HR case need different speed and cost.</li>
+        <li><b>Seize the data lawfully.</b> Why: an illegal seizure can make everything that follows useless.</li>
+        <li><b>Duplicate and verify.</b> Why: analysis must never touch the only original.</li>
+        <li><b>Recover what is missing.</b> Why: deleted or damaged data is often the key evidence.</li>
+        <li><b>Search and convert.</b> Why: old media and huge document sets must be made readable before review.</li>
+        <li><b>Analyse and report.</b> Why: the client needs findings in plain language, not raw files.</li>
+        <li><b>Testify if needed.</b> Why: the expert must defend the method under cross-examination.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A forensic lab works like a specialist repair garage. You can pay for standard hours, an on-site visit, emergency call-out, priority service or weekend service. The repair is the same; what changes is how fast someone picks up the tools.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Duplication is not the same as backup. A backup is a second copy for daily use. A forensic duplicate is a verified bit-for-bit image made for court, with a hash and a chain of custody.</div>
 
       <h4>1. The eight core services (book §3.4)</h4>
       <ol>
@@ -300,6 +392,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+
+      <p class="small"><b>What this means:</b> the service option is a business promise, not a forensic method. The science stays the same; only the working hours and response time change.</p>
 
       <h4>3. “Explain any two” — model answer</h4>
       <p><b>(a) Data duplication / preservation.</b> The expert connects the seized drive through a <b>write blocker</b> and creates a <b>bit-stream image</b> — an exact sector-by-sector copy. A cryptographic hash (MD5/SHA-1) is calculated for the original and for the image. If both hashes match, the copy is verified. The original is sealed and stored; all analysis is done on the copy. This protects the evidence from alteration and allows the defence to re-examine the same data.</p>
@@ -338,6 +432,42 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q1(b) [9] · 2023 Nov Q2(b) [9] · 2024 May Q2(b) [9, key components] · 2025 May Q2(b) [9, strategies — any two] · 2025 Nov Q1(b) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> Data recovery brings back data that was deleted, damaged or locked.<br>Backup keeps a second copy so the data can be restored after a failure.<br>In forensics you recover from a verified copy, never from the only original.</div>
+
+      <h4>Why we do this</h4>
+      <p>Evidence is often the only copy of what happened, and the suspect may have deleted or damaged it. A backup plus a tested recovery plan keeps the case alive and the original safe.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Data recovery</b> — the process of getting usable data back from damaged, deleted or locked media.</li>
+        <li><b>Backup</b> — a second copy of data, kept on separate media, used to restore after loss.</li>
+        <li><b>Restore</b> — copying the backup back so the system works again.</li>
+        <li><b>Backup window</b> — the time allowed for a backup, usually outside working hours.</li>
+        <li><b>Bandwidth</b> — how much data a network can carry per second.</li>
+        <li><b>Throughput</b> — how much data a system can actually move in a given time.</li>
+        <li><b>Mirroring</b> — keeping two identical disks live at the same time.</li>
+        <li><b>Image copy</b> — a full copy of a database or disk at one moment.</li>
+        <li><b>Change accumulation</b> — saving only the changes made since the last full copy, to speed up recovery.</li>
+        <li><b>Point-in-time (PIT) recovery</b> — restoring data exactly as it looked at a chosen moment.</li>
+        <li><b>BRS</b> — backup and recovery solution, the set of tools that copy and restore data.</li>
+        <li><b>3-2-1 rule</b> — keep three copies, on two media types, with one copy off-site.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Stop using the damaged source.</b> Why: every new write can overwrite the data you hope to recover.</li>
+        <li><b>Copy or image it first.</b> Why: recovery attempts can fail, and the original must survive them.</li>
+        <li><b>Work on the copy.</b> Why: the original stays sealed for court and for a second attempt.</li>
+        <li><b>Repair or rebuild the structure.</b> Why: deleted files need their directory entries and clusters rebuilt.</li>
+        <li><b>Verify what came back.</b> Why: a recovered file may be partial, corrupt or from the wrong date.</li>
+        <li><b>Restore into a clean location.</b> Why: restoring over the damaged disk can destroy other evidence.</li>
+        <li><b>Record every action.</b> Why: the defence will ask who touched the data and when.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A precious paper document is water-damaged. You photocopy it first, dry and repair the photocopy, and keep the wet original sealed in a folder. Recovery works the same way: copy first, repair the copy.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A backup is not a forensic image. A backup may copy only live files and skip deleted data, slack and unallocated space. A forensic image copies every sector, which is why it can prove what was deleted.</div>
 
       <h4>1. Data recovery defined (book §3.8.1)</h4>
       <p><b>Data recovery</b> is the process by which highly experienced engineers <b>analyse, remove and restore data from damaged media in an intact format</b>. It is feasible to recover deleted information, forgotten passwords and complete hard drives that were not physically destroyed.</p>
@@ -392,6 +522,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       </table>
       </div>
 
+      <p class="small"><b>What this means:</b> a BRS is not one program. It is a chain: copy the data, record changes, rebuild indexes, then manage and check the whole restore. If any link is missing, recovery can stop halfway.</p>
+
       <h4>7. Strategies for effective backup (2025 May — any two in detail)</h4>
       <p><b>(a) 3-2-1 rule.</b> Keep <b>three</b> copies of data, on <b>two</b> different types of media, with <b>one</b> copy off-site (or in the cloud). This protects against disk failure, ransomware and site disaster at the same time.</p>
       <p><b>(b) Full + incremental + periodic test restore.</b> Take a full backup weekly, incremental backups daily, and <b>test the restore</b> at least once a month. A backup that has never been restored is only a hope. Record the restore test in the backup log.</p>
@@ -419,6 +551,40 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 May Q2(b) [9] · 2022 Nov Q2(b) [9] · 2023 Nov Q1(a) [9, steps + any two in detail] · 2025 Nov Q1(a) [8, steps only]</p>
 
+      <div class="simple"><b>In simple words:</b> A professional method is a fixed, written way of handling a computer so nothing is damaged or invented.<br>The specialist protects the machine, copies it, finds and recovers data, examines it, reports, and testifies.<br>Following the same steps every time is what makes the result trustworthy.</div>
+
+      <h4>Why we do this</h4>
+      <p>Random poking changes evidence and cannot be repeated. A standard method lets another expert check the work and lets a court trust the result.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Methodology</b> — a documented, repeatable set of steps for doing an investigation.</li>
+        <li><b>Chain of custody</b> — the signed record of every person who handled the evidence and what they did.</li>
+        <li><b>Virus injection</b> — accidentally introducing malware into the suspect machine during analysis.</li>
+        <li><b>Unallocated space</b> — disk space not used by any live file; it can still hold deleted data.</li>
+        <li><b>File slack</b> — the unused tail of the last cluster of a file, which can contain fragments of older data.</li>
+        <li><b>Swap file</b> — disk space the operating system uses as extra memory; it can hold fragments of documents.</li>
+        <li><b>Encrypted file</b> — a file scrambled so it cannot be read without the correct key or password.</li>
+        <li><b>Extant file</b> — a normal, visible file that still exists in the directory tree.</li>
+        <li><b>Expert testimony</b> — a specialist's explanation of the evidence in court.</li>
+        <li><b>PDRRAEPPE</b> — the nine-step memory hook: Protect, Discover, Recover, Reveal, Access, Examine, Print, Provide opinion, Expert testimony.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Prepare the tools and the authority.</b> Why: you need lawful access and clean, tested software before touching the machine.</li>
+        <li><b>Protect the system.</b> Why: stop changes, damage, virus entry and accidental writes.</li>
+        <li><b>Copy the storage.</b> Why: all later work happens on a verified copy, so the original never changes.</li>
+        <li><b>Discover and recover data.</b> Why: visible files are only part of the story; deleted, hidden and encrypted files may hold the key.</li>
+        <li><b>Examine the relevant data.</b> Why: the examiner must separate useful evidence from noise and record where it was found.</li>
+        <li><b>Report the findings.</b> Why: a clear report lets a non-technical reader follow the evidence.</li>
+        <li><b>Give an opinion or testimony.</b> Why: the court may need the expert to explain and defend the conclusion.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A surgeon follows a sterile procedure: wash, gown, mark the site, operate, count the instruments, write the notes. The steps are boring and repeated, and that is exactly why the patient can trust the result.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “Protect the system” does not mean “switch everything off immediately”. Protection means stop changes while still capturing data that would vanish, such as RAM. Order matters.</div>
+
       <h4>1. Benefits of professional forensics methodology (book §3.5)</h4>
       <ol>
         <li><b>No potential evidence is damaged, deleted or compromised</b> by the investigation technique.</li>
@@ -441,6 +607,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Provide an opinion</b> on the system layout, file structures, authorship information, attempts to hide/erase/protect/encrypt information, and anything else significant.</li>
         <li><b>Provide expert consultation and/or testimony</b> as needed.</li>
       </ol>
+
+      <p class="small"><b>What this means:</b> the nine steps move from “do not break it” to “explain it in court”. The first two protect the evidence, the middle five extract it, and the last two turn it into an opinion a court can use.</p>
 
       <h4>3. “Explain any two in detail”</h4>
       <p><b>(a) Discover.</b> The examiner does not look only at visible files. He or she enumerates:</p>
@@ -467,6 +635,41 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q2(a) [8, techniques] · 2023 Nov Q1(b) [9, benefits] · 2024 May Q1(b) [9, technologies — any two]</p>
+
+      <div class="simple"><b>In simple words:</b> Businesses use forensics to catch fraud, stop data theft and defend themselves in disputes.<br>They monitor company computers, tag important documents, and recover stolen laptops.<br>The aim is to protect the company without breaking employee privacy rules.</div>
+
+      <h4>Why we do this</h4>
+      <p>A company owns the network and the data, but it still needs proof before it can discipline or sue anyone. Business forensics turns suspicion into documented evidence.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Business computer forensics</b> — using forensic methods to protect a company's data and resolve workplace or commercial disputes.</li>
+        <li><b>DIRT</b> — Data Interception by Remote Transmission; software that watches a target computer from a remote command centre.</li>
+        <li><b>BAIT</b> — Binary Audit Identification Transfer; a way to tag a document so you can trace who opened or copied it.</li>
+        <li><b>PC PhoneHome</b> — theft-recovery software that reports a stolen computer's location.</li>
+        <li><b>E-discovery</b> — finding and exchanging electronic documents for a legal case.</li>
+        <li><b>Keystroke monitoring</b> — recording the keys a user types, usually through monitoring software.</li>
+        <li><b>Forensic imaging</b> — making a verified sector-by-sector copy of a disk.</li>
+        <li><b>Hash</b> — a file fingerprint used to prove a copy has not changed.</li>
+        <li><b>Honeytrap</b> — a decoy system or file set up to attract and record an intruder.</li>
+        <li><b>Due diligence</b> — the checks a company must make before a deal, such as a merger.</li>
+        <li><b>Intellectual property (IP)</b> — ideas, designs, code and trade secrets owned by the company.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Check the written policy.</b> Why: monitoring without a signed policy can be a privacy violation.</li>
+        <li><b>Preserve the evidence first.</b> Why: a suspect who learns of the investigation may delete files.</li>
+        <li><b>Image the computer.</b> Why: the company can return the machine to work while analysis continues on the copy.</li>
+        <li><b>Monitor or trace if the activity is ongoing.</b> Why: remote tools such as DIRT can record live misuse that would otherwise stop.</li>
+        <li><b>Search documents, mail and USB history.</b> Why: this shows what was taken, sent or copied.</li>
+        <li><b>Write a factual report.</b> Why: HR or management needs clear findings, not technical logs.</li>
+        <li><b>Protect the evidence until the case closes.</b> Why: a later lawsuit or criminal referral may need the same data.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A shop has cameras, tagged stock and a tracker in the delivery van. None of them stops theft by itself. Together they show what was taken, by whom and where it went. Business forensics uses the same three ideas on data.</div>
+
+      <div class="confuse"><b>Common confusion:</b> These tools are not police-only, but a company cannot use them freely. Without a written monitoring policy and a lawful reason, even real evidence can be rejected as an invasion of privacy.</div>
 
       <h4>1. Business-oriented techniques</h4>
       <ol>
@@ -503,6 +706,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       </table>
       </div>
 
+      <p class="small"><b>What this means:</b> DIRT watches activity, BAIT tags a document, and PC PhoneHome finds a stolen machine. One is about behaviour, one about files, one about hardware. That is enough to answer “any two” without confusing them.</p>
+
       <p><b>Other business forensic services:</b> password and file recovery, recovery of deleted and hidden files, decryption of files and e-mail, e-mail monitoring and authentication, Internet-activity identification, computer-usage supervision, remote network monitoring, tracking stolen electronic files, honeytrap operations, identification of unauthorized software and users.</p>
 
       <div class="note"><b>Cost argument (good closing line):</b> replacing a stolen computer costs hardware, data re-creation, lost production, investigation, insurance and lost customer trust. Forensic technology is cheaper than the loss it prevents.</div>
@@ -517,6 +722,39 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> Military, police and business all use forensics, but they want different results.<br>The military wants speed and attribution, police want proof for court, and business wants minimum disruption.<br>The technology overlaps; the goal, legal power and report change.</div>
+
+      <h4>Why we do this</h4>
+      <p>The same seized laptop can be handled in three very different ways. Knowing the sector tells you what to preserve, how fast you must work, and who will read the report.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Military forensics</b> — forensics used to protect defence networks and identify attackers.</li>
+        <li><b>Attribution</b> — proving who carried out an attack.</li>
+        <li><b>National security</b> — protecting a country's defence, intelligence and critical systems.</li>
+        <li><b>Law enforcement</b> — police and prosecutors handling criminal cases.</li>
+        <li><b>Chain of custody</b> — the signed record of everyone who handled the evidence.</li>
+        <li><b>Admissibility</b> — whether a court will allow evidence to be used.</li>
+        <li><b>Civil discovery</b> — the legal process where both sides in a lawsuit exchange documents.</li>
+        <li><b>Intellectual property (IP)</b> — company-owned ideas, designs, code and trade secrets.</li>
+        <li><b>Classified</b> — information restricted by law to authorised people.</li>
+        <li><b>Write blocker</b> — a tool that allows reading but blocks writing to a disk.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Identify the sector.</b> Why: military, police and business have different legal powers and different customers.</li>
+        <li><b>State the goal.</b> Why: attribution, conviction and asset protection need different evidence.</li>
+        <li><b>Check the legal basis.</b> Why: a warrant, defence law and company policy allow different actions.</li>
+        <li><b>Choose the tools.</b> Why: a military team may need real-time tracking; a police team needs a court-ready image.</li>
+        <li><b>Balance speed and depth.</b> Why: live attackers may vanish, but a weak copy may be rejected in court.</li>
+        <li><b>Write for the audience.</b> Why: a classified intelligence report is not a court statement or an HR memo.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A soldier, a police officer and a shop owner all use cameras. The soldier needs a live feed of the battlefield, the officer needs footage that will stand up in court, and the shop owner needs a clip to stop a thief. Same technology, different mission.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Students often claim the three sectors use completely different tools. Most tools overlap. The real difference is the goal, the legal authority and the report, not the brand of software.</div>
+
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Military</th><th>Law enforcement</th><th>Business</th></tr></thead>
@@ -530,6 +768,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+
+      <p class="small"><b>What this means:</b> read the table row by row, not column by column. For each row, the three sectors answer the same question differently. That comparison is the answer the examiner wants.</p>
 
       <h4>Detail — military technology (§3.7.1)</h4>
       <ul>
@@ -563,6 +803,38 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q2(a) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> Forensic tools are the examiner's kit: a safe copier, a fingerprint checker, a search engine for disks, and a network recorder.<br>Each tool answers one question, such as “is this copy exact?” or “what did the attacker send?”<br>You only need to explain two tools well.</div>
+
+      <h4>Why we do this</h4>
+      <p>A court will not accept “the computer showed it”. The examiner must name the tool, explain what it does, and show that it did not change the evidence.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Bit-stream copy</b> — an exact copy of every sector on a disk, including empty and deleted areas.</li>
+        <li><b>Write blocker</b> — a one-way valve that allows reading but blocks all writing to the evidence disk.</li>
+        <li><b>Hashing</b> — turning data into a short fingerprint (MD5, SHA-1, SHA-256) so changes can be detected.</li>
+        <li><b>Forensic suite</b> — software such as FTK or EnCase that images, searches, recovers and reports.</li>
+        <li><b>Packet capture</b> — recording network traffic so an attack can be replayed and studied.</li>
+        <li><b>Steganography</b> — hiding secret data inside an ordinary-looking image, audio or video file.</li>
+        <li><b>Encryption</b> — scrambling data so only someone with the key can read it.</li>
+        <li><b>Mobile acquisition</b> — extracting call logs, messages and app data from a phone.</li>
+        <li><b>GPS</b> — the satellite system that records a device's location.</li>
+        <li><b>Keyword search</b> — scanning a disk image for chosen words, names or addresses.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Pick two tools you can explain.</b> Why: the question says “any two”, and a clear pair beats a rushed list of seven.</li>
+        <li><b>Say what the tool is.</b> Why: the examiner needs a definition, not just a brand name.</li>
+        <li><b>Explain how it works.</b> Why: the method is what proves the evidence is sound.</li>
+        <li><b>Say why it matters in a case.</b> Why: this links the tool to a real investigation.</li>
+        <li><b>Add one limitation.</b> Why: showing judgement earns more than claiming a tool is perfect.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A fingerprint kit has powder, tape and a card. Each item does one job, and the card proves the print came from this scene. Forensic tools work the same way: copy, fingerprint, record, compare.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A write blocker is not an antivirus or a cleaner. It does not inspect files; it simply stops the computer from writing to the evidence disk. Confusing it with a security tool loses marks.</div>
+
       <p><b>Answer plan:</b> name six technologies in one line each, then explain any two in a short paragraph. The question is Unit-3 “types of technology”, not the Unit-6 tool list — keep the examples broad.</p>
 
       <div class="tbl-wrap">
@@ -579,6 +851,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+
+      <p class="small"><b>What this means:</b> the table is a menu of tools, not a procedure. The two paragraphs below turn two menu items into a full answer by adding method, purpose and limitation.</p>
 
       <p><b>(a) Forensic imaging with hash verification.</b> The examiner connects the suspect drive to a write blocker and runs an imaging tool. The tool reads every sector — allocated, unallocated and slack — and writes a bit-stream image. It computes an MD5 or SHA-1 hash of both the source and the image. If the two hashes are equal, the image is a true copy. The original is sealed; the image is mounted read-only for analysis. This is the foundation of every other technique.</p>
       <p><b>(b) Forensic suite (FTK / EnCase).</b> The suite indexes the image, recovers deleted files, filters by file type and date, searches keywords, shows e-mail and Internet history, and produces a court-ready report. It also keeps an audit log of every action, which supports the chain of custody.</p>
@@ -597,6 +871,37 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 May Q1(a) [9] · 2022 Nov Q1(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> Computer forensics is the careful study of computers and storage devices to find evidence.<br>It covers four jobs: identify the evidence, preserve it, analyse it, and present it in court.<br>“Schemes” simply means the three places it is used: military, police and business.</div>
+
+      <h4>Why we do this</h4>
+      <p>A computer holds far more than the files a user can see. Forensics gives a lawful, repeatable way to find the hidden parts and explain them to people who are not technical.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Computer forensics</b> — the methodical examination of computer media for evidence.</li>
+        <li><b>Media</b> — the physical storage, such as a hard disk, USB drive, CD or tape.</li>
+        <li><b>Admissible</b> — allowed to be used as evidence in court.</li>
+        <li><b>Preserve</b> — keep the evidence unchanged and protected.</li>
+        <li><b>Analyse</b> — study the data to decide what it proves.</li>
+        <li><b>Present</b> — explain the findings clearly in a report or in court.</li>
+        <li><b>Scheme</b> — here, a deployment area: military, law enforcement or business.</li>
+        <li><b>Electronic discovery</b> — finding electronic documents for a legal case; another name for forensic work.</li>
+        <li><b>Military forensics</b> — forensics focused on defence networks and attackers.</li>
+        <li><b>Business forensics</b> — forensics focused on company data, employees and disputes.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Identify.</b> Why: you must know which devices and files may hold evidence before you touch anything.</li>
+        <li><b>Preserve.</b> Why: the original must not change, or the court may reject it.</li>
+        <li><b>Analyse.</b> Why: raw data is not proof until someone shows what it means.</li>
+        <li><b>Present.</b> Why: a finding only helps the case if a judge, jury or employer can understand it.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A detective at a crime scene does four things: mark what is evidence, protect it, study it, and explain it in court. Computer forensics is the same job, with a hard disk instead of a room.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Computer forensics is not just data recovery. Recovery is one service. Forensics adds lawful seizure, proof that the copy is exact, analysis, and a report that can survive court.</div>
 
       <h4>1. Definition</h4>
       <p><b>Computer forensics</b> is the <b>methodical examination of computer media</b> (hard disks, diskettes, cassettes, optical media, flash drives) for evidence. It means <b>gathering, preserving, analysing and presenting</b> data related to computers so that the findings can be used in a court, tribunal or disciplinary hearing.</p>
@@ -629,6 +934,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       </table>
       </div>
 
+      <p class="small"><b>What this means:</b> “schemes”, “types” and “deployment areas” are the same three groups in this syllabus. The difference is who pays, who has legal power and what the final report is used for.</p>
+
       <div class="tip"><b>Exam tip:</b> if the question says “schemes”, do not invent a fourth scheme. Write the three above, then one line: “These are called types of computer forensic technology in the prescribed book (Unit 3.7).”</div>
     </div>
   </div>
@@ -640,6 +947,37 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q1(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> The purpose of computer forensics is to turn digital data into evidence a court will accept.<br>It differs from fingerprint or DNA work because digital evidence can be copied exactly.<br>That copy can be checked with a hash, so the original never has to be touched.</div>
+
+      <h4>Why we do this</h4>
+      <p>Digital evidence is invisible, easy to change and often huge. Forensics needs a different method from blood or fingerprint work, but the goal is the same: prove what happened without damaging the proof.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Admissible</b> — allowed to be used in court.</li>
+        <li><b>Binary</b> — data stored as 0s and 1s, which a person cannot read directly.</li>
+        <li><b>Bit-stream image</b> — an exact copy of every sector on a disk.</li>
+        <li><b>Hash</b> — a fingerprint of a file or disk; a single changed bit produces a different hash.</li>
+        <li><b>Volatile evidence</b> — data that disappears when power is lost, such as RAM contents.</li>
+        <li><b>Chain of custody</b> — the signed record of every person who handled the evidence.</li>
+        <li><b>Traditional forensics</b> — fingerprint, DNA, ballistics and similar physical-science work.</li>
+        <li><b>Timeline</b> — a dated sequence of events built from file and log timestamps.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Find the data.</b> Why: the relevant files may be hidden among millions.</li>
+        <li><b>Copy the whole disk exactly.</b> Why: a partial copy can miss deleted or hidden evidence.</li>
+        <li><b>Verify the copy with a hash.</b> Why: this proves the copy and the original are identical.</li>
+        <li><b>Analyse only the copy.</b> Why: the original stays sealed and unchanged for court.</li>
+        <li><b>Build a timeline and link the user.</b> Why: the court needs a story, not a pile of files.</li>
+        <li><b>Present the findings plainly.</b> Why: the judge and jury may have no technical background.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Digital evidence is like a document that can be photocopied perfectly, again and again. Fingerprint evidence is like a cake: once you cut it for testing, you cannot put it back. That is why digital examiners copy first and test the copy.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “Digital evidence is easy to change” does not mean it is weak evidence. It is easy to change, but it is also easy to prove that it did not change, thanks to hashing and a strict chain of custody.</div>
 
       <h4>1. Primary purpose</h4>
       <p>The primary purpose is to <b>find, preserve, analyse and present digital evidence in a legally acceptable form</b> so that the truth of an incident can be established. In one line: <b>to turn digital data into admissible evidence</b>.</p>
@@ -667,6 +1005,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       </table>
       </div>
 
+      <p class="small"><b>What this means:</b> the table is not saying digital evidence is “better” or “worse”. It is saying the handling rules are different: copy exactly, verify the copy, and protect a scene that has no walls.</p>
+
       <div class="note"><b>Source note:</b> the definition and law-enforcement uses are from the Technical book §3.1–3.2. The “difference from other disciplines” comparison is not treated separately in the book, so it is written from the syllabus reference (Nelson, Phillips, Enfinger &amp; Steuart, <i>Computer Forensics and Investigations</i>).</div>
     </div>
   </div>
@@ -682,6 +1022,40 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 May Q2(a) [9] · 2022 Nov Q2(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> HR uses computer forensics when an employee is accused of harassment, theft, data leakage or misuse of office systems.<br>The expert copies the employee's computer before the person is interviewed or fired.<br>That copy protects the company and gives a fair, documented record.</div>
+
+      <h4>Why we do this</h4>
+      <p>A disciplinary case can become a labour-court case. HR needs facts, not rumours, and it needs them preserved before the employee has a chance to delete anything.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Human Resources (HR)</b> — the department that handles employees, discipline and workplace complaints.</li>
+        <li><b>Employment proceeding</b> — a formal hearing or legal case about a worker's conduct or dismissal.</li>
+        <li><b>Bit-stream image</b> — an exact copy of every sector on the employee's disk.</li>
+        <li><b>Preserve</b> — keep the data unchanged and protected.</li>
+        <li><b>Monitoring policy</b> — a written company rule that tells employees the computer may be inspected.</li>
+        <li><b>Privacy</b> — a person's right to keep personal information private.</li>
+        <li><b>Chain of custody</b> — the signed record of who handled the evidence.</li>
+        <li><b>Trade secret</b> — confidential business information that gives the company an advantage.</li>
+        <li><b>Termination</b> — ending a person's employment.</li>
+        <li><b>E-discovery</b> — finding electronic documents for a legal case.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Receive the complaint.</b> Why: the investigation needs a defined allegation, not a general suspicion.</li>
+        <li><b>Check the written policy.</b> Why: the company must have the right to inspect the computer.</li>
+        <li><b>Preserve the computer before any interview or termination.</b> Why: once warned, a person can delete files in minutes.</li>
+        <li><b>Image the disk and verify the hash.</b> Why: the company can keep working while the original stays sealed.</li>
+        <li><b>Analyse mail, documents, browser and USB history.</b> Why: this shows what was accessed, copied or sent.</li>
+        <li><b>Write a factual report.</b> Why: HR and the lawyer need dates, accounts and files, not technical jargon.</li>
+        <li><b>Present it at the hearing.</b> Why: the report must survive questions from the other side.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Before an employee hands back a company laptop, security makes a complete copy of the hard drive. It is like photographing the inside of a safe before anyone empties it. Later, nobody can claim the contents were changed.</div>
+
+      <div class="confuse"><b>Common confusion:</b> HR forensics is not unlimited snooping. Without a written policy, a lawful reason and a documented chain of custody, the evidence can be challenged as a privacy violation and may be excluded.</div>
 
       <h4>1. Why HR needs computer forensics</h4>
       <p>Computers are used as evidence in many HR cases: <b>sexual harassment, discrimination, wrongful termination, theft of data, leakage of trade secrets and misuse of office systems</b>. E-mail servers, network servers and individual staff PCs all contain evidence.</p>
@@ -708,6 +1082,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>Was e-mail archived on tapes that are retained for months or years?</li>
         <li>How many employees keep digital records of their finances and investments?</li>
       </ul>
+
+      <p class="small"><b>What this means:</b> these questions are all answerable from a preserved image. That is why the copy is made before HR talks to the employee, not after.</p>
 
       <h4>4. Employment-proceeding workflow</h4>
       <pre><code>Complaint / suspicion

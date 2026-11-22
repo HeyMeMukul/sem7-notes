@@ -87,6 +87,10 @@ table.left td,table.left th{text-align:left}
 .tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
 .book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
 .note b,.warn b,.tip b,.book b{color:#fff}
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
 ul,ol{margin:8px 0 8px 22px;padding:0}
 li{margin:5px 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -138,6 +142,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 @media print{
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important;break-inside:avoid}
+  .simple b,.analogy b,.confuse b{color:#000!important}
   .booksrc{color:#333!important}
   .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
 
@@ -147,7 +153,13 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 .prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
 .side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
-</style></head>
+</style><style id="print-simple">
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 
@@ -194,6 +206,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   </div>
 </header>
 
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every term is defined, and every mechanism is explained step by step. No prior blockchain background needed.</div>
+
 <!-- ================= FREQUENCY MAP ================= -->
 <section class="card" id="map">
   <h2>📊 PYQ frequency map — what actually gets asked</h2>
@@ -238,41 +252,81 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q1(b)(i) [6 — shared with PoA] · 2023 Nov Q1(b) [6] · 2024 May Q1(a)(i) [8 — shared] · 2025 May Q1(a) [8 — bitcoin mining, see Q10] · 2025 Nov Q1(a)(i) [8 — shared]  |  2025 May Q2(b) [9] asks for any five algorithms — PoW can be one of them</p>
 
-      <h4>1. Definition</h4>
-      <p><b>Proof of Work (PoW)</b> is a consensus mechanism in which nodes compete to solve a <b>computationally hard but easy-to-verify puzzle</b>. The first node to find a valid solution gets the right to add the next block and earns a reward. Bitcoin, Ethereum (before 2022), Litecoin and Dogecoin use it.</p>
+      <div class="simple"><b>In simple words:</b> Proof of Work is a race to solve a hard maths puzzle.<br>
+      The winner adds the next page to a shared notebook and earns new coins.<br>
+      Solving costs real electricity, but checking the answer takes one step.<br>
+      That cost is what stops people from rewriting old pages.</div>
 
-      <h4>2. The puzzle</h4>
+      <h4>Why we do this</h4>
+      <p>A public blockchain has no manager. If adding a block were free, anyone could flood the chain with fake blocks or rewrite yesterday's payments. PoW makes block creation expensive, so honest work stays cheaper than cheating.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Blockchain:</b> a shared notebook copied to many computers, where each page (block) is linked to the page before it.</li>
+        <li><b>Node:</b> a computer that keeps a copy of the ledger and checks every new block against the rules.</li>
+        <li><b>Miner:</b> a node that competes to create the next block.</li>
+        <li><b>Consensus:</b> the process that gets all nodes to accept the same history.</li>
+        <li><b>Hash:</b> a short fingerprint of data. The same data always gives the same fingerprint, and any tiny change gives a completely different one.</li>
+        <li><b>SHA-256:</b> the hash function Bitcoin uses; its output is 64 hexadecimal characters.</li>
+        <li><b>Block header:</b> the summary of a block: previous block hash, Merkle root, timestamp, difficulty target and nonce.</li>
+        <li><b>Merkle root:</b> one hash that stands for all transactions in the block.</li>
+        <li><b>Nonce:</b> a number that miners change again and again to produce a different hash.</li>
+        <li><b>Difficulty target:</b> the maximum hash value allowed. A smaller target means a harder puzzle.</li>
+        <li><b>Proof of Work:</b> the proof that a miner spent computing effort to find a valid nonce.</li>
+        <li><b>Confirmation:</b> each block added after your block. More confirmations mean more safety.</li>
+        <li><b>Mempool:</b> the waiting area for valid transactions that are not yet inside a block.</li>
+        <li><b>Difficulty:</b> a number that sets how hard the puzzle is; it adjusts to keep block time near 10 minutes.</li>
+        <li><b>Block reward:</b> new bitcoin paid to the miner who adds a valid block.</li>
+        <li><b>Transaction fee:</b> extra bitcoin paid by users to get their transaction included sooner.</li>
+        <li><b>51% attack:</b> an attack by one entity with more than half of the total hash power, enough to rewrite recent history and double-spend.</li>
+      
+        <li><b>ASIC:</b> a chip built for one hash algorithm, far faster than a general CPU.</li>
+        <li><b>Probabilistic finality:</b> a state where a block becomes safer with each later block but is never absolutely final.</li>
+        <li><b>Throughput:</b> the number of transactions a network processes per second.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Collect transactions.</b> The miner takes valid transactions from the mempool, the waiting room of unconfirmed transactions. <i>Why:</i> a block needs real, signed payments to be useful.</li>
+        <li><b>Build a candidate block.</b> It chooses transactions and computes the Merkle root. <i>Why:</i> the root lets anyone check the whole transaction list with one hash.</li>
+        <li><b>Link it to the past.</b> The header stores the previous block's hash. <i>Why:</i> this makes the chain tamper-evident; changing an old block changes every later hash.</li>
+        <li><b>Read the target.</b> The protocol sets how hard the puzzle must be. <i>Why:</i> difficulty keeps block times stable as total computing power changes.</li>
+        <li><b>Guess a nonce.</b> Start at 0 and hash the header. <i>Why:</i> the hash cannot be predicted, so trial and error is the only way.</li>
+        <li><b>Check the result.</b> If the hash is below the target, the puzzle is solved; otherwise increase the nonce and try again. <i>Why:</i> Only a hash below the target proves the work is done.</li>
+        <li><b>Broadcast the block.</b> The winner sends it to peers at once. <i>Why:</i> other nodes must accept it before the reward is real.</li>
+        <li><b>Others verify.</b> Every node checks the proof with one hash and re-checks every transaction. <i>Why:</i> verification is cheap, so cheating is easy to catch.</li>
+        <li><b>Append and pay.</b> The block is added and the miner receives the block reward plus fees. All miners then build on this block. <i>Why:</i> each new block makes rewriting the past more expensive.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Imagine a sealed puzzle contest where everyone must find a number that opens a padlock. The first person to open it wins the right to write the next page of a public diary. Anyone can test the winning number in a second, but finding it took hours of trial and error.</div>
+
+      <div class="confuse"><b>Common confusion:</b> "Proof of Work is hard to verify." It is the opposite: producing the proof is hard, checking it is instant. Also, miners do not decide the rules; every node checks their work.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>Proof of Work (PoW)</b> is a consensus mechanism in which nodes compete to solve a computationally hard but easy-to-verify puzzle. The first node to find a valid solution gets the right to add the next block and earns a reward. Bitcoin, Litecoin and Dogecoin use it; Ethereum used it until 2022.</p>
+
+      <h4>The puzzle</h4>
       <p>The block header contains the previous block hash, Merkle root, timestamp, difficulty target and a <b>nonce</b>. Miners repeatedly change the nonce and hash the header:</p>
       <div class="math">SHA-256( block_header || nonce ) &lt; target</div>
       <p>Because SHA-256 is unpredictable, the only way to find a nonce is <b>trial and error</b>. Verification, however, needs only <b>one hash</b>.</p>
+      <p><b>What this means:</b> the "work" is the millions of failed guesses. The proof is the one nonce that worked.</p>
 
-      <h4>3. Step-by-step working</h4>
-      <ol>
-        <li>Collect valid transactions from the mempool.</li>
-        <li>Build a candidate block and compute the Merkle root.</li>
-        <li>Set the difficulty target from the network rule.</li>
-        <li>Try nonce = 0, 1, 2, … and hash the header each time.</li>
-        <li>When the hash is below the target, broadcast the block.</li>
-        <li>Other nodes verify the hash and all transactions in one pass.</li>
-        <li>If valid, the block is appended; the miner receives the block reward + fees.</li>
-        <li>All miners start the next block on top of this one.</li>
-      </ol>
-
-      <h4>4. Solved example (small numbers)</h4>
+      <h4>Solved example (small numbers)</h4>
       <p>Suppose the target requires the hash to begin with <b>four hexadecimal zeros</b>. Four hex digits = 16 bits, so the expected number of tries is:</p>
       <div class="math">2<sup>16</sup> = 65,536 hashes</div>
       <p>If a laptop computes 1 million hashes per second, the expected time is <b>0.065 s</b>. If the target requires eight hex zeros (32 bits):</p>
       <div class="math">2<sup>32</sup> = 4,294,967,296 hashes ≈ 4.29 billion</div>
       <p>At 100 million hashes/s, that is about <b>42.9 seconds</b>. Bitcoin raises the difficulty so that the whole network needs about <b>10 minutes</b> per block.</p>
+      <p><b>What this means:</b> each extra required zero multiplies the work by 16. Small target changes create huge changes in electricity cost.</p>
 
-      <h4>5. Difficulty adjustment</h4>
+      <h4>Difficulty adjustment</h4>
       <ul>
         <li>Every <b>2016 blocks</b> (about two weeks), each node recomputes the target.</li>
         <li>If blocks came too fast, the target is lowered (harder); if too slow, it is raised (easier).</li>
         <li>This keeps the average block time near 10 minutes.</li>
       </ul>
 
-      <h4>6. Diagram</h4>
+      <h4>Diagram</h4>
       <pre class="tree">transactions ──► candidate block ──► header + nonce
                                           │
                                           ▼
@@ -289,8 +343,9 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
                               │
                               ▼
                      append + reward + fees</pre>
+      <p><b>What this means:</b> the loop on the right is the expensive part. The path on the left happens once, and then the whole network checks it cheaply.</p>
 
-      <h4>7. Advantages and limitations</h4>
+      <h4>Advantages and limitations</h4>
       <div class="grid2">
         <div>
           <h4 style="margin-top:0">Advantages</h4>
@@ -307,7 +362,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
             <li>Very high electricity consumption.</li>
             <li>Low throughput (~7 tx/s for Bitcoin).</li>
             <li>Mining pools and ASICs centralise power.</li>
-            <li>Probabilistic finality — confirmations needed.</li>
+            <li>Probabilistic finality: confirmations are needed.</li>
           </ul>
         </div>
       </div>
@@ -324,21 +379,67 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q1(a) [8]</p>
 
-      <h4>1. What is bitcoin mining?</h4>
-      <p><b>Mining</b> is the process of adding new blocks to the Bitcoin blockchain. Miners compete to find a nonce that makes the block hash satisfy the difficulty target. The winner publishes the block and receives newly created bitcoins plus transaction fees.</p>
+      <div class="simple"><b>In simple words:</b> Mining is the bookkeeping job of Bitcoin.<br>
+      Miners check payments, pack them into a block, then race to solve the PoW puzzle.<br>
+      The winner adds the block and earns new bitcoin plus fees.<br>
+      Mining turns electricity into security, and the reward pays for that work.</div>
 
-      <h4>2. Functions of a miner</h4>
+      <h4>Why we do this</h4>
+      <p>Someone must put transactions in a fixed order and make the history expensive to rewrite. Bitcoin has no office staff, so it pays miners to do this job. The payment is the incentive that keeps them honest.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Mining:</b> the work of collecting transactions, building a block and solving its PoW puzzle.</li>
+        <li><b>Mempool:</b> each node's waiting room for valid transactions that are not yet in a block.</li>
+        <li><b>Coinbase transaction:</b> the first transaction in a block; it creates the block reward and collects fees.</li>
+        <li><b>Block subsidy:</b> brand-new bitcoin paid to the miner; it halves over time.</li>
+        <li><b>Halving:</b> the event that cuts the block subsidy in half every 210,000 blocks.</li>
+        <li><b>Transaction fee:</b> extra bitcoin paid by users to get priority in a block.</li>
+        <li><b>Hash rate:</b> the number of hashes a machine can try per second.</li>
+        <li><b>ASIC:</b> a chip built only for one hash algorithm, so it mines far faster than a CPU.</li>
+        <li><b>Mining pool:</b> a group of miners who combine hash power and split rewards.</li>
+        <li><b>Extranonce:</b> extra changing data in the coinbase transaction, used when a miner runs out of nonce values.</li>
+        <li><b>Block:</b> a batch of transactions with a header, linked to the block before it.</li>
+        <li><b>Proof of Work:</b> the puzzle solution that proves a miner spent real computing effort.</li>
+        <li><b>Target:</b> the maximum hash value allowed for a valid block.</li>
+        <li><b>Merkle root:</b> one hash that represents every transaction in the block.</li>
+        <li><b>Digital signature:</b> cryptographic proof that the owner approved a transaction.</li>
+        <li><b>Difficulty:</b> how hard the network's puzzle is; it is adjusted about every two weeks.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li><b>Collect transactions</b> from the mempool and check signatures and balances.</li>
-        <li><b>Build a candidate block</b> — choose transactions, create the coinbase transaction (reward + fees), compute the Merkle root.</li>
-        <li><b>Run the hash puzzle</b> — change the nonce/extranonce until the hash is below the target.</li>
-        <li><b>Broadcast the block</b> to peers as soon as a solution is found.</li>
-        <li><b>Validate others' blocks</b> — every miner checks the PoW and every transaction before extending the chain.</li>
-        <li><b>Secure the chain</b> — the accumulated work makes past blocks expensive to rewrite.</li>
-        <li><b>Earn rewards</b> — block subsidy + fees; this is the economic incentive to stay honest.</li>
+        <li><b>Collect transactions</b> from the mempool and check signatures and balances. <i>Why:</i> a miner must not build on invalid payments.</li>
+        <li><b>Pick transactions</b> by fee and build a candidate block. <i>Why:</i> fees are part of the miner's income.</li>
+        <li><b>Add the coinbase transaction</b> that pays the subsidy and fees to the miner's address. <i>Why:</i> this is how new coins enter circulation.</li>
+        <li><b>Compute the Merkle root</b> of all transactions. <i>Why:</i> one hash then commits to the whole list.</li>
+        <li><b>Run the hash puzzle</b> by changing the nonce or extranonce until the hash is below the target. <i>Why:</i> The puzzle is the only way to prove costly work.</li>
+        <li><b>Broadcast the block</b> as soon as a solution is found. <i>Why:</i> a late block may lose the race.</li>
+        <li><b>Validate others' blocks.</b> Every miner checks the PoW and every transaction before extending the chain. <i>Why:</i> accepting a bad block would destroy trust in the chain.</li>
+        <li><b>Earn the reward.</b> The block subsidy plus fees is the payment for work and for staying honest. <i>Why:</i> Payment is what makes honesty more profitable than cheating.</li>
       </ol>
 
-      <h4>3. Mining hardware and pools</h4>
+      <div class="analogy"><b>Real-life analogy:</b> Think of a public noticeboard. Anyone who solves the daily puzzle gets to paste the next sheet and is paid for the service. Small players join a team, solve together, and split the prize.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Miners do not create money whenever they like; the reward follows a fixed schedule checked by every node. A mining pool's operator also does not own the miners' coins; it only coordinates work and distributes the reward.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>What is bitcoin mining?</b> <b>Mining</b> is the process of adding new blocks to the Bitcoin blockchain. Miners compete to find a nonce that makes the block hash satisfy the difficulty target. The winner publishes the block and receives newly created bitcoins plus transaction fees.</p>
+
+      <h4>Functions of a miner</h4>
+      <ol>
+        <li><b>Collect transactions</b> from the mempool and check signatures and balances.</li>
+        <li><b>Build a candidate block</b>: choose transactions, create the coinbase transaction (reward + fees), compute the Merkle root.</li>
+        <li><b>Run the hash puzzle</b>: change the nonce/extranonce until the hash is below the target.</li>
+        <li><b>Broadcast the block</b> to peers as soon as a solution is found.</li>
+        <li><b>Validate others' blocks</b>: every miner checks the PoW and every transaction before extending the chain.</li>
+        <li><b>Secure the chain</b>: the accumulated work makes past blocks expensive to rewrite.</li>
+        <li><b>Earn rewards</b>: block subsidy + fees; this is the economic incentive to stay honest.</li>
+      </ol>
+
+      <h4>Mining hardware and pools</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Generation</th><th>Hardware</th><th>Typical speed</th><th>Note</th></tr></thead>
@@ -350,9 +451,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> mining moved from hobby hardware to specialised factories. That raises the entry cost and pushes miners into pools.</p>
       <p><b>Mining pool:</b> many miners combine hash power and share the reward in proportion to work. Pools reduce variance but increase centralisation risk.</p>
 
-      <h4>4. Reward schedule</h4>
+      <h4>Reward schedule</h4>
       <div class="tbl-wrap">
       <table>
         <thead><tr><th>Era</th><th>Block reward</th><th>Halving</th></tr></thead>
@@ -365,9 +467,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the same amount of work pays less over time. Miners must keep improving efficiency or wait for the price of bitcoin to rise.</p>
       <p><b>Worked example:</b> a miner finds a block when the reward is 3.125 BTC. If BTC = $60,000 and fees = 0.05 BTC, earnings = 3.175 × 60,000 = <b>$190,500</b> before electricity and hardware cost.</p>
 
-      <h4>5. Mining diagram</h4>
+      <h4>Mining diagram</h4>
       <pre class="tree">mempool ──► select txs ──► build block ──► hash puzzle
                                                    │
                          ┌─────────────────────────┘
@@ -382,6 +485,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
                          │
                          ▼
           reward (3.125 BTC) + transaction fees</pre>
+      <p><b>What this means:</b> the miner's income is only safe after other nodes verify the block. Mining and checking are two separate jobs.</p>
 
       <div class="tip"><b>8-mark structure:</b> definition (2) + seven miner functions (3) + hardware/pool table (1.5) + reward example (1) + diagram (0.5).</div>
     </div>
@@ -399,11 +503,57 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q2(c) [4] · 2023 Nov Q1(c) [6 — with significance] · 2024 May Q2(c) [4] · 2025 Nov Q2(c) [4]</p>
 
-      <h4>1. The story</h4>
+      <div class="simple"><b>In simple words:</b> Several generals must agree to attack or retreat, but messengers may lie.<br>
+      A blockchain has the same problem: some nodes may fail or cheat.<br>
+      Consensus must still produce one agreed history.<br>
+      The Byzantine bound says how many honest participants are needed.</div>
+
+      <h4>Why we do this</h4>
+      <p>A distributed network cannot trust every participant. Some nodes crash, some send conflicting messages, and some are controlled by attackers. The Byzantine problem studies the worst case, where a node can lie deliberately, so the agreed rule must survive it.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Byzantine fault:</b> any failure where a node behaves unpredictably, including sending fake or conflicting messages.</li>
+        <li><b>Node:</b> one computer in the network that stores data and validates messages.</li>
+        <li><b>General:</b> in the story, a commander who must agree on a plan; in blockchain, a node or validator.</li>
+        <li><b>Messenger:</b> the communication channel that carries orders between generals.</li>
+        <li><b>Consensus:</b> one agreed decision or history accepted by all honest participants.</li>
+        <li><b>BFT (Byzantine Fault Tolerance):</b> the ability of a system to agree even when some nodes lie.</li>
+        <li><b>Quorum:</b> the minimum number of votes needed to decide.</li>
+        <li><b>PBFT:</b> Practical Byzantine Fault Tolerance, a voting protocol for known validators.</li>
+        <li><b>Tendermint:</b> a BFT consensus engine used by Cosmos-style chains.</li>
+        <li><b>51% attack:</b> an attack in PoW that needs more than half of the total hash power.</li>
+        <li><b>Validator:</b> a node that votes on blocks in a BFT-style chain.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Hash power:</b> the number of hashes per second that a network or attacker can compute.</li>
+        <li><b>Finality:</b> the point after which a decided block cannot be reversed.</li>
+        <li><b>Signed message:</b> a message with a cryptographic proof of its sender, so it cannot be altered.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>The commander sends one order</b> to every general. <i>Why:</i> a decision must start somewhere.</li>
+        <li><b>Each general relays what he heard</b> to the others. <i>Why:</i> no single message can be trusted alone.</li>
+        <li><b>Each general compares all reports.</b> <i>Why:</i> honest reports agree; a traitor's reports conflict.</li>
+        <li><b>Count the conflicting voices.</b> If too many generals are traitors, honest generals cannot tell which order is real. <i>Why:</i> The size of the majority decides whether honest generals can outvote the liars.</li>
+        <li><b>Apply the bound.</b> With oral messages, agreement needs <code>n ≥ 3m + 1</code>, where n is total generals and m is traitors. <i>Why:</i> The bound guarantees that honest voices outnumber traitors even in the worst message pattern.</li>
+        <li><b>Use signatures if possible.</b> Signed messages cannot be changed, so the bound improves to <code>n ≥ m + 2</code>. <i>Why:</i> Unforgeable signatures remove the ability to alter a message in transit.</li>
+        <li><b>Map it to blockchain.</b> Generals become nodes, messages become blocks or votes, traitors become faulty nodes, and agreement becomes one shared ledger. <i>Why:</i> The mapping shows that the old story is a model for distributed agreement.</li>
+        <li><b>Pay for honesty.</b> PoW makes lying expensive; BFT chains use stake or reputation and slash bad validators. <i>Why:</i> agreement needs an incentive, not only a rule.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Five friends plan a surprise party by phone, but two may send different times to different people. You need enough honest friends that the true time wins the majority, even when the liars contradict each other.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A Byzantine fault is not just a crashed computer; it can actively lie. Also, <code>n ≥ 3m + 1</code> counts all generals, not "3 traitors plus 1". One traitor needs four generals in total.</div>
+
+      <h4>Full answer for the exam</h4>
+      <h4>The story</h4>
       <p>Several Byzantine army divisions surround an enemy city. Each division is commanded by a general. They must agree on a <b>single plan</b>: attack together or retreat together. If some attack and some retreat, they lose. They can communicate only by <b>messengers</b>, and some generals may be <b>traitors</b> who send different messages to different generals.</p>
       <p>The question is: <b>can the loyal generals still reach agreement?</b></p>
 
-      <h4>2. Formal statement</h4>
+      <h4>Formal statement</h4>
       <ul>
         <li>There are <code>n</code> generals and at most <code>m</code> traitors.</li>
         <li>With <b>oral messages</b> (a traitor can lie and change a message), agreement is possible only if <code>n ≥ 3m + 1</code>.</li>
@@ -422,8 +572,9 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 
 A hears "B says retreat"; B hears "A says attack".
 No common plan.  Need n ≥ 3m + 1 = 4.</pre>
+      <p><b>What this means:</b> with three generals and one liar, the two honest generals hear opposite stories and cannot break the tie. One more honest general creates a majority.</p>
 
-      <h4>3. Mapping to blockchain</h4>
+      <h4>Mapping to blockchain</h4>
       <ul>
         <li><b>Generals</b> → nodes / miners / validators.</li>
         <li><b>Messages</b> → blocks, votes, transactions.</li>
@@ -432,17 +583,18 @@ No common plan.  Need n ≥ 3m + 1 = 4.</pre>
         <li>In a BFT protocol such as PBFT or Tendermint, the network needs <b>more than two-thirds</b> of validators honest (equivalent to <code>n ≥ 3m + 1</code>).</li>
         <li>Bitcoin's PoW solves the problem <b>probabilistically</b>: an attacker needs more than 50% of hash power to rewrite history (the "51% attack").</li>
       </ul>
+      <p><b>What this means:</b> BFT chains count votes; PoW chains count work. Both make lying expensive, but only BFT gives immediate finality.</p>
 
-      <h4>4. Significance (for the 6-mark version)</h4>
+      <h4>Significance (for the 6-mark version)</h4>
       <ul>
-        <li>It proves that distributed agreement is impossible with too many faulty nodes — consensus has a <b>hard limit</b>.</li>
+        <li>It proves that distributed agreement is impossible with too many faulty nodes, so consensus has a <b>hard limit</b>.</li>
         <li>It explains why blockchain needs <b>redundancy</b> and <b>incentives</b>, not just voting.</li>
         <li>It justifies the <b>2/3 honest assumption</b> in permissioned BFT chains and the <b>&gt;50% hash</b> assumption in PoW.</li>
         <li>It explains why exchanges wait for <b>multiple confirmations</b> before accepting a deposit.</li>
         <li>It is the theoretical base of PBFT, Tendermint, Corda's notary and other enterprise consensus protocols.</li>
       </ul>
 
-      <div class="tip"><b>Memory hook:</b> "3m + 1" — three times the traitors plus one. One traitor → four generals.</div>
+      <div class="tip"><b>Memory hook:</b> "3m + 1": three times the traitors plus one. One traitor → four generals.</div>
     </div>
   </div>
 </section>
@@ -458,10 +610,56 @@ No common plan.  Need n ≥ 3m + 1 = 4.</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q1(c) [4] · 2023 Nov Q2(b) [6] · 2024 May Q1(a)(iv) [8 — shared] · 2025 Nov Q1(a)(iv) [8 — shared]</p>
 
-      <h4>1. Definition</h4>
-      <p><b>Proof of Stake (PoS)</b> is a consensus mechanism in which validators <b>lock ("stake") their own coins</b> as collateral. The protocol selects the next block proposer at random, with probability proportional to the stake. A validator who breaks the rules loses part or all of its stake (<b>slashing</b>).</p>
+      <div class="simple"><b>In simple words:</b> In Proof of Stake, validators lock their own coins as a promise to behave.<br>
+      The protocol randomly picks who proposes the next block, and more stake means a higher chance.<br>
+      Honest validators earn rewards; cheaters lose part of their stake.<br>
+      No mining farms and very little electricity are needed.</div>
 
-      <h4>2. Working</h4>
+      <h4>Why we do this</h4>
+      <p>PoW secures a chain by burning electricity. PoS reaches the same goal with an economic deposit instead: a validator risks its own money, so cheating costs it directly. This cuts energy use and usually gives faster finality.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Validator:</b> a node that locks stake and helps propose or attest blocks.</li>
+        <li><b>Stake:</b> coins locked as collateral; they can be lost if the validator misbehaves.</li>
+        <li><b>Slashing:</b> the penalty that destroys part of a validator's stake for provable rule-breaking.</li>
+        <li><b>Proposer:</b> the validator chosen to build a particular block.</li>
+        <li><b>Attestation:</b> a validator's signed vote that a block is valid.</li>
+        <li><b>Slot:</b> a fixed time window (12 seconds on Ethereum) in which one block is proposed.</li>
+        <li><b>Epoch:</b> a group of slots used for rewards and checkpoints.</li>
+        <li><b>Finality:</b> the point after which a block cannot be reversed without a huge penalty.</li>
+        <li><b>Nothing-at-stake:</b> a naive-design problem where validators vote on every fork because voting costs them nothing.</li>
+        <li><b>Staking pool:</b> a service that combines many users' coins and runs validators for them.</li>
+        <li><b>Proof of Stake:</b> consensus by locking stake instead of spending computing power.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Issuance:</b> new coins created by the protocol as rewards.</li>
+        <li><b>Checkpoint:</b> a block that the protocol treats as final after enough validator votes.</li>
+        <li><b>Deposit contract:</b> the on-chain contract that holds validators' staked ETH.</li>
+        <li><b>Priority fee:</b> an extra tip that helps a transaction get included sooner.</li>
+        <li><b>VPS:</b> a rented virtual server that can run a validator node.</li>
+      
+        <li><b>ASIC:</b> a chip built for one hash algorithm, used in PoW mining farms.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Deposit the minimum stake.</b> On Ethereum this is 32 ETH into a validator contract. <i>Why:</i> the deposit is the collateral that makes cheating costly.</li>
+        <li><b>Join the validator set.</b> The node is activated after a short queue. <i>Why:</i> the protocol needs a known set of participants to choose from.</li>
+        <li><b>Wait for selection.</b> The protocol pseudo-randomly picks a proposer, weighted by stake. <i>Why:</i> randomness stops anyone from predicting and manipulating turns.</li>
+        <li><b>Propose a block.</b> The chosen validator builds and broadcasts it. <i>Why:</i> someone must order the waiting transactions.</li>
+        <li><b>Attest.</b> Other validators sign votes that the block is valid. <i>Why:</i> one proposer could lie, so many witnesses are needed.</li>
+        <li><b>Finalise.</b> After a supermajority of attestations, the checkpoint is final. <i>Why:</i> users then know the block will not be reversed.</li>
+        <li><b>Pay or punish.</b> Honest validators earn rewards; provable cheaters are slashed and ejected. <i>Why:</i> Rewards attract honest validators, and penalties make attacks expensive.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A group of shopkeepers puts a cash deposit in a shared locker for the right to be the referee. The referee is picked at random, weighted by deposit size. Anyone who cheats loses part of the deposit.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Staked coins are locked, not spent or donated. PoS is also not "free money": rewards are paid for real work and for risk. And a slashing penalty applies only to provable misbehaviour, not to a simple internet outage.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>Proof of Stake (PoS)</b> is a consensus mechanism in which validators lock ("stake") their own coins as collateral. The protocol selects the next block proposer at random, with probability proportional to the stake. A validator who breaks the rules loses part or all of its stake (<b>slashing</b>).</p>
+
+      <h4>Working</h4>
       <ol>
         <li>A user deposits the minimum stake (32 ETH on Ethereum) into a validator contract.</li>
         <li>The protocol pseudo-randomly chooses a proposer from the validator set, weighted by stake.</li>
@@ -471,14 +669,15 @@ No common plan.  Need n ≥ 3m + 1 = 4.</pre>
         <li>Honest validators earn rewards; lazy or malicious validators are slashed.</li>
       </ol>
 
-      <h4>3. Solved example</h4>
+      <h4>Solved example</h4>
       <p>Ethereum requires <b>32 ETH</b> per validator. Suppose the total staked amount is <b>16,000,000 ETH</b>. Then the number of validators is:</p>
       <div class="math">16,000,000 ÷ 32 = 500,000 validators</div>
       <p>The chance that one particular validator is chosen to propose a given slot is:</p>
       <div class="math">32 ÷ 16,000,000 = 0.000002 = <b>0.0002%</b> (1 in 500,000)</div>
-      <p>A validator with 64 ETH (two validators) has twice that chance. This is why "the more you stake, the more you earn" — but it also creates a centralisation risk.</p>
+      <p>A validator with 64 ETH (two validators) has twice that chance. This is why "the more you stake, the more you earn", but it also creates a centralisation risk.</p>
+      <p><b>What this means:</b> selection is a lottery with stake as tickets. Small holders rarely propose alone, so they often join a pool.</p>
 
-      <h4>4. PoW vs PoS (must-know table)</h4>
+      <h4>PoW vs PoS (must-know table)</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Proof of Work</th><th>Proof of Stake</th></tr></thead>
@@ -497,8 +696,9 @@ No common plan.  Need n ≥ 3m + 1 = 4.</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the trade is not "free security". PoS saves energy but moves the risk to large staking providers and to software complexity.</p>
 
-      <h4>5. Advantages and limitations</h4>
+      <h4>Advantages and limitations</h4>
       <div class="grid2">
         <div>
           <h4 style="margin-top:0">Advantages</h4>
@@ -512,7 +712,7 @@ No common plan.  Need n ≥ 3m + 1 = 4.</pre>
         <div>
           <h4 style="margin-top:0">Limitations</h4>
           <ul>
-            <li>"Rich get richer" — stake concentration.</li>
+            <li>"Rich get richer": stake concentration.</li>
             <li>Nothing-at-stake problem in naive designs.</li>
             <li>Complex to implement safely.</li>
             <li>Large staking services can dominate.</li>
@@ -536,18 +736,48 @@ No common plan.  Need n ≥ 3m + 1 = 4.</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q1(b)(ii) [6 — shared with PoW] · 2024 May Q1(a)(ii) [8 — shared] · 2025 Nov Q1(a)(ii) [8 — shared]</p>
 
-      <h4>1. Definition</h4>
-      <p><b>Proof of Activity (PoA)</b> is a <b>hybrid of PoW and PoS</b>. Mining starts like PoW, but the finished block must be signed by a group of validators chosen in proportion to their stake. It is used by <b>Decred</b> and <b>Espers</b>.</p>
+      <div class="simple"><b>In simple words:</b> Proof of Activity mixes two locks.<br>
+      A miner first solves a PoW puzzle to find a block.<br>
+      Then a group of stake-weighted validators must sign it.<br>
+      The block is accepted only when both groups do their part.</div>
 
-      <h4>2. Working</h4>
+      <h4>Why we do this</h4>
+      <p>Pure PoW lets a large mining farm dominate, and pure PoS can concentrate power among rich holders. PoA (Activity) makes an attacker need both hash power and stake, so a single resource is not enough.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Hybrid consensus:</b> a design that combines two consensus mechanisms.</li>
+        <li><b>Proof of Activity (PoA):</b> a hybrid where PoW finds the block and stake-weighted validators sign it.</li>
+        <li><b>Validator:</b> a node chosen to approve a block, weighted by its stake.</li>
+        <li><b>Stake:</b> coins locked as collateral.</li>
+        <li><b>Seed:</b> a pseudo-random value derived from the block hash and used to pick validators.</li>
+        <li><b>Block header:</b> the summary of a block that is hashed during mining.</li>
+        <li><b>Signature:</b> a cryptographic mark that proves a validator approved the block.</li>
+        <li><b>Decred:</b> a real cryptocurrency that uses a PoW + stake hybrid.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Block reward:</b> new coins paid to the miner or validator who creates a block.</li>
+        <li><b>Mining:</b> the work of building a block and solving its PoW puzzle.</li>
+        <li><b>Hash:</b> a short fingerprint of data that changes completely if the data changes.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li>Miners solve the PoW puzzle and create a block header (often with no transactions yet).</li>
-        <li>The header is broadcast; the network derives a random seed from its hash.</li>
-        <li>From this seed, <b>N validators</b> are selected; the chance of selection rises with stake.</li>
-        <li>The selected validators sign the block. The block is valid only when all chosen validators sign.</li>
-        <li>The block is filled with transactions and added to the chain.</li>
-        <li>The reward is <b>split between the miner and the validators</b>.</li>
+        <li><b>Mine a block header.</b> Miners solve the PoW puzzle, often before adding transactions. <i>Why:</i> PoW still provides the expensive ticket.</li>
+        <li><b>Broadcast the header.</b> The winning miner announces the new block candidate. <i>Why:</i> Validators must know which block they are being asked to approve.</li>
+        <li><b>Derive a random seed</b> from the header hash. <i>Why:</i> the selection must be unpredictable so validators cannot plan an attack.</li>
+        <li><b>Select N validators</b> using the seed, with chance rising with stake. <i>Why:</i> stake gives them something to lose.</li>
+        <li><b>Collect signatures.</b> Every chosen validator signs the block. <i>Why:</i> one miner alone cannot make the block final.</li>
+        <li><b>Fill and append.</b> Transactions are added and the block joins the chain. <i>Why:</i> the block is now useful as well as secure.</li>
+        <li><b>Split the reward</b> between the miner and the validators. <i>Why:</i> both groups did work and both need an incentive.</li>
       </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A competition winner drafts an official document, but a committee must countersign it before it becomes valid. Forging the document would require winning the competition and bribing the committee.</div>
+
+      <div class="confuse"><b>Common confusion:</b> <b>Proof of Activity</b> and <b>Proof of Authority</b> share the short form PoA but are different. Activity = PoW + PoS. Authority = a small set of approved, reputable validators.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>Proof of Activity (PoA)</b> is a <b>hybrid of PoW and PoS</b>. Mining starts like PoW, but the finished block must be signed by a group of validators chosen in proportion to their stake. It is used by <b>Decred</b> and <b>Espers</b>.</p>
 
       <pre class="tree">PoW phase                  PoS phase
 ──────────                 ──────────
@@ -561,8 +791,9 @@ block header  ────────► select N validators
                               │
                               ▼
                      block accepted + reward split</pre>
+      <p><b>What this means:</b> the left side supplies costly work; the right side supplies a second, independent approval. An attacker must beat both.</p>
 
-      <h4>3. Advantages / limitations</h4>
+      <h4>Advantages / limitations</h4>
       <ul>
         <li><b>+</b> Keeps PoW's security while adding stake-based checkpoints.</li>
         <li><b>+</b> Attackers need both hash power and stake.</li>
@@ -582,10 +813,47 @@ block header  ────────► select N validators
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q1(a)(iii) [8 — shared] · 2025 Nov Q1(a)(iii) [8 — shared]</p>
 
-      <h4>1. Definition</h4>
-      <p><b>Proof of Burn (PoB)</b> is a consensus mechanism in which a miner earns the right to mine by <b>destroying ("burning") coins</b>. The coins are sent to an <b>eater address</b> — a provably unspendable address — so they can never be recovered. The more coins burned, the higher the chance of being selected.</p>
+      <div class="simple"><b>In simple words:</b> In Proof of Burn, a miner destroys coins to earn mining rights.<br>
+      The coins go to an address that no one can ever spend.<br>
+      The more a miner burns, the better the chance of being selected.<br>
+      It replaces electricity with a permanent sacrifice of value.</div>
 
-      <h4>2. Working</h4>
+      <h4>Why we do this</h4>
+      <p>PoW burns electricity and PoS locks capital. PoB asks for a sacrifice that can never be taken back. That makes a miner commit for the long term, because a cheater cannot recover the burned coins.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Burn:</b> to send coins to an address that cannot spend them, so they are gone forever.</li>
+        <li><b>Eater address:</b> a provably unspendable address used for burning.</li>
+        <li><b>Circulating supply:</b> the number of coins available to users; burning reduces it.</li>
+        <li><b>Deflationary:</b> a design where supply can fall or grow more slowly, which may support scarcity.</li>
+        <li><b>Selection weight:</b> the share of total burned coins that decides a miner's chance.</li>
+        <li><b>Slimcoin:</b> a cryptocurrency that uses Proof of Burn.</li>
+        <li><b>Proof of Burn:</b> consensus by destroying coins to earn mining rights.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Block reward:</b> new coins paid to the miner who creates a block.</li>
+        <li><b>Consensus:</b> the rule that gets all honest nodes to accept one history.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Create a burn transaction.</b> Send coins to a known unspendable address. <i>Why:</i> the sacrifice must be visible and verifiable.</li>
+        <li><b>Wait for confirmation.</b> The network records the burn permanently on the chain. <i>Why:</i> a pending burn could be reversed or faked.</li>
+        <li><b>Track total burned.</b> The protocol adds the amount to the miner's selection weight. <i>Why:</i> this converts sacrifice into influence.</li>
+        <li><b>Run selection.</b> A miner is chosen with probability proportional to coins burned. <i>Why:</i> the rule must be fair and predictable.</li>
+        <li><b>Add the next block.</b> The winner earns the block reward. <i>Why:</i> this pays back the sacrifice over time.</li>
+        <li><b>Accept lower supply.</b> Burned coins never return, so circulating supply falls. <i>Why:</i> A smaller supply is the lasting economic cost of the burn.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A raffle where you buy tickets and then destroy them in front of everyone. Destroying more tickets improves your odds, but the money is gone whether you win or not.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Burning is not a normal transfer to another person's wallet; the address is designed to be unspendable. PoB is also not PoS, because burned coins are destroyed rather than locked and returned.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>Proof of Burn (PoB)</b> is a consensus mechanism in which a miner earns the right to mine by <b>destroying ("burning") coins</b>. The coins are sent to an <b>eater address</b>, a provably unspendable address, so they can never be recovered. The more coins burned, the higher the chance of being selected.</p>
+
+      <h4>Working</h4>
       <ol>
         <li>The miner creates a transaction that sends coins to a verifiable burn address.</li>
         <li>The network records the burn permanently on the chain.</li>
@@ -594,10 +862,11 @@ block header  ────────► select N validators
         <li>Burned coins are gone forever, reducing the circulating supply.</li>
       </ol>
 
-      <h4>3. Solved example</h4>
+      <h4>Solved example</h4>
       <p>Suppose the total burned in the network is 1,000 coins. Miner A burned 100 coins and Miner B burned 10 coins. Then A's selection chance is 100/1,000 = <b>10%</b>, while B's is 10/1,000 = <b>1%</b>. A has a 10× higher chance.</p>
+      <p><b>What this means:</b> selection depends on the share of all burned coins, not on the size of a single burn. A late miner must burn a lot to catch up.</p>
 
-      <h4>4. Advantages / limitations</h4>
+      <h4>Advantages / limitations</h4>
       <div class="grid2">
         <div>
           <h4 style="margin-top:0">Advantages</h4>
@@ -629,7 +898,50 @@ block header  ────────► select N validators
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q2(b) [9]</p>
-      <p>Pick any five. The safest five are PoW, PoS, DPoS, PoA (Activity) and PoB — all are in the book and all have named example coins.</p>
+
+      <div class="simple"><b>In simple words:</b> Networks need a rule for choosing who adds the next block.<br>
+      Each consensus algorithm uses a different scarce resource to make that choice.<br>
+      Some use computing power, some use locked coins, some use votes or waiting time.<br>
+      The right choice depends on whether the network is public or private.</div>
+
+      <h4>Why we do this</h4>
+      <p>No single algorithm is best for every job. A public payment chain cares about open entry and attack cost. A bank consortium cares about speed, privacy and known members. Comparing the resource and the selection rule explains those trade-offs.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Consensus algorithm:</b> the rule set that decides who proposes a block and when it is final.</li>
+        <li><b>Delegated PoS (DPoS):</b> token holders vote for a small number of block producers.</li>
+        <li><b>Witness / delegate:</b> an elected block producer in DPoS.</li>
+        <li><b>Proof of Elapsed Time (PoET):</b> a random waiting time inside a trusted enclave decides the next miner.</li>
+        <li><b>Proof of Capacity (PoC):</b> disk space, not computing power, decides mining rights.</li>
+        <li><b>Proof of History (PoH):</b> a verifiable timestamp sequence that orders events.</li>
+        <li><b>Proof of Importance (PoI):</b> stake plus recent activity decides selection.</li>
+        <li><b>Finality:</b> the point after which a block cannot be reversed.</li>
+        <li><b>Throughput:</b> transactions processed per second.</li>
+        <li><b>Proof of Work:</b> the first solver of a hash puzzle adds the block.</li>
+        <li><b>Proof of Stake:</b> a random proposer is chosen in proportion to locked stake.</li>
+        <li><b>Proof of Burn:</b> miners destroy coins to improve their chance of selection.</li>
+        <li><b>Proof of Authority:</b> a small set of approved, reputable validators signs blocks.</li>
+        <li><b>Block producer:</b> the node that creates and broadcasts the next block.</li>
+        <li><b>Proof of Activity:</b> a hybrid where PoW finds a block and stake-weighted validators sign it.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Name the scarce resource.</b> Is it hash power, stake, burned coins, disk space or votes? <i>Why:</i> the resource is what an attacker must acquire.</li>
+        <li><b>Describe the selection rule.</b> First to solve, random weighted by stake, elected delegates, or a quorum vote. <i>Why:</i> The selection rule decides who gets power and how often.</li>
+        <li><b>State the penalty.</b> Wasted electricity, slashing, lost reputation or lost burn. <i>Why:</i> a penalty turns a rule into an incentive.</li>
+        <li><b>State the finality.</b> Probabilistic chains may reorganise; voting chains finalise at once. <i>Why:</i> Finality tells users when they can trust a payment.</li>
+        <li><b>Give one real example</b> for each algorithm. <i>Why:</i> the examiner wants proof that you can match theory to a live network.</li>
+        <li><b>Pick for the scenario.</b> Public payment chain → PoW/PoS. Bank consortium → BFT. IoT → lightweight PoET or IOTA. <i>Why:</i> The scenario decides which trade-off is acceptable.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A class needs a monitor. One class races to solve a puzzle, one deposits savings, one holds a vote, one uses a teacher's approved list, and one burns pocket money. Each method picks a monitor, but each rewards a different kind of commitment.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A consensus algorithm is not a coin or a wallet; it is the rule for ordering blocks. Also, PoA has two meanings, so always write "Proof of Activity" or "Proof of Authority" in full.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p>Pick any five. The safest five are PoW, PoS, DPoS, PoA (Activity) and PoB. All are in the book and all have named example coins.</p>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>#</th><th>Algorithm</th><th>One-line mechanism</th><th>Example</th><th>Strength</th><th>Weakness</th></tr></thead>
@@ -642,6 +954,7 @@ block header  ────────► select N validators
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> read the table by column. The "mechanism" column is what happens; the "strength" and "weakness" columns are the trade-off you should quote in the exam.</p>
 
       <h4>Syllabus extras (not directly asked, useful as a 6th choice)</h4>
       <ul>
@@ -671,10 +984,53 @@ block header  ────────► select N validators
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [8] · 2023 Nov Q2(a) [6 — any two] · 2025 May Q2(a) [8 — types + advantages/disadvantages]</p>
 
-      <h4>1. Definition</h4>
-      <p>A <b>blockchain platform</b> is the software layer that lets participants create, store, validate and query a shared, append-only ledger. The <b>type</b> of platform is decided by <b>who is allowed to join</b>, <b>who validates</b> and <b>who owns the network</b>.</p>
+      <div class="simple"><b>In simple words:</b> Blockchain platforms differ by who is allowed in.<br>
+      Public is open to anyone; private is controlled by one organisation; consortium is shared by a group.<br>
+      Open networks are transparent but slower; closed networks are faster but need trust in the owner.<br>
+      The type decides who can read, validate and change the ledger.</div>
 
-      <h4>2. The four types (book's classification)</h4>
+      <h4>Why we do this</h4>
+      <p>The same blockchain software can serve a public payment network or a private bank network. Access rules change the trust model, speed, privacy and cost, so you must choose the type before choosing the software.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Blockchain platform:</b> the software layer that lets participants create, store, validate and query a shared ledger.</li>
+        <li><b>Node:</b> a computer that keeps a copy of the ledger and checks blocks.</li>
+        <li><b>Validator:</b> a node allowed to approve or add blocks.</li>
+        <li><b>Permissionless:</b> anyone can join and validate without approval.</li>
+        <li><b>Permissioned:</b> only approved, identified members can join or validate.</li>
+        <li><b>Consortium:</b> a group of organisations that jointly own and govern a network.</li>
+        <li><b>Trustless:</b> a design where you do not need to trust a person or company, because rules and incentives enforce behaviour.</li>
+        <li><b>Hybrid blockchain:</b> a mix where one organisation runs the network but a public chain checks some data.</li>
+        <li><b>Throughput:</b> the number of transactions processed per second.</li>
+        <li><b>Public blockchain:</b> an open network where anyone can read, transact and validate.</li>
+        <li><b>Private blockchain:</b> a network where one organisation approves members and validators.</li>
+        <li><b>Consortium blockchain:</b> a network jointly owned and governed by a group of organisations.</li>
+        <li><b>Append-only:</b> data can be added but old entries cannot be edited or deleted.</li>
+        <li><b>Ledger:</b> the record of all transactions and balances.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Byzantine Fault Tolerance (BFT):</b> agreement that still works when some nodes lie.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Decide who may join.</b> Open to all, one organisation, or a fixed group. <i>Why:</i> this is the first dividing line between public and private.</li>
+        <li><b>Decide who may validate.</b> Anonymous miners, the owner's servers, or consortium members. <i>Why:</i> validators control the history.</li>
+        <li><b>Decide who may read.</b> Everyone, only members, or only selected parties. <i>Why:</i> reading rules decide privacy.</li>
+        <li><b>Pick consensus.</b> Public chains often use PoW/PoS; private and consortium chains often use BFT voting. <i>Why:</i> known validators can vote quickly; unknown ones need costly proof.</li>
+        <li><b>Compare the trade-offs.</b> Public = transparent but slow; private = fast but trusted owner; consortium = shared control but slow governance. <i>Why:</i> The comparison turns definitions into a practical choice.</li>
+        <li><b>Write advantages and disadvantages</b> for each type, as the exam asks. <i>Why:</i> The exam awards marks for both sides, not just the definition.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A public blockchain is a public park anyone can enter. A private blockchain is a company office with a badge door. A consortium blockchain is a gated clubhouse owned jointly by several companies.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Private does not always mean secret; it means membership is controlled. A consortium is not the same as a private chain owned by one company. And public does not mean "no rules": the protocol still enforces them.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> A <b>blockchain platform</b> is the software layer that lets participants create, store, validate and query a shared, append-only ledger. The <b>type</b> of platform is decided by <b>who is allowed to join</b>, <b>who validates</b> and <b>who owns the network</b>.</p>
+
+      <h4>The four types (book's classification)</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Public</th><th>Private (managed)</th><th>Consortium</th><th>Hybrid</th></tr></thead>
@@ -689,17 +1045,18 @@ block header  ────────► select N validators
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> leaving the public column trades openness for speed and privacy. The consensus method changes with that trade, not by accident.</p>
 
-      <h4>3. Public blockchain</h4>
+      <h4>Public blockchain</h4>
       <ul>
         <li><b>Open access:</b> any node can read the chain, send a transaction and take part in validation.</li>
         <li><b>Fully decentralised:</b> no single owner; rules are enforced by the protocol and by economic incentives.</li>
         <li><b>Consensus:</b> usually PoW or PoS; every node stores a copy of the ledger.</li>
-        <li><b>Advantages:</b> censorship-resistant, transparent, anyone can audit, large number of participants makes tampering hard.</li>
+        <li><b>Advantages:</b> censorship-resistant, transparent, anyone can audit, a large number of participants makes tampering hard.</li>
         <li><b>Disadvantages:</b> slow throughput, high energy use (PoW), public exposure of transaction data, hard to change rules.</li>
       </ul>
 
-      <h4>4. Private blockchain</h4>
+      <h4>Private blockchain</h4>
       <ul>
         <li><b>Permissioned:</b> a single organisation decides which nodes join and what rights they get.</li>
         <li><b>Partially decentralised:</b> the ledger may be replicated, but the central authority controls membership.</li>
@@ -707,7 +1064,7 @@ block header  ────────► select N validators
         <li><b>Disadvantages:</b> trust is back on the owner; fewer validators means easier collusion; less transparent.</li>
       </ul>
 
-      <h4>5. Consortium blockchain</h4>
+      <h4>Consortium blockchain</h4>
       <ul>
         <li><b>Permissioned but multi-owner:</b> a group of organisations (banks, shippers, hospitals) jointly runs the network. No single member owns it.</li>
         <li><b>Better decentralisation than private:</b> no one party can rewrite history alone, so safety improves.</li>
@@ -715,7 +1072,7 @@ block header  ────────► select N validators
         <li><b>Disadvantages:</b> forming the consortium is slow (legal, technical and antitrust issues); every member must invest in infrastructure; governance disputes are common.</li>
       </ul>
 
-      <h4>6. Diagram — decentralisation spectrum</h4>
+      <h4>Diagram: decentralisation spectrum</h4>
       <pre class="tree">PUBLIC                 CONSORTIUM                 PRIVATE
 open to all            selected organisations     one organisation
    |                          |                         |
@@ -723,6 +1080,7 @@ open to all            selected organisations     one organisation
 [ Bitcoin ]  ------&gt;  [ R3 Corda / GSBN ]  ------&gt;  [ Fabric, single org ]
 more decentralised  ----------------------------&gt;  more centralised
 slower, transparent  ----------------------------&gt;  faster, private</pre>
+      <p><b>What this means:</b> decentralisation and privacy pull in opposite directions here. Public chains protect openness; private chains protect control.</p>
 
       <div class="tip"><b>8-mark structure:</b> 3 definitions (3) + comparison table (3) + one advantage and one disadvantage each (2). For 2025 May Q2(a), add a short "advantages/disadvantages" list after the table.</div>
     </div>
@@ -740,23 +1098,66 @@ slower, transparent  ----------------------------&gt;  faster, private</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a)(iv) [8, part] · 2024 May Q2(d) [6] · 2025 Nov Q2(d) [6]</p>
 
-      <h4>1. Definition</h4>
-      <p><b>IOTA (MIOTA)</b> is a distributed ledger built for the <b>Internet of Things</b>. It records machine-to-machine and device-to-device transactions. Its native currency is <b>MIOTA</b>. Instead of a chain of blocks, IOTA uses a directed acyclic graph (DAG) called the <b>Tangle</b>.</p>
+      <div class="simple"><b>In simple words:</b> IOTA is a ledger built for tiny machines, not for people.<br>
+      It has no blocks and no miners; each new transaction approves two older ones.<br>
+      Because there are no fees, a sensor can sell one reading for a tiny amount.<br>
+      The resulting web of transactions is called the Tangle.</div>
 
-      <h4>2. Why IOTA was created</h4>
+      <h4>Why we do this</h4>
+      <p>The Internet of Things needs millions of small payments between sensors, meters and cars. Bitcoin-style fees and 10-minute blocks make those payments too costly and too slow. IOTA was designed around that gap.</p>
+
+      <h4>Words you need first</h4>
       <ul>
-        <li>Bitcoin-style chains have <b>transaction fees</b> and limited throughput — bad for millions of tiny device payments.</li>
-        <li>PoW mining needs heavy hardware and energy — bad for cheap sensors.</li>
+        <li><b>IOTA:</b> a distributed ledger and cryptocurrency designed for machine-to-machine payments.</li>
+        <li><b>MIOTA:</b> the unit of IOTA's native currency (one million IOTA).</li>
+        <li><b>DAG (directed acyclic graph):</b> a network of linked records with arrows and no loops.</li>
+        <li><b>Tangle:</b> IOTA's DAG, where each transaction approves two earlier transactions.</li>
+        <li><b>Tip:</b> a transaction that no later transaction has approved yet.</li>
+        <li><b>Approval:</b> a link from a new transaction to an old one, which confirms the old one.</li>
+        <li><b>Feeless:</b> no transaction fee is charged.</li>
+        <li><b>M2M (machine-to-machine):</b> devices paying and exchanging data without a human.</li>
+        <li><b>Coordinator:</b> a central milestone server that IOTA used in its early years to protect the network.</li>
+        <li><b>Confidence:</b> how strongly a transaction is confirmed, measured by how many later transactions approve it.</li>
+        <li><b>Internet of Things (IoT):</b> a network of everyday devices, sensors and machines that exchange data.</li>
+        <li><b>Proof of Work:</b> a small puzzle that makes spam expensive; IOTA uses a light version.</li>
+        <li><b>Blockchain:</b> a shared ledger of blocks linked in a chain.</li>
+        <li><b>Transaction:</b> a signed request to move value or record data.</li>
+        <li><b>Validation:</b> checking that a transaction follows the rules before accepting it.</li>
+      
+        <li><b>Scalability:</b> the ability to handle more users or transactions without slowing down.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>A device creates a transaction.</b> It states who pays whom and how much. <i>Why:</i> every transfer must be recorded.</li>
+        <li><b>It picks two unapproved tips.</b> <i>Why:</i> approving old work is what confirms the network's history.</li>
+        <li><b>It solves a small PoW puzzle.</b> <i>Why:</i> a tiny cost stops spam, but it is light enough for a sensor.</li>
+        <li><b>It attaches to the Tangle</b> and becomes a new tip. <i>Why:</i> other transactions can now approve it.</li>
+        <li><b>Later transactions approve it.</b> Its confidence grows with each approval. <i>Why:</i> confirmation is cumulative, not a single block.</li>
+        <li><b>No miner and no block are needed.</b> The users do the validation themselves. <i>Why:</i> this removes fees and mining centralisation.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A group of friends writes a shared diary. Before adding your page, you must stamp two earlier pages to confirm them. The more people who stamp your page later, the more trusted it becomes.</div>
+
+      <div class="confuse"><b>Common confusion:</b> IOTA is not a blockchain, because it has no blocks and no chain. "Feeless" also does not mean "no work": each transaction still does a small proof of work.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>IOTA (MIOTA)</b> is a distributed ledger built for the <b>Internet of Things</b>. It records machine-to-machine and device-to-device transactions. Its native currency is <b>MIOTA</b>. Instead of a chain of blocks, IOTA uses a directed acyclic graph (DAG) called the <b>Tangle</b>.</p>
+
+      <h4>Why IOTA was created</h4>
+      <ul>
+        <li>Bitcoin-style chains have <b>transaction fees</b> and limited throughput, which is bad for millions of tiny device payments.</li>
+        <li>PoW mining needs heavy hardware and energy, which is bad for cheap sensors.</li>
         <li>IOTA aims to be a <b>feeless</b>, <b>scalable</b>, <b>lightweight</b> ledger for connected devices.</li>
       </ul>
 
-      <h4>3. How the Tangle works</h4>
+      <h4>How the Tangle works</h4>
       <ol>
         <li>Every new transaction must <b>approve two earlier transactions</b> (called tips).</li>
         <li>To approve them, the sender solves a <b>small proof-of-work puzzle</b>. This is easy compared with Bitcoin mining.</li>
         <li>The new transaction becomes a new tip. Later transactions approve it, so its <b>confidence</b> (weight) grows.</li>
         <li>There are <b>no miners and no blocks</b>. The users themselves do the validation.</li>
-        <li>The more devices that join, the more validation capacity the network has — the opposite of a congested blockchain.</li>
+        <li>The more devices that join, the more validation capacity the network has, the opposite of a congested blockchain.</li>
       </ol>
 
       <pre class="tree">                 TANGLE (DAG)
@@ -768,8 +1169,9 @@ slower, transparent  ----------------------------&gt;  faster, private</pre>
 
 Each new transaction approves 2 old transactions.
 No blocks. No miners. No fees.</pre>
+      <p><b>What this means:</b> confirmation flows backwards. A transaction is safer when many later transactions point to it, not when a miner puts it in a block.</p>
 
-      <h4>4. Role of IOTA in IoT (6-mark answer)</h4>
+      <h4>Role of IOTA in IoT (6-mark answer)</h4>
       <ul>
         <li><b>Micropayments:</b> a sensor can sell one reading for a tiny amount because there is no fee.</li>
         <li><b>Machine identity:</b> each device can have an address and a signed transaction history.</li>
@@ -779,7 +1181,7 @@ No blocks. No miners. No fees.</pre>
         <li><b>Scalability:</b> parallel tip approval avoids the single-chain bottleneck.</li>
       </ul>
 
-      <h4>5. Advantages and concerns</h4>
+      <h4>Advantages and concerns</h4>
       <div class="grid2">
         <div>
           <h4 style="margin-top:0">Advantages</h4>
@@ -801,7 +1203,7 @@ No blocks. No miners. No fees.</pre>
         </div>
       </div>
 
-      <div class="note"><b>One-line answer:</b> IOTA replaces the blockchain with the Tangle, a DAG where each transaction validates two previous transactions — feeless, parallel and built for IoT micropayments.</div>
+      <div class="note"><b>One-line answer:</b> IOTA replaces the blockchain with the Tangle, a DAG where each transaction validates two previous transactions. It is feeless, parallel and built for IoT micropayments.</div>
     </div>
   </div>
 </section>
@@ -817,7 +1219,53 @@ No blocks. No miners. No fees.</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2024 May Q1(b) [6] · 2025 Nov Q1(b) [6]  |  2023 Nov Q1(a) [6 — any two of R3, Ethereum, Hyperledger, Corda; see §3.3 for R3/Corda]</p>
 
-      <h4>1. Bitcoin</h4>
+      <div class="simple"><b>In simple words:</b> Bitcoin is digital money.<br>
+      Ethereum is a programmable blockchain that runs apps and smart contracts.<br>
+      Hyperledger is a private, permissioned ledger for businesses.<br>
+      All three are platforms, but they solve different jobs.</div>
+
+      <h4>Why we do this</h4>
+      <p>The exam often says "explain any two platforms". To choose well, you need to know what each platform optimises: simple payments, programmable apps, or private enterprise workflows.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Platform:</b> the base software on which applications and transactions run.</li>
+        <li><b>UTXO:</b> unspent transaction output; Bitcoin's way of tracking money as spendable chunks.</li>
+        <li><b>Account model:</b> a ledger that stores a balance for each account, as Ethereum does.</li>
+        <li><b>Smart contract:</b> code stored on a blockchain that runs automatically when conditions are met.</li>
+        <li><b>EVM:</b> Ethereum Virtual Machine, the runtime that executes Ethereum contracts.</li>
+        <li><b>Solidity:</b> the main programming language for Ethereum contracts.</li>
+        <li><b>Gas:</b> the fee paid to execute computation on Ethereum.</li>
+        <li><b>Turing-complete:</b> able to express any computation, given enough time and memory.</li>
+        <li><b>Permissioned:</b> only approved, identified members can join.</li>
+        <li><b>Chaincode:</b> Hyperledger Fabric's name for a smart contract.</li>
+        <li><b>Channel:</b> a private sub-ledger shared only by selected Fabric members.</li>
+        <li><b>MSP:</b> Membership Service Provider, the Fabric component that issues identities.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>DApp:</b> a decentralised application that runs on a blockchain.</li>
+        <li><b>NFT:</b> a unique token that represents one specific item.</li>
+        <li><b>DAO:</b> a decentralised autonomous organisation governed by token votes.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>State the purpose.</b> Payments, apps, or enterprise records. <i>Why:</i> purpose explains every other design choice.</li>
+        <li><b>State the ledger model.</b> Bitcoin uses UTXOs; Ethereum uses accounts; Fabric uses key-value state. <i>Why:</i> The ledger model changes how balances and transfers are computed.</li>
+        <li><b>State consensus.</b> Bitcoin uses PoW; Ethereum uses PoS; Fabric plugs in Raft or BFT. <i>Why:</i> public chains need costly Sybil resistance; private chains know their members.</li>
+        <li><b>State programmability.</b> Bitcoin has limited Script; Ethereum is Turing-complete; Fabric runs chaincode in Go, Java or JavaScript. <i>Why:</i> Programmability decides what developers can build.</li>
+        <li><b>State privacy and speed.</b> Public chains are transparent and slower; Fabric uses private channels and is faster. <i>Why:</i> Privacy and speed often decide whether a business can use the chain.</li>
+        <li><b>Give one use case each.</b> Payments, DApps/NFTs, supply chain or trade finance. <i>Why:</i> A use case proves you can match the platform to a real job.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Bitcoin is a calculator that does one job very well. Ethereum is a smartphone with an app store. Hyperledger is a company intranet where only staff with badges can log in.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Ethereum is not "just another Bitcoin"; it is a programmable platform. Hyperledger is not a coin; it is a family of enterprise ledgers. Bitcoin's limited script still supports multisignature and time locks.</div>
+
+      <h4>Full answer for the exam</h4>
+      <h4>Bitcoin</h4>
       <ul>
         <li><b>What:</b> the first public blockchain and cryptocurrency, released in 2009 by the pseudonymous <b>Satoshi Nakamoto</b>.</li>
         <li><b>Model:</b> UTXO (unspent transaction output). A transaction spends old outputs and creates new ones.</li>
@@ -827,7 +1275,7 @@ No blocks. No miners. No fees.</pre>
         <li><b>Use:</b> peer-to-peer value transfer, store of value. No general smart contracts.</li>
       </ul>
 
-      <h4>2. Ethereum</h4>
+      <h4>Ethereum</h4>
       <ul>
         <li><b>What:</b> a public, programmable blockchain proposed by <b>Vitalik Buterin</b> in 2013; Frontier released in 2015.</li>
         <li><b>Model:</b> account-based (externally owned accounts and contract accounts).</li>
@@ -837,7 +1285,7 @@ No blocks. No miners. No fees.</pre>
         <li><b>Use:</b> DApps, tokens (ERC-20), NFTs (ERC-721), DAOs, DeFi.</li>
       </ul>
 
-      <h4>3. Hyperledger (Fabric)</h4>
+      <h4>Hyperledger (Fabric)</h4>
       <ul>
         <li><b>What:</b> an open-source, <b>permissioned</b> enterprise blockchain hosted by the Linux Foundation.</li>
         <li><b>Modular architecture:</b> pluggable consensus, membership, identity and storage.</li>
@@ -847,7 +1295,7 @@ No blocks. No miners. No fees.</pre>
         <li><b>Use:</b> supply chain, trade finance, healthcare consortia, banking pilots.</li>
       </ul>
 
-      <h4>4. Comparison table (use this for the 6-mark answer)</h4>
+      <h4>Comparison table (use this for the 6-mark answer)</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th><th>Hyperledger Fabric</th></tr></thead>
@@ -862,8 +1310,9 @@ No blocks. No miners. No fees.</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the rows about consensus, privacy and speed all follow from one choice: whether the network is open to strangers or limited to known members.</p>
 
-      <div class="tip"><b>For "any two":</b> pick Ethereum + Hyperledger if you want a strong contrast (public programmable vs private enterprise). Write one paragraph each and two comparison rows — that is enough for 6 marks.</div>
+      <div class="tip"><b>For "any two":</b> pick Ethereum + Hyperledger if you want a strong contrast (public programmable vs private enterprise). Write one paragraph each and two comparison rows; that is enough for 6 marks.</div>
     </div>
   </div>
 </section>
@@ -880,11 +1329,61 @@ No blocks. No miners. No fees.</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [8] · 2023 Nov Q2(c) [6]</p>
 
-      <h4>1. Definition</h4>
-      <p><b>Consensus</b> is the process by which all peers (nodes) of a blockchain network agree on <b>one present state of the ledger</b> and on the <b>order of transactions</b>. It creates reliability and trust between nodes that may not know or trust each other.</p>
+      <div class="simple"><b>In simple words:</b> Consensus means all nodes agree on one ledger and one order of transactions.<br>
+      Without it, each computer would keep a different story of who paid whom.<br>
+      A consensus algorithm decides who proposes the next block and when it is final.<br>
+      It also stops double-spending and keeps the chain growing when some nodes fail.</div>
+
+      <h4>Why we do this</h4>
+      <p>A blockchain has no central referee. Nodes may be slow, faulty or malicious, and messages can arrive out of order. Consensus is the rule that still produces one shared history from all that noise.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Consensus:</b> agreement by all honest nodes on one ledger state and one transaction order.</li>
+        <li><b>Consensus algorithm:</b> the rules that decide who proposes a block and which blocks are valid.</li>
+        <li><b>Node:</b> a computer that stores the ledger and validates blocks.</li>
+        <li><b>Ledger:</b> the record of all transactions and balances.</li>
+        <li><b>Double-spending:</b> spending the same coin twice.</li>
+        <li><b>Fork:</b> two different blocks that claim the same parent, creating rival histories.</li>
+        <li><b>Fork choice:</b> the rule that picks the canonical branch.</li>
+        <li><b>Finality:</b> the point after which a block cannot be reversed.</li>
+        <li><b>Safety:</b> honest nodes never accept two conflicting final histories.</li>
+        <li><b>Liveness:</b> the chain keeps accepting new blocks and does not freeze.</li>
+        <li><b>Quorum:</b> the minimum votes needed to decide.</li>
+        <li><b>BFT:</b> Byzantine Fault Tolerance, agreement even when some nodes lie.</li>
+        <li><b>Mempool:</b> the waiting area for valid transactions not yet in a block.</li>
+        <li><b>Block reward:</b> new coins paid to the node that creates a block.</li>
+        <li><b>Slashing:</b> destroying part of a validator's stake as a penalty.</li>
+        <li><b>PBFT:</b> Practical Byzantine Fault Tolerance, a voting protocol for known validators.</li>
+        <li><b>Raft:</b> a crash-fault consensus protocol for known servers; it does not handle lying nodes.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Proof of Burn:</b> consensus by destroying coins to earn mining rights.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>A user broadcasts a signed transaction.</b> <i>Why:</i> nodes need proof that the owner authorised it.</li>
+        <li><b>Each node checks the rules.</b> Signature, balance, nonce and format. <i>Why:</i> invalid transactions must never reach a block.</li>
+        <li><b>Valid transactions wait in the mempool.</b> <i>Why:</i> a block has limited space, so ordering matters.</li>
+        <li><b>A proposer or miner selects transactions</b> and builds a candidate block. <i>Why:</i> someone must create the next page.</li>
+        <li><b>Other nodes validate the block.</b> <i>Why:</i> one node's claim is not enough.</li>
+        <li><b>A fork-choice rule picks the branch.</b> Longest chain in PoW, checkpoint in PoS, quorum certificate in BFT. <i>Why:</i> two valid blocks can appear at the same time.</li>
+        <li><b>Finality is reached.</b> More blocks or a supermajority vote makes reversal impractical. <i>Why:</i> Users need to know when a payment can no longer be reversed.</li>
+        <li><b>Rewards and penalties keep nodes honest.</b> Fees and block rewards for good work; slashing or wasted cost for bad work. <i>Why:</i> Incentives make honest behaviour the profitable choice.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A class keeps five copies of the attendance register. Some students may write a different entry in one copy. The class needs a rule that makes all honest copies end up with the same list, even when a few entries disagree.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Consensus does not mean everyone trusts everyone; it means they agree despite distrust. A confirmation is not the same as finality: one block can still be reversed, while a finalised block cannot.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>Consensus</b> is the process by which all peers (nodes) of a blockchain network agree on <b>one present state of the ledger</b> and on the <b>order of transactions</b>. It creates reliability and trust between nodes that may not know or trust each other.</p>
       <p>A <b>consensus algorithm</b> is the set of rules that lets all peers reach this agreement. It decides which node proposes the next block and which blocks are valid.</p>
 
-      <h4>2. Why blockchain needs consensus</h4>
+      <h4>Why blockchain needs consensus</h4>
       <ul>
         <li>There is no central bank or administrator to decide the true balance.</li>
         <li>Nodes may be faulty, slow or malicious.</li>
@@ -893,7 +1392,7 @@ No blocks. No miners. No fees.</pre>
         <li>It provides <b>fault tolerance</b>: the network keeps working if some nodes fail.</li>
       </ul>
 
-      <h4>3. Consensus approach (two main families)</h4>
+      <h4>Consensus approach (two main families)</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Approach</th><th>Idea</th><th>Examples</th><th>Finality</th></tr></thead>
@@ -904,19 +1403,20 @@ No blocks. No miners. No fees.</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> proof-based chains buy security with a costly resource; voting chains buy speed with known identities. Hybrids combine the two.</p>
 
-      <h4>4. Consensus elements (the seven pieces)</h4>
+      <h4>Consensus elements (the seven pieces)</h4>
       <ol>
-        <li><b>Nodes / peers</b> — the participants that store the ledger and validate blocks.</li>
-        <li><b>Transactions</b> — signed requests to change state.</li>
-        <li><b>Blocks</b> — an ordered batch of transactions with a header and a hash link to the parent.</li>
-        <li><b>Validation rules</b> — signature, balance, nonce, gas, block format and size checks.</li>
-        <li><b>Fork-choice / finality rule</b> — which branch is canonical (longest chain in PoW; checkpoint finality in PoS; quorum certificate in BFT).</li>
-        <li><b>Incentives and penalties</b> — block reward and fees for honest work; slashing or wasted energy for bad behaviour.</li>
-        <li><b>Agreement and liveness</b> — all honest nodes eventually agree (safety) and the chain keeps growing (liveness).</li>
+        <li><b>Nodes / peers:</b> the participants that store the ledger and validate blocks.</li>
+        <li><b>Transactions:</b> signed requests to change state.</li>
+        <li><b>Blocks:</b> an ordered batch of transactions with a header and a hash link to the parent.</li>
+        <li><b>Validation rules:</b> signature, balance, nonce, gas, block format and size checks.</li>
+        <li><b>Fork-choice / finality rule:</b> which branch is canonical (longest chain in PoW; checkpoint finality in PoS; quorum certificate in BFT).</li>
+        <li><b>Incentives and penalties:</b> block reward and fees for honest work; slashing or wasted energy for bad behaviour.</li>
+        <li><b>Agreement and liveness:</b> all honest nodes eventually agree (safety) and the chain keeps growing (liveness).</li>
       </ol>
 
-      <h4>5. Diagram — consensus round</h4>
+      <h4>Diagram: consensus round</h4>
       <pre class="tree">new transactions
       │
       ▼
@@ -933,6 +1433,7 @@ consensus rule (PoW longest chain / PoS votes / BFT quorum)
       │
       ▼
 block appended ──► state updated ──► next round</pre>
+      <p><b>What this means:</b> the loop repeats forever. Every pass adds one block and updates the agreed state.</p>
 
       <div class="note"><b>For 6 marks:</b> definition (2) + why needed (2) + approach table (2). For 8 marks, add the seven elements and the diagram.</div>
     </div>
@@ -945,6 +1446,48 @@ block appended ──► state updated ──► next round</pre>
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q2(b) [4] · 2025 Nov Q2(b) [4]</p>
+
+      <div class="simple"><b>In simple words:</b> Permissionless means anyone can join and validate.<br>
+      Permissioned means only approved, known members can join.<br>
+      Open networks need costly proof to stop fake accounts; closed networks can simply vote.<br>
+      That one difference explains the gap in speed, privacy and trust.</div>
+
+      <h4>Why we do this</h4>
+      <p>An open network cannot know who is behind a new node, so it must make identity expensive. A closed network already knows its members, so it can use fast voting. The exam asks you to connect those entry rules to the consensus design.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Permissionless:</b> anyone can join, read, transact and validate without approval.</li>
+        <li><b>Permissioned:</b> only approved and identified members can join or validate.</li>
+        <li><b>Sybil attack:</b> one attacker creates many fake identities to gain influence.</li>
+        <li><b>KYC:</b> Know Your Customer; identity checks used by regulated services.</li>
+        <li><b>Validator:</b> a node that approves or adds blocks.</li>
+        <li><b>BFT:</b> Byzantine Fault Tolerance, voting that survives lying nodes.</li>
+        <li><b>Probabilistic finality:</b> a block becomes safer with each later block but is never absolutely final.</li>
+        <li><b>Deterministic finality:</b> a block is final as soon as the required quorum signs.</li>
+        <li><b>Consortium:</b> a group of organisations that jointly runs a permissioned network.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Raft:</b> a fast consensus protocol for known servers that assumes they do not lie.</li>
+        <li><b>Proof of Authority:</b> consensus by a small set of approved, reputable validators.</li>
+        <li><b>Sybil resistance:</b> a rule that makes it expensive or impossible to create many fake identities.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Ask who may join.</b> Anyone or approved members. <i>Why:</i> this decides whether fake identities are cheap.</li>
+        <li><b>Choose Sybil resistance.</b> PoW/PoS cost or identity checks. <i>Why:</i> consensus needs a limit on how many voices one attacker can create.</li>
+        <li><b>Choose the validator set.</b> Open to all, or selected by an operator or consortium. <i>Why:</i> Who validates decides how much trust the network needs.</li>
+        <li><b>Choose the consensus style.</b> Proof-based and probabilistic, or voting-based and deterministic. <i>Why:</i> The validator set limits which consensus style is safe.</li>
+        <li><b>Check speed and privacy.</b> A small known set is faster and can keep data private; a large open set is slower and public. <i>Why:</i> These two properties usually decide the business fit.</li>
+        <li><b>Match the use case.</b> Public payments → permissionless. Bank or supply-chain network → permissioned. <i>Why:</i> The use case is the final test of the choice.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A public bus lets anyone board and pay per ride. A company shuttle checks your employee badge before you enter. The shuttle is faster and more private, but only because the company controls the door.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Permissioned does not mean fully centralised; a consortium can have many independent owners. Permissionless does not mean lawless: users still follow protocol rules, and exchanges may still require KYC.</div>
+
+      <h4>Full answer for the exam</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Permissionless</th><th>Permissioned</th></tr></thead>
@@ -959,6 +1502,7 @@ block appended ──► state updated ──► next round</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the consensus row is a consequence, not a free choice. Open entry forces costly proof; closed entry allows fast votes.</p>
       <p><b>One-line answer:</b> permissionless = open entry + probabilistic proof-based consensus; permissioned = restricted entry + fast voting-based consensus with known identities.</p>
     </div>
   </div>
@@ -974,28 +1518,74 @@ block appended ──► state updated ──► next round</pre>
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q1(a)(i) [6 — R3 option] · 2025 May Q1(b) [9 — Corda features, difference, CorDapps]</p>
-      <p class="small">The cleaned text of 2023 Nov Q1(a) lost option (i). The PDF page shows the four options are: i) R3, ii) Ethereum, iii) Hyperledger, iv) Corda.</p>
 
-      <h4>1. What is R3?</h4>
+      <div class="simple"><b>In simple words:</b> R3 is a company and consortium of banks.<br>
+      Corda is the private ledger it built for financial deals.<br>
+      Only the parties in a deal see its details, and a special notary stops double-spending.<br>
+      A CorDapp is an app on Corda, built from states, contracts and flows.</div>
+
+      <h4>Why we do this</h4>
+      <p>Banks cannot broadcast every trade to competitors, and they need a deal to be final immediately. Corda keeps data point-to-point, checks each state change with a contract, and uses a notary to guarantee that the same asset is not promised twice.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>R3:</b> a financial-technology company and consortium that builds enterprise distributed-ledger software.</li>
+        <li><b>Corda:</b> R3's open-source, permissioned distributed ledger for business and finance.</li>
+        <li><b>CorDapp:</b> a Corda Distributed Application, installed on Corda nodes.</li>
+        <li><b>State:</b> a shared fact on the Corda ledger, such as "Bank A owes Bank B $1M".</li>
+        <li><b>Contract:</b> code that checks whether a state change is allowed.</li>
+        <li><b>Flow:</b> the workflow that gathers signatures and records a state change.</li>
+        <li><b>Notary:</b> a special Corda node that signs a state only once to stop double-spending.</li>
+        <li><b>Doorman:</b> the Corda service that checks identity and issues certificates at join time.</li>
+        <li><b>Point-to-point:</b> sending data only to the parties involved, not to the whole network.</li>
+        <li><b>Deterministic finality:</b> a deal is final as soon as the required signatures and notary sign exist.</li>
+        <li><b>JVM:</b> Java Virtual Machine, the runtime Corda uses.</li>
+        <li><b>Distributed ledger:</b> a record of transactions copied and kept consistent across many nodes.</li>
+        <li><b>Permissioned:</b> only approved, identified members can join or validate.</li>
+        <li><b>Double-spending:</b> spending the same asset twice.</li>
+        <li><b>Corda Settler:</b> an R3 service for cross-border payments and settlement.</li>
+        <li><b>Kotlin:</b> a programming language that runs on the JVM and is used for Corda.</li>
+        <li><b>Consensus:</b> the rule that gets all honest nodes to accept one history.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>A party starts a flow.</b> The flow describes the business step it wants to perform. <i>Why:</i> Corda separates business workflow from ledger data.</li>
+        <li><b>The flow builds a transaction</b> that proposes a new state and names the input state it replaces. <i>Why:</i> every update must point to the old fact it changes.</li>
+        <li><b>The contract checks the transaction.</b> It enforces rules such as positive amounts and required signatures. <i>Why:</i> no party should be able to write an invalid fact.</li>
+        <li><b>Involved parties sign.</b> Only they see the full details. <i>Why:</i> competitors and outsiders must not learn the trade.</li>
+        <li><b>The notary checks the input state.</b> It signs only if that state has not been used before. <i>Why:</i> this is how Corda prevents double-spending.</li>
+        <li><b>The new state is recorded</b> on the parties' ledgers and the old state is marked consumed. <i>Why:</i> the ledger now has one current version of the fact.</li>
+        <li><b>The deal is final.</b> No mining and no waiting for confirmations. <i>Why:</i> Immediate finality is the main business benefit of Corda.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Two companies sign a private contract at a lawyer's office. Only they see the pages, but the lawyer stamps the contract so it cannot be reused to claim the same asset twice.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Corda is not a Bitcoin-style blockchain: it does not broadcast every transaction to every node and has no native coin. Its "notary" is a validating node, not a public government official.</div>
+
+      <h4>Full answer for the exam</h4>
+      <h4>What is R3?</h4>
       <p><b>R3</b> is a financial-technology company founded in 2014 by a group of nine financial institutions (including Goldman Sachs, Credit Suisse and J.P. Morgan). It leads a consortium of more than 100 banks and builds distributed-ledger software for financial markets. Its main product is <b>Corda</b>.</p>
 
-      <h4>2. What is Corda?</h4>
+      <h4>What is Corda?</h4>
       <p><b>Corda</b> is an open-source, <b>permissioned</b> distributed ledger platform for business and finance. It runs on the <b>JVM</b> and is written mainly in Kotlin and Java. Unlike Bitcoin, Corda does <b>not</b> broadcast every transaction to every node. It shares data only with the parties who need it.</p>
 
-      <h4>3. Features of Corda (2025 May Q1b — 9 marks)</h4>
+      <h4>Features of Corda (2025 May Q1b: 9 marks)</h4>
       <ol>
         <li><b>Permissioned network:</b> every node has a real-world identity and a certificate from a doorman/network operator. There are no anonymous miners.</li>
         <li><b>Point-to-point privacy:</b> transaction data goes only to the involved parties and the notary, not to the whole network.</li>
         <li><b>States:</b> the ledger stores facts (e.g. "Bank A owes Bank B $1M") in <b>state objects</b>, which are immutable. A new version replaces the old one.</li>
         <li><b>Contracts:</b> each state has a <b>contract</b> that validates every update (e.g. both parties must sign).</li>
-        <li><b>Flows:</b> the business workflow is written as a <b>flow</b> — a sequence of steps that gathers signatures, talks to the counterparty and asks the notary to finalise.</li>
+        <li><b>Flows:</b> the business workflow is written as a <b>flow</b>, a sequence of steps that gathers signatures, talks to the counterparty and asks the notary to finalise.</li>
         <li><b>Notary:</b> a special node that prevents double-spending by signing a state only once. It does not see the full transaction, only the input state reference.</li>
         <li><b>No native cryptocurrency:</b> Corda settles real assets, not coins. Fees are a business decision, not a mining reward.</li>
         <li><b>Interoperability:</b> can connect to existing banking systems, databases and other DLTs; supports R3's Corda Settler for cross-border payments.</li>
         <li><b>Deterministic finality:</b> once the notary signs, the transaction is final. No probabilistic confirmations.</li>
       </ol>
 
-      <h4>4. Why Corda is different from Bitcoin/Ethereum</h4>
+      <h4>Why Corda is different from Bitcoin/Ethereum</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Bitcoin / Ethereum</th><th>Corda</th></tr></thead>
@@ -1009,19 +1599,21 @@ block appended ──► state updated ──► next round</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> Corda trades openness for privacy and legal certainty. That is exactly what a bank needs, and exactly what a public payment chain refuses to give up.</p>
 
-      <h4>5. CorDapps</h4>
+      <h4>CorDapps</h4>
       <p>A <b>CorDapp</b> (Corda Distributed Application) is an application built on Corda. It is a normal JAR file that is installed on Corda nodes. It has three parts:</p>
       <ul>
-        <li><b>States</b> — the shared facts on the ledger (e.g. <code>IOUState</code> with lender, borrower, amount).</li>
-        <li><b>Contracts</b> — code that says which state changes are valid (e.g. amount must be positive, both parties must sign).</li>
-        <li><b>Flows</b> — the workflow that proposes, signs and records the state change.</li>
+        <li><b>States:</b> the shared facts on the ledger (e.g. <code>IOUState</code> with lender, borrower, amount).</li>
+        <li><b>Contracts:</b> code that says which state changes are valid (e.g. amount must be positive, both parties must sign).</li>
+        <li><b>Flows:</b> the workflow that proposes, signs and records the state change.</li>
       </ul>
       <pre class="tree">CorDapp = States + Contracts + Flows
              |          |          |
              v          v          v
         "what is true" "what is   "how do we
                         allowed"   get there"</pre>
+      <p><b>What this means:</b> a CorDapp is not just code; it is data (states), rules (contracts) and process (flows) packaged together.</p>
 
       <div class="book"><b>Book link:</b> the supplied book covers R3 and Corda Settler in §3.5 (news-style), not Corda's internal architecture. The feature list above is the standard Corda model required by the 2025 paper.</div>
     </div>
@@ -1038,6 +1630,50 @@ block appended ──► state updated ──► next round</pre>
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [4] · 2025 Nov Q2(a) [4]</p>
+
+      <div class="simple"><b>In simple words:</b> Bitcoin is digital gold: it stores and moves value.<br>
+      Ethereum is a world computer: it also runs programs.<br>
+      Bitcoin uses UTXOs and PoW; Ethereum uses accounts and PoS.<br>
+      Their purposes explain their different designs.</div>
+
+      <h4>Why we do this</h4>
+      <p>Examiners ask for four differences, not twenty. The safest way is to start from purpose, then show how purpose changes the ledger model, consensus and programming.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>UTXO:</b> unspent transaction output; Bitcoin tracks spendable chunks rather than account balances.</li>
+        <li><b>Account model:</b> Ethereum stores a balance and storage for each account.</li>
+        <li><b>EVM:</b> Ethereum Virtual Machine, which runs smart contracts.</li>
+        <li><b>Gas:</b> the unit of computation cost on Ethereum.</li>
+        <li><b>Turing-complete:</b> able to run any computation, subject to gas limits.</li>
+        <li><b>PoW / PoS:</b> proof-based consensus using computing power or locked stake.</li>
+        <li><b>Issuance:</b> the rate at which new coins are created.</li>
+        <li><b>DApp:</b> a decentralised application that runs on a blockchain.</li>
+        <li><b>Smart contract:</b> code on a blockchain that runs automatically when conditions are met.</li>
+        <li><b>Block time:</b> the average time between two blocks.</li>
+        <li><b>Script:</b> Bitcoin's simple language for spending conditions such as multisignature.</li>
+        <li><b>ERC-20:</b> the standard for fungible tokens on Ethereum.</li>
+        <li><b>NFT:</b> a unique token that represents one specific item.</li>
+        <li><b>Store of value:</b> an asset people hold because they expect it to keep value over time.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Compare purpose.</b> Money versus programmable applications. <i>Why:</i> this is the root difference.</li>
+        <li><b>Compare the ledger model.</b> UTXO versus accounts. <i>Why:</i> it changes how a wallet computes a balance.</li>
+        <li><b>Compare consensus.</b> PoW versus PoS. <i>Why:</i> it changes energy use and finality.</li>
+        <li><b>Compare supply.</b> Hard cap of 21 million versus a policy without a hard cap. <i>Why:</i> Supply policy affects scarcity and long-term value.</li>
+        <li><b>Compare programming.</b> Limited Script versus a Turing-complete EVM. <i>Why:</i> Programmability is the main capability gap between the two.</li>
+        <li><b>Finish with one line.</b> Bitcoin is digital gold; Ethereum is a world computer. <i>Why:</i> One sentence gives the examiner a clean conclusion.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Bitcoin is a gold bar in a secure vault: scarce, simple and good for storing value. Ethereum is a smartphone: it can hold money, but it also runs apps.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Ethereum also has money (ETH); it is not "only apps". Bitcoin can run simple scripts for multisignature and time locks. "No hard cap" does not mean Ethereum prints coins without limit; its issuance follows a policy.</div>
+
+      <h4>Full answer for the exam</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th></tr></thead>
@@ -1054,7 +1690,8 @@ block appended ──► state updated ──► next round</pre>
         </tbody>
       </table>
       </div>
-      <div class="note"><b>4-mark version:</b> give four differences only — purpose, consensus, supply and programmability. Add one line: "Bitcoin is digital gold; Ethereum is a world computer."</div>
+      <p><b>What this means:</b> read the table top to bottom. Purpose drives the ledger model, the consensus choice and the programming model.</p>
+      <div class="note"><b>4-mark version:</b> give four differences only: purpose, consensus, supply and programmability. Add one line: "Bitcoin is digital gold; Ethereum is a world computer."</div>
     </div>
   </div>
 </section>

@@ -155,7 +155,24 @@ main{min-width:0}
 .prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
 .side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
-</style></head>
+</style>
+<style id="explain-css">
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important;break-inside:avoid}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+  .analogy,.confuse{page-break-inside:avoid}
+}
+</style><style id="print-simple">
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 
@@ -198,6 +215,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <span class="chip">⏱️ Unit weight ≈ <b>12–18 marks</b></span>
   </div>
 </header>
+
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every technique is explained with a small example. No prior testing background needed.</div>
 
 <div class="book"><b>Source:</b> all answers in this unit are re-sourced from the supplied <i>Technical Publications — Software Testing and Quality Assurance</i> (Units 3–6), matched to the exact PYQ wording.</div>
 
@@ -248,23 +267,37 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q1(c) [6] · 2025 Nov Q2(c) [6] · 2023 May Q1(c) [6, non-functional + performance example]</p>
 
-      <h4>1. Functional testing</h4>
-      <p>Functional testing addresses the <b>overall behaviour of the program</b> by testing <b>transaction flows, input validation and functional completeness</b>. It is considered <b>black-box testing</b> because no knowledge of the internal logic of the system is used to develop test cases. System testing, regression testing and user acceptance testing are types of functional testing.</p>
-      <p>Both functional and structural methods together validate the entire system. For example, a functional test case may be taken from the documentation that describes how to perform a certain function, such as accepting bar-code input. Comparing actual outputs against expected behaviour gives a clearer overall picture than testing modules in isolation, because interactions between modules are frequently the points where errors occur.</p>
+      <div class="simple"><b>In simple words:</b> Functional testing checks <i>what</i> the software does.<br>Non-functional testing checks <i>how well</i> it does it — speed, safety and ease of use.<br>A login that works is functional. A login that works in one second for 500 people is also non-functional.</div>
+
+      <h4>Why we do this</h4>
+      <p>A feature can be correct and still be unusable. People leave when a page is slow, a site is unsafe or an app fails on their phone. We test both sides so the product is correct and pleasant to use at the same time.</p>
+
+      <h4>Words you need first</h4>
       <ul>
-        <li><b>Advantages:</b> simulates actual system usage; makes no system structure assumptions.</li>
-        <li><b>Disadvantages:</b> potential of missing logical errors in software; possibility of redundant testing.</li>
+        <li><b>Functional testing:</b> checking what the software does against its written requirements.</li>
+        <li><b>Non-functional testing:</b> checking quality attributes such as speed, security and usability.</li>
+        <li><b>Functional requirement:</b> a statement of what the software must do, such as “the user can reset a password”.</li>
+        <li><b>Non-functional requirement:</b> a statement of how well it must behave, such as “the page loads in under two seconds”.</li>
+        <li><b>Black-box testing:</b> testing only through inputs and outputs, without looking at the code.</li>
+        <li><b>White-box testing:</b> testing with knowledge of the internal code and structure.</li>
+        <li><b>Performance:</b> how fast and reliably the system responds under a given load.</li>
+        <li><b>Throughput:</b> how many requests the system completes in a fixed time.</li>
+        <li><b>Latency:</b> the delay between sending a request and getting the first response.</li>
+        <li><b>Benchmark:</b> an agreed target number used to judge measured results.</li>
+        <li><b>Concurrent users:</b> users who use the system at the same moment.</li>
       </ul>
 
-      <h4>2. Non-functional testing</h4>
-      <p>Non-functional testing verifies the <b>non-functional requirements</b> of the application, such as performance and usability. It assesses properties that are <b>not critical to functionality but contribute to the end-user experience</b>.</p>
-      <p>Performance and reliability under load are not functional components of a software system, but they can make or break the user experience. Something that fails a non-functional test does not always cause an issue that users would notice, but it can indicate a problem in the system, especially at scale.</p>
-      <ul>
-        <li><b>Advantages:</b> covers testing that cannot be covered by functional testing; ensures the application runs efficiently and is reliable enough; ensures the security of the application.</li>
-        <li><b>Disadvantages:</b> every time the software is updated, non-functional tests must be performed again; this re-examination makes the software expensive.</li>
-      </ul>
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Read the requirements and mark each one as “what it does” or “how well it must do it”. This separates the two kinds of testing before any test is written.</li>
+        <li>Design functional tests from user actions: log in, search, pay, cancel. Give an input and state the expected output.</li>
+        <li>Run the functional tests first. A system must do the right thing before its speed matters.</li>
+        <li>Write measurable non-functional targets, such as “95% of logins finish in under two seconds with 500 users”.</li>
+        <li>Run the non-functional tests in a production-like environment and record real numbers.</li>
+        <li>Compare the numbers with the targets, report the gap and name the likely bottleneck.</li>
+      </ol>
 
-      <h4>3. Functional vs non-functional testing</h4>
+      <h4>Functional vs non-functional — the exam table</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Functional testing</th><th>Non-functional testing</th></tr></thead>
@@ -272,18 +305,31 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
           <tr><td>Purpose</td><td>Confirms that the code is doing the <b>right things</b>.</td><td>Validates that the code is doing things the <b>right way</b>.</td></tr>
           <tr><td>Focus</td><td>User requirements.</td><td>User expectations.</td></tr>
           <tr><td>Tools</td><td>Can be performed manually and with automation tools.</td><td>Requires automation tools for effective testing.</td></tr>
-          <tr><td>Order</td><td>Defines all the process and is executed first.</td><td>Executed only after functional testing, because the system must be defined first.</td></tr>
+          <tr><td>Order</td><td>Defines the process and is executed first.</td><td>Executed only after functional testing, because the system must work first.</td></tr>
           <tr><td>Test case type</td><td>Easy to execute black-box test cases.</td><td>Easy to execute white-box test cases.</td></tr>
           <tr><td>Types</td><td>Unit testing, integration testing, system testing.</td><td>Performance, compatibility and usability testing.</td></tr>
           <tr><td>Inputs</td><td>Business requirements.</td><td>Parameters such as speed and scalability.</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> functional testing proves the feature exists; non-functional testing proves the feature is usable at real scale. They answer different questions, and neither one replaces the other.</p>
 
-      <h4>4. Performance testing with example</h4>
-      <p>Performance testing is conducted <b>after functional testing</b> and is usually conducted for web applications. Its main objective is to get information about <b>response time, throughput and utilization</b> under a given load. It is normally used with load testing and stress testing.</p>
-      <p>Performance testing <b>does not give a pass or fail result</b>; it sets the benchmark and standard of the application against concurrency/throughput, server response time, latency and render response time. It determines how much resources are used and how scalable, reliable and speedy the product is.</p>
-      <p><b>Example:</b> the login API must respond in under <b>2 seconds</b> for <b>500 concurrent users</b>, with an error rate below <b>1%</b>. Ramp from 0 to 500 virtual users over 10 minutes, hold for 30 minutes, and measure average and 95th-percentile response time, throughput and errors. If the 95th percentile is 3.8 s, the requirement fails and the bottleneck (often the DB connection pool or CPU) is reported.</p>
+      <h4>Performance testing with an example</h4>
+      <p>Performance testing runs <b>after functional testing</b> and is usually done on web applications. It measures <b>response time, throughput and resource use</b> under a given load. It is normally used together with load testing and stress testing.</p>
+      <p>Performance testing <b>does not give a simple pass or fail</b>. It measures the system against a written benchmark: concurrency, server response time, latency and page render time. The result shows how scalable, reliable and speedy the product is.</p>
+      <p><b>Example:</b> the login API must respond in under <b>2 seconds</b> for <b>500 concurrent users</b>, with an error rate below <b>1%</b>. Ramp from 0 to 500 virtual users over 10 minutes, hold for 30 minutes, and record average and 95th-percentile response time. If the 95th percentile is 3.8 s, the target is missed and the bottleneck (often the database connection pool or the CPU) is reported.</p>
+      <p class="small"><b>What this means:</b> the 95th percentile is the time below which 95 out of 100 requests finish. It is more honest than an average, because a few very slow requests can hide inside an average.</p>
+
+      <h4>Advantages and limits (book)</h4>
+      <ul>
+        <li><b>Functional — advantage:</b> simulates actual system usage; makes no assumptions about the internal structure.</li>
+        <li><b>Functional — limit:</b> can miss logical errors inside the code; may repeat the same check in several tests.</li>
+        <li><b>Non-functional — advantage:</b> covers qualities that functional testing cannot; shows whether the app is efficient, reliable and secure.</li>
+        <li><b>Non-functional — limit:</b> tests must be repeated after every update, which costs time and money.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> a restaurant dish passes the <b>functional</b> test when it tastes correct. It passes the <b>non-functional</b> test when it reaches the table hot in ten minutes, the plate is clean and the price is fair.</div>
+      <div class="confuse"><b>Common confusion:</b> “non-functional” does <b>not</b> mean “not important” or “extra features”. It means the quality attributes of a working feature — speed, security, usability and reliability.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.7.1 Functional Testing, §3.8 Non-functional Testing and §3.8.1 Performance Testing, p. 3-23, 3-27 – 3-28</p>
     </div>
   </div>
@@ -296,40 +342,70 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q2(c) [6, performance with example] · 2025 May Q1(b) [6, performance + security]</p>
 
-      <h4>1. Performance testing</h4>
-      <p>Performance testing is conducted <b>after functional testing</b> and is usually conducted for <b>web applications</b>. Its main objective is to get information about <b>response time, throughput and utilization</b> under a given load. It is normally used with <b>load testing and stress testing</b>.</p>
-      <p>Poor latency destroys the user experience; well-written performance tests catch problems before they become evident to users. Performance testing determines how much resources are used and how <b>scalable, reliable and speedy</b> the product is. It <b>does not give a pass or fail result</b>; it sets the benchmark and standard of the application against concurrency/throughput, server response time, latency and render response time.</p>
-      <p>It is a subset of performance engineering and is used to find performance issues in the <b>design and architecture</b> of the product. It is extensive and contains <b>load testing, stress testing, capacity testing, volume testing, endurance testing, spike testing, scalability testing and reliability testing</b>.</p>
+      <div class="simple"><b>In simple words:</b> Performance testing asks “is it fast enough under load?”.<br>Security testing asks “can an attacker break in?”.<br>Both test quality, not features, and both need a realistic environment.</div>
 
-      <h4>2. Load testing vs performance testing (book)</h4>
+      <h4>Why we do this</h4>
+      <p>A system that is correct in a demo can still collapse on a sale day or leak private data. These two tests protect the two things users notice most: speed and trust.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Performance testing:</b> measuring speed, throughput and resource use under a defined load.</li>
+        <li><b>Security testing:</b> trying to find weaknesses that an attacker could use to read or change data.</li>
+        <li><b>Load:</b> the number of users or requests the system is handling at one time.</li>
+        <li><b>Load testing:</b> running the system at the expected busiest load to see whether it stays healthy.</li>
+        <li><b>Stress testing:</b> pushing beyond the expected load until something breaks, to find the limit.</li>
+        <li><b>Response time:</b> the time from sending a request to receiving the answer.</li>
+        <li><b>Throughput:</b> the number of requests completed per second or minute.</li>
+        <li><b>Vulnerability:</b> a weakness that an attacker can use to damage or enter the system.</li>
+        <li><b>SQL injection:</b> an attack that puts database commands into an input box to read or change data.</li>
+        <li><b>Authorization:</b> the rule that decides which user may see or change which data.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Write a measurable performance target: users, response time, error rate and test duration.</li>
+        <li>Build a load profile that looks like real traffic, including quiet and peak periods.</li>
+        <li>Ramp up slowly, hold the peak, then ramp down. This shows both the climb and the recovery.</li>
+        <li>Record average and 95th-percentile response time, throughput and errors.</li>
+        <li>Compare the numbers with the target and report the bottleneck. This is why we measure instead of guessing.</li>
+        <li>For security, list what must be protected: accounts, payments, personal data and admin actions.</li>
+        <li>Try to break each protection: change an ID in the URL, submit attack strings, call an admin action as a normal user.</li>
+        <li>Log every attempt and fix the weakness. Retest to prove the fix works.</li>
+      </ol>
+
+      <h4>Performance vs load — the book table</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Performance testing</th><th>Load testing</th></tr></thead>
         <tbody>
           <tr><td>Load used</td><td>Expected number of users.</td><td>More than the usual load.</td></tr>
-          <tr><td>Aim</td><td>Get a baseline and see behaviour under normal conditions; check whether the required response time is met.</td><td>See whether the application can sustain the increased load or will crash and kill the servers.</td></tr>
-          <tr><td>Method</td><td>Measure response time with the expected load.</td><td>Start at low numbers and gradually increase to the desired load, then ramp down.</td></tr>
-          <tr><td>Goal</td><td>Set the performance benchmark.</td><td>Prove the system can handle the expected volume with minimal acceptable performance degradation.</td></tr>
+          <tr><td>Aim</td><td>Get a baseline and check whether the required response time is met.</td><td>See whether the application can sustain the increased load or will crash.</td></tr>
+          <tr><td>Method</td><td>Measure response time with the expected load.</td><td>Start low, increase gradually to the target load, then ramp down.</td></tr>
+          <tr><td>Goal</td><td>Set the performance benchmark.</td><td>Prove the system handles the expected volume with acceptable speed.</td></tr>
         </tbody>
       </table>
       </div>
-      <p class="small">A load test is sometimes referred to as <b>volume testing</b> because it ensures a web system can handle the expected volume of traffic.</p>
+      <p class="small"><b>What this means:</b> performance testing sets the baseline; load testing pushes the system to its expected busy limit. A load test is sometimes called volume testing because it checks a large volume of traffic.</p>
 
-      <h4>3. Example</h4>
-      <p>An e-commerce sale page must serve 2,000 users with page load under 3 s. JMeter ramps to 2,000 threads, holds for 30 minutes and reports 2.4 s average, 3.6 s p95 and 0.4% errors. The target is narrowly missed, so the image CDN is tuned.</p>
+      <h4>Example</h4>
+      <p>An e-commerce sale page must serve 2,000 users with page load under 3 s. JMeter, a load-testing tool, ramps to 2,000 threads, holds for 30 minutes and reports 2.4 s average, 3.6 s p95 and 0.4% errors. The average looks fine, but the p95 misses the target, so the image CDN is tuned.</p>
+      <p>Performance testing is broad. It includes <b>load, stress, capacity, volume, endurance, spike, scalability and reliability</b> testing.</p>
+      <p class="small"><b>What this means:</b> always judge against the agreed percentile, not only the average. One slow group of users is still a real group of unhappy customers.</p>
 
-      <h4>4. Security testing</h4>
-      <p>Security testing is a type of software testing that intends to <b>uncover vulnerabilities</b> of the system and determine that its <b>data and resources are protected</b> from possible intruders. It depends heavily on <b>expertise and experience</b>.</p>
-      <p>Software security is about making software <b>behave correctly in the presence of a malicious attack</b>. The difference between software safety and software security is the presence of an <b>intelligent adversary</b> bent on breaking the system.</p>
+      <h4>Security testing</h4>
+      <p>Security testing tries to <b>find vulnerabilities</b> and prove that data and resources are protected from intruders. It depends heavily on the tester's expertise. Software security means the software behaves correctly <b>even during a malicious attack</b>. The difference between safety and security is the presence of an <b>intelligent adversary</b>.</p>
       <p><b>Types of security testing (book):</b></p>
       <ol>
-        <li><b>Network security</b> — looking for vulnerabilities in the network infrastructure (resources and policies).</li>
-        <li><b>System software security</b> — assessing weaknesses in the OS and database system that the application depends on.</li>
-        <li><b>Client-side application security</b> — ensuring that the client cannot be manipulated.</li>
-        <li><b>Server-side application security</b> — making sure the server code and its technologies are robust enough to fend off any intrusion.</li>
+        <li><b>Network security</b> — look for weaknesses in the network infrastructure, its resources and policies.</li>
+        <li><b>System software security</b> — check the operating system and database that the application depends on.</li>
+        <li><b>Client-side application security</b> — make sure the client or browser cannot be manipulated.</li>
+        <li><b>Server-side application security</b> — make sure the server code resists intrusion.</li>
       </ol>
-      <p><b>Example:</b> log in as a normal user, change the URL <code>/account?id=105</code> to <code>/account?id=106</code>, and confirm the server returns “403 Forbidden”, not another user's data. A search box given <code>' OR 1=1 --</code> must return no data and log the attempt.</p>
-      <p><b>Difference:</b> performance asks “will it stay fast under load?”; security asks “can an attacker break it?”. Both are non-functional and both need a production-like environment.</p>
+      <p><b>Example:</b> log in as a normal user, change the URL <code>/account?id=105</code> to <code>/account?id=106</code>, and confirm the server returns “403 Forbidden” instead of another user's data. A search box given <code>' OR 1=1 --</code> must return no data and must log the attempt.</p>
+      <p><b>Difference in one line:</b> performance asks “will it stay fast under load?”; security asks “can an attacker break it?”. Both are non-functional and both need a production-like environment.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> a bank must stay open and quick during the morning rush (<b>performance</b>) and must also stop a robber at the door (<b>security</b>). A fast bank with an open vault is not a good bank.</div>
+      <div class="confuse"><b>Common confusion:</b> “the site uses HTTPS” does not mean it is secure. HTTPS protects data in transit; it does not stop a user from changing another user's ID or an admin from being tricked into a bad action.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.8.1 Performance Testing and §3.8.5 Security Testing, p. 3-28 – 3-31</p>
     </div>
   </div>
@@ -341,40 +417,70 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q2(b) [6] · 2025 Nov Q2(b) [6]</p>
-      <p><b>Definition:</b> A <b>cookie</b> is a file used to store the <b>session content and other session-related information inside the browser</b>. Some sites use cookies for the <b>payment gateway</b> and some sites use them for an <b>authentication session</b>.</p>
-      <p><b>Cookie testing</b> is performed to test the cookies that are saved in the web browser whenever a web application is accessed by making use of its server. It is all about testing the cookies present at the <b>client side</b> — in local machines, computers or browsers. A basic understanding of the cookie is useful before going through the methods of cookie testing.</p>
 
-      <h4>1. Types of cookies (book)</h4>
+      <div class="simple"><b>In simple words:</b> a cookie is a small note a website asks your browser to keep.<br>It helps the site remember you between clicks or visits.<br>Cookie testing checks that the note is created, stored, used and deleted correctly.</div>
+
+      <h4>Why we do this</h4>
+      <p>Cookies carry login sessions and payment state. If a cookie is created wrongly, expires too late or is deleted at the wrong time, a user can lose a cart, fail a payment or stay logged in on a shared computer.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Cookie testing:</b> checking that cookies are created, stored, used and deleted correctly.</li>
+        <li><b>Cookie:</b> a small file stored by the browser that holds session or preference data for a website.</li>
+        <li><b>Session:</b> one period of use, from login until logout or browser close.</li>
+        <li><b>Session cookie:</b> a cookie that lives only while the browser session is open and is deleted when the browser closes.</li>
+        <li><b>Persistent cookie:</b> a cookie that stays on the machine until a set expiry date.</li>
+        <li><b>Expiry date:</b> the date and time after which the browser must delete the cookie.</li>
+        <li><b>Authentication:</b> the process of proving who a user is, usually by login.</li>
+        <li><b>Payment gateway:</b> the service that handles card payment between the shop and the bank.</li>
+        <li><b>Client side:</b> the user's own browser and machine, not the company's server.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Open the site and watch the browser's cookie list. A cookie should appear when the session starts. This proves creation works.</li>
+        <li>Log in and confirm the cookie carries only the session identifier, not the password. This protects the user if the cookie is seen.</li>
+        <li>Close the browser completely and reopen the site. A session cookie must be gone, so the user must log in again.</li>
+        <li>Log in with “Remember me” and check that a persistent cookie with the correct expiry date is stored.</li>
+        <li>Move the system date past the expiry date. The cookie must expire and the user must log in again.</li>
+        <li>Clear cookies, or block cookies in the browser, and confirm the site fails safely instead of showing another user's data.</li>
+        <li>During payment, confirm the payment cookie is active only for that payment and is removed when the transaction ends.</li>
+      </ol>
+
+      <h4>Types of cookies (book)</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Type</th><th>Definition</th><th>What cookie testing checks</th></tr></thead>
         <tbody>
-          <tr><td><b>Session cookie</b></td><td>Gets active on the call made by the web browser and is <b>automatically deleted on termination of the session</b> by that browser.</td><td>The cookie exists during the session; it disappears when the browser/session is closed.</td></tr>
-          <tr><td><b>Persistent cookie</b></td><td>Resides <b>permanently on the user's machine</b> and has a specific time-period for expiration, which may last for a few months or a year.</td><td>The cookie remains after the browser closes and expires only at the set date/time.</td></tr>
+          <tr><td><b>Session cookie</b></td><td>Becomes active when the browser makes a request and is <b>automatically deleted when the session ends</b>.</td><td>The cookie exists during the session and disappears when the browser closes.</td></tr>
+          <tr><td><b>Persistent cookie</b></td><td>Stays <b>permanently on the user's machine</b> and has a fixed expiry period, which may be months or a year.</td><td>The cookie survives a browser restart and expires only at the set date and time.</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the type of cookie decides when it should die. Testing the wrong lifetime is the most common cookie defect.</p>
 
-      <h4>2. What to test</h4>
+      <h4>What to test</h4>
       <ol>
-        <li><b>Creation:</b> the cookie is created when the web application is accessed or when the user logs in.</li>
-        <li><b>Client-side storage:</b> the cookie is stored in the browser on the local machine, not on the server.</li>
-        <li><b>Session behaviour:</b> a session cookie is active during the session and is deleted when the session terminates.</li>
-        <li><b>Expiry:</b> a persistent cookie stays until its specified expiry date and is removed after it.</li>
-        <li><b>Purpose:</b> cookies used for the payment gateway or authentication session work correctly and do not leak the session.</li>
-        <li><b>Browser handling:</b> the application behaves correctly when cookies are cleared or when the browser does not accept cookies.</li>
+        <li><b>Creation:</b> the cookie appears when the site is opened or the user logs in.</li>
+        <li><b>Client-side storage:</b> the cookie sits in the browser on the local machine, not on the server.</li>
+        <li><b>Session behaviour:</b> a session cookie is active during the session and is deleted when the session ends.</li>
+        <li><b>Expiry:</b> a persistent cookie stays until its expiry date and is removed afterwards.</li>
+        <li><b>Purpose:</b> cookies for payment or authentication work correctly and do not leak the session.</li>
+        <li><b>Browser handling:</b> the site behaves correctly when cookies are cleared or blocked.</li>
       </ol>
 
-      <h4>3. Example — login and “remember me”</h4>
+      <h4>Example — login and “remember me”</h4>
       <ol>
         <li>Open the site and log in. The server sends a <b>session cookie</b> to the browser.</li>
-        <li>Close the browser completely and open the site again. The session cookie should be <b>deleted</b>; the user should have to log in again.</li>
-        <li>Log in again and tick <b>“Remember me”</b>. A <b>persistent cookie</b> with an expiry date (say 30 days) is stored.</li>
+        <li>Close the browser completely and reopen the site. The session cookie should be <b>deleted</b>, so the user must log in again.</li>
+        <li>Log in again and tick <b>“Remember me”</b>. A <b>persistent cookie</b> with an expiry date, say 30 days, is stored.</li>
         <li>Close and reopen the browser. The persistent cookie is still there, so the user is remembered.</li>
         <li>Change the system date beyond the expiry date. The cookie must expire and the user must log in again.</li>
-        <li>For a payment gateway, the payment cookie should be active only during the payment session and must be removed after the transaction ends.</li>
+        <li>For a payment gateway, the payment cookie should be active only during payment and must be removed when the transaction ends.</li>
       </ol>
-      <p><b>Why it matters:</b> cookies store session content and authentication sessions, so incorrect creation, expiry or deletion can cause a wrong session state, a failed payment or an exposed login session.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> a session cookie is a <b>wristband</b> for one party — cut it off when you leave. A persistent cookie is a <b>membership card</b> that stays in your wallet until its printed expiry date.</div>
+      <div class="confuse"><b>Common confusion:</b> a cookie is not a virus or a program. It is passive data. The risk is that it can hold a session token, so it must be protected, expire correctly and never store a password.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.8.6 Cookies Testing, p. 3-31</p>
     </div>
   </div>
@@ -386,23 +492,47 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q1(c) [6]</p>
-      <p><b>Definition:</b> Risk-based testing is an approach to software testing that relies on <b>risk assessments</b> to determine the <b>best allocation of testing resources</b>. <b>Risk</b> is the probability of occurrence of an undesirable outcome; this outcome is also associated with an <b>impact</b>.</p>
-      <p>Risk-based testing is a <b>ranking of tests and subtests</b> for functionality. Tools and techniques such as equivalence partitioning, state transition tables, decision tables, boundary value analysis, path flow testing and all-pairs testing help assess the most risk-prone areas.</p>
-      <p>It is done on a project at the <b>very early stages</b>. This helps identify the project risks that disclose the project quality. That information, in turn, leads to the testing of the <b>planning, specifications, preparations and execution</b>.</p>
 
-      <h4>1. Risk formula</h4>
-      <div class="math">Risk = Probability of an undesirable outcome × Impact of that outcome</div>
-      <p><b>Probability</b> depends on complexity, new technology, change frequency, developer experience and usage. <b>Impact</b> depends on money, safety, legal exposure, users affected and reputation.</p>
+      <div class="simple"><b>In simple words:</b> risk-based testing tests the most dangerous parts first.<br>“Dangerous” means likely to break and costly if it breaks.<br>Low-risk parts are tested later or more lightly.</div>
 
-      <h4>2. Process of risk-based testing (book)</h4>
+      <h4>Why we do this</h4>
+      <p>No project has enough time to test everything equally. Risk-based testing spends the testing budget where a failure would hurt the most, so the biggest dangers are found and fixed first.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Risk-based testing:</b> an approach that ranks tests by risk so the most dangerous areas are tested first.</li>
+        <li><b>Risk:</b> the chance of an unwanted event multiplied by how bad the event would be.</li>
+        <li><b>Probability:</b> how likely the unwanted event is, based on complexity, new technology, change frequency and team experience.</li>
+        <li><b>Impact:</b> the damage if it happens — money, safety, legal exposure, users affected and reputation.</li>
+        <li><b>Risk assessment:</b> the activity of identifying risks and scoring their probability and impact.</li>
+        <li><b>Prioritization:</b> putting the highest-scoring items first in the test plan.</li>
+        <li><b>Test effort:</b> the amount of review, test design and execution given to an item.</li>
+        <li><b>Mitigation:</b> an action that reduces either the chance or the impact of a risk.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li>Identify every requirement with regard to the risks associated with the project.</li>
-        <li>When it comes to assessing risks, <b>prioritize the needs</b>.</li>
-        <li>Prepare and outline the tests based on requirement prioritization.</li>
-        <li>Perform the test as per prioritization as well as approval criteria.</li>
+        <li>List every requirement and ask two questions: how likely is a defect here, and how bad would it be? This turns vague worry into a score.</li>
+        <li>Score probability and impact, then multiply them to rank the risks. A simple high/medium/low scale is enough for an exam answer.</li>
+        <li>Put the highest-risk requirements first in the test plan. This is why the process saves time.</li>
+        <li>Choose stronger techniques for high-risk items: reviews, boundary tests, independent validation.</li>
+        <li>Run the tests in priority order and record results against each risk.</li>
+        <li>Review the risk scores as the project changes. A risk that was low can become high after a late change.</li>
       </ol>
 
-      <h4>3. Example — hospital application</h4>
+      <h4>Risk formula</h4>
+      <div class="math">Risk = Probability of an undesirable outcome × Impact of that outcome</div>
+      <p><b>Probability</b> rises with complexity, new technology, frequent change, an inexperienced team and heavy usage. <b>Impact</b> rises with money loss, safety danger, legal exposure, the number of users affected and reputation damage.</p>
+
+      <h4>Process of risk-based testing (book)</h4>
+      <ol>
+        <li>Identify every requirement and the risks linked to it.</li>
+        <li>Assess the risks and <b>prioritize the needs</b>.</li>
+        <li>Prepare and outline tests in that priority order.</li>
+        <li>Run tests in priority order and apply the agreed approval criteria.</li>
+      </ol>
+
+      <h4>Example — hospital application</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Requirement</th><th>Probability</th><th>Impact</th><th>Priority</th><th>Test effort</th></tr></thead>
@@ -413,16 +543,20 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the dosage feature gets several strong techniques because a mistake could kill someone. The icon gets one quick look. The testing budget is limited, but it is placed where it matters.</p>
 
-      <h4>4. Advantages (book)</h4>
+      <h4>Advantages (book)</h4>
       <ol>
-        <li>As all the critical functions of the application are tested, it improves the overall quality of the product.</li>
-        <li>Early detection of potential problem areas, so effective preventive measures can be taken.</li>
-        <li>Improved market opportunity (time to market) and on-time delivery.</li>
+        <li>Critical functions are tested first, so overall product quality improves.</li>
+        <li>Problem areas are found early, so preventive action is possible.</li>
+        <li>Improved market opportunity and on-time delivery.</li>
         <li>Improved service performance.</li>
-        <li>Helps make testing a better planned and organized activity.</li>
+        <li>Testing becomes a better planned and organised activity.</li>
       </ol>
-      <p><b>Limitation:</b> risk scores are estimates and can be biased, so they must be reviewed and updated as the project changes.</p>
+      <p><b>Limitation:</b> risk scores are estimates and can be biased. They must be reviewed and updated as the project changes.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> a city with a small repair budget fixes the bridge used by school buses before it repaints a park bench. The bridge is not more visible; it is simply more dangerous if it fails.</div>
+      <div class="confuse"><b>Common confusion:</b> risk-based testing does <b>not</b> mean ignoring low-risk items. It ranks effort. Low-risk items still get a basic check; they just do not get the deepest tests.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.8.12 Risk Based Testing, p. 3-34 – 3-35</p>
     </div>
   </div>
@@ -434,21 +568,51 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q2(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> compatibility testing checks that the software runs on many devices and environments.<br>Security testing checks that an attacker cannot break in.<br>One makes the product work on the user's device; the other protects the user's data.</div>
+
+      <h4>Why we do this</h4>
+      <p>Users open the same app on old phones, new browsers and slow networks. A product that works only on the developer's laptop is not finished. Separately, any product that stores data must resist people who want to steal or change it.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Compatibility testing:</b> checking that the software works on the promised devices, systems and networks.</li>
+        <li><b>Security testing:</b> trying to break the system's protections before an attacker does.</li>
+        <li><b>Compatibility:</b> the ability of the software to work correctly on different hardware, operating systems, browsers and networks.</li>
+        <li><b>Operating system (OS):</b> the base software such as Windows, Android, iOS or Ubuntu that runs applications.</li>
+        <li><b>Backward compatibility:</b> working with <b>older</b> versions of hardware or software.</li>
+        <li><b>Forward compatibility:</b> working with <b>newer</b> versions that do not exist yet.</li>
+        <li><b>Minimum configuration:</b> the weakest machine the product promises to support.</li>
+        <li><b>Vulnerability:</b> a weakness an attacker can use.</li>
+        <li><b>Authorization:</b> the rule that decides who may access which data or action.</li>
+        <li><b>SQL injection:</b> an attack that inserts database commands through an input field.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>List the supported platforms: operating systems, browsers, screen sizes, network types and the weakest supported machine.</li>
+        <li>Pick a representative device or browser for each group. Testing every combination is usually impossible.</li>
+        <li>Install the same build on each platform and run the key user journeys.</li>
+        <li>Check layout, input, navigation, downloads and error messages on each platform.</li>
+        <li>For security, list the assets: accounts, payments, personal data and admin actions.</li>
+        <li>Try to break each protection: change an ID, submit attack text, call an admin action as a normal user.</li>
+        <li>Log the result with the exact device, browser and version, so the defect can be reproduced.</li>
+      </ol>
+
       <h4>1. Compatibility testing</h4>
-      <p>Compatibility testing checks whether the software is <b>capable of running on different hardware, operating systems, applications, network environments or mobile devices</b>. It evaluates that the application is compatible with other hardware/software with the <b>minimum and maximum configuration</b>.</p>
+      <p>Compatibility testing checks whether the software runs on different <b>hardware, operating systems, applications, network environments and mobile devices</b>. It checks the product on the <b>minimum and maximum configuration</b>.</p>
       <p><b>Why it is important (book):</b></p>
       <ol>
         <li>It ensures complete customer satisfaction.</li>
         <li>It provides service across multiple platforms.</li>
-        <li>It helps identify bugs during the development process.</li>
+        <li>It helps find bugs during development.</li>
       </ol>
-      <p><b>Two types:</b></p>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Type</th><th>What is verified</th><th>Why it is easy or hard</th></tr></thead>
         <tbody>
-          <tr><td><b>Backward compatibility</b></td><td>Behaviour and compatibility of the developed hardware/software with <b>older versions</b>.</td><td>Much more predictable, because all changes from previous versions are known.</td></tr>
-          <tr><td><b>Forward compatibility</b></td><td>Behaviour and compatibility with <b>newer versions</b>.</td><td>Harder to predict, because the changes that will be made in newer versions are not known.</td></tr>
+          <tr><td><b>Backward compatibility</b></td><td>Behaviour with <b>older versions</b> of hardware or software.</td><td>More predictable, because the old versions and their changes are known.</td></tr>
+          <tr><td><b>Forward compatibility</b></td><td>Behaviour with <b>newer versions</b>.</td><td>Harder, because future changes are not known yet.</td></tr>
         </tbody>
       </table>
       </div>
@@ -456,26 +620,30 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <table class="left">
         <thead><tr><th>What is varied</th><th>Example</th></tr></thead>
         <tbody>
-          <tr><td>Operating system</td><td>Same build on Windows 11 and Ubuntu.</td></tr>
-          <tr><td>Hardware / device</td><td>Desktop, tablet, phone; different screen sizes.</td></tr>
-          <tr><td>Application / browser</td><td>Chrome, Firefox, Edge, Safari.</td></tr>
-          <tr><td>Network environment</td><td>2G/3G/4G/Wi-Fi and high-latency links.</td></tr>
-          <tr><td>Minimum / maximum configuration</td><td>Low-RAM machine and a high-end machine.</td></tr>
+          <tr><td>Operating system</td><td>The same build on Windows 11 and Ubuntu.</td></tr>
+          <tr><td>Hardware / device</td><td>Desktop, tablet and phone with different screen sizes.</td></tr>
+          <tr><td>Application / browser</td><td>Chrome, Firefox, Edge and Safari.</td></tr>
+          <tr><td>Network environment</td><td>2G, 3G, 4G, Wi-Fi and high-latency links.</td></tr>
+          <tr><td>Minimum / maximum configuration</td><td>A low-RAM machine and a high-end machine.</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> compatibility is a matrix, not a single test. You choose representative rows and columns, then record exactly which combination passed or failed.</p>
 
       <h4>2. Security testing</h4>
-      <p>Security testing intends to <b>uncover vulnerabilities</b> of the system and determine that its <b>data and resources are protected</b> from possible intruders. It depends heavily on expertise and experience. Software security means making software <b>behave correctly in the presence of a malicious attack</b>; the difference between safety and security is the presence of an <b>intelligent adversary</b>.</p>
+      <p>Security testing tries to <b>find vulnerabilities</b> and prove that data and resources are protected from intruders. It depends heavily on expertise and experience. Software security means behaving correctly <b>during a malicious attack</b>; the difference between safety and security is the presence of an <b>intelligent adversary</b>.</p>
       <p><b>Types (book):</b></p>
       <ol>
-        <li><b>Network security</b> — vulnerabilities in the network infrastructure (resources and policies).</li>
-        <li><b>System software security</b> — weaknesses in the OS and database system the application depends on.</li>
-        <li><b>Client-side application security</b> — ensuring that the client cannot be manipulated.</li>
-        <li><b>Server-side application security</b> — ensuring the server code and its technologies are robust enough to fend off any intrusion.</li>
+        <li><b>Network security</b> — weaknesses in the network infrastructure, resources and policies.</li>
+        <li><b>System software security</b> — weaknesses in the operating system and database the app depends on.</li>
+        <li><b>Client-side application security</b> — making sure the client or browser cannot be manipulated.</li>
+        <li><b>Server-side application security</b> — making sure the server code resists intrusion.</li>
       </ol>
-      <p><b>Example:</b> a user changes <code>role=user</code> to <code>role=admin</code> in the request; the server must reject it. A search box given <code>' OR 1=1 --</code> must return no data and log the attempt.</p>
-      <p><b>Tools used in practice:</b> OWASP ZAP and Burp Suite (only on authorised systems).</p>
+      <p><b>Example:</b> a user changes <code>role=user</code> to <code>role=admin</code> in a request; the server must reject it. A search box given <code>' OR 1=1 --</code> must return no data and must log the attempt.</p>
+      <p><b>Tools used in practice:</b> OWASP ZAP and Burp Suite, used only on systems you are authorised to test.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> compatibility is a <b>key that opens every door in the building</b>. Security is the <b>lock that cannot be picked</b>. A key that works everywhere is useful only if the locks still hold.</div>
+      <div class="confuse"><b>Common confusion:</b> “it looks fine on my laptop” is not compatibility testing. Compatibility means a defined list of platforms, versions and configurations, each with a recorded result.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.8.4 Compatibility Testing and §3.8.5 Security Testing, p. 3-30 – 3-31</p>
     </div>
   </div>
@@ -487,30 +655,55 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q2(a) [6]</p>
-      <p><b>Definition:</b> Ad hoc testing is <b>unstructured, random and requires no documentation</b>. It is also referred to as <b>random testing</b> and <b>monkey testing</b>.</p>
 
-      <h4>1. Characteristics (book)</h4>
+      <div class="simple"><b>In simple words:</b> ad hoc testing is testing with no plan and no written test case.<br>The tester pokes at the software like a curious user and follows whatever looks suspicious.<br>It finds odd bugs that scripted tests miss, but it cannot prove coverage.</div>
+
+      <h4>Why we do this</h4>
+      <p>Scripted tests only check what someone thought to write down. A tester who explores freely can hit strange combinations, interruptions and bad inputs that no plan predicted. Ad hoc testing is a cheap way to find those surprises.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Ad hoc testing:</b> unplanned testing with no written test cases, where the tester follows whatever looks suspicious.</li>
+        <li><b>Ad hoc:</b> done for a particular situation, without a fixed plan.</li>
+        <li><b>Monkey testing:</b> another name for random ad hoc testing, like a monkey pressing buttons.</li>
+        <li><b>Black-box testing:</b> testing through inputs and outputs without reading the code.</li>
+        <li><b>Buddy testing:</b> a tester and a developer test together, usually after unit testing.</li>
+        <li><b>Pair testing:</b> two testers share one setup; one drives, the other observes and analyses.</li>
+        <li><b>Traceability:</b> the ability to link a test back to a requirement.</li>
+        <li><b>Exploratory testing:</b> structured learning and testing at the same time, guided by a charter.</li>
+      </ul>
+
+      <h4>Step-by-step — how an ad hoc session runs</h4>
       <ol>
-        <li>Random testing, done on any part of the application.</li>
-        <li>It is a <b>black box testing technique</b>.</li>
-        <li>It detects/uncovers bugs and loopholes that may be missed during automated testing.</li>
-        <li>It requires a software tester with in-depth knowledge of the testing system.</li>
-        <li>It is unplanned and unstructured.</li>
-        <li>It does not require any documentation or formal test case execution.</li>
+        <li>Open the application and pick an area that feels risky, such as payment or sign-up. No script is written.</li>
+        <li>Try unusual but realistic actions: add many items, go back, repeat a step, rotate the phone, cut the network.</li>
+        <li>Watch for crashes, blank screens, wrong totals or stuck buttons. These are the signals of a defect.</li>
+        <li>Write down the exact steps and the result immediately, even though the session was unplanned. This is the only way to reproduce the bug.</li>
+        <li>Log each defect and tell the team which area was explored, so the gap in scripted coverage is known.</li>
       </ol>
 
-      <h4>2. Types of ad hoc testing</h4>
+      <h4>Characteristics (book)</h4>
+      <ol>
+        <li>Random testing, done on any part of the application.</li>
+        <li>It is a <b>black-box technique</b>.</li>
+        <li>It finds bugs and loopholes that automated testing may miss.</li>
+        <li>It needs a tester with in-depth knowledge of the system.</li>
+        <li>It is unplanned and unstructured.</li>
+        <li>It needs no documentation or formal test-case execution.</li>
+      </ol>
+
+      <h4>Types of ad hoc testing</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Type</th><th>How it is done</th></tr></thead>
         <tbody>
-          <tr><td><b>Buddy testing</b></td><td>Done with at least two members — one from the testing team and one from the development team. It is performed when unit testing is done on the application, and it helps both teams do their jobs.</td></tr>
-          <tr><td><b>Pair testing</b></td><td>Two testers work together on a module with the same test setup shared between them. One tester performs testing while the other observes and analyses the process; both share the work and document their observations.</td></tr>
+          <tr><td><b>Buddy testing</b></td><td>At least two people — one tester and one developer. It is done when unit testing is complete and helps both teams understand the change.</td></tr>
+          <tr><td><b>Pair testing</b></td><td>Two testers share one setup. One tests while the other observes and analyses; both record what they find.</td></tr>
         </tbody>
       </table>
       </div>
 
-      <h4>3. Example</h4>
+      <h4>Example</h4>
       <p>A tester opens a food-delivery app and randomly tries:</p>
       <ol>
         <li>adding 20 items to the cart, then removing them all;</li>
@@ -521,31 +714,34 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       </ol>
       <p>The app crashes during payment with Wi-Fi off and shows a blank coupon after the back-and-reapply step. Both are logged as defects. This is ad hoc testing because there was no plan, no written test case and no expected-result document.</p>
 
-      <h4>4. Advantages</h4>
+      <h4>Advantages</h4>
       <ol>
-        <li>Ad hoc testing can be done without following any fixed process.</li>
-        <li>The tester can find more defects than in traditional testing because of the various innovative methods that can be applied.</li>
-        <li>When in-depth testing is required in less time, ad hoc testing can be performed and still deliver a quality product on time.</li>
+        <li>It can be done without following a fixed process.</li>
+        <li>The tester can find more defects than in traditional testing because of the unusual methods used.</li>
+        <li>When deep testing is needed in a short time, it can still deliver a quality product on schedule.</li>
+      </ol>
+      <h4>Disadvantages</h4>
+      <ol>
+        <li>It depends on the test engineer's product knowledge, because the tester must know the application flow.</li>
+        <li>We cannot trace requirements or measure requirement coverage, because there is no traceability matrix or documentation.</li>
       </ol>
 
-      <h4>5. Disadvantages</h4>
-      <ol>
-        <li>It is dependent on the test engineer's product knowledge, because he/she must know the flow of the application.</li>
-        <li>We cannot trace the requirements or check requirement/test coverage, as there is no traceability matrix or documentation.</li>
-      </ol>
-
-      <h4>6. Ad hoc vs exploratory testing</h4>
+      <h4>Ad hoc vs exploratory testing</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Ad hoc testing</th><th>Exploratory testing</th></tr></thead>
         <tbody>
-          <tr><td>Planning</td><td>Performed without planning or goal.</td><td>Performed with a clear plan; structured.</td></tr>
-          <tr><td>Prior knowledge</td><td>The tester needs complete knowledge of the software.</td><td>No compulsion; the tester can work with or without knowledge of the subject.</td></tr>
-          <tr><td>Target</td><td>No target or goal; everything is done randomly, without structure.</td><td>Targets and goals can be set while still allowing free exploration.</td></tr>
-          <tr><td>Documentation</td><td>No documentation; none of the steps are documented.</td><td>Documentation/recording can be done, so bugs can be reproduced.</td></tr>
+          <tr><td>Planning</td><td>Performed without planning or a goal.</td><td>Performed with a clear plan; structured.</td></tr>
+          <tr><td>Prior knowledge</td><td>The tester needs complete knowledge of the software.</td><td>The tester can work with or without deep knowledge.</td></tr>
+          <tr><td>Target</td><td>No target or goal; actions are random.</td><td>Targets and goals can be set while still allowing free exploration.</td></tr>
+          <tr><td>Documentation</td><td>No documentation; steps are not recorded.</td><td>Notes are recorded, so bugs can be reproduced.</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> ad hoc testing is a quick, unrecorded poke. Exploratory testing is a planned investigation with notes. Both are useful, but only exploratory testing leaves evidence you can repeat.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> a child handed a new toy presses every button, opens every flap and shakes it upside down. That is ad hoc testing — no instructions, no plan, and often the fastest way to find the part that falls off.</div>
+      <div class="confuse"><b>Common confusion:</b> ad hoc testing is <b>not</b> the same as exploratory testing. Exploratory testing has a charter, a time box and notes; ad hoc testing has none of these.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.8.10 Adhoc Testing, p. 3-33 – 3-34</p>
     </div>
   </div>
@@ -563,39 +759,70 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q1(b) [6] · 2023 Nov Q2(b) [6] · 2025 Nov Q1(c) [6]</p>
 
+      <div class="simple"><b>In simple words:</b> unit testing checks one small piece of code on its own.<br>Integration testing checks that the pieces work together.<br>Unit testing finds a broken brick; integration testing finds a wall that does not fit.</div>
+
+      <h4>Why we do this</h4>
+      <p>A function can pass its own test and still fail when it receives real data from another function. Testing units first makes bugs easy to locate. Testing the joins afterwards catches the misunderstandings between modules.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Unit testing:</b> testing one small piece of code on its own, before it is joined to anything else.</li>
+        <li><b>Integration testing:</b> testing several tested units together to check the joins between them.</li>
+        <li><b>Unit:</b> the smallest testable piece of software, usually one function, class or method.</li>
+        <li><b>Integration:</b> joining tested units into a larger group and testing the group.</li>
+        <li><b>Interface:</b> the agreed way two modules pass data or call each other.</li>
+        <li><b>Use case:</b> one complete task a user performs with the system, from start to result.</li>
+        <li><b>Stub:</b> a fake lower-level module used when the real one is not ready.</li>
+        <li><b>Driver:</b> a small fake caller used to run a low-level module that has no real caller yet.</li>
+        <li><b>Big-bang integration:</b> joining all modules at once and testing the whole group.</li>
+        <li><b>Top-down:</b> starting from the main module and adding lower modules one level at a time.</li>
+        <li><b>Bottom-up:</b> starting from the lowest modules and building upward.</li>
+        <li><b>Sandwich (hybrid):</b> combining top-down and bottom-up so the two meet in the middle.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Take one unit and test it alone with clear inputs and expected outputs. This proves the unit before it is mixed with others.</li>
+        <li>Choose an integration order: big-bang, top-down, bottom-up or sandwich. The order decides which risks you see first.</li>
+        <li>Add the fake helpers the order needs — stubs for missing lower modules, drivers for missing callers.</li>
+        <li>Test the interfaces: data types, order of calls, error values and empty inputs. Most integration bugs live here.</li>
+        <li>Run functional tests for the use cases the group must support.</li>
+        <li>Run structural and performance tests on the joined group.</li>
+        <li>Record the tests and defects, then repeat steps 1 to 7 until the whole system is integrated.</li>
+      </ol>
+
       <h4>1. Unit testing</h4>
-      <p>A <b>unit</b> is the <b>smallest testable piece of software</b>. Unit testing is the level where individual units/components of a software are tested. The purpose is to <b>validate that each unit performs as designed</b>. It aims at testing each component that the system is built upon; if each works as defined, the system as a whole has a better chance of working together.</p>
-      <p>Unit testing is the <b>first level of testing</b> and is performed <b>before integration testing</b>. It is normally performed by the <b>software developers themselves</b>.</p>
+      <p>A <b>unit</b> is the smallest testable piece of software. Unit testing checks each unit separately and confirms that it <b>does what it was designed to do</b>. It is the <b>first level of testing</b>, done before integration, usually by the <b>developers themselves</b>.</p>
       <p><b>Advantages (book):</b></p>
       <ol>
-        <li>Codes are more reusable.</li>
-        <li>Increases confidence in changing/maintaining code.</li>
-        <li>Development is faster.</li>
-        <li>Debugging is easy.</li>
-        <li>The cost of fixing a defect found during unit testing is less than at higher levels.</li>
+        <li>Code becomes more reusable.</li>
+        <li>Confidence rises when code is changed or maintained.</li>
+        <li>Development becomes faster.</li>
+        <li>Debugging is easier.</li>
+        <li>A defect found here costs less to fix than at a higher level.</li>
       </ol>
 
       <h4>2. Integration testing</h4>
-      <p>Integration testing is the phase in which <b>individual software modules are combined and tested as a group</b>. It occurs <b>after unit testing and before validation testing</b>. The entire system is viewed as a collection of subsystems determined during system and object design; the <b>order in which subsystems are selected</b> for testing and integration determines the testing strategy.</p>
+      <p>Integration testing combines individual modules and tests them <b>as a group</b>. It runs <b>after unit testing and before validation testing</b>. The system is viewed as a set of subsystems, and the <b>order in which they are selected</b> decides the integration strategy.</p>
       <p><b>Example — three-layer call hierarchy (Fig. 3.7.2):</b></p>
       <div class="tree">            A              Layer I
           / | \
          B  C  D          Layer II
         / \    |
        E   F   G          Layer III</div>
+      <p class="small"><b>What this means:</b> A calls B, C and D; B calls E and F; D calls G. Top-down starts at A and uses stubs below. Bottom-up starts at E, F and G and uses a driver above.</p>
 
       <h4>3. Steps in integration testing (book)</h4>
       <ol>
-        <li>Based on the integration strategy, select a component to be tested. Unit test all the classes in the component.</li>
-        <li>Put the selected component together; do any preliminary fix-up necessary to make the integration test operational (<b>drivers, stubs</b>).</li>
-        <li>Do <b>functional testing</b>: define test cases that exercise all use cases with the selected component.</li>
-        <li>Do <b>structural testing</b>: define test cases that exercise the selected component.</li>
-        <li>Execute <b>performance tests</b>.</li>
-        <li>Keep records of the test cases and testing activities.</li>
-        <li>Repeat steps 1 to 7 until the full system is tested.</li>
+        <li>Pick a component using the chosen strategy and unit test all its classes.</li>
+        <li>Join the component and add the needed <b>drivers or stubs</b> so the test can run.</li>
+        <li>Do <b>functional testing</b>: exercise all use cases that touch this component.</li>
+        <li>Do <b>structural testing</b>: exercise the internal paths of the component.</li>
+        <li>Run <b>performance tests</b> on the joined group.</li>
+        <li>Record test cases and results.</li>
+        <li>Repeat until the full system is tested.</li>
       </ol>
-      <p><b>Primary goal:</b> identify errors in the current component configuration.</p>
-      <p><b>Who / when / where / why:</b> done by developers/testers; test cases are written when the detailed specification is ready; testing is continuous throughout the project; done on the <b>programmer's workbench</b>; the reason is to <b>discover inconsistencies in the combination of units</b>.</p>
+      <p><b>Primary goal:</b> find errors in the current component configuration. Integration testing is done by developers or testers on the <b>programmer's workbench</b>, and its reason is to <b>discover inconsistencies in the combination of units</b>.</p>
 
       <h4>4. Approaches used in integration testing</h4>
       <div class="tbl-wrap">
@@ -609,7 +836,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
-      <div class="note"><b>Diagram to draw:</b> the three-layer tree A → B, C, D → E, F, G. Mark stubs for top-down and a driver at the bottom for bottom-up.</div>
+      <p class="small"><b>What this means:</b> stubs stand in for modules <b>below</b> the one being tested; drivers stand in for modules <b>above</b> it. Choosing an approach is really choosing which end of the system you want to trust first.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> unit testing checks each car part — battery, brake disc, headlight — on a bench. Integration testing bolts the parts together and checks that the engine, brakes and lights work as one car.</div>
+      <div class="confuse"><b>Common confusion:</b> integration testing is <b>not</b> system testing. Integration checks the joins between modules; system testing checks the complete product against the requirements.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.7.2 – 3.7.3 Unit and Integration Testing, p. 3-23 – 3-25</p>
     </div>
   </div>
@@ -622,30 +852,60 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q1(c) [6] · 2023 May Q2(c) [6] · 2025 Nov Q1(b) [6]</p>
 
+      <div class="simple"><b>In simple words:</b> system testing checks the complete product against its written requirements.<br>Acceptance testing checks whether the customer will accept it.<br>One is done by an independent test team; the other ends with a customer decision.</div>
+
+      <h4>Why we do this</h4>
+      <p>A system can pass every module test and still fail as a product. System testing checks the whole behaviour. Acceptance testing protects the customer and the contract: it decides whether the product is good enough to go live.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>System testing:</b> testing the fully integrated product against the specified requirements.</li>
+        <li><b>Acceptance testing:</b> formal testing that decides whether the product meets the agreed acceptance criteria.</li>
+        <li><b>Acceptance criteria:</b> the written conditions the customer will use to accept or reject the product.</li>
+        <li><b>UAT (user acceptance testing):</b> acceptance testing done by the customer or end users.</li>
+        <li><b>Business acceptance testing:</b> testing by the supplier's own organisation to check that the product will pass UAT.</li>
+        <li><b>UI (user interface):</b> the screens, buttons and messages the user sees and uses.</li>
+        <li><b>SRS:</b> the Software Requirements Specification, the written statement of what the system must do.</li>
+        <li><b>Sign-off:</b> the customer's formal written approval.</li>
+        <li><b>Cut-over:</b> the moment the old system is replaced by the new one in live operation.</li>
+        <li><b>Interoperability:</b> the ability of two systems to exchange data and work together.</li>
+        <li><b>Independent tester:</b> a tester who did not write the code and reports outside the development team.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Take the approved requirements and turn each one into a system test with a clear expected result.</li>
+        <li>Run the tests on the fully integrated system in a production-like environment.</li>
+        <li>Include non-functional checks: performance, security, portability, safety and interoperability.</li>
+        <li>Log every difference between the implementation and the specification.</li>
+        <li>Fix the defects and rerun. System testing ends when the exit criteria are met.</li>
+        <li>Hand the product to the customer for acceptance testing against the acceptance criteria.</li>
+        <li>Record the customer's decision: accept, accept with conditions, or reject. This is the formal sign-off.</li>
+      </ol>
+
       <h4>1. System testing</h4>
-      <p><b>Definition:</b> System testing is the process of testing an <b>integrated system</b> to verify that it <b>meets the specified requirements</b>. It tests the <b>overall interaction of components</b> and finds disparities between the implementation and the specification.</p>
-      <p>It is performed <b>after integration testing and before acceptance testing</b>. Normally, <b>independent testers</b> perform system testing. The system is tested for its <b>non-functional requirements</b> such as performance, portability, security, safety and interoperability of hardware/software.</p>
-      <p>System testing also <b>identifies new faults</b> that may have been introduced while current faults were being corrected. It verifies that a new version or release still performs the same functions in the same manner as an older version or release.</p>
-      <p><b>Example:</b> for an e-commerce site, place an order end to end — search → cart → payment gateway → order record → confirmation e-mail — and check performance, security and portability.</p>
+      <p><b>Definition:</b> system testing tests an <b>integrated system</b> to verify that it <b>meets the specified requirements</b>. It checks the <b>overall interaction of components</b> and finds differences between the implementation and the specification.</p>
+      <p>It runs <b>after integration testing and before acceptance testing</b>, normally with <b>independent testers</b>. It covers non-functional requirements such as performance, portability, security, safety and interoperability. It also finds <b>new faults</b> introduced while old faults were being fixed.</p>
+      <p><b>Example:</b> for an e-commerce site, place an order end to end — search, cart, payment gateway, order record, confirmation e-mail — and check performance, security and portability.</p>
 
       <h4>2. Acceptance testing</h4>
-      <p><b>Definition:</b> Acceptance testing is a <b>formal testing</b> activity conducted to determine whether a system <b>satisfies its acceptance criteria</b>. There are two categories: <b>user acceptance testing</b> and <b>business acceptance testing</b>.</p>
+      <p><b>Definition:</b> acceptance testing is a <b>formal activity</b> that decides whether a system <b>satisfies its acceptance criteria</b>. It has two categories: <b>user acceptance testing</b> and <b>business acceptance testing</b>.</p>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Type</th><th>Who does it</th><th>Purpose</th></tr></thead>
         <tbody>
-          <tr><td><b>User acceptance testing (UAT)</b></td><td>The customer</td><td>Ensure the system satisfies the contractual acceptance criteria before it is signed off as meeting the needs.</td></tr>
-          <tr><td><b>Business acceptance testing</b></td><td>The development organization of the supplier</td><td>Ensure that the system will eventually pass the user acceptance testing.</td></tr>
+          <tr><td><b>User acceptance testing (UAT)</b></td><td>The customer</td><td>Ensure the system satisfies the contractual acceptance criteria before sign-off.</td></tr>
+          <tr><td><b>Business acceptance testing</b></td><td>The supplier's development organisation</td><td>Ensure the system will eventually pass user acceptance testing.</td></tr>
         </tbody>
       </table>
       </div>
-      <p>Acceptance testing can be done at the <b>client's office or the developer's office</b>. Its three major objectives are:</p>
+      <p>Acceptance testing can happen at the <b>client's office or the developer's office</b>. Its three objectives are:</p>
       <ol>
-        <li>Confirm that the system meets the agreed-upon criteria.</li>
-        <li>Identify and resolve discrepancies, if there are any.</li>
-        <li>Determine the readiness of the system for cut-over to live operations.</li>
+        <li>Confirm that the system meets the agreed criteria.</li>
+        <li>Identify and resolve any differences.</li>
+        <li>Decide whether the system is ready for cut-over to live operation.</li>
       </ol>
-      <p>Acceptance tests are usually created by <b>business customers</b> and expressed in a business domain language. They are high-level tests that test the completeness of a user story played during a sprint/iteration. They are ideally created through collaboration between business customers, business analysts, testers and developers; the <b>business customers (product owners) are the primary owners</b> of these tests. They include both <b>business logic tests and UI validation</b>.</p>
+      <p>Acceptance tests are usually written by <b>business customers</b> in business language. They are high-level tests of complete user stories. Business customers, analysts, testers and developers create them together, but the <b>business customers or product owners own them</b>. They include both <b>business logic checks and UI checks</b>.</p>
 
       <h4>3. System vs acceptance testing</h4>
       <div class="tbl-wrap">
@@ -659,6 +919,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> system testing asks “does it meet the specification?”. Acceptance testing asks “will the customer pay for and use it?”. A product can pass the first and still fail the second if the specification itself was wrong.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> system testing is the factory's full inspection of a new car — engine, brakes, lights, safety. Acceptance testing is the customer's test drive and signature on the delivery form.</div>
+      <div class="confuse"><b>Common confusion:</b> acceptance testing is not just “testing at the end”. It is a <b>formal decision</b> against agreed criteria, and business acceptance testing is done by the supplier to predict the customer's UAT — not by the customer.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.7.4 – 3.7.5 System and Acceptance Testing, p. 3-25 – 3-26</p>
     </div>
   </div>
@@ -670,34 +934,62 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2023 Nov Q2(c) [6]</p>
-      <p><b>Definition:</b> Regression testing refers to testing activities that occur <b>after software changes</b>. It usually refers to testing activities during the <b>software maintenance phase</b>. It is also referred to as <b>verification testing</b>.</p>
-      <p>Regression testing is initiated after a designer has attempted to <b>fix a recognized problem</b> or has <b>added source code</b> to a program that may have inadvertently introduced errors. It is a <b>quality control measure</b> to ensure that the newly modified code still complies with its specified requirements and that the <b>unmodified code has not been affected</b> by the maintenance activity.</p>
+
+      <div class="simple"><b>In simple words:</b> regression testing re-runs old tests after a change.<br>It checks that the new code did not break something that already worked.<br>Retesting checks the fix itself; regression checks everything around it.</div>
+
+      <h4>Why we do this</h4>
+      <p>A small fix can quietly break a feature that nobody touched. Regression testing is the safety net that catches these side effects before users do. It protects the quality of every release.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Regression:</b> a new defect in something that used to work, caused by a change elsewhere.</li>
+        <li><b>Regression testing:</b> re-running existing tests after a change to confirm old behaviour still works.</li>
+        <li><b>Retesting:</b> running the specific failed test again after a fix to confirm that defect is closed.</li>
+        <li><b>Maintenance phase:</b> the period after release when the software is fixed and improved.</li>
+        <li><b>Side effect:</b> an unintended change in another part of the program.</li>
+        <li><b>Test suite:</b> a collected set of test cases that are run together.</li>
+        <li><b>Automation:</b> using a tool to run tests and compare results without manual effort.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Identify what changed: a fixed defect, a new feature or an updated rule.</li>
+        <li>Select existing tests that cover the changed area and everything that depends on it.</li>
+        <li>Check that the fix has its own test. Regression testing itself reuses existing tests rather than inventing new ones.</li>
+        <li>Run the selected suite on the new build.</li>
+        <li>Compare the results with the recorded results from the previous build.</li>
+        <li>Investigate every new failure. A failure in an untouched area is a regression.</li>
+        <li>Automate the suite where possible, because it will run again after every change.</li>
+      </ol>
 
       <h4>1. Importance of regression testing</h4>
       <ol>
-        <li><b>Checks the modified code:</b> the new or changed code still meets its specified requirements.</li>
-        <li><b>Protects the unmodified code:</b> it confirms that maintenance activity has not affected code that was working earlier.</li>
-        <li><b>Catches side effects:</b> a fix or new feature may introduce errors in another part of the program.</li>
-        <li><b>Acts as quality control:</b> it is a planned check during the maintenance phase, not an optional extra.</li>
-        <li><b>Finds inadvertent errors:</b> adding source code can introduce faults that were not present before.</li>
-        <li><b>Supports new releases:</b> it verifies that a new version performs the same functions as the older version.</li>
-        <li><b>Saves cost and time:</b> existing test cases are re-executed, so no new test cases are created and defects are caught before release.</li>
+        <li><b>Checks the modified code:</b> the new or changed code still meets its requirements.</li>
+        <li><b>Protects the unmodified code:</b> maintenance has not damaged code that worked before.</li>
+        <li><b>Catches side effects:</b> a fix or feature may create an error elsewhere.</li>
+        <li><b>Acts as quality control:</b> it is a planned check during maintenance, not an optional extra.</li>
+        <li><b>Finds inadvertent errors:</b> adding source code can introduce faults that were not there before.</li>
+        <li><b>Supports new releases:</b> a new version performs the same functions as the old one.</li>
+        <li><b>Saves cost and time:</b> existing tests are reused, and defects are caught before release.</li>
       </ol>
 
       <h4>2. Where it is performed</h4>
-      <p>Regression testing can be performed during <b>any level of testing</b> — unit, integration, system or acceptance — but it is <b>mostly relevant during system testing</b>. During regression testing, <b>new test cases are not created</b>; previously created test cases are <b>re-executed</b>.</p>
+      <p>Regression testing can run at <b>any level</b> — unit, integration, system or acceptance — but it matters most during <b>system testing</b>. During regression testing, <b>no new test cases are created</b> for the old behaviour; previously created tests are <b>re-executed</b>.</p>
 
       <h4>3. What is needed</h4>
       <ul>
-        <li><b>Regression test models</b> to support the definition of the regression test strategy, test cases and coverage criteria.</li>
-        <li>A <b>selected set of existing tests</b> that covers the changed area and the areas that depend on it.</li>
-        <li>Records of earlier test results so that the new results can be compared.</li>
-        <li>Automation where possible, because the same tests are run again and again.</li>
+        <li><b>Regression test models</b> that define the strategy, test cases and coverage criteria.</li>
+        <li>A <b>selected set of existing tests</b> covering the changed area and the areas that depend on it.</li>
+        <li>Records of earlier results so the new results can be compared.</li>
+        <li><b>Automation</b> where possible, because the same tests run again and again.</li>
       </ul>
 
       <h4>4. Example</h4>
       <p>After changing the login password rule from 6 to 8 characters, re-run the existing registration, login, forgot-password, session-timeout and account-lock tests. If the forgot-password test now fails, the change has caused a regression.</p>
-      <p><b>Note:</b> regression testing is <b>not</b> the same as retesting. Retesting checks that the <b>specific defect is fixed</b>; regression checks that <b>other features still work</b> after the change.</p>
+      <p class="small"><b>What this means:</b> the password change was small, but its effects reached five other features. Regression testing follows those connections instead of testing only the changed line.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> after a plumber replaces one pipe, you turn on every tap in the house. The repaired pipe is the retest; the other taps are the regression test.</div>
+      <div class="confuse"><b>Common confusion:</b> regression testing is <b>not</b> the same as retesting. Retesting proves the reported defect is fixed. Regression proves the fix did not break other features.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.7.7 Regression Test, p. 3-27</p>
     </div>
   </div>
@@ -714,49 +1006,79 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [6] · 2023 Nov Q1(a) [6] · 2023 Nov Q1(c) [6]</p>
-      <p><b>Definition:</b> A <b>test design technique</b> is used to select a good set of tests from all possible tests for a given system. <b>Static testing does not execute code</b> — it manually checks work documents to find errors at an early stage. It checks the software product and related artifacts <b>without executing them</b>.</p>
-      <p>Static testing uses the white box method and may include <b>reviews, walkthroughs, inspections and audits</b>. Its main goal is to check whether the coding and algorithm work properly, point out code errors at the beginning of the testing process, and make further testing more efficient and productive.</p>
+
+      <div class="simple"><b>In simple words:</b> static testing checks documents and code <b>without running them</b>.<br>People read, question and inspect the work to find mistakes early.<br>Because nothing is executed, it can start before a single line of code works.</div>
+
+      <h4>Why we do this</h4>
+      <p>The earlier a mistake is found, the cheaper it is to fix. A wrong sentence in a requirements document costs minutes to correct. The same mistake found after release can cost a rebuild. Static testing finds those mistakes while they are still cheap.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Static testing:</b> checking software work products by reading and analysis, without executing the code.</li>
+        <li><b>Dynamic testing:</b> testing by running the software with inputs and checking outputs.</li>
+        <li><b>Review:</b> a person or group examines a work product to find defects.</li>
+        <li><b>Walkthrough:</b> the author leads the team through the document or code and invites comments.</li>
+        <li><b>Inspection:</b> a formal review with a moderator, checklists and recorded metrics.</li>
+        <li><b>Technical review:</b> experts examine the technical approach and content of a work product.</li>
+        <li><b>Static analysis:</b> a tool scans code for type errors, memory leaks and syntax problems without running it.</li>
+        <li><b>Audit:</b> an independent check that processes and standards are being followed.</li>
+        <li><b>Work product:</b> any document or code produced during development, such as a design or a test plan.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Choose the work product to check: requirements, design, code or a test plan.</li>
+        <li>Decide the review type. A draft needs only an informal review; a safety-critical design needs a formal inspection.</li>
+        <li>Give reviewers the material and a checklist in advance, so they know what to look for.</li>
+        <li>Hold the review and record each issue with its location and severity.</li>
+        <li>Send the issues to the author for correction.</li>
+        <li>Check that every issue was fixed. This follow-up is what makes the review useful.</li>
+      </ol>
 
       <h4>1. Static testing methods</h4>
       <ol>
-        <li><b>Code inspections</b> — software code is manually reviewed for defects.</li>
-        <li><b>Code analyzers</b> — a tool checks the code for type errors, memory leaks, syntax errors, etc.</li>
-        <li><b>Compiling</b> — compiling the code using the source compiler or interpreter.</li>
-        <li><b>Modelling techniques</b> — software requirements are modelled to verify that they are correct.</li>
+        <li><b>Code inspections</b> — people read the code and look for defects.</li>
+        <li><b>Code analyzers</b> — a tool checks for type errors, memory leaks and syntax errors.</li>
+        <li><b>Compiling</b> — the source compiler or interpreter checks the code.</li>
+        <li><b>Modelling techniques</b> — requirements are modelled to check that they are correct and complete.</li>
       </ol>
-      <p>Static testing finds bugs <b>before compilation</b>. The earlier a bug is detected, the cheaper it is to fix.</p>
+      <p>Static testing can find bugs <b>before compilation</b>. The earlier a bug is found, the cheaper it is to fix.</p>
 
       <h4>2. How each static technique is useful</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Technique</th><th>What is done</th><th>Usefulness</th></tr></thead>
         <tbody>
-          <tr><td><b>Informal review</b></td><td>The author asks a colleague to review a document or code; a two-person team. It is not documented.</td><td>Very cheap and quick; good for early drafts and small work products.</td></tr>
-          <tr><td><b>Walkthrough</b></td><td>The designer or programmer leads the team through the product; participants ask questions and comment on possible errors and violations of development standards.</td><td>Semi-formal; spreads understanding; most effective at source-code level and on small work products.</td></tr>
-          <tr><td><b>Technical review</b></td><td>Experts such as architects, designers and key users examine the technical content. There is no management participation; a report lists the issues.</td><td>Checks technical concepts, alternatives and consistency; less formal than audit and inspection.</td></tr>
+          <tr><td><b>Informal review</b></td><td>The author asks a colleague to review a document or code; a two-person team; not documented.</td><td>Very cheap and quick; good for early drafts and small work products.</td></tr>
+          <tr><td><b>Walkthrough</b></td><td>The designer or programmer leads the team through the product; participants ask questions and comment on errors and standard violations.</td><td>Semi-formal; spreads understanding; best at source-code level and on small products.</td></tr>
+          <tr><td><b>Technical review</b></td><td>Experts such as architects, designers and key users examine the technical content; no management participation; a report lists the issues.</td><td>Checks technical concepts, alternatives and consistency; less formal than audit and inspection.</td></tr>
           <tr><td><b>Inspection</b></td><td>Formal, disciplined review by a moderator, the author and at least one peer inspector; uses checklists and collects metrics.</td><td>Most formal; gives quantitative quality data; best for critical artefacts such as detailed design and cleanly compiled code.</td></tr>
           <tr><td><b>Static analysis</b></td><td>A code analyzer scans for type errors, memory leaks and syntax errors.</td><td>Fast, repeatable and finds problems before the code is run.</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the techniques differ mainly in <b>formality</b>. Informal review is a quick favour; inspection is a controlled process with records. Match the technique to the risk of the work product.</p>
 
       <h4>3. Advantages</h4>
       <ol>
-        <li>Can start early in the life cycle, so early feedback on quality issues is possible.</li>
-        <li>Defects found at an early stage keep rework cost low.</li>
-        <li>Reduced rework increases development productivity.</li>
-        <li>Team evaluation gives an exchange of information between participants.</li>
-        <li>Increases awareness of quality issues.</li>
-        <li>Highest probability of finding defects.</li>
+        <li>It can start early in the life cycle, so quality feedback arrives early.</li>
+        <li>Defects found early keep rework cost low.</li>
+        <li>Less rework increases development productivity.</li>
+        <li>Team evaluation shares information between participants.</li>
+        <li>It raises awareness of quality issues.</li>
+        <li>It has a high probability of finding defects.</li>
       </ol>
 
       <h4>4. Disadvantages</h4>
       <ul>
         <li>Time-consuming.</li>
-        <li>Cannot test data dependencies.</li>
-        <li>High skill levels are required.</li>
+        <li>Cannot test data dependencies or runtime behaviour.</li>
+        <li>Requires high skill levels.</li>
       </ul>
-      <div class="note"><b>Limitation:</b> static techniques cannot check run-time behaviour, performance or real user interaction. They must be combined with dynamic testing.</div>
+      <p><b>Limitation:</b> static techniques cannot check runtime behaviour, performance or real user interaction. They must be combined with dynamic testing.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> proofreading a letter before posting it. You have not sent it, so a mistake costs nothing yet. Once it is posted, every copy carries the error.</div>
+      <div class="confuse"><b>Common confusion:</b> static testing does <b>not</b> mean “testing that does nothing”. It is real testing of documents and code structure. It simply does not execute the program.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.2 Static Techniques, p. 3-5 – 3-9</p>
     </div>
   </div>
@@ -769,35 +1091,68 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [6] — technical review is also part of the syllabus list</p>
 
+      <div class="simple"><b>In simple words:</b> these are three human checks, from casual to formal.<br>An informal review is a colleague reading your work.<br>A walkthrough is you explaining it to the team.<br>An inspection is a formal team check with a checklist and records.</div>
+
+      <h4>Why we do this</h4>
+      <p>People spot different mistakes when they read with a purpose. A quick second pair of eyes catches obvious errors. A formal inspection with roles and checklists catches deeper defects and gives numbers the organisation can track.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Informal review:</b> a simple, undocumented review by one colleague.</li>
+        <li><b>Walkthrough:</b> a semi-formal session where the author leads others through the product.</li>
+        <li><b>Inspection:</b> a formal review with defined roles, preparation, checklists and metrics.</li>
+        <li><b>Moderator:</b> the neutral person who runs an inspection and keeps it on track.</li>
+        <li><b>Checklist:</b> a list of common defect types that reviewers must check.</li>
+        <li><b>CAR form:</b> a Corrective Action Request form used to record an issue found in a walkthrough.</li>
+        <li><b>Traceability:</b> the ability to follow a requirement from the customer statement to its design, code and tests.</li>
+        <li><b>Metrics:</b> measured numbers, such as defects found per page or per hour.</li>
+        <li><b>Rework:</b> the effort spent correcting a defect.</li>
+        <li><b>Producer:</b> the person who created the work product; in a walkthrough, the author who leads the session.</li>
+      </ul>
+
+      <h4>Step-by-step — a formal inspection</h4>
+      <ol>
+        <li><b>Planning:</b> choose the document, the team and the checklist. This keeps the inspection focused.</li>
+        <li><b>Overview:</b> the author explains the product and its context, so reviewers are not guessing.</li>
+        <li><b>Preparation:</b> each reviewer reads alone and records possible defects. This is where most defects are actually found.</li>
+        <li><b>Meeting:</b> the team discusses each issue and agrees whether it is a defect. The moderator prevents personal criticism.</li>
+        <li><b>Rework:</b> the author fixes the agreed defects.</li>
+        <li><b>Follow-up:</b> the moderator checks that every fix was made. Without this step, defects silently survive.</li>
+      </ol>
+
       <h4>1. Informal review</h4>
-      <p>Informal reviews are applied at various times during the <b>early stages in the life cycle</b> of a document. A <b>two-person team</b> can conduct an informal review: the author asks a colleague to review a document or code. The peers try to find defects and discuss them in a review meeting. The goal is to help the author and improve the quality of the document. Informal reviews come in various shapes and forms, but they have one characteristic in common — <b>they are not documented</b>. The material may be as informal as a computer listing or hand-written documentation.</p>
+      <p>Informal reviews happen at various times in the <b>early stages</b> of a document. A <b>two-person team</b> can do it: the author asks a colleague to review a document or code. The pair looks for defects and discusses them. The goal is to help the author and improve the document. Informal reviews take many shapes, but they share one trait — <b>they are not documented</b>. The material may be as casual as a printed listing or handwritten notes.</p>
 
       <h4>2. Walkthrough</h4>
-      <p>A walkthrough is a <b>semi-formal</b> type of review. Products are reviewed by groups of people, mostly <b>without preparation</b>. A <b>requirements traceability review</b> is a walkthrough: it traces a requirement from customer requirements to the test procedures, and all issues found are documented on <b>CAR forms</b>.</p>
-      <p>It is a form of software peer review in which the <b>designer or programmer leads</b> members of the development team and other interested parties through the product. Participants ask questions and comment on possible errors, violation of development standards and other problems. The <b>producer is the review leader</b>, so the utility of a walkthrough depends on the real goal of the producer. Walkthroughs are most effective at the <b>source code level</b> and on other small work products.</p>
+      <p>A walkthrough is a <b>semi-formal</b> review. A group reviews the product, mostly <b>without preparation</b>. A <b>requirements traceability review</b> is a walkthrough: it follows a requirement from the customer statement to the test procedure, and issues are recorded on <b>CAR forms</b>.</p>
+      <p>In a walkthrough, the <b>designer or programmer leads</b> the development team and other interested people through the product. Participants ask questions and comment on errors, standard violations and other problems. The <b>producer is the review leader</b>, so the value of a walkthrough depends on the producer's real goal. Walkthroughs work best at the <b>source-code level</b> and on small work products.</p>
 
       <h4>3. Inspection</h4>
-      <p>Software inspection is a <b>disciplined engineering practice</b> for detecting and correcting defects in software artifacts and preventing their leakage into field operations. It is a <b>more formal process than a walkthrough</b> and is used to collect metrics or statistics about the software process. A walkthrough is a more informal version of an inspection.</p>
-      <p>Inspections reduce variability and tighten process control. They address three major tasks of process management: <b>planning, measurement and control</b>. They collect quantitative quality data at defined points in the development process, which gives feedback to developers and feed-forward to future steps. Michael Fagan recommended inspections on <b>detailed design, cleanly compiled code and completion of unit test</b>.</p>
-      <p>At a minimum, a formal inspection includes a <b>designated moderator</b>, the <b>author of the work</b> and at least <b>one peer inspector</b>. Walkthroughs generally do not include a designated moderator and are often led by the author.</p>
+      <p>Software inspection is a <b>disciplined engineering practice</b> for finding and correcting defects before they reach the field. It is <b>more formal than a walkthrough</b> and collects metrics about the process. A walkthrough is a more informal version of an inspection.</p>
+      <p>Inspections reduce variation and tighten process control. They support three management tasks: <b>planning, measurement and control</b>. They collect quality data at fixed points, giving feedback to developers and feed-forward to later steps. Michael Fagan recommended inspections on <b>detailed design, cleanly compiled code and completion of unit test</b>.</p>
+      <p>A formal inspection has at least a <b>designated moderator</b>, the <b>author</b> and <b>one peer inspector</b>. Walkthroughs usually have no moderator and are often led by the author.</p>
       <p><b>Steps of inspection:</b> planning → overview → preparation → meeting → rework → follow-up.</p>
 
-      <h4>4. Comparison</h4>
+      <h4>4. Walkthrough vs inspection</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Walkthrough</th><th>Inspection</th></tr></thead>
         <tbody>
-          <tr><td>Focus</td><td>Improve product.</td><td>Find defects.</td></tr>
-          <tr><td>Activities</td><td>Find defects; examine alternatives; forum for learning; discussion.</td><td>Find defects; only defect explanation allowed; learning through defects and inspection.</td></tr>
+          <tr><td>Focus</td><td>Improve the product.</td><td>Find defects.</td></tr>
+          <tr><td>Activities</td><td>Find defects; examine alternatives; forum for learning; discussion.</td><td>Find defects; only defect explanation allowed; learning through defects.</td></tr>
           <tr><td>Process</td><td>Informal.</td><td>Formal.</td></tr>
-          <tr><td>Quality</td><td>Variable; personalities can modify the outcome.</td><td>Repeatable with a fixed process.</td></tr>
-          <tr><td>Time</td><td>Preparation ad-hoc, less formal.</td><td>Preparation required, efficient use of time.</td></tr>
+          <tr><td>Quality</td><td>Variable; personalities can change the outcome.</td><td>Repeatable with a fixed process.</td></tr>
+          <tr><td>Time</td><td>Preparation is ad hoc and less formal.</td><td>Preparation is required and time is used efficiently.</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> a walkthrough can turn into a design discussion. An inspection stays on task: find defects, record them, fix them. That discipline is why inspections give repeatable numbers.</p>
 
       <h4>5. Technical review (extra point)</h4>
-      <p>A technical review reviews the <b>technical approach</b> used during development. It is a peer review activity, less formal than audit and inspection. The product is examined and defects found are mainly <b>technical</b>. There is no management participation; a full report lists the issues. Its goals are to ensure technical concepts are used correctly, assess the value of technical concepts and alternatives, maintain consistency in their use and representation, and inform participants about the technical content of the document.</p>
+      <p>A technical review examines the <b>technical approach</b> used in development. It is a peer review, less formal than an audit or inspection. The product is examined and the defects found are mainly <b>technical</b>. There is no management participation, and a full report lists the issues. Its goals are to use technical concepts correctly, assess alternatives, keep their use consistent and inform participants about the technical content.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> an <b>informal review</b> is a friend reading your letter. A <b>walkthrough</b> is you reading it aloud to the team. An <b>inspection</b> is a proofreading team with a checklist, a chairperson and a signed record of every correction.</div>
+      <div class="confuse"><b>Common confusion:</b> an inspection is not “a longer walkthrough”. It has different roles, mandatory preparation and recorded metrics. The moderator, not the author, runs the meeting.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.2.2 – 3.2.6 Static Techniques, p. 3-7 – 3-9</p>
     </div>
   </div>
@@ -814,28 +1169,54 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q1(b) [6] · 2023 May Q2(a) [6, experience-based techniques] · 2025 May Q2(c) [6, exploratory]</p>
-      <p><b>Experience-based testing</b> is the technique of executing testing activities with the help of <b>experience</b> gained through several years. The tester verifies and validates software quality using past experience of testing a similar type of product in the same domain. People's <b>knowledge, skills and background</b> are of prime importance for the test conditions and test cases.</p>
-      <p>These techniques go together with specification-based and structure-based techniques. They are used when there is <b>no specification</b>, or when the specification is <b>inadequate or out of date</b>. They are used for <b>low-risk systems</b>.</p>
-      <p><b>When experience-based testing is required:</b></p>
+
+      <div class="simple"><b>In simple words:</b> experience-based testing uses the tester's past knowledge instead of a written specification.<br>Error guessing means “I have seen this break before, so I will test it first”.<br>Exploratory testing means learning the product while testing it, with a goal and notes.</div>
+
+      <h4>Why we do this</h4>
+      <p>Specifications are sometimes missing, outdated or too vague to design tests from. Experienced testers still know where software usually breaks. These techniques turn that knowledge into useful tests when formal methods have nothing to work from.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Experience-based testing:</b> testing that relies on the tester's knowledge of similar products and past defects.</li>
+        <li><b>Error guessing:</b> predicting the parts most likely to fail and testing them first.</li>
+        <li><b>Intuition:</b> a feeling based on experience rather than a written rule.</li>
+        <li><b>Exploratory testing:</b> learning, designing and running tests at the same time, guided by a goal.</li>
+        <li><b>Charter:</b> a short written goal for an exploratory session, such as “test refunds for cancelled orders”.</li>
+        <li><b>Agile:</b> a development style with short repeated cycles and frequent feedback.</li>
+        <li><b>Defect history:</b> the record of what failed in this product or similar products before.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li>Non-availability of requirements and specifications.</li>
-        <li>Limited knowledge of the software product.</li>
-        <li>Inadequate specification.</li>
-        <li>Restricted amount of time to perform testing.</li>
+        <li>Check whether the specification is missing, weak or out of date. If it is usable, use formal techniques first and add these on top.</li>
+        <li>List the areas with a history of defects: discounts, dates, payments, imports, permissions.</li>
+        <li>For error guessing, write a short test for each likely mistake, such as an empty discount code or a negative quantity.</li>
+        <li>Run the tests and record what happens. A guess that finds nothing still tells you the area is healthy.</li>
+        <li>For exploratory testing, write a charter and a time box, then explore freely within that goal.</li>
+        <li>Take notes as you go: what you tried, what you saw and what you did not finish.</li>
+        <li>Turn the notes into defects and into future test ideas, so the next session starts smarter.</li>
+      </ol>
+
+      <h4>When experience-based testing is needed (book)</h4>
+      <ol>
+        <li>Requirements and specifications are not available.</li>
+        <li>The team has limited knowledge of the product.</li>
+        <li>The specification is inadequate.</li>
+        <li>There is very little time for testing.</li>
       </ol>
 
       <h4>1. Error guessing</h4>
-      <p>In error guessing, the tester applies his/her experience to <b>guess the areas in the application that are prone to error</b>. It makes use of the tester's <b>skills, intuition and experience</b> to anticipate errors, defects and failures that may not be easily captured by formal techniques such as boundary value analysis and equivalence partitioning.</p>
-      <p>The success of error guessing is very much dependent on the <b>skill of the tester</b>; good testers know where defects are most likely to be. Every application has a <b>history</b>, based on the people working on it and the functionality or integration points it has; an experienced tester knows the type of errors that occurred in the past.</p>
-      <p><b>Book's example:</b> in an e-commerce application, the <b>discount logic</b> has often failed when a random discount code is applied. The tester tries different combinations of valid and invalid discounts and checks that the logic works fine. That insight comes only when the tester has enough experience in the application to know its historical issues.</p>
+      <p>In error guessing, the tester uses experience to <b>guess which areas are prone to error</b>. It relies on <b>skill, intuition and experience</b> to anticipate defects that formal techniques may not catch. Its success depends heavily on the <b>tester's skill</b>.</p>
+      <p>Every application has a <b>history</b> shaped by its people, features and integration points. An experienced tester knows the kinds of errors that occurred before.</p>
+      <p><b>Book's example:</b> in an e-commerce application, the <b>discount logic</b> has often failed when a random discount code is applied. The tester tries combinations of valid and invalid codes and checks that the logic still works. That insight comes from experience with the application's history.</p>
 
       <h4>2. Exploratory testing</h4>
-      <p>Exploratory testing is a testing technique and, at the same time, a <b>progressive learning approach</b> to perform maximum testing with <b>minimal planning</b>. During exploratory testing, the tester constantly studies and analyses the software product and applies his/her skills, traits and experience to develop a strategy and test cases and carry out the necessary testing.</p>
-      <p>Exploratory testing is all about testers <b>exploring an application</b> to identify and document potential bugs. Testers embark on a process of <b>investigation and discovery</b> to test a product effectively.</p>
+      <p>Exploratory testing is both a technique and a <b>progressive learning approach</b>: it aims for maximum testing with <b>minimal planning</b>. The tester studies the product and uses skill and experience to build a strategy and test cases while testing.</p>
+      <p>It is about <b>exploring an application</b> to find and document potential bugs. Testers investigate and discover rather than follow a fixed script.</p>
       <ul>
-        <li>It is often used in <b>Agile models</b> because it links with discovering, investigating and gaining a greater understanding of the code under test.</li>
-        <li>It is valuable when <b>new testers join the team</b> — they bring knowledge, expertise and a fresh perspective.</li>
-        <li>Its best use is when specifications and requirements are <b>inadequate</b> and time is <b>severely limited</b>.</li>
+        <li>It fits <b>Agile</b> work because it supports discovering and understanding the code under test.</li>
+        <li>It helps when <b>new testers join</b>, because they bring fresh knowledge and perspective.</li>
+        <li>It is most useful when specifications are <b>inadequate</b> and time is <b>severely limited</b>.</li>
       </ul>
 
       <h4>3. Error guessing vs exploratory testing</h4>
@@ -843,13 +1224,17 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <table class="left">
         <thead><tr><th>Point</th><th>Error guessing</th><th>Exploratory testing</th></tr></thead>
         <tbody>
-          <tr><td>Basis</td><td>Tester's experience, skills and intuition about error-prone areas.</td><td>Simultaneous learning, test design and execution.</td></tr>
+          <tr><td>Basis</td><td>Tester's experience, skill and intuition about error-prone areas.</td><td>Simultaneous learning, test design and execution.</td></tr>
           <tr><td>Planning</td><td>No formal technique; depends on the tester.</td><td>Minimal planning; progressive learning.</td></tr>
           <tr><td>Best for</td><td>Areas with a history of defects; quick checks.</td><td>New features, unclear requirements, Agile projects, limited time.</td></tr>
           <tr><td>Output</td><td>Tests for the guessed error areas.</td><td>Documented potential bugs found during exploration.</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> error guessing starts from a list of likely mistakes. Exploratory testing starts from a goal and learns as it goes. Both depend on the tester, but exploratory testing leaves a record of the journey.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> an experienced mechanic hears a rattle and checks the same three parts that rattled on earlier cars — that is <b>error guessing</b>. A new mechanic drives the car, listens, tests one idea at a time and writes down each result — that is <b>exploratory testing</b>.</div>
+      <div class="confuse"><b>Common confusion:</b> exploratory testing is <b>not</b> random clicking. It has a charter, a time box and notes. Random clicking without a goal is ad hoc testing.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.6 Experienced Based Techniques, p. 3-20 – 3-21</p>
     </div>
   </div>
@@ -867,11 +1252,42 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q1(a) [6] · 2025 May Q1(a) [6, white box only]</p>
 
-      <h4>1. White box testing — definition</h4>
-      <p><b>White box testing</b> builds upon the <b>internals of a software component</b>. It is a detailed investigation of the <b>internal logic and structure of the code</b>, so the tester must have <b>full knowledge of the source code</b> (Fig. 3.1.1).</p>
-      <p>The book defines it as a <b>test case design method that uses the control structure of the procedural design</b> to derive test cases. It can uncover implementation errors such as poor key management, and it is applicable at <b>unit, integration and system</b> levels.</p>
+      <div class="simple"><b>In simple words:</b> white box testing looks inside the code.<br>Grey box testing looks at part of the inside, plus the product's behaviour.<br>Black box testing looks only at inputs and outputs.</div>
 
-      <h4>2. White box techniques (name them)</h4>
+      <h4>Why we do this</h4>
+      <p>Some defects hide in the logic: a branch that never runs, a loop that never ends, a value that is never initialised. You cannot see those from the outside. White box testing checks the structure. Grey box testing gives a useful middle ground when the tester has some internal knowledge but not full access.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>White box testing:</b> testing based on the internal logic and structure of the code.</li>
+        <li><b>Grey box testing:</b> testing with partial knowledge of the code, architecture or internal states.</li>
+        <li><b>Black box testing:</b> testing only through inputs and outputs, with no knowledge of the code.</li>
+        <li><b>Source code:</b> the human-written instructions that make up the program.</li>
+        <li><b>Control flow:</b> the order in which the program's statements and branches execute.</li>
+        <li><b>Branch:</b> one possible path after a decision such as an <code>if</code> or a loop.</li>
+        <li><b>Basis path:</b> a path through the code that adds at least one new edge to the flow graph.</li>
+        <li><b>Data flow:</b> how data is created, changed and used as it moves through the program.</li>
+        <li><b>Loop testing:</b> testing a loop at zero, one, typical and maximum iterations.</li>
+        <li><b>GUI:</b> the graphical user interface — the screens, buttons and menus a user clicks.</li>
+        <li><b>Orthogonal array:</b> a compact table that tests many input combinations without testing every combination.</li>
+        <li><b>Matrix testing:</b> a table of all variables and their values, used to see which combinations matter.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Read the code and draw a flow graph: boxes for statements, arrows for control flow.</li>
+        <li>Choose a white-box technique: statement, branch, basis path, data flow or loop coverage.</li>
+        <li>Design inputs that force the chosen paths or branches to run. The code structure decides the tests.</li>
+        <li>Run the tests and record which lines and branches were actually covered.</li>
+        <li>For grey box, add what you know about the architecture, database or internal states, then test behaviour through the interface.</li>
+        <li>Report uncovered code and untested states. Coverage numbers show what is still unknown.</li>
+      </ol>
+
+      <h4>1. White box testing — definition</h4>
+      <p><b>White box testing</b> builds on the <b>internals of a software component</b>. It is a detailed study of the <b>internal logic and structure of the code</b>, so the tester needs <b>full knowledge of the source code</b>.</p>
+      <p>The book defines it as a <b>test case design method that uses the control structure of the procedural design</b> to derive test cases. It can uncover implementation errors such as poor key management, and it applies at <b>unit, integration and system</b> levels.</p>
+
+      <h4>2. White box techniques</h4>
       <ul>
         <li>Control flow testing</li>
         <li>Branch testing</li>
@@ -883,29 +1299,29 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <h4>3. Advantages of white box testing</h4>
       <ol>
         <li>Can be done by the development team.</li>
-        <li>Does not require a completed GUI.</li>
+        <li>Does not need a finished GUI.</li>
         <li>Highly systematic and easy to reproduce.</li>
-        <li>Thorough — it can test every possible path.</li>
-        <li>Can uncover errors early in the development process.</li>
+        <li>Thorough in principle — it can target every path, though very large programs make that impractical.</li>
+        <li>Can uncover errors early in development.</li>
       </ol>
 
       <h4>4. Disadvantages of white box testing</h4>
       <ol>
-        <li>Time required of developers.</li>
-        <li>Code updates can invalidate test cases.</li>
-        <li>Hard to separate the program from the testing environment.</li>
+        <li>It takes developers' time.</li>
+        <li>Code changes can invalidate test cases.</li>
+        <li>It is hard to separate the program from the test environment.</li>
       </ol>
 
       <h4>5. Grey box testing — definition</h4>
-      <p><b>Grey box testing</b> is a <b>combination of black box and white box testing</b>. The grey box tester has knowledge of the code, <b>but not completely</b>. The tester is not required to design test cases; test cases are created from algorithms that evaluate <b>internal states, program behaviour and application architecture knowledge</b>, and the tester carries out and interprets the results.</p>
-      <p><b>Purpose:</b> improve the quality of the product by covering both <b>functional and non-functional</b> testing together, which saves time and the lengthy process of testing the application.</p>
+      <p><b>Grey box testing</b> combines black box and white box testing. The grey box tester has <b>some knowledge of the code, but not complete knowledge</b>. The tester does not have to design every test case from scratch: test cases come from algorithms that use <b>internal states, program behaviour and architecture knowledge</b>, and the tester runs and interprets them.</p>
+      <p><b>Purpose:</b> improve product quality by covering <b>functional and non-functional</b> testing together, which saves time and avoids a long separate testing cycle.</p>
 
       <h4>6. Grey box techniques</h4>
       <ul>
-        <li><b>Matrix testing</b> — examines all variables in an application.</li>
-        <li><b>Regression testing</b> — verifies whether changes or bug fixes have caused errors in existing components.</li>
-        <li><b>Orthogonal array testing</b> — used when inputs are too many or too complex; optimises test cases and balances coverage with effort.</li>
-        <li><b>Pattern testing</b> — evaluates past defects to identify patterns that lead to defects.</li>
+        <li><b>Matrix testing</b> — lists all variables in an application and examines their combinations.</li>
+        <li><b>Regression testing</b> — checks whether changes or fixes broke existing components.</li>
+        <li><b>Orthogonal array testing</b> — used when inputs are many or complex; reduces the number of tests while keeping good coverage.</li>
+        <li><b>Pattern testing</b> — studies past defects to find patterns that lead to new defects.</li>
       </ul>
 
       <h4>7. Advantages and disadvantages of grey box testing</h4>
@@ -913,7 +1329,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <table class="left">
         <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
         <tbody>
-          <tr><td>Testers do not need programming expertise.</td><td>Code path traversal is limited because access to internal application structure is restricted.</td></tr>
+          <tr><td>Testers do not need programming expertise.</td><td>Code path traversal is limited because access to internal structure is restricted.</td></tr>
           <tr><td>Provides the benefits of both black and white box testing.</td><td>Cannot be used for algorithm testing.</td></tr>
           <tr><td>Eliminates conflicts between developers and testers.</td><td>Test cases can be difficult to design.</td></tr>
           <tr><td>Cheaper than integration testing.</td><td>—</td></tr>
@@ -934,7 +1350,11 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> white box asks “is the internal logic correct and fully exercised?”. Grey box asks “does the system behave correctly, given what we know about how it is built?”. The knowledge level, not the tool, separates them.</p>
       <p class="small">Draw Fig. 3.1.1 (white box) and Fig. 3.1.2 (black box) if the question says “in detail”. A labelled diagram earns marks.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> white box testing is <b>standing in the kitchen and watching the cook</b> at every step. Grey box testing is watching through a half-open door: you see some of the process and can judge the dish. Black box testing is only tasting the final dish.</div>
+      <div class="confuse"><b>Common confusion:</b> grey box testing does <b>not</b> mean “half the tests are white box”. It means the tester has <b>partial internal knowledge</b> and uses it to choose better behavioural tests.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.1 Software Testing Methodologies, p. 3-2 – 3-5</p>
     </div>
   </div>
@@ -946,21 +1366,53 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q1(a) [6] · 2025 Nov Q1(a) [6]</p>
-      <p><b>Definition:</b> Black box testing is also called <b>functional testing</b>; white box testing is also called <b>structural testing</b>. The book compares them on six points.</p>
+
+      <div class="simple"><b>In simple words:</b> black box testing judges the product from the outside.<br>White box testing judges it from the inside.<br>Black box asks “does it behave correctly?”; white box asks “is the logic correct?”.</div>
+
+      <h4>Why we do this</h4>
+      <p>Customers see behaviour, not code. Developers can see code, but can miss a user's real workflow. Using both views catches different defects: black box finds wrong or missing behaviour, white box finds untested logic and dead paths.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Black box testing:</b> testing behaviour through inputs and outputs without seeing the code; also called functional testing.</li>
+        <li><b>White box testing:</b> testing the internal logic and structure of the code; also called structural testing.</li>
+        <li><b>Functional testing:</b> testing what the software does against its requirements.</li>
+        <li><b>Structural testing:</b> testing how the code is built and which paths execute.</li>
+        <li><b>Specification:</b> the written description of what the software must do.</li>
+        <li><b>Source code:</b> the written program that the computer runs.</li>
+        <li><b>Coverage:</b> the share of code, branches or paths that the tests actually execute.</li>
+        <li><b>ECP (equivalence class partitioning):</b> a black-box technique that groups inputs that behave the same.</li>
+        <li><b>BVA (boundary value analysis):</b> a black-box technique that tests the edges of each input group.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Decide what question you are answering: “does it behave correctly?” or “is the logic fully tested?”.</li>
+        <li>For black box, read the specification and list inputs, expected outputs and business rules.</li>
+        <li>Design tests from those rules using ECP, BVA, decision tables or state transitions.</li>
+        <li>For white box, read the code and draw its control flow.</li>
+        <li>Choose inputs that force every statement, branch or path to run, and measure the coverage.</li>
+        <li>Combine both sets of results. A behaviour defect and an uncovered branch are different findings, and both matter.</li>
+      </ol>
+
+      <h4>Black box vs white box — the exam table</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Black box testing</th><th>White box testing</th></tr></thead>
         <tbody>
           <tr><td>Also called</td><td>Functional testing technique.</td><td>Structural testing technique.</td></tr>
-          <tr><td>Level</td><td>Mainly higher level — system and acceptance testing; implementation comes later in the development cycle.</td><td>Usually begins early in the development cycle; conducted at lower levels — unit and integration testing.</td></tr>
+          <tr><td>Level</td><td>Mainly higher level — system and acceptance testing.</td><td>Usually begins early; conducted at lower levels — unit and integration testing.</td></tr>
           <tr><td>Programming knowledge</td><td>Not required.</td><td>Required.</td></tr>
           <tr><td>Source code access</td><td>May not have access to the source code.</td><td>May have access to the source code.</td></tr>
-          <tr><td>Techniques</td><td>Equivalence partitioning, boundary value analysis, orthogonal array testing, all-pair testing, state transition testing.</td><td>Control flow testing, branch testing, basis path testing, data flow testing, loop testing.</td></tr>
-          <tr><td>Applicability</td><td>Mainly applicable to higher-level techniques.</td><td>Mainly applicable to lower-level techniques.</td></tr>
+          <tr><td>Techniques</td><td>Equivalence partitioning, boundary value analysis, orthogonal array testing, all-pairs testing, state transition testing.</td><td>Control flow testing, branch testing, basis path testing, data flow testing, loop testing.</td></tr>
+          <tr><td>Applicability</td><td>Mainly higher-level techniques.</td><td>Mainly lower-level techniques.</td></tr>
         </tbody>
       </table>
       </div>
-      <p><b>One-line answer:</b> black box tests <b>behaviour against the specification</b>; white box tests <b>logic against the code structure</b>. They are complementary — the two methods together validate the entire system.</p>
+      <p class="small"><b>What this means:</b> the two methods are complementary. Black box proves the product does the right things; white box proves the code has been exercised. Together they validate the whole system.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> black box testing is <b>only tasting the final dish</b>. White box testing is <b>standing in the kitchen and watching the cook</b> — the ingredients, the order and the cooking time.</div>
+      <div class="confuse"><b>Common confusion:</b> black box testing is <b>not</b> “testing with no knowledge”. The tester still knows the domain and the specification. The only thing hidden is the code.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.1.3 Difference between Black Box and White Box Testing, p. 3-4</p>
     </div>
   </div>
@@ -971,28 +1423,54 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q2(a) [6]</p>
-      <p><b>Definition:</b> Black box testing looks at the <b>available inputs</b> for an application and the <b>expected outputs</b> that should result from each input. It is also called <b>functional testing</b>.</p>
+
+      <div class="simple"><b>In simple words:</b> black box testing gives the software an input and checks the output.<br>The tester does not look at the code.<br>If the output matches the expected result, the test passes.</div>
+
+      <h4>Why we do this</h4>
+      <p>Users care about what the software does, not how it is written. Black box testing checks the product from the user's side. It also lets testers who cannot program join the testing effort.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Black box testing:</b> testing behaviour through inputs and outputs without seeing the internal code.</li>
+        <li><b>Functional testing:</b> another name for black box testing; it checks what the software does.</li>
+        <li><b>Input:</b> the data or action given to the software.</li>
+        <li><b>Expected output:</b> the result the specification says should happen.</li>
+        <li><b>Actual output:</b> the result the software really produced.</li>
+        <li><b>Specification:</b> the written description of required behaviour.</li>
+        <li><b>Test case:</b> a set of inputs, steps and expected results used to check one behaviour.</li>
+        <li><b>Coverage:</b> how much of the required behaviour the tests actually check.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Read the specification and choose one behaviour to test, such as a search or a login.</li>
+        <li>Write the input, the steps and the expected output. This makes the test repeatable.</li>
+        <li>Put the component in the required starting state.</li>
+        <li>Give the input and observe the actual output.</li>
+        <li>Compare actual with expected. Equal means pass; different means fail.</li>
+        <li>Record the result and the exact input, so a failure can be reproduced.</li>
+      </ol>
 
       <h4>1. Main idea</h4>
-      <p>Define the initial component state, the input and the expected output for the test. Set the component in the required state, give the defined input, observe the output and compare it with the expected output (Fig. 3.1.2).</p>
-      <p>No knowledge of the internals of the code is required. Test cases are designed from the <b>specification</b>; the tester ignores the internals and focuses on the <b>relationship between inputs and outputs</b>.</p>
+      <p>Black box testing looks at the <b>available inputs</b> and the <b>expected outputs</b> for each input. It is also called <b>functional testing</b>. You define the starting state, the input and the expected output, set the state, give the input, observe the output and compare it with the expected result (Fig. 3.1.2).</p>
+      <p>No knowledge of the code is needed. Test cases come from the <b>specification</b>; the tester ignores the internals and focuses on the <b>relationship between inputs and outputs</b>.</p>
 
       <h4>2. Example — search engine</h4>
-      <p>You type a search term in the search bar and press “Search”; results are returned. You do not know or see the specific process used to obtain those results — you simply give an input and receive an output. That is black box testing.</p>
+      <p>You type a search term and press “Search”. Results appear. You do not see the ranking algorithm or the database query; you only give an input and receive an output. That is black box testing.</p>
 
       <h4>3. Advantages</h4>
       <ol>
         <li>Easy to use.</li>
-        <li>Quicker test case development.</li>
-        <li>Efficient for a large code segment.</li>
-        <li>Tester perception is very simple.</li>
+        <li>Test cases can be written quickly.</li>
+        <li>Efficient for a large codebase.</li>
+        <li>The tester's view is simple: input, output, compare.</li>
       </ol>
 
       <h4>4. Disadvantages</h4>
       <ol>
-        <li>Only a selected number of test scenarios are performed, so there is limited coverage.</li>
-        <li>Without a clear specification, test cases are difficult to design.</li>
-        <li>Testing can be inefficient.</li>
+        <li>Only a selected number of scenarios are tested, so coverage is limited.</li>
+        <li>Without a clear specification, test cases are hard to design.</li>
+        <li>Testing can be inefficient because some tests repeat the same path.</li>
       </ol>
 
       <h4>5. Result rule and a small test table</h4>
@@ -1007,7 +1485,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
-      <p><b>In one line:</b> black box testing is testing from a <b>functional or behavioural perspective</b> to ensure the program meets its specification; it is focused on <b>results</b>, not on how the code works.</p>
+      <p class="small"><b>What this means:</b> a black box test does not care why the long string crashes the page. It only records that the observed behaviour differs from the required behaviour.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> black box testing is <b>tasting the final dish</b>. You can say whether it is too salty or cold, but you cannot see which ingredient caused it. That is enough to reject the dish.</div>
+      <div class="confuse"><b>Common confusion:</b> black box testing is <b>not</b> “testing without a plan”. It is planned from the specification. “No knowledge” refers only to the code, not to the requirements.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.1.2 Black Box Testing, p. 3-3 – 3-4</p>
     </div>
   </div>
@@ -1026,12 +1507,40 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q1(b) [6] · 2025 Nov Q2(a) [6]</p>
 
+      <div class="simple"><b>In simple words:</b> ECP puts inputs that behave the same into one group, then tests one value from each group.<br>BVA tests the edges of those groups, where programmers make most mistakes.<br>ECP cuts the number of tests; BVA makes each edge safe.</div>
+
+      <h4>Why we do this</h4>
+      <p>You cannot test every possible input. A field that accepts 18 to 60 has millions of numbers, but only three meaningful groups: below 18, 18 to 60, and above 60. ECP finds those groups. BVA then checks the exact edges, because “17”, “18”, “60” and “61” are where off-by-one bugs live.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>ECP (equivalence class partitioning):</b> dividing inputs into groups that should behave the same, then testing one value from each group.</li>
+        <li><b>Equivalence class:</b> a set of inputs that the software should treat the same way and answer the same way.</li>
+        <li><b>Valid class:</b> a group of inputs the software should accept.</li>
+        <li><b>Invalid class:</b> a group of inputs the software should reject with an error.</li>
+        <li><b>BVA (boundary value analysis):</b> testing values on, just below and just above the edge of each class.</li>
+        <li><b>Boundary value:</b> the smallest or largest value allowed for an input, internal value or output.</li>
+        <li><b>Off-by-one error:</b> a mistake where a limit is one too high or one too low.</li>
+        <li><b>Input domain:</b> the full set of values an input can take.</li>
+        <li><b>maxint:</b> the largest integer the system can store before overflow.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Read each input rule and list the groups: too small, allowed, too large; wrong type; missing value.</li>
+        <li>Mark each group valid or invalid. This tells you what the software should do.</li>
+        <li>Pick <b>one representative value</b> from each group. This is ECP, and it keeps the test count small.</li>
+        <li>For every edge, add <b>boundary − 1, boundary, boundary + 1</b>. This is BVA.</li>
+        <li>Write the expected result for each value before running the test.</li>
+        <li>Run the tests and compare. A rejected value that should be accepted, or the reverse, is a defect.</li>
+      </ol>
+
       <h4>1. Equivalence class partitioning (ECP)</h4>
-      <p>ECP <b>reduces the number of test cases</b> that need to be developed. We do not want to write several test cases that test the same aspect of the program. Equivalence partitioning <b>divides the input domain into classes</b>. For each class, the set of data should be treated the <b>same</b> by the module under test and should produce the <b>same answer</b>. Test cases are designed so that the inputs lie within these classes.</p>
+      <p>ECP <b>reduces the number of test cases</b>. We do not want several tests that check the same aspect of the program. ECP <b>divides the input domain into classes</b>. Inside one class, the module should treat every value the <b>same</b> and produce the <b>same answer</b>. Test cases are chosen so that inputs fall inside these classes.</p>
 
       <h4>2. Book's example — sum of the first |value| integers</h4>
-      <p>The program computes the sum of the first <code>|value|</code> integers as long as the sum <b>does not exceed</b> <code>maxint</code>; otherwise an error is reported. If <code>value</code> is negative, it takes the absolute value.</p>
-      <div class="math">Result = Σ k, for k = 0 to |value|   ·   valid if Result ≤ maxint, else error</div>
+      <p>The program computes the sum of the first <code>|value|</code> integers as long as the sum <b>does not exceed</b> <code>maxint</code>; otherwise it reports an error. If <code>value</code> is negative, it uses the absolute value.</p>
+      <div class="math">Result = Σ k, for k = 0 to |value|   ·   valid if Result ≤ maxint, else error</div>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Condition</th><th>Valid equivalence classes</th><th>Invalid equivalence classes</th></tr></thead>
@@ -1057,17 +1566,17 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
-      <p class="small">The third row is in a valid input class but its sum is larger than <code>maxint</code>, so the program reports an error. ECP still tests one value per class; BVA then tests the edges of each class.</p>
+      <p class="small"><b>What this means:</b> the third row is a valid input class, but its sum is larger than <code>maxint</code>, so the program correctly reports an error. ECP tests one value per class; BVA then tests the edges of each class.</p>
 
       <h4>3. Boundary value analysis (BVA)</h4>
-      <p><b>Boundary value</b> is defined as a data value that corresponds to a <b>minimum or maximum input, internal, or output value</b> specified for a system or component. Programmers often make mistakes on the <b>boundaries</b> of equivalence classes / the input domain.</p>
-      <p>Testing boundary conditions is more effective: use values <b>directly on, above and beneath</b> the edges of equivalence classes. Choose input boundary values as tests in input equivalence classes instead of, or in addition to, arbitrary values. Also choose inputs that invoke <b>output boundary values</b>.</p>
+      <p>A <b>boundary value</b> is a data value at the <b>minimum or maximum input, internal or output value</b> of a system or component. Programmers often make mistakes at the <b>edges</b> of a class or input domain.</p>
+      <p>Testing boundaries is more effective: use values <b>on, just above and just below</b> the edge of each class. Choose input boundary values instead of, or in addition to, arbitrary values. Also choose inputs that produce <b>output boundary values</b>.</p>
 
       <h4>4. BVA strategy (book's three steps)</h4>
       <ol>
-        <li>Choose one (n) arbitrary value in each equivalence class.</li>
-        <li>Choose values <b>exactly on the lower and upper boundaries</b> of the equivalence class.</li>
-        <li>Choose values <b>immediately below and above each boundary</b> (if applicable).</li>
+        <li>Choose one arbitrary value in each equivalence class.</li>
+        <li>Choose values <b>exactly on the lower and upper boundaries</b> of the class.</li>
+        <li>Choose values <b>immediately below and above each boundary</b> where applicable.</li>
       </ol>
 
       <h4>5. Example — age field accepts 18 to 60</h4>
@@ -1087,6 +1596,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> ECP uses three tests; BVA uses six around the same two edges. BVA is not “more tests for the sake of it” — it targets the exact places where a <code>&lt;</code> should have been <code>&lt;=</code>.</p>
 
       <h4>6. BVA vs ECP</h4>
       <div class="tbl-wrap">
@@ -1100,7 +1610,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
-      <p><b>Exam tip:</b> show one valid and two invalid classes for ECP; for BVA list the boundary and the values just below and just above it — not just the two endpoints.</p>
+      <p><b>Exam tip:</b> show one valid and two invalid classes for ECP. For BVA, list the boundary and the values just below and just above it — not only the two endpoints.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> ECP is <b>grouping similar customers into one queue</b> so you serve one person per queue type. BVA is <b>testing the edges of a bridge</b>, not just the middle — the weakest points are where the bridge meets the land.</div>
+      <div class="confuse"><b>Common confusion:</b> BVA is <b>not</b> just testing the two endpoints. It tests the endpoint, one below and one above, because that is where an off-by-one error shows up.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.5.1 – 3.5.2 Boundary Value Analysis and Equivalence Class Partition, p. 3-16 – 3-18</p>
     </div>
   </div>
@@ -1131,37 +1644,67 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q1(b) [6]</p>
-      <p><b>Dynamic testing</b> can take place <b>only after compilation and linking</b>. It detects fewer errors than static testing, but it detects some errors that static testing misses. The software must actually be compiled and run; the tester gives input values and checks whether the output is as expected. Dynamic testing is a <b>validation</b> activity.</p>
-      <p><b>Dynamic analysis</b> is the examination of the <b>physical response</b> from the system to variables that are not constant and change with time.</p>
+
+      <div class="simple"><b>In simple words:</b> dynamic testing runs the software and watches what happens.<br>Static testing reads the software and never runs it.<br>Dynamic techniques use the code structure to decide which inputs to run.</div>
+
+      <h4>Why we do this</h4>
+      <p>Some defects only appear when the program actually executes: a wrong calculation, a crash on empty data, an infinite loop. Static reading cannot prove runtime behaviour. Dynamic testing turns the code into running evidence.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Dynamic testing:</b> testing by compiling and running the software with chosen inputs.</li>
+        <li><b>Static testing:</b> testing by reading code or documents without running them.</li>
+        <li><b>Compilation:</b> translating source code into a runnable program.</li>
+        <li><b>Linking:</b> joining compiled pieces and libraries into one executable program.</li>
+        <li><b>Validation:</b> checking that the product meets the user's real needs.</li>
+        <li><b>Verification:</b> checking that the product matches its written specification.</li>
+        <li><b>Dynamic analysis:</b> observing the running system's response to changing variables.</li>
+        <li><b>Coverage:</b> the share of statements, branches or paths that the tests execute.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Compile and link the code. Dynamic testing can only start when a runnable build exists.</li>
+        <li>Choose the structural target: statements, branches, paths, conditions or loops.</li>
+        <li>Design inputs that force the target structure to run.</li>
+        <li>Run the program and record the actual output and the path taken.</li>
+        <li>Compare the output with the expected result and measure the coverage.</li>
+        <li>Report the defect with the input and the path, so a developer can reproduce it.</li>
+      </ol>
 
       <h4>1. Static vs dynamic testing</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Static testing</th><th>Dynamic testing</th></tr></thead>
         <tbody>
-          <tr><td>Execution</td><td>Software is not actually used.</td><td>Software must be compiled and run.</td></tr>
-          <tr><td>Nature</td><td>Not detailed testing; mainly sanity of the code, algorithm or document, syntax checking and manual reading.</td><td>Examines the physical response to variables that change with time.</td></tr>
-          <tr><td>Who / how</td><td>Developer who wrote the code, in isolation; code reviews, inspections and walkthroughs.</td><td>Unit, integration, system and acceptance testing.</td></tr>
+          <tr><td>Execution</td><td>Software is not run.</td><td>Software must be compiled and run.</td></tr>
+          <tr><td>Nature</td><td>Sanity of code, algorithm or document; syntax checking and manual reading.</td><td>Examines the physical response to variables that change with time.</td></tr>
+          <tr><td>Who / how</td><td>Developer who wrote the code, in isolation; reviews, inspections and walkthroughs.</td><td>Unit, integration, system and acceptance testing.</td></tr>
           <tr><td>V / V</td><td>Verification portion.</td><td>Validation portion.</td></tr>
           <tr><td>Examples</td><td>Reviews, walkthroughs, inspections.</td><td>Unit, integration, system and acceptance tests.</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> static testing asks “is the work correct on paper?”. Dynamic testing asks “does the running program behave correctly?”. A defect can survive either one, so good projects use both.</p>
 
       <h4>2. Dynamic structural techniques</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Technique</th><th>What it covers</th><th>Key idea</th></tr></thead>
         <tbody>
-          <tr><td><b>Statement coverage</b></td><td>Every statement in the source code executed at least once.</td><td>Measures statements executed; weak on control flow.</td></tr>
-          <tr><td><b>Branch coverage</b></td><td>Each branch of every decision (if, loop) executed at least once.</td><td>Also called decision coverage; stronger than statement coverage.</td></tr>
-          <tr><td><b>Path coverage</b></td><td>Every path from entry to exit executed at least once.</td><td>Uses flow graph and cyclomatic complexity; strongest but paths can explode.</td></tr>
-          <tr><td><b>Conditional coverage</b></td><td>Each individual condition takes both true and false at least once.</td><td>Combinations of conditions are not relevant.</td></tr>
-          <tr><td><b>Loop coverage</b></td><td>Loops run at minimum, typical and maximum values, and below minimum / above maximum.</td><td>Tries to break the loop at its boundaries.</td></tr>
+          <tr><td><b>Statement coverage</b></td><td>Every statement in the source code runs at least once.</td><td>Measures statements executed; weak on control flow.</td></tr>
+          <tr><td><b>Branch coverage</b></td><td>Each branch of every decision (<code>if</code>, loop) runs at least once.</td><td>Also called decision coverage; stronger than statement coverage.</td></tr>
+          <tr><td><b>Path coverage</b></td><td>Every path from entry to exit runs at least once.</td><td>Uses a flow graph and cyclomatic complexity; strongest, but paths can explode.</td></tr>
+          <tr><td><b>Conditional coverage</b></td><td>Each individual condition takes both true and false at least once.</td><td>Combinations of conditions are not the focus.</td></tr>
+          <tr><td><b>Loop coverage</b></td><td>Loops run at minimum, typical and maximum values, and below minimum and above maximum.</td><td>Tries to break the loop at its boundaries.</td></tr>
         </tbody>
       </table>
       </div>
-      <p><b>Order of strength:</b> statement &lt; branch &lt; condition/decision &lt; path. Branch coverage solves a problem faced in statement coverage, and path coverage exercises independent paths through the flow graph.</p>
+      <p><b>Order of strength:</b> statement &lt; branch &lt; condition/decision &lt; path. Branch coverage fixes a weakness of statement coverage, and path coverage exercises independent paths through the flow graph.</p>
+      <p class="small"><b>What this means:</b> stronger coverage costs more tests. Use the weakest technique that gives enough confidence for the risk of the code.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> static testing is <b>reading a recipe</b> and checking the steps. Dynamic testing is <b>cooking the dish</b> and tasting it. The recipe can look perfect and still burn in a real oven.</div>
+      <div class="confuse"><b>Common confusion:</b> dynamic testing is <b>not</b> only system testing. It happens at every level where code runs, including unit testing.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.3 Dynamic Techniques and §3.4 Structural Testing Techniques, p. 3-9 – 3-15</p>
     </div>
   </div>
@@ -1174,16 +1717,42 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q2(b) [6]</p>
 
+      <div class="simple"><b>In simple words:</b> statement coverage asks “did every line run?”.<br>Branch coverage asks “did every <code>if</code> take both the true and false path?”.<br>Branch coverage is stronger, because running a line does not prove both decisions were tested.</div>
+
+      <h4>Why we do this</h4>
+      <p>Code that never runs during testing is code you know nothing about. Coverage measures how much of the code the tests actually reached. It turns “we tested it” into a number that a team can check and improve.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Statement coverage:</b> the percentage of source statements executed by the tests.</li>
+        <li><b>Branch coverage:</b> the percentage of decision branches executed at least once; also called decision coverage.</li>
+        <li><b>Branch:</b> one possible path after a decision, such as the true or false side of an <code>if</code>.</li>
+        <li><b>Decision:</b> a condition in the code that chooses between paths.</li>
+        <li><b>Flow graph:</b> a diagram of code as nodes and arrows, used to see paths.</li>
+        <li><b>Edge:</b> an arrow in the flow graph that represents a possible transfer of control.</li>
+        <li><b>Coverage percentage:</b> (items executed ÷ total items) × 100.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>List the statements and decisions in the code. A flow graph makes the branches visible.</li>
+        <li>Write one test that runs the main path, then check which statements it covered.</li>
+        <li>Add tests for the statements or branches still not covered.</li>
+        <li>For branch coverage, make sure every decision takes both true and false at least once.</li>
+        <li>Calculate the percentage and record which items remain uncovered.</li>
+        <li>Decide whether the remaining items are unreachable, defensive code or a real gap.</li>
+      </ol>
+
       <h4>1. Statement coverage testing</h4>
-      <p>Statement coverage is a <b>white box testing technique</b>. It involves the <b>execution of all statements at least once</b> in the source code. It is a metric used to calculate and measure the number of statements in the source code that have been executed.</p>
-      <p>It aims to test all the statements in the program. It is a good measure of testing each part in terms of statements, but it is <b>not a good technique for testing control flow</b>. For example, one node can be reached from multiple other nodes, but since the aim is only to cover statements, those conditions are not covered.</p>
-      <div class="math">Statement coverage (%) = (Number of statements executed as a part of the application's code ÷ Total number of statements in the application's source code) × 100</div>
-      <p>Statement coverage is put into practice as part of <b>code validation during the build and development phases</b>.</p>
+      <p>Statement coverage is a <b>white box technique</b>. It requires <b>every statement to run at least once</b>. It measures how many source statements the tests executed.</p>
+      <p>It is a good measure of line-by-line testing, but it is <b>not a good measure of control flow</b>. One node can be reached from several other nodes, but if the aim is only to touch every statement, those different conditions may never be checked.</p>
+      <div class="math">Statement coverage (%) = (Number of statements executed ÷ Total number of statements) × 100</div>
+      <p>Statement coverage is used as part of <b>code validation during the build and development phases</b>.</p>
 
       <h4>2. Branch coverage testing</h4>
-      <p>Branch coverage is a requirement that, for <b>each branch</b> in the program (e.g. <code>if</code> statements, loops), each branch is executed at least once during testing. A <b>branch</b> is one of the possible execution paths the code can take after a decision statement.</p>
-      <p>Branch coverage is also known as <b>decision coverage testing</b>. It aims to test all branches or edges at least once, or to test each branch from a decision point at least once. It provides a solution to the problem faced in statement coverage.</p>
-      <p>Branch coverage helps validate all branches and makes sure that no branching leads to abnormal behaviour. A <b>low branch coverage</b> shows that some scenarios lack testing; such scenarios may contain defects that appear only in edge cases in production.</p>
+      <p>Branch coverage requires that, for <b>each branch</b> in the program — every <code>if</code> and every loop — each branch runs at least once. A <b>branch</b> is one of the possible paths the code can take after a decision.</p>
+      <p>Branch coverage is also called <b>decision coverage</b>. It aims to test every branch or edge at least once. It solves a problem that statement coverage leaves open: a decision can be reached without both outcomes being tested.</p>
+      <p>Branch coverage confirms that every branch is reached and that no branch causes abnormal behaviour. A <b>low branch coverage</b> means some scenarios were never tested, and those scenarios may hold defects that appear only in production.</p>
 
       <h4>3. Worked example</h4>
 <pre><code>1  read a, b
@@ -1203,15 +1772,19 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       </table>
       </div>
       <p>TC1 + TC2 execute every statement (100% statement coverage) and both outcomes of the <code>if</code> (100% branch coverage).</p>
+      <p class="small"><b>What this means:</b> TC1 covers lines 1, 2, 3, 6 and 7 — 5 of the 7 statements. TC2 adds lines 4 and 5. Only both tests together reach 100% statement coverage and exercise both branches.</p>
 
       <h4>4. Why branch coverage is stronger</h4>
-      <p>The book gives the example of an <code>if ... then</code> statement with <b>no else</b>. Executing it when the condition is true tests only <b>one of two branches</b> in the flow graph. Branch testing seeks to ensure that <b>every branch</b> is executed.</p>
+      <p>The book gives the example of an <code>if ... then</code> statement with <b>no else</b>. Running it when the condition is true tests only <b>one of two branches</b> in the flow graph. Branch testing makes sure <b>every branch</b> is executed.</p>
       <p><b>Pros of branch coverage (book):</b></p>
       <ol>
-        <li>Approves that all branches in the code are reached.</li>
-        <li>Guarantees that no branch prompts any irregularity in the program's operation.</li>
-        <li>Kills issues that happen with statement coverage testing.</li>
+        <li>Confirms that all branches in the code are reached.</li>
+        <li>Confirms that no branch causes irregular behaviour.</li>
+        <li>Fixes the weakness of statement coverage testing.</li>
       </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> statement coverage is <b>visiting every room in a building</b>. Branch coverage is <b>opening both doors at every fork in the corridor</b>. You can visit every room and still never open one of the doors.</div>
+      <div class="confuse"><b>Common confusion:</b> 100% statement coverage does <b>not</b> guarantee 100% branch coverage. A one-line <code>if</code> with no <code>else</code> can be fully covered by a single true test, while the false branch never runs.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.4.4 – 3.4.5 Statement and Branch Coverage, p. 3-12 – 3-13</p>
     </div>
   </div>
@@ -1224,21 +1797,48 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [6]</p>
 
+      <div class="simple"><b>In simple words:</b> path coverage runs every route from the start of the program to the end.<br>Conditional coverage makes each small condition inside a decision take both true and false.<br>Path coverage is the strongest but can explode; condition coverage is precise but can miss the overall decision.</div>
+
+      <h4>Why we do this</h4>
+      <p>Some bugs appear only on a particular combination of decisions. Path coverage tries to run every route. Other bugs hide inside one condition of a compound decision, so condition coverage checks each part separately. Together they reveal gaps that branch coverage alone can miss.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Path coverage:</b> testing every route through the program from entry to exit at least once.</li>
+        <li><b>Path:</b> one complete route through the program from entry to exit.</li>
+        <li><b>Independent path:</b> a path that adds at least one new edge to the flow graph.</li>
+        <li><b>Flow graph:</b> a diagram of code as nodes and directed edges.</li>
+        <li><b>Cyclomatic complexity:</b> a number that estimates how many independent paths a program has.</li>
+        <li><b>Conditional coverage:</b> testing each individual Boolean condition as both true and false.</li>
+        <li><b>Decision coverage:</b> testing each whole decision as both true and false.</li>
+        <li><b>Boolean condition:</b> a part of a decision that is either true or false, such as <code>a &gt; 0</code>.</li>
+        <li><b>Combination:</b> one specific set of true and false values across all conditions in a decision.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Draw the flow graph and find the decisions and loops.</li>
+        <li>Compute cyclomatic complexity to estimate the number of independent paths. This stops you from chasing infinite loop paths.</li>
+        <li>Choose test inputs that run each independent path at least once, including zero, one and many loop iterations.</li>
+        <li>For each compound decision, list its individual conditions.</li>
+        <li>Write tests so each condition is true once and false once.</li>
+        <li>Check the whole decision too. Condition coverage alone can leave the decision stuck on one outcome.</li>
+      </ol>
+
       <h4>1. Path coverage testing</h4>
-      <p>Path coverage aims to test the <b>different paths from entry to the exit</b> of the program. A path is a <b>combination of different decisions taken in sequence</b>. The number of paths can be too many to test — for example, a loop can go on and on — so <b>cyclomatic complexity</b> is used to find and avoid redundant test cases.</p>
-      <p>In this technique, the test case is executed in such a way that <b>every path is executed at least once</b>. All possible control paths are taken, including loop paths taken <b>zero, once and multiple (ideally maximum)</b> times. Test cases are prepared from the <b>logical complexity measure</b> of the procedural design, and every statement is guaranteed to execute at least once.</p>
-      <p>A <b>flow graph, cyclomatic complexity and graph metrics</b> are used to arrive at the basis path. The objective is that each <b>independent path</b> through the program is executed at least once. An independent path traverses at least <b>one new edge</b> in the flow graph, which means exercising one or more new conditions. Both the true and false branches of all conditions must be executed.</p>
+      <p>Path coverage tests the <b>different paths from entry to exit</b>. A path is a <b>combination of decisions taken in sequence</b>. The number of paths can be enormous — a loop can run forever — so <b>cyclomatic complexity</b> is used to find and avoid redundant test cases.</p>
+      <p>In this technique, <b>every path runs at least once</b>. All control paths are taken, including loops run <b>zero, one and multiple (ideally maximum)</b> times. Test cases come from the <b>logical complexity measure</b> of the design, and every statement is guaranteed to run at least once.</p>
+      <p>A <b>flow graph, cyclomatic complexity and graph metrics</b> help find the basis paths. The aim is for each <b>independent path</b> to run at least once. An independent path crosses at least <b>one new edge</b>, which means it exercises one or more new conditions. Both the true and false branches of every condition must run.</p>
 
       <h4>2. Limitation of path coverage (book's warning)</h4>
       <ul>
-        <li>Testing all paths does <b>not</b> mean the programmer will find all bugs.</li>
-        <li>Many bugs arise because programmers <b>forgot to include some processing</b> in the code, so there are no paths to execute.</li>
-        <li>Some bugs are related to the <b>order in which code segments execute</b>. If segments a, b and c run as &lt;a, b, c&gt; the program may work, but as &lt;a, c, b&gt; an error may appear. It is practically impossible to test all orders and all program paths.</li>
+        <li>Testing all paths does <b>not</b> mean every bug will be found.</li>
+        <li>Many bugs happen because programmers <b>forgot to include some processing</b>, so there is no path to execute.</li>
+        <li>Some bugs depend on the <b>order in which code segments run</b>. If a, b and c run as &lt;a, b, c&gt; the program may work, but as &lt;a, c, b&gt; it may fail. Testing every order and every path is practically impossible.</li>
       </ul>
 
       <h4>3. Conditional coverage testing</h4>
-      <p>Condition coverage aims to test <b>individual conditions</b> with the possible different combinations of Boolean input for the expression. The possible outcomes — <b>true and false</b> — for each condition are tested at least once, so each individual condition is one time true and one time false.</p>
-      <p>The outcome of the decision point is only relevant for checking the conditions; the <b>combinations of conditions are not relevant</b>.</p>
+      <p>Condition coverage tests <b>individual conditions</b> with different Boolean inputs. Each condition takes <b>true and false</b> at least once. The whole decision's outcome matters only for checking the conditions; the <b>combinations of conditions are not the focus</b>.</p>
 
       <h4>4. Example — <code>if (a &gt; 0 AND b &lt; 5)</code></h4>
       <div class="tbl-wrap">
@@ -1251,9 +1851,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       </table>
       </div>
       <p>TC1 + TC2 give 100% condition coverage: each atomic condition takes both true and false. The decision also takes both outcomes here.</p>
+      <p class="small"><b>What this means:</b> this example is lucky. Each test flips both conditions together, so the decision also flips. The next example shows why that is not always true.</p>
 
       <h4>5. Condition coverage without decision coverage</h4>
       <p>TC1: <code>a=1, b=7</code> → T, F → decision false. TC2: <code>a=−1, b=3</code> → F, T → decision false. Every condition takes true and false, so condition coverage is 100%, but the decision is never true, so decision coverage is 0%. This shows why condition coverage alone is not enough — use it with decision coverage.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> path coverage is <b>walking every possible route through a maze</b>. Condition coverage is <b>flipping every switch in a control panel</b> once on and once off. Flipping every switch does not prove the whole machine ever started.</div>
+      <div class="confuse"><b>Common confusion:</b> 100% condition coverage does <b>not</b> imply 100% decision coverage. Each condition can flip while the overall <code>AND</code> or <code>OR</code> result stays the same.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.4.6 – 3.4.7 Path and Conditional Coverage, p. 3-14 – 3-15</p>
     </div>
   </div>
@@ -1265,18 +1869,45 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q2(c) [6]</p>
-      <p><b>Definition:</b> Loop testing is an example of <b>white box testing</b>. It is used to test software loops and is one type of <b>control structure testing</b>.</p>
-      <p><b>Goal:</b> test <code>while-do</code>, <code>do-while</code> and any other loops thoroughly — ensure each loop is executed at <b>minimal, typical and maximal</b> values, and try to <b>“break”</b> the program by having a loop executed with <b>fewer than the minimum</b> and <b>larger than the maximum</b> number of iterations.</p>
+
+      <div class="simple"><b>In simple words:</b> loop coverage tests a loop at its edges.<br>Run it zero times, once, a normal number of times, the maximum, and one beyond the maximum.<br>Most loop bugs are off-by-one, missing updates or overflow at the last iteration.</div>
+
+      <h4>Why we do this</h4>
+      <p>Loops repeat work, so a small mistake repeats many times. A loop that runs one time too many can read past the end of an array. A loop that never runs can leave a total at zero. Testing the edges exposes both.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Loop testing:</b> testing a loop at its minimum, typical and maximum number of repetitions, plus one beyond each edge.</li>
+        <li><b>Loop:</b> code that repeats a block while a condition holds or for a set number of items.</li>
+        <li><b>Iteration:</b> one complete run of the loop body.</li>
+        <li><b>Simple loop:</b> a loop whose body contains no other loop.</li>
+        <li><b>Nested loop:</b> a loop placed inside the body of another loop.</li>
+        <li><b>Concatenated loop:</b> loops that follow one another, where the next starts after the previous ends.</li>
+        <li><b>Off-by-one error:</b> a loop that runs one too few or one too many times.</li>
+        <li><b>Initialisation:</b> setting a variable to its starting value before the loop.</li>
+        <li><b>Overflow:</b> a value growing beyond the space or range reserved for it.</li>
+        <li><b>Array:</b> a numbered list of values stored together under one name.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li>Find every loop and classify it as simple, nested or concatenated.</li>
+        <li>For a simple loop, run it at minimum − 1, minimum, typical, maximum and maximum + 1 iterations.</li>
+        <li>For a nested loop, test the inner loop at its edges while the outer loop is at its minimum. Then test the outer edges.</li>
+        <li>For concatenated loops, test each loop alone, then test the hand-off where one ends and the next begins.</li>
+        <li>Check the values before the loop, inside the loop and after it. This catches missing initialisation and missing updates.</li>
+        <li>Confirm that an out-of-range count is rejected safely instead of crashing.</li>
+      </ol>
 
       <h4>1. Why loop testing is performed (book's reasons)</h4>
       <ol>
         <li>It helps resolve loop repetition observation.</li>
         <li>It can estimate conditions in performance and facility.</li>
-        <li>The loop's uninitialized variables can be detected by testing loops.</li>
-        <li>It aids in the classification of loop starting issues.</li>
+        <li>Uninitialised variables in the loop can be detected.</li>
+        <li>It helps classify loop starting issues.</li>
         <li>Testing can return the loop to routine issues.</li>
-        <li>Loop testing can reveal production/capability bottlenecks.</li>
-        <li>It serves to classify the loop's beginning queries.</li>
+        <li>Loop testing can reveal production or capability bottlenecks.</li>
+        <li>It helps classify the loop's beginning queries.</li>
       </ol>
 
       <h4>2. Types of loops to be tested</h4>
@@ -1284,23 +1915,24 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
       <table class="left">
         <thead><tr><th>Type</th><th>Definition (book)</th><th>How to test</th></tr></thead>
         <tbody>
-          <tr><td><b>Simple loop</b></td><td>A loop whose body contains no other loop.</td><td>Run at minimum, minimum−1, typical, maximum and maximum+1 iterations.</td></tr>
-          <tr><td><b>Nested loop</b></td><td>Loops combined so that each is contained inside the body of the next.</td><td>Test the inner loop at minimum, typical and maximum while the outer loop is at minimum; then test the outer boundaries.</td></tr>
-          <tr><td><b>Concatenated loop</b></td><td>Loops where each follows the next in code; the next loop begins after the previous terminates.</td><td>Test each loop independently, then test the boundary between the first ending and the second starting.</td></tr>
+          <tr><td><b>Simple loop</b></td><td>A loop whose body contains no other loop.</td><td>Run at minimum, minimum − 1, typical, maximum and maximum + 1 iterations.</td></tr>
+          <tr><td><b>Nested loop</b></td><td>Loops combined so that each is inside the body of the next.</td><td>Test the inner loop at minimum, typical and maximum while the outer loop is at minimum; then test the outer boundaries.</td></tr>
+          <tr><td><b>Concatenated loop</b></td><td>Loops where each follows the next in code; the next begins after the previous ends.</td><td>Test each loop independently, then test the boundary between the first ending and the second starting.</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> nested loops multiply the work, so test the inner loop first while the outer loop is held still. Otherwise you cannot tell which loop caused the failure.</p>
 
       <h4>3. Boundary values to use</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Case</th><th>Iterations</th><th>What it checks</th></tr></thead>
         <tbody>
-          <tr><td>Below minimum</td><td>minimum − 1</td><td>Loop that should run at least once is skipped.</td></tr>
+          <tr><td>Below minimum</td><td>minimum − 1</td><td>A loop that should run at least once is skipped.</td></tr>
           <tr><td>Minimum</td><td>minimum</td><td>First valid iteration and exit condition.</td></tr>
           <tr><td>Typical</td><td>normal working value</td><td>Normal working case.</td></tr>
           <tr><td>Maximum</td><td>maximum</td><td>Last valid iteration; array bound.</td></tr>
-          <tr><td>Above maximum</td><td>maximum + 1</td><td>Extra iteration / overflow defect.</td></tr>
+          <tr><td>Above maximum</td><td>maximum + 1</td><td>Extra iteration or overflow defect.</td></tr>
         </tbody>
       </table>
       </div>
@@ -1310,8 +1942,11 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 for i = 1 to n do
     sum = sum + marks[i]
 print sum</code></pre>
-      <p>Test with <code>n = 0</code> (fewer than minimum, if the loop expects at least one mark), <code>n = 1</code> (minimum), <code>n = 50</code> (typical), <code>n = 100</code> (maximum) and <code>n = 101</code> (above maximum — the program should reject it, not crash).</p>
+      <p>Test with <code>n = 0</code> (fewer than the minimum, if the loop expects at least one mark), <code>n = 1</code> (minimum), <code>n = 50</code> (typical), <code>n = 100</code> (maximum) and <code>n = 101</code> (above maximum — the program should reject it, not crash).</p>
       <p><b>Benefits:</b> catches off-by-one, wrong initialisation, missing update and array-overflow defects. <b>Limitation:</b> it does not test the logic inside the loop body — combine it with branch and path coverage.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> a revolving door must be tested with <b>no one</b>, <b>one person</b>, a <b>normal queue</b>, a <b>full crowd</b> and <b>one person too many</b>. The last case is where it jams.</div>
+      <div class="confuse"><b>Common confusion:</b> loop testing is <b>not</b> just “run the loop many times”. It tests below the minimum and above the maximum as well, because those are the cases that crash.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.4.8 Loop Coverage Testing, p. 3-15</p>
     </div>
   </div>

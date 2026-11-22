@@ -139,7 +139,23 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 .prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
 .side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
-</style></head>
+</style>
+<style id="explain-blocks">
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important;break-inside:avoid}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style><style id="print-simple">
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 
@@ -183,6 +199,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   </div>
 </header>
 
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every procedure is broken into numbered steps. No prior forensics background needed.</div>
+
 <section class="card" id="map">
   <h2>📊 PYQ frequency map — what actually gets asked</h2>
   <p class="lead">Counted from all seven end-sem papers. The same eight topics rotate; nothing outside this table has been asked from Unit 4.</p>
@@ -224,6 +242,38 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 May Q4(b) [9] · 2022 Nov Q4(b) [9] · 2023 May Q3(b) [9] · 2024 May Q3(b) [9, essential steps from the crime scene] · 2025 Nov Q3(b) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> Processing evidence is a fixed routine, not a single clever click.<br>First protect and copy the machine, then search the copy, then write down everything you did.<br>The book lists sixteen steps; they group into five easy phases.</div>
+
+      <h4>Why we do this</h4>
+      <p>A computer changes every time it is used. The routine freezes the scene, keeps the original safe, and produces a record that another expert can repeat and a court can trust.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Processing</b> — the full set of steps from seizing a computer to reporting the findings.</li>
+        <li><b>Bit-stream backup</b> — an exact copy of every sector on a disk, including deleted and empty areas.</li>
+        <li><b>Mathematical verification</b> — using a hash to prove the copy matches the original.</li>
+        <li><b>Hash</b> — a fingerprint of data; a single changed bit gives a completely different value.</li>
+        <li><b>Swap file</b> — disk space used as extra memory; it can hold fragments of documents and passwords.</li>
+        <li><b>File slack</b> — the unused tail of a file's last storage block, which can contain older data.</li>
+        <li><b>Unallocated space</b> — disk space not assigned to any live file; deleted data often survives there.</li>
+        <li><b>Keyword list</b> — the names, e-mail addresses and terms the examiner will search for.</li>
+        <li><b>Timestamp</b> — the date and time recorded for a file event.</li>
+        <li><b>Volatile data</b> — data that disappears when the power goes off, such as RAM contents.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Preserve.</b> Capture volatile data if needed, shut down correctly, transport safely, and make a verified bit-stream copy. Why: the original must not change.</li>
+        <li><b>Document the scene.</b> Photograph the hardware, label the cables, note the system clock, and record file names and dates. Why: a later reader must be able to rebuild the setup.</li>
+        <li><b>Search.</b> Build a keyword list, then search files, the swap file, slack and unallocated space. Why: evidence hides outside normal files.</li>
+        <li><b>Examine.</b> Study irregular, binary, compressed and encrypted files, and test how the software behaves. Why: a text search cannot explain every file.</li>
+        <li><b>Report.</b> Record every tool, version and step, and keep copies of the software used. Why: another expert must be able to repeat the work.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Processing a computer is like processing a physical crime scene. Photograph everything, bag each item, copy what cannot be kept, test the copy in the lab, and write a report that another officer could follow.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Step 1 says “turn the computer off”, which sounds like the first thing to do. In modern practice you capture RAM and network state first, because they vanish on shutdown. Write both ideas: volatile data first, then the traditional shutdown step.</div>
+
       <h4>1. The sixteen steps (book §4.13.2)</h4>
       <ol>
         <li><b>Turn the computer off</b> — disconnect or shut down the network computer using the correct procedure; shut down as soon as feasible when time is of the essence.</li>
@@ -243,6 +293,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Document your findings</b> — record every piece of software used, its version number, the procedure followed and screenshots of the operating system.</li>
         <li><b>Retain copies of the software used</b> — provide a copy with the report; if the software was upgraded and the old version was not kept, duplicating findings may be impossible.</li>
       </ol>
+
+      <p class="small"><b>What this means:</b> every step protects one of two things — the evidence, or the record of what was done. Lose either one and the strongest finding can be challenged.</p>
 
       <h4>2. Compressed version for 9 marks</h4>
       <p>If you cannot write all sixteen, group them into five phases — this still earns most of the marks:</p>
@@ -275,6 +327,41 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q4(b) [9] · 2023 Nov Q3(b) [8] · 2024 May Q4(b) [9] · 2025 Nov Q4(a) [9, any four steps]</p>
 
+      <div class="simple"><b>In simple words:</b> There are two main ways to collect digital evidence: bait the attacker and watch, or freeze the scene and copy it.<br>In practice you also choose live, dead, remote, logical, physical or mobile collection.<br>The six collection steps then keep the copy accurate and documented.</div>
+
+      <h4>Why we do this</h4>
+      <p>You cannot collect everything at once. The method decides what you save, what you lose, and whether the evidence is strong enough for court.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Honeypotting</b> — setting up a decoy system to attract an attacker and record what they do.</li>
+        <li><b>Freezing the scene</b> — capturing a snapshot of the system at the moment of the attack, then copying the key data.</li>
+        <li><b>Live acquisition</b> — collecting data while the computer is still running, such as RAM and network connections.</li>
+        <li><b>Dead acquisition</b> — collecting a disk image after the computer has been shut down.</li>
+        <li><b>Remote acquisition</b> — copying data over a network from another location.</li>
+        <li><b>Logical acquisition</b> — copying selected files or folders rather than the whole disk.</li>
+        <li><b>Physical acquisition</b> — copying every sector, including deleted data, slack and unallocated space.</li>
+        <li><b>Artifact</b> — a trace left by an attacker, such as a log entry, file or running process.</li>
+        <li><b>Rootkit</b> — malware that hides itself and other files from the operating system.</li>
+        <li><b>Cryptographic message digest</b> — a hash used to prove a copy has not changed.</li>
+        <li><b>Order of volatility</b> — the rule that the fastest-changing data is collected first.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Find the evidence.</b> Why: a checklist stops you missing a device or a data source.</li>
+        <li><b>Decide what is relevant.</b> Why: copying everything can bury the useful facts and waste time.</li>
+        <li><b>Choose the method.</b> Why: live, dead, remote or logical collection each save different data.</li>
+        <li><b>Establish the order of volatility.</b> Why: RAM disappears in seconds; a disk survives for years.</li>
+        <li><b>Remove outside change.</b> Why: a write blocker or isolated network stops evidence being altered.</li>
+        <li><b>Gather and verify.</b> Why: a hash proves the copy matches what was collected.</li>
+        <li><b>Document everything.</b> Why: the method itself may be challenged in court.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Honeypotting is a bait car: police leave it parked and watch what a thief does. Freezing the scene is a security camera snapshot: it captures the room exactly as it was at the moment of the crime.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Honeypotting is not “hacking back”. The investigator watches and records activity on their own decoy system. Attacking the intruder's machine would be a separate, usually illegal, act.</div>
+
       <h4>1. Two fundamental methods (book §4.9)</h4>
       <p><b>(a) Honeypotting.</b> The investigator inserts <b>deceptive information</b> and observes the attacker's response. It is an effective way of finding out the attacker's motivation. A replica system is set up to entice the attacker into more monitoring. The attacker's actions are recorded, and the evidence shows intent and method.</p>
       <p><b>(b) Freezing the scene.</b> The investigator captures a <b>picture of the system at the moment it is hacked</b>. Crucial data is then copied onto removable non-volatile media in a predetermined manner. A <b>cryptographic message digest</b> is generated for each piece of data, and the digests are cross-checked against the originals to ensure accuracy.</p>
@@ -301,6 +388,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>Never try to study a piece of evidence on a <b>hacked machine</b> — the attacker may have left a trap or a rootkit that hides or alters what you see.</li>
         <li>The examiner must ensure that the impact of artifacts is <b>within our control</b>, because they are unpredictable.</li>
       </ul>
+
+      <p class="small"><b>What this means:</b> an artifact is only useful if you can explain where it came from. Never study it on the hacked machine, because the attacker may have hidden or changed it.</p>
 
       <h4>4. The six collection steps (book §4.11)</h4>
       <ol>
@@ -330,6 +419,40 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 May Q3(b) [9] · 2022 Nov Q3(b) [9] · 2023 May Q4(a) [9, with contamination] · 2025 Nov Q4(b) [9, with contamination methods]</p>
+
+      <div class="simple"><b>In simple words:</b> Chain of custody is the signed story of who had the evidence, when, and what they did with it.<br>It starts at seizure and ends in court.<br>If the story has a gap, the other side can say the evidence was changed.</div>
+
+      <h4>Why we do this</h4>
+      <p>Digital evidence is easy to copy and easy to alter. The chain is how you prove that the file in court is the same file that was taken from the suspect's computer.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Chain of custody</b> — the written record of every transfer, access and storage location of evidence.</li>
+        <li><b>Contamination</b> — any outside influence that changes or adds to the evidence.</li>
+        <li><b>Custody</b> — who currently controls and protects the evidence.</li>
+        <li><b>Tamper-evident</b> — packaging that shows clearly if someone opened it.</li>
+        <li><b>Exhibit number</b> — the unique label given to each item in a case.</li>
+        <li><b>Evidence custodian</b> — the named person responsible for the evidence store.</li>
+        <li><b>Faraday bag</b> — a signal-blocking bag that stops a phone from connecting to a network.</li>
+        <li><b>Hash</b> — a fingerprint used to prove the data has not changed.</li>
+        <li><b>Write blocker</b> — a tool that allows reading but blocks writing to a disk.</li>
+        <li><b>Working clone</b> — a verified copy used for analysis while the original stays sealed.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Save the original files.</b> Why: the first copy is the reference for everything later.</li>
+        <li><b>Photograph the physical evidence.</b> Why: a picture proves the item's condition at seizure.</li>
+        <li><b>Take screenshots of the digital evidence.</b> Why: the screen may show live data that disappears on shutdown.</li>
+        <li><b>Record the date, time and receiver.</b> Why: the chain needs an exact starting point.</li>
+        <li><b>Clone the data bit for bit.</b> Why: analysis must happen on a copy, not the original.</li>
+        <li><b>Hash the clone.</b> Why: a matching hash proves the working copy is authentic.</li>
+        <li><b>Log every later transfer and access.</b> Why: one unrecorded handover is enough to raise doubt.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Chain of custody is a relay baton that must never be dropped. Each runner signs for the baton, runs their leg, and hands it on. If the baton appears with no signature at one stage, nobody can prove it was not swapped.</div>
+
+      <div class="confuse"><b>Common confusion:</b> The chain is not just a form at the front of the file. It is a process plus a record. You must actually control access and storage, then write down what you did. A perfect form with a broken process is worthless.</div>
 
       <h4>1. Definition</h4>
       <p><b>Chain of custody</b> is the <b>documentation that identifies all changes in the control, handling, custody and ownership of a piece of evidence</b>. It lets you trace the evidence from the instant it was collected to the instant it was presented in a judicial court.</p>
@@ -362,6 +485,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Authenticate the working clone</b> by performing a hash test analysis.</li>
       </ol>
 
+      <p class="small"><b>What this means:</b> the first four actions preserve what the evidence looked like; the last two create a safe copy. Together they turn a seized disk into something a court can examine without touching the original.</p>
+
       <h4>5. What the record must contain</h4>
       <ul>
         <li>Exhibit number, description and serial number.</li>
@@ -385,6 +510,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Store in an evidence safe</b> accessible only to the evidence custodian.</li>
       </ol>
 
+      <p class="small"><b>What this means:</b> every control blocks one route for contamination — people, packaging, power, network, heat or paperwork. Name the route, then name the control, and the list becomes easy to remember.</p>
+
       <div class="note"><b>For 2023 May / 2025 Nov:</b> the question joins chain of custody with contamination. Answer in two parts: definition + process (5 marks), then the ten contamination controls (4 marks). Explicitly say “chain of custody is both a document and a process”.</div>
     </div>
   </div>
@@ -400,6 +527,38 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 May Q3(a) [8] · 2022 Nov Q3(a) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> Evidence is information that helps prove something relevant to the case.<br>We collect it to stop the attacker repeating the act, to fix responsibility, and to support legal or disciplinary action.<br>At the scene you have two main choices: pull the system offline, or leave it online and watch.</div>
+
+      <h4>Why we do this</h4>
+      <p>Without evidence, a company cannot prove a crime, defend a dismissal, or claim insurance. Without a plan, the act of collecting can destroy the very data that matters.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Evidence</b> — information that proves or helps prove something relevant to a case.</li>
+        <li><b>Relevant</b> — connected to the incident being investigated.</li>
+        <li><b>Authentic</b> — shown to be what it claims to be, not a fake.</li>
+        <li><b>Lawfully obtained</b> — collected with the correct authority, such as a warrant or a company policy.</li>
+        <li><b>Isolate</b> — disconnect a system from the network without necessarily switching it off.</li>
+        <li><b>Image</b> — an exact copy of a disk for analysis.</li>
+        <li><b>Volatile data</b> — data that disappears when power is lost.</li>
+        <li><b>Dead man switch</b> — a hidden program that wipes evidence when it loses a connection or is disturbed.</li>
+        <li><b>Intruder</b> — the person or program that has broken into the system.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Confirm there is an incident.</b> Why: a system fault or user mistake is not an attack.</li>
+        <li><b>Decide what matters more: preservation or observation.</b> Why: you usually cannot do both perfectly.</li>
+        <li><b>If the attacker has gone, isolate and image.</b> Why: this stops further change and secures a stable copy.</li>
+        <li><b>If the attacker is active, monitor first.</b> Why: you can learn the method and identify the person.</li>
+        <li><b>Capture volatile data before shutdown.</b> Why: RAM and network state vanish forever when power is cut.</li>
+        <li><b>Record the choice and the reason.</b> Why: the defence will ask why you acted as you did.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A fire alarm goes off in a shop. You can cut the power and save the building, or leave the lights on and watch the arsonist on camera. Each choice saves something and risks something else.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “Collect more evidence” is not always better. Evidence must be relevant and lawfully obtained. A huge pile of unrelated personal files can create a privacy problem without proving anything.</div>
 
       <h4>1. What is evidence?</h4>
       <p><b>Evidence</b> is any information of supporting value — information that <b>proves something or helps to prove something relevant to the case</b>. In digital forensics it can be a file, an e-mail, a log entry, a screenshot, a disk image or a network packet.</p>
@@ -426,6 +585,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the two options are a trade-off, not a right answer. Pulling the plug protects the disk but loses live data; staying online keeps the live data but gives the attacker time to erase it.</p>
       <p class="small">A third practical option — often used in business — is to capture volatile data first, then isolate and image. That is “live acquisition then shutdown”, covered in Unit 5.</p>
 
       <div class="tip"><b>8-mark answer:</b> definition (2) + five reasons (3) + two options in a small table (3). The two-option table is exactly what the book gives, so use it.</div>
@@ -440,6 +600,38 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q3(a) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> The main purpose is to turn digital data into proof a court or employer can rely on.<br>That means proving an incident happened, showing what was done, and linking it to a person.<br>Good evidence can also clear an innocent suspect.</div>
+
+      <h4>Why we do this</h4>
+      <p>Data by itself is not evidence. It becomes evidence only when someone can show it is relevant, genuine and lawfully collected. That is the whole purpose of the process.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Primary purpose</b> — the main reason the activity is done.</li>
+        <li><b>Admissible</b> — allowed to be used in court.</li>
+        <li><b>Relevant</b> — connected to the incident.</li>
+        <li><b>Authentic</b> — proven to be what it claims to be.</li>
+        <li><b>Perpetrator</b> — the person who carried out the act.</li>
+        <li><b>Chain of custody</b> — the signed record of who handled the evidence.</li>
+        <li><b>Volatile data</b> — data that disappears when power is lost.</li>
+        <li><b>Timeline</b> — a dated sequence of events.</li>
+        <li><b>Cross-examination</b> — the other side's questioning of a witness in court.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Prove an incident occurred.</b> Why: an attack must be separated from a fault or a mistake.</li>
+        <li><b>Establish the facts.</b> Why: the court needs to know what was accessed, changed, copied or deleted.</li>
+        <li><b>Identify the person.</b> Why: an account, device or IP address must be linked to human action.</li>
+        <li><b>Preserve the truth.</b> Why: volatile data vanishes and originals can be altered.</li>
+        <li><b>Build a timeline.</b> Why: the order of events shows how the attack worked.</li>
+        <li><b>Present it so it survives challenge.</b> Why: evidence that cannot be defended under cross-examination proves nothing.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Evidence is a bridge between the incident and the courtroom. Each plank is a fact: what happened, when, how, and who. If one plank is missing or rotten, the bridge collapses under cross-examination.</div>
+
+      <div class="confuse"><b>Common confusion:</b> The purpose is not “to prove the suspect guilty”. It is to establish the facts. The same evidence may exclude a suspect, which is just as important as convicting the guilty.</div>
+
       <p>The primary purpose is to <b>obtain proof that is relevant, authentic and legally admissible</b>, so that the incident can be explained and the responsible person can be identified and held accountable.</p>
       <ol>
         <li><b>Prove that an incident occurred</b> — distinguish a real attack from a system fault or user error.</li>
@@ -451,6 +643,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li><b>Prevent future incidents</b> — use the findings to close the weakness.</li>
         <li><b>Protect the innocent</b> — evidence can also exclude a suspect or disprove an allegation.</li>
       </ol>
+      <p class="small"><b>What this means:</b> the first three points prove the act and the actor. The next three protect the proof. The last two use the result to prevent harm and to be fair.</p>
       <div class="note"><b>One-line definition to open with:</b> “The primary purpose is to convert digital data into admissible evidence — proof that a court or employer can rely on.”</div>
     </div>
   </div>
@@ -467,6 +660,36 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 May Q4(a) [8] · 2022 Nov Q4(a) [8]</p>
 
+      <div class="simple"><b>In simple words:</b> The general procedure has four stages: identify the evidence, preserve it, analyse it, and present it.<br>Each stage answers one question: what is evidence, how do we keep it safe, what does it mean, and how do we explain it?<br>The copy is always made before the analysis.</div>
+
+      <h4>Why we do this</h4>
+      <p>A single missed stage breaks the case. If you analyse before preserving, you may destroy the evidence. If you never present it clearly, the court cannot use it.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Identification</b> — deciding which devices, files and logs are evidence.</li>
+        <li><b>Preservation</b> — keeping evidence unchanged and protected.</li>
+        <li><b>Analysis</b> — studying the data to work out what it proves.</li>
+        <li><b>Presentation</b> — explaining the findings in a report or in court.</li>
+        <li><b>Bit-stream image</b> — an exact copy of every sector on a disk.</li>
+        <li><b>Hash</b> — a fingerprint used to prove a copy matches the original.</li>
+        <li><b>Write blocker</b> — a tool that allows reading but blocks writing to a disk.</li>
+        <li><b>Anti-static bag</b> — packaging that protects electronics from static damage.</li>
+        <li><b>Faraday bag</b> — a signal-blocking bag used for phones and wireless devices.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Identify.</b> Why: you cannot preserve what you have not recognised as evidence.</li>
+        <li><b>Preserve.</b> Why: the original must stay unchanged from seizure to court.</li>
+        <li><b>Analyse.</b> Why: the examiner must find and interpret the relevant data.</li>
+        <li><b>Present.</b> Why: the judge, jury or employer must be able to follow the conclusion.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A museum receives a fragile old manuscript. Staff first identify it, then place it in a climate-controlled case, then study it under glass, and finally write a label for visitors. The order protects the object at every stage.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Preservation is not analysis. Preservation keeps the evidence safe; analysis studies a copy. If you start “looking around” on the original, you have skipped preservation.</div>
+
       <h4>1. The four-stage procedure (book §4.7)</h4>
       <div class="tbl-wrap">
       <table class="left">
@@ -479,6 +702,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+
+      <p class="small"><b>What this means:</b> the four stages are the skeleton of every forensic case. The ten practical steps below are the same skeleton with the muscles added.</p>
 
       <h4>2. Practical step-by-step version</h4>
       <ol>
@@ -512,6 +737,41 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q4(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> Collecting gets the evidence out of the scene safely; archiving keeps it safe until the trial.<br>Collecting means photograph, copy and verify. Archiving means log it, lock it up, control access and keep it long enough.<br>The original stays sealed; the working copy is analysed.</div>
+
+      <h4>Why we do this</h4>
+      <p>A case can take months or years to reach court. Without controlled storage and a record of access, the evidence may change, disappear, or be impossible to defend.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Collection</b> — finding and taking the digital evidence into custody.</li>
+        <li><b>Archiving</b> — storing evidence in a controlled, logged place for long-term safekeeping.</li>
+        <li><b>Evidence safe</b> — a locked room or cupboard accessible only to named custodians.</li>
+        <li><b>Access log</b> — a record of who entered the store, when, and why.</li>
+        <li><b>Retention</b> — how long evidence must be kept before it can be destroyed.</li>
+        <li><b>Tamper-evident bag</b> — packaging that shows if it has been opened.</li>
+        <li><b>CD-R / DVD-R</b> — write-once optical media used for a permanent copy.</li>
+        <li><b>SSD</b> — solid-state drive, a fast storage device with no moving parts.</li>
+        <li><b>LTO</b> — Linear Tape-Open, a high-capacity tape format used for long-term archives.</li>
+        <li><b>Faraday bag</b> — a signal-blocking bag that stops a phone being wiped remotely.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Identify and document the devices.</b> Why: the record must show exactly what was taken.</li>
+        <li><b>Capture volatile data.</b> Why: RAM and network state disappear on shutdown.</li>
+        <li><b>Isolate the system.</b> Why: it stops remote changes during collection.</li>
+        <li><b>Image and hash.</b> Why: the copy must be proven identical to the original.</li>
+        <li><b>Label and seal the original.</b> Why: the seal shows whether anyone opened it.</li>
+        <li><b>Store it in the evidence safe.</b> Why: controlled access prevents contamination and theft.</li>
+        <li><b>Log every access.</b> Why: the chain of custody needs a complete history.</li>
+        <li><b>Keep it until the appeal period ends.</b> Why: early destruction can be treated as obstruction.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A library's rare-book room has a locked door, a sign-in sheet and a climate-controlled shelf. You can study a copy, but the original never leaves the room. Evidence archiving follows the same rules.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Archiving is not just “putting it in a drawer”. It means controlled access, a log, a stable environment and a retention date. A drawer with no log is not an archive.</div>
 
       <h4>1. Collection</h4>
       <ol>
@@ -547,6 +807,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+
+      <p class="small"><b>What this means:</b> the medium is chosen for a job. Optical discs are for a final permanent copy, disks for fast working copies, tape for long archives, and signal-blocking bags for anything that can connect to a network.</p>
     </div>
   </div>
 </section>
@@ -561,6 +823,40 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [9] · 2025 May Q3(b) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> A computer image is a copy of a disk. Verification checks that the copy is exact; authentication checks that it came from the right place.<br>The main tool is a hash, which works like a fingerprint for a file.<br>If the original and the copy have the same hash, the copy is accepted.</div>
+
+      <h4>Why we do this</h4>
+      <p>The defence has the right to ask, “Is this really the data from that computer?” A verified image answers that question without letting anyone touch the original.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Image</b> — an exact copy of every sector on a disk.</li>
+        <li><b>Verification</b> — checking that the copy matches the original.</li>
+        <li><b>Authentication</b> — proving the evidence is genuine and came from the stated source.</li>
+        <li><b>Hash</b> — a short fingerprint produced from data by a mathematical function.</li>
+        <li><b>Avalanche effect</b> — a tiny change in the input produces a completely different hash.</li>
+        <li><b>Known-good hash set</b> — a list of fingerprints of safe, standard files.</li>
+        <li><b>Known-bad hash set</b> — a list of fingerprints of malware or contraband.</li>
+        <li><b>Re-imaging</b> — making a second image, often with a different tool, to compare results.</li>
+        <li><b>Digital signature</b> — a cryptographic stamp that proves who signed the data and that it has not changed.</li>
+        <li><b>Certificate authority (CA)</b> — a trusted body that confirms a public key belongs to a person or organisation.</li>
+        <li><b>Hex editor</b> — a tool that shows the raw bytes of a file.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Hash the original at seizure.</b> Why: this is the reference value before anything is copied.</li>
+        <li><b>Image the disk through a write blocker.</b> Why: the copy must be made without changing the source.</li>
+        <li><b>Hash the image.</b> Why: the two values must be compared.</li>
+        <li><b>Compare the hashes.</b> Why: equal values prove the copy is bit-for-bit identical.</li>
+        <li><b>Record the algorithm and value.</b> Why: the court needs to know exactly what was checked.</li>
+        <li><b>Re-verify before analysis and at every transfer.</b> Why: this catches any later change.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A hash is a fingerprint for a file. If the original document and the photocopy have the same fingerprint, you know the copy is exact. But the fingerprint does not tell you whether the original document told the truth.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A matching hash does not prove the content is true or that the suspect is guilty. It proves only that the copy equals the original. The examiner still has to interpret what the data means.</div>
 
       <h4>1. Why authentication is needed (book §4.15.1)</h4>
       <ul>
@@ -589,6 +885,8 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
         <li><b>Known-bad set</b> — instantly flags contraband or malware without opening every file.</li>
         <li>This is also a validation technique: it shows that the tool produces the expected hash for a known file.</li>
       </ul>
+
+      <p class="small"><b>What this means:</b> hashing checks one copy against one original. Known-good and known-bad sets check thousands of files at once, so the examiner can ignore the ordinary and focus on the suspicious.</p>
 
       <h4>4. Method 3 — Re-imaging and comparison</h4>
       <p>Take a second image from the original with a different tool, or re-image the working copy, then compare the two hashes. If they match, the copying procedure is <b>repeatable</b>. If they differ, the original changed or the tool is faulty.</p>
@@ -622,6 +920,41 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q4(b) [8]</p>
 
+      <div class="simple"><b>In simple words:</b> Duplication means making an exact bit-for-bit copy of the storage media.<br>Preservation means keeping the original unchanged and protected after that copy is made.<br>Together they let everyone analyse the same data without touching the only original.</div>
+
+      <h4>Why we do this</h4>
+      <p>Digital evidence is fragile: one accidental write can destroy it. A verified duplicate plus controlled storage protects the original and gives the defence the same data to inspect.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Duplication</b> — making an exact copy of all data on the storage media.</li>
+        <li><b>Bit-for-bit copy</b> — a copy that matches every single bit of the original.</li>
+        <li><b>Preservation</b> — keeping the original unchanged and protected.</li>
+        <li><b>Write blocker</b> — a tool that allows reading but blocks writing to the evidence disk.</li>
+        <li><b>Bit-stream image</b> — an image of every sector, including deleted data, slack and unallocated space.</li>
+        <li><b>Hash</b> — a fingerprint used to prove the image matches the original.</li>
+        <li><b>Working copy</b> — the verified duplicate used for analysis.</li>
+        <li><b>Tamper-evident bag</b> — packaging that shows if it has been opened.</li>
+        <li><b>Evidence safe</b> — a locked store with restricted access and an access log.</li>
+        <li><b>Faraday bag</b> — a signal-blocking bag that prevents remote wiping of a phone.</li>
+        <li><b>Chain of custody</b> — the signed record of every handover and access.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Connect the original through a write blocker.</b> Why: this prevents any accidental write during copying.</li>
+        <li><b>Create a bit-stream image.</b> Why: a normal copy misses deleted files, slack and unallocated space.</li>
+        <li><b>Hash the original and the image.</b> Why: matching hashes prove the copy is exact.</li>
+        <li><b>Make a second copy for working.</b> Why: the original and one copy can be stored separately.</li>
+        <li><b>Label both copies.</b> Why: the case number, exhibit number, date and hash must travel with the media.</li>
+        <li><b>Seal and store the original.</b> Why: preservation starts the moment the copy is verified.</li>
+        <li><b>Re-verify at every transfer.</b> Why: this catches accidental change or tampering.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> You photocopy an important contract, check that the photocopy is perfect, then lock the original in a vault. You do all your reading and marking on the photocopy. If anyone questions the copy, you compare it with the vault original.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Duplication is not “copy and paste” a folder. A folder copy misses deleted data, file slack and unallocated space, and it does not prove the copy is exact. A forensic duplicate copies every sector and is hash-verified.</div>
+
       <h4>1. Duplication</h4>
       <p><b>Duplication</b> is making an exact, <b>bit-for-bit copy</b> of the storage media. The copy must include every sector: allocated files, deleted files, file slack and unallocated space.</p>
       <ol>
@@ -644,6 +977,8 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
         <li>Keep a complete <b>chain-of-custody record</b>.</li>
         <li>For phones, use a <b>faraday bag</b> to prevent remote wipe.</li>
       </ul>
+
+      <p class="small"><b>What this means:</b> duplication creates the safe copy; preservation keeps it safe. Duplication without preservation is just a copy lying in an unlocked drawer.</p>
 
       <h4>3. The three essential qualities of a trustworthy copy</h4>
       <ol>
@@ -669,6 +1004,39 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q2(a) [9] · 2023 Nov Q4(a) [8]</p>
 
+      <div class="simple"><b>In simple words:</b> Digital evidence comes in several forms: the device itself, documents stored on it, a witness's explanation, and a diagram that helps explain the rest.<br>It can also be grouped by source, such as e-mail, files, network traffic, browser history or a phone.<br>The type decides how you prove it is genuine.</div>
+
+      <h4>Why we do this</h4>
+      <p>Courts treat each type differently. A seized hard disk, a server log and an expert's opinion each need a different proof of authenticity, so the examiner must know which type they are handling.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Real evidence</b> — a physical object shown to the court, such as the seized disk.</li>
+        <li><b>Documentary evidence</b> — written or recorded material, such as logs, e-mail or contracts.</li>
+        <li><b>Testimonial evidence</b> — a witness's statement under oath.</li>
+        <li><b>Demonstrative evidence</b> — a chart, diagram or animation that explains other evidence.</li>
+        <li><b>Computer-generated record</b> — data created by a system without a person typing it, such as an audit log.</li>
+        <li><b>Computer-stored record</b> — data a person created and saved, such as a document or e-mail.</li>
+        <li><b>Hearsay</b> — an out-of-court statement offered to prove its content; it is usually restricted in court.</li>
+        <li><b>Metadata</b> — data about data, such as author, timestamps and GPS coordinates.</li>
+        <li><b>File slack</b> — the unused tail of a file's last storage block.</li>
+        <li><b>Unallocated space</b> — disk space not assigned to a live file.</li>
+        <li><b>Volatile evidence</b> — data that disappears when power is lost.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Ask what the item is.</b> Why: an object, a document, a statement and a diagram are treated differently.</li>
+        <li><b>Ask who created it.</b> Why: a machine log and a human-written e-mail need different authentication.</li>
+        <li><b>Ask what it proves.</b> Why: relevance decides whether the court will even consider it.</li>
+        <li><b>Ask how you will prove it is genuine.</b> Why: each type has its own authenticity test.</li>
+        <li><b>Ask how you will present it.</b> Why: a log may need a summary, and a disk may need an expert.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> In a courtroom you may show the knife, read the letter, call the witness, and point to a diagram of the scene. Each is evidence, but each works in a different way. Digital evidence follows the same four roles.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A screenshot is usually demonstrative evidence, not the original record. The underlying log or file is stronger because it can be hashed and examined. Use the screenshot to explain, not to replace, the source.</div>
+
       <h4>1. The four classical types of evidence (book §4.4)</h4>
       <div class="tbl-wrap">
       <table class="left">
@@ -681,6 +1049,8 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
         </tbody>
       </table>
       </div>
+
+      <p class="small"><b>What this means:</b> the four types answer “what role does this play in court?” The device, the document, the witness and the diagram each have a different job. Do not call everything “real evidence”.</p>
 
       <h4>2. Types of digital evidence by source</h4>
       <ol>
@@ -716,6 +1086,7 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
         </tbody>
       </table>
       </div>
+      <p class="small"><b>What this means:</b> the five rules are a checklist for every item. Admissible gets it into court, authentic proves it is real, complete stops a one-sided story, reliable proves the method, and believable makes it understandable.</p>
       <p class="small">Memory hook: <b>A-A-C-R-B</b> — Admissible, Authentic, Complete, Reliable, Believable.</p>
 
       <div class="tip"><b>Best structure for 9 marks:</b> 4 classical types in a table (4 marks) + 6 digital sources in a numbered list (4 marks) + one line on admissibility (1 mark).</div>
@@ -734,6 +1105,41 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q4(a) [8] · 2025 Nov Q8(a) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> Volatile evidence is data that disappears when the power goes off.<br>RAM, running processes and network connections are the clearest examples.<br>Collect it first, because a shutdown destroys it in seconds.</div>
+
+      <h4>Why we do this</h4>
+      <p>The most useful proof of live activity often exists only in memory. If you pull the plug first, you may lose the malware, the open connection and the logged-in user.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Volatile data</b> — data that changes constantly and is lost when power is removed.</li>
+        <li><b>RAM</b> — the computer's working memory, where running programs and open files live.</li>
+        <li><b>Register</b> — a tiny, very fast storage location inside the processor.</li>
+        <li><b>Cache</b> — fast memory that holds recently used data.</li>
+        <li><b>Virtual memory</b> — disk space used as if it were extra RAM.</li>
+        <li><b>ARP cache</b> — a table that maps local IP addresses to hardware addresses.</li>
+        <li><b>Process table</b> — the operating system's list of running programs.</li>
+        <li><b>Swap file</b> — the disk file that holds data moved out of RAM.</li>
+        <li><b>Order of volatility</b> — the rule for collecting the fastest-changing data first.</li>
+        <li><b>Memory dump</b> — a saved copy of RAM for analysis.</li>
+        <li><b>DLL</b> — a shared code file that a running program can load.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Stop new activity.</b> Why: every new program or login overwrites part of the memory.</li>
+        <li><b>Record the system time and logged-in users.</b> Why: these details disappear with the session.</li>
+        <li><b>Capture the fastest-changing data first.</b> Why: registers, cache and network tables change in seconds.</li>
+        <li><b>Dump RAM with a trusted tool.</b> Why: memory holds malware, keys and open documents.</li>
+        <li><b>Record network connections and processes.</b> Why: they show what the machine was doing at that moment.</li>
+        <li><b>Hash the memory image.</b> Why: the copy must be provably unchanged.</li>
+        <li><b>Only then shut down and image the disk.</b> Why: the disk is less volatile and can wait.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Volatile evidence is like ice on a warm day. If you wait, it melts and the shape is gone forever. You photograph it, measure it and bag it first; the solid furniture in the room can wait.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “Volatile” does not mean “unimportant” or “unreliable”. It often holds the strongest proof of live activity, such as running malware or an open connection to the attacker.</div>
+
       <h4>1. Definition</h4>
       <p><b>Volatile data</b> is data that is <b>in a state of change</b> — data that will be <b>lost when the power is switched off</b>. Volatile evidence is present in physical memory, registers, virtual memory, the file-system cache and peripheral device memory.</p>
 
@@ -751,6 +1157,8 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
         <li>Router configuration</li>
         <li>Network topology</li>
       </ol>
+
+      <p class="small"><b>What this means:</b> the list runs from “gone in milliseconds” to “survives a power cut”. You do not memorise it as ten random items; you read it as a countdown from most fragile to most stable.</p>
 
       <h4>3. Why collect quickly?</h4>
       <ul>
@@ -800,6 +1208,41 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q3(a) [9] · 2025 Nov Q3(a) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> Digital evidence must be collected and stored according to the law, not just the textbook.<br>You need lawful authority, a strict chain of custody, secure storage and respect for privacy.<br>A perfect technical copy can still be rejected if the seizure was illegal.</div>
+
+      <h4>Why we do this</h4>
+      <p>Courts exclude evidence obtained illegally, even when it proves the crime. Following the legal rules protects the case and the rights of everyone involved.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Legal standard</b> — the rule a court requires before evidence can be used.</li>
+        <li><b>Chain of custody</b> — the signed record of who handled the evidence and what they did.</li>
+        <li><b>Tamper-proof</b> — stored so that unauthorised access or change is prevented or detected.</li>
+        <li><b>Search warrant</b> — a judge's written permission to search or seize.</li>
+        <li><b>Scope</b> — the limit of what a warrant or policy allows you to search.</li>
+        <li><b>Privacy</b> — a person's right to control personal information.</li>
+        <li><b>Best evidence rule</b> — use the original record, or a verified duplicate, rather than a casual copy.</li>
+        <li><b>Hearsay</b> — an out-of-court statement used to prove its content; usually restricted.</li>
+        <li><b>Business-record exception</b> — a rule that lets routine computer records be used despite the hearsay rule.</li>
+        <li><b>Retention</b> — how long evidence must be kept.</li>
+        <li><b>Obstruction</b> — deliberately interfering with an investigation or destroying evidence.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Get lawful authority.</b> Why: a warrant, consent or written policy is the legal basis for the search.</li>
+        <li><b>Stay inside the scope.</b> Why: searching beyond the warrant can make the extra evidence inadmissible.</li>
+        <li><b>Document every handover.</b> Why: the chain of custody proves the evidence was not swapped.</li>
+        <li><b>Store it securely.</b> Why: tamper-proof storage protects both the evidence and the case.</li>
+        <li><b>Respect privacy.</b> Why: personal data on a work device may still be protected.</li>
+        <li><b>Keep the original or a verified duplicate.</b> Why: the best evidence rule prefers the original.</li>
+        <li><b>Retain until the appeal period ends.</b> Why: destroying evidence early can be obstruction.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Airport security can search your bag, but only within the law and with a record of what was done. If an officer searches a locked case without authority, the find may not count. Digital evidence follows the same rule.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A technically perfect image is not automatically admissible. If the device was seized without lawful authority, or the chain has a gap, the court may reject the image no matter how good the hash is.</div>
+
       <h4>1. Legal standards are not optional</h4>
       <p>When gathering evidence, specific legal standards must be followed. These requirements are <b>extensive, intricate and differ from nation to nation</b>. Evidence obtained illegally may be excluded even if it proves the crime.</p>
 
@@ -821,6 +1264,8 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
         <li><b>A trustworthy copying procedure was applied.</b></li>
         <li><b>All media were protected.</b></li>
       </ol>
+
+      <p class="small"><b>What this means:</b> the four statements are the legal version of “prove the copy is good”. No addition, a full copy, a trustworthy method, and protected media. If any one is missing, the chain is weak.</p>
 
       <h4>4. Legal requirements for workplace monitoring (CERT Advisory CA-1992-19)</h4>
       <p>The advisory suggests wording that should be customised to the corporation's requirements and overseen by legal counsel:</p>
@@ -863,6 +1308,38 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q3(a) [8]</p>
 
+      <div class="simple"><b>In simple words:</b> At the scene you must choose how to collect: pull the plug, watch the intruder, capture live data, or copy over the network.<br>Each option saves some evidence and risks losing something else.<br>The right choice depends on whether the attacker is active, how critical the system is, and where it is.</div>
+
+      <h4>Why we do this</h4>
+      <p>There is no single safe method. A choice that saves a business-critical server may lose the attacker's live connection; a choice that catches the attacker may let evidence be deleted.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Collection option</b> — the strategy chosen for taking evidence at the scene.</li>
+        <li><b>Live acquisition</b> — collecting data while the system is running.</li>
+        <li><b>Dead acquisition</b> — collecting a disk image after shutdown.</li>
+        <li><b>Remote acquisition</b> — copying data over a network from another site.</li>
+        <li><b>Isolate</b> — disconnect from the network while keeping the machine running.</li>
+        <li><b>Attribution</b> — identifying who carried out the attack.</li>
+        <li><b>Business continuity</b> — keeping essential services running during the investigation.</li>
+        <li><b>Dead man switch</b> — a hidden program that wipes data when the machine is disturbed or disconnected.</li>
+        <li><b>Warrant</b> — a judge's permission to search or seize.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Is the attacker still active?</b> Why: if yes, watching may identify them; if no, preservation matters more.</li>
+        <li><b>Is the system business-critical?</b> Why: a production server may not be allowed to go offline.</li>
+        <li><b>Is the site far away?</b> Why: remote acquisition may be the only practical route.</li>
+        <li><b>What legal authority do you have?</b> Why: a warrant may require seizure; policy may allow only a copy.</li>
+        <li><b>What will you lose?</b> Why: shutdown loses RAM; staying online risks deletion.</li>
+        <li><b>Record the choice and the reason.</b> Why: the defence will question every undocumented action.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A fire is spreading in a building. You can cut the power and save the building, or keep the cameras running to catch the arsonist. Each choice saves something and gives up something else.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Pulling the plug is not always the safest option. It destroys RAM and can trigger a hidden wipe program. On a live server, capturing memory first is often the better choice.</div>
+
       <p>“Options” means the <b>strategic choice</b> made at the moment of detection. The book gives two; in practice there are four.</p>
 
       <div class="tbl-wrap">
@@ -876,6 +1353,8 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
         </tbody>
       </table>
       </div>
+
+      <p class="small"><b>What this means:</b> the four options are not ranked. Option 1 is safest for the disk, option 2 is best for attribution, option 3 is best for a live server, and option 4 is best for distance. Match the option to the situation, then justify it.</p>
 
       <h4>Decision factors</h4>
       <ul>
@@ -898,6 +1377,40 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q3(a) [8]</p>
 
+      <div class="simple"><b>In simple words:</b> Digital evidence is hard to collect because it is fast, invisible, easy to change and often encrypted.<br>It may sit on a server in another country, or vanish before you arrive.<br>The obstacles are technical, legal and organisational, not just “the disk is locked”.</div>
+
+      <h4>Why we do this</h4>
+      <p>Knowing the obstacles in advance tells you what to capture first, what tools to bring and when to involve a lawyer. It also explains why a simple “copy the disk” plan often fails.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Obstacle</b> — anything that makes collection slower, harder or less reliable.</li>
+        <li><b>Ephemeral</b> — lasting only a very short time.</li>
+        <li><b>Audit trail</b> — the recorded history of system activity.</li>
+        <li><b>Encryption</b> — scrambling data so only a key can read it.</li>
+        <li><b>Steganography</b> — hiding data inside an ordinary-looking file.</li>
+        <li><b>Anti-forensics</b> — methods used to hide, alter or destroy evidence.</li>
+        <li><b>Timestomping</b> — changing a file's timestamps to mislead an investigator.</li>
+        <li><b>Rootkit</b> — malware that hides files and processes from the operating system.</li>
+        <li><b>Jurisdiction</b> — the legal area a court or police force controls.</li>
+        <li><b>Warrant scope</b> — the limit of what a warrant allows you to search.</li>
+        <li><b>Volatility</b> — how quickly data disappears without power.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Identify the obstacle.</b> Why: a legal problem needs a lawyer, while encryption needs a technical tool.</li>
+        <li><b>Capture the volatile data first.</b> Why: it disappears while you are still arguing about access.</li>
+        <li><b>Isolate the system.</b> Why: it stops remote deletion and further attack.</li>
+        <li><b>Image before you investigate.</b> Why: a verified copy lets you experiment without risk.</li>
+        <li><b>Document what you could not get.</b> Why: a known gap is easier to explain than a hidden one.</li>
+        <li><b>Get legal help early.</b> Why: jurisdiction and warrant limits can stop a case after the technical work is done.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> You are chasing a thief who can erase footprints, lock doors from the inside and move to another country. You save the footprints you can see, photograph the doors, and call a lawyer before forcing entry.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Encryption is not the only obstacle, and often it is not the biggest one. Distance, jurisdiction, cost, business downtime and a gap in the chain of custody can stop an investigation just as effectively.</div>
+
       <h4>1. Obstacles listed in the book (§4.3)</h4>
       <ol>
         <li><b>Speed and distance</b> — computer transactions are quick, can be done from anywhere, and may be encrypted or anonymous.</li>
@@ -907,6 +1420,8 @@ Image of disk  ──►  MD5  ──►  5d41402abc4b2a76b9719d911017c592
         <li><b>Ease of alteration</b> — data can be changed without leaving an obvious mark; transactions can be conducted anonymously.</li>
         <li><b>Investigative limits</b> — investigators can only follow the norms of evidence collection and be as diligent as is feasible.</li>
       </ol>
+
+      <p class="small"><b>What this means:</b> the book's six obstacles all point to one problem: digital evidence leaves no stable physical scene. The examiner must race the system, not just search it.</p>
 
       <h4>2. Technical obstacles</h4>
       <ul>

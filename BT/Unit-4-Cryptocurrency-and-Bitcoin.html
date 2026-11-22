@@ -81,6 +81,10 @@ table.left td,table.left th{text-align:left}
 .tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
 .book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
 .note b,.warn b,.tip b,.book b{color:#fff}
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
 ul,ol{margin:8px 0 8px 22px;padding:0}
 li{margin:5px 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -129,6 +133,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 @media print{
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important;break-inside:avoid}
+  .simple b,.analogy b,.confuse b{color:#000!important}
   .booksrc{color:#333!important}
   .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
 
@@ -138,7 +144,13 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 .prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
 .side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
-</style></head>
+</style><style id="print-simple">
+@media print{
+  .simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .simple b,.analogy b,.confuse b{color:#000!important}
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 
@@ -180,6 +192,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   </div>
 </header>
 
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every term is defined, and every mechanism is explained step by step. No prior blockchain background needed.</div>
+
 <section class="card" id="map">
   <h2>📊 PYQ frequency map — what actually gets asked</h2>
   <p class="lead">Five end-sem papers only. 2024 May and 2025 Nov are near-identical; both are counted. One sub-question can cover two topics (e.g. 2025 May Q4(b) asks hot/cold <em>and</em> MetaMask), so the rows below add up to slightly more than 26.</p>
@@ -220,11 +234,62 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q3(a) [6] · 2023 Nov Q3(b) [6] · 2024 May Q3(b) [8] · 2025 May Q3(a) [9 — with safety opinion] · 2025 Nov Q3(b) [8]</p>
 
-      <h4>1. Two ways to classify</h4>
-      <p><b>(a) By purpose:</b> coins, tokens, stablecoins, privacy coins, utility tokens, governance tokens.<br>
-      <b>(b) By name:</b> the book lists Bitcoin, Ethereum, Tether, XRP, Binance Coin and Solana. For 8–9 marks, give both — the categories first, then five named examples.</p>
+      <div class="simple"><b>In simple words:</b> "Cryptocurrency" is not one coin; it is a family of digital assets.<br>
+      Some are money, some are fuel for apps, some stay pegged to the dollar, and some hide transaction details.<br>
+      The exam asks you to list these types and give an example of each.<br>
+      It also asks whether crypto is safe, and the honest answer depends on who holds the keys.</div>
 
-      <h4>2. Categories with examples</h4>
+      <h4>Why we do this</h4>
+      <p>People say "crypto" as if every coin works the same way. They do not. Grouping coins by purpose lets you judge their risks: a stablecoin, a platform coin and a meme coin fail in very different ways.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Cryptocurrency:</b> digital money secured by cryptography and recorded on a blockchain.</li>
+        <li><b>Coin:</b> a cryptocurrency with its own blockchain, such as BTC or ETH.</li>
+        <li><b>Token:</b> an asset built on another blockchain, such as an ERC-20 token on Ethereum.</li>
+        <li><b>Stablecoin:</b> a token designed to keep a steady value, usually one US dollar.</li>
+        <li><b>Privacy coin:</b> a coin that hides the sender, receiver or amount.</li>
+        <li><b>Utility token:</b> a token that pays for a service or gives a discount on a platform.</li>
+        <li><b>Governance token:</b> a token that gives a vote on protocol decisions.</li>
+        <li><b>Meme coin:</b> a coin driven by online hype, with little or no practical use.</li>
+        <li><b>Private key:</b> the secret code that proves ownership and authorises spending.</li>
+        <li><b>Custody:</b> who holds the private keys: you or a third party.</li>
+        <li><b>Volatility:</b> how sharply a price moves up and down.</li>
+        <li><b>Phishing:</b> a fake website or message that tricks you into revealing keys or approving a theft.</li>
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+        <li><b>Exchange:</b> a platform where users buy, sell and trade crypto.</li>
+        <li><b>Smart contract:</b> code on a blockchain that runs automatically when conditions are met.</li>
+        <li><b>DeFi:</b> decentralised finance: lending, trading and earning built on smart contracts.</li>
+        <li><b>Fiat:</b> government-issued money such as the rupee or dollar.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Consensus:</b> the rule that gets all honest nodes to accept one history.</li>
+      
+        <li><b>Peg:</b> a fixed exchange rate between a stablecoin and another asset, usually the US dollar.</li>
+        <li><b>Reserves:</b> the assets an issuer holds to back a stablecoin.</li>
+        <li><b>DAO:</b> a decentralised autonomous organisation governed by token votes.</li>
+        <li><b>Speculation:</b> buying an asset mainly for a possible price gain, not for its use.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Classify by purpose, not by price.</b> Ask what the coin is for: payment, platform fuel, stable value, privacy, utility or hype. <i>Why:</i> purpose decides how the coin creates value.</li>
+        <li><b>Separate coins from tokens.</b> A coin runs its own chain; a token lives on someone else's chain. <i>Why:</i> tokens inherit the host chain's risks.</li>
+        <li><b>Check the backing.</b> A stablecoin needs reserves; a meme coin has no backing. <i>Why:</i> "stable" is a promise, not a law of physics.</li>
+        <li><b>Check the privacy claim.</b> Does it hide the sender, the receiver, the amount, or all three? <i>Why:</i> Privacy claims differ, so you must check exactly what is hidden.</li>
+        <li><b>Check supply and consensus.</b> A fixed cap and PoW behave very differently from unlimited issuance and PoS. <i>Why:</i> Supply and consensus decide scarcity, energy and attack cost.</li>
+        <li><b>Judge safety in two parts.</b> First the technology: can a transaction be forged? Then the user journey: who holds the keys, and what happens if they are lost? <i>Why:</i> most losses come from the second part.</li>
+        <li><b>Give a balanced opinion</b> with one condition, such as self-custody and a hardware wallet. <i>Why:</i> A one-sided answer loses marks; a condition shows judgement.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> The crypto market is a street with different vehicles. Bitcoin is a gold bar, ETH is fuel for a city of apps, a stablecoin is a digital dollar bill, a privacy coin is a car with tinted windows, and a meme coin is a lottery ticket with a logo.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A coin is not the same as a token. A stablecoin is not risk-free, because the issuer or its reserves can fail. A privacy coin is not invisible to law enforcement, and "the cryptography is safe" does not mean "your coins are safe".</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Two ways to classify.</b> <b>(a) By purpose:</b> coins, tokens, stablecoins, privacy coins, utility tokens, governance tokens. <b>(b) By name:</b> the book lists Bitcoin, Ethereum, Tether, XRP, Binance Coin and Solana. For 8–9 marks, give both: the categories first, then five named examples.</p>
+
+      <h4>Categories with examples</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Type</th><th>What it is</th><th>Example</th><th>Key point</th></tr></thead>
@@ -240,8 +305,9 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the "key point" column is your safety checklist. Fixed supply, reserves, privacy and hype each create a different kind of risk.</p>
 
-      <h4>3. "Is cryptocurrency safe?" — balanced answer (2025 May Q3a)</h4>
+      <h4>"Is cryptocurrency safe?" A balanced answer (2025 May Q3a)</h4>
       <div class="grid2">
         <div>
           <h4 style="margin-top:0">Where it is safe</h4>
@@ -256,15 +322,16 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <div>
           <h4 style="margin-top:0">Where it is risky</h4>
           <ul>
-            <li><b>Key loss:</b> lost seed phrase = permanent loss.</li>
+            <li><b>Key loss:</b> a lost seed phrase means permanent loss.</li>
             <li><b>Exchange failure:</b> Mt. Gox, FTX and others froze user funds.</li>
             <li><b>Phishing and malware:</b> fake wallets and approvals drain accounts.</li>
-            <li><b>Smart-contract bugs:</b> the 2016 DAO hack moved ~$50M of ETH.</li>
+            <li><b>Smart-contract bugs:</b> the 2016 DAO hack moved about $50M of ETH.</li>
             <li><b>Volatility and scams:</b> pump-and-dump, rug pulls, fake tokens.</li>
             <li><b>Regulation:</b> rules change; tax and legal status vary by country.</li>
           </ul>
         </div>
       </div>
+      <p><b>What this means:</b> the left column protects the record; the right column attacks the person. A safe user needs both good technology and good key habits.</p>
       <p><b>Opinion line:</b> "The <em>technology</em> is cryptographically safe, but the <em>user journey</em> is not. Safety depends on self-custody, a hardware wallet, verified contracts and small allocations. I would call crypto safe only for a user who understands key management, not for a first-time investor using an unregulated exchange."</p>
 
       <div class="tip"><b>9-mark structure:</b> 6 categories with examples (4) + safety table (3) + opinion (1) + conclusion (1).</div>
@@ -279,10 +346,56 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q3(b) [8]</p>
 
-      <h4>1. Why they exist</h4>
+      <div class="simple"><b>In simple words:</b> Bitcoin is public: anyone can see every payment.<br>
+      Zerocoin hides who spent a coin.<br>
+      Zerocash hides who spent it, who received it and how much.<br>
+      Both use zero-knowledge proofs, which prove a statement is true without showing the details.</div>
+
+      <h4>Why we do this</h4>
+      <p>Bitcoin calls itself private, but it is only pseudonymous. If an address is linked to a name once, the whole history becomes visible. Zerocoin and Zerocash were built to add real financial privacy without abandoning a public ledger.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Pseudonymous:</b> your real name is hidden, but your address and payments are public and can be linked.</li>
+        <li><b>Anonymity:</b> nobody can link the transaction to a real identity.</li>
+        <li><b>Zero-knowledge proof:</b> a method that proves you know a secret without revealing the secret.</li>
+        <li><b>Zerocoin:</b> a 2013 privacy extension for Bitcoin that hides the link between minting and spending.</li>
+        <li><b>Zerocash:</b> the 2014 successor that hides sender, receiver and amount, and became Zcash.</li>
+        <li><b>Mint:</b> to lock coins and create a private representative coin.</li>
+        <li><b>Spend:</b> to redeem a private coin at a new address.</li>
+        <li><b>zk-SNARK:</b> a short zero-knowledge proof that can be checked quickly.</li>
+        <li><b>Shielded transaction:</b> a transaction whose sender, receiver and amount are hidden.</li>
+        <li><b>Commitment:</b> a cryptographic seal that hides a value but fixes it, so it cannot be changed later.</li>
+        <li><b>Nullifier:</b> a one-time tag that proves a private coin has not already been spent.</li>
+        <li><b>Trusted setup:</b> a one-time ceremony that creates secret parameters; if the secrets leak, privacy can break.</li>
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+        <li><b>Transaction:</b> a signed request to move value or record data.</li>
+        <li><b>Consensus:</b> the rule that gets all honest nodes to accept one history.</li>
+      
+        <li><b>Denomination:</b> a fixed unit of value, such as a 1, 10 or 100 coin.</li>
+        <li><b>Chain analysis:</b> studying public transactions to link addresses and identities.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Start with public Bitcoin.</b> Every transaction is visible, so chain analysis can link addresses. <i>Why:</i> this is the privacy gap both systems try to fix.</li>
+        <li><b>Mint a Zerocoin.</b> Lock some BTC and receive a private coin plus a proof. <i>Why:</i> the proof lets you later claim the coin without showing where it came from.</li>
+        <li><b>Spend the Zerocoin later</b> at a fresh address. <i>Why:</i> the mint and the spend are now unlinkable.</li>
+        <li><b>Note the limits.</b> Zerocoin hides the sender link but not the amount. <i>Why:</i> exam answers must state exactly what is hidden.</li>
+        <li><b>Move to Zerocash.</b> It puts coins in a shielded pool and stores only a commitment. <i>Why:</i> the ledger can hold value without revealing it.</li>
+        <li><b>Produce a zk-SNARK</b> showing the shielded coins are valid. <i>Why:</i> the network must verify without seeing the details.</li>
+        <li><b>Publish a nullifier</b> so the same coin cannot be spent twice. <i>Why:</i> privacy must not allow double-spending.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A casino lets you turn cash into chips at one window and cash out at another, so the cashier cannot easily match you to your original notes. Zerocash goes further and also hides the value of the chips.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Zerocash is the protocol; Zcash is the live cryptocurrency built from it. Zerocoin does not hide the amount. And "zero-knowledge" does not mean "no audit"; it means the proof reveals nothing beyond the fact that the statement is true.</div>
+
+      <h4>Full answer for the exam</h4>
+      <h4>Why they exist</h4>
       <p>Bitcoin is <b>pseudonymous</b>, not anonymous. Every transaction is public, so chain analysis can link addresses and reveal identities. Zerocoin and Zerocash add <b>financial privacy</b> on top of a public ledger.</p>
 
-      <h4>2. Zerocoin (2013)</h4>
+      <h4>Zerocoin (2013)</h4>
       <ul>
         <li>Proposed by Miers, Garman, Green and Rubin as an <b>extension to Bitcoin</b>.</li>
         <li>A user <b>mints</b> a zerocoin by locking some BTC and receives a zero-knowledge proof.</li>
@@ -292,7 +405,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>Fixed denominations and no trusted setup.</li>
       </ul>
 
-      <h4>3. Zerocash (2014) — the successor</h4>
+      <h4>Zerocash (2014): the successor</h4>
       <ul>
         <li>Proposed by Sasson, Chiesa, Garman, Green, Miers, Tromer and Virza.</li>
         <li>Uses <b>zk-SNARKs</b> (zero-knowledge succinct non-interactive arguments of knowledge).</li>
@@ -302,7 +415,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>Cost: a <b>trusted setup</b> ceremony and heavier computation than Bitcoin.</li>
       </ul>
 
-      <h4>4. Comparison</h4>
+      <h4>Comparison</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Zerocoin</th><th>Zerocash</th></tr></thead>
@@ -318,6 +431,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the three "hides" rows are the whole comparison. Zerocoin hides who; Zerocash hides who, to whom and how much.</p>
 
       <pre class="tree">Zerocash shielded transaction
 
@@ -327,6 +441,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
              receiver, amount                     was not spent twice
                     │
              zk-SNARK proof (valid without revealing details)</pre>
+      <p><b>What this means:</b> the commitment hides the coin, the nullifier stops reuse, and the proof lets the network check both without seeing the data.</p>
 
       <div class="note"><b>One-line answer:</b> Zerocoin hides <em>who</em> spent the coin; Zerocash hides <em>who, to whom and how much</em> using zk-SNARKs, and became Zcash.</div>
     </div>
@@ -344,10 +459,56 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6] · 2023 Nov Q3(c) [5] · 2024 May Q3(a) [9] · 2025 May Q4(b) [9, part] · 2025 Nov Q3(a) [9]</p>
 
-      <h4>1. Definition</h4>
-      <p><b>MetaMask</b> is a non-custodial cryptocurrency wallet and gateway to blockchain apps. It was launched in 2016 by <b>ConsenSys</b>. It is available as a browser extension and a mobile app. It generates and stores the user's private keys on the device, and it lets the user interact with Ethereum and EVM-compatible networks.</p>
+      <div class="simple"><b>In simple words:</b> MetaMask is a wallet and a bridge inside your browser.<br>
+      It keeps your keys on your device and signs transactions for you.<br>
+      Websites cannot touch your keys; they can only ask MetaMask for permission.<br>
+      That is how a normal web page becomes a blockchain app.</div>
 
-      <h4>2. Why it is needed</h4>
+      <h4>Why we do this</h4>
+      <p>A browser cannot sign a blockchain transaction, and a website should never see your private key. MetaMask sits between the two: it holds the keys, shows you what the site wants, and signs only after you approve.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Wallet:</b> software that stores keys and signs transactions; it does not store the coins themselves.</li>
+        <li><b>Non-custodial:</b> you hold the keys; the company cannot move your funds.</li>
+        <li><b>Private key:</b> the secret that authorises spending.</li>
+        <li><b>Seed phrase:</b> 12 or 24 words that can rebuild every key in the wallet.</li>
+        <li><b>DApp:</b> a decentralised application that runs on a blockchain.</li>
+        <li><b>EVM:</b> Ethereum Virtual Machine; the standard runtime for Ethereum-style chains.</li>
+        <li><b>Gas:</b> the fee paid for computation and transaction space.</li>
+        <li><b>RPC:</b> the connection a wallet uses to read the chain and send transactions.</li>
+        <li><b><code>window.ethereum</code>:</b> the object MetaMask injects into a web page so DApps can request accounts and signatures.</li>
+        <li><b>HD wallet:</b> a wallet that derives many accounts from one seed phrase.</li>
+        <li><b>ERC-20:</b> the standard for fungible tokens on Ethereum.</li>
+        <li><b>NFT:</b> a unique token that represents a specific item.</li>
+        <li><b>Swap / bridge:</b> exchanging one token for another, or moving assets between chains.</li>
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+        <li><b>Block explorer:</b> a website that shows transactions and blocks on a chain.</li>
+        <li><b>DeFi:</b> decentralised finance: lending, trading and earning built on smart contracts.</li>
+        <li><b>DAO:</b> a decentralised autonomous organisation governed by token votes.</li>
+        <li><b>Ether (ETH):</b> Ethereum's native coin, used to pay gas.</li>
+        <li><b>Ethereum:</b> the programmable blockchain that MetaMask connects to by default.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Install from the official source.</b> Use the official site or app store. <i>Why:</i> fake extensions steal seed phrases.</li>
+        <li><b>Create a wallet and set a password.</b> The password unlocks the app on this device. <i>Why:</i> it protects local access, not the blockchain itself.</li>
+        <li><b>Write down the seed phrase offline.</b> Never store it in a photo or cloud note. <i>Why:</i> anyone with the phrase owns the funds.</li>
+        <li><b>Fund the account with ETH.</b> <i>Why:</i> every Ethereum transaction needs gas.</li>
+        <li><b>Connect to a DApp.</b> The site asks for permission; you choose which accounts to share. <i>Why:</i> the site should not see all your accounts by default.</li>
+        <li><b>Review and confirm.</b> MetaMask shows the transaction and fee, then signs with your key. <i>Why:</i> you must see what you approve before it is signed.</li>
+        <li><b>Track it on a block explorer.</b> <i>Why:</i> the explorer shows whether the transaction is pending or confirmed.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> MetaMask is like a keychain and ID card you carry while shopping online. A website can ask you to sign a contract, but it never gets to keep your key. You look at the contract and tap "sign" only when it is correct.</div>
+
+      <div class="confuse"><b>Common confusion:</b> MetaMask does not hold your coins; the coins stay on the blockchain, and MetaMask holds the keys. It is not an exchange, and "non-custodial" does not mean "risk-free": a phishing site can still trick you into approving a bad transaction.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>MetaMask</b> is a non-custodial cryptocurrency wallet and gateway to blockchain apps. It was launched in 2016 by <b>ConsenSys</b>. It is available as a browser extension and a mobile app. It generates and stores the user's private keys on the device, and it lets the user interact with Ethereum and EVM-compatible networks.</p>
+
+      <h4>Why it is needed</h4>
       <ul>
         <li>A normal browser is centralised; it has no wallet and cannot sign blockchain transactions.</li>
         <li>DApps need a bridge between the web page and the blockchain.</li>
@@ -355,7 +516,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>Users need a safe place for ERC-20 tokens and NFTs.</li>
       </ul>
 
-      <h4>3. Key features (2024 May Q3a — 9 marks)</h4>
+      <h4>Key features (2024 May Q3a: 9 marks)</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Feature</th><th>Explanation</th></tr></thead>
@@ -373,8 +534,9 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the table is really one idea plus extras. The core is non-custodial key storage; everything else makes that core usable across apps and networks.</p>
 
-      <h4>4. How to set up and use MetaMask</h4>
+      <h4>How to set up and use MetaMask</h4>
       <ol>
         <li>Install the extension from the official site or the mobile app from the official store.</li>
         <li>Create a new wallet; set a strong password.</li>
@@ -384,8 +546,9 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
         <li>Confirm the transaction and gas fee in the MetaMask pop-up.</li>
         <li>Track the transaction on Etherscan.</li>
       </ol>
+      <p><b>What this means:</b> setup is mostly key safety. The technical steps are easy; the seed phrase is the part you cannot undo.</p>
 
-      <h4>5. Importance</h4>
+      <h4>Importance</h4>
       <ul>
         <li>It is the <b>default entry point</b> to Ethereum DeFi, NFTs and DAOs.</li>
         <li>It makes self-custody usable for non-technical people.</li>
@@ -407,6 +570,7 @@ user confirms ──► wallet signs with private key
       │
       ▼
 RPC node ──► Ethereum network ──► block explorer</pre>
+      <p><b>What this means:</b> the DApp never sees the private key. It sends a request, MetaMask shows it to you, and only your approval produces a signature.</p>
 
       <div class="tip"><b>3-mark version:</b> definition + non-custodial + browser extension/DApp gateway. <b>9-mark version:</b> add the feature table, setup steps and importance.</div>
     </div>
@@ -424,11 +588,55 @@ RPC node ──► Ethereum network ──► block explorer</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [5] · 2023 Nov Q4(a) [6] · 2024 May Q4(a) [8] · 2025 Nov Q4(a) [8]</p>
 
-      <h4>1. One-line definitions</h4>
-      <p><b>Coinbase</b> is a US-based, regulated cryptocurrency exchange and custodial wallet service, known for a simple interface and beginner-friendly compliance.<br>
-      <b>Binance</b> is a global cryptocurrency exchange, the largest by daily trading volume, known for a huge altcoin list, low fees and the BNB Chain ecosystem.</p>
+      <div class="simple"><b>In simple words:</b> Coinbase and Binance are both crypto exchanges.<br>
+      Coinbase is regulated, simple and beginner-friendly, with fewer coins.<br>
+      Binance is huge, cheap and packed with altcoins and advanced tools.<br>
+      Both hold your keys, so both carry exchange risk.</div>
 
-      <h4>2. Comparison table</h4>
+      <h4>Why we do this</h4>
+      <p>Most people meet crypto through an exchange. The choice affects fees, coin choice, regulation and what happens if the exchange fails. The exam wants a clear comparison, not a fan opinion.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Exchange:</b> a platform where users buy, sell and trade crypto.</li>
+        <li><b>Custodial:</b> the exchange holds the private keys for user balances.</li>
+        <li><b>KYC / AML:</b> identity checks and anti-money-laundering rules.</li>
+        <li><b>Spot market:</b> buying and selling the asset itself for immediate delivery.</li>
+        <li><b>Futures:</b> contracts that bet on a future price, with leverage and extra risk.</li>
+        <li><b>Altcoin:</b> any cryptocurrency other than Bitcoin.</li>
+        <li><b>Counterparty risk:</b> the risk that the other side of a deal fails or freezes your funds.</li>
+        <li><b>Cold storage:</b> keeping most keys offline in secure vaults.</li>
+        <li><b>Order book:</b> the list of open buy and sell orders on a market.</li>
+        <li><b>Wallet:</b> software or hardware that stores keys and signs transactions.</li>
+        <li><b>Staking:</b> locking coins to help secure a proof-of-stake chain and earn rewards.</li>
+        <li><b>Launchpad:</b> a platform that lets users buy new tokens before they list publicly.</li>
+        <li><b>BNB Chain:</b> Binance's own blockchain ecosystem and its BNB token.</li>
+        <li><b>Crypto:</b> short for cryptocurrency: digital money secured by cryptography.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      
+        <li><b>Leverage:</b> borrowed exposure that magnifies both gains and losses.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Compare regulation.</b> A regulated, listed company gives more legal clarity. <i>Why:</i> rules affect deposits, withdrawals and complaint handling.</li>
+        <li><b>Compare the coin list.</b> Fewer vetted coins versus hundreds of altcoins. <i>Why:</i> more choice also means more scams and thin markets.</li>
+        <li><b>Compare fees.</b> Simple-mode fees versus advanced trading fees. <i>Why:</i> frequent traders feel fees far more than long-term holders.</li>
+        <li><b>Compare custody.</b> Both hold keys on the exchange; separate wallet apps offer self-custody. <i>Why:</i> exchange balances are promises, not keys in your hand.</li>
+        <li><b>Compare products.</b> Staking, futures, launchpads, wallets and chains. <i>Why:</i> Products decide what you can do after the purchase.</li>
+        <li><b>Match to the user.</b> Beginner or compliance-focused → Coinbase. Active trader or altcoin hunter → Binance, with more risk accepted. <i>Why:</i> The right exchange depends on the user's experience and risk tolerance.</li>
+        <li><b>Withdraw long-term holdings</b> to a non-custodial wallet. <i>Why:</i> this removes exchange counterparty risk.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Coinbase is a bank branch with a help desk and a short product list. Binance is a giant supermarket with thousands of products and low prices, but you must check the labels and the local rules yourself.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Coinbase the exchange is not Coinbase Wallet; the wallet is a separate self-custody app. Low trading fees also do not mean low total risk, because regulatory and counterparty risks remain.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>One-line definitions.</b> <b>Coinbase</b> is a US-based, regulated cryptocurrency exchange and custodial wallet service, known for a simple interface and beginner-friendly compliance. <b>Binance</b> is a global cryptocurrency exchange, the largest by daily trading volume, known for a huge altcoin list, low fees and the BNB Chain ecosystem.</p>
+
+      <h4>Comparison table</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Coinbase</th><th>Binance</th></tr></thead>
@@ -446,11 +654,12 @@ RPC node ──► Ethereum network ──► block explorer</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the table is a trade-off between safety and choice. Coinbase sells simplicity and regulation; Binance sells variety and low fees.</p>
 
-      <h4>3. Which one to choose?</h4>
+      <h4>Which one to choose?</h4>
       <ul>
-        <li><b>Coinbase</b> if you want regulation, insurance-like safeguards, simple UI and are happy with major coins.</li>
-        <li><b>Binance</b> if you want low fees, many altcoins and advanced trading tools — but accept higher regulatory and counterparty risk.</li>
+        <li><b>Coinbase</b> if you want regulation, insurance-like safeguards, a simple UI and are happy with major coins.</li>
+        <li><b>Binance</b> if you want low fees, many altcoins and advanced trading tools, but accept higher regulatory and counterparty risk.</li>
         <li>For long-term holding, withdraw to a <b>non-custodial wallet</b> (MetaMask, Ledger) instead of leaving funds on either exchange.</li>
       </ul>
 
@@ -470,10 +679,55 @@ RPC node ──► Ethereum network ──► block explorer</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [5] · 2023 Nov Q4(c) [5] · 2024 May Q1(c) [4] · 2025 Nov Q1(c) [4]</p>
 
-      <h4>1. Definition</h4>
-      <p><b>Bitcoin (BTC)</b> is the first cryptocurrency and a peer-to-peer electronic cash system. It was described in a 2008 whitepaper by the pseudonymous <b>Satoshi Nakamoto</b> and released as open-source software in <b>2009</b>. It lets two parties transfer value directly without a bank or other intermediary.</p>
+      <div class="simple"><b>In simple words:</b> Bitcoin is the first cryptocurrency: digital cash sent directly between people.<br>
+      There is no bank in the middle and no company in charge.<br>
+      A public network of nodes checks every payment, and miners order them into blocks.<br>
+      The supply is capped at 21 million coins, which is why people call it digital gold.</div>
 
-      <h4>2. Key facts</h4>
+      <h4>Why we do this</h4>
+      <p>Before Bitcoin, digital cash had a double-spending problem: a file could be copied and spent twice. Bitcoin solved it with a public ledger, proof of work and a fixed supply, without needing a central bank.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Bitcoin (BTC):</b> the first cryptocurrency and a peer-to-peer electronic cash system.</li>
+        <li><b>Peer-to-peer (P2P):</b> two parties deal directly, without a bank or middleman.</li>
+        <li><b>Satoshi Nakamoto:</b> the pseudonym of Bitcoin's anonymous creator.</li>
+        <li><b>UTXO:</b> unspent transaction output; a spendable chunk of bitcoin, like a banknote.</li>
+        <li><b>Private key:</b> the secret that authorises spending from an address.</li>
+        <li><b>Mempool:</b> the waiting room of valid transactions not yet in a block.</li>
+        <li><b>Proof of Work:</b> the puzzle miners solve to add a block.</li>
+        <li><b>Confirmation:</b> a block added after the block that contains your transaction.</li>
+        <li><b>Halving:</b> the cut in the block reward every 210,000 blocks.</li>
+        <li><b>Satoshi (unit):</b> the smallest bitcoin unit, 0.00000001 BTC.</li>
+        <li><b>Deflationary:</b> a design with a fixed or falling supply.</li>
+        <li><b>Pseudonymous:</b> addresses are public, but real names are not printed on them.</li>
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+        <li><b>Block:</b> a batch of transactions linked to the previous block.</li>
+        <li><b>Wallet:</b> software or hardware that stores keys and signs transactions.</li>
+        <li><b>Digital signature:</b> cryptographic proof that the owner approved a transaction.</li>
+        <li><b>Mining:</b> the work of building a block and solving its proof-of-work puzzle.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Create a wallet.</b> It gives you a public address and a private key. <i>Why:</i> the address receives funds; the key spends them.</li>
+        <li><b>Choose UTXOs to spend.</b> Your balance is the sum of chunks you can unlock. <i>Why:</i> Bitcoin has no account balance field.</li>
+        <li><b>Sign the transaction</b> with the private key. <i>Why:</i> nodes must know the owner approved the spend.</li>
+        <li><b>Broadcast it</b> to peer nodes. <i>Why:</i> the network, not a bank, validates it.</li>
+        <li><b>Wait in the mempool.</b> Miners pick transactions, usually by fee. <i>Why:</i> block space is limited.</li>
+        <li><b>A miner adds it to a block</b> after solving PoW. <i>Why:</i> this fixes the transaction order.</li>
+        <li><b>Other nodes verify</b> the block and signatures. <i>Why:</i> one miner cannot force a bad block.</li>
+        <li><b>Wait for confirmations.</b> Each later block makes reversal harder. <i>Why:</i> finality in Bitcoin is probabilistic.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Bitcoin is like cash passed hand to hand, but with a public receipt book that everyone can read. The book has a fixed number of pages of coins, and no bank can print extra pages.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Bitcoin is not a company and has no CEO. "No bank" does not mean "no fees"; miners still charge fees. The 21 million cap is a maximum, not the number of coins in circulation today.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>Bitcoin (BTC)</b> is the first cryptocurrency and a peer-to-peer electronic cash system. It was described in a 2008 whitepaper by the pseudonymous <b>Satoshi Nakamoto</b> and released as open-source software in <b>2009</b>. It lets two parties transfer value directly without a bank or other intermediary.</p>
+
+      <h4>Key facts</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Property</th><th>Value / detail</th></tr></thead>
@@ -490,8 +744,9 @@ RPC node ──► Ethereum network ──► block explorer</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the facts are linked. PoW secures the chain, the cap creates scarcity, and the UTXO model decides how a wallet spends.</p>
 
-      <h4>3. How Bitcoin works</h4>
+      <h4>How Bitcoin works</h4>
       <ol>
         <li>A user creates a wallet with a public address and a private key.</li>
         <li>To pay, the user signs a transaction that spends one or more UTXOs.</li>
@@ -517,20 +772,22 @@ RPC node ──► Ethereum network ──► block explorer</pre>
    │                        block appended ──────► receive BTC   │
    │                              │                              │
    │                        confirmations                       │</pre>
+      <p><b>What this means:</b> the signature proves authorisation, the miner fixes the order, and confirmations turn a pending payment into a safe one.</p>
 
-      <h4>4. UTXO model (one-mark differentiator)</h4>
+      <h4>UTXO model (one-mark differentiator)</h4>
       <p>There are no "balances" inside Bitcoin. A wallet balance is the sum of all <b>unspent outputs</b> that the wallet can unlock. When you pay 0.6 BTC from a 1 BTC UTXO, the transaction creates a 0.6 BTC output to the receiver and a ~0.4 BTC change output back to you (minus fee).</p>
+      <p><b>What this means:</b> think of spending a ₹100 note for a ₹60 purchase; you get ₹40 change. Bitcoin creates a new change output instead of editing a balance.</p>
 
-      <h4>5. Significance of Bitcoin (5-mark version)</h4>
+      <h4>Significance of Bitcoin (5-mark version)</h4>
       <ul>
         <li>First successful solution to the <b>double-spending</b> problem without a central authority.</li>
         <li>Enables cheap international payments and censorship-resistant value transfer.</li>
-        <li>Fixed supply makes it <b>deflationary</b>; often called "digital gold".</li>
+        <li>Fixed supply makes it <b>deflationary</b>; it is often called "digital gold".</li>
         <li>Open-source and auditable by anyone.</li>
         <li>Introduced the blockchain data structure and PoW mining.</li>
       </ul>
 
-      <h4>6. Mining and reward schedule</h4>
+      <h4>Mining and reward schedule</h4>
       <div class="tbl-wrap">
       <table>
         <thead><tr><th>Period</th><th>Reward per block</th><th>Halving year</th></tr></thead>
@@ -543,14 +800,15 @@ RPC node ──► Ethereum network ──► block explorer</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the reward falls by half at each halving, so new supply slows over time. That schedule is written into the protocol.</p>
       <p><b>Worked example:</b> at 3.125 BTC reward and BTC = $60,000, one block earns 3.125 × 60,000 = <b>$187,500</b> before costs. With 0.05 BTC fees, total = 3.175 × 60,000 = <b>$190,500</b>.</p>
 
-      <h4>7. Advantages and limitations</h4>
+      <h4>Advantages and limitations</h4>
       <div class="grid2">
         <div>
           <h4 style="margin-top:0">Advantages</h4>
           <ul>
-            <li>Decentralised — no central bank.</li>
+            <li>Decentralised, with no central bank.</li>
             <li>Fixed supply, inflation-resistant.</li>
             <li>Borderless and censorship-resistant.</li>
             <li>Transparent, immutable ledger.</li>
@@ -585,10 +843,53 @@ RPC node ──► Ethereum network ──► block explorer</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q4(b) [6] · 2023 Nov Q3(a) [6]</p>
 
-      <h4>1. Definition</h4>
-      <p>A <b>crypto wallet</b> is software or hardware that stores the <b>public and private keys</b> needed to receive, send and manage cryptocurrency. The coins themselves live on the blockchain; the wallet controls the keys that prove ownership.</p>
+      <div class="simple"><b>In simple words:</b> A crypto wallet does not hold coins.<br>
+      It holds the keys that prove ownership and allow spending.<br>
+      The coins stay on the blockchain; the wallet is the key manager.<br>
+      Lose the keys, and the coins are still there but no longer yours to move.</div>
 
-      <h4>2. The two keys</h4>
+      <h4>Why we do this</h4>
+      <p>Ownership on a blockchain is control of a key, not a name in a database. A wallet gives you a safe place to create, store and use that key. The type of wallet decides how safe the key is and how convenient it is to use.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Crypto wallet:</b> software or hardware that stores keys and signs transactions.</li>
+        <li><b>Public key / address:</b> the shareable identifier used to receive funds.</li>
+        <li><b>Private key:</b> the secret that authorises spending.</li>
+        <li><b>Seed phrase:</b> 12 or 24 words that can rebuild a wallet and all its keys.</li>
+        <li><b>Signature:</b> a cryptographic proof that the owner approved a transaction.</li>
+        <li><b>Custodial:</b> a third party holds the keys.</li>
+        <li><b>Non-custodial:</b> you hold the keys.</li>
+        <li><b>Hot wallet:</b> a wallet whose keys are on an internet-connected device.</li>
+        <li><b>Cold wallet:</b> a wallet whose keys stay offline.</li>
+        <li><b>Hardware wallet:</b> a small device that stores keys offline and signs transactions.</li>
+        <li><b>Paper wallet:</b> keys printed on paper and stored physically.</li>
+        <li><b>HD wallet:</b> a wallet that derives many accounts from one seed phrase.</li>
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+        <li><b>Transaction:</b> a signed request to move value from one address to another.</li>
+        <li><b>Balance:</b> the total value a wallet can spend, usually the sum of unspent outputs.</li>
+      
+        <li><b>Mempool:</b> the waiting area for valid transactions that are not yet in a block.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Create a wallet.</b> It generates a seed phrase and a tree of keys. <i>Why:</i> all later accounts come from this one backup.</li>
+        <li><b>Back up the seed phrase offline.</b> Write it on paper or metal. <i>Why:</i> it is the only way to recover the wallet.</li>
+        <li><b>Share the address to receive funds.</b> <i>Why:</i> the address is safe to share; the private key is not.</li>
+        <li><b>Build a transaction.</b> Enter the receiver and amount. <i>Why:</i> the wallet must know what to sign.</li>
+        <li><b>Confirm and sign.</b> The wallet signs with the private key. <i>Why:</i> the network needs proof of authorisation.</li>
+        <li><b>Broadcast and wait.</b> The transaction enters the mempool and then a block. <i>Why:</i> a pending balance becomes spendable only after confirmation.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A wallet is a set of keys to a locker, not the money inside. The public address is the locker number, which you can share. The private key is the key itself, which you never hand over.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Deleting a wallet app does not delete your coins; restoring the seed phrase brings them back. But losing the seed phrase with no backup means permanent loss. Also, never share a private key or seed phrase, even with "support".</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> A <b>crypto wallet</b> is software or hardware that stores the <b>public and private keys</b> needed to receive, send and manage cryptocurrency. The coins themselves live on the blockchain; the wallet controls the keys that prove ownership.</p>
+
+      <h4>The two keys</h4>
       <ul>
         <li><b>Public key / address:</b> like an account number. Share it to receive funds.</li>
         <li><b>Private key:</b> like a digital signature. It authorises spending. Never share it.</li>
@@ -605,8 +906,9 @@ RPC node ──► Ethereum network ──► block explorer</pre>
         └──► ...
 
 wallet = key manager, not a coin bank</pre>
+      <p><b>What this means:</b> one backup phrase rebuilds every account. That is convenient, but it also makes the phrase a single point of failure.</p>
 
-      <h4>3. Types of wallet (book's classification)</h4>
+      <h4>Types of wallet (book's classification)</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Type</th><th>Where keys live</th><th>Examples</th><th>Security</th><th>Convenience</th></tr></thead>
@@ -619,14 +921,15 @@ wallet = key manager, not a coin bank</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> security and convenience move in opposite directions. A hardware wallet is safer but slower; an exchange wallet is faster but depends on a third party.</p>
 
-      <h4>4. Two more useful classifications</h4>
+      <h4>Two more useful classifications</h4>
       <ul>
-        <li><b>Custodial vs non-custodial:</b> who holds the private key — a third party or you. (See §4.4.)</li>
+        <li><b>Custodial vs non-custodial:</b> who holds the private key, a third party or you. (See §4.4.)</li>
         <li><b>Hot vs cold:</b> whether the key is connected to the internet. (See §4.4.)</li>
       </ul>
 
-      <h4>5. How a wallet sends a transaction</h4>
+      <h4>How a wallet sends a transaction</h4>
       <ol>
         <li>Enter the receiver's address and amount.</li>
         <li>The wallet builds the transaction and shows the network fee.</li>
@@ -635,7 +938,7 @@ wallet = key manager, not a coin bank</pre>
         <li>The wallet shows a pending balance until confirmation.</li>
       </ol>
 
-      <div class="note"><b>Golden rule:</b> "Not your keys, not your coins." A custodial wallet is convenient but the exchange controls the funds.</div>
+      <div class="note"><b>Golden rule:</b> "Not your keys, not your coins." A custodial wallet is convenient, but the exchange controls the funds.</div>
     </div>
   </div>
 </section>
@@ -651,6 +954,49 @@ wallet = key manager, not a coin bank</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q4(b) [9] · 2025 Nov Q4(b) [9]</p>
 
+      <div class="simple"><b>In simple words:</b> MetaMask and Coinbase Wallet are both self-custody wallets.<br>
+      Both keep your keys on your device and both are hot wallets.<br>
+      MetaMask is built for DeFi power users and developers.<br>
+      Coinbase Wallet is built for beginners who want a clean app and easy cash-in.</div>
+
+      <h4>Why we do this</h4>
+      <p>The exam compares two wallets that look similar on custody but differ in user experience, chain support and ecosystem. The comparison is really about who each product is built for.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Non-custodial:</b> you hold the keys; the company cannot move your funds.</li>
+        <li><b>Hot wallet:</b> keys are on an internet-connected device, so it is convenient but exposed.</li>
+        <li><b>Seed phrase:</b> the 12 or 24 words that can restore the wallet.</li>
+        <li><b>DApp browser:</b> the part of a wallet that connects to blockchain apps.</li>
+        <li><b>EVM:</b> Ethereum Virtual Machine; the standard for Ethereum-style chains.</li>
+        <li><b>KYC:</b> identity verification, required by regulated fiat services.</li>
+        <li><b>Fiat on-ramp:</b> a service that converts bank money into crypto.</li>
+        <li><b>Base:</b> Coinbase's Ethereum layer-2 network.</li>
+        <li><b>Hardware wallet:</b> an offline device used for stronger key security.</li>
+        <li><b>Wallet:</b> software that stores keys and signs transactions.</li>
+        <li><b>DeFi:</b> decentralised finance: lending, trading and earning built on smart contracts.</li>
+        <li><b>NFT:</b> a unique token that represents one specific item.</li>
+        <li><b>RPC:</b> the connection a wallet uses to read a chain and send transactions.</li>
+        <li><b>Ethereum:</b> the programmable blockchain that MetaMask was originally built for.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Confirm custody.</b> Both are non-custodial, so both give you the seed phrase. <i>Why:</i> custody is the first thing an examiner checks.</li>
+        <li><b>Compare the target user.</b> MetaMask is denser and developer-friendly; Coinbase Wallet is simpler. <i>Why:</i> The target user explains the interface and feature differences.</li>
+        <li><b>Compare chain support.</b> MetaMask supports EVM chains and custom RPCs; Coinbase Wallet also supports Bitcoin, Solana and Base. <i>Why:</i> Chain support decides which assets and apps you can use.</li>
+        <li><b>Compare the DApp experience.</b> MetaMask has the deepest DeFi integration; Coinbase Wallet has a built-in explorer. <i>Why:</i> The DApp browser is the main daily experience.</li>
+        <li><b>Compare fiat entry.</b> Coinbase Wallet links to Coinbase's on-ramp, which requires KYC; MetaMask relies on partners. <i>Why:</i> Fiat entry decides how easy it is to start with normal money.</li>
+        <li><b>Choose by habit.</b> DeFi and development → MetaMask. First wallet and simple cash-in → Coinbase Wallet. <i>Why:</i> The best wallet is the one that matches your habits.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Two remotes control the same television. The MetaMask remote has fifty buttons and suits a power user. The Coinbase Wallet remote has five buttons and suits someone who just wants to watch a show.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Coinbase Wallet is not the Coinbase exchange account. Both wallets are non-custodial and both are hot wallets, so neither removes online risk. KYC applies to the fiat on-ramp, not to creating the wallet.</div>
+
+      <h4>Full answer for the exam</h4>
       <p class="small">Note: <b>Coinbase Wallet</b> is the self-custody wallet app, not the Coinbase exchange account. The question compares these two wallets.</p>
 
       <div class="tbl-wrap">
@@ -671,6 +1017,7 @@ wallet = key manager, not a coin bank</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the shared rows are custody and key storage; the different rows are experience, chains and audience. That is the comparison to remember.</p>
 
       <h4>Similarities</h4>
       <ul>
@@ -696,10 +1043,53 @@ wallet = key manager, not a coin bank</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [6]</p>
 
-      <h4>1. Definition</h4>
-      <p><b>Cryptocurrency</b> is digital or virtual money that uses <b>cryptography</b> to secure transactions, control the creation of new units and verify transfers. It runs on a <b>decentralised</b> blockchain, so no central bank or government issues it.</p>
+      <div class="simple"><b>In simple words:</b> Cryptocurrency is digital money secured by cryptography.<br>
+      It runs on a blockchain that many computers maintain together.<br>
+      No bank or government issues it or keeps the main copy.<br>
+      You own it through a private key, and you can send it directly to anyone.</div>
 
-      <h4>2. Key properties</h4>
+      <h4>Why we do this</h4>
+      <p>Normal digital payments depend on a bank to update its database. Cryptocurrency replaces that trusted middleman with a shared ledger, cryptographic signatures and a consensus rule, so two strangers can transact directly.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Cryptocurrency:</b> digital money that uses cryptography to secure transactions and control supply.</li>
+        <li><b>Cryptography:</b> maths that protects data, proves identity and creates unforgeable signatures.</li>
+        <li><b>Blockchain:</b> a shared, append-only ledger copied across many computers.</li>
+        <li><b>Decentralised:</b> no single administrator controls the network.</li>
+        <li><b>Node:</b> a computer that stores the ledger and validates transactions.</li>
+        <li><b>Private key:</b> the secret that authorises spending.</li>
+        <li><b>Mining:</b> creating new blocks by solving PoW puzzles (used by Bitcoin).</li>
+        <li><b>Staking:</b> locking coins to help validate blocks (used by PoS chains).</li>
+        <li><b>Pseudo-anonymous:</b> addresses are public, but real names are not attached.</li>
+        <li><b>Smart contract:</b> code on a blockchain that runs automatically.</li>
+        <li><b>Volatility:</b> sharp price swings caused by changing supply and demand.</li>
+        <li><b>Fiat money:</b> government-issued money such as the rupee or dollar.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Wallet:</b> software or hardware that stores keys and signs transactions.</li>
+        <li><b>Consensus:</b> the rule that gets all honest nodes to accept one history.</li>
+        <li><b>Block:</b> a batch of transactions linked to the previous block.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Create a wallet.</b> It generates a public address and a private key. <i>Why:</i> the address receives, the key spends.</li>
+        <li><b>Sign a transaction</b> with the private key. <i>Why:</i> nodes must verify the owner's approval.</li>
+        <li><b>Broadcast it</b> to the peer-to-peer network. <i>Why:</i> there is no bank server to send it to.</li>
+        <li><b>Nodes check it.</b> They verify the signature, balance and format. <i>Why:</i> invalid transactions must be rejected before a block is built.</li>
+        <li><b>Miners or validators include it in a block</b> and reach consensus. <i>Why:</i> one agreed order prevents double-spending.</li>
+        <li><b>Confirmations follow.</b> Each later block makes reversal harder. <i>Why:</i> the receiver needs certainty before releasing goods.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Imagine a village where every family keeps an identical copy of the account book. To pay someone, you sign the entry with a stamp that only you own. Everyone checks the stamp, and the entry becomes part of the shared book.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Cryptocurrency is not fully untraceable; it is pseudonymous. Not all crypto is Bitcoin, and "decentralised" does not mean "no rules": the protocol and consensus rules still apply.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>Cryptocurrency</b> is digital or virtual money that uses <b>cryptography</b> to secure transactions, control the creation of new units and verify transfers. It runs on a <b>decentralised</b> blockchain, so no central bank or government issues it.</p>
+
+      <h4>Key properties</h4>
       <ul>
         <li><b>Digital:</b> exists only as data; no notes or coins.</li>
         <li><b>Decentralised:</b> a peer-to-peer network maintains the ledger; there is no single administrator.</li>
@@ -710,7 +1100,7 @@ wallet = key manager, not a coin bank</pre>
         <li><b>Volatile:</b> prices can move sharply because supply and demand are not managed by a central bank.</li>
       </ul>
 
-      <h4>3. How it works</h4>
+      <h4>How it works</h4>
       <ol>
         <li>A user creates a wallet with a <b>public key</b> (address) and a <b>private key</b> (signature).</li>
         <li>The sender signs a transaction with the private key and broadcasts it.</li>
@@ -728,8 +1118,9 @@ wallet = key manager, not a coin bank</pre>
                         │
                         ▼
               consensus + append to chain</pre>
+      <p><b>What this means:</b> the wallet signs, the network checks, and the block fixes the order. No bank touches the money at any step.</p>
 
-      <h4>4. Advantages and disadvantages</h4>
+      <h4>Advantages and disadvantages</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
@@ -742,8 +1133,9 @@ wallet = key manager, not a coin bank</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> every advantage creates a matching risk. Low cost comes with volatility; no intermediary comes with no insurance; irreversibility protects the receiver but punishes a careless sender.</p>
 
-      <h4>5. Examples</h4>
+      <h4>Examples</h4>
       <p>Bitcoin (BTC), Ether (ETH), Tether (USDT), XRP, Binance Coin (BNB), Solana (SOL), Cardano (ADA), Monero (XMR).</p>
 
       <div class="note"><b>Exam line:</b> "Cryptocurrency is not issued by a central bank; it is created by mining or staking and recorded on a distributed ledger secured by cryptography."</div>
@@ -758,7 +1150,53 @@ wallet = key manager, not a coin bank</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [6]</p>
 
-      <h4>1. Why businesses and users adopt crypto</h4>
+      <div class="simple"><b>In simple words:</b> Crypto is useful where normal money moves slowly or costs too much.<br>
+      Cross-border payments, remittances and online customers are the clearest cases.<br>
+      A business can accept crypto and convert it to local currency at once.<br>
+      That way it gains the customer without betting on the price.</div>
+
+      <h4>Why we do this</h4>
+      <p>International payments often pass through several banks, take days and carry fixed fees. Crypto can settle directly in minutes. The exam asks for relevance with an example, so you need one concrete business case, not a list of slogans.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Cryptocurrency:</b> digital money secured by cryptography on a blockchain.</li>
+        <li><b>Remittance:</b> money sent by a worker abroad to family at home.</li>
+        <li><b>Payment processor:</b> a service that accepts crypto for a merchant and converts it to local money.</li>
+        <li><b>Fiat:</b> government-issued money such as the rupee.</li>
+        <li><b>Chargeback:</b> a card payment reversed by the customer's bank after a dispute.</li>
+        <li><b>Treasury:</b> the money a company holds and manages.</li>
+        <li><b>Tokenisation:</b> representing a real asset as a digital token.</li>
+        <li><b>Volatility:</b> sharp price swings that make holding crypto risky.</li>
+        <li><b>VDA:</b> Virtual Digital Asset, the tax category India uses for crypto.</li>
+        <li><b>Correspondent bank:</b> a bank that holds accounts for other banks to settle cross-border payments.</li>
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+        <li><b>Merchant:</b> a business that sells goods or services to customers.</li>
+        <li><b>Settlement:</b> the final transfer of money that completes a payment.</li>
+        <li><b>Custody:</b> who holds the private keys that control an asset.</li>
+        <li><b>Exchange:</b> a platform where users buy, sell and trade crypto.</li>
+        <li><b>Smart contract:</b> code on a blockchain that runs automatically when conditions are met.</li>
+      
+        <li><b>Liquidity:</b> how easily an asset can be bought or sold without moving its price.</li>
+        <li><b>Hedge:</b> an investment used to reduce the risk of another holding.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Find the pain point.</b> Is it remittance cost, slow settlement, cross-border sales or new online customers? <i>Why:</i> relevance must answer a real problem.</li>
+        <li><b>Choose the model.</b> Hands-off uses a processor; hands-on means the company holds crypto. <i>Why:</i> the model decides who carries volatility and custody risk.</li>
+        <li><b>Let the customer pay</b> in crypto at checkout. <i>Why:</i> this opens a new payment option without forcing the customer to use a card.</li>
+        <li><b>Convert immediately.</b> The processor turns crypto into fiat and credits the bank account. <i>Why:</i> the merchant avoids price risk.</li>
+        <li><b>Record the sale and tax</b> like any other payment. <i>Why:</i> crypto is not a tax-free zone.</li>
+        <li><b>Review the risks.</b> Volatility, regulation, fraud and custody. <i>Why:</i> relevance does not mean "risk-free".</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A shop accepts foreign currency from tourists, but a currency counter converts it to rupees at once. The shop serves the customer without keeping foreign cash overnight.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Accepting crypto does not mean the business must hold crypto; the hands-off model converts it instantly. Crypto payments are also irreversible, so there is no chargeback for the merchant, which helps against fraud but removes a consumer protection.</div>
+
+      <h4>Full answer for the exam</h4>
+      <h4>Why businesses and users adopt crypto</h4>
       <ul>
         <li><b>New customers:</b> crypto-paying users are often new customers and spend more per order.</li>
         <li><b>Cheaper cross-border payments:</b> no correspondent bank chain, so fees and settlement time fall.</li>
@@ -768,7 +1206,7 @@ wallet = key manager, not a coin bank</pre>
         <li><b>Competitive pressure:</b> clients and vendors may want to pay or be paid in crypto.</li>
       </ul>
 
-      <h4>2. Two adoption paths</h4>
+      <h4>Two adoption paths</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Path</th><th>How it works</th><th>Risk / effort</th></tr></thead>
@@ -778,11 +1216,13 @@ wallet = key manager, not a coin bank</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> hands-off buys convenience with a vendor fee; hands-on buys control with custody and volatility risk. Most businesses should start hands-off.</p>
 
-      <h4>3. Example</h4>
+      <h4>Example</h4>
       <p>A coffee chain accepts BTC through a payment processor. The customer pays 0.0002 BTC; the processor instantly converts it to rupees and credits the chain's bank account. The chain gains new customers and avoids chargebacks, while never holding bitcoin itself. This is the <b>hands-off</b> model.</p>
+      <p><b>What this means:</b> the chain gets the marketing benefit of accepting crypto without putting company cash into a volatile asset.</p>
 
-      <h4>4. Relevance in India</h4>
+      <h4>Relevance in India</h4>
       <ul>
         <li>Remittances from workers abroad can be cheaper and faster.</li>
         <li>Small exporters can receive payment without heavy bank charges.</li>
@@ -804,11 +1244,49 @@ wallet = key manager, not a coin bank</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q4(a) [8]</p>
 
-      <h4>1. Definition</h4>
-      <p><b>Custodial wallet:</b> a third party (exchange or bank) holds the private keys and manages the wallet on your behalf.<br>
-      <b>Non-custodial wallet:</b> you hold the private key/seed phrase; no third party can move the funds.</p>
+      <div class="simple"><b>In simple words:</b> A custodial wallet is run by an exchange that holds your keys.<br>
+      A non-custodial wallet is run by you, and you hold the keys.<br>
+      Custody gives convenience but adds the risk that the provider fails or freezes funds.<br>
+      Self-custody gives control but puts all recovery duty on your seed phrase.</div>
 
-      <h4>2. Comparison table</h4>
+      <h4>Why we do this</h4>
+      <p>Whoever holds the private key controls the money. That single fact decides what happens when you forget a password, when an exchange collapses, or when a hacker targets an account. The exam asks you to compare those outcomes.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Custody:</b> control of the private keys that can move an asset.</li>
+        <li><b>Custodial wallet:</b> a wallet where a third party holds the keys for you.</li>
+        <li><b>Non-custodial wallet:</b> a wallet where you hold the keys.</li>
+        <li><b>Private key:</b> the secret that authorises spending.</li>
+        <li><b>Seed phrase:</b> the backup words that restore a non-custodial wallet.</li>
+        <li><b>KYC:</b> identity verification required by regulated providers.</li>
+        <li><b>Counterparty risk:</b> the risk that the provider fails, freezes funds or becomes insolvent.</li>
+        <li><b>Insolvency:</b> when a company cannot pay what it owes.</li>
+        <li><b>Insurance:</b> protection that may cover some losses, but usually not market losses.</li>
+        <li><b>Hot / cold wallet:</b> whether the keys are online or offline.</li>
+        <li><b>Exchange:</b> a platform that holds accounts and keys for its users.</li>
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+        <li><b>Withdrawal:</b> moving funds out of a custodial account to a wallet you control.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Custodial route:</b> open an account and complete KYC. <i>Why:</i> the provider must identify you under the law.</li>
+        <li><b>Deposit funds.</b> The provider records a balance in its database. <i>Why:</i> the keys stay with the provider, so your "balance" is a claim on it.</li>
+        <li><b>Trade or withdraw.</b> The provider approves and signs the withdrawal. <i>Why:</i> it controls the keys, so it can also freeze them.</li>
+        <li><b>Non-custodial route:</b> create a wallet and back up the seed phrase. <i>Why:</i> no support desk can recover it for you.</li>
+        <li><b>Receive and sign.</b> You approve each transaction with your own key. <i>Why:</i> you are the only party who can authorise a spend.</li>
+        <li><b>Recover carefully.</b> Restore from the seed phrase if the device is lost. <i>Why:</i> the phrase is the only backup.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A custodial wallet is like leaving valuables in a hotel safe; the hotel controls the master key. A non-custodial wallet is like a safe at home; you control it, but you must remember the combination and protect the house.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A balance shown on an exchange is not coins sitting in your wallet; it is a promise from the exchange. Non-custodial does not automatically mean safer, because a lost seed phrase or a phishing approval can still empty the wallet.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>Custodial wallet:</b> a third party (exchange or bank) holds the private keys and manages the wallet on your behalf. <b>Non-custodial wallet:</b> you hold the private key/seed phrase; no third party can move the funds.</p>
+
+      <h4>Comparison table</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Custodial</th><th>Non-custodial</th></tr></thead>
@@ -825,8 +1303,9 @@ wallet = key manager, not a coin bank</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the "key holder" row explains every other row. Recovery, KYC, insurance and risk all follow from who controls the key.</p>
 
-      <h4>3. Trade-off</h4>
+      <h4>Trade-off</h4>
       <p>Custodial = <b>convenience over control</b>. Non-custodial = <b>control over convenience</b>. The FTX collapse (2022) is the standard example of custodial risk; a lost seed phrase is the standard example of non-custodial risk.</p>
 
       <div class="tip"><b>8-mark structure:</b> two definitions (2) + table (4) + one example each (1) + conclusion (1).</div>
@@ -841,15 +1320,57 @@ wallet = key manager, not a coin bank</pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q4(b) [9]</p>
 
-      <h4>1. Hot wallet</h4>
+      <div class="simple"><b>In simple words:</b> A hot wallet keeps keys on an internet-connected device.<br>
+      A cold wallet keeps keys offline, away from hackers.<br>
+      Hot is for spending and trading; cold is for savings.<br>
+      MetaMask is a hot wallet, so it is convenient but exposed to phishing.</div>
+
+      <h4>Why we do this</h4>
+      <p>The same key cannot be both maximally safe and instantly usable. Keeping it online makes payments easy but gives malware a path to it. Keeping it offline blocks remote theft but makes every spend a physical chore. The exam wants that trade-off, plus MetaMask as a concrete hot-wallet example.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Hot wallet:</b> a wallet whose keys are stored on a device connected to the internet.</li>
+        <li><b>Cold wallet:</b> a wallet whose keys are generated and stored offline.</li>
+        <li><b>Air-gapped:</b> a device that has never been connected to the internet.</li>
+        <li><b>Hardware wallet:</b> a small offline device that signs transactions.</li>
+        <li><b>Paper wallet:</b> public and private keys printed on paper.</li>
+        <li><b>Seed phrase:</b> the backup words that can restore a wallet.</li>
+        <li><b>Malware:</b> malicious software that can read or replace clipboard data and keys.</li>
+        <li><b>Phishing:</b> a fake site or message that tricks you into revealing keys or approving a drain.</li>
+        <li><b>HODL:</b> slang for holding an asset for the long term instead of trading.</li>
+        <li><b>Wallet:</b> software or hardware that stores keys and signs transactions.</li>
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+        <li><b>DApp:</b> a decentralised application that runs on a blockchain.</li>
+        <li><b>Gas:</b> the fee paid for computation and transaction space.</li>
+        <li><b>Ethereum:</b> the programmable blockchain that MetaMask connects to by default.</li>
+        <li><b>MetaMask:</b> a non-custodial Ethereum wallet and DApp browser made by ConsenSys.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Split your funds by job.</b> Keep spending money hot and savings cold. <i>Why:</i> a single wallet should not carry both daily risk and lifetime savings.</li>
+        <li><b>Set up the hot wallet</b> with a small balance. <i>Why:</i> if it is drained, the loss is limited.</li>
+        <li><b>Set up the cold wallet</b> and write the seed phrase offline. <i>Why:</i> the backup must survive the device.</li>
+        <li><b>Test with a small transfer</b> before moving a large amount. <i>Why:</i> address mistakes are irreversible.</li>
+        <li><b>Sign on the cold device</b> and broadcast from the hot app. <i>Why:</i> the key never touches the internet.</li>
+        <li><b>Store the backup safely</b> against fire, water and theft. <i>Why:</i> physical loss is the cold-wallet risk.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A hot wallet is the cash in your pocket: easy to spend, easy to lose. A cold wallet is a safe at home: harder to reach, but much harder for a pickpocket to touch.</div>
+
+      <div class="confuse"><b>Common confusion:</b> The coins are never inside the device; they are always on the blockchain. A hardware wallet protects the key, not the coins. Cold storage also does not remove physical risk, because a lost seed phrase or a fire can still destroy access.</div>
+
+      <h4>Full answer for the exam</h4>
+      <h4>Hot wallet</h4>
       <p>A <b>hot wallet</b> is a wallet whose private keys are stored on a device that is <b>connected to the internet</b>. It can sign and send transactions immediately.</p>
       <ul>
         <li><b>Examples:</b> MetaMask, Trust Wallet, exchange wallets, mobile wallets.</li>
         <li><b>Good for:</b> daily spending, trading, DeFi, NFTs.</li>
-        <li><b>Risk:</b> malware, phishing, fake dApp approvals, exchange hacks.</li>
+        <li><b>Risk:</b> malware, phishing, fake DApp approvals, exchange hacks.</li>
       </ul>
 
-      <h4>2. Cold wallet</h4>
+      <h4>Cold wallet</h4>
       <p>A <b>cold wallet</b> keeps the private keys <b>offline</b>. The key is generated and stored on a device that never touches the internet, or on paper.</p>
       <ul>
         <li><b>Examples:</b> Ledger, Trezor, air-gapped laptop, paper wallet.</li>
@@ -857,7 +1378,7 @@ wallet = key manager, not a coin bank</pre>
         <li><b>Risk:</b> physical loss, fire/water damage, forgotten PIN, no quick trades.</li>
       </ul>
 
-      <h4>3. Hot vs cold comparison</h4>
+      <h4>Hot vs cold comparison</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Hot wallet</th><th>Cold wallet</th></tr></thead>
@@ -872,8 +1393,9 @@ wallet = key manager, not a coin bank</pre>
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> speed and safety are the two ends of one scale. Choose the end that matches the amount and how often you need to move it.</p>
 
-      <h4>4. MetaMask — importance, benefits and drawbacks</h4>
+      <h4>MetaMask: importance, benefits and drawbacks</h4>
       <p><b>MetaMask</b> is a free, non-custodial wallet and DApp browser made by ConsenSys. It runs as a browser extension (Chrome, Firefox, Brave, Edge) and a mobile app. It stores the seed phrase locally and connects to Ethereum and EVM-compatible networks.</p>
       <div class="grid2">
         <div>
@@ -909,8 +1431,9 @@ wallet = key manager, not a coin bank</pre>
                               │
                               ▼
                      Ethereum / EVM chain</pre>
+      <p><b>What this means:</b> the key stays local even when the wallet talks to a website. The risk is not the connection itself; it is approving the wrong request.</p>
 
-      <p class="small">For the full MetaMask feature list, setup steps and importance, see §4.5 — the 9-mark 2025 May Q4(b) combines this hot/cold table with that section.</p>
+      <p class="small">For the full MetaMask feature list, setup steps and importance, see §4.5. The 9-mark 2025 May Q4(b) combines this hot/cold table with that section.</p>
 
       <div class="warn"><b>Safety rule:</b> MetaMask support will never ask for your seed phrase. Store it offline; never type it into a website.</div>
     </div>
