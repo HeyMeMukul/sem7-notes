@@ -124,6 +124,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 }
 
 .freq td:nth-child(2),.freq td:nth-child(3){text-align:left}
+.booksrc{font-size:12.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:8px;margin:16px 0 0}
 
 main{min-width:0}
 .tbl-wrap{max-width:100%}
@@ -188,6 +189,8 @@ main{min-width:0}
   </div>
 </header>
 
+<div class="book"><b>Source:</b> all answers in this unit are re-sourced from the supplied <i>Technical Publications — Software Testing and Quality Assurance</i> (Units 3–6), matched to the exact PYQ wording.</div>
+
 <!-- ================= FREQUENCY MAP ================= -->
 <section class="card" id="map">
   <h2>📊 PYQ frequency map — Unit 6</h2>
@@ -230,47 +233,62 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q7(b) [6] · 2022 Nov Q8(a) [6] · 2023 May Q7(a) [6] · 2024 May Q7(b) [6] · 2025 May Q7(a) [6] · 2025 Nov Q7(c) [6]</p>
-      <p><b>Definition:</b> Six Sigma is a <b>data-driven, customer-focused, process-improvement methodology</b> that reduces variation and defects to <b>3.4 defects per million opportunities (DPMO)</b> — a 99.99966% success rate.</p>
-      <h4>1. Sigma levels</h4>
+      <p><b>Book definition (David Card):</b> Six Sigma is “a generic quantitative approach to improvement that applies to any process.” The book also defines it as a <b>disciplined, data-driven approach and methodology for eliminating defects</b> in any process — from manufacturing to transactional, and from product to service.</p>
+      <p>In simple words, Six Sigma finds the <b>cause of a business problem</b>, solves it, improves the <b>bottom line</b> of the corporation and reduces <b>variation</b> in the product. Its aim is to deliver products when promised, with no delivered defects, no early-life failures and no failures during use.</p>
+      <h4>1. Key terms used by Six Sigma</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Level</th><th>Defects per million</th><th>Yield</th><th>Meaning</th></tr></thead>
+        <thead><tr><th>Term</th><th>Book meaning</th></tr></thead>
         <tbody>
-          <tr><td>1σ</td><td>690,000</td><td>31%</td><td>Chaotic</td></tr>
-          <tr><td>2σ</td><td>308,000</td><td>69%</td><td>Poor</td></tr>
-          <tr><td>3σ</td><td>66,800</td><td>93.3%</td><td>Average industry</td></tr>
-          <tr><td>4σ</td><td>6,210</td><td>99.38%</td><td>Good</td></tr>
-          <tr><td>5σ</td><td>233</td><td>99.977%</td><td>Excellent</td></tr>
-          <tr><td><b>6σ</b></td><td><b>3.4</b></td><td><b>99.99966%</b></td><td>World class</td></tr>
+          <tr><td><b>Critical to quality (CTQ)</b></td><td>Internal critical quality parameters that relate to the wants and needs of the customer.</td></tr>
+          <tr><td><b>Critical to customer (CTC)</b></td><td>The input to the Quality Function Deployment (QFD) activity.</td></tr>
+          <tr><td><b>Defect</b></td><td>Any type of undesired result.</td></tr>
+          <tr><td><b>Opportunity</b></td><td>An area within a product, process, service or system where a defect could be produced, or where you fail to achieve the ideal product in the eyes of the customer.</td></tr>
         </tbody>
       </table>
       </div>
-      <h4>2. Characteristics</h4>
+      <h4>2. Characteristics (features) of Six Sigma</h4>
       <ol>
-        <li><b>Customer-focused:</b> quality is defined by the customer's critical-to-quality (CTQ) requirements.</li>
-        <li><b>Data-driven:</b> decisions use measured data, not opinions; “In God we trust, all others bring data.”</li>
-        <li><b>Process-focused:</b> defects are symptoms; the process is the root cause and must be improved.</li>
-        <li><b>Project-based:</b> improvement happens through defined projects with charters, owners and savings targets.</li>
-        <li><b>Statistical:</b> uses control charts, capability indices (Cp, Cpk), Pareto and hypothesis tests to reduce variation.</li>
-        <li><b>Breakthrough improvement:</b> targets large reductions (e.g. 50% defects), not small incremental changes.</li>
-        <li><b>Belt system:</b> Champions, Master Black Belts, Black Belts and Green Belts lead projects and training.</li>
-        <li><b>Top-management commitment:</b> leadership selects projects, allocates resources and reviews results.</li>
+        <li><b>Eliminates waste and inefficiency:</b> it increases customer satisfaction by delivering what the customer expects.</li>
+        <li><b>Structured methodology:</b> it follows a defined method and gives defined roles to the participants.</li>
+        <li><b>Data-driven:</b> it requires accurate data collection for the processes being analysed; opinions are not enough.</li>
+        <li><b>Results on the financial statements:</b> improvement must show on cost and margin, not only on a chart.</li>
+        <li><b>Business-driven and multi-dimensional:</b> it is a structured business approach, not a one-department activity.</li>
       </ol>
-      <h4>3. DMAIC — the Six Sigma method</h4>
+      <p><b>Very important line from the book:</b> Six Sigma is <b>not team-driven like TQM</b>. It is a <b>management approach</b>, and <b>defect metrics</b> are the main tool for leaders to impact cost and margin.</p>
+      <h4>3. The Six Sigma method — DMAIC</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Phase</th><th>Activity</th><th>Software example</th></tr></thead>
+        <thead><tr><th>Step</th><th>What the book asks you to do</th><th>Software example</th></tr></thead>
         <tbody>
-          <tr><td><b>D</b>efine</td><td>Define problem, customer, goal and scope.</td><td>“Reduce payment failures from 6% to 1%.”</td></tr>
-          <tr><td><b>M</b>easure</td><td>Measure current performance; validate data.</td><td>Baseline 6.2% failures over 3 months.</td></tr>
-          <tr><td><b>A</b>nalyse</td><td>Find root causes with data.</td><td>70% failures from gateway timeout on retry.</td></tr>
-          <tr><td><b>I</b>mprove</td><td>Implement and verify the fix.</td><td>Add idempotency and retry with backoff; failure → 0.9%.</td></tr>
-          <tr><td><b>C</b>ontrol</td><td>Standardise and monitor.</td><td>Control chart on failure rate; alert above 1.2%.</td></tr>
+          <tr><td><b>D</b>efine</td><td>Set the goal. Define customer requirements, deliverables and project goals through well-defined customer communication.</td><td>“Reduce payment failures from 6% to 1%.”</td></tr>
+          <tr><td><b>M</b>easure</td><td>Define the metrics. Measure the existing process and its output to find current quality performance; collect defect metrics.</td><td>Baseline: 6.2% failures over three months.</td></tr>
+          <tr><td><b>A</b>nalyse</td><td>Measure where you go. Analyse the defect metrics and determine the <b>vital few</b> causes.</td><td>70% of failures come from a gateway timeout during retry.</td></tr>
+          <tr><td><b>I</b>mprove</td><td>Improve your processes while you go; eliminate the root causes of defects.</td><td>Add idempotency and retry with backoff; failures fall to 0.9%.</td></tr>
+          <tr><td><b>C</b>ontrol</td><td>Act immediately if going the wrong path. Control the process so future work does not reintroduce the causes.</td><td>Control chart on failure rate; alert above 1.2%.</td></tr>
         </tbody>
       </table>
       </div>
-      <p><b>DMADV/DFSS</b> is used for new products: Define, Measure, Analyse, Design, Verify.</p>
-      <p><b>Limitation:</b> Six Sigma needs good data and trained people; it is weaker for innovative design and very small projects.</p>
+      <p>The book summarises the same method as: <b>set the goal – Define; define the metrics – Measure; measure where you go – Analyse; improve your processes – Improve; act immediately if going the wrong path – Control.</b></p>
+      <h4>4. Why software needs Six Sigma</h4>
+      <ul>
+        <li>Software is responsible for most of the added value in products, and it must also be blamed for many failures. The book gives the example of the German high-speed intercity express crash, where the software did not detect the broken wheel ring in time.</li>
+        <li>Mobile networks suffer from poor Internet interconnection and inter-operability; in e-commerce and web services, security, reliability and fault tolerance are essential. In each case, it is the software that fails or must improve.</li>
+        <li>Software is so widespread that solving the software development problem helps solve many other problems of society.</li>
+        <li>Six Sigma makes product development transparent to management and customers, but this transparency needs an important <b>cultural change</b>. Bad communication is a major reason why software projects fail.</li>
+      </ul>
+      <h4>5. Six benefits of Six Sigma</h4>
+      <ol>
+        <li>Generates sustained success.</li>
+        <li>Sets a performance goal for everyone.</li>
+        <li>Enhances value to customers.</li>
+        <li>Accelerates the rate of improvement.</li>
+        <li>Promotes learning and cross-pollination.</li>
+        <li>Executes strategic change.</li>
+      </ol>
+      <p><b>Caution from the book:</b> early Six Sigma attempts failed because software metrics were not connected to economic success. Counting mistakes and defects is not a clear sign that a project will succeed — <b>time-to-market</b> and <b>user friendliness</b> are often more important, and reliability is essential only sometimes.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.4 Six Sigma for Software Engineering, p. 6-13 – 6-15</p>
+
     </div>
   </div>
 
@@ -281,40 +299,29 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q8(b) [6] · 2023 Nov Q7(a) [6] · 2025 May Q8(b) [6]</p>
-      <p><b>Definition:</b> Total Quality Management is a <b>management philosophy</b> in which <b>every member</b> of the organisation continuously improves quality at <b>every stage</b> to meet customer needs. “Total” = everyone and everything; “Quality” = fitness for use; “Management” = leadership and continuous improvement.</p>
-      <h4>1. Principles</h4>
-      <ol>
-        <li><b>Customer focus:</b> internal and external customers define quality.</li>
-        <li><b>Top-management leadership:</b> quality is a strategic goal, not a QA department task.</li>
-        <li><b>Employee involvement:</b> every person is responsible for quality; empowerment and teamwork.</li>
-        <li><b>Process approach:</b> improve the process, not blame the person.</li>
-        <li><b>Continuous improvement:</b> small, never-ending improvements (Kaizen) plus breakthrough projects.</li>
-        <li><b>Fact-based decisions:</b> use data and statistical tools.</li>
-        <li><b>Supplier partnership:</b> quality of bought-in components matters.</li>
-        <li><b>Training and culture:</b> invest in skills and a blame-free quality culture.</li>
-      </ol>
-      <h4>2. Elements / building blocks</h4>
+      <p><b>Book definition:</b> Total Quality Management is “a management philosophy embracing all activities through which the needs and expectations of the CUSTOMER and COMMUNITY and the objectives of the organization are satisfied in the most efficient and cost-effective manner by maximising the potential of ALL employees in a continuing drive for improvement.”</p>
+      <p><b>Why TQM is needed:</b> Quality is the fulfilment of the individual needs of the stakeholders, users and customers of a product, service or result of a project. Testing alone does not seem enough — pure curative action like testing cannot produce a high-quality product. TQM says that a <b>good quality product comes from good quality processes</b>. It covers all processes used to deliver the product, not only the development team: procurement, controlling and portfolio management also matter. The overall organisational environment decides how well the task is fulfilled.</p>
+      <h4>1. Six basic concepts of TQM</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Element</th><th>What it means in software</th></tr></thead>
+        <thead><tr><th>Concept</th><th>What the book says</th></tr></thead>
         <tbody>
-          <tr><td>Quality policy</td><td>Top management's written commitment and measurable objectives.</td></tr>
-          <tr><td>Quality planning</td><td>Define standards, reviews, tests and metrics for the project.</td></tr>
-          <tr><td>Quality control</td><td>Reviews, testing and defect tracking.</td></tr>
-          <tr><td>Quality assurance</td><td>Process definition, audits and training.</td></tr>
-          <tr><td>Quality improvement</td><td>Root-cause analysis, PDCA, benchmark and reuse.</td></tr>
-          <tr><td>People and culture</td><td>Training, teams, recognition, no blame for reporting defects.</td></tr>
+          <tr><td><b>Leadership</b></td><td>Top management must realise the importance of quality. Quality is the responsibility of everybody, but the <b>ultimate responsibility is the CEO</b>. Quality excellence must become part of business strategy, and leaders must lead the implementation.</td></tr>
+          <tr><td><b>Customer satisfaction</b></td><td>The customer is always right; in Japan the customer is “King”. Customer expectations change constantly, and satisfaction is a function of the <b>total experience</b> with the organisation — quality product or service, reasonable price, on-time delivery and outstanding service. The quality system must be examined continually.</td></tr>
+          <tr><td><b>Employee involvement</b></td><td>People are the most important resource and asset. <b>Quality comes from people</b>, so everyone must be involved.</td></tr>
+          <tr><td><b>Continuous process improvement</b></td><td>View all work as a process — production and business. Process includes purchasing, design and invoicing, not only coding.</td></tr>
+          <tr><td><b>Supplier partnership</b></td><td>About <b>40% of product cost</b> comes from purchased materials, so supplier quality management is important. A substantial part of quality problems comes from suppliers; use long-term purchase contracts and supplier management activities.</td></tr>
+          <tr><td><b>Performance measures</b></td><td>Manage by <b>fact, not gut feeling</b>. Measure performance against a baseline, identify potential projects and assess the results of improvement.</td></tr>
         </tbody>
       </table>
       </div>
-      <h4>3. TQM in software — example</h4>
-      <p>A company sets a policy “zero critical defects at release”. It trains developers in reviews, measures defect density, holds weekly quality circles, audits the test process and updates checklists after every escape. Every team member can stop a release on a quality concern.</p>
-      <h4>4. Benefits and barriers</h4>
-      <ul>
-        <li><b>Benefits:</b> fewer defects, lower rework, happier customers, better morale, continuous improvement.</li>
-        <li><b>Barriers:</b> management indifference, short-term cost pressure, blame culture, lack of training, difficulty measuring soft benefits.</li>
-      </ul>
-      <p><b>TQM vs Six Sigma:</b> TQM is a broad management philosophy and culture; Six Sigma is a focused, data-driven project methodology with a specific defect target. TQM provides the culture; Six Sigma provides the method.</p>
+      <h4>2. TQM in a software organisation</h4>
+      <p>Leadership writes the quality policy; customers are the users and the sponsoring business; employees own reviews and testing; the process is the full SDLC; suppliers are component and tool vendors; performance is measured with defect, service and schedule metrics. Development, procurement and support are all part of the quality system.</p>
+      <h4>3. TQM vs Six Sigma</h4>
+      <p>TQM is a broad management philosophy in which <b>all employees</b> continuously improve every process. Six Sigma is a management approach with a structured, data-driven method and a defect target. The book notes that Six Sigma is <b>not team-driven like TQM</b>; defect metrics are its main tool for leaders.</p>
+      <p><b>One-line answer:</b> TQM means total involvement of people, total coverage of processes and total commitment to customer satisfaction, measured by facts.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.7 Total Quality Management, p. 6-22 – 6-23</p>
+
     </div>
   </div>
 
@@ -325,37 +332,73 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q7(c) [5, parameters] · 2023 Nov Q8(b) [6, facts] · 2024 May Q7(a) [8, activities] · 2025 Nov Q8(c) [6, activities]</p>
-      <p>Software quality is not achieved by testing alone. It is built into the <b>people, process, product and measurement</b> across the lifecycle.</p>
-      <h4>1. Activities across the lifecycle (use this table for 8 marks)</h4>
+      <p><b>Book definition:</b> Software quality is “an effective software process applied in a manner that creates a useful product that provides measurable value for those who produce it and those who use it.” A useful product gives the content, functions and features the end-user wants — reliably and error-free.</p>
+      <h4>1. Parameters of quality (2023 May)</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Phase</th><th>Quality activity</th><th>Example / output</th></tr></thead>
+        <thead><tr><th>Dimension</th><th>Question the book asks</th></tr></thead>
         <tbody>
-          <tr><td>Requirements</td><td>Elicit, review and baseline requirements; build a traceability matrix.</td><td>Every requirement has an owner, acceptance criterion and test ID.</td></tr>
-          <tr><td>Planning</td><td>Write the quality plan; estimate effort; identify risks and quality gates.</td><td>Coverage target 80%, p95 &lt; 2 s, review schedule.</td></tr>
-          <tr><td>Design</td><td>Design reviews, checklists, prototyping, complexity analysis.</td><td>Peer review finds a missing interface before coding.</td></tr>
-          <tr><td>Coding</td><td>Coding standards, static analysis, peer review, unit tests.</td><td>No merge without review and green unit tests.</td></tr>
-          <tr><td>Testing</td><td>Risk-based test design, layered testing, regression, automation.</td><td>Defects found before release; coverage measured.</td></tr>
-          <tr><td>Release</td><td>Entry/exit criteria, defect triage, UAT, installation and smoke tests.</td><td>No open critical/high defects; signed acceptance.</td></tr>
-          <tr><td>Maintenance</td><td>Impact analysis, regression, root-cause analysis, metrics review.</td><td>Recurring defects eliminated by process change.</td></tr>
-          <tr><td>Organisation</td><td>Training, quality culture, standards, tools, audits, continual improvement.</td><td>Certified QMS; trained testers; measured process capability.</td></tr>
+          <tr><td><b>Performance quality</b></td><td>Does the software deliver all content, functions and features specified in the requirements model in a way that provides value to the end-user?</td></tr>
+          <tr><td><b>Feature quality</b></td><td>Does the software provide features that surprise and delight first-time end-users?</td></tr>
+          <tr><td><b>Reliability</b></td><td>Does it deliver all features without failure, is it available when needed, and is its functionality error-free?</td></tr>
+          <tr><td><b>Conformance</b></td><td>Does it conform to local and external software standards, and to de facto design and coding conventions (for example, accepted menu-selection or data-input rules)?</td></tr>
         </tbody>
       </table>
       </div>
-      <h4>2. Key parameters / facts</h4>
+      <h4>2. Activities that achieve quality (2024 May, 2025 Nov)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Activity</th><th>What is done</th></tr></thead>
+        <tbody>
+          <tr><td><b>Good project management</b></td><td>The project plan includes explicit techniques for quality and change management.</td></tr>
+          <tr><td><b>Solid engineering practice</b></td><td>Understand the problem to be solved and create a quality design that conforms to the problem requirements.</td></tr>
+          <tr><td><b>Design improvement</b></td><td>Eliminate architectural flaws during design; this is cheaper than finding them in testing.</td></tr>
+          <tr><td><b>Quality control</b></td><td>A series of inspections, reviews and tests used to ensure that a work product conforms to its specifications.</td></tr>
+          <tr><td><b>Quality assurance</b></td><td>Auditing and reporting procedures that give management the data needed to make proactive decisions.</td></tr>
+          <tr><td><b>Change management</b></td><td>Control changes to requirements, design and code so that quality is not lost between phases.</td></tr>
+          <tr><td><b>Measurement</b></td><td>Collect data on size, defects, effort and time to control schedule, cost and quality.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>3. Facts about quality (2023 Nov)</h4>
+      <ul>
+        <li>Software quality is the <b>result of good project management and solid engineering practice</b> — not the job of the test team alone.</li>
+        <li>Quality means <b>conformance to requirements</b>; customer needs may be stated explicitly or be implicit.</li>
+        <li>The cost to find and repair an error rises steeply from requirements → design → coding → testing → maintenance (Fig. 6.1.2). Prevention is the cheapest option.</li>
+        <li>Defects are injected at every development phase; end-of-phase reviews and inspections are the main vehicles for removing them.</li>
+      </ul>
+      <h4>4. Management actions that damage quality</h4>
       <ol>
-        <li><b>Management commitment</b> and a written quality policy.</li>
-        <li><b>Clear, testable requirements</b> and traceability.</li>
-        <li><b>Defined process</b> with entry/exit criteria and standards.</li>
-        <li><b>Reviews and inspections</b> at every phase — defects removed early.</li>
-        <li><b>Layered testing</b> with measurable coverage.</li>
-        <li><b>Metrics</b> — defect density, DRE, MTBF, coverage, customer satisfaction.</li>
-        <li><b>Skilled, trained people</b> and a blame-free culture.</li>
-        <li><b>Tools and automation</b> — version control, CI, static analysis, test automation.</li>
-        <li><b>Configuration and change management</b> — test the right version.</li>
-        <li><b>Continual improvement</b> — root-cause analysis and process updates.</li>
+        <li><b>Estimation decisions:</b> irrational delivery-date estimates make teams take shortcuts, which reduces product quality.</li>
+        <li><b>Scheduling decisions:</b> ignoring task dependencies may force the team to test modules without their subcomponents, so quality suffers.</li>
+        <li><b>Risk-oriented decisions:</b> reacting to each crisis instead of monitoring risks and preparing contingency plans results in products of reduced quality.</li>
       </ol>
-      <p><b>One-line conclusion:</b> quality is <b>prevented in, not inspected in</b>. The cheapest defect is the one stopped at the requirements review.</p>
+      <h4>5. Cost of quality (book table)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type of cost</th><th>Parameters</th></tr></thead>
+        <tbody>
+          <tr><td><b>Prevention cost</b></td><td>Quality planning, formal technical reviews, test equipment, training.</td></tr>
+          <tr><td><b>Appraisal cost</b></td><td>Technique review, data collection, testing and debugging.</td></tr>
+          <tr><td><b>Failure cost</b></td><td>Internal failure cost (before shipment) and external failure cost (after shipment).</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>6. Nine causes of software errors (book list)</h4>
+      <ol>
+        <li>Faulty requirements definition.</li>
+        <li>Client–developer communication failures.</li>
+        <li>Deliberate deviations from software requirements.</li>
+        <li>Logical design errors.</li>
+        <li>Coding errors.</li>
+        <li>Non-compliance with documentation and coding instructions.</li>
+        <li>Shortcomings of the testing process.</li>
+        <li>User interface and procedure errors.</li>
+        <li>Documentation errors.</li>
+      </ol>
+      <p><b>Conclusion:</b> quality is <b>built in</b> by a good process, good project management, early reviews and prevention. Testing is only one activity in the quality system.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.1.4 Achieving Software Quality, p. 6-7; §6.1 Software Quality, p. 6-2 – 6-6</p>
+
     </div>
   </div>
 </section>
@@ -372,25 +415,26 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [6] · 2024 May Q8(c) [6, basic tools for quality control]</p>
-      <p>Kaoru Ishikawa popularised seven simple graphical tools that any team can use to find, analyse and control quality problems. They are called the <b>7 QC tools</b>.</p>
+      <p><b>Book introduction:</b> Most QA people know Ishikawa's Seven Basic Tools of quality. These tools are used “to analyze the reports and find the root cause of the issues in the system.” They are seven different ways to analyse a system.</p>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>#</th><th>Tool</th><th>Purpose</th><th>How to read / example</th></tr></thead>
+        <thead><tr><th>#</th><th>Tool</th><th>What it does (book)</th><th>How to read it / software example</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td><b>Cause-effect (fishbone) diagram</b></td><td>Find root causes of a problem.</td><td>Effect on the right; 6M branches: Man, Machine, Method, Material, Measurement, Environment. Ask “why” five times.</td></tr>
-          <tr><td>2</td><td><b>Check sheet / checklist</b></td><td>Collect data in a structured way.</td><td>Tally marks for defect type per day; shows frequency and location.</td></tr>
-          <tr><td>3</td><td><b>Pareto chart</b></td><td>Separate the “vital few” from the “trivial many”.</td><td>Bars in descending order + cumulative % line; 80% of defects from 20% of causes.</td></tr>
-          <tr><td>4</td><td><b>Histogram</b></td><td>Show the distribution of continuous data.</td><td>Bars of response-time ranges; shape shows centre, spread, skew and outliers.</td></tr>
-          <tr><td>5</td><td><b>Flow chart</b></td><td>Map the process steps and decision points.</td><td>Oval = start/end, rectangle = process, diamond = decision; find loops, waits and rework.</td></tr>
-          <tr><td>6</td><td><b>Scatter diagram</b></td><td>Show the relationship between two variables.</td><td>Plot module size vs defect count; upward trend = positive correlation.</td></tr>
-          <tr><td>7</td><td><b>Control chart</b></td><td>Monitor whether a process is stable over time.</td><td>Time-ordered points with mean, UCL and LCL at ±3σ; points outside limits = special cause.</td></tr>
-          <tr><td>8*</td><td><b>Run chart</b></td><td>Show trends, shifts and cycles over time.</td><td>Time-ordered line with a median; no control limits. Often added as the eighth tool.</td></tr>
+          <tr><td>1</td><td><b>Check sheet (checklist)</b></td><td>The most basic quality tool, used for gathering and organising data. Data are collected and tabulated to record the frequency of specific events during a data-collection period. Three types: defect-location, tally and defect-cause check sheets.</td><td>Rows = defect reason, columns = day, tally marks in cells. Easy to apply and understand; gives a clear picture and finds frequent problems. Limitation: it cannot analyse the quality problem deeply into the workplace.</td></tr>
+          <tr><td>2</td><td><b>Pareto diagram</b></td><td>A frequency chart of bars in <b>descending order</b>. The tall bars on the left are more significant. It separates the <b>“vital few” from the “trivial many”</b>.</td><td>In software, X-axis = defect cause, Y-axis = defect count; arrange causes by frequency. It shows which few causes account for most defects and which problem to solve first. Based on the 80-20 principle (20% of causes → 80% of defects), though the split is not always exactly 80-20.</td></tr>
+          <tr><td>3</td><td><b>Histogram</b></td><td>A graphic representation of frequency counts of a sample or population. X-axis = unit intervals of a parameter in ascending order; Y-axis = frequency counts. It shows the distribution of data and the amount of variation in a process.</td><td>Higher bars mean more data values in that class. Look at centre, spread, skew, gaps and outliers. Example: response times grouped into 0.5-second classes.</td></tr>
+          <tr><td>4</td><td><b>Scatter diagram</b></td><td>A two-dimensional plot that detects and analyses the pattern of relationship between two quality/compliance variables. The shape shows the <b>degree and direction</b> of the relationship — weak or strong, positive or negative.</td><td>Plot module size (X) against defect count (Y). A rising pattern is positive correlation; a falling pattern is negative. Correlation does <b>not</b> prove cause and effect, but it can reveal possible causes.</td></tr>
+          <tr><td>5</td><td><b>Run chart</b></td><td>Tracks the performance of a parameter of interest over time. X-axis = time, Y-axis = value of the parameter. Best used for <b>trend analysis</b>, especially when historical data are available for comparison.</td><td>The book's software example is the <b>weekly number of open problems in the backlog</b>, which shows the development team's workload of fixes. Ishikawa also includes pie, bar, compound-bar and circle graphs under run charts.</td></tr>
+          <tr><td>6</td><td><b>Cause-effect (fishbone) diagram</b></td><td>Developed by Ishikawa and associates in Japan in the early 1950s. Also called the Ishikawa diagram or fishbone diagram because its shape looks like a fish skeleton. It explores all potential or real causes (inputs) that produce a single effect (output).</td><td>Effect on the right; main branches are <b>Equipment, Process, People, Materials, Environment and Management</b>. Causes are arranged by level of importance and detail (primary and secondary causes), so the team can search for root causes and compare their relative importance.</td></tr>
+          <tr><td>7</td><td><b>Control chart</b></td><td>A Shewhart control chart, developed by Walter A. Shewhart in the 1920s at Bell Telephone Laboratories. It is a special form of run chart that shows the <b>amount and nature of variation</b> over time. It has a central line, a pair of control limits (and sometimes warning limits).</td><td>X-axis = real time; plot the parameter. If all values stay within the limits and show no particular tendency, the process is <b>in control</b>. If a point falls outside the limits or a trend appears, the process is <b>out of control</b> and needs causal analysis and corrective action. Types: univariate (one characteristic) and multivariate (more than one).</td></tr>
         </tbody>
       </table>
       </div>
-      <p class="small">*Different textbooks list stratification instead of run chart. In SPPU papers, run chart and control chart are asked together, so learn both.</p>
-      <h4>Quick example</h4>
-      <p>A team sees 120 defects in a release. A <b>check sheet</b> records them by type. A <b>Pareto</b> shows 78% come from “payment” and “login”. A <b>fishbone</b> on payment finds the root cause: retry logic. A <b>flow chart</b> shows the retry loop. After the fix, a <b>control chart</b> tracks weekly payment defects and stays inside limits.</p>
+      <h4>How the seven tools work together</h4>
+      <p>A team records 120 defects with a <b>check sheet</b>, ranks them with a <b>Pareto</b>, studies the shape of a <b>histogram</b>, looks for a relationship with a <b>scatter</b> plot, and traces the main cause with a <b>fishbone</b>. After the fix, a <b>run chart</b> shows the trend and a <b>control chart</b> proves whether the process is stable.</p>
+      <p class="small">The SPPU syllabus also names the flow chart among the quality tools; the book's seven are listed above and the flow chart is covered in Q5.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.11 Ishikawa's 7 Basic Tools, p. 6-31 – 6-37</p>
+
     </div>
   </div>
 
@@ -401,24 +445,29 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [6] · 2023 May Q7(b) [6] · 2025 May Q8(a) [6] · 2025 Nov Q7(b) [6]</p>
+      <p><b>Histogram (book definition):</b> “The histogram is a graphic representation of frequency counts of a sample or a population. The X-axis lists the unit intervals of a parameter ranked in ascending order from left to right and the Y-axis contains the frequency counts.” It is a type of bar chart that shows the distribution of data and the amount of variation in a process. Higher bars mean more data values in that class.</p>
+      <p><b>Flow chart (process map):</b> a diagram of the steps, decisions and loops in a process. Standard symbols are an oval for start/end, a rectangle for an activity, a diamond for a decision and arrows for the flow. It shows how work actually moves, including waits, approvals and rework loops.</p>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Flow chart</th><th>Histogram</th></tr></thead>
         <tbody>
-          <tr><td>Purpose</td><td>Show the <b>sequence of steps</b> and decisions in a process.</td><td>Show the <b>distribution</b> of measured data.</td></tr>
-          <tr><td>Data type</td><td>Process steps, events, decisions (qualitative).</td><td>Continuous numeric data (time, size, defects).</td></tr>
-          <tr><td>Display</td><td>Boxes, arrows, diamonds, start/end ovals.</td><td>Adjacent bars on a number line; x = class interval, y = frequency.</td></tr>
-          <tr><td>What it reveals</td><td>Rework loops, bottlenecks, missing steps, unclear ownership.</td><td>Centre, spread, skew, bimodal shape, outliers, capability.</td></tr>
-          <tr><td>Question answered</td><td>“How does the process actually work?”</td><td>“How is the data distributed?”</td></tr>
-          <tr><td>Use in SQA</td><td>Map the test/defect process; find unnecessary approvals and loops.</td><td>Check response-time distribution or defect counts per module.</td></tr>
+          <tr><td>Purpose</td><td>Show the <b>sequence of steps and decisions</b> in a process.</td><td>Show the <b>frequency distribution</b> of measured data.</td></tr>
+          <tr><td>Data used</td><td>Process steps, events, decisions and owners (qualitative).</td><td>Continuous or attribute data grouped into classes (quantitative).</td></tr>
+          <tr><td>Display</td><td>Ovals, rectangles, diamonds and arrows.</td><td>Adjacent bars; X-axis = class intervals in ascending order, Y-axis = frequency.</td></tr>
+          <tr><td>What it reveals</td><td>Rework loops, bottlenecks, missing steps, unnecessary approvals and unclear responsibility.</td><td>Centre, spread, skew, bimodal shape, gaps and outliers — the amount of variation.</td></tr>
+          <tr><td>Question answered</td><td>“How does the process actually work?”</td><td>“How are the measured values distributed?”</td></tr>
+          <tr><td>Use in SQA</td><td>Map the defect or test process and remove unnecessary loops.</td><td>Check the distribution of response times, defect counts or failures per stage.</td></tr>
           <tr><td>Limitation</td><td>Does not quantify variation.</td><td>Does not show time order or root cause.</td></tr>
         </tbody>
       </table>
       </div>
       <h4>Example</h4>
-      <p><b>Flow chart:</b> “defect reported → triage → assign → fix → review → retest → close”, with a decision diamond “fix verified?” that loops back to assign.</p>
-      <p><b>Histogram:</b> 500 login response times grouped into 0.5 s bins. Most fall in 1.0–1.5 s, with a small tail at 4–5 s — showing a slow subset that needs investigation.</p>
-      <p><b>One-line answer:</b> a flow chart shows <b>process flow</b>; a histogram shows <b>data distribution</b>. Use the flow chart to find where work goes wrong, and the histogram to measure how much variation exists.</p>
+      <p><b>Flow chart:</b> defect reported → triage → assign → fix → review → retest → close, with a decision diamond “fix verified?” that loops back to assign.</p>
+      <p><b>Histogram:</b> 500 login response times grouped into 0.5-second classes. Most values fall in 1.0–1.5 s, with a small tail at 4–5 s. The histogram shows a slow subset that needs investigation; the flow chart would then be used to find where in the login process the delay occurs.</p>
+      <p><b>One-line answer:</b> a flow chart shows <b>process flow</b>; a histogram shows <b>data distribution</b>. Use the flow chart to find <i>where</i> work goes wrong and the histogram to measure <i>how much</i> variation exists.</p>
+      <p class="small">The book's Ishikawa chapter lists seven tools without the flow chart; the SPPU syllabus names it, so the flow-chart side above follows the standard process-map symbols.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.11.3 Histogram, p. 6-33; §6.11 Ishikawa's 7 Basic Tools, p. 6-31 – 6-37</p>
+
     </div>
   </div>
 
@@ -431,16 +480,18 @@ main{min-width:0}
       <p class="asked"><b>Asked in:</b> 2024 May Q7(c) [3] · 2025 Nov Q8(b) [6] · 2023 Nov Q8(a) [6, flow chart + run chart + control chart]</p>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Tool</th><th>Definition</th><th>How to draw / read</th><th>Example</th></tr></thead>
+        <thead><tr><th>Tool</th><th>Book definition</th><th>How to draw / read</th><th>Example</th></tr></thead>
         <tbody>
-          <tr><td><b>Histogram</b></td><td>A bar chart of the frequency distribution of continuous data.</td><td>Divide data into equal class intervals; bar height = frequency. Look at centre, spread, skew and outliers.</td><td>Distribution of 300 test execution times; most 2–3 s, a few 10 s.</td></tr>
-          <tr><td><b>Flow chart</b></td><td>A diagram of the steps, decisions and flow of a process.</td><td>Oval = start/end, rectangle = activity, diamond = decision, arrow = flow.</td><td>Defect lifecycle from report to closure, including the retest loop.</td></tr>
-          <tr><td><b>Control chart</b></td><td>A time-ordered chart with a centre line and upper/lower control limits (±3σ).</td><td>Plot each sample; investigate points outside limits, runs of 7+ on one side, or trends.</td><td>Weekly defect density with UCL 5.2 and LCL 0.4; a point at 7.1 is a special cause.</td></tr>
+          <tr><td><b>Histogram</b></td><td>A graphic representation of frequency counts of a sample or population; X-axis = unit intervals of a parameter in ascending order, Y-axis = frequency counts. It shows the distribution of data and the amount of variation in a process.</td><td>Collect data, choose equal class intervals, count the values in each class and draw adjacent bars. Higher bars mean more values in that class. Read the centre, spread, skew and outliers.</td><td>Distribution of 300 test execution times; most are 2–3 s, a few are 10 s.</td></tr>
+          <tr><td><b>Flow chart</b></td><td>A diagram of the steps, decisions and flow of a process. It shows how work moves from start to end.</td><td>Oval = start/end, rectangle = activity, diamond = decision, arrow = flow. Follow the path and look for loops, waits and unnecessary approvals.</td><td>Defect lifecycle from report to closure, including the retest loop.</td></tr>
+          <tr><td><b>Control chart</b></td><td>A Shewhart chart and a special form of run chart. It shows the amount and nature of variation over time and has a central line plus a pair of control limits (and sometimes warning limits).</td><td>Plot the parameter against real time. If all points lie inside the limits and show no particular tendency, the process is in control. A point outside the limits or a trend means out of control — investigate and take corrective action.</td><td>Weekly defect density with UCL 5.2 and LCL 0.4; a point at 7.1 is outside the limit and needs action.</td></tr>
         </tbody>
       </table>
       </div>
-      <p><b>If the question asks flow chart + run chart + control chart (2023 Nov Q8a):</b> define the flow chart and control chart as above, then add — a <b>run chart</b> is a time-ordered line graph with a median line but <b>no control limits</b>; it shows trends, shifts and cycles. It is the simpler cousin of the control chart.</p>
+      <p><b>If the question also asks for a run chart (2023 Nov Q8a):</b> a <b>run chart</b> tracks the performance of a parameter over time — X-axis = time, Y-axis = value. It is used for trend analysis and has <b>no control limits</b>. The control chart is a special form of run chart with a centre line and control limits, so the run chart is the simpler first look and the control chart is the formal test of stability.</p>
       <p><b>Relationship:</b> the flow chart shows <b>how</b> the process works, the histogram shows <b>what</b> the output looks like, and the run/control chart shows whether the process is <b>stable over time</b>.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.11.3 Histogram, §6.11.5 Run Chart, §6.11.7 Control Chart, p. 6-33 – 6-36</p>
+
     </div>
   </div>
 
@@ -451,24 +502,27 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q8(c) [5] · 2025 May Q8(c) [5]</p>
+      <p>The book calls the control chart “a special form of run chart that illustrates the amount and nature of variation in the process over time.” Both plot a quality characteristic against time; the difference is the <b>centre line and control limits</b>.</p>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Point</th><th>Run chart</th><th>Control chart</th></tr></thead>
         <tbody>
-          <tr><td>Definition</td><td>Line graph of data in time order with a median line.</td><td>Line graph with a mean and statistically calculated control limits (UCL/LCL).</td></tr>
-          <tr><td>Limits</td><td>No control limits.</td><td>UCL and LCL, usually mean ±3σ.</td></tr>
-          <tr><td>Purpose</td><td>Spot trends, shifts, cycles and unusual patterns.</td><td>Distinguish common-cause variation from special-cause variation.</td></tr>
-          <tr><td>Statistical basis</td><td>Simple; no distribution assumption.</td><td>Based on process variation and probability.</td></tr>
-          <tr><td>Decision power</td><td>Indicates a change; cannot confirm statistical control.</td><td>Can decide whether the process is in control.</td></tr>
-          <tr><td>Cost / skill</td><td>Low; anyone can draw it.</td><td>Higher; needs data and formulas.</td></tr>
-          <tr><td>Use</td><td>First look at defect trend; daily team review.</td><td>Formal SPC; release gate; supplier quality.</td></tr>
+          <tr><td>Definition</td><td>Tracks the performance of a parameter of interest over time; X-axis = time, Y-axis = value.</td><td>A special form of run chart with a central line, a pair of control limits and sometimes warning limits.</td></tr>
+          <tr><td>Limits</td><td><b>No control limits.</b></td><td><b>UCL and LCL</b> (usually based on process variation), plus a central line.</td></tr>
+          <tr><td>Purpose</td><td>Trend analysis, especially comparison of current data with historical data.</td><td>Show the amount and nature of variation and decide whether the process is in control; the main aim is to prevent defects.</td></tr>
+          <tr><td>Interpretation</td><td>A rise, fall, shift or cycle is visible, but the chart cannot say whether it is statistically unusual.</td><td>If all values are within the limits and show no particular tendency, the process is in control. A point outside the limits or a trend means out of control → causal analysis and corrective action.</td></tr>
+          <tr><td>Statistical basis</td><td>Simple time plot; no distribution assumption.</td><td>Based on process variation and control limits; points represent the state of the process.</td></tr>
+          <tr><td>Types</td><td>The book includes pie, bar, compound-bar and circle graphs under run charts.</td><td>Univariate (one quality characteristic) and multivariate (more than one).</td></tr>
+          <tr><td>Use</td><td>First look at a trend; daily team review.</td><td>Routine monitoring of quality; formal decision on process stability.</td></tr>
         </tbody>
       </table>
       </div>
-      <h4>Example</h4>
-      <p><b>Run chart:</b> weekly defects 12, 10, 14, 9, 8, 11, 7 — a downward trend, but no limits, so we cannot say whether the last point is statistically unusual.</p>
-      <p><b>Control chart:</b> same data with mean 10.1, UCL 16.2, LCL 4.0. All points lie inside, so the process is in control; the downward trend is common-cause variation, not a special event.</p>
-      <p><b>Memory hook:</b> run chart = <b>time + median</b>; control chart = <b>time + mean + 3σ limits</b>.</p>
+      <h4>Book examples</h4>
+      <p><b>Run chart:</b> the book's software example is the weekly number of open problems in the backlog, which shows the development team's workload of software fixes. If that number falls from 12 to 7 over several weeks, a downward trend is visible, but without limits we cannot say whether it is statistically unusual.</p>
+      <p><b>Control chart:</b> Fig. 6.11.7 plots the average wall thickness of samples. The average line is at about 0.368, with UCL 0.384 and LCL 0.352. Point B reaches the upper control limit (0.384), so the process is out of control and corrective action is needed.</p>
+      <p><b>Memory hook:</b> run chart = <b>time + value</b>; control chart = <b>time + value + centre line + control limits</b>.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.11.5 Run Chart and §6.11.7 Control Chart, p. 6-34 – 6-36</p>
+
     </div>
   </div>
 </section>
@@ -484,23 +538,50 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q7(c) [5] · 2023 May Q8(a) [6] · 2025 May Q7(b) [6] · 2025 Nov Q7(a) [5]</p>
-      <p><b>Meaning:</b> Maintaining SQA means keeping the quality system <b>alive and effective</b> after it is defined — auditing it, measuring it, updating it and improving it as the product and organisation change.</p>
-      <h4>1. Activities</h4>
+      <p><b>Book meaning:</b> SQA is “a process that ensures that developed software meets and complies with defined or standardized quality specifications.” It is an <b>ongoing process within the software development life cycle</b> that routinely checks the developed software to ensure it meets the desired quality measures. “Maintaining SQA” means keeping this process, its standards and its evidence alive after the plan is written.</p>
+      <h4>1. Keep performing the six SQA tasks</h4>
       <ol>
-        <li><b>Keep the process current:</b> review the SDLC, standards and checklists after every major change; retire obsolete steps.</li>
-        <li><b>Conduct audits:</b> internal and external audits check that the process is actually followed; record nonconformities and corrective actions.</li>
-        <li><b>Track metrics:</b> defect density, DRE, coverage, defect leakage, MTBF, schedule variance. Compare with targets and trends.</li>
-        <li><b>Review defects and root causes:</b> Pareto and fishbone analysis; fix the process, not only the bug.</li>
-        <li><b>Maintain the test assets:</b> update test cases, data, automation scripts and environments as the product changes.</li>
-        <li><b>Train and certify people:</b> new tools, standards and domain knowledge; keep skills current.</li>
-        <li><b>Manage tools and configuration:</b> version control, CI, defect tracker, test-management tool; keep them integrated.</li>
-        <li><b>Management review:</b> periodic review of quality objectives, audit results, customer feedback and improvement actions (ISO 9001 clause 9).</li>
-        <li><b>Continual improvement:</b> PDCA — plan an improvement, implement, check the metric, standardise.</li>
-        <li><b>Documentation:</b> keep the quality manual, procedures and records up to date and accessible.</li>
+        <li><b>Prepare the SQA plan:</b> identify the evaluations, audits and reviews, the applicable standards, the procedures for error reporting and tracking, the documents to be produced by the SQA group, and the feedback to the project team.</li>
+        <li><b>Participate in the software process description:</b> review it for compliance with organisational policy, internal software standards, externally imposed standards and the rest of the project plan.</li>
+        <li><b>Review software engineering activities</b> to verify compliance with the defined software process.</li>
+        <li><b>Audit designated work products</b> to verify compliance with the process.</li>
+        <li><b>Ensure deviations</b> in software or work products are documented and handled by a documented procedure.</li>
+        <li><b>Record evidence of noncompliance</b> and report it to management.</li>
       </ol>
-      <h4>2. Example</h4>
-      <p>A quarterly review finds defect leakage rose from 4% to 9%. The team audits the review process, finds that code reviews are being skipped under schedule pressure, adds a CI gate, retrains reviewers, and tracks leakage monthly until it returns below 5%.</p>
-      <p><b>One-line answer:</b> maintain SQA by <b>auditing, measuring, updating and improving</b> the process and its assets — not by filing the quality manual once and forgetting it.</p>
+      <h4>2. Maintain the ten SQA elements</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Element</th><th>What must be kept working</th></tr></thead>
+        <tbody>
+          <tr><td><b>Standards</b></td><td>Ensure that standards are adopted and followed.</td></tr>
+          <tr><td><b>Reviews and audits</b></td><td>Audits are reviews performed by SQA personnel to ensure quality guidelines are followed in all software engineering work.</td></tr>
+          <tr><td><b>Testing</b></td><td>Ensure testing is properly planned and conducted.</td></tr>
+          <tr><td><b>Error/defect collection and analysis</b></td><td>Collect and analyse error and defect data to understand how errors are introduced and how they can be eliminated.</td></tr>
+          <tr><td><b>Change management</b></td><td>Ensure adequate change management practices are in place.</td></tr>
+          <tr><td><b>Education</b></td><td>Take the lead in software process improvement and educational programmes.</td></tr>
+          <tr><td><b>Vendor management</b></td><td>Suggest quality practices to vendors and incorporate quality mandates in vendor contracts.</td></tr>
+          <tr><td><b>Security management</b></td><td>Ensure the appropriate process and technology are used to achieve the desired security level.</td></tr>
+          <tr><td><b>Safety</b></td><td>Assess the impact of software failure and initiate steps to reduce risk.</td></tr>
+          <tr><td><b>Risk management</b></td><td>Ensure risk activities are conducted and contingency plans are established.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>3. Keep the organisation's SQA system implemented</h4>
+      <ul>
+        <li>Set up a <b>staff instruction programme</b>.</li>
+        <li>Leaders and managers must follow up and support the implementation efforts made by their units.</li>
+        <li>Carry out <b>internal quality audits</b> to verify the success of implementation.</li>
+        <li>Use the audit findings to decide whether the organisation has reached a satisfactory level of implementation.</li>
+      </ul>
+      <h4>4. Maintain SQA during maintenance</h4>
+      <ul>
+        <li>The book's objectives for SQA in maintenance are confidence that maintenance conforms to <b>functional technical requirements</b> and to <b>managerial scheduling and budgetary requirements</b>, plus activities to improve the efficiency of maintenance and SQA.</li>
+        <li>Use <b>maintenance quality metrics</b> to identify trends in maintenance efficiency, effectiveness and customer satisfaction.</li>
+        <li>Keep collecting and analysing defect data so that the causes of errors are removed, not only the symptoms.</li>
+      </ul>
+      <p><b>One-line answer:</b> maintain SQA by keeping the process defined, auditing that it is followed, recording and reporting noncompliance, retraining people and repeating the cycle.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.2 SQA elements, tasks and goals, p. 6-8 – 6-11; §6.5.4 SQA system implementation, p. 6-21</p>
+
     </div>
   </div>
 
@@ -511,43 +592,49 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q8(b) [6] · 2023 Nov Q8(c) [5]</p>
-      <h4>1. SQA tasks</h4>
-      <ul>
-        <li>Prepare the <b>SQA/quality plan</b> and quality objectives.</li>
-        <li>Define and maintain <b>processes, standards and templates</b>.</li>
-        <li>Plan and conduct <b>reviews, inspections and audits</b>.</li>
-        <li>Oversee <b>test planning and execution</b>; check entry/exit criteria.</li>
-        <li>Collect and analyse <b>metrics</b>; publish quality reports.</li>
-        <li>Manage <b>defects, change requests and configuration</b>.</li>
-        <li>Conduct <b>training</b> and promote quality awareness.</li>
-        <li>Drive <b>root-cause analysis and continual improvement</b>.</li>
-      </ul>
-      <h4>2. SQA goals</h4>
-      <ul>
-        <li><b>Prevent</b> defects rather than detect them late.</li>
-        <li><b>Meet</b> functional and non-functional requirements.</li>
-        <li><b>Reduce</b> cost of quality and rework.</li>
-        <li><b>Improve</b> process capability and predictability.</li>
-        <li><b>Achieve</b> customer satisfaction and compliance (ISO/CMM).</li>
-      </ul>
-      <h4>3. Metrics</h4>
+      <h4>1. SQA tasks (book §6.2.4)</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Metric</th><th>Formula / meaning</th><th>Target example</th></tr></thead>
+        <thead><tr><th>#</th><th>Task</th><th>What it covers</th></tr></thead>
         <tbody>
-          <tr><td><b>Defect density</b></td><td>Defects ÷ size (KLOC or function points)</td><td>&lt; 1 per KLOC</td></tr>
-          <tr><td><b>Defect removal effectiveness (DRE)</b></td><td>Defects found before release ÷ total defects × 100</td><td>&gt; 95%</td></tr>
-          <tr><td><b>Defect leakage</b></td><td>Defects found after release ÷ total defects × 100</td><td>&lt; 5%</td></tr>
-          <tr><td><b>Test coverage</b></td><td>Requirements or code covered ÷ total × 100</td><td>≥ 80% branch</td></tr>
-          <tr><td><b>Test case productivity</b></td><td>Test cases designed ÷ person-day</td><td>Project baseline</td></tr>
-          <tr><td><b>MTBF</b></td><td>Total operating time ÷ number of failures</td><td>Increasing</td></tr>
-          <tr><td><b>MTTR</b></td><td>Total repair time ÷ number of repairs</td><td>Decreasing</td></tr>
-          <tr><td><b>Schedule / effort variance</b></td><td>(Actual − planned) ÷ planned × 100</td><td>Within ±10%</td></tr>
-          <tr><td><b>Customer satisfaction</b></td><td>CSAT / NPS from surveys</td><td>≥ 4.2/5 or NPS +30</td></tr>
+          <tr><td>1</td><td><b>Prepare the SQA plan</b></td><td>Evaluations, audits and reviews, applicable standards, error reporting and tracking procedures, documents produced by the SQA group and feedback to the project team.</td></tr>
+          <tr><td>2</td><td><b>Participate in the software process description</b></td><td>Review it for compliance with organisational policy, internal standards, externally imposed standards and the project plan.</td></tr>
+          <tr><td>3</td><td><b>Review engineering activities</b></td><td>Verify compliance with the defined software process.</td></tr>
+          <tr><td>4</td><td><b>Audit work products</b></td><td>Verify compliance with the process.</td></tr>
+          <tr><td>5</td><td><b>Handle deviations</b></td><td>Ensure deviations are documented and handled by a documented procedure.</td></tr>
+          <tr><td>6</td><td><b>Record noncompliance</b></td><td>Record evidence and report it to management.</td></tr>
         </tbody>
       </table>
       </div>
-      <p><b>Goal–question–metric (GQM):</b> start from a goal (“reduce payment defects”), ask questions (“where do they occur?”), then choose metrics (“defects per payment module”). This keeps measurement purposeful.</p>
+      <h4>2. SQA goals (book §6.2.5)</h4>
+      <ul>
+        <li><b>Requirements quality:</b> correctness, completeness and consistency of the requirements model strongly influence the quality of all later work products.</li>
+        <li><b>Design quality:</b> every element of the design model is assessed to ensure it is of high quality and conforms to requirements.</li>
+        <li><b>Code quality:</b> source code and related work products conform to local coding standards and show characteristics that make maintenance easy.</li>
+        <li><b>Quality control effectiveness:</b> limited resources are applied where they have the highest likelihood of producing a high-quality result.</li>
+      </ul>
+      <h4>3. Metrics (book §6.8 and §6.9)</h4>
+      <p>Software process and project metrics are <b>quantitative measures</b> and a <b>management tool</b>. Product metrics refer to the operational phase; process metrics are collected across projects over long periods and used for strategic decisions.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Metric</th><th>Formula</th><th>What it tells you</th></tr></thead>
+        <tbody>
+          <tr><td><b>HD calls density (HDD)</b></td><td>HDD = NHYC / KLMC</td><td>Help-desk calls per thousand lines of maintained code.</td></tr>
+          <tr><td><b>Weighted HD calls density (WHDD)</b></td><td>WHDD = WHYC / KLMC</td><td>Severity-weighted help-desk load per KLMC.</td></tr>
+          <tr><td><b>Average severity of HD calls (ASHC)</b></td><td>ASHC = WHYC / NHYC</td><td>How severe the average help-desk call is.</td></tr>
+          <tr><td><b>HD service success (HDS)</b></td><td>HDS = NHYNOT / NHYC</td><td>Share of help-desk calls completed on time.</td></tr>
+          <tr><td><b>Code error density (CED)</b></td><td>CED = NCE / KLOC</td><td>Code errors found by inspection and testing per KLOC.</td></tr>
+          <tr><td><b>Development error density (DED)</b></td><td>DED = NDE / KLOC</td><td>All design and code errors found during development per KLOC.</td></tr>
+          <tr><td><b>Average severity of code errors (ASCE)</b></td><td>ASCE = WCE / NCE</td><td>Severity-weighted view of code errors.</td></tr>
+          <tr><td><b>Development error removal effectiveness (DERE)</b></td><td>DERE = NDE / (NDE + NYF)</td><td>How well development removed errors before maintenance began.</td></tr>
+          <tr><td><b>Time-table observance (TTO)</b></td><td>TTO = MSOT / MS</td><td>Share of milestones completed on time.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small">NHYC = HD calls during a year of service; KLMC = thousands of lines of maintained code; WHYC = weighted HD calls in a year; NHYNOT = HD calls completed on time; NCE = code errors detected by inspection and testing; NDE = development errors detected; KLOC = thousand lines of code; WCE = weighted code errors; NYF = software failures in a year of maintenance service; MSOT = milestones completed on time; MS = total milestones.</p>
+      <p><b>Why metrics matter:</b> they show whether the process is improving, where defects are injected and whether limited quality resources are being used effectively. They are not a scorecard for blaming individuals.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.2.4–6.2.5 SQA Tasks and Goals, p. 6-10 – 6-11; §6.8–6.9 Metrics, p. 6-24 – 6-28</p>
+
     </div>
   </div>
 
@@ -558,38 +645,44 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 May Q8(c) [5] · 2025 May Q7(c) [5]</p>
-      <p><b>Definition:</b> Defect Removal Effectiveness measures how well the quality process <b>removes defects before delivery</b>. It is the percentage of all defects that are found and fixed before the product reaches the customer.</p>
-      <div class="math">DRE (%) = (defects found before delivery ÷ (defects found before delivery + defects found after delivery)) × 100</div>
-      <p>Equivalently: <b>DRE = 1 − defect leakage</b>.</p>
-      <h4>1. Solved example</h4>
+      <p><b>What is a defect?</b> From the <b>producer's viewpoint</b>, a defect is “a deviation from specifications, whether missing, wrong, or extra.” From the <b>customer's viewpoint</b>, it is “anything that causes customer dissatisfaction, whether in the requirements or not” — that is, a failure of <b>fit for use</b>.</p>
+      <p><b>Classification:</b> <b>Critical</b> defects need immediate attention and can affect essential functionality or crash the system; <b>Major</b> defects affect core or major functions but do not cause complete failure; <b>Minor</b> defects have a small impact and the user can still work, perhaps with an alternative; <b>Trivial</b> defects have no impact on working, such as spelling or grammar mistakes.</p>
+      <h4>1. Defect tracking (book §6.12.1)</h4>
+      <ul>
+        <li>Execute the test, compare actual with expected, and log any discrepancy as <b>“open”</b> with screen prints or traces.</li>
+        <li>The tester or manager confirms that it is a defect, assigns it to a developer, and the developer records the fix and marks it <b>“Fixed”</b> or <b>“Retest”</b>.</li>
+        <li>The defect goes back to the test team for retesting and regression testing, based on severity and impact.</li>
+        <li>If the retest matches the expected result, the status is <b>“Closed”</b>; otherwise it returns to <b>“Open”</b> and goes back to the developer.</li>
+      </ul>
+      <h4>2. DRE — definition and formula</h4>
+      <p>Defect Removal Effectiveness (also called Defect Removal Efficiency, DRE) is a powerful metric used to measure <b>test effectiveness</b>. It tells how many bugs were found out of the set of bugs that could have been found.</p>
+      <div class="math">DRE = (Total defects detected during inspection and testing ÷ Total defects detected) × 100</div>
+      <p>“Total defects detected” includes defects found before delivery and defects found after delivery. DRE is therefore the percentage of all defects removed before the product reaches the customer. It is also written as <b>DRE = 1 − defect leakage</b>.</p>
+      <h4>3. Solved example</h4>
       <p>A release has <b>90</b> defects found in reviews and testing, and customers report <b>10</b> defects after release.</p>
       <div class="math">DRE = 90 ÷ (90 + 10) × 100 = <b>90%</b><br>Defect leakage = 10 ÷ 100 × 100 = <b>10%</b></div>
-      <p>Target for critical software is usually <b>&gt; 95%</b>.</p>
-      <h4>2. Phase-wise DRE</h4>
-      <p>DRE can be calculated for each phase to find the weak gate:</p>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Phase</th><th>Defects found</th><th>Defects escaping to next phase</th><th>Phase effectiveness</th></tr></thead>
-        <tbody>
-          <tr><td>Requirements review</td><td>50</td><td>50</td><td>50/100 = 50%</td></tr>
-          <tr><td>Design review</td><td>30</td><td>20</td><td>30/50 = 60%</td></tr>
-          <tr><td>Code review + unit test</td><td>12</td><td>8</td><td>12/20 = 60%</td></tr>
-          <tr><td>System test</td><td>6</td><td>2</td><td>6/8 = 75%</td></tr>
-          <tr><td>Post-release</td><td>2</td><td>—</td><td>—</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>Start with 100 defects. Pre-release removal = 50 + 30 + 12 + 6 = <b>98</b>; post-release = <b>2</b>.</p>
-      <p>Overall DRE = 98 ÷ (98 + 2) = 98 ÷ 100 = <b>98%</b>; leakage = <b>2%</b>.</p>
-      <h4>3. How to improve DRE</h4>
+      <h4>4. Weighted DRE (book §6.9.3)</h4>
+      <p>Because a critical defect is not equal to a trivial one, the book also gives weighted versions:</p>
+      <div class="math">DERE = NDE ÷ (NDE + NYF) × 100<br>DWERE = WDE ÷ (WDE + WYF) × 100</div>
+      <p>NDE = development errors detected; NYF = software failures detected during a year of maintenance service; WDE/WYF = the same counts weighted by severity. Weighted metrics give a more accurate evaluation of the error situation.</p>
+      <h4>5. Defect injection and removal by phase (book §6.12.3)</h4>
+      <p>Defects are injected at every phase, not only at the beginning of development. Requirements are injected by requirements gathering and functional specifications and removed by requirement analysis and review; high-level and low-level design are injected by design work and removed by design inspections; code is injected by coding and removed by code inspections; integration is injected by the build process and removed by build verification testing. Unit, component and system testing can also inject <b>bad fixes</b>, and testing itself removes them. This is why DRE should be read phase by phase, not only as one final number.</p>
+      <h4>6. Why DRE matters — and its limit</h4>
       <ul>
-        <li>Add or strengthen reviews at the phase with the lowest effectiveness.</li>
-        <li>Use checklists based on past escape defects.</li>
-        <li>Increase test coverage and add regression tests for every escape.</li>
-        <li>Perform root-cause analysis on defects found after release.</li>
-        <li>Track DRE per release and set a quality gate (e.g. ≥ 95%).</li>
+        <li>A defect found early is cheaper and gives a better-quality product and a better reputation; the customer avoids the problem entirely.</li>
+        <li>Reviewers may find many non-critical defects and still achieve a high DRE; the customer can remain unhappy because a <b>critical</b> defect escaped. Always read DRE with severity data.</li>
+        <li>DRE measures the <b>removal process</b>, not individual tester skill. A low DRE means defects are slipping through the quality gates.</li>
       </ul>
-      <p><b>Why it matters:</b> DRE measures the <b>process</b>, not individual tester skill. A low DRE shows that defects are slipping through the quality gates and that prevention must improve.</p>
+      <h4>7. How to improve DRE</h4>
+      <ul>
+        <li>Prevent defects at the source — requirements and design reviews before coding.</li>
+        <li>Inspect and test early, and log every defect with open/fixed/retest/closed status.</li>
+        <li>Run regression tests after every fix, based on severity and impact.</li>
+        <li>Classify defects by severity and track weighted DRE (DWERE).</li>
+        <li>Analyse every escape and correct the process that let it through.</li>
+      </ul>
+      <p class="booksrc">📘 <b>Book:</b> §6.12.1–6.12.3 Defect, Defect Removal Efficiency and Defect Injection, p. 6-37 – 6-40; §6.9.3 Error Removal Effectiveness Metrics, p. 6-28</p>
+
     </div>
   </div>
 
@@ -600,37 +693,57 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q7(c) [5]</p>
-      <p><b>Definition:</b> Software maintenance is the work done on a delivered product to <b>correct defects, adapt to a changed environment, improve performance or prevent future problems</b>. It usually consumes <b>50–70%</b> of total lifecycle cost.</p>
-      <h4>1. Types</h4>
+      <p><b>Book definition:</b> Maintenance is “the set of activities, both technical and managerial, that ensures that software continues to meet organizational and business objectives in a cost-effective way.”</p>
+      <h4>1. Types of maintenance (book §6.10)</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Type</th><th>Purpose</th><th>Example</th></tr></thead>
+        <thead><tr><th>Type</th><th>Book meaning</th><th>Example</th></tr></thead>
         <tbody>
-          <tr><td><b>Corrective</b></td><td>Fix defects found after delivery.</td><td>Patch a wrong tax calculation.</td></tr>
-          <tr><td><b>Adaptive</b></td><td>Adapt to a new OS, browser, database or law.</td><td>Support Windows 11 or a new GST rate.</td></tr>
-          <tr><td><b>Perfective</b></td><td>Improve performance, maintainability or add minor enhancements.</td><td>Optimise a slow query; refactor a module.</td></tr>
-          <tr><td><b>Preventive</b></td><td>Reduce future failure risk.</td><td>Add logging, upgrade a library, add regression tests.</td></tr>
+          <tr><td><b>Corrective</b></td><td>Taking existing code and correcting a fault that causes the code to behave in a way that deviates from its documented requirements.</td><td>Patch a wrong tax calculation.</td></tr>
+          <tr><td><b>Adaptive</b></td><td>Taking existing code and adapting it to provide new features and functionality; usually part of a new release and a larger development effort.</td><td>Support a new operating system or a changed tax rule.</td></tr>
+          <tr><td><b>Perfective</b></td><td>Improving maintainability — restructuring code to make it easier to understand or to remove ambiguities.</td><td>Refactor a confusing module; rename unclear variables.</td></tr>
+          <tr><td><b>Inspection</b></td><td>Work done as a result of code inspections; focuses on adhering to coding standards or reducing the likelihood of a failure.</td><td>Fix coding-standard violations found in a review.</td></tr>
         </tbody>
       </table>
       </div>
-      <h4>2. Maintenance process</h4>
+      <h4>2. Pre-maintenance quality components</h4>
+      <p><b>(a) Maintenance contract review.</b> Before agreeing to supply maintenance, the book reviews five things:</p>
       <ol>
-        <li><b>Request</b> — bug report or change request.</li>
-        <li><b>Impact analysis</b> — which modules, interfaces, tests and data are affected.</li>
-        <li><b>Approval and planning</b> — priority, effort, release window.</li>
-        <li><b>Change</b> — modify code/design and update documentation.</li>
-        <li><b>Testing</b> — unit, integration, regression and UAT.</li>
-        <li><b>Release and monitor</b> — deploy, verify, close the request.</li>
+        <li><b>Customer requirements classification:</b> hours of service, size of the user population, location of users and types of applications.</li>
+        <li><b>Alternative approaches to maintenance provision:</b> for example, subcontracting types of service.</li>
+        <li><b>Estimates of required maintenance resources:</b> advice from the proposal team, the company's ability to meet commitments, and the professional competence of the maintenance team.</li>
+        <li><b>Services provided by subcontractors and/or the customer:</b> quality assurance, payment to subcontractors and follow-up procedures.</li>
+        <li><b>Maintenance cost estimates:</b> reviewed on the basis of the required resources.</li>
       </ol>
-      <h4>3. SQA role in maintenance</h4>
-      <ul>
-        <li>Enforce change control and configuration management.</li>
-        <li>Require impact analysis and regression testing for every change.</li>
-        <li>Track defect recurrence and MTBF.</li>
-        <li>Keep documentation and test cases current.</li>
-        <li>Use root-cause analysis to move from corrective to preventive work.</li>
-      </ul>
-      <p><b>Example:</b> a bank changes its interest rule (adaptive). The team analyses the affected calculation and report modules, changes the code, runs the full regression suite, and releases a patch with updated documentation.</p>
+      <p><b>(b) Maintenance plan.</b> The plan gives the framework within which maintenance is organised. It contains:</p>
+      <ol>
+        <li>A list of contracted maintenance services — customers, number of users and characteristics of corrective service (remote and on-site).</li>
+        <li>A description of the maintenance team's organisation.</li>
+        <li>A list of maintenance facilities — the maintenance support centre and documentation centre.</li>
+        <li>A list of identified maintenance service risks — where inability to provide sufficient maintenance is anticipated.</li>
+        <li>A list of required maintenance procedures and controls.</li>
+        <li>The software maintenance budget.</li>
+      </ol>
+      <h4>3. Quality metrics and cost of maintenance quality</h4>
+      <p>Maintenance quality metrics are used mainly to identify trends in <b>maintenance efficiency, effectiveness and customer satisfaction</b>. The quality costs of corrective maintenance are divided into six types:</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Cost type</th><th>What it includes</th></tr></thead>
+        <tbody>
+          <tr><td><b>Prevention</b></td><td>Instruction and training of the maintenance team; preventive and corrective actions.</td></tr>
+          <tr><td><b>Appraisal</b></td><td>Error detection.</td></tr>
+          <tr><td><b>Managerial preparation and control</b></td><td>Managerial activities carried out to prevent errors.</td></tr>
+          <tr><td><b>Internal failure</b></td><td>Failure corrections initiated by the maintenance team.</td></tr>
+          <tr><td><b>External failure</b></td><td>Failure corrections initiated by customer complaints.</td></tr>
+          <tr><td><b>Managerial failure</b></td><td>Damage from a shortage of maintenance staff or inadequate task organisation.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>4. SQA's role in maintenance</h4>
+      <p>SQA reviews the maintenance contract, checks that a maintenance plan exists, measures efficiency, effectiveness and customer satisfaction, and tracks the six cost categories so that prevention increases and failures fall.</p>
+      <p><b>Example:</b> a bank changes its interest rule. This is <b>adaptive</b> maintenance — the team adapts the existing calculation code, plans the release, updates documentation, runs regression tests and monitors customer complaints after delivery.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.10 Software Maintenance, p. 6-28 – 6-30</p>
+
     </div>
   </div>
 </section>
@@ -646,44 +759,44 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q8(a) [6] · 2025 Nov Q8(a) [5]</p>
-      <p><b>Definition:</b> ISO 9000 is a family of <b>international standards for quality management systems (QMS)</b>, published by ISO. It gives a common vocabulary, requirements and guidance so that organisations can consistently meet customer and regulatory requirements.</p>
+      <p><b>Book definition:</b> A quality management system “defines and establishes an organization's quality policy, objectives and procedures.” Quality management system standards do not give specific quality indicators or describe ways of achieving them, because these differ in every situation. Instead they provide <b>generic frameworks and general principles</b> that can be applied to any organization, of any size, in any industry.</p>
+      <p>ISO 9000 is an international set of standards for quality management, applicable to a range of organizations from manufacturing to service industries. Its scope covers hardware, software, processed materials and services; it outlines the basic elements of a good quality management system, which are good business practice.</p>
+      <p><b>Benefits of using standards (book):</b> the ability to apply methodologies and procedures of the highest professional level; better mutual understanding and coordination among development teams, especially between development and maintenance; greater cooperation between the software developer and external participants in the project; better understanding and cooperation between suppliers and customers when standards are adopted as part of the contract.</p>
       <h4>1. The ISO 9000 family</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Standard</th><th>Purpose</th><th>Certifiable?</th></tr></thead>
         <tbody>
-          <tr><td><b>ISO 9000</b></td><td>Fundamentals and vocabulary; defines the concepts and terms.</td><td>No</td></tr>
-          <tr><td><b>ISO 9001</b></td><td>Requirements for a QMS; the standard against which organisations are certified.</td><td><b>Yes</b></td></tr>
-          <tr><td><b>ISO 9004</b></td><td>Guidance for sustained success and performance improvement.</td><td>No</td></tr>
-          <tr><td><b>ISO 19011</b></td><td>Guidelines for auditing management systems.</td><td>No</td></tr>
+          <tr><td><b>ISO 9000</b></td><td>International set of standards for quality management; broad scope; outlines the basic elements of a good QMS.</td><td>Guideline — not mandatory for certification.</td></tr>
+          <tr><td><b>ISO 9001</b></td><td>The broadest standard; model for design, development, production, installation and servicing. Applicable to organizations that design, develop and maintain products.</td><td><b>Yes</b> — quality system standard.</td></tr>
+          <tr><td><b>ISO 9002</b></td><td>Limited to production, installation and servicing; governs the manufacture of a product and conformance to production and installation methods.</td><td><b>Yes</b> — quality system standard.</td></tr>
+          <tr><td><b>ISO 9003</b></td><td>Further limited to inspection and testing; final test and inspection of products; assumes an extensive quality control function.</td><td><b>Yes</b> — quality system standard.</td></tr>
+          <tr><td><b>ISO 9004</b></td><td>Guidance for quality management — design, implementation and improvement of a quality system; for internal use only.</td><td>Guideline — not mandatory for certification.</td></tr>
+          <tr><td><b>ISO 9000-1</b></td><td>Guidelines for selection and use of the ISO 9000 standards.</td><td>Guideline.</td></tr>
         </tbody>
       </table>
       </div>
-      <h4>2. Seven quality management principles</h4>
+      <h4>2. Eight quality management principles (ISO 9000-3)</h4>
       <ol>
-        <li>Customer focus</li>
-        <li>Leadership</li>
-        <li>Engagement of people</li>
-        <li>Process approach</li>
-        <li>Improvement</li>
-        <li>Evidence-based decision making</li>
-        <li>Relationship management</li>
+        <li><b>Customer focus:</b> understand current and future customer needs, meet requirements and strive to exceed expectations.</li>
+        <li><b>Leadership:</b> establish unity of purpose and direction; create an internal environment in which people can become fully involved.</li>
+        <li><b>Involvement of people:</b> people at all levels are the essence of the organization; their full involvement enables their abilities to be used for the organization's benefit.</li>
+        <li><b>Process approach:</b> a desired result is achieved more efficiently when activities and related resources are managed as a process.</li>
+        <li><b>System approach to management:</b> identify, understand and manage interrelated processes as a system to improve effectiveness and efficiency.</li>
+        <li><b>Continual improvement:</b> improvement of the organization's overall performance should be a permanent objective.</li>
+        <li><b>Factual approach to decision making:</b> effective decisions are based on the analysis of data and information.</li>
+        <li><b>Mutually supportive supplier relationships:</b> an organization and its suppliers are interdependent; a mutually beneficial relationship enhances the ability of both to create value.</li>
       </ol>
-      <h4>3. ISO 9001:2015 clauses</h4>
-      <p><b>4</b> Context · <b>5</b> Leadership · <b>6</b> Planning · <b>7</b> Support · <b>8</b> Operation · <b>9</b> Performance evaluation · <b>10</b> Improvement. The model runs on <b>PDCA</b>.</p>
-      <h4>4. Benefits and limitations</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Benefits</th><th>Limitations</th></tr></thead>
-        <tbody>
-          <tr><td>Consistent, documented process; fewer defects.</td><td>Certifies the process, not the product.</td></tr>
-          <tr><td>Customer and tender confidence; international recognition.</td><td>Can become paperwork for its own sake.</td></tr>
-          <tr><td>Clear responsibilities and records.</td><td>Cost and time for certification and audits.</td></tr>
-          <tr><td>Continual improvement and corrective action.</td><td>Does not prescribe specific software techniques.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>ISO 9000 vs ISO 9001:</b> 9000 explains the <b>concepts and vocabulary</b>; 9001 states the <b>auditable requirements</b> for certification. In exams, write the family table and then the clauses.</p>
+      <p>Senior management uses these eight principles as a framework to guide the organization towards improved performance.</p>
+      <h4>3. ISO 9000-3 requirements</h4>
+      <p>ISO 9000-3 contains about <b>20 requirements</b> in five groups: <b>quality management system; management responsibilities; resource management; product realization; measurement, analysis and improvement.</b></p>
+      <h4>4. Certification</h4>
+      <p><b>Four tiers of documentation:</b> (1) the quality manual; (2) quality management procedures (core procedures); (3) area work instructions — standard operating procedures, test methods, calibration methods; (4) forms, records, books and files.</p>
+      <p><b>Certification process:</b> (1) the company implements the control and documentation procedures; (2) an independent certification organization, licensed by an accreditation body, performs a thorough audit; (3) on compliance, the company receives a registration certificate and its name is included in the published directory of registered suppliers; (4) the registrar verifies continually through periodic surveillance and full audits every few years.</p>
+      <p><b>Problems with certification:</b> cost of application and maintenance; time; level of internal expertise; executive commitment; selection of registration.</p>
+      <p><b>Why certify:</b> better organizational definition; greater quality awareness; better documentation of processes; increased control of operations; ongoing analysis of and solution to problems; positive cultural change; improved customer satisfaction and increased market opportunities.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.5 ISO 9000 Quality Standards, p. 6-15 – 6-21</p>
+
     </div>
   </div>
 
@@ -694,23 +807,32 @@ main{min-width:0}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q8(b) [5]</p>
-      <p><b>Definition:</b> An SQA plan defines <b>how quality assurance will be performed</b> for a specific project — the activities, responsibilities, standards, reviews, tests, metrics and records. IEEE 730 is the standard template.</p>
-      <h4>Contents</h4>
-      <ol>
-        <li><b>Purpose and scope</b> — project, release and quality objectives.</li>
-        <li><b>Reference documents</b> — SRS, design, standards, contract.</li>
-        <li><b>Management and organisation</b> — QA roles, responsibilities, reporting.</li>
-        <li><b>Documentation</b> — which documents are produced, reviewed and stored.</li>
-        <li><b>Standards, practices and metrics</b> — coding standards, review checklists, coverage and defect targets.</li>
-        <li><b>Reviews and audits</b> — type, schedule, participants, entry/exit criteria.</li>
-        <li><b>Test plan</b> — levels, environments, data, tools, automation and acceptance criteria.</li>
-        <li><b>Problem reporting and corrective action</b> — defect workflow, severity, escalation.</li>
-        <li><b>Tools and configuration management</b> — version control, CI, defect tracker, test tool.</li>
-        <li><b>Records, training and risks</b> — audit evidence, skill plan, risk list.</li>
-      </ol>
-      <h4>Example quality gate</h4>
-      <p>No release unless: 100% requirements traced, 80% branch coverage, zero open critical/high defects, performance targets met, and the test summary report is approved.</p>
-      <p><b>SQA plan vs quality plan:</b> the quality plan is the broader project quality document; the SQA plan focuses on the <b>assurance activities</b> — reviews, audits, standards and evidence — that prove the process is working.</p>
+      <p><b>What it is:</b> Preparing the SQA plan is the first SQA task in the book. The plan identifies the <b>evaluations</b> to be performed, the <b>audits and reviews</b> to be performed, the <b>standards</b> applicable to the project, the <b>procedures for error reporting and tracking</b>, the <b>documents</b> to be produced by the SQA group, and the <b>amount of feedback</b> provided to the software project team.</p>
+      <h4>Contents of the SQA plan (book §6.6)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Section</th><th>What it contains</th></tr></thead>
+        <tbody>
+          <tr><td><b>Management</b></td><td>Describes the place of SQA in the structure of the organization.</td></tr>
+          <tr><td><b>Documentation</b></td><td>Describes each work product produced as part of the software process.</td></tr>
+          <tr><td><b>Standards, practices and conventions</b></td><td>Lists all applicable standards and practices used during the software process, and any metrics to be collected.</td></tr>
+          <tr><td><b>Reviews and audits</b></td><td>Gives an overview of the approach used in the reviews and audits to be conducted during the project.</td></tr>
+          <tr><td><b>Test</b></td><td>References the test plan and procedure document and defines test record-keeping requirements.</td></tr>
+          <tr><td><b>Problem reporting and corrective action</b></td><td>Defines procedures for reporting, tracking and resolving errors or defects, and identifies organizational responsibilities for these activities.</td></tr>
+          <tr><td><b>Other</b></td><td>Tools, SQA methods, change control, record keeping, training and risk management.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>How the plan is used</h4>
+      <ul>
+        <li>It tells the project team what evidence will be checked and who is responsible.</li>
+        <li>It fixes the standards and metrics before work starts, so reviews are objective.</li>
+        <li>It defines how errors are reported, tracked and closed, and what records the SQA group will produce.</li>
+        <li>It sets the feedback loop between the SQA group and the project team.</li>
+      </ul>
+      <p><b>One-line answer:</b> the SQA plan is the written agreement between the project and the SQA group — it names the reviews, audits, standards, tests, records and responsibilities that prove quality is being built in.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.6 SQA Plan, p. 6-22</p>
+
     </div>
   </div>
 </section>
@@ -723,15 +845,16 @@ main{min-width:0}
   <table class="left">
     <thead><tr><th>Topic</th><th>Exam-ready answer</th></tr></thead>
     <tbody>
-      <tr><td><b>Software quality dilemma</b></td><td>Quality competes with cost, schedule and scope. Adding quality work raises short-term cost and time; skipping it raises long-term rework and failure cost. The dilemma is resolved by risk-based investment in prevention.</td></tr>
-      <tr><td><b>Elements of SQA</b></td><td>Standards, reviews and audits, testing, metrics, defect management, configuration management, training, tools and documentation.</td></tr>
-      <tr><td><b>Formal approaches</b></td><td>Mathematical specification and verification (Z, VDM, B-method, model checking) to prove properties; used in safety-critical systems.</td></tr>
-      <tr><td><b>Statistical SQA</b></td><td>Collect defect data by phase, fit a distribution, find the phase with the highest defect rate and improve it; use control charts and Pareto analysis.</td></tr>
-      <tr><td><b>Product quality metrics</b></td><td>Defect density, MTBF, customer-reported defects, reliability growth, severity distribution.</td></tr>
-      <tr><td><b>In-process quality metrics</b></td><td>Review effectiveness, test coverage, defect removal effectiveness, phase yield, schedule/effort variance, test case productivity.</td></tr>
+      <tr><td><b>Software quality dilemma</b></td><td>If the quality is terrible, nobody will buy the product. If infinite time, effort and money are spent on perfection, the product is too late and too expensive, and the company may be out of business. Industry looks for the middle ground: good enough not to be rejected, but not so perfect that it takes too long or costs too much. Fig. 6.1.2 shows the cost to find and repair an error rising from requirements → design → coding → testing → maintenance.</td></tr>
+      <tr><td><b>Elements of SQA</b></td><td>Standards; reviews and audits; testing; error/defect collection and analysis; change management; education; vendor management; security management; safety; risk management.</td></tr>
+      <tr><td><b>Formal approaches</b></td><td>A planned and systematic approach to evaluate quality and act on software product standards, software process and software procedure. It assumes that rigorous syntax and semantics can be defined for every programming language, allows a rigorous approach to the specification of software requirements, and applies mathematical proof of correctness to show that a program conforms to its specification. Reviews use 3–5 reviewers, more than 2 hours of preparation and a meeting of less than 2 hours.</td></tr>
+      <tr><td><b>Statistical SQA</b></td><td>Collect and categorise information about software errors and defects, and trace each defect to its underlying cause — non-conformance to specifications, design error, violation of standards or poor communication with the customer. Use the Pareto principle (80% of defects come from 20% of causes) to isolate the vital few, then correct the problems that caused them. Software reliability is the probability of failure-free operation in a specified environment for a specified time.</td></tr>
+      <tr><td><b>Product quality metrics</b></td><td>Product metrics refer to the operational phase. Customer services are help desk (HD) and corrective maintenance; HD metrics cover call density, severity and success — for example HDD = NHYC / KLMC, ASHC = WHYC / NHYC and HDS = NHYNOT / NHYC.</td></tr>
+      <tr><td><b>In-process quality metrics</b></td><td>Four classes: software process quality, process timetable, error removal effectiveness and process productivity. Examples: CED = NCE / KLOC, DED = NDE / KLOC, ASCE = WCE / NCE, TTO = MSOT / MS and DERE = NDE / (NDE + NYF).</td></tr>
     </tbody>
   </table>
   </div>
+  <p class="booksrc">📘 <b>Book:</b> §6.1.3 Quality Dilemma, p. 6-6; §6.2.3 Elements, p. 6-9 – 6-10; §6.2.6 Formal Approaches, p. 6-11 – 6-12; §6.3 Statistical SQA, p. 6-12; §6.8–6.9 Metrics, p. 6-24 – 6-28</p>
 </section>
 
 <!-- ================= CHEAT SHEET ================= -->
@@ -747,7 +870,7 @@ main{min-width:0}
         <li>Belts: Champion → Master Black Belt → Black Belt → Green Belt.</li>
       </ul>
       <h4>Ishikawa 7 tools</h4>
-      <div class="math">Fishbone · Check sheet · Pareto · Histogram · Flow chart · Scatter · Control chart (+ Run chart)</div>
+      <div class="math">Book's 7: Check sheet · Pareto · Histogram · Scatter · Run chart · Cause–effect · Control chart<br>(syllabus adds Flow chart)</div>
     </div>
     <div>
       <h4>One-line differences</h4>
@@ -778,14 +901,14 @@ main{min-width:0}
   </table>
   </div>
 
-  <div class="book"><b>Source note:</b> the supplied STQA “TechKnowledge” book covers <b>Units 1–2 only</b>. Unit 6 is built from the syllabus-listed reference texts — M. G. Limaye, <em>Software Testing: Principles, Techniques and Tools</em>; Srinivasan Desikan &amp; Gopal Swamy Ramesh, <em>Software Testing: Principles and Practices</em>; Naresh Chauhan, <em>Software Testing: Principles and Practices</em> — and matched to the exact PYQ wording and mark weights.</div>
+  <div class="book"><b>Source note:</b> the supplied book is <b>Technical Publications — Software Testing and Quality Assurance</b> (Units 3–6). Unit 6 is printed pages 6-1 to 6-42 (PDF pages 113–154); all answers in this unit are re-sourced from it and matched to the exact PYQ wording.</div>
 
   <div class="tip"><b>Exam-day order:</b> Six Sigma (6×) → maintain SQA (4×) → Ishikawa flow chart vs histogram (4×) → achieving quality (4×) → TQM (3×). If Q7/Q8 combine two units, answer the Unit-6 part with a table and the Unit-4 part with a definition.</div>
 </section>
 
 
 <footer>
-  STQA · Unit 6 · built from 6 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410245D · 2019 Pattern<br><span class="small">Source: syllabus-listed texts — Limaye; Desikan &amp; Ramesh; Chauhan. The supplied TechKnowledge book covers Units 1–2 only.</span><br>
+  STQA · Unit 6 · built from 6 SPPU end-sem papers (2022 Nov – 2025 Nov) · 410245D · 2019 Pattern<br><span class="small">Source: Technical Publications — <i>Software Testing and Quality Assurance</i> (Units 3–6), Unit 6 pp. 6-1 – 6-42.</span><br>
   <span class="small">Questions are reproduced from the university papers; answers are exam-oriented notes, not official solutions.</span>
 </footer>
 
