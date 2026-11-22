@@ -41,6 +41,7 @@ hr.sep{border:0;border-top:1px dashed var(--line);margin:22px 0}
 .qa-body{padding:16px 18px}
 .asked{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:14px;border-left:3px solid #ffc46b66}
 .asked b{color:var(--muted)}
+.booksrc{margin:16px 0 0;padding-top:10px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;line-height:1.55}
 pre{background:#070c16;border:1px solid #1d2b47;border-radius:12px;padding:14px 16px;overflow:auto;font-family:var(--mono);font-size:13.2px;line-height:1.62;color:#cfe0ff;margin:12px 0}
 code{font-family:var(--mono);font-size:.92em;background:#ffffff0f;padding:1px 5px;border-radius:5px;color:#bfe9ff}
 pre code{background:none;padding:0;color:inherit}
@@ -76,6 +77,13 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .qa-head{background:#f2f2f2!important}
   a{color:#0b57d0!important}
   .card,.qa,.hero{box-shadow:none!important}
+}
+</style>
+<style id="print-callouts">
+@media print{
+  .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .book b,.note b,.warn b,.tip b{color:#000!important}
+  .booksrc{color:#333!important}
 }
 </style>
 </head>
@@ -116,6 +124,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </header>
 
+<div class="book"><b>Source:</b> all answers in this unit are re-sourced from the supplied <i>Technical Publications — Design and Analysis of Algorithms</i> (Units 3–6), matched to the exact PYQ wording.</div>
+
 <section class="card" id="map">
   <h2>📊 PYQ frequency map</h2>
   <div class="tbl-wrap">
@@ -151,44 +161,55 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [10 — short notes on all three] · 2023 Nov Q5(a) [9 — aggregate] · 2024 May Q6(a) [8] · 2025 May Q6(a) [6] · 2025 Nov Q5(c) [6 — any two]</p>
 
       <h4>What is amortized analysis?</h4>
-      <p>Amortized analysis finds the <b>average cost per operation over a sequence of operations</b>, in the <b>worst case</b>, without using probability. A single operation may be expensive (e.g. MULTIPOP empties the stack), but that cost is "paid for" by many cheap operations before it. Amortized cost is <b>not</b> average-case cost.</p>
+      <p>According to the book, <b>amortized analysis means finding the average running time per operation over a worst-case sequence of operations</b>. The average cost of a single operation is small when the average of the whole sequence is taken, even if one operation in that sequence is expensive. It therefore guarantees the <b>time per operation in the worst case</b>.</p>
+      <div class="note"><b>Average case vs amortized:</b> average-case analysis averages over <em>all possible inputs</em>; amortized analysis averages over a <em>sequence of operations</em> and assumes a worst-case input. Amortized cost is not average-case cost.</div>
+      <p>The book gives three commonly used techniques, with one key formula:</p>
+      <div class="math">Amortized cost of n operations = <b>total cost of the n operations / n</b></div>
 
-      <h4>Method 1 — Aggregate analysis</h4>
-      <p>Show that a sequence of <b>n</b> operations costs <b>T(n)</b> in total; then the amortized cost per operation is <code>T(n)/n</code>.</p>
+      <h4>1. Aggregate analysis</h4>
+      <p>Analyse the whole sequence of <b>n</b> operations first. If the sequence takes worst-case time <b>T(n)</b>, the amortized cost of each operation is:</p>
+      <div class="math">T(n) / n</div>
       <ul>
-        <li>Stack with MULTIPOP: n operations cost ≤ 2n → <b>O(1)</b> per operation.</li>
-        <li>Binary counter: n increments flip &lt; 2n bits → <b>O(1)</b> per increment.</li>
+        <li>Stack with PUSH, POP and MULTIPOP: n operations cost at most 2n, because each object is pushed once and popped once → <b>O(1)</b> per operation.</li>
+        <li>k-bit binary counter: n INCREMENTs flip fewer than 2n bits → <b>O(1)</b> per increment.</li>
+        <li>The book points out that a sequence containing O(n) MULTIPOPs costs O(n²) in the loose worst case, but this bound is correct and <b>not tight</b>; the tight total is O(n).</li>
       </ul>
 
-      <h4>Method 2 — Accounting method</h4>
-      <p>Charge each operation an <b>amortized cost</b> that may differ from its actual cost. The surplus is stored as <b>credit</b> on data objects. The rule: <b>total credit must never become negative</b>. Then total amortized cost ≥ total actual cost.</p>
+      <h4>2. Accounting method</h4>
+      <p>Assign a different charge to each operation; this charge is its <b>amortized cost</b>. It may be more or less than the actual cost.</p>
       <ul>
-        <li>PUSH charges 2: 1 pays for the push, 1 is credit stored on the element.</li>
-        <li>POP and MULTIPOP charge 0 and spend the stored credit.</li>
-        <li>Total for n operations = 2n → amortized <b>O(1)</b>.</li>
+        <li>If amortized cost &gt; actual cost, the difference is saved on a specific object as <b>credit</b>.</li>
+        <li>If amortized cost &lt; actual cost, the stored credit is used up.</li>
+        <li>The total amortized cost must be an upper bound on the total actual cost, so total credit never becomes negative.</li>
+      </ul>
+      <div class="math">Amortized cost = actual cost + credit (deposited or used up)<br>
+      Σ c′<sub>i</sub> ≥ Σ c<sub>i</sub> &nbsp;&nbsp; and &nbsp;&nbsp; total credit = Σ c′<sub>i</sub> − Σ c<sub>i</sub> ≥ 0</div>
+      <p><b>Stack example:</b> charge PUSH 2, POP 0, MULTIPOP 0. The extra 1 from PUSH stays on the pushed object and pays for its later POP or MULTIPOP. Total for n operations is at most 2n, so the amortized cost per operation is 2.</p>
+      <p><b>Binary counter example:</b> charge 2 for setting a bit to 1. Of this, 1 pays the actual set and 1 is credit on that bit; when the bit is reset to 0, the stored credit pays for the reset. Total is O(n).</p>
+
+      <h4>3. Potential function method</h4>
+      <p>This is similar to the accounting method, but the prepaid amount is <b>potential “energy” attached to the whole data structure</b>, not to individual objects. Let D<sub>0</sub>, D<sub>1</sub>, …, D<sub>n</sub> be the data structure after each operation, c<sub>i</sub> the actual cost of operation i, and Φ(D<sub>i</sub>) its potential (a real number).</p>
+      <div class="math">c′<sub>i</sub> = c<sub>i</sub> + Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>)<br>
+      Σ c′<sub>i</sub> = Σ c<sub>i</sub> + Φ(D<sub>n</sub>) − Φ(D<sub>0</sub>)</div>
+      <p>Choose Φ(D<sub>0</sub>) = 0 and Φ(D<sub>i</sub>) ≥ 0. Then the amortized cost is an upper bound on the actual cost. A positive potential change means the operation was overcharged; a negative change means stored potential is discharged to pay for the operation.</p>
+      <ul>
+        <li><b>Stack:</b> Φ = number of elements. PUSH: ΔΦ = +1 → ĉ = 1 + 1 = <b>2</b>. POP: ΔΦ = −1 → ĉ = 1 − 1 = <b>0</b>. MULTIPOP of k′ elements: ΔΦ = −k′ → ĉ = k′ − k′ = <b>0</b>.</li>
+        <li><b>Binary counter:</b> Φ = number of 1 bits. If an INCREMENT resets t bits, actual cost = t + 1 and ΔΦ = 1 − t → ĉ = (t + 1) + (1 − t) = <b>2</b>.</li>
       </ul>
 
-      <h4>Method 3 — Potential function method</h4>
-      <p>Define a potential function <code>Φ(D)</code> over data structures, with <code>Φ(D<sub>0</sub>) = 0</code> and <code>Φ(D<sub>i</sub>) ≥ 0</code>. The amortized cost of operation i is:</p>
-      <div class="math">ĉ<sub>i</sub> = c<sub>i</sub> + Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>)</div>
-      <p>Summing over n operations gives total amortized = total actual + Φ(D<sub>n</sub>) − Φ(D<sub>0</sub>) ≥ total actual.</p>
-      <ul>
-        <li>Stack: <code>Φ = size of stack</code> → PUSH amortized 2, POP 0, MULTIPOP 0.</li>
-        <li>Binary counter: <code>Φ = number of 1 bits</code> → INCREMENT amortized 2.</li>
-      </ul>
-
-      <h4>Comparison</h4>
+      <h4>Comparison of the three methods</h4>
       <div class="tbl-wrap">
       <table class="left">
         <thead><tr><th>Method</th><th>Idea</th><th>Best used when</th></tr></thead>
         <tbody>
-          <tr><td>Aggregate</td><td>Total cost / number of operations</td><td>All operations have similar structure and the total is easy to bound</td></tr>
-          <tr><td>Accounting</td><td>Prepay credit; spend later</td><td>Different operations have very different costs</td></tr>
-          <tr><td>Potential</td><td>Formal "energy" stored in the structure</td><td>Need a rigorous proof; complex data structures</td></tr>
+          <tr><td>Aggregate</td><td>Analyse the entire sequence first; amortized cost = total / n</td><td>The total cost of the sequence is easy to bound</td></tr>
+          <tr><td>Accounting</td><td>Assign different charges; excess is stored as credit on objects</td><td>Different operations have very different actual costs</td></tr>
+          <tr><td>Potential</td><td>Define a potential function Φ and prove it is a valid potential</td><td>A rigorous proof is needed; the structure has a natural “energy”</td></tr>
         </tbody>
       </table>
       </div>
-      <div class="note"><b>Key line for the examiner:</b> amortized analysis averages over a <em>sequence</em>, not over inputs — so it gives a <b>worst-case guarantee</b>, unlike average-case analysis.</div>
+      <div class="note"><b>Key line for the examiner:</b> amortized analysis averages over a <em>sequence of operations</em>, not over inputs — so it gives a <b>worst-case guarantee</b>, unlike average-case analysis.</div>
+      <p class="booksrc">📘 <b>Book:</b> §5.1 Amortized Analysis, p. 5-2 – 5-10</p>
     </div>
   </div>
 </section>
@@ -206,6 +227,14 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       <p class="asked"><b>Asked in:</b> 2022 Nov Q6(a) [9] · 2023 Nov Q5(b) [9] · 2025 Nov Q6(a) [9]</p>
 
       <h4>Operations and actual costs</h4>
+      <p>The book implements the stack as an array: PUSH does <code>s[top] = item; top++;</code> and POP does <code>top--; item = s[top];</code>. Both run in O(1). MULTIPOP is:</p>
+      <pre><code>Algorithm multiple_pop(st, k)
+while ((!stempty(st)) AND (k != 0))
+{
+    pop(st);
+    k = k - 1;
+}</code></pre>
+      <p>It removes at most k elements. For a stack of size 8, removing 4 elements costs 4 pops.</p>
       <div class="tbl-wrap">
       <table>
         <thead><tr><th>Operation</th><th>Action</th><th>Actual cost</th></tr></thead>
@@ -216,7 +245,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
-      <p>A MULTIPOP of k elements can cost O(k), which looks expensive. But each element can be popped only after it has been pushed, so across any sequence the total pops cannot exceed the total pushes.</p>
+      <p>MULTIPOP looks expensive: if the stack has n elements, one call can cost O(n). The book says a sequence of n operations containing O(n) such calls costs O(n²) in the loose worst case, but this is correct and <b>not tight</b>. The tight bound follows because each object can be popped only once: <b>total pops = total pushes</b>.</p>
 
       <h4>Method 1 — Aggregate analysis</h4>
       <p>Start with an empty stack and perform n operations. Each element is pushed at most once, so it can be popped at most once.</p>
@@ -224,16 +253,16 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       Amortized cost per operation = 2n / n = <b>2 = O(1)</b></div>
 
       <h4>Method 2 — Accounting method</h4>
-      <p>Charge <b>2</b> for PUSH, <b>0</b> for POP, <b>0</b> for MULTIPOP.</p>
+      <p>Assign: <b>PUSH = 2, POP = 0, MULTIPOP = 0</b>.</p>
       <ul>
-        <li>PUSH: 1 unit pays for the actual push, the second unit is stored as <b>credit</b> on the pushed element.</li>
-        <li>POP: uses the 1 unit of credit stored on that element.</li>
-        <li>MULTIPOP: each element popped uses its own stored credit.</li>
+        <li>PUSH: $1 pays for the actual push; the second $1 is stored as <b>credit</b> on the pushed object.</li>
+        <li>POP: uses the $1 credit stored on that object.</li>
+        <li>MULTIPOP: each popped object spends its own $1 credit.</li>
       </ul>
-      <p>Credit never goes negative, so total amortized cost = 2n → <b>O(1)</b> per operation.</p>
+      <p>Credits never go negative. Total amortized cost for n operations is at most 2n, so the amortized cost per operation is 2 = <b>O(1)</b>.</p>
 
       <h4>Method 3 — Potential function method</h4>
-      <p>Let <code>Φ(S) = |S|</code>, the number of elements in the stack. Initially Φ = 0 and Φ ≥ 0 always.</p>
+      <p>Let <code>Φ(S) = |S|</code>, the number of objects in the stack. Φ(D<sub>0</sub>) = 0 and Φ(D<sub>i</sub>) ≥ 0. For MULTIPOP, let k′ = min(|S|, k).</p>
       <div class="tbl-wrap">
       <table>
         <thead><tr><th>Operation</th><th>Actual c<sub>i</sub></th><th>ΔΦ</th><th>Amortized ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ</th></tr></thead>
@@ -244,10 +273,12 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
+      <p class="small">The book's MULTIPOP line prints the potential change as k′; because k′ objects leave the stack, the change is actually −k′, which gives the stated amortized cost 0.</p>
       <div class="math"><b>All three operations have amortized cost O(1).</b><br>
       Total for n operations = O(n), even though one MULTIPOP can cost O(n).</div>
 
-      <div class="warn"><b>Common mistake:</b> saying "MULTIPOP is O(n) so the sequence is O(n²)". That is the <em>worst-case per operation</em>, not the amortized bound. The total is O(n) because each element is popped once.</div>
+      <div class="warn"><b>Common mistake:</b> saying “MULTIPOP is O(n), so the sequence is O(n²)”. That is the <em>worst-case per operation</em>, not the amortized bound. The total is O(n) because each element is popped once.</div>
+      <p class="booksrc">📘 <b>Book:</b> §5.1.1 – 5.1.3 Stack and Binary Counter, p. 5-2 – 5-9</p>
     </div>
   </div>
 </section>
@@ -265,8 +296,17 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       <p class="asked"><b>Asked in:</b> 2025 May Q5(a) [6] · 2025 Nov Q5(a) [5]</p>
 
       <h4>Setup</h4>
-      <p>A k-bit binary counter starts at 0 and supports INCREMENT. INCREMENT flips a suffix of 1-bits to 0 and the next 0-bit to 1. For example:</p>
-      <div class="math">0000 → 0001 (1 flip) → 0010 (2 flips) → 0011 (1) → 0100 (3) → 0101 (1) → 0110 (2) → 0111 (1) → 1000 (4)</div>
+      <p>A k-bit binary counter is stored in an array <code>B[0..k−1]</code>, with B[0] the least significant bit. INCREMENT flips a suffix of 1-bits to 0 and the next 0-bit to 1. The book's algorithm is:</p>
+      <pre><code>Algorithm Increment(B[0..k-1])
+i = 0
+while ((i &lt; length(B)) AND (B[i] = 1))
+{
+    B[i] = 0
+    i = i + 1
+}
+if (i &lt; length(B)) then
+    B[i] = 1</code></pre>
+      <p>The book's 8-bit example starts at 00000000. The costs of successive increments are 1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3, 1, 2, 1, 5, giving a cumulative cost of <b>31 flips for 16 increments</b> (Fig. 5.1.1).</p>
 
       <h4>Aggregate analysis</h4>
       <p>In n consecutive INCREMENT operations, count how often each bit flips:</p>
@@ -274,25 +314,29 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       <table>
         <thead><tr><th>Bit position</th><th>Flips every</th><th>Number of flips in n increments</th></tr></thead>
         <tbody>
-          <tr><td>bit 0 (LSB)</td><td>1 operation</td><td>n</td></tr>
-          <tr><td>bit 1</td><td>2 operations</td><td>n/2</td></tr>
-          <tr><td>bit 2</td><td>4 operations</td><td>n/4</td></tr>
+          <tr><td>B[0] (LSB)</td><td>1 operation</td><td>n</td></tr>
+          <tr><td>B[1]</td><td>2 operations</td><td>n/2</td></tr>
+          <tr><td>B[2]</td><td>4 operations</td><td>n/4</td></tr>
+          <tr><td>B[3]</td><td>8 operations</td><td>n/8</td></tr>
           <tr><td>…</td><td>…</td><td>…</td></tr>
-          <tr><td>bit k−1</td><td>2<sup>k−1</sup></td><td>n/2<sup>k−1</sup></td></tr>
+          <tr><td>B[i]</td><td>2<sup>i</sup></td><td>⌊n/2<sup>i</sup>⌋</td></tr>
         </tbody>
       </table>
       </div>
-      <div class="math">Total flips T(n) = n + n/2 + n/4 + … + n/2<sup>k−1</sup> &lt; n · Σ<sub>i≥0</sub> (1/2)<sup>i</sup> = 2n<br>
-      Amortized cost per INCREMENT = T(n)/n &lt; <b>2 = O(1)</b></div>
+      <div class="math">T(n) = Σ<sub>i=0</sub><sup>k−1</sup> ⌊n/2<sup>i</sup>⌋ &lt; n · Σ<sub>i=0</sub><sup>∞</sup> (1/2)<sup>i</sup> = 2n<br>
+      Worst case for the sequence = O(n)<br>
+      Amortized cost per INCREMENT = O(n)/n = <b>O(1)</b></div>
 
       <h4>Potential method (alternative, for full marks)</h4>
-      <p>Let <code>Φ = number of 1-bits</code> in the counter. If an INCREMENT flips t trailing 1s to 0 and one 0 to 1:</p>
-      <div class="math">actual cost c<sub>i</sub> = t + 1<br>
-      ΔΦ = (1 − t) &nbsp;&nbsp;(lose t ones, gain one 1)<br>
-      ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ = (t + 1) + (1 − t) = <b>2</b></div>
-      <p>Since Φ ≥ 0 and Φ starts at 0, total amortized cost ≥ total actual cost, so each operation is O(1) amortized.</p>
+      <p>Let <code>Φ(D<sub>i</sub>) = b<sub>i</sub></code>, the number of 1-bits after the i-th increment. Suppose the i-th operation resets t<sub>i</sub> bits. Its actual cost is:</p>
+      <div class="math">c<sub>i</sub> = t<sub>i</sub> + 1</div>
+      <p>If b<sub>i</sub> = 0, the operation resets all k bits, so b<sub>i−1</sub> = t<sub>i</sub> = k. Otherwise b<sub>i</sub> = b<sub>i−1</sub> − t<sub>i</sub> + 1. Hence b<sub>i</sub> ≤ b<sub>i−1</sub> − t<sub>i</sub> + 1, and the potential change is:</p>
+      <div class="math">Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>) = 1 − t<sub>i</sub><br>
+      ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ = (t<sub>i</sub> + 1) + (1 − t<sub>i</sub>) = <b>2</b></div>
+      <p>Since Φ ≥ 0 and Φ(D<sub>0</sub>) = 0, total amortized cost is an upper bound on total actual cost, so each operation is O(1) amortized.</p>
 
       <div class="note"><b>Worst case vs amortized:</b> a single INCREMENT can flip all k bits → O(k). But n increments cost O(n), so the amortized cost is O(1).</div>
+      <p class="booksrc">📘 <b>Book:</b> §5.1.1 Aggregate Analysis &amp; §5.1.3 Potential Method, p. 5-3 – 5-10</p>
     </div>
   </div>
 </section>
@@ -309,20 +353,33 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [part] · 2025 May Q5(b) [7] · 2025 Nov Q5(b) [6]</p>
 
-      <h4>Tractable</h4>
-      <p>A problem is <b>tractable</b> if it can be solved by an algorithm whose running time is a <b>polynomial</b> in the input size, i.e. O(n<sup>k</sup>) for some constant k. Such problems form the class <b>P</b>.</p>
-      <p><b>Examples:</b> sorting (O(n log n)), searching a sorted list (O(log n)), shortest path (Dijkstra O(E log V)), minimum spanning tree, matrix multiplication, linear programming, string matching.</p>
+      <h4>Tractable problem</h4>
+      <p>The book defines a <b>tractable problem</b> as a problem that can be solved by a <b>polynomial-time algorithm</b>; its upper bound is polynomial.</p>
+      <p><b>Examples (book):</b> (i) searching an unordered list, (ii) searching an ordered list, (iii) sorting a list, (iv) multiplication of integers, (v) finding a minimum spanning tree in a graph.</p>
 
-      <h4>Intractable (non-tractable)</h4>
-      <p>A problem is <b>intractable</b> if no polynomial-time algorithm is known and the best known algorithms are exponential or worse. These include <b>NP-hard</b> and <b>NP-complete</b> problems.</p>
-      <p><b>Examples:</b> travelling salesman problem (decision version), 0/1 knapsack (decision version), graph colouring (decision version), Hamiltonian cycle, SAT / 3-SAT, vertex cover, subset sum.</p>
+      <h4>Intractable (non-tractable) problem</h4>
+      <p>The book defines an <b>intractable problem</b> as a problem that <b>cannot be solved by a polynomial-time algorithm</b>; its lower bound is exponential.</p>
+      <p><b>Examples (book):</b> (i) travelling salesman problem, (ii) knapsack problem.</p>
 
-      <h4>Important nuance</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Tractable</th><th>Intractable</th></tr></thead>
+        <tbody>
+          <tr><td>Solvable in polynomial time?</td><td>Yes</td><td>No polynomial-time algorithm is known</td></tr>
+          <tr><td>Bound used by the book</td><td>Upper bound is polynomial</td><td>Lower bound is exponential</td></tr>
+          <tr><td>Book examples</td><td>Searching ordered/unordered list, sorting, integer multiplication, MST</td><td>Travelling salesman problem, knapsack problem</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Why the difference matters</h4>
       <ul>
-        <li>P ⊆ NP. Whether P = NP is still open; most researchers believe P ≠ NP.</li>
-        <li>A problem can be <b>NP-hard but still solvable for small inputs</b> — "intractable" is about asymptotic worst-case growth, not about every instance.</li>
-        <li>Approximation algorithms and heuristics are used for intractable optimisation problems (e.g. 2-approximation for metric TSP).</li>
+        <li>For a tractable problem, polynomial growth keeps the running time manageable as the input size increases.</li>
+        <li>For an intractable problem, the best known exact algorithms grow exponentially; even moderate n can be impossible.</li>
+        <li>Intractability is a worst-case asymptotic statement. Small instances of TSP or knapsack can still be solved exactly.</li>
+        <li>The book uses this distinction to motivate approximation algorithms in §5.5: for an NP-hard optimization problem, find a good solution quickly instead of the exact optimum.</li>
       </ul>
+      <p class="booksrc">📘 <b>Book:</b> §5.3 Introduction to Tractable and Non-tractable Problems, p. 5-12</p>
     </div>
   </div>
 
@@ -333,8 +390,14 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 Nov Q5(b) [6]</p>
-      <p><b>Yes.</b> The <b>decision version</b> of TSP ("is there a tour of length ≤ K?") is <b>NP-complete</b>: a candidate tour can be verified in polynomial time, and Hamiltonian cycle reduces to it. The <b>optimisation version</b> ("find the shortest tour") is NP-hard. No polynomial-time exact algorithm is known; brute force is O(n!), and DP (Held–Karp) is O(n²2<sup>n</sup>) — both super-polynomial.</p>
-      <p><b>But:</b> for the <b>metric</b> TSP (triangle inequality) a 2-approximation exists via MST double traversal, and Christofides' algorithm gives 1.5-approximation. So TSP is intractable exactly, but approximable.</p>
+      <p><b>Yes, TSP is intractable.</b> The book's rule is: if the <b>decision version</b> of a combinatorial optimization problem is proved <b>NP-complete</b>, then its <b>optimization version</b> is <b>NP-hard</b>.</p>
+      <ul>
+        <li><b>Decision TSP:</b> “Is there a tour of length less than K?” A proposed tour can be checked in polynomial time, and Hamiltonian cycle reduces to it, so it is NP-complete.</li>
+        <li><b>Optimization TSP:</b> “What is the shortest tour?” This is NP-hard. The book's Hamiltonian-cycle example makes the same point: the decision version (is there a cycle shorter than k?) is NP-complete, but the optimization version (what is the shortest cycle?) is NP-hard because it is not easy to decide whether the cycle obtained is the shortest.</li>
+      </ul>
+      <p>No polynomial-time exact algorithm is known. Exhaustive search is O(n!), and the standard dynamic-programming solution (Held–Karp) is O(n²2<sup>n</sup>); both are super-polynomial.</p>
+      <p><b>But TSP is approximable.</b> For Euclidean (metric) TSP, the book gives the twice-around-the-tree algorithm, a 2-approximation: compute an MST, walk around it by DFS, and remove duplicate visits. So exact TSP is intractable, but a near-optimal tour can be found in polynomial time.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.3 &amp; §5.5.1 TSP, p. 5-12, 5-19 – 5-22</p>
     </div>
   </div>
 
@@ -345,7 +408,13 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 Nov Q6(c) [4]</p>
-      <p><b>The statement is true.</b> Searching an unordered list takes O(n) (linear scan) and searching a sorted list takes O(log n) (binary search). Both are polynomial in the input size, hence both belong to <b>P</b> and are tractable. Even the O(n) linear search is linear — well within polynomial time.</p>
+      <p><b>The statement is true.</b> The book lists both <b>searching an unordered list</b> and <b>searching an ordered list</b> as examples of tractable problems.</p>
+      <ul>
+        <li>Unordered list: linear search scans up to n elements → O(n), which is polynomial.</li>
+        <li>Ordered list: binary search halves the interval each time → O(log n), which is also polynomial (and faster).</li>
+      </ul>
+      <p>Since a polynomial-time algorithm exists for both, both belong to the tractable class. The ordered list is simply the easier of the two.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.3 Introduction to Tractable and Non-tractable Problems, p. 5-12</p>
     </div>
   </div>
 </section>
@@ -362,39 +431,65 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q5(b) [8] · 2023 Nov Q6(c) [8] · 2024 May Q5(a) [8] · 2025 May Q6(c) [4] · 2025 Nov Q6(b) [4]</p>
 
-      <h4>Definition</h4>
-      <p>A <b>randomized algorithm</b> makes random choices during execution (using a random number generator) rather than following a fixed deterministic path. Its running time or output may be a random variable, and we analyse its <b>expected</b> behaviour over all random choices.</p>
+      <h4>Randomized algorithm — book definition</h4>
+      <p>A randomized algorithm uses a <b>random number generator (randomizer)</b> and takes each decision from the <b>current random output</b>, instead of following one fixed deterministic path. The book gives three properties:</p>
+      <ol>
+        <li>Execution time may vary from run to run.</li>
+        <li>For different inputs there may be different outcomes on each execution.</li>
+        <li>For the same input there may be different outcomes on each execution.</li>
+      </ol>
 
-      <h4>Two types</h4>
+      <h4>Probability background used by the book</h4>
+      <ul>
+        <li>An experiment has outcomes called <b>sample points</b>; the set of all sample points is the <b>sample space S</b>.</li>
+        <li>An <b>event E</b> is a subset of S; its probability is <b>P(E) = |E| / |S|</b>. For m sample points there are 2<sup>m</sup> possible events.</li>
+        <li>Two events are <b>mutually exclusive</b> if A ∩ B = ∅; they are <b>independent</b> if P(A ∩ B) = P(A) × P(B).</li>
+        <li>A <b>random variable</b> F maps sample points to real numbers; it is discrete if its set of values is finite. Example: pick 4 balls from an urn of red and white balls; F = number of red balls, so F(RRRW) = 3 and F(RWWW) = 1.</li>
+        <li>A <b>probability distribution</b> lists P[F = a<sub>i</sub>] for all values, and Σ P[F = a<sub>i</sub>] = 1. For the 4-ball example: P[0] = 1/16, P[1] = 4/16, P[2] = 6/16, P[3] = 4/16, P[4] = 1/16.</li>
+      </ul>
+
+      <h4>Two types of randomized algorithms (Fig. 5.4.1)</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Type</th><th>Guarantee</th><th>Example</th></tr></thead>
+        <thead><tr><th>Type</th><th>Book definition</th><th>Meaning</th><th>Book example</th></tr></thead>
         <tbody>
-          <tr><td><b>Las Vegas</b></td><td>Always correct; running time is random</td><td>Randomized quicksort, randomized min-cut</td></tr>
-          <tr><td><b>Monte Carlo</b></td><td>Fixed running time; may be wrong with small probability</td><td>Miller–Rabin primality test</td></tr>
+          <tr><td><b>Las Vegas</b></td><td>Produces the same outcome on each execution for the same input</td><td>Always correct; running time may vary</td><td>Randomized algorithm for repeated elements</td></tr>
+          <tr><td><b>Monte Carlo</b></td><td>Produces different outcomes on each execution for the same input</td><td>May be wrong with a small probability; usually fixed time</td><td>Randomized primality testing</td></tr>
         </tbody>
       </table>
       </div>
+      <p class="small">In standard exam language: Las Vegas = correct answer, random time; Monte Carlo = fixed time, small probability of error. The book's defining test is the “same/different outcome” line above.</p>
 
-      <h4>Reasons for using randomized algorithms</h4>
+      <h4>Book examples</h4>
       <ol>
-        <li><b>Avoid worst-case inputs</b> — a random pivot in quicksort prevents an adversarial already-sorted input from causing O(n²).</li>
-        <li><b>Simplicity</b> — randomized algorithms are often much shorter and easier to implement than deterministic ones with the same guarantee (e.g. hashing, min-cut).</li>
-        <li><b>Speed</b> — many randomized algorithms are asymptotically faster or have better constants (e.g. randomized primality testing).</li>
-        <li><b>Symmetry breaking</b> — random choices let distributed processes break ties without coordination (e.g. randomized leader election, contention resolution).</li>
-        <li><b>Hashing</b> — random hash functions give good expected O(1) performance regardless of the key distribution.</li>
-        <li><b>Approximation</b> — randomness helps in sampling, estimation (Monte Carlo integration) and approximation algorithms.</li>
-        <li><b>Security</b> — random keys and nonces are essential in cryptography.</li>
+        <li><b>Repeated elements (Las Vegas).</b> An array of n elements has n/2 distinct and n/2 duplicate values. A deterministic algorithm may need n/2 + 2 steps. The randomized algorithm <code>Repeated(a,n)</code> repeatedly picks two random indices i and j until i ≠ j and a[i] = a[j], then returns i. Each trial is O(1); the expected number of trials is O(log n), written Õ(log n).</li>
+        <li><b>Primality testing (Monte Carlo).</b> A composite n has a divisor ≤ ⌊√n⌋; testing all divisors from 2 to ⌊√n⌋ is the deterministic way. The randomized version uses Fermat's theorem a<sup>n−1</sup> ≡ 1 (mod n): pick a random a and test the congruence. If it fails, n is composite; if it holds, n is probably prime. It may return a wrong answer with small probability. It is used in cryptography.</li>
+        <li><b>Randomized quicksort (Las Vegas).</b> RANDOMIZED-PARTITION picks the pivot index uniformly at random, swaps A[r] with A[i], and then calls PARTITION. The rest of quicksort is unchanged. It avoids the fixed-pivot worst case; expected time is O(n log n).</li>
       </ol>
 
-      <h4>Mathematics used</h4>
+      <h4>Primary reasons for using randomized algorithms</h4>
+      <p>The book lists two major advantages:</p>
+      <ol>
+        <li><b>Simple to implement</b> — the random choice often removes complicated case handling. For example, RANDOMIZED-PARTITION adds only a random index and a swap to ordinary PARTITION.</li>
+        <li><b>Many times more efficient than traditional algorithms</b> — random sampling and random pivots often give better expected performance. The repeated-element search takes Õ(log n) instead of n/2 + 2 steps, and randomized quicksort has expected O(n log n) on any input.</li>
+      </ol>
+      <p>Two further reasons follow directly from the book's examples:</p>
+      <ol start="3">
+        <li><b>Avoiding an adversarial worst case</b> — randomizing the pivot means no fixed input order can force quicksort's O(n²) partition pattern every time.</li>
+        <li><b>Good solutions quickly for hard problems</b> — for primality, random witnesses replace a long deterministic search; for duplicate detection, random sampling is much faster than scanning.</li>
+      </ol>
+
+      <h4>Drawbacks (book §5.4.3)</h4>
       <ul>
-        <li><b>Random variable X</b> — a function from the sample space to real numbers. Example: X = number of comparisons in quicksort.</li>
-        <li><b>Expected value</b>: <code>E[X] = Σ<sub>x</sub> x · Pr(X = x)</code>; linearity <code>E[X+Y] = E[X] + E[Y]</code> holds even when X and Y are dependent.</li>
-        <li><b>Indicator variable</b>: <code>I<sub>i</sub> = 1</code> if event i occurs, else 0; <code>E[I<sub>i</sub>] = Pr(event i)</code>.</li>
-        <li><b>Binomial random variable</b>: X ~ B(n, p), the number of successes in n independent trials with success probability p. <code>E[X] = np</code>, <code>Var(X) = np(1−p)</code>, <code>Pr(X=k) = <sup>n</sup>C<sub>k</sub> p<sup>k</sup>(1−p)<sup>n−k</sup></code>.</li>
-        <li><b>Markov / Chebyshev / Chernoff bounds</b> — bound the probability that a random variable deviates far from its mean.</li>
+        <li>The small degree of error may be dangerous for some applications.</li>
+        <li>It is not always possible to obtain better results using a randomized algorithm.</li>
       </ul>
+
+      <h4>Binomial random variable (mathematics for randomized analysis)</h4>
+      <p>If X counts the number of successes in n independent trials, each with success probability p, then X is a <b>binomial random variable</b>, X ~ B(n,p):</p>
+      <div class="math">P(X = k) = <sup>n</sup>C<sub>k</sub> p<sup>k</sup> (1−p)<sup>n−k</sup>, &nbsp; E[X] = np, &nbsp; Var(X) = np(1−p)</div>
+      <p>For a single trial, the indicator variable I is 1 on success and 0 on failure, with E[I] = p. Linearity of expectation, E[X+Y] = E[X] + E[Y], holds even when X and Y are dependent; this is the usual tool for analysing randomized algorithms. The book's 4-ball example is exactly a binomial distribution with n = 4 and p = 1/2: its probabilities 1/16, 4/16, 6/16, 4/16, 1/16 are the B(4, 1/2) values.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.4 Introduction to Randomized Algorithms, p. 5-12 – 5-17</p>
     </div>
   </div>
 
@@ -405,14 +500,26 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q5(c) [4] · 2025 Nov Q6(b) [4]</p>
-      <p><b>No — it does not change the average-case complexity, which remains O(n log n).</b> What it improves is the <b>worst-case behaviour on adversarial inputs</b>.</p>
+      <h4>The book's randomized quicksort</h4>
+      <pre><code>RANDOMIZED-PARTITION(A, p, r)
+1  i = RANDOM(p, r)
+2  exchange A[r] &lt;-&gt; A[i]
+3  return PARTITION(A, p, r)
+
+RANDOMIZED-QUICKSORT(A, p, r)
+1  if p &lt; r
+2      q = RANDOMIZED-PARTITION(A, p, r)
+3      RANDOMIZED-QUICKSORT(A, p, q - 1)
+4      RANDOMIZED-QUICKSORT(A, q + 1, r)</code></pre>
+      <p><b>No — it does not improve the average-case complexity, which remains O(n log n).</b> What it improves is the dependence on the input order.</p>
       <ul>
-        <li>Deterministic quicksort with first/last pivot is O(n²) on already-sorted input, because every partition is completely unbalanced.</li>
-        <li>Randomized quicksort picks the pivot uniformly at random. For <em>any</em> fixed input, the expected running time over the random choices is <b>O(n log n)</b>.</li>
-        <li>The worst case O(n²) is still possible but has very low probability; no adversary can force it without knowing the random choices.</li>
+        <li>Deterministic quicksort with the first or last element as pivot is O(n²) on an already sorted or reverse-sorted input: every partition is completely unbalanced.</li>
+        <li>Randomized quicksort chooses the pivot uniformly at random, so for any fixed input the expected running time over the random choices is <b>O(n log n)</b>.</li>
+        <li>The O(n²) worst case is still possible, but its probability is very small and no adversary can force it without knowing the random choices.</li>
       </ul>
-      <div class="math">Expected T(n) = O(n log n) &nbsp;&nbsp;|&nbsp;&nbsp; Worst case = O(n²) with probability ≈ 0</div>
-      <p><b>One-line answer:</b> randomization converts a bad <em>input-dependent</em> worst case into a low-probability event; the average case stays O(n log n).</p>
+      <div class="math">Expected T(n) = O(n log n) &nbsp;&nbsp;|&nbsp;&nbsp; Worst case = O(n²) with small probability</div>
+      <p><b>One-line answer:</b> randomization turns an input-dependent worst case into a low-probability event; the average case stays O(n log n).</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.4.2 Examples — Randomized Quicksort, p. 5-16 – 5-17</p>
     </div>
   </div>
 </section>
@@ -429,39 +536,65 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q5(b) [8] · 2023 Nov Q6(b) [4] · 2024 May Q5(b) [9] · 2025 May Q6(b) [7]</p>
 
-      <h4>Definition</h4>
-      <p>An <b>approximation algorithm</b> runs in polynomial time and returns a <b>feasible</b> solution that is guaranteed to be close to the optimal, for an NP-hard optimisation problem where finding the exact optimum is impractical.</p>
+      <h4>NP-hard problems — the book's starting point</h4>
+      <p>In complexity theory, some problems are <b>decision problems</b> (answer yes/no), some are <b>search problems</b>, and many are <b>optimization problems</b>. The book defines: if the <b>decision version</b> of a combinatorial optimization problem is proved <b>NP-complete</b>, then its <b>optimization version</b> is <b>NP-hard</b>.</p>
+      <p><b>Example (book):</b> the Hamiltonian-cycle decision problem (“is there a Hamiltonian cycle of length less than k?”) is NP-complete, because a cycle of length less than k is easy to verify. The optimization version (“what is the shortest Hamiltonian cycle?”) is NP-hard, because it is not easy to decide whether the cycle obtained is the shortest.</p>
 
-      <h4>Approximation ratio</h4>
-      <p>For a minimisation problem with algorithm cost C and optimal cost C*:</p>
-      <div class="math">ρ(n) = max( C / C*, C* / C ) &nbsp;&nbsp;→&nbsp;&nbsp; ρ(n) ≥ 1<br>
-      An algorithm with ratio ρ(n) is called a <b>ρ(n)-approximation algorithm</b>.</div>
-      <p>For maximisation, C ≤ C*, and the same max formula applies. Smaller ρ = better approximation; ρ = 1 means optimal.</p>
+      <h4>What is an approximation algorithm?</h4>
+      <p>The book defines approximation algorithms as algorithms used to find <b>approximate solutions to optimization problems</b>. They are usually associated with NP-hard problems because an efficient polynomial-time exact algorithm is very difficult to obtain.</p>
+      <ul>
+        <li>They are mainly useful when an exact polynomial algorithm is known but is <b>too expensive</b> for the size of the data set.</li>
+        <li>The philosophy is: <b>find a “good” solution fast</b>. You will not get the exact optimum, but you will get an approximate solution quickly.</li>
+        <li>They start with inaccurate data, so the approximate optimization may be as good as the optimal solution.</li>
+        <li>They are based on <b>heuristics</b> — a collection of common-sense rules defined from experience (trial and error).</li>
+      </ul>
+      <p><b>Book examples of heuristics:</b> in TSP, go to the next nearest city; in knapsack, start with the item of highest value and minimum weight.</p>
 
-      <h4>Classification by approximation ratio</h4>
+      <h4>Accuracy ratio</h4>
+      <p>For an approximate solution s<sub>a</sub> with objective value f(s<sub>a</sub>) and an optimal solution s* with value f(s*):</p>
+      <div class="math">r(s<sub>a</sub>) = f(s<sub>a</sub>) / f(s*) &nbsp;&nbsp; and generally &nbsp; r(s<sub>a</sub>) ≥ 1</div>
+      <p>When r(s<sub>a</sub>) is close to 1, the approximate solution is better. For a maximization problem the ratio is written the other way round so that it is still ≥ 1.</p>
+
+      <h4>Performance ratio and classification by ratio</h4>
+      <p>The <b>performance ratio R<sub>A</sub></b> is the <b>best upper bound on the accuracy ratio taken over all instances</b> of the problem. It is used to judge the quality of an approximation algorithm; a value nearer 1 is better.</p>
+      <p>If there exists a value <b>c ≥ 1</b> such that r(s<sub>a</sub>) ≤ c for all instances, the algorithm is called a <b>c-approximation algorithm</b>. This is the book's classification:</p>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Class</th><th>Guarantee</th><th>Example</th></tr></thead>
+        <thead><tr><th>Value of c</th><th>Class</th><th>Meaning / book example</th></tr></thead>
         <tbody>
-          <tr><td><b>Constant-factor</b></td><td>ρ(n) = c, a constant</td><td>2-approx vertex cover; 2-approx metric TSP (MST double traversal)</td></tr>
-          <tr><td><b>PTAS</b> (Polynomial-Time Approximation Scheme)</td><td>For every ε &gt; 0, ratio (1+ε); running time polynomial in n for fixed ε</td><td>Euclidean TSP, scheduling on identical machines</td></tr>
-          <tr><td><b>FPTAS</b> (Fully PTAS)</td><td>Ratio (1+ε), running time polynomial in both n and 1/ε</td><td>0/1 knapsack (scaling + DP)</td></tr>
-          <tr><td><b>Logarithmic-factor</b></td><td>ρ(n) = O(log n)</td><td>Set cover — greedy gives H(n) ≈ ln n</td></tr>
-          <tr><td><b>APX-hard / no PTAS</b></td><td>Constant factor possible, but no PTAS unless P = NP</td><td>General TSP, bin packing</td></tr>
+          <tr><td>c = 1</td><td>Optimal</td><td>Exact algorithm; ratio 1 is the best possible</td></tr>
+          <tr><td>c &gt; 1, constant</td><td>c-approximation</td><td>Guaranteed f(s<sub>a</sub>) ≤ c·f(s*); smaller c is better</td></tr>
+          <tr><td>c = 2</td><td>2-approximation</td><td>Twice-around-the-tree TSP for Euclidean distances</td></tr>
+          <tr><td>No finite c</td><td>Unbounded ratio</td><td>Nearest-neighbour TSP; ratio grows without limit</td></tr>
         </tbody>
       </table>
       </div>
+      <div class="math">For a c-approximation: &nbsp; f(s<sub>a</sub>) ≤ c · f(s*)</div>
 
       <h4>Why performance ratios are useful</h4>
       <ul>
-        <li>They give a <b>provable worst-case quality guarantee</b>, unlike heuristics which have no guarantee.</li>
-        <li>They let us trade accuracy for speed in a controlled way — choose ε to meet a required quality.</li>
-        <li>They allow comparison of algorithms independently of input instances.</li>
-        <li>They help decide whether an exact algorithm is worth the exponential cost.</li>
+        <li>They give a <b>provable worst-case quality guarantee</b>, unlike a heuristic with no bound.</li>
+        <li>They let us compare two approximation algorithms independently of the input instance: the smaller R<sub>A</sub> or c, the better.</li>
+        <li>They show how much accuracy is traded for speed: c = 1 means exact, c = 2 means at most twice the optimum.</li>
+        <li>They help decide whether the approximate algorithm is good enough or an exact (possibly exponential) algorithm is required.</li>
       </ul>
 
-      <h4>Example — vertex cover 2-approximation</h4>
-      <p>Repeatedly pick an uncovered edge (u,v), add both endpoints to the cover, and remove all edges incident to them. The chosen edges form a matching, and any vertex cover must contain at least one endpoint per matching edge, so <code>|C| ≤ 2·|C*|</code> → ratio 2.</p>
+      <h4>Book example — nearest-neighbour TSP and its ratio</h4>
+      <p>Graph: A–B = 2, B–C = 3, C–D = 2, D–A = 7, A–C = 4, B–D = 4. Start at A; the nearest unvisited city gives the tour A–B–C–D–A, with s<sub>a</sub> = 2 + 3 + 2 + 7 = 14. Exhaustive search gives the optimal A–B–D–C–A, with s* = 2 + 4 + 2 + 4 = 12. Hence</p>
+      <div class="math">r(s<sub>a</sub>) = 14 / 12 = 1.16</div>
+      <p>The approximate tour is 16% longer than the optimum. Its drawback is the long return edge D–A: if that edge has length w, then r(s<sub>a</sub>) = (7 + w)/12, which tends to infinity as w grows.</p>
+
+      <h4>Book example — twice-around-the-tree TSP</h4>
+      <p>For <b>Euclidean</b> instances the distances satisfy the triangle inequality, dist[i,j] ≤ dist[i,k] + dist[k,j], and symmetry, dist[i,j] = dist[j,i]. The book's algorithm is:</p>
+      <ol>
+        <li>Compute a minimum spanning tree (MST) of the graph.</li>
+        <li>Start at any city and walk around the tree by DFS, recording the nodes visited.</li>
+        <li>Eliminate duplicate visits from the recorded list; the remaining order is a Hamiltonian circuit.</li>
+      </ol>
+      <p>This is a <b>2-approximation</b> (c = 2) for TSP with Euclidean distances. The book also gives the accuracy-ratio bound</p>
+      <div class="math">r(s<sub>a</sub>) ≤ ½ (⌈log<sub>2</sub> n⌉ + 1)</div>
+      <p>where n is the number of cities. In the book's example the MST is A–B (3), B–C (5), B–D (8), D–E (7); DFS records A–B–C–B–D–E–D–B–A; removing duplicates gives A–B–C–D–E–A. This is a valid tour but not necessarily the optimal one.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.5 Introduction to Approximate Algorithms, p. 5-17 – 5-22</p>
     </div>
   </div>
 </section>
@@ -478,32 +611,53 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q6(b) [9] · related: 2023 Nov Q6(a) [6] · 2024 May Q6(b) [9]</p>
 
-      <h4>Embedded algorithm</h4>
-      <p>An <b>embedded algorithm</b> is an algorithm designed to run inside a dedicated embedded system (microcontroller/DSP/SoC) that interacts with the physical world in real time. It must satisfy <b>non-functional constraints</b> along with correctness:</p>
+      <h4>Embedded system and embedded algorithm</h4>
+      <p>The book defines an <b>embedded system</b> as “a computer system with a dedicated function within a larger mechanical or electrical system.” It usually does not look like a computer: there is often no keyboard, monitor or mouse, but it has a processor, memory and software. It is a permanent part of a bigger system. Examples: smart card, washing machine, microwave oven, answering machine, mobile phone, digital camera, vending machine.</p>
+      <p>An <b>embedded algorithm</b> is therefore an algorithm written for such a dedicated system. It must respect the system's constraints: limited memory, low power, real-time deadlines, small code size and predictable timing.</p>
+
+      <h4>Characteristics of embedded systems (book)</h4>
+      <ol>
+        <li><b>Single functional:</b> designed to perform dedicated functions.</li>
+        <li><b>Tightly constrained:</b> tightly coupled hardware and software integration.</li>
+        <li><b>Part of a large system:</b> an integral part of a bigger system.</li>
+        <li><b>Reactive and real-time:</b> responds to events and triggers; generally time-bounded; modern systems have a user-friendly interface.</li>
+        <li><b>Programmable:</b> contains at least one programmable unit (microcontroller).</li>
+      </ol>
+
+      <h4>Embedded system scheduling (book §5.6.1)</h4>
+      <p>The book defines scheduling as the method by which threads and processes access system resources at a specific time. It balances the load and shares resources effectively. In a real-time embedded system the scheduler must ensure that processes meet their deadlines. Priorities are assigned to tasks, and the OS always runs the ready task with the highest priority. Algorithms are classified as <b>fixed priority</b>, <b>dynamic priority</b>, or <b>mixed/hybrid priority</b>.</p>
+
+      <h4>Fixed-priority scheduling</h4>
       <ul>
-        <li><b>Limited memory</b> — small RAM/ROM, no virtual memory; avoid large tables and recursion.</li>
-        <li><b>Low power</b> — battery or thermally constrained devices.</li>
-        <li><b>Real-time deadlines</b> — hard/soft deadlines; worst-case execution time must be predictable.</li>
-        <li><b>Deterministic timing</b> — avoid algorithms with high variance (e.g. quicksort worst case).</li>
-        <li><b>Small code size</b> and no dynamic allocation.</li>
-        <li><b>Reliability</b> — must recover from faults; often fixed-point instead of floating-point arithmetic.</li>
+        <li>All priorities are assigned at design time and remain constant for the lifetime of the task.</li>
+        <li>Initially tasks reside in the <b>sleep queue</b>. When ready, they enter the <b>ready queue</b>; one ready queue is maintained for each distinct priority.</li>
+        <li>The highest-priority ready task is executed first.</li>
+        <li><b>Advantage:</b> simple to execute.</li>
+      </ul>
+
+      <h4>Dynamic-priority scheduling</h4>
+      <ul>
+        <li>All scheduling decisions, including assignment of priorities, are made at run time.</li>
+        <li>Task deadlines are taken into consideration when deciding priorities; mutual exclusion and synchronization are enforced.</li>
+        <li>Tasks start in the sleep queue and move to ready queues; for the highest-priority task the scheduler checks the deadlines of the highest-priority queue and then executes the task.</li>
+        <li><b>Advantage:</b> flexible, and used only when actual resources are claimed.</li>
       </ul>
 
       <h4>Power-optimized scheduling</h4>
-      <p>The dominant power in CMOS is dynamic power:</p>
-      <div class="math">P<sub>dynamic</sub> = α · C · V² · f</div>
-      <p>where V is supply voltage and f is clock frequency. Since f ∝ V, lowering frequency allows a quadratic reduction in voltage and hence a <b>cubic reduction in power</b>. <b>DVFS</b> (Dynamic Voltage and Frequency Scaling) exploits this.</p>
-      <p>A power-optimized scheduler assigns each task the <b>lowest frequency/voltage</b> that still meets its deadline, using the slack left by earlier tasks.</p>
+      <p>A power-optimized scheduler is a <b>deadline-aware dynamic-priority scheduler with voltage/frequency scaling</b>. It uses the book's dynamic-priority idea — priorities decided at run time from deadlines — and adds a power rule: run each task at the lowest voltage and frequency that still finishes it before its deadline.</p>
       <ol>
-        <li>Sort tasks by deadline (EDF — Earliest Deadline First) or by period (Rate Monotonic).</li>
-        <li>Compute the required execution cycles for each task: <code>C<sub>i</sub></code>.</li>
-        <li>Choose frequency <code>f<sub>i</sub></code> such that <code>C<sub>i</sub>/f<sub>i</sub> ≤ deadline<sub>i</sub> − current time</code>.</li>
-        <li>Run at that frequency; any leftover slack is used to lower the frequency further (slack stealing).</li>
-        <li>If the total utilization <code>Σ C<sub>i</sub>/T<sub>i</sub> ≤ 1</code>, EDF guarantees all deadlines are met.</li>
+        <li>Assign each task a priority from its deadline at run time (earlier deadline = higher priority).</li>
+        <li>Compute the required execution cycles C<sub>i</sub> and the time left until the deadline.</li>
+        <li>Choose the lowest frequency f<sub>i</sub> such that C<sub>i</sub>/f<sub>i</sub> ≤ deadline<sub>i</sub> − current time.</li>
+        <li>Run at that frequency; if a task finishes early, use the slack to lower the frequency of later tasks.</li>
+        <li>If the total utilization Σ C<sub>i</sub>/T<sub>i</sub> ≤ 1, earliest-deadline-first (EDF) meets all deadlines.</li>
       </ol>
-      <div class="math">Energy saved ≈ Σ (P<sub>max</sub> − P<sub>i</sub>) · t<sub>i</sub>, &nbsp; with P<sub>i</sub> ∝ f<sub>i</sub><sup>3</sup></div>
-      <p><b>Example:</b> a task needs 300 ms of work with a 500 ms deadline; running at 60% frequency still meets the deadline and cuts dynamic energy to about 0.6³ ≈ 22% of the maximum.</p>
-      <div class="note"><b>Trade-off:</b> lower frequency increases execution time, so the scheduler must keep enough slack. Too aggressive scaling causes deadline misses; too conservative scaling wastes energy.</div>
+      <p>The power saving comes from the CMOS dynamic-power relation</p>
+      <div class="math">P<sub>dynamic</sub> = α · C · V² · f</div>
+      <p>where V is supply voltage and f is clock frequency. Since a lower frequency allows a lower voltage, power falls roughly as the cube of the frequency. <b>Example:</b> a task needs 300 ms of work and has a 500 ms deadline; running at 60% frequency still meets the deadline, and dynamic energy falls to about 0.6³ ≈ 22% of the maximum.</p>
+      <div class="note"><b>Trade-off:</b> lowering frequency increases execution time. Too aggressive scaling misses deadlines; too conservative scaling wastes energy. The scheduler must keep enough slack.</div>
+      <p class="small">The book's §5.6.1 gives the fixed/dynamic priority scheduling framework; the voltage/frequency layer above is the standard power-optimized extension of the same deadline-driven rule.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.6.1 Embedded System Scheduling, p. 5-23 – 5-25</p>
     </div>
   </div>
 </section>
@@ -520,40 +674,57 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q6(a) [6] · 2024 May Q6(b) [9 — medical device scenario]</p>
 
-      <h4>Answer</h4>
-      <p><b>Insertion sort</b> is the best choice for the small data buffers typical of embedded systems. For larger buffers with hard real-time deadlines, <b>heap sort</b> is the safer choice.</p>
+      <h4>What the book requires from an embedded sorting algorithm</h4>
+      <ol>
+        <li>The sorting algorithm must be <b>in place</b>.</li>
+        <li>The algorithm must <b>not be recursive</b>.</li>
+        <li>The <b>code size</b> must be as per the need of the problem.</li>
+        <li>The running time should increase <b>linearly or logarithmically</b> with the number of elements sorted.</li>
+      </ol>
+      <p>The book defines an <b>in-place</b> algorithm as one that requires very little additional space besides the initial array; the input is overwritten by the output and no more additional space is required. It lists bubble sort, insertion sort and heap sort as methods that can be used in embedded systems, and discusses insertion sort in detail.</p>
 
-      <h4>Why insertion sort for small buffers</h4>
-      <ul>
-        <li><b>In-place</b> — needs only O(1) extra memory, no recursion stack.</li>
-        <li><b>Adaptive</b> — O(n) on nearly sorted data, which is common for sensor streams.</li>
-        <li><b>Low overhead</b> — simple loops, small code size, no function calls.</li>
-        <li><b>Stable</b> — preserves the order of equal readings (useful for timestamps).</li>
-        <li>For n ≤ ~32 it beats O(n log n) algorithms because of cache behaviour and constant factors.</li>
-      </ul>
+      <h4>Insertion sort (book §5.6.2)</h4>
+      <p>Insertion sort maintains a <b>sorted zone</b>. Each new unsorted element is compared with the elements in the sorted zone and inserted at its proper position. The process continues until the whole list is sorted.</p>
+      <p><b>Book example:</b> 30 70 20 50 40 10 60 → the sorted zone grows as 30 | 30 70 | 20 30 70 | 20 30 50 70 | 20 30 40 50 70 | 10 20 30 40 50 70 | 10 20 30 40 50 60 70.</p>
+      <pre><code>Algorithm Insert_sort(A[0..n-1])
+for i = 1 to n-1 do
+{
+    temp = A[i]
+    j = i - 1
+    while (j &gt;= 0) AND (A[j] &gt; temp) do
+    {
+        A[j+1] = A[j]
+        j = j - 1
+    }
+    A[j+1] = temp
+}</code></pre>
+      <p>The book notes that although insertion sort is naturally recursive (top-down), the <b>bottom-up iterative</b> version above is very efficient to implement.</p>
 
-      <h4>Why heap sort for larger / real-time data</h4>
-      <ul>
-        <li>Guaranteed <b>O(n log n)</b> in the worst case — predictable timing, unlike quicksort's O(n²).</li>
-        <li><b>In-place</b>, O(1) extra memory — unlike merge sort's O(n) buffer.</li>
-        <li>No recursion if implemented iteratively → no stack overflow.</li>
-      </ul>
-
-      <h4>Why not the others</h4>
+      <h4>Analysis (book)</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Algorithm</th><th>Problem in embedded systems</th></tr></thead>
+        <thead><tr><th>Case</th><th>Input</th><th>Comparisons</th><th>Complexity</th></tr></thead>
         <tbody>
-          <tr><td>Quick sort</td><td>Worst case O(n²) and recursion stack → unpredictable latency</td></tr>
-          <tr><td>Merge sort</td><td>O(n) extra memory — too costly on small RAM</td></tr>
-          <tr><td>Bubble / selection</td><td>O(n²) always — too slow for real-time streams</td></tr>
-          <tr><td>Counting / radix</td><td>Needs extra arrays proportional to range; only for integer keys</td></tr>
+          <tr><td>Best</td><td>Almost sorted array</td><td>C<sub>best</sub>(n) = Σ<sub>i=1</sub><sup>n−1</sup> 1 = n − 1</td><td>Θ(n)</td></tr>
+          <tr><td>Average</td><td>Randomly distributed elements</td><td>C<sub>avg</sub>(n) = ((n−1)n/2) × ½ = (n²−n)/4 ≈ n²/4</td><td>Θ(n²)</td></tr>
+          <tr><td>Worst</td><td>Descending list sorted ascending</td><td>C<sub>worst</sub>(n) = Σ<sub>i=1</sub><sup>n−1</sup> Σ<sub>j=0</sub><sup>i−1</sup> 1 = Σ i = (n−1)n/2</td><td>Θ(n²)</td></tr>
         </tbody>
       </table>
       </div>
+      <p>The basic operation is the key comparison <code>A[j] &gt; temp</code>; the book analyses it over the range 1 to n − 1.</p>
 
-      <h4>Medical device scenario (2024 May)</h4>
-      <p>The device samples timestamps, temperature, heart rate and blood pressure continuously and must display results in real time. The buffer is small and often nearly sorted, so <b>insertion sort</b> is ideal: it is in-place, stable, O(n) on nearly sorted data, and has bounded low overhead. If the buffer grows large, switch to <b>heap sort</b> to keep a hard O(n log n) worst-case guarantee.</p>
+      <h4>Which is best for embedded systems?</h4>
+      <p><b>Insertion sort</b> is the natural choice for the small buffers typical of embedded systems, and it is the algorithm the book develops for this purpose. Reasons:</p>
+      <ul>
+        <li><b>In place</b> — only O(1) extra memory, no auxiliary array.</li>
+        <li><b>Non-recursive</b> when written as the bottom-up loop above — no recursion stack.</li>
+        <li><b>Small code size</b> — simple loops, suitable for limited ROM.</li>
+        <li><b>Adaptive</b> — Θ(n) on nearly sorted data, which is common for sensor streams.</li>
+        <li><b>Stable</b> — equal readings keep their original order (useful for timestamps).</li>
+      </ul>
+      <p>For large buffers with a hard real-time deadline, <b>heap sort</b> is safer: the book lists it as an embedded sorting method, and it gives O(n log n) worst-case time with O(1) extra memory and no recursion. Merge sort is unsuitable because it needs O(n) extra memory; ordinary recursive quicksort is unsuitable because of its O(n²) worst case and recursion stack.</p>
+      <p><b>Medical-device scenario (2024 May):</b> the device samples timestamps, temperature, heart rate and blood pressure continuously, and the buffer is small and often nearly sorted. Insertion sort is ideal: in-place, stable, Θ(n) on nearly sorted data and very small code. If the buffer becomes large, switch to heap sort to keep an O(n log n) worst-case guarantee.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.6.2 Sorting Algorithm for Embedded Systems, p. 5-25 – 5-28</p>
     </div>
   </div>
 </section>
@@ -596,7 +767,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     </div>
   </div>
 
-  <div class="book"><b>Source note:</b> the supplied DAA book covers Units 1–2 only. Unit 5 answers follow the syllabus-listed references (Cormen et al.; Motwani &amp; Raghavan, <em>Randomized Algorithms</em>; Horowitz &amp; Sahani) and match the PYQ wording.</div>
+  <div class="book"><b>Book:</b> Technical Publications — <i>Design and Analysis of Algorithms</i>, Unit V “Amortized Analysis”, p. 5-1 – 5-28 (supplied Units 3–6 edition).</div>
 
   <div class="tip"><b>Exam-day order:</b> stack amortized (3 methods) → binary counter → randomized algorithms → approximation → embedded. All are theory; write headings and bullet points, and always include the formula for each method.</div>
 </section>

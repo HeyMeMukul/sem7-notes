@@ -43,6 +43,13 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:30px 0 50px}
   .card,.qa,.hero{box-shadow:none!important}
 }
 </style>
+<style id="print-callouts">
+@media print{
+  .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .book b,.note b,.warn b,.tip b{color:#000!important}
+  .booksrc{color:#333!important}
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -92,7 +99,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:30px 0 50px}
 </div>
 
 <div class="note">
-  <b>Source note:</b> the supplied DAA “Technical” book covers Units 1–2 only. Units 3–6 notes therefore follow the syllabus-listed texts — Cormen et al. (<i>Introduction to Algorithms</i>), Horowitz &amp; Sahani (<i>Fundamentals of Computer Algorithms</i>), Motwani &amp; Raghavan (<i>Randomized Algorithms</i>) — while matching the exact PYQ wording and mark weights.
+  <b>Source note:</b> all four units are re-sourced from the supplied <i>Technical Publications — Design and Analysis of Algorithms</i> (Units 3–6). Every answer cites its exact section and book page, and every PYQ is still reproduced with its original marks and repetition count.
   <br><br>
   <b>Paper availability:</b> the site's 2023 May DAA link returns 404, so repeat counts are based on the 5 hosted end-sem papers (2022 Nov, 2023 Nov, 2024 May, 2025 May, 2025 Nov). All of them are saved in <code>DAA/PYQ/</code>.
 </div>

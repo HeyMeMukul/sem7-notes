@@ -61,6 +61,8 @@ table.left td,table.left th{text-align:left}
 .tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
 .book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
 .note b,.warn b,.tip b,.book b{color:#fff}
+.booksrc{margin:18px 0 0;padding-top:10px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+.booksrc b{color:var(--txt)}
 ul,ol{margin:8px 0 8px 22px;padding:0} li{margin:5px 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}}
@@ -81,6 +83,13 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .qa-head{background:#f2f2f2!important}
   a{color:#0b57d0!important}
   .card,.qa,.hero{box-shadow:none!important}
+}
+</style>
+<style id="print-callouts">
+@media print{
+  .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .book b,.note b,.warn b,.tip b{color:#000!important}
+  .booksrc{color:#333!important}
 }
 </style>
 </head>
@@ -120,6 +129,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </header>
 
+<div class="book"><b>Source:</b> all answers in this unit are re-sourced from the supplied <i>Technical Publications — Design and Analysis of Algorithms</i> (Units 3–6), matched to the exact PYQ wording.</div>
+
 <section class="card" id="map">
   <h2>📊 PYQ frequency map</h2>
   <div class="tbl-wrap">
@@ -152,50 +163,62 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [8] · 2023 Nov Q3(b) [8]</p>
+<h4>1. Principle (book §4.1)</h4>
+<p>Backtracking is a <b>systematic trial-and-error</b> method. The desired solution is an <b>n-tuple</b> <code>(x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>)</code>, where each <code>x<sub>i</sub></code> is chosen from a finite set <code>S<sub>i</sub></code>. The solution must maximise, minimise or satisfy a criterion function <code>C(x<sub>1</sub>, …, x<sub>n</sub>)</code>.</p>
+<ul>
+<li>The problem may be a <b>decision</b> problem (is there a feasible solution?), an <b>optimisation</b> problem (what is the best solution?) or an <b>enumeration</b> problem (list all feasible solutions).</li>
+<li>The vector is built <b>one component at a time</b>. At every step the algorithm tests whether the partial vector has any chance of success. If it cannot lead to a solution, that partial vector is abandoned by the <b>bounding function</b>.</li>
+<li>Backtracking is a <b>depth-first search with bounding</b>. It is better than brute force because whole subtrees are never generated.</li>
+<li><b>Explicit constraints</b> restrict each <code>x<sub>i</sub></code> to its allowed set <code>S<sub>i</sub></code> (for 8-queens, <code>x<sub>i</sub> ∈ {1,…,8}</code>). <b>Implicit constraints</b> decide which tuples satisfy the criterion (no two queens in the same row, column or diagonal; no repeated element in sum of subsets; the chosen weights must add to <code>M</code>).</li>
+</ul>
+<p><b>Applications (book §4.3):</b> 8-queens, sum of subsets, graph colouring, Hamiltonian cycle and knapsack.</p>
 
-      <h4>Principle</h4>
-      <p>Backtracking is a <b>systematic trial-and-error</b> method. It builds a solution vector <code>x[1..n]</code> one component at a time. At each level it tries all legal values of that component; if a partial vector cannot be extended to a complete solution (detected by a <b>bounding function</b>), it <b>abandons that branch and backs up</b> to the previous level to try the next value.</p>
-      <ul>
-        <li>The search space is a <b>state-space tree</b>: root = empty solution, level k = choice for x[k].</li>
-        <li><b>Bounding / pruning function</b> B(k) rejects a partial solution early — this is what makes backtracking better than brute force.</li>
-        <li>It is a <b>depth-first</b> search with pruning.</li>
-      </ul>
+<h4>2. State-space tree terms (book §4.1.1)</h4>
+<ul>
+<li><b>Problem state</b> — every node of the tree.</li>
+<li><b>Solution state / solution space</b> — a path from the root that defines a tuple in the solution space.</li>
+<li><b>Answer state</b> — a leaf that satisfies the implicit constraints.</li>
+<li><b>Live node</b> — generated but its children are not yet fully generated. <b>E-node</b> — the live node whose children are being expanded. <b>Dead node</b> — a node not to be expanded further.</li>
+<li><b>Bounding function</b> <code>B<sub>k</sub></code> — kills live nodes without generating all their children, but care is taken that at least one answer node is produced.</li>
+</ul>
 
-      <h4>Control abstraction</h4>
+<h4>3. Control abstraction (book §4.2, recursive)</h4>
 <pre><code>Algorithm Backtrack(k)
-// x[1..k−1] is a partial solution; tries to extend it
+// a[1..k] is a solution vector. On entering, k-1 values are fixed.
+// T(a1,...,a_{k-1}) = set of all values for a_k such that
+// (a1,...,a_k) is a path to a problem state.
+// B_k is the bounding function.
 {
-    if (x[1..k−1] is a complete solution) then
-        output x[1..k−1];
-
-    else
+    for (each a_k that belongs to T(a1, a2, ..., a_{k-1})) do
     {
-        for each value v in S(k) do        // S(k) = allowed values at level k
+        if (B_k(a1, a2, ..., a_k) = true) then      // feasible sequence
         {
-            if ( B(k, v) is true ) then     // bounding function
-            {
-                x[k] = v;
-                Backtrack(k + 1);
-            }
+            if ((a1, a2, ..., a_k) is a path to an answer node) then
+                print(a[1], a[2], ..., a[k]);
+            if (k &lt; n) then
+                Backtrack(k + 1);                   // find the next set
         }
     }
 }</code></pre>
-      <p>For n-queens, <code>S(k) = {1..n}</code> (column of queen k) and <code>B(k)</code> checks no two queens share a column or diagonal. For sum of subsets, <code>S(k) = {0,1}</code> and B checks <code>s + w[k] ≤ target ≤ s + remaining</code>.</p>
+<p><b>How to read it:</b> <code>T</code> gives the legal values for the next component, and <code>B<sub>k</sub></code> rejects a partial vector early. If the partial vector is already an answer, it is printed; if not, the algorithm goes one level deeper. When no value remains, the recursion returns — this return is the <b>backtrack</b>.</p>
+<p>The book also gives the iterative form <code>Non_Rec_Backtrack()</code>: it keeps <code>k</code>, tries the next untried value of <code>a[k]</code>, prints the solution if it is an answer node, increments <code>k</code> on success, and executes <code>k := k − 1</code> to backtrack when no value is left.</p>
 
-      <h4>Time analysis</h4>
-      <div class="math">Worst case: T(n) = O(m<sup>n</sup>) &nbsp;— n levels, m choices per level<br>
-      With effective bounding: T(n) = O(number of nodes actually generated)</div>
-      <ul>
-        <li><b>n-queens:</b> worst O(n!), with pruning about O(n!).</li>
-        <li><b>Sum of subsets:</b> O(2<sup>n</sup>) worst (each element in/out); tree has 2<sup>n</sup> leaves.</li>
-        <li><b>Graph colouring:</b> O(m<sup>n</sup>) worst.</li>
-        <li><b>Space:</b> O(n) for the recursion stack + solution vector.</li>
-      </ul>
+<h4>4. Time analysis (book §4.2)</h4>
+<p>The efficiency depends on four factors:</p>
+<ol>
+<li>time to generate <code>a[k]</code>;</li>
+<li>number of <code>a[k]</code> values that satisfy the explicit constraints;</li>
+<li>time taken by the bounding function <code>B<sub>k</sub></code> to generate a feasible sequence;</li>
+<li>number of <code>a[k]</code> values that satisfy <code>B<sub>k</sub></code> for all <code>k</code>.</li>
+</ol>
+<p>The first three factors are independent of the instance and take polynomial time. The fourth varies with the instance. If <code>n!</code> nodes satisfy the bounding function, then</p>
+<div class="math">T(n) = O(P(n) · n!)</div>
+<p>where <code>P(n)</code> is the polynomial time of the first three factors. For particular problems: n-queens <b>O(n!)</b>, sum of subsets <b>O(2<sup>n</sup>)</b>, graph colouring <b>O(n·m<sup>n</sup>)</b>. Space is <b>O(n)</b> for the solution vector and recursion stack.</p>
 
-      <h4>Example — 4-queens (one line)</h4>
-      <p>Place Q1 in column 1, Q2 in column 3, Q3 in column 5 → conflict? If a partial placement attacks, backtrack to the previous queen and shift it. The first valid 4-queens arrangement is (2,4,1,3).</p>
-
-      <div class="note"><b>Difference from brute force:</b> brute force generates all m<sup>n</sup> vectors and tests them at the end. Backtracking tests <b>as it builds</b>, so entire subtrees are never generated.</div>
+<h4>5. Suitable example — 4-queens</h4>
+<p>Place queens row by row. The book's 4-queen state-space tree (Fig. 4.4.1) first tries a placement that reaches a dead end, backtracks, and finally gives the answer tuple <b>(2, 4, 1, 3)</b>: queen 1 in column 2, queen 2 in column 4, queen 3 in column 1, queen 4 in column 3. No two queens share a row, column or diagonal. The book's 8-queens solution is the tuple <b>(4, 6, 8, 2, 7, 1, 3, 5)</b>.</p>
+<div class="note"><b>Key idea:</b> brute force generates all <code>m<sup>n</sup></code> vectors and tests them at the end; backtracking tests at every level, so a bad partial vector is killed immediately.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.1 Principle, §4.2 Control Abstraction and Time Analysis, §4.3 Applications &amp; §4.4 The 8-Queen Problem, p. 4-2 – 4-21</p>
     </div>
   </div>
 </section>
@@ -211,36 +234,43 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q4(a) [8] · algorithm also asked in 2024 May, 2023 Nov</p>
+<h4>Problem statement (book §4.6)</h4>
+<p>Let <code>S = {s<sub>1</sub>, s<sub>2</sub>, …, s<sub>n</sub>}</code> be a set of <b>n positive integers</b> and <code>d</code> a given positive integer. Find a subset of <code>S</code> whose sum is exactly <code>d</code>. It is convenient to sort the elements in <b>ascending</b> order: <code>s<sub>1</sub> ≤ s<sub>2</sub> ≤ … ≤ s<sub>n</sub></code>.</p>
+<p>Represent the choice by <code>x<sub>i</sub> ∈ {0,1}</code>: <code>x<sub>i</sub> = 1</code> means <code>s<sub>i</sub></code> is selected, <code>0</code> means it is not. The constraint is</p>
+<div class="math">Σ<sub>i=1..n</sub> s<sub>i</sub>x<sub>i</sub> = d, &nbsp; x<sub>i</sub> ∈ {0,1}</div>
 
-      <h4>Problem statement</h4>
-      <p>Given a set <code>W = {w<sub>1</sub>, w<sub>2</sub>, …, w<sub>n</sub>}</code> of positive weights and a target sum <code>M</code>, find <b>all subsets</b> of W whose elements add up to exactly M.</p>
-      <div class="math">Find x<sub>i</sub> ∈ {0, 1} such that &nbsp; Σ<sub>i=1..n</sub> w<sub>i</sub> x<sub>i</sub> = M</div>
-      <p>Each x<sub>i</sub> = 1 means w<sub>i</sub> is included. The state-space tree is binary: <b>include</b> (left) or <b>exclude</b> (right).</p>
-
-      <h4>Algorithm</h4>
-<pre><code>// w[1..n] sorted ascending, x[] is the solution vector
-// s = current sum, k = current index, r = sum of remaining weights
-Algorithm SumOfSubsets(s, k, r)
+<h4>Backtracking algorithm (book's 6 steps)</h4>
+<ol>
+<li><b>Start</b> with an empty subset; sum = 0.</li>
+<li><b>Add</b> the next element from the sorted list to the subset.</li>
+<li>If the subset sum is <code>d</code>, <b>stop</b> — this subset is a solution.</li>
+<li>If the subset is <b>not feasible</b> (sum exceeds <code>d</code>) or the end of the list is reached, <b>backtrack</b> through the subset until a suitable value is found.</li>
+<li>If the subset is feasible, repeat step 2.</li>
+<li>If all elements are visited and no suitable subset is found, and backtracking is no longer possible, <b>stop without a solution</b>.</li>
+</ol>
+<p>The same procedure is written recursively below. Here <code>s</code> is the current sum, <code>k</code> is the next index, and <code>r</code> is the sum of the weights from <code>k</code> to <code>n</code>.</p>
+<pre><code>Algorithm SumOfSubsets(s, k, r)
 {
-    x[k] = 1;                                  // try including w[k]
-    if (s + w[k] == M) then
-        output x[1..k];                        // solution found
-    else if (s + w[k] + w[k+1] &lt;= M) then
-        SumOfSubsets(s + w[k], k+1, r − w[k]);
+    if (s = d) then
+    {
+        print the chosen subset;
+        return;
+    }
+    if (k &gt; n) then return;
 
-    x[k] = 0;                                  // try excluding w[k]
-    if ((s + r − w[k] &gt;= M) and (s + w[k+1] &lt;= M)) then
-        SumOfSubsets(s, k+1, r − w[k]);
+    if (s + w[k] ≤ d) then          // include w[k]
+        SumOfSubsets(s + w[k], k + 1, r − w[k]);
+
+    if (s + r − w[k] ≥ d) then      // exclude w[k]
+        SumOfSubsets(s, k + 1, r − w[k]);
 }</code></pre>
-      <p><b>Bounding conditions used</b></p>
-      <ul>
-        <li>If <code>s + w[k] &gt; M</code>, including w[k] is useless → prune left branch.</li>
-        <li>If <code>s + r − w[k] &lt; M</code>, even taking all remaining weights cannot reach M → prune right branch.</li>
-        <li>If <code>s + w[k] + w[k+1] &gt; M</code>, no further inclusion can complete a solution.</li>
-      </ul>
+<p>The book's Example 4.6.2 starts with <code>SumOfSubsets(0, 1, 55)</code> for <code>W = {7, 11, 13, 24}</code> and <code>m = 31</code>. Its recursion tree (Fig. 4.6.2) produces the two solutions <code>{7, 11, 13}</code> and <code>{7, 24}</code>.</p>
+<p>The search space is a <b>binary state-space tree</b>: at level <code>i</code>, the left edge means “include <code>s<sub>i</sub></code>” and the right edge means “exclude <code>s<sub>i</sub></code>”. The bounding function kills a node when its sum exceeds <code>d</code>, or when the remaining elements cannot possibly take the sum up to <code>d</code>.</p>
 
-      <h4>Time complexity</h4>
-      <p>Worst case the tree is a full binary tree of depth n → <b>O(2<sup>n</sup>)</b> nodes. Sorting takes O(n log n). Space is <b>O(n)</b> for the recursion stack. With pruning, far fewer nodes are generated in practice.</p>
+<h4>Time complexity</h4>
+<p>In the worst case the tree is a full binary tree of depth <code>n</code>, so it has <code>2<sup>n</sup></code> leaves and the algorithm takes <b>O(2<sup>n</sup>)</b> time. Sorting costs <b>O(n log n)</b>. The recursion stack and solution vector need <b>O(n)</b> space.</p>
+<div class="tip"><b>Why sort ascending?</b> The book shows that a non-decreasing order finds solutions early and prunes more branches. A decreasing or unsorted list may examine every element for every subset and makes the computing time worst.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.6 Sum of Subsets Problem, p. 4-28 – 4-34</p>
     </div>
   </div>
 
@@ -251,41 +281,85 @@ Algorithm SumOfSubsets(s, k, r)
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 Nov Q3(a) [10] · same instance also in 2024 May Q4(b) [9]</p>
+<h4>Book's solved example first (Example 4.6.1)</h4>
+<p>For <code>S = {5, 10, 12, 13, 15, 18}</code> and <code>d = 30</code>, the book's trace is:</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Subset</th><th>Sum</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>{5}</td><td>5</td><td>add next element</td></tr>
+<tr><td>{5, 10}</td><td>15</td><td>15 &lt; 30, add next</td></tr>
+<tr><td>{5, 10, 12}</td><td>27</td><td>27 &lt; 30, add next</td></tr>
+<tr><td>{5, 10, 12, 13}</td><td>40</td><td>exceeds 30 → backtrack</td></tr>
+<tr><td>{5, 10, 12, 15}</td><td>42</td><td>exceeds 30 → backtrack</td></tr>
+<tr><td>{5, 10, 12, 18}</td><td>45</td><td>not feasible → backtrack</td></tr>
+<tr><td>{5, 10, 13}</td><td>28</td><td>28 &lt; 30, add next</td></tr>
+<tr><td>{5, 10, 13, 15}</td><td>33</td><td>exceeds 30 → backtrack</td></tr>
+<tr><td>{5, 10, 15}</td><td><b>30</b></td><td><b>solution = {5, 10, 15}</b></td></tr>
+</tbody>
+</table>
+</div>
+<p>The book's Fig. 4.6.1 draws this as a tree: every node is labelled by its current sum, left edges are “with s<sub>i</sub>”, right edges are “without s<sub>i</sub>”. Nodes that cannot reach 30 (for example the nodes with sums 27 and 28) are marked “Not a solution — prune it”, and the node with sum 30 is marked “Solution”.</p>
 
-      <h4>Setup</h4>
-      <p>n = 5, M = 30, total r = 5+10+15+20+25 = 75. Sorted ascending already. We search left-to-right, <b>include first</b>, and stop at the <b>first</b> solution.</p>
+<h4>PYQ instance — A = {5, 10, 15, 20, 25}, sum = 30</h4>
+<p>Here <code>n = 5</code>, <code>d = 30</code>, and the set is already sorted. We use the same include-first depth-first search.</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Step</th><th>Subset built</th><th>Sum</th><th>Decision</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>{5}</td><td>5</td><td>5 &lt; 30, go deeper</td></tr>
+<tr><td>2</td><td>{5, 10}</td><td>15</td><td>15 &lt; 30, go deeper</td></tr>
+<tr><td>3</td><td>{5, 10, 15}</td><td><b>30</b></td><td><b>first solution</b></td></tr>
+<tr><td>4</td><td>{5, 10, 20}</td><td>35</td><td>exceeds 30 → prune</td></tr>
+<tr><td>5</td><td>{5, 10, 25}</td><td>40</td><td>exceeds 30 → prune</td></tr>
+<tr><td>6</td><td>{5, 15}</td><td>20</td><td>continue</td></tr>
+<tr><td>7</td><td>{5, 15, 20}</td><td>40</td><td>prune</td></tr>
+<tr><td>8</td><td>{5, 15, 25}</td><td>45</td><td>prune</td></tr>
+<tr><td>9</td><td>{5, 20}</td><td>25</td><td>continue</td></tr>
+<tr><td>10</td><td>{5, 20, 25}</td><td>50</td><td>prune</td></tr>
+<tr><td>11</td><td>{5, 25}</td><td><b>30</b></td><td><b>solution</b></td></tr>
+<tr><td>12</td><td>{10}</td><td>10</td><td>continue</td></tr>
+<tr><td>13</td><td>{10, 15}</td><td>25</td><td>continue</td></tr>
+<tr><td>14</td><td>{10, 15, 20}</td><td>45</td><td>prune</td></tr>
+<tr><td>15</td><td>{10, 15, 25}</td><td>50</td><td>prune</td></tr>
+<tr><td>16</td><td>{10, 20}</td><td><b>30</b></td><td><b>solution</b></td></tr>
+<tr><td>17</td><td>{10, 25}</td><td>35</td><td>prune</td></tr>
+<tr><td>18</td><td>{15, 20}</td><td>35</td><td>prune</td></tr>
+<tr><td>19</td><td>{15, 25}</td><td>40</td><td>prune</td></tr>
+<tr><td>20</td><td>{20, 25}</td><td>45</td><td>prune</td></tr>
+</tbody>
+</table>
+</div>
 
-      <h4>Step-by-step trace</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Level k</th><th>Element w<sub>k</sub></th><th>Decision</th><th>Current sum s</th><th>Remaining r</th><th>Check</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>5</td><td>include</td><td>5</td><td>70</td><td>5 &lt; 30, continue</td></tr>
-          <tr><td>2</td><td>10</td><td>include</td><td>15</td><td>60</td><td>15 &lt; 30, continue</td></tr>
-          <tr><td>3</td><td>15</td><td>include</td><td><b>30</b></td><td>45</td><td><b>s = M → solution</b></td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>State-space tree (first branch)</h4>
-      <div class="tree">                        root (0,75)
-                       /            \
-                +5  /                \  −5
-               (5,70)               (0,70)
-              /       \                ...
-        +10  /         \ −10
-          (15,60)      (5,60)
-         /      \
-   +15  /        \ −15
-     (30,45)     (15,45)
-       ✅
-  subset = {5, 10, 15}</div>
-      <p>At node (30,45) the current sum equals M, so the branch is a solution and search stops (first solution). Other solutions that exist in the full tree are <b>{5,25}</b> and <b>{10,20}</b> — they are reached only if we continue searching.</p>
-
-      <div class="math"><b>First solution: {5, 10, 15} → 5 + 10 + 15 = 30</b><br>
-      All solutions: {5,10,15}, {5,25}, {10,20}</div>
-
-      <div class="tip"><b>Drawing marks:</b> label each node as (current sum, remaining sum) and mark ✅ at the solution node. Show at least one pruned branch (e.g. 5+10+15+20 &gt; 30) to prove you used bounding.</div>
+<h4>State-space tree</h4>
+<div class="tree">root (0)
+├── with 5 → 5
+│   ├── with 10 → 15
+│   │   ├── with 15 → 30 ✅ {5,10,15}
+│   │   ├── with 20 → 35 ✂
+│   │   └── with 25 → 40 ✂
+│   ├── with 15 → 20
+│   │   ├── with 20 → 40 ✂
+│   │   └── with 25 → 45 ✂
+│   ├── with 20 → 25
+│   │   └── with 25 → 50 ✂
+│   └── with 25 → 30 ✅ {5,25}
+└── without 5 → 0
+    ├── with 10 → 10
+    │   ├── with 15 → 25
+    │   │   ├── with 20 → 45 ✂
+    │   │   └── with 25 → 50 ✂
+    │   ├── with 20 → 30 ✅ {10,20}
+    │   └── with 25 → 35 ✂
+    ├── with 15 → 15
+    │   ├── with 20 → 35 ✂
+    │   └── with 25 → 40 ✂
+    ├── with 20 → 20
+    │   └── with 25 → 45 ✂
+    └── with 25 → 25 (end, no solution)</div>
+<div class="math"><b>All solutions: {5, 10, 15}, {5, 25}, {10, 20}</b><br>Each sum = 30 = d.</div>
+<div class="tip"><b>Drawing marks:</b> label each node with the running sum, write “with/without” on the edges, cross out every node whose sum exceeds 30, and mark the three solution leaves. Tick the first solution if the question says “find a subset”; list all three if it says “all subsets”.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.6, Example 4.6.1 and Fig. 4.6.1, p. 4-29 – 4-31</p>
     </div>
   </div>
 
@@ -296,30 +370,94 @@ Algorithm SumOfSubsets(s, k, r)
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [8]</p>
-      <p>Sorted set: 2, 3, 5, 6, 8, 10. M = 10, total r = 34.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Path</th><th>Sum</th><th>Result</th></tr></thead>
-        <tbody>
-          <tr><td>2 + 3</td><td>5</td><td>continue</td></tr>
-          <tr><td>2 + 3 + 5</td><td><b>10</b></td><td>✅ <b>first solution {2,3,5}</b></td></tr>
-          <tr><td>2 + 3 + 6</td><td>11</td><td>❌ prune (&gt;10)</td></tr>
-          <tr><td>2 + 8</td><td><b>10</b></td><td>✅ solution {2,8}</td></tr>
-          <tr><td>10</td><td><b>10</b></td><td>✅ solution {10}</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="tree">root(0,34)
-├── +2 (2,32)
-│   ├── +3 (5,29)
-│   │   ├── +5 (10,24) ✅ {2,3,5}
-│   │   ├── +6 (11,·) ❌ prune
-│   │   └── +8 (13,·) ❌ prune
-│   ├── +5 (7,27) → +6 (13) ❌, +8 (15) ❌ …
-│   └── +8 (10,24) ✅ {2,8}
-└── +3 (3,31) … 
-    └── +10 (10,·) ✅ {10}</div>
-      <div class="math"><b>Solutions: {2, 3, 5}, {2, 8}, {10}</b></div>
+<h4>Book's solved example first (Example 4.6.5)</h4>
+<p>For <code>S = {3, 4, 5, 6}</code> and <code>d = 13</code>, the book builds the pruned tree of Fig. 4.6.4. The successful path is <b>3 → 4 → 6</b>, because 3 + 4 + 6 = 13. The branches 3 + 4 + 5 = 12, 3 + 5 = 8, 4 + 5 = 9 and 5 + 6 = 11 are marked with a cross because they cannot reach 13 with the remaining elements (or the list ends), so they are pruned.</p>
+
+<h4>PYQ instance — S = {2, 3, 5, 6, 8, 10}, sum = 10</h4>
+<p>The set is already in ascending order. Use include-first backtracking and record every solution.</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Subset</th><th>Sum</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>{2}</td><td>2</td><td>continue</td></tr>
+<tr><td>{2, 3}</td><td>5</td><td>continue</td></tr>
+<tr><td>{2, 3, 5}</td><td><b>10</b></td><td>✅ <b>solution {2, 3, 5}</b></td></tr>
+<tr><td>{2, 3, 6}</td><td>11</td><td>✂ exceeds 10</td></tr>
+<tr><td>{2, 3, 8}</td><td>13</td><td>✂ exceeds 10</td></tr>
+<tr><td>{2, 3, 10}</td><td>15</td><td>✂ exceeds 10</td></tr>
+<tr><td>{2, 5}</td><td>7</td><td>continue</td></tr>
+<tr><td>{2, 5, 6}</td><td>13</td><td>✂ exceeds 10</td></tr>
+<tr><td>{2, 5, 8}</td><td>15</td><td>✂ exceeds 10</td></tr>
+<tr><td>{2, 5, 10}</td><td>17</td><td>✂ exceeds 10</td></tr>
+<tr><td>{2, 6}</td><td>8</td><td>continue</td></tr>
+<tr><td>{2, 6, 8}</td><td>16</td><td>✂ exceeds 10</td></tr>
+<tr><td>{2, 6, 10}</td><td>18</td><td>✂ exceeds 10</td></tr>
+<tr><td>{2, 8}</td><td><b>10</b></td><td>✅ <b>solution {2, 8}</b></td></tr>
+<tr><td>{2, 10}</td><td>12</td><td>✂ exceeds 10</td></tr>
+<tr><td>{3}</td><td>3</td><td>continue</td></tr>
+<tr><td>{3, 5}</td><td>8</td><td>continue</td></tr>
+<tr><td>{3, 5, 6}</td><td>14</td><td>✂ exceeds 10</td></tr>
+<tr><td>{3, 5, 8}</td><td>16</td><td>✂ exceeds 10</td></tr>
+<tr><td>{3, 5, 10}</td><td>18</td><td>✂ exceeds 10</td></tr>
+<tr><td>{3, 6}</td><td>9</td><td>continue</td></tr>
+<tr><td>{3, 6, 8}</td><td>17</td><td>✂ exceeds 10</td></tr>
+<tr><td>{3, 6, 10}</td><td>19</td><td>✂ exceeds 10</td></tr>
+<tr><td>{3, 8}</td><td>11</td><td>✂ exceeds 10</td></tr>
+<tr><td>{3, 10}</td><td>13</td><td>✂ exceeds 10</td></tr>
+<tr><td>{5}</td><td>5</td><td>continue</td></tr>
+<tr><td>{5, 6}</td><td>11</td><td>✂ exceeds 10</td></tr>
+<tr><td>{5, 8}</td><td>13</td><td>✂ exceeds 10</td></tr>
+<tr><td>{5, 10}</td><td>15</td><td>✂ exceeds 10</td></tr>
+<tr><td>{6}</td><td>6</td><td>continue</td></tr>
+<tr><td>{6, 8}</td><td>14</td><td>✂ exceeds 10</td></tr>
+<tr><td>{6, 10}</td><td>16</td><td>✂ exceeds 10</td></tr>
+<tr><td>{8}</td><td>8</td><td>continue</td></tr>
+<tr><td>{8, 10}</td><td>18</td><td>✂ exceeds 10</td></tr>
+<tr><td>{10}</td><td><b>10</b></td><td>✅ <b>solution {10}</b></td></tr>
+</tbody>
+</table>
+</div>
+
+<h4>Pruned state-space tree</h4>
+<div class="tree">root (0)
+├── with 2 → 2
+│   ├── with 3 → 5
+│   │   ├── with 5 → 10 ✅ {2,3,5}
+│   │   ├── with 6 → 11 ✂
+│   │   ├── with 8 → 13 ✂
+│   │   └── with 10 → 15 ✂
+│   ├── with 5 → 7
+│   │   ├── with 6 → 13 ✂
+│   │   ├── with 8 → 15 ✂
+│   │   └── with 10 → 17 ✂
+│   ├── with 6 → 8
+│   │   ├── with 8 → 16 ✂
+│   │   └── with 10 → 18 ✂
+│   ├── with 8 → 10 ✅ {2,8}
+│   └── with 10 → 12 ✂
+└── without 2 → 0
+    ├── with 3 → 3
+    │   ├── with 5 → 8
+    │   │   ├── with 6 → 14 ✂
+    │   │   ├── with 8 → 16 ✂
+    │   │   └── with 10 → 18 ✂
+    │   ├── with 6 → 9
+    │   │   ├── with 8 → 17 ✂
+    │   │   └── with 10 → 19 ✂
+    │   ├── with 8 → 11 ✂
+    │   └── with 10 → 13 ✂
+    ├── with 5 → 5
+    │   ├── with 6 → 11 ✂
+    │   ├── with 8 → 13 ✂
+    │   └── with 10 → 15 ✂
+    ├── with 6 → 6
+    │   ├── with 8 → 14 ✂
+    │   └── with 10 → 16 ✂
+    ├── with 8 → 8
+    │   └── with 10 → 18 ✂
+    └── with 10 → 10 ✅ {10}</div>
+<div class="math"><b>Solutions: {2, 3, 5}, {2, 8}, {10}</b></div>
+<p class="booksrc">📘 <b>Book:</b> §4.6, Example 4.6.5 and Fig. 4.6.4, p. 4-33 – 4-34</p>
     </div>
   </div>
 
@@ -330,15 +468,18 @@ Algorithm SumOfSubsets(s, k, r)
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q3(b) [4]</p>
-      <h4>Proof</h4>
-      <ol>
-        <li>Each element has exactly two choices — include (1) or exclude (0). So the state-space tree is a <b>full binary tree</b> of height n.</li>
-        <li>The number of leaves (complete decisions) is <b>2<sup>n</sup></b>.</li>
-        <li>In any full binary tree, the number of internal nodes = number of leaves − 1.</li>
-        <li>Therefore internal nodes = <b>2<sup>n</sup> − 1</b>.</li>
-      </ol>
-      <div class="math">Total nodes = 2<sup>n+1</sup> − 1 &nbsp;&nbsp;|&nbsp;&nbsp; Leaves = 2<sup>n</sup> &nbsp;&nbsp;|&nbsp;&nbsp; Excluding leaves = 2<sup>n</sup> − 1 ∎</div>
-      <p class="small">Example n = 3: leaves = 8, internal nodes = 7, total = 15. ✓</p>
+<h4>Proof</h4>
+<ol>
+<li>Each element of the set has exactly <b>two choices</b> — include it (1) or exclude it (0). Therefore the state-space tree is a <b>full binary tree</b> of height <code>n</code>.</li>
+<li>A complete decision is made only at a leaf, so the number of leaves is <b>2<sup>n</sup></b>.</li>
+<li>In any full binary tree, the number of internal nodes is <b>one less than the number of leaves</b>: <code>internal = leaves − 1</code>.</li>
+<li>Hence the number of nodes excluding the leaves is <b>2<sup>n</sup> − 1</b>.</li>
+</ol>
+<div class="math">Leaves = 2<sup>n</sup> &nbsp;|&nbsp; Internal nodes (excluding leaves) = 2<sup>n</sup> − 1<br>
+Total nodes = 2<sup>n+1</sup> − 1</div>
+<p>The book's Fig. 4.6.4 for <code>S = {3, 4, 5, 6}</code> shows this full binary tree: <code>n = 4</code>, so it has 16 leaves, 15 internal nodes and 31 nodes in total. Only the leaves that sum to <code>d = 13</code> become answer states; the rest are pruned or dead.</p>
+<div class="tip"><b>Marks tip:</b> state the two choices (include/exclude), then use the standard full-binary-tree result. One line of algebra and the n = 4 example are enough for 4 marks.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.6, state-space tree of Fig. 4.6.4, p. 4-30 – 4-34</p>
     </div>
   </div>
 </section>
@@ -354,43 +495,67 @@ Algorithm SumOfSubsets(s, k, r)
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q3(a) [9] · 2025 Nov Q4(b) [8] · 2022 Nov Q4(b) [8 — with numerical]</p>
+<h4>Problem (book §4.5)</h4>
+<p>Given an undirected graph <code>G = (V, E)</code> and <code>m</code> colours, colour every vertex so that <b>no two adjacent vertices have the same colour</b>. This is the <b>m-colouring problem</b>. If the maximum degree of the graph is <code>d</code>, then <code>d + 1</code> colours are always enough. The smallest number of colours needed is the <b>chromatic number</b>.</p>
+<p>The book's Fig. 4.5.1 graph has chromatic number <b>3</b>; one valid colouring is A = 1 (Red), B = 2 (Green), C = 3 (Blue), D = 1, E = 2, F = 3.</p>
 
-      <h4>Problem</h4>
-      <p>Given an undirected graph <code>G = (V, E)</code> and <b>m</b> colours, assign a colour to every vertex so that <b>no two adjacent vertices share a colour</b>. This is the m-colourability problem; the smallest m for which it works is the <b>chromatic number</b>.</p>
+<h4>Backtracking formulation</h4>
+<ul>
+<li>The solution is a tuple <code>x[1..n]</code>, where <code>x[k] ∈ {1, 2, …, m}</code> is the colour of vertex <code>k</code>.</li>
+<li>The state-space tree has one level per vertex and <code>m</code> branches per level.</li>
+<li><b>Bounding function:</b> colour <code>c</code> is rejected for vertex <code>k</code> if any already-coloured neighbour <code>j &lt; k</code> has <code>G[k][j] = 1</code> and <code>x[j] = c</code>.</li>
+<li>When no colour is left, <code>x[k] = 0</code>; the algorithm returns and the previous vertex tries its next colour — this is the backtrack.</li>
+</ul>
 
-      <h4>Algorithm</h4>
-<pre><code>// G[1..n][1..n] adjacency matrix, x[1..n] colour of each vertex
-Algorithm mColoring(k)
+<h4>Recursive algorithm (book §4.5.1)</h4>
+<pre><code>Algorithm Gr_color(k)
+// G[1:n, 1:n] is the adjacency matrix.
+// x[k] is the legal colour assigned to vertex k.
 {
-    do
+    repeat
     {
-        NextValue(k);              // assign the next valid colour to x[k]
-        if (x[k] == 0) return;     // no colour left → backtrack
-        if (k == n) then
-            output x[1..n];        // all vertices coloured
+        Gen_Col_Value(k);              // produce the next possible colour
+        if (x[k] = 0) then
+            return;                    // no new colour is possible
+        if (k = n) then
+            write(x[1..n]);            // all vertices are coloured
         else
-            mColoring(k + 1);
-    } while (true);
+            Gr_color(k + 1);           // choose the next vertex
+    } until (false);
 }
 
-Algorithm NextValue(k)
+Algorithm Gen_Col_Value(k)
+// x[k] = 0 if no legal colour exists.
 {
-    do
+    repeat
     {
-        x[k] = (x[k] + 1) mod (m + 1);
-        if (x[k] == 0) return;     // all m colours tried
-        for j = 1 to k−1 do
+        x[k] ← (x[k] + 1) mod (m + 1); // next colour index
+        if (x[k] = 0) then
+            return;                    // all m colours have been tried
+        for j ← 1 to n do
         {
-            if (G[k][j] == 1 and x[k] == x[j]) then
-                break;             // conflict with an adjacent vertex
+            if (G[k][j] = 1 and x[k] = x[j]) then
+                break;                 // same colour as an adjacent vertex
         }
-    } while (j != k);              // repeat until a non-conflicting colour
+        if (j = n + 1) then
+            return;                    // no conflict: colour is legal
+    } until (false);
 }</code></pre>
 
-      <h4>Time complexity</h4>
-      <p>Worst case m choices at each of n levels → <b>O(m<sup>n</sup>)</b>. The adjacency check at each node costs O(n), so the bound is O(n·m<sup>n</sup>). Space = <b>O(n)</b> for x[] and recursion.</p>
+<h4>Time analysis (book §4.5.2)</h4>
+<p>At level 1 there are <code>m</code> choices, at level 2 up to <code>m<sup>2</sup></code>, and so on. The total number of nodes generated is</p>
+<div class="math">Σ<sub>i=0..n−1</sub> m<sup>i</sup> = 1 + m + m<sup>2</sup> + … + m<sup>n−1</sup></div>
+<p>Each colour check scans <code>n</code> vertices, so the total computing time is <b>O(n · m<sup>n</sup>)</b>. Space is <b>O(n)</b> for <code>x[]</code> and the recursion stack.</p>
 
-      <div class="note"><b>Bounding function:</b> a partial colouring is abandoned as soon as a vertex has no colour that differs from all its already-coloured neighbours. This pruning removes whole subtrees.</div>
+<h4>Book's 4-step strategy</h4>
+<ol>
+<li>Choose a colour <code>c</code> and apply it to some vertex <code>v</code>.</li>
+<li>Choose different colours from the available list for each successive vertex; after applying a colour, check whether it is the same as an adjacent colour.</li>
+<li>If the colour is not the same, go to the next adjacent vertex; otherwise try another colour from the list or change an already-assigned colour.</li>
+<li>Repeat for all vertices.</li>
+</ol>
+<div class="note"><b>Bounding in action:</b> in the book's Fig. 4.5.1 example, the search reaches a vertex where colours 1, 2 and 3 all conflict with neighbours. That node is a dead end, so the algorithm backtracks and changes an earlier vertex. The final colouring uses only 3 colours, which proves the chromatic number is 3.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.5 Graph Coloring Problem, p. 4-22 – 4-26</p>
     </div>
   </div>
 
@@ -401,36 +566,35 @@ Algorithm NextValue(k)
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q4(b) [8]</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th></th><th>C1</th><th>C2</th><th>C3</th><th>C4</th><th>C5</th></tr></thead>
-        <tbody>
-          <tr><th>C1</th><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
-          <tr><th>C2</th><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
-          <tr><th>C3</th><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
-          <tr><th>C4</th><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
-          <tr><th>C5</th><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>Edges:</b> C1–C2, C1–C4, C2–C3, C3–C4, C3–C5, C4–C5. Note C3–C4–C5 form a <b>triangle</b>, so at least <b>3 colours</b> are needed. Use m = 3.</p>
+<h4>Read the graph from the matrix</h4>
+<p>The matrix is symmetric, so the edges are: C1–C2, C1–C4, C2–C3, C3–C4, C3–C5, C4–C5. Vertices C3, C4, C5 form a <b>triangle</b> (C3–C4, C4–C5, C5–C3), so at least <b>3 colours</b> are necessary. We try <code>m = 3</code> with colours 1, 2, 3.</p>
 
-      <h4>Step-by-step assignment</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Vertex</th><th>Adjacent to</th><th>Tried</th><th>Colour</th></tr></thead>
-        <tbody>
-          <tr><td>C1</td><td>—</td><td>—</td><td>1 (Red)</td></tr>
-          <tr><td>C2</td><td>C1 = 1</td><td>1 conflicts</td><td>2 (Green)</td></tr>
-          <tr><td>C3</td><td>C2 = 2</td><td>1 is free</td><td>1 (Red)</td></tr>
-          <tr><td>C4</td><td>C1 = 1, C3 = 1</td><td>1 conflicts, 2 is free</td><td>2 (Green)</td></tr>
-          <tr><td>C5</td><td>C3 = 1, C4 = 2</td><td>1,2 conflict</td><td>3 (Blue)</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="math"><b>Solution:</b> C1 = 1, C2 = 2, C3 = 1, C4 = 2, C5 = 3<br>
-      Verify all edges: 1-2, 1-2, 2-1, 1-2, 1-3, 2-3 — no equal pair ✓</div>
-      <p>If m = 2, the triangle C3–C4–C5 makes it impossible → backtracking would exhaust all combinations and report "no solution".</p>
+<h4>Step-by-step colouring (book's Gen_Col_Value)</h4>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Vertex</th><th>Already-coloured neighbours</th><th>Colours tried</th><th>Colour assigned</th></tr></thead>
+<tbody>
+<tr><td>C1</td><td>—</td><td>1 is legal</td><td><b>1</b></td></tr>
+<tr><td>C2</td><td>C1 = 1</td><td>1 conflicts; 2 legal</td><td><b>2</b></td></tr>
+<tr><td>C3</td><td>C2 = 2</td><td>1 legal (C2 is 2)</td><td><b>1</b></td></tr>
+<tr><td>C4</td><td>C1 = 1, C3 = 1</td><td>1 conflicts; 2 legal</td><td><b>2</b></td></tr>
+<tr><td>C5</td><td>C3 = 1, C4 = 2</td><td>1 conflicts; 2 conflicts; 3 legal</td><td><b>3</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="math"><b>Solution: C1 = 1, C2 = 2, C3 = 1, C4 = 2, C5 = 3</b></div>
+<p><b>Verification:</b> C1–C2 = 1–2, C1–C4 = 1–2, C2–C3 = 2–1, C3–C4 = 1–2, C3–C5 = 1–3, C4–C5 = 2–3. No edge joins two equal colours.</p>
+
+<h4>State-space tree (3 colours)</h4>
+<div class="tree">C1
+└── C1 = 1
+    └── C2 = 2          (C2 = 1 ✂ conflicts with C1)
+        └── C3 = 1      (C3 = 2 ✂ with C2; 1 is legal)
+            └── C4 = 2  (C4 = 1 ✂ conflicts with C1 and C3)
+                └── C5 = 3   (C5 = 1 ✂ with C3; C5 = 2 ✂ with C4)
+                    ✅ (1, 2, 1, 2, 3)</div>
+<p>At C5 the first two colours fail, so the algorithm tries colour 3. If all three failed, <code>x[5]</code> would become 0 and the search would backtrack to C4 to try its next colour. With <code>m = 2</code> the triangle C3–C4–C5 makes a solution impossible; backtracking would exhaust the tree and report “no solution”.</p>
+<p class="booksrc">📘 <b>Book:</b> §4.5, Fig. 4.5.1 – 4.5.3, p. 4-22 – 4-28</p>
     </div>
   </div>
 
@@ -441,38 +605,35 @@ Algorithm NextValue(k)
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q3(a) [10]</p>
-      <h4>Graph</h4>
-      <p>Edges: A–B, A–C, B–D, C–D. This is a 4-cycle (even cycle), so <b>2 colours are sufficient</b>.</p>
-      <div class="tree">      A
-     / \
-    B   C
-     \ /
-      D</div>
+<h4>Graph and colouring</h4>
+<p>The given 4-vertex graph is the cycle A–B–D–C–A (edges A–B, A–C, B–D, C–D). An even cycle is bipartite, so <b>2 colours are sufficient</b>; the chromatic number is 2. Use <b>R = 1</b> and <b>B = 2</b>.</p>
 
-      <h4>Trace with m = 2 (R = 1, B = 2)</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Step</th><th>Vertex</th><th>Try R</th><th>Try B</th><th>Decision</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>A</td><td>valid</td><td>—</td><td>A = R</td></tr>
-          <tr><td>2</td><td>B</td><td>conflicts with A</td><td>valid</td><td>B = B</td></tr>
-          <tr><td>3</td><td>C</td><td>conflicts with A</td><td>valid (B not adjacent to C)</td><td>C = B</td></tr>
-          <tr><td>4</td><td>D</td><td>valid (only B,C are neighbours, both B)</td><td>conflicts with B and C</td><td>D = R</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="math"><b>Solution:</b> A = Red, B = Black, C = Black, D = Red</div>
+<h4>Step-by-step backtracking</h4>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Step</th><th>Vertex</th><th>Colour 1 (R)</th><th>Colour 2 (B)</th><th>Decision</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>A</td><td>legal</td><td>—</td><td>A = R</td></tr>
+<tr><td>2</td><td>B</td><td>conflicts with A = R</td><td>legal</td><td>B = B</td></tr>
+<tr><td>3</td><td>C</td><td>conflicts with A = R</td><td>legal (C is not adjacent to B)</td><td>C = B</td></tr>
+<tr><td>4</td><td>D</td><td>legal (neighbours B and C are both B)</td><td>conflicts with B and C</td><td>D = R</td></tr>
+</tbody>
+</table>
+</div>
+<div class="math"><b>Solution: A = Red, B = Black, C = Black, D = Red</b></div>
 
-      <h4>State-space tree (pruned)</h4>
-      <div class="tree">                 A
-        R ─────────────── B
-        │                  │
-        │             B ─── C           (C=R pruned: A=R)
-        │                  │
-        │             R ─── D  ✅  {A=R, B=B, C=B, D=R}
-        │
-        └── (A=B symmetric solution: B=R, C=R, D=B)</div>
-      <p><b>Backtracking point:</b> if D were assigned Black first, the conflict with B and C forces a backtrack to try Red — this is the step examiners look for.</p>
+<h4>State-space diagram</h4>
+<div class="tree">A
+├── A = R
+│   ├── B = R ✂ (adjacent to A)
+│   └── B = B
+│       ├── C = R ✂ (adjacent to A)
+│       └── C = B
+│           ├── D = R ✅  → (R, B, B, R)
+│           └── D = B ✂ (adjacent to B and C)
+└── A = B  (symmetric solution: B = R, C = R, D = B)</div>
+<p><b>Backtracking point:</b> at D, if Black is tried it is rejected because both neighbours are Black; the algorithm then tries Red and succeeds. In the colour order R = 1, B = 2 used here, Red is tried first and is legal, so the first complete assignment succeeds. If both colours had failed, <code>x[4]</code> would become 0 and the search would <b>backtrack</b> to C to try its next colour. The failed branches (B = R, C = R, D = B) are the pruned nodes shown in the diagram.</p>
+<p class="booksrc">📘 <b>Book:</b> §4.5, p. 4-22 – 4-25</p>
     </div>
   </div>
 </section>
@@ -488,65 +649,104 @@ Algorithm NextValue(k)
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [9] · control abstraction + applications: 2025 Nov Q3(b) [8]</p>
+<h4>What is Branch and Bound? (book §4.7)</h4>
+<p><b>Branch and Bound (BnB)</b> is a general algorithm for finding <b>optimal solutions</b> of optimisation problems. It is used where greedy and dynamic programming fail, but it is slower; in the worst case it takes exponential time, although with good bounding it can run reasonably fast on average.</p>
+<ul>
+<li><b>Branch</b> — partition the problem at a node into smaller subproblems (generate its children).</li>
+<li><b>Bound</b> — compute a lower bound <code>c^(x)</code> and an upper bound <code>u(x)</code> for every child. If a child cannot contain a better answer than the best known, it is <b>killed</b> (pruned).</li>
+<li>BnB builds the state-space tree and generates <b>all children of the E-node</b> before any other live node can become an E-node.</li>
+<li>It may use <b>BFS</b> (FIFO queue) or <b>DFS</b> (LIFO stack). FIFO BnB is breadth-first; LIFO BnB is depth-first.</li>
+</ul>
 
-      <h4>Definition</h4>
-      <p><b>Branch and Bound (BnB)</b> is an optimisation technique for combinatorial problems. It explores the state-space tree but uses a <b>bound</b> at every node:</p>
-      <ul>
-        <li><b>Branch</b> — split a node into its children (include / exclude a decision).</li>
-        <li><b>Bound</b> — compute the best value that any solution in that subtree can possibly achieve.</li>
-        <li>If the bound cannot beat the best solution found so far (<code>best</code>), <b>prune</b> the subtree. Otherwise expand it.</li>
-      </ul>
-      <p>Unlike backtracking (depth-first, feasibility-based pruning), BnB prunes using an <b>objective-value bound</b> and can use different search orders.</p>
+<h4>Three search strategies (book §4.9)</h4>
+<div class="tbl-wrap">
+<table class="left">
+<thead><tr><th>Strategy</th><th>Live-node list</th><th>E-node chosen</th><th>Search</th></tr></thead>
+<tbody>
+<tr><td><b>FIFO</b></td><td>Queue</td><td>Oldest live node</td><td>Breadth-first</td></tr>
+<tr><td><b>LIFO</b></td><td>Stack</td><td>Newest live node</td><td>Depth-first</td></tr>
+<tr><td><b>LC</b></td><td>Heap (priority queue)</td><td>Smallest <code>c^(x)</code></td><td>Best-cost first</td></tr>
+</tbody>
+</table>
+</div>
+<p><b>LC (Least Cost)</b> uses a ranking function. Let <code>g^(x)</code> be an estimate of the extra effort needed to reach an answer node from <code>x</code>, and <code>h(x)</code> the cost of reaching <code>x</code> from the root. Define</p>
+<div class="math">c^(x) = f(h(x)) + g^(x)</div>
+<ul>
+<li>If <code>g^(x) = 0</code> and <code>f(h(x))</code> = level of <code>x</code>, the search is <b>BFS</b>.</li>
+<li>If <code>f(h(x)) = 0</code> and <code>g^(x) ≤ g^(y)</code> whenever <code>y</code> is a child of <code>x</code>, the search is <b>D-search</b> (DFS).</li>
+<li>LC search with a bounding function is called <b>LC Branch and Bound (LCBB)</b>.</li>
+</ul>
 
-      <h4>Three strategies</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Strategy</th><th>Data structure</th><th>Order</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><b>FIFO</b></td><td>Queue</td><td>Breadth-first</td><td>Simple, more memory</td></tr>
-          <tr><td><b>LIFO</b></td><td>Stack</td><td>Depth-first</td><td>Low memory</td></tr>
-          <tr><td><b>LC (Least Cost)</b></td><td>Min-heap (priority queue)</td><td>Best-bound first</td><td>Fewest nodes, best for optimisation</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Control abstraction — Least-Cost search</h4>
-<pre><code>Algorithm LCBB(root)
+<h4>Control abstraction — general BnB (book §4.8)</h4>
+<pre><code>Algorithm Branch_Bound()
 {
-    PQ = empty min-heap;              // key = estimated cost / bound
-    best = +∞;                        // for minimisation
-    insert(PQ, root);
-
-    while (PQ is not empty) do
+    E ← new(node);          // root / dummy start node
+    // H is the heap of all live nodes
+    // min-heap for minimisation, max-heap for maximisation
+    while (true)
     {
-        node = delete-min(PQ);        // node with smallest bound
-
-        if (node is a complete solution) then
+        if (E is a final leaf) then
         {
-            if (cost(node) &lt; best) best = cost(node);
+            write(path from E to the root);   // optimal solution
+            return;
         }
-        else
+        Expand(E);
+        if (H is empty) then
         {
-            for each child c of node do
-            {
-                compute bound(c);
-                if (bound(c) &lt; best) then   // pruning test
-                    insert(PQ, c);
-            }
+            write("there is no solution");
+            return;
         }
+        E ← delete_top(H);
     }
-    return best;
-}</code></pre>
-      <p>For maximisation, replace <code>&lt;</code> by <code>&gt;</code> and use a max-heap / upper bound.</p>
+}
 
-      <h4>Applications (asked in 2025 Nov)</h4>
-      <ul>
-        <li>0/1 knapsack problem</li>
-        <li>Travelling salesman problem (TSP)</li>
-        <li>Job scheduling / assignment problem</li>
-        <li>Integer linear programming</li>
-        <li>Facility location, network design</li>
-      </ul>
+Algorithm Expand(E)
+{
+    Generate all children of E;
+    Compute the approximate cost value of each child;
+    Insert each child into the heap H;
+}</code></pre>
+
+<h4>Control abstraction — Least-Cost search (book §4.9)</h4>
+<pre><code>Algorithm LC_search()
+// tr is the state-space tree; x is a node; E is the E-node
+{
+    if (tr is an answer node) then
+    {
+        write(tr);
+        return;
+    }
+    E ← tr;                              // set the E-node
+    repeat
+    {
+        for (each child x of E) do
+        {
+            if (x is an answer node) then
+            {
+                output the path from x to the root;
+                return;
+            }
+            Add_Node(x);                 // add x to the live-node list
+            x.parent ← E;                // path from x to the root
+        }
+        if (no more live nodes) then
+        {
+            write("Can not have answer node!!");
+            return;
+        }
+        E ← Least_cost();                // next E-node with least cost
+    } until (false);
+}</code></pre>
+<p><b>Example of bounding:</b> the book's Fig. 4.8.1 shows a portion of the 4-queens state-space tree used by BnB. Each node gets a bounding value; the node with the optimum bound becomes the E-node, and children that cannot beat the current best are killed. The numbers outside the nodes show the order of evaluation.</p>
+
+<h4>Applications (asked in 2025 Nov)</h4>
+<ul>
+<li>Job sequencing with deadlines</li>
+<li>Travelling salesman problem (TSP)</li>
+<li>0/1 knapsack problem</li>
+<li>Assignment and integer linear programming problems</li>
+</ul>
+<p class="booksrc">📘 <b>Book:</b> §4.7 Principle, §4.8 Control Abstraction, §4.9 FIFO/LIFO/LC Strategies, p. 4-34 – 4-42</p>
     </div>
   </div>
 
@@ -557,13 +757,16 @@ Algorithm NextValue(k)
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q3(c) [4]</p>
-      <ul>
-        <li><b>Exponential worst case</b> — if bounds are weak, the tree is not pruned and the method degenerates to brute force, O(2<sup>n</sup>) or O(n!).</li>
-        <li><b>Memory heavy</b> — FIFO/LC must store many live nodes in the queue/heap.</li>
-        <li><b>Bound computation cost</b> — a tight bound (e.g. solving a fractional knapsack at every node) is itself expensive.</li>
-        <li><b>No guarantee of early solution</b> — the first complete solution found may not be optimal; the whole tree may still need exploration.</li>
-        <li><b>Problem-specific</b> — designing a correct bound and branching rule needs insight; a wrong bound can prune the optimal solution.</li>
-      </ul>
+<h4>Major drawbacks (from the book's discussion)</h4>
+<ul>
+<li><b>Slower than greedy and DP; exponential worst case.</b> The book states that BnB applies where greedy and dynamic programming fail, but it is much slower. If the bound is weak, most children survive, no pruning happens, and the method degenerates to exhaustive search — <code>O(2<sup>n</sup>)</code> for knapsack/subsets or <code>O(n!)</code> for TSP.</li>
+<li><b>Blind FIFO/LIFO selection; costly LC.</b> The book says selecting the E-node using FIFO or LIFO is “very complicated and somewhat blind”. LC is better but needs a ranking/cost value <code>c^(x)</code> at every node; computing a tight bound (for example, fractional knapsack at every node) itself costs time.</li>
+<li><b>Large live-node list.</b> FIFO/LIFO/LC must store all live nodes in a queue, stack or heap; in the worst case this is exponential, unlike backtracking's O(n) stack.</li>
+<li><b>Problem-specific bounds.</b> A correct bounding function and branching rule need insight. The book warns that care must be taken while killing live nodes so that at least one answer node is still produced; a bad bound can remove the optimum.</li>
+<li><b>No guaranteed early stop.</b> Finding one complete solution is not enough; the search must continue until the bound proves that no unexplored node can beat it.</li>
+</ul>
+<div class="note"><b>Exam-safe one-liner:</b> BnB is exact but can be slow and memory-heavy; its speed depends entirely on how tight the bound is.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.7 Principle, §4.9 Strategies, §4.10 Concept of Bounding, p. 4-34 – 4-42</p>
     </div>
   </div>
 </section>
@@ -579,88 +782,99 @@ Algorithm NextValue(k)
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q3(a) [9] · 2023 Nov Q4(a) [9 — identical instance]</p>
+<h4>0/1 knapsack — book's formulation (book §4.12)</h4>
+<p>There are <code>n</code> objects and a knapsack of capacity <code>m</code>. Object <code>i</code> has weight <code>w<sub>i</sub></code> and profit <code>p<sub>i</sub></code>. Choose <code>x<sub>i</sub> ∈ {0,1}</code> to</p>
+<div class="math">maximise &nbsp; Σ p<sub>i</sub>x<sub>i</sub> &nbsp; subject to &nbsp; Σ w<sub>i</sub>x<sub>i</sub> ≤ m</div>
+<p>The book writes the same problem as <b>minimise −Σp<sub>i</sub>x<sub>i</sub></b>. It uses the <b>fixed tuple size formulation</b>: level <code>i</code> decides <code>x<sub>i</sub> = 1</code> (include) or <code>x<sub>i</sub> = 0</code> (exclude). For every node <code>x</code>,</p>
+<div class="math">c^(x) ≤ c(x) ≤ u(x)</div>
+<p>where <code>c^(x)</code> is the lower bound (approximate least cost) and <code>u(x)</code> is the upper bound. A node is killed when its bound cannot lead to a better answer than the best solution already found.</p>
 
-      <h4>Algorithm</h4>
-<pre><code>Algorithm KnapsackBB(w[], p[], n, M)
+<h4>BnB algorithm for 0/1 knapsack</h4>
+<pre><code>Algorithm Knapsack_BB()
 {
     sort items by p[i]/w[i] in decreasing order;
-    best = 0;  bestSet = ∅;
-    PQ = empty max-heap;  insert(root with ub = fractionalBound(0, M));
-
-    while (PQ not empty) do
+    best ← 0;  bestSet ← ∅;
+    PQ ← empty max-heap;
+    insert root with ub = C_Bound(0, 0, 0);
+    while (PQ is not empty) do
     {
-        node = delete-max(PQ);            // highest upper bound
-        if (node.ub &lt;= best) continue;    // prune
-
-        if (node.level == n) then
+        node ← delete-max(PQ);          // highest upper bound
+        if (node.ub ≤ best) then
+            continue;                   // bound cannot beat best
+        if (node.level = n) then
         {
-            if (node.profit &gt; best) { best = node.profit; bestSet = node.set; }
+            if (node.profit &gt; best) then
+            {
+                best ← node.profit;
+                bestSet ← node.set;
+            }
         }
         else
         {
             // left child: include item level+1
-            if (node.weight + w[node.level+1] &lt;= M) then
-                insert(child with profit + p, weight + w, ub = bound());
-
-            // right child: exclude item
-            insert(child with same profit/weight, ub = bound());
+            if (node.weight + w[node.level+1] ≤ m) then
+                insert left child with ub = C_Bound(...);
+            // right child: exclude item level+1
+            insert right child with ub = C_Bound(...);
         }
     }
     return best, bestSet;
 }
 
-// bound = current profit + profit of remaining items taken fractionally
-fractionalBound(node)
+Algorithm C_Bound(total_profit, total_wt, k)
+// optimistic bound: remaining items are taken fractionally
 {
-    ub = node.profit;  rem = M − node.weight;
-    for i = node.level+1 to n do
+    pt ← total_profit;
+    wt ← total_wt;
+    for (i ← k+1 to n) do
     {
-        if w[i] &lt;= rem then { ub += p[i]; rem −= w[i]; }
-        else { ub += p[i] * rem / w[i]; break; }
+        wt ← wt + w[i];
+        if (wt &lt; m) then
+            pt ← pt + p[i];
+        else
+            return (pt + (1 − (wt − m)/w[i]) * p[i]);
     }
-    return ub;
+    return pt;
 }</code></pre>
+<p>The book also defines <code>U_Bound</code>, which adds only the items that fit completely. In the book's minimisation form the bounds are stored with a minus sign; for the PYQ we use the equivalent <b>positive profit</b> upper bound: <code>ub = profit so far + fractional profit of the remaining items</code>. A node is pruned if <code>ub ≤ best</code>.</p>
 
-      <h4>Step 1 — order by profit/weight</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Item</th><th>Weight</th><th>Profit</th><th>p/w</th><th>Order</th></tr></thead>
-        <tbody>
-          <tr><td>D</td><td>2</td><td>10</td><td>5.00</td><td>1</td></tr>
-          <tr><td>B</td><td>4</td><td>10</td><td>2.50</td><td>2</td></tr>
-          <tr><td>A</td><td>9</td><td>18</td><td>2.00</td><td>3</td></tr>
-          <tr><td>C</td><td>6</td><td>12</td><td>2.00</td><td>4</td></tr>
-        </tbody>
-      </table>
-      </div>
+<h4>Book's solved example (Example 4.12.1) — one line</h4>
+<p>For <code>n = 5</code>, <code>m = 100</code>, <code>p = (10, 20, 30, 40, 50)</code>, <code>w = (20, 30, 66, 40, 60)</code>, the ratio order is item 4, 5, 2, 1, 3. The root bound is 90, and the optimal set is <b>{4, 5}</b> with profit <b>90</b>.</p>
 
-      <h4>Step 2 — state-space tree with bounds</h4>
-      <p>Root upper bound = take D + B + A fully = 2+4+9 = 15 kg, profit 10+10+18 = <b>38</b>.</p>
-      <div class="tree">                         root
-                       w=0, p=0
-                        ub=38
-                 ┌────────┴────────┐
-            +D   │                 │  −D
-          w=2,p=10              w=0,p=0
-           ub=38                 ub=32  ✂ prune (&lt;38)
-         ┌────┴────┐
-     +B  │         │ −B
-    w=6,p=20    w=2,p=10
-     ub=38       ub=36  ✂ prune (&lt;38)
-    ┌───┴───┐
- +A │       │ −A
-w=15,p=38  w=6,p=20
- ub=38      ub=32  ✂ prune (&lt;38)
-  ✅</div>
-      <p><b>Bound calculations:</b></p>
-      <ul>
-        <li>−D branch: best is B + A = 13 kg, 28, plus 2 kg of C (ratio 2) = 4 → ub = <b>32</b>.</li>
-        <li>−B branch (D taken): A = 9 kg, 18 → total 28 at 11 kg, plus 4/6 of C = 8 → ub = <b>36</b>.</li>
-        <li>−A branch (D+B taken): 6 kg, 20; remaining 9 kg can take C (6 kg, 12) + part of nothing → ub = <b>32</b>.</li>
-      </ul>
+<h4>PYQ instance — capacity 15 kg</h4>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Item</th><th>Weight</th><th>Profit</th><th>p/w</th><th>Order</th></tr></thead>
+<tbody>
+<tr><td>D</td><td>2</td><td>10</td><td>5.00</td><td>1</td></tr>
+<tr><td>B</td><td>4</td><td>10</td><td>2.50</td><td>2</td></tr>
+<tr><td>A</td><td>9</td><td>18</td><td>2.00</td><td>3</td></tr>
+<tr><td>C</td><td>6</td><td>12</td><td>2.00</td><td>4</td></tr>
+</tbody>
+</table>
+</div>
+<p><b>Root upper bound:</b> take D + B + A = 2 + 4 + 9 = 15 kg, profit 10 + 10 + 18 = <b>38</b>. The remaining capacity is 0, so <code>ub = 38</code>.</p>
 
-      <div class="math"><b>Optimal set = {A, B, D}</b> &nbsp;|&nbsp; weight = 9 + 4 + 2 = <b>15 kg</b> &nbsp;|&nbsp; <b>profit = 18 + 10 + 10 = Rs. 38</b></div>
-      <div class="note"><b>Why BnB beats plain DP here:</b> DP would build a 4×15 table; BnB reaches the answer after exploring only 4–5 nodes because the bound proves the other branches cannot beat 38.</div>
+<h4>Fixed-tuple state-space tree</h4>
+<div class="tree">root: w = 0, p = 0, ub = 38
+├── with D: w = 2, p = 10, ub = 38
+│   ├── with B: w = 6, p = 20, ub = 38
+│   │   ├── with A: w = 15, p = 38, ub = 38  ✅ {A, B, D}
+│   │   └── without A: w = 6, p = 20
+│   │       └── with C: w = 12, p = 32, ub = 32  ✂ (32 &lt; 38)
+│   └── without B: w = 2, p = 10, ub = 36  ✂ (36 &lt; 38)
+│       └── with A: w = 11, p = 28; 4 kg of C → +8 = 36
+└── without D: w = 0, p = 0, ub = 32  ✂
+    └── B + A = 13 kg, 28; 2 kg of C → +4 = 32</div>
+<p><b>Bound details:</b></p>
+<ul>
+<li><b>Without D:</b> B (4, 10) + A (9, 18) = 13 kg, profit 28; remaining 2 kg of C at ratio 2 gives +4 → <b>ub = 32</b>.</li>
+<li><b>D included, B excluded:</b> A (9, 18) gives 11 kg, profit 28; remaining 4 kg of C at ratio 2 gives +8 → <b>ub = 36</b>.</li>
+<li><b>D and B included, A excluded:</b> C (6, 12) gives 12 kg, profit 32; no item is left for the remaining 3 kg → <b>ub = 32</b>.</li>
+</ul>
+<div class="math"><b>Optimal set = {A, B, D}</b> &nbsp;|&nbsp; weight = 9 + 4 + 2 = <b>15 kg</b> &nbsp;|&nbsp; profit = 18 + 10 + 10 = <b>Rs. 38</b></div>
+<div class="note"><b>Book's sign convention:</b> because the book minimises <code>−profit</code>, its <code>c^</code> values are negative (for example, the root of Example 4.12.1 has <code>c^ = ub = −90</code>). The tree above uses the same bounds with positive profits; the pruning decision is identical.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.8 Control Abstraction and §4.12 Knapsack Problem, p. 4-35 – 4-36, 4-76 – 4-79</p>
     </div>
   </div>
 
@@ -671,40 +885,47 @@ w=15,p=38  w=6,p=20
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q3(b) [9] · 2025 May Q4(b) [10 — same data]</p>
+<h4>LC branch and bound (book §4.9, §4.12)</h4>
+<p>LC (Least Cost) BnB keeps all live nodes in a heap and always expands the node with the <b>smallest</b> cost estimate <code>c^(x)</code>. For maximisation we store <code>c^ = −ub</code>, so the node with the largest upper bound is expanded first. A node is pruned when its bound cannot beat the best solution found. The book demonstrates the same rule on job sequencing in §4.10.3: expand the least-cost live node and update the upper bound whenever a cheaper answer node is reached.</p>
+<pre><code>best ← 0
+insert root into min-heap with key c^ = −ub(root)
+while heap is not empty do
+{
+    x ← delete-min(heap)
+    if (−x.c^) ≤ best then continue        // bound cannot beat best
+    if x is a complete solution then
+        best ← max(best, x.profit)
+    else
+        generate include-child and exclude-child
+        compute ub for each child by fractional knapsack
+        insert each child with key c^ = −ub
+}</code></pre>
 
-      <h4>Step 1 — ratio order</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Item</th><th>Weight</th><th>Value</th><th>v/w</th><th>Order</th></tr></thead>
-        <tbody>
-          <tr><td>O3</td><td>3</td><td>4</td><td>1.333</td><td>1</td></tr>
-          <tr><td>O2</td><td>4</td><td>5</td><td>1.250</td><td>2</td></tr>
-          <tr><td>O1</td><td>5</td><td>6</td><td>1.200</td><td>3</td></tr>
-        </tbody>
-      </table>
-      </div>
+<h4>PYQ instance — O1(5,6), O2(4,5), O3(3,4), m = 7</h4>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Item</th><th>Weight</th><th>Value</th><th>v/w</th><th>Order</th></tr></thead>
+<tbody>
+<tr><td>O3</td><td>3</td><td>4</td><td>1.333</td><td>1</td></tr>
+<tr><td>O2</td><td>4</td><td>5</td><td>1.250</td><td>2</td></tr>
+<tr><td>O1</td><td>5</td><td>6</td><td>1.200</td><td>3</td></tr>
+</tbody>
+</table>
+</div>
+<p><b>Root bound:</b> O3 + O2 fill the knapsack exactly: 3 + 4 = 7 kg, value 4 + 5 = <b>9</b>.</p>
 
-      <h4>Step 2 — LC tree (best-bound first)</h4>
-      <div class="tree">                      root (w=0, v=0)
-                         ub = 4 + 5 = 9
-                  ┌──────────┴──────────┐
-             +O3  │                     │  −O3
-            w=3,v=4                  w=0,v=0
-             ub=9                     ub=8.6 ✂
-          ┌─────┴─────┐
-      +O2 │           │ −O2
-     w=7,v=9       w=3,v=4
-      ub=9          ub=8.8 ✂
-       ✅</div>
-      <ul>
-        <li><b>Root:</b> take O3 (3 kg) + O2 (4 kg) = 7 kg, value 9 → ub = 9.</li>
-        <li><b>+O3 → +O2:</b> weight 7 = capacity, value <b>9</b> → complete solution.</li>
-        <li><b>+O3 → −O2:</b> 3 kg, value 4; O1 needs 5 kg → only 4 kg free → fractional value 4 + 6×4/5 = 8.8 &lt; 9 → prune.</li>
-        <li><b>−O3:</b> O2 + 3/5 of O1 = 5 + 3.6 = 8.6 &lt; 9 → prune.</li>
-      </ul>
-      <div class="math"><b>Optimal selection = {O2, O3}</b> &nbsp;|&nbsp; weight = 4 + 3 = <b>7</b> &nbsp;|&nbsp; <b>maximum value = 5 + 4 = 9</b></div>
-
-      <div class="tip"><b>LC vs FIFO:</b> LC expands the node with the best bound (min-heap of −ub), so it reaches the optimal leaf fastest. Write "LC = Least Cost = best-first search" in the answer — that phrase carries a mark.</div>
+<h4>LC tree (best-bound first)</h4>
+<div class="tree">root  w = 0, v = 0, ub = 9, c^ = −9
+├── with O3: w = 3, v = 4, ub = 9, c^ = −9   ← expand (least c^)
+│   ├── with O2: w = 7, v = 9, ub = 9  ✅ {O2, O3}
+│   └── without O2: w = 3, v = 4
+│       └── 4 kg free; O1 needs 5 kg → 4 + 6×4/5 = 8.8  ✂
+└── without O3: w = 0, v = 0
+    └── O2 + 3/5 of O1 = 5 + 3.6 = 8.6  ✂</div>
+<div class="math"><b>Optimal selection = {O2, O3}</b> &nbsp;|&nbsp; weight = 4 + 3 = <b>7</b> &nbsp;|&nbsp; <b>maximum value = 5 + 4 = 9</b></div>
+<p><b>Order of expansion:</b> root (ub 9) → with O3 (ub 9) → with O2 (complete, value 9). The without-O2 node has ub 8.8 &lt; 9, so it is killed. The without-O3 node has ub 8.6 &lt; 9, so it is also killed. No live node remains, and 9 is optimal.</p>
+<div class="note"><b>LC vs FIFO:</b> LC expands the best-bound node, so it reaches the optimal leaf fastest. The book calls LC search with a bounding function <b>LCBB</b>; FIFO uses a queue (breadth-first), LIFO uses a stack (depth-first).</div>
+<p class="booksrc">📘 <b>Book:</b> §4.9 LC Search and §4.12 Knapsack Problem, p. 4-39 – 4-40, 4-48, 4-76 – 4-79</p>
     </div>
   </div>
 </section>
@@ -720,71 +941,93 @@ w=15,p=38  w=6,p=20
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q3(a) [9] · method also asked in 2025 Nov Q4(a)</p>
+<h4>TSP — book's method (book §4.11)</h4>
+<p>Given <code>n</code> cities and the cost of travelling from any city to any other, find the <b>cheapest round trip</b> that visits every city exactly once and returns to the starting city. The problem is represented by a weighted graph / cost matrix.</p>
+<p>The state-space tree has the root at level 1, one level per city, and <code>(n−1)!</code> leaves when the starting city is fixed. A node at level <code>k</code> represents a partial tour of <code>k</code> cities. The bound is obtained by <b>reducing</b> the cost matrix.</p>
 
-      <h4>Cost matrix</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
-        <tbody>
-          <tr><th>0</th><td>∞</td><td>10</td><td>15</td><td>20</td></tr>
-          <tr><th>1</th><td>10</td><td>∞</td><td>35</td><td>25</td></tr>
-          <tr><th>2</th><td>15</td><td>35</td><td>∞</td><td>30</td></tr>
-          <tr><th>3</th><td>20</td><td>25</td><td>30</td><td>∞</td></tr>
-        </tbody>
-      </table>
-      </div>
+<h4>Reduction rules (book §4.11.1 – 4.11.3)</h4>
+<ul>
+<li><b>Row reduction:</b> subtract the minimum of each row from that row; add all row minima to get the row-reduction cost.</li>
+<li><b>Column reduction:</b> subtract the minimum of each column from that column; add all column minima.</li>
+<li><b>Fully reduced matrix:</b> every row and every column has at least one zero. The total reduction cost is a <b>lower bound</b> on every tour.</li>
+</ul>
 
-      <h4>Step 1 — row reduction</h4>
-      <p>Row minima: 10, 10, 15, 20 → total 55.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
-        <tbody>
-          <tr><th>0</th><td>∞</td><td>0</td><td>5</td><td>10</td></tr>
-          <tr><th>1</th><td>0</td><td>∞</td><td>25</td><td>15</td></tr>
-          <tr><th>2</th><td>0</td><td>20</td><td>∞</td><td>15</td></tr>
-          <tr><th>3</th><td>0</td><td>5</td><td>10</td><td>∞</td></tr>
-        </tbody>
-      </table>
-      </div>
+<h4>Dynamic reduction (book §4.11.4)</h4>
+<ol>
+<li>Draw the state-space tree with the optimum (reduced) cost at the root.</li>
+<li>For path <code>i → j</code>, make row <code>i</code> and column <code>j</code> infinite; also set <code>M[j][i] = ∞</code> so the tour cannot return early.</li>
+<li>Cost of the child = optimum cost of the parent + reduced cost of the new matrix + <code>M[i][j]</code>.</li>
+<li>Choose the node with the minimum cost as the next E-node and generate its children; repeat.</li>
+</ol>
 
-      <h4>Step 2 — column reduction</h4>
-      <p>Column minima: col 2 = 5, col 3 = 10 → total 15. Overall reduction = 55 + 15 = <b>70</b>.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
-        <tbody>
-          <tr><th>0</th><td>∞</td><td>0</td><td>0</td><td>0</td></tr>
-          <tr><th>1</th><td>0</td><td>∞</td><td>20</td><td>5</td></tr>
-          <tr><th>2</th><td>0</td><td>20</td><td>∞</td><td>5</td></tr>
-          <tr><th>3</th><td>0</td><td>5</td><td>0</td><td>∞</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="math">Lower bound at root = <b>70</b></div>
+<h4>Book's solved example (Example 4.11.3) — one line</h4>
+<p>For the 4-city graph of Fig. 4.11.18 (edges 1–2 = 2, 1–3 = 4, 1–4 = 7, 2–3 = 8, 2–4 = 3, 3–4 = 1), the row reduction gives 6 and the column reduction gives 0, so the root bound is 6. The BnB tree finds the tour <b>1 → 3 → 4 → 2 → 1</b> with cost <b>10</b>.</p>
 
-      <h4>Step 3 — branch and bound</h4>
-      <p>Explore the tour 0 → 1 → 3 → 2 → 0:</p>
-      <ul>
-        <li>0→1 = 10; set row 0 and column 1 to ∞, and 1→0 = ∞. The reduced matrix adds 5 (column 3 reduction) → bound <b>75</b>.</li>
-        <li>1→3 = 25; remaining path must be 3→2→0. Bound stays 75.</li>
-        <li>3→2 = 30, 2→0 = 15 → total = 10 + 25 + 30 + 15 = <b>80</b>.</li>
-      </ul>
-      <p>Other tours and their costs:</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Tour</th><th>Cost</th><th>Decision</th></tr></thead>
-        <tbody>
-          <tr><td>0 → 1 → 3 → 2 → 0</td><td><b>80</b></td><td>✅ best</td></tr>
-          <tr><td>0 → 2 → 3 → 1 → 0</td><td><b>80</b></td><td>✅ equally optimal</td></tr>
-          <tr><td>0 → 1 → 2 → 3 → 0</td><td>95</td><td>pruned (bound ≥ 80)</td></tr>
-          <tr><td>0 → 3 → 1 → 2 → 0</td><td>95</td><td>pruned</td></tr>
-          <tr><td>0 → 2 → 1 → 3 → 0</td><td>95</td><td>pruned</td></tr>
-          <tr><td>0 → 3 → 2 → 1 → 0</td><td>95</td><td>pruned</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="math"><b>Optimal tour: 0 → 1 → 3 → 2 → 0 (or its reverse)</b> &nbsp;|&nbsp; <b>Minimum cost = 80</b></div>
+<h4>PYQ instance — 4 cities 0, 1, 2, 3</h4>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
+<tbody>
+<tr><th>0</th><td>∞</td><td>10</td><td>15</td><td>20</td></tr>
+<tr><th>1</th><td>10</td><td>∞</td><td>35</td><td>25</td></tr>
+<tr><th>2</th><td>15</td><td>35</td><td>∞</td><td>30</td></tr>
+<tr><th>3</th><td>20</td><td>25</td><td>30</td><td>∞</td></tr>
+</tbody>
+</table>
+</div>
+<p><b>Step 1 — row reduction:</b> row minima are 10, 10, 15, 20, total <b>55</b>.</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
+<tbody>
+<tr><th>0</th><td>∞</td><td>0</td><td>5</td><td>10</td></tr>
+<tr><th>1</th><td>0</td><td>∞</td><td>25</td><td>15</td></tr>
+<tr><th>2</th><td>0</td><td>20</td><td>∞</td><td>15</td></tr>
+<tr><th>3</th><td>0</td><td>5</td><td>10</td><td>∞</td></tr>
+</tbody>
+</table>
+</div>
+<p><b>Step 2 — column reduction:</b> column 2 minimum 5, column 3 minimum 10, total <b>15</b>. Root lower bound = 55 + 15 = <b>70</b>.</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
+<tbody>
+<tr><th>0</th><td>∞</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><th>1</th><td>0</td><td>∞</td><td>20</td><td>5</td></tr>
+<tr><th>2</th><td>0</td><td>20</td><td>∞</td><td>5</td></tr>
+<tr><th>3</th><td>0</td><td>5</td><td>0</td><td>∞</td></tr>
+</tbody>
+</table>
+</div>
+
+<h4>Step 3 — branch and bound</h4>
+<ul>
+<li><b>0 → 1:</b> cross row 0 and column 1, set M[1][0] = ∞. Row 1 needs a reduction of 5; the child bound is 70 + 0 + 5 = <b>75</b>.</li>
+<li><b>1 → 2:</b> from the 0→1 matrix, edge value 15; after crossing, column 3 needs 5 → bound 75 + 15 + 5 = <b>95</b> ✂.</li>
+<li><b>1 → 3:</b> edge value 0; no further reduction → bound <b>75</b>. Then the only completion is 3 → 2 → 0, giving 10 + 25 + 30 + 15 = <b>80</b> ✅.</li>
+<li><b>0 → 2:</b> cross row 0 and column 2, set M[2][0] = ∞. Row 2 reduction 5 and column 1 reduction 5 → bound 70 + 0 + 10 = <b>80</b>.</li>
+<li><b>2 → 1:</b> edge value 10 + column 3 reduction 5 → bound <b>95</b> ✂.</li>
+<li><b>2 → 3:</b> edge value 0; no further reduction → bound <b>80</b>. Then 0→2 (15) + 2→3 (30) + 3→1 (25) + 1→0 (10) = <b>80</b> ✅.</li>
+<li><b>0 → 3:</b> cross row 0 and column 3, set M[3][0] = ∞. Column 1 reduction 5 → bound 70 + 0 + 5 = <b>75</b>.</li>
+<li><b>3 → 1:</b> edge value 0 + column 2 reduction 20 → bound <b>95</b> ✂.</li>
+<li><b>3 → 2:</b> edge value 0 + column 1 reduction 15 → bound <b>90</b> ✂.</li>
+</ul>
+<div class="tree">root (bound 70)
+├── 0→1 (75)
+│   ├── 1→2 (95) ✂
+│   └── 1→3 (75) → 3→2→0 = 80 ✅
+│       tour 0 → 1 → 3 → 2 → 0
+├── 0→2 (80)
+│   ├── 2→1 (95) ✂
+│   └── 2→3 (80) → 3→1→0 = 80 ✅
+│       tour 0 → 2 → 3 → 1 → 0
+└── 0→3 (75)
+    ├── 3→1 (95) ✂
+    └── 3→2 (90) ✂</div>
+<div class="math"><b>Optimal tours: 0 → 1 → 3 → 2 → 0 and 0 → 2 → 3 → 1 → 0</b><br>
+Cost = 10 + 25 + 30 + 15 = <b>80</b> (both tours).</div>
+<div class="note"><b>Check:</b> the other four tours cost 95 each (0→1→2→3→0, 0→3→1→2→0, 0→2→1→3→0, 0→3→2→1→0), so the bound prunes them correctly.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.11 Travelling Salesperson Problem, p. 4-48 – 4-72</p>
     </div>
   </div>
 
@@ -795,58 +1038,56 @@ w=15,p=38  w=6,p=20
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 Nov Q4(a) [10]</p>
+<h4>Cost matrix</h4>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th></th><th>P</th><th>Q</th><th>R</th></tr></thead>
+<tbody>
+<tr><th>P</th><td>∞</td><td>4</td><td>2</td></tr>
+<tr><th>Q</th><td>3</td><td>∞</td><td>4</td></tr>
+<tr><th>R</th><td>1</td><td>8</td><td>∞</td></tr>
+</tbody>
+</table>
+</div>
 
-      <h4>Cost matrix</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th></th><th>P</th><th>Q</th><th>R</th></tr></thead>
-        <tbody>
-          <tr><th>P</th><td>∞</td><td>4</td><td>2</td></tr>
-          <tr><th>Q</th><td>3</td><td>∞</td><td>4</td></tr>
-          <tr><th>R</th><td>1</td><td>8</td><td>∞</td></tr>
-        </tbody>
-      </table>
-      </div>
+<h4>Step 1 — row reduction</h4>
+<p>Row minima: P = 2, Q = 3, R = 1, total <b>6</b>.</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th></th><th>P</th><th>Q</th><th>R</th></tr></thead>
+<tbody>
+<tr><th>P</th><td>∞</td><td>2</td><td>0</td></tr>
+<tr><th>Q</th><td>0</td><td>∞</td><td>1</td></tr>
+<tr><th>R</th><td>0</td><td>7</td><td>∞</td></tr>
+</tbody>
+</table>
+</div>
+<p><b>Step 2 — column reduction:</b> column Q minimum 2, total <b>2</b>. Root lower bound = 6 + 2 = <b>8</b>.</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th></th><th>P</th><th>Q</th><th>R</th></tr></thead>
+<tbody>
+<tr><th>P</th><td>∞</td><td>0</td><td>0</td></tr>
+<tr><th>Q</th><td>0</td><td>∞</td><td>1</td></tr>
+<tr><th>R</th><td>0</td><td>5</td><td>∞</td></tr>
+</tbody>
+</table>
+</div>
 
-      <h4>Step 1 — reduce the matrix</h4>
-      <p>Row minima: P = 2, Q = 3, R = 1 → subtract.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th></th><th>P</th><th>Q</th><th>R</th></tr></thead>
-        <tbody>
-          <tr><th>P</th><td>∞</td><td>2</td><td>0</td></tr>
-          <tr><th>Q</th><td>0</td><td>∞</td><td>1</td></tr>
-          <tr><th>R</th><td>0</td><td>7</td><td>∞</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>Column minima: P = 0, Q = 2, R = 0 → subtract 2 from column Q.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th></th><th>P</th><th>Q</th><th>R</th></tr></thead>
-        <tbody>
-          <tr><th>P</th><td>∞</td><td>0</td><td>0</td></tr>
-          <tr><th>Q</th><td>0</td><td>∞</td><td>1</td></tr>
-          <tr><th>R</th><td>0</td><td>5</td><td>∞</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="math">Reduction cost = (2 + 3 + 1) + 2 = <b>8</b> → lower bound = 8</div>
-
-      <h4>Step 2 — enumerate the two tours</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Tour</th><th>Calculation</th><th>Cost</th><th>Compare with bound</th></tr></thead>
-        <tbody>
-          <tr><td>P → Q → R → P</td><td>4 + 4 + 1</td><td><b>9</b></td><td>✅ 9 ≥ 8, best</td></tr>
-          <tr><td>P → R → Q → P</td><td>2 + 8 + 3</td><td>13</td><td>❌ pruned (13 &gt; 9)</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Step 3 — branch-and-bound reasoning</h4>
-      <p>At the root the bound is 8, so no tour can cost less than 8. Branch <b>P→Q</b>: the remaining route is forced Q→R→P, giving cost 9. Update <code>best = 9</code>. Branch <b>P→R</b>: the remaining route R→Q→P costs 2 + 8 + 3 = 13 &gt; 9, so the branch is pruned. No unexplored branch can beat 9.</p>
-      <div class="math"><b>Optimal tour: P → Q → R → P</b> &nbsp;|&nbsp; <b>Minimum cost = 9</b></div>
+<h4>Step 3 — branch and bound</h4>
+<ul>
+<li><b>P → Q:</b> edge value 0. Cross row P and column Q; set M[Q][P] = ∞. The remaining submatrix needs a row reduction of 1, so the node bound is 8 + 0 + 1 = <b>9</b>.</li>
+<li><b>Q → R → P:</b> 4 + 1 = 5; total tour = 4 + 5 = <b>9</b> ✅.</li>
+<li><b>P → R:</b> edge value 0. Cross row P and column R; set M[R][P] = ∞. The remaining submatrix needs a column reduction of 5, so the node bound is 8 + 0 + 5 = <b>13</b>.</li>
+<li><b>R → Q → P:</b> 8 + 3 = 11; total tour = 2 + 11 = <b>13</b> ✂ (13 &gt; 9).</li>
+</ul>
+<div class="tree">root (bound 8)
+├── P→Q (9)
+│   └── Q→R→P = 9 ✅  tour P → Q → R → P
+└── P→R (13) ✂
+    └── R→Q→P = 13</div>
+<div class="math"><b>Optimal tour: P → Q → R → P</b> &nbsp;|&nbsp; <b>minimum cost = 4 + 4 + 1 = 9</b></div>
+<p class="booksrc">📘 <b>Book:</b> §4.11 Travelling Salesperson Problem, p. 4-48 – 4-56</p>
     </div>
   </div>
 </section>
@@ -861,21 +1102,23 @@ w=15,p=38  w=6,p=20
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q4(a) [8]</p>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Backtracking</th><th>Branch and Bound</th></tr></thead>
-        <tbody>
-          <tr><td><b>Search technique</b></td><td>Depth-first search of the state-space tree (implicitly via recursion/stack)</td><td>Can be BFS (FIFO queue), DFS (LIFO stack) or best-first (LC priority queue)</td></tr>
-          <tr><td><b>Pruning criterion</b></td><td><b>Feasibility</b> — a partial solution violating constraints is rejected</td><td><b>Optimality bound</b> — a subtree whose bound cannot beat the best known solution is rejected</td></tr>
-          <tr><td><b>Exploration</b></td><td>Explores one path fully before trying the next; backtracks on failure</td><td>Maintains a list of live nodes; expands the most promising node (LC) or in queue/stack order</td></tr>
-          <tr><td><b>Type of problem</b></td><td>Decision / constraint-satisfaction problems — n-queens, graph colouring, sum of subsets, Hamiltonian cycle</td><td>Optimisation problems — 0/1 knapsack, TSP, assignment, job scheduling</td></tr>
-          <tr><td><b>Memory</b></td><td>O(n) — only the current path</td><td>O(2<sup>n</sup>) in the worst case — stores live nodes</td></tr>
-          <tr><td><b>When a solution is found</b></td><td>Stops at the first feasible solution</td><td>Must continue until the bound proves optimality (unless a good incumbent is known)</td></tr>
-          <tr><td><b>Speed</b></td><td>Fast when constraints are tight</td><td>Fast when bounds are tight; can be exponential otherwise</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="note"><b>One-line answer:</b> Backtracking asks <em>"can this partial solution ever become valid?"</em>; BnB asks <em>"can this partial solution ever beat my best answer?"</em></div>
+<h4>Comparison (book §4.13)</h4>
+<div class="tbl-wrap">
+<table class="left">
+<thead><tr><th>Point</th><th>Backtracking</th><th>Branch and Bound</th></tr></thead>
+<tbody>
+<tr><td><b>Search technique</b></td><td>Depth-first search of the state-space tree, usually by recursion or an explicit stack.</td><td>May use BFS (FIFO queue), DFS (LIFO stack) or best-cost search (LC priority queue); DFS is not compulsory.</td></tr>
+<tr><td><b>Exploration of the state-space tree</b></td><td>Follows one path as far as possible; when a partial solution violates a constraint, it backtracks and tries the next value. The tree is searched only until the required solution is obtained.</td><td>Builds the tree and generates <b>all children of the E-node</b> before any other live node. It keeps a list of live nodes and may have to search the whole tree, because the optimum may be anywhere.</td></tr>
+<tr><td><b>Kind of problems</b></td><td><b>Decision / constraint-satisfaction</b> problems: m-colouring, 8-queens, sum of subsets, Hamiltonian cycle.</td><td><b>Optimisation</b> problems: job sequencing with deadlines, travelling salesman, 0/1 knapsack, assignment.</td></tr>
+<tr><td><b>Pruning criterion</b></td><td><b>Feasibility</b> — a partial solution that violates an explicit or implicit constraint is rejected.</td><td><b>Optimality bound</b> — a subtree whose lower/upper bound cannot beat the best known solution is rejected.</td></tr>
+<tr><td><b>Bad choices</b></td><td>Bad choices can be made while finding the solution; they are undone by backtracking.</td><td>It proceeds on better solutions, so a bad complete solution cannot be accepted as the answer.</td></tr>
+<tr><td><b>When a solution is found</b></td><td>Stops at the first feasible solution (unless all solutions are asked).</td><td>Must continue until the bound proves optimality; finding one solution is not enough.</td></tr>
+<tr><td><b>Memory</b></td><td><b>O(n)</b> — only the current path and solution vector.</td><td>Stores all live nodes in a queue/stack/heap; can be exponential in the worst case.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>One-line answer:</b> backtracking asks <em>“can this partial solution ever become valid?”</em>; branch and bound asks <em>“can this partial solution ever beat my best answer?”</em></div>
+<p class="booksrc">📘 <b>Book:</b> §4.13 Difference between Backtracking and Branch and Bound Techniques, p. 4-79 – 4-80</p>
     </div>
   </div>
 </section>
@@ -915,7 +1158,7 @@ w=15,p=38  w=6,p=20
     </div>
   </div>
 
-  <div class="book"><b>Source note:</b> the supplied DAA book covers Units 1–2 only. Unit 4 answers follow the syllabus-listed references (Horowitz &amp; Sahani, <em>Fundamentals of Computer Algorithms</em>; Cormen et al., <em>Introduction to Algorithms</em>) and match the exact PYQ wording.</div>
+  <div class="book"><b>Book:</b> Technical Publications — <i>Design and Analysis of Algorithms</i> (Units 3–6). Part I: Backtracking, p. 4-2 – 4-34; Part II: Branch and Bound, p. 4-34 – 4-80. All answers in this unit are re-sourced from this book.</div>
 
   <div class="tip"><b>Exam-day order:</b> sum of subsets (almost certain) → graph colouring → knapsack BnB → TSP. Draw the state-space tree; it is worth 50% of the numerical marks.</div>
 </section>
