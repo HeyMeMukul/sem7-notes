@@ -109,13 +109,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h3>DAA · Unit 5</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s55">5.5 Randomized algorithms <span class="pill">5×</span></a>
     <a href="#s51">5.1 Amortized analysis — 3 methods <span class="pill">5×</span></a>
-    <a href="#s54">5.4 Tractable &amp; intractable <span class="pill">4×</span></a>
-    <a href="#s56">5.6 Approximation algorithms <span class="pill">4×</span></a>
     <a href="#s52">5.2 Stack: PUSH / POP / MULTIPOP <span class="pill">3×</span></a>
-    <a href="#s57">5.7 Embedded algorithms &amp; scheduling <span class="pill">3×</span></a>
     <a href="#s53">5.3 Binary counter <span class="pill">2×</span></a>
+    <a href="#s54">5.4 Tractable &amp; intractable <span class="pill">4×</span></a>
+    <a href="#s55">5.5 Randomized algorithms <span class="pill">5×</span></a>
+    <a href="#s56">5.6 Approximation algorithms <span class="pill">4×</span></a>
+    <a href="#s57">5.7 Embedded algorithms &amp; scheduling <span class="pill">3×</span></a>
     <a href="#s58">5.8 Sorting for embedded systems <span class="pill">2×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
@@ -148,7 +148,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h2>📊 PYQ frequency map</h2>
   <div class="tbl-wrap">
   <table class="freq">
-    <thead><tr><th>#</th><th>Question</th><th>Appears in</th><th>Repeat</th></tr></thead>
+    <thead><tr><th>Rank</th><th>Question</th><th>Appears in</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td class="l">Randomized algorithms — definition, reasons, examples</td><td>2022 Nov Q5b [8]; 2023 Nov Q6c [8]; 2024 May Q5a [8]; 2025 May Q6c [4]; 2025 Nov Q6b [4]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
       <tr><td>2</td><td class="l">Amortized analysis — methods / aggregate / accounting / potential</td><td>2022 Nov Q5a [10]; 2023 Nov Q5a [9]; 2024 May Q6a [8]; 2025 May Q6a [6]; 2025 Nov Q5c [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
@@ -166,8 +166,565 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <div class="tip"><b>High-yield:</b> amortized analysis (3 methods) + stack example + binary counter = about 25 marks of options across five papers. Randomized + approximation = another 15. Both are pure theory — prepare them as written answers.</div>
 </section>
 
-<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s55">
-  <div class="prio">Priority 1 · ★★★★★ 5× repeated</div><h2>5.5 Randomized algorithms <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★★ 5×</span></h2>
+<div class="note" id="topic-note">📚 Notes follow the book order (3.1 → 3.2 → …). The frequency table above is sorted by repetition, so use it to decide what to revise first.</div><section class="card" id="s51">
+  <h2>5.1 Amortized analysis — the three methods</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain the methods of amortized analysis with a suitable example.</p>
+      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [10 — short notes on all three] · 2023 Nov Q5(a) [9 — aggregate] · 2024 May Q6(a) [8] · 2025 May Q6(a) [6] · 2025 Nov Q5(c) [6 — any two]</p>
+
+<div class="simple"><b>In simple words:</b> Some operations are cheap almost every time. Once in a while, one operation is very expensive. Amortized analysis finds the fair cost of one operation across a long run. It spreads the rare big cost over the many small ones.</div>
+
+<div class="note"><b>Why we do this:</b> One scary operation can make a good data structure look bad. Amortized analysis shows the real long-run cost. That lets us promise a worst-case total time, not a guess.</div>
+
+<h4>The words you need first</h4>
+<ul>
+  <li><b>Operation:</b> one action on the data, such as PUSH or INCREMENT.</li>
+  <li><b>Data structure:</b> a way to organise data in memory, such as a stack or a counter.</li>
+  <li><b>Sequence:</b> a run of n operations, one after another.</li>
+  <li><b>n:</b> the number of operations in that run.</li>
+  <li><b>Actual cost (c<sub>i</sub>):</b> the real work done by operation i, counted in steps.</li>
+  <li><b>Amortized cost (ĉ<sub>i</sub>):</b> the fair share of the total cost that we charge to operation i.</li>
+  <li><b>O(1):</b> constant time. The work does not grow as n grows.</li>
+  <li><b>O(n):</b> linear time. If n doubles, the work doubles.</li>
+  <li><b>Worst-case sequence:</b> the order of operations that makes the total cost as large as possible.</li>
+</ul>
+
+<h4>What is amortized analysis?</h4>
+<p>According to the book, <b>amortized analysis means finding the average running time per operation over a worst-case sequence of operations</b>. The average cost of a single operation is small when we average over the whole sequence. This holds even if one operation in that sequence is expensive. It therefore guarantees the <b>time per operation in the worst case</b>.</p>
+<p><b>In one line:</b> total work divided by the number of operations gives the fair cost per operation.</p>
+<div class="math">Amortized cost of n operations = <b>total cost of the n operations / n</b></div>
+<p class="small"><b>What this means:</b> add the real cost of all n operations, then divide by n.</p>
+<p>The book gives three commonly used techniques. All three find the same fair cost. They differ only in how they keep the accounts.</p>
+
+<h4>1. Aggregate analysis</h4>
+<p><b>Define:</b> <b>Aggregate analysis</b> adds up the cost of the whole sequence first. Then it divides by n. We do not track single operations.</p>
+<p>Analyse the whole sequence of <b>n</b> operations first. If the sequence takes worst-case time <b>T(n)</b>, the amortized cost of each operation is:</p>
+<div class="math">T(n) / n</div>
+<p class="small"><b>What this means:</b> the total time T(n) is shared equally by all n operations.</p>
+<p><b>Step-by-step:</b></p>
+<ol>
+  <li>Write down the n operations you will perform.</li>
+  <li>Find the total worst-case cost T(n) of the whole sequence.</li>
+  <li>Divide T(n) by n.</li>
+  <li>If the result is a constant, each operation is O(1) amortized.</li>
+</ol>
+<ul>
+  <li>Stack with PUSH, POP and MULTIPOP: n operations cost at most 2n, because each object is pushed once and popped once → <b>O(1)</b> per operation.</li>
+  <li>k-bit binary counter: n INCREMENTs flip fewer than 2n bits → <b>O(1)</b> per increment.</li>
+  <li>The book first gives a loose bound. A sequence with O(n) MULTIPOPs can cost O(n²). That bound is correct but <b>not tight</b>. The tight total is O(n).</li>
+</ul>
+
+<h4>2. Accounting method</h4>
+<p><b>Define:</b> <b>Credit</b> is prepaid work. We charge an operation more than it really costs. The extra amount is saved on a data object. Later, that saved credit pays for a real operation.</p>
+<p>Assign a different charge to each operation; this charge is its <b>amortized cost</b>. It may be more or less than the actual cost.</p>
+<ul>
+  <li>If amortized cost &gt; actual cost, the difference is saved on a specific object as <b>credit</b>.</li>
+  <li>If amortized cost &lt; actual cost, the stored credit is used up.</li>
+  <li>The total amortized cost must be an upper bound on the total actual cost. So total credit never becomes negative.</li>
+</ul>
+<div class="math">Amortized cost = actual cost + credit (deposited or used up)<br>
+Σ c′<sub>i</sub> ≥ Σ c<sub>i</sub>    and    total credit = Σ c′<sub>i</sub> − Σ c<sub>i</sub> ≥ 0</div>
+<p class="small"><b>What this means:</b> the charges we invent must cover all real work. The saved credit is the extra we charged, and it can never go below zero.</p>
+<p><b>Step-by-step:</b></p>
+<ol>
+  <li>Choose a charge (amortized cost) for each operation type.</li>
+  <li>Compare the charge with the real cost.</li>
+  <li>If the charge is bigger, store the difference as credit on an object.</li>
+  <li>If the charge is smaller, spend credit that was stored earlier.</li>
+  <li>Check that total credit never becomes negative.</li>
+  <li>Add all charges. That sum is an upper bound on the real total.</li>
+</ol>
+<p><b>Stack example:</b> charge PUSH 2, POP 0, MULTIPOP 0. The extra 1 from PUSH stays on the pushed object and pays for its later POP or MULTIPOP. Total for n operations is at most 2n, so the amortized cost per operation is 2.</p>
+<p><b>Binary counter example:</b> charge 2 for setting a bit to 1. Of this, 1 pays the actual set and 1 is credit on that bit; when the bit is reset to 0, the stored credit pays for the reset. Total is O(n).</p>
+
+<h4>3. Potential function method</h4>
+<p><b>Define:</b> a <b>potential function Φ</b> is a number that stores “saved energy” for the whole data structure. It works like a battery. An operation can charge the battery or drain it.</p>
+<p>This is similar to the accounting method. Here the prepaid amount is <b>potential “energy” attached to the whole data structure</b>. It is not attached to individual objects. Let D<sub>0</sub>, D<sub>1</sub>, …, D<sub>n</sub> be the data structure after each operation, c<sub>i</sub> the actual cost of operation i, and Φ(D<sub>i</sub>) its potential (a real number).</p>
+<div class="math">c′<sub>i</sub> = c<sub>i</sub> + Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>)<br>
+Σ c′<sub>i</sub> = Σ c<sub>i</sub> + Φ(D<sub>n</sub>) − Φ(D<sub>0</sub>)</div>
+<p class="small"><b>What this means:</b> the fair cost is the real cost plus the change in stored energy. If the operation charges the battery, the fair cost is higher. If it drains the battery, the fair cost is lower.</p>
+<p>Choose Φ(D<sub>0</sub>) = 0 and Φ(D<sub>i</sub>) ≥ 0. Then the amortized cost is an upper bound on the actual cost. A positive potential change means the operation was overcharged; a negative change means stored potential is discharged to pay for the operation.</p>
+<p><b>Step-by-step:</b></p>
+<ol>
+  <li>Pick a potential function Φ for the data structure.</li>
+  <li>Check Φ is never negative and Φ(empty) = 0.</li>
+  <li>For each operation, write its actual cost c<sub>i</sub>.</li>
+  <li>Find the change ΔΦ = Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>).</li>
+  <li>Add them: ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ.</li>
+  <li>If ĉ<sub>i</sub> is a constant, the amortized cost is O(1).</li>
+</ol>
+<ul>
+  <li><b>Stack:</b> Φ = number of elements. PUSH: ΔΦ = +1 → ĉ = 1 + 1 = <b>2</b>. POP: ΔΦ = −1 → ĉ = 1 − 1 = <b>0</b>. MULTIPOP of k′ elements: ΔΦ = −k′ → ĉ = k′ − k′ = <b>0</b>.</li>
+  <li><b>Binary counter:</b> Φ = number of 1 bits. If an INCREMENT resets t bits, actual cost = t + 1 and ΔΦ = 1 − t → ĉ = (t + 1) + (1 − t) = <b>2</b>.</li>
+</ul>
+
+<h4>Comparison of the three methods</h4>
+<div class="tbl-wrap">
+<table class="left">
+  <thead><tr><th>Method</th><th>Idea</th><th>Best used when</th></tr></thead>
+  <tbody>
+    <tr><td>Aggregate</td><td>Analyse the entire sequence first; amortized cost = total / n</td><td>The total cost of the sequence is easy to bound</td></tr>
+    <tr><td>Accounting</td><td>Assign different charges; excess is stored as credit on objects</td><td>Different operations have very different actual costs</td></tr>
+    <tr><td>Potential</td><td>Define a potential function Φ and prove it is a valid potential</td><td>A rigorous proof is needed; the structure has a natural “energy”</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="note"><b>Key line for the examiner:</b> amortized analysis averages over a <em>sequence of operations</em>, not over inputs — so it gives a <b>worst-case guarantee</b>, unlike average-case analysis.</div>
+
+<div class="analogy"><b>Real-life analogy — the metro card:</b> Most rides cost ₹20. One airport trip costs ₹400. Paying per ride makes that one trip look terrible. A monthly pass spreads the ₹400 over all rides, so the average ride is cheap. Amortized analysis is that monthly pass. It does not make the expensive trip cheap. It shows the fair cost per ride.</div>
+
+<div class="confuse"><b>Common confusion:</b> Amortized cost is <b>not</b> average-case cost. Average case averages over random inputs. Amortized cost averages over a sequence of operations and still assumes the worst-case input. Also, “amortized O(1)” does not mean every single operation is O(1). One operation can still be expensive.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §5.1 Amortized Analysis, p. 5-2 – 5-10</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s52">
+  <h2>5.2 Stack: PUSH, POP, MULTIPOP <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain amortized analysis using a stack with PUSH, POP and MULTIPOP. Find the amortized cost of each operation using all three methods.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(a) [9] · 2023 Nov Q5(b) [9] · 2025 Nov Q6(a) [9]</p>
+
+<div class="simple"><b>In simple words:</b> A stack is a pile of plates. PUSH adds a plate on top. POP removes the top plate. MULTIPOP removes many plates in one call. One MULTIPOP can look expensive, but each plate leaves the pile only once. So the total work for n operations is still linear.</div>
+
+<div class="note"><b>Why we do this:</b> One MULTIPOP call can cost O(n). If we multiply that by n operations, we get a loose O(n²) and reject a good design. The expensive call is paid for by the cheap PUSHes before it. Amortized analysis proves the true total is O(n).</div>
+
+<h4>The words you need first</h4>
+<ul>
+  <li><b>Stack:</b> a list where we add and remove only at one end, called the top.</li>
+  <li><b>Array:</b> a row of memory cells, each reached by a position number.</li>
+  <li><b>LIFO:</b> “last in, first out.” The last item pushed is the first item popped.</li>
+  <li><b>PUSH(S, x):</b> put item x on top of stack S.</li>
+  <li><b>POP(S):</b> remove and return the top item.</li>
+  <li><b>MULTIPOP(S, k):</b> remove up to k items from the top in one call.</li>
+  <li><b>Credit:</b> prepaid work saved on an item, used later to pay for its removal.</li>
+  <li><b>O(n²):</b> quadratic time. If n doubles, the work becomes four times larger.</li>
+</ul>
+
+<h4>Operations and actual costs</h4>
+<p>The book implements the stack as an array: PUSH does <code>s[top] = item; top++;</code> and POP does <code>top--; item = s[top];</code>. Both run in O(1). MULTIPOP is:</p>
+<pre><code>Algorithm multiple_pop(st, k)
+while ((!stempty(st)) AND (k != 0))
+{
+    pop(st);
+    k = k - 1;
+}</code></pre>
+<p>It removes at most k elements. For a stack of size 8, removing 4 elements costs 4 pops.</p>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Operation</th><th>Action</th><th>Actual cost</th></tr></thead>
+  <tbody>
+    <tr><td>PUSH(S, x)</td><td>push x onto stack S</td><td>1</td></tr>
+    <tr><td>POP(S)</td><td>remove and return top element</td><td>1</td></tr>
+    <tr><td>MULTIPOP(S, k)</td><td>pop min(k, |S|) elements</td><td>min(k, |S|)</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small"><b>What this means:</b> PUSH and POP do one unit of work. MULTIPOP does one unit per item it removes, so its cost can be large.</p>
+<p>MULTIPOP looks expensive: if the stack has n elements, one call can cost O(n). The book says a sequence of n operations can contain O(n) such calls. In the loose worst case, that costs O(n²). That bound is correct but <b>not tight</b>. The tight bound follows because each object can be popped only once: <b>total pops = total pushes</b>.</p>
+
+<h4>Method 1 — Aggregate analysis</h4>
+<p><b>Step-by-step:</b></p>
+<ol>
+  <li>Start with an empty stack.</li>
+  <li>Perform n operations in total.</li>
+  <li>Each element is pushed at most once, so there are at most n pushes.</li>
+  <li>Each pushed element can be popped at most once, so there are at most n pops.</li>
+  <li>Add both: total cost ≤ n + n = 2n.</li>
+  <li>Divide by n: amortized cost per operation ≤ 2.</li>
+</ol>
+<div class="math">Total cost of n operations ≤ (number of pushes) + (number of pops) ≤ n + n = 2n<br>
+Amortized cost per operation = 2n / n = <b>2 = O(1)</b></div>
+<p class="small"><b>What this means:</b> even if one MULTIPOP removes n items, those items were already paid for by n PUSHes. The whole run of n operations does at most 2n units of work.</p>
+
+<h4>Method 2 — Accounting method</h4>
+<p>Assign: <b>PUSH = 2, POP = 0, MULTIPOP = 0</b>.</p>
+<p><b>Step-by-step:</b></p>
+<ol>
+  <li>Charge 2 for every PUSH.</li>
+  <li>Use 1 to pay for the actual push.</li>
+  <li>Save the other 1 as credit on the pushed item.</li>
+  <li>Charge 0 for POP. The pop spends the item's saved credit.</li>
+  <li>Charge 0 for MULTIPOP. Each removed item spends its own saved credit.</li>
+  <li>Check the credit never goes negative. Every removed item was pushed first, so it always has its coin.</li>
+</ol>
+<div class="math">Total amortized cost for n operations ≤ 2n  →  amortized cost per operation = 2 = <b>O(1)</b></div>
+<p class="small"><b>What this means:</b> we overcharge each PUSH by 1. That extra coin waits on the item and pays for its future removal.</p>
+
+<h4>Method 3 — Potential function method</h4>
+<p>Let <code>Φ(S) = |S|</code>, the number of objects in the stack. Φ(D<sub>0</sub>) = 0 and Φ(D<sub>i</sub>) ≥ 0. For MULTIPOP, let k′ = min(|S|, k).</p>
+<p><b>Step-by-step:</b></p>
+<ol>
+  <li>Define the potential as the number of items in the stack.</li>
+  <li>Check the empty stack has potential 0, and potential is never negative.</li>
+  <li>PUSH: actual cost 1, potential rises by 1, so ĉ = 1 + 1 = 2.</li>
+  <li>POP: actual cost 1, potential falls by 1, so ĉ = 1 − 1 = 0.</li>
+  <li>MULTIPOP(k): actual cost k′, potential falls by k′, so ĉ = k′ − k′ = 0.</li>
+  <li>All three results are constants, so each operation is O(1) amortized.</li>
+</ol>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Operation</th><th>Actual c<sub>i</sub></th><th>ΔΦ</th><th>Amortized ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ</th></tr></thead>
+  <tbody>
+    <tr><td>PUSH</td><td>1</td><td>+1</td><td>1 + 1 = <b>2</b></td></tr>
+    <tr><td>POP</td><td>1</td><td>−1</td><td>1 − 1 = <b>0</b></td></tr>
+    <tr><td>MULTIPOP(k)</td><td>k′ = min(k, |S|)</td><td>−k′</td><td>k′ − k′ = <b>0</b></td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small"><b>What this means:</b> PUSH stores one unit of “energy” in the stack. POP and MULTIPOP release that energy, so their fair cost is zero.</p>
+<p class="small">The book's MULTIPOP line prints the potential change as k′; because k′ objects leave the stack, the change is actually −k′, which gives the stated amortized cost 0.</p>
+<div class="math"><b>All three operations have amortized cost O(1).</b><br>
+Total for n operations = O(n), even though one MULTIPOP can cost O(n).</div>
+<p class="small"><b>What this means:</b> the scary single call is rare and is paid for by many cheap pushes. The long-run total is linear.</p>
+
+<div class="warn"><b>Common mistake:</b> saying “MULTIPOP is O(n), so the sequence is O(n²)”. That is the <em>worst-case per operation</em>, not the amortized bound. The total is O(n) because each element is popped once.</div>
+
+<div class="analogy"><b>Real-life analogy — a ₹1 coin on every plate:</b> PUSH costs ₹2. You spend ₹1 to place the plate and glue ₹1 to it. POP and MULTIPOP cost ₹0, because each plate pays with its own coin when it leaves. No plate can leave twice, so the coins never run out.</div>
+
+<div class="confuse"><b>Common confusion:</b> “Amortized cost 2” does not mean every operation takes 2 steps. PUSH really takes 1, POP takes 1, and MULTIPOP can take n. It means the <b>average over the sequence</b> is at most 2. Also, this is not probability: we assume the worst-case sequence, not random operations.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §5.1.1 – 5.1.3 Stack and Binary Counter, p. 5-2 – 5-9</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s53">
+  <h2>5.3 Binary counter <span class="b rep" style="font-size:12px;vertical-align:middle">★★ 2×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Prove that the amortized cost per operation of a k-bit binary counter is O(1), using the aggregate method.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q5(a) [6] · 2025 Nov Q5(a) [5]</p>
+
+<div class="simple"><b>In simple words:</b> A binary counter counts in bits: 000, 001, 010, 011, and so on. Adding 1 sometimes flips many bits at once. For example, 0111 becomes 1000 and flips four bits. But most increments flip only one bit. Over n increments, the total flips are less than 2n, so the fair cost per increment is constant.</div>
+
+<div class="note"><b>Why we do this:</b> If we look only at the worst single increment, we get O(k) and think the counter is slow. The expensive flips happen rarely. Amortized analysis proves the counter is O(1) per increment on average.</div>
+
+<h4>The words you need first</h4>
+<ul>
+  <li><b>Bit:</b> a digit that is either 0 or 1.</li>
+  <li><b>k-bit counter:</b> a counter stored in k bits, from B[0] to B[k−1].</li>
+  <li><b>LSB:</b> least significant bit, the rightmost bit B[0]. It changes most often.</li>
+  <li><b>Flip:</b> change a bit from 0 to 1, or from 1 to 0.</li>
+  <li><b>INCREMENT:</b> add 1 to the counter.</li>
+  <li><b>Geometric series:</b> a sum where each term is half the one before, such as 1 + ½ + ¼ + … = 2.</li>
+</ul>
+
+<h4>Setup</h4>
+<p>A k-bit binary counter is stored in an array <code>B[0..k−1]</code>, with B[0] the least significant bit. INCREMENT flips a suffix of 1-bits to 0 and the next 0-bit to 1. A <b>suffix</b> is a block of bits at the right end. The book's algorithm is:</p>
+<pre><code>Algorithm Increment(B[0..k-1])
+i = 0
+while ((i &lt; length(B)) AND (B[i] = 1))
+{
+    B[i] = 0
+    i = i + 1
+}
+if (i &lt; length(B)) then
+    B[i] = 1</code></pre>
+<p>The book's 8-bit example starts at 00000000. The costs of successive increments are 1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3, 1, 2, 1, 5, giving a cumulative cost of <b>31 flips for 16 increments</b> (Fig. 5.1.1).</p>
+<div class="math">31 flips / 16 increments ≈ 1.94 flips per increment</div>
+<p class="small"><b>What this means:</b> the pattern repeats in powers of two. One increment costs 5 flips, but the average stays below 2.</p>
+
+<h4>Aggregate analysis</h4>
+<p>In n consecutive INCREMENT operations, count how often each bit flips:</p>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Bit position</th><th>Flips every</th><th>Number of flips in n increments</th></tr></thead>
+  <tbody>
+    <tr><td>B[0] (LSB)</td><td>1 operation</td><td>n</td></tr>
+    <tr><td>B[1]</td><td>2 operations</td><td>n/2</td></tr>
+    <tr><td>B[2]</td><td>4 operations</td><td>n/4</td></tr>
+    <tr><td>B[3]</td><td>8 operations</td><td>n/8</td></tr>
+    <tr><td>…</td><td>…</td><td>…</td></tr>
+    <tr><td>B[i]</td><td>2<sup>i</sup></td><td>⌊n/2<sup>i</sup>⌋</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small"><b>What this means:</b> the last bit flips on every step, the next bit every second step, the next every fourth step, and so on. Higher bits flip very rarely.</p>
+<p><b>Step-by-step:</b></p>
+<ol>
+  <li>Count flips of B[0]: it flips on every increment, so n flips.</li>
+  <li>Count flips of B[1]: it flips every 2 increments, so about n/2 flips.</li>
+  <li>Count flips of B[i]: it flips every 2<sup>i</sup> increments, so about n/2<sup>i</sup> flips.</li>
+  <li>Add all bit positions from i = 0 to k − 1.</li>
+  <li>Replace the finite sum by the infinite geometric series. This only makes it bigger, so the bound stays safe.</li>
+  <li>Use 1 + ½ + ¼ + … = 2 to get T(n) &lt; 2n.</li>
+  <li>Divide by n: amortized cost per increment &lt; 2, which is O(1).</li>
+</ol>
+<div class="math">T(n) = Σ<sub>i=0</sub><sup>k−1</sup> ⌊n/2<sup>i</sup>⌋ &lt; n · Σ<sub>i=0</sub><sup>∞</sup> (1/2)<sup>i</sup> = 2n<br>
+Worst case for the sequence = O(n)<br>
+Amortized cost per INCREMENT = O(n)/n = <b>O(1)</b></div>
+<p class="small"><b>What this means:</b> the total flips for n increments is below 2n. So each increment gets a fair share below 2, even though one increment can flip k bits.</p>
+
+<h4>Potential method (alternative, for full marks)</h4>
+<p><b>Define:</b> the <b>potential function</b> here is the number of 1-bits in the counter. It measures stored “energy” that the next increment may have to clear.</p>
+<p>Let <code>Φ(D<sub>i</sub>) = b<sub>i</sub></code>, the number of 1-bits after the i-th increment. Suppose the i-th operation resets t<sub>i</sub> bits. Its actual cost is:</p>
+<div class="math">c<sub>i</sub> = t<sub>i</sub> + 1</div>
+<p class="small"><b>What this means:</b> the increment clears t<sub>i</sub> ones and sets one new bit, so it does t<sub>i</sub> + 1 flips.</p>
+<p>If b<sub>i</sub> = 0, the operation resets all k bits, so b<sub>i−1</sub> = t<sub>i</sub> = k. Otherwise b<sub>i</sub> = b<sub>i−1</sub> − t<sub>i</sub> + 1. Hence b<sub>i</sub> ≤ b<sub>i−1</sub> − t<sub>i</sub> + 1, and the potential change is:</p>
+<div class="math">Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>) = 1 − t<sub>i</sub><br>
+ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ = (t<sub>i</sub> + 1) + (1 − t<sub>i</sub>) = <b>2</b></div>
+<p class="small"><b>What this means:</b> clearing t ones releases t units of energy, and setting one new bit stores 1 unit. The two effects cancel, leaving a fair cost of 2.</p>
+<p><b>Step-by-step:</b></p>
+<ol>
+  <li>Define Φ as the number of 1-bits.</li>
+  <li>Check Φ is never negative and the all-zero counter has Φ = 0.</li>
+  <li>Let t<sub>i</sub> be the number of 1-bits that the increment resets.</li>
+  <li>Write the actual cost: c<sub>i</sub> = t<sub>i</sub> + 1.</li>
+  <li>Write the potential change: ΔΦ = 1 − t<sub>i</sub>.</li>
+  <li>Add: ĉ<sub>i</sub> = (t<sub>i</sub> + 1) + (1 − t<sub>i</sub>) = 2.</li>
+  <li>Since Φ ≥ 0 and Φ(D<sub>0</sub>) = 0, total amortized cost is an upper bound on total actual cost.</li>
+</ol>
+<p>Since Φ ≥ 0 and Φ(D<sub>0</sub>) = 0, total amortized cost is an upper bound on total actual cost, so each operation is O(1) amortized.</p>
+
+<div class="note"><b>Worst case vs amortized:</b> a single INCREMENT can flip all k bits → O(k). But n increments cost O(n), so the amortized cost is O(1).</div>
+
+<div class="analogy"><b>Real-life analogy — the car odometer:</b> The last digit rolls on every kilometre. The tens digit rolls every 10 km. The hundreds digit rolls every 100 km. The higher digits move very rarely. If you watch one roll-over, it looks busy. Over a long drive, each kilometre costs about one digit turn.</div>
+
+<div class="confuse"><b>Common confusion:</b> “One increment is O(k), so n increments are O(nk)” is wrong as a tight bound. The expensive all-ones case happens once every 2<sup>k</sup> increments. Also, n is the number of increments, not the number of bits. The O(1) result is per increment over a long sequence.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §5.1.1 Aggregate Analysis &amp; §5.1.3 Potential Method, p. 5-3 – 5-10</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s54">
+  <h2>5.4 Tractable and intractable problems</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are tractable and non-tractable (intractable) problems? Give examples.</p>
+      <div class="badges"><span class="b marks">6–7 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [part] · 2025 May Q5(b) [7] · 2025 Nov Q5(b) [6]</p>
+
+<div class="simple"><b>In simple words:</b> A tractable problem has a fast algorithm. “Fast” means polynomial time: n, n², n³, and so on. An intractable problem has no known polynomial-time algorithm. Its best exact methods grow exponentially, such as 2<sup>n</sup> or n!. Small inputs may still be solvable, but large inputs explode.</div>
+
+<div class="note"><b>Why we do this:</b> This split tells us what to expect. For tractable problems, we hunt for a better exact algorithm. For intractable problems, we often stop hunting and use approximation or heuristics. That saves months of wasted effort.</div>
+
+<h4>The words you need first</h4>
+<ul>
+  <li><b>Polynomial time:</b> running time bounded by n<sup>c</sup> for some fixed number c, such as n² or n³.</li>
+  <li><b>Exponential time:</b> running time such as 2<sup>n</sup> or n!, which grows far faster than any polynomial as n grows.</li>
+  <li><b>Upper bound:</b> a promise that the algorithm never takes more than this much time.</li>
+  <li><b>Lower bound:</b> a proof that no algorithm can do better than this much time.</li>
+  <li><b>Asymptotic:</b> describes behaviour as n grows very large.</li>
+  <li><b>Tractable:</b> solvable in polynomial time.</li>
+  <li><b>P:</b> the class of problems that have a polynomial-time algorithm.</li>
+  <li><b>NP:</b> the class of problems whose yes answer can be checked quickly.</li>
+  <li><b>Intractable:</b> no polynomial-time algorithm is known; the book says its lower bound is exponential.</li>
+  <li><b>NP-hard:</b> a problem at least as hard as the hardest problems in the class NP. No polynomial exact algorithm is known for it.</li>
+</ul>
+
+<h4>Tractable problem</h4>
+<p>The book defines a <b>tractable problem</b> as a problem that can be solved by a <b>polynomial-time algorithm</b>; its upper bound is polynomial.</p>
+<p><b>Examples (book):</b> (i) searching an unordered list, (ii) searching an ordered list, (iii) sorting a list, (iv) multiplication of integers, (v) finding a minimum spanning tree in a graph.</p>
+<div class="simple"><b>Quick check:</b> if n doubles, a polynomial algorithm slows by a fixed factor. For n², doubling n makes the work 4 times larger. That is manageable.</div>
+
+<h4>Intractable (non-tractable) problem</h4>
+<p>The book defines an <b>intractable problem</b> as a problem that <b>cannot be solved by a polynomial-time algorithm</b>; its lower bound is exponential.</p>
+<p><b>Examples (book):</b> (i) travelling salesman problem, (ii) knapsack problem.</p>
+<p class="small"><b>Exam-safe wording:</b> for NP-hard problems, say “no polynomial-time algorithm is known.” Proving that none can exist is the famous open P vs NP question.</p>
+
+<h4>How to classify a problem — step-by-step</h4>
+<ol>
+  <li>Write down the best exact algorithm you know for the problem.</li>
+  <li>Find its growth rate in terms of input size n.</li>
+  <li>If the growth is log n, n, n log n, n², n³, or any polynomial, call it tractable.</li>
+  <li>If the best known growth is 2<sup>n</sup>, n!, or similar, call it intractable.</li>
+  <li>Check the input size. A small TSP instance can still be solved exactly.</li>
+  <li>If the problem is intractable, look for an approximation algorithm with a proven ratio.</li>
+</ol>
+
+<div class="tbl-wrap">
+<table class="left">
+  <thead><tr><th>Point</th><th>Tractable</th><th>Intractable</th></tr></thead>
+  <tbody>
+    <tr><td>Solvable in polynomial time?</td><td>Yes</td><td>No polynomial-time algorithm is known</td></tr>
+    <tr><td>Bound used by the book</td><td>Upper bound is polynomial</td><td>Lower bound is exponential</td></tr>
+    <tr><td>Book examples</td><td>Searching ordered/unordered list, sorting, integer multiplication, MST</td><td>Travelling salesman problem, knapsack problem</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small"><b>What this means:</b> the difference is the shape of the growth curve, not the size of the code or the difficulty of the exam question.</p>
+
+<h4>Why the difference matters</h4>
+<ul>
+  <li>For a tractable problem, polynomial growth keeps the running time manageable as the input size increases.</li>
+  <li>For an intractable problem, the best known exact algorithms grow exponentially; even moderate n can be impossible.</li>
+  <li>Intractability is a worst-case asymptotic statement. Small instances of TSP or knapsack can still be solved exactly.</li>
+  <li>The book uses this distinction to motivate approximation algorithms in §5.5: for an NP-hard optimization problem, find a good solution quickly instead of the exact optimum.</li>
+</ul>
+
+<div class="analogy"><b>Real-life analogy — the staircase and the wall:</b> A tractable problem is a staircase. Each extra step costs about the same, so you can climb a hundred steps. An intractable problem is a wall that doubles in height with every step. The first few steps are easy. Then the wall becomes impossible, even though the rule is simple.</div>
+
+<div class="confuse"><b>Common confusion:</b> “Intractable” does not mean “impossible to solve.” It means “no polynomial-time exact algorithm is known.” A 10-city TSP can still be solved by brute force. Also, intractable is not the same as undecidable. Undecidable means no algorithm can ever solve it, even with unlimited time. An intractable problem has an answer; we just cannot find it fast in the worst case.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §5.3 Introduction to Tractable and Non-tractable Problems, p. 5-12</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What are intractable problems? Does the Travelling Salesman Problem belong to this class? Justify.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q5(b) [6]</p>
+
+<div class="simple"><b>In simple words:</b> The Travelling Salesman Problem (TSP) asks for the shortest tour that visits every city once and returns home. Checking one given tour is easy. Finding the best tour is hard. The decision version is NP-complete, and the optimization version is NP-hard. So yes, TSP is intractable. But we can still find a good tour quickly with approximation.</div>
+
+<div class="note"><b>Why we do this:</b> The examiner wants a chain of reasoning, not just “yes.” We must connect decision version, NP-complete, optimization version, and NP-hard. Then we add the exact costs to prove the problem explodes.</div>
+
+<h4>The words you need first</h4>
+<ul>
+  <li><b>Tour:</b> a closed route that visits every city exactly once.</li>
+  <li><b>Hamiltonian cycle:</b> a cycle that visits every vertex exactly once.</li>
+  <li><b>Decision problem:</b> a question with a yes/no answer.</li>
+  <li><b>Optimization problem:</b> a question that asks for the best value, such as the shortest tour.</li>
+  <li><b>NP:</b> the class of problems whose yes answer can be checked quickly.</li>
+  <li><b>NP-complete:</b> an NP problem that is at least as hard as every other NP problem.</li>
+  <li><b>NP-hard:</b> at least as hard as NP-complete problems; no polynomial exact algorithm is known.</li>
+  <li><b>Reduction:</b> a fast way to turn one problem into another, used to prove hardness.</li>
+  <li><b>Exhaustive search:</b> try every possible tour and keep the shortest.</li>
+  <li><b>Held–Karp:</b> a dynamic-programming method that solves TSP exactly.</li>
+  <li><b>Super-polynomial:</b> grows faster than any fixed power of n, such as 2<sup>n</sup>.</li>
+</ul>
+
+<h4>The book's rule</h4>
+<p><b>Yes, TSP is intractable.</b> The book's rule is: if the <b>decision version</b> of a combinatorial optimization problem is proved <b>NP-complete</b>, then its <b>optimization version</b> is <b>NP-hard</b>.</p>
+<ul>
+  <li><b>Decision TSP:</b> “Is there a tour of length less than K?” We can check a proposed tour in polynomial time. Hamiltonian cycle also reduces to it. So decision TSP is NP-complete.</li>
+  <li><b>Optimization TSP:</b> “What is the shortest tour?” This is NP-hard. The book's Hamiltonian-cycle example makes the same point. The decision version asks if a cycle shorter than k exists; it is NP-complete. The optimization version asks for the shortest cycle; it is NP-hard. Checking whether a cycle is truly the shortest is hard.</li>
+</ul>
+
+<h4>Justify step-by-step</h4>
+<ol>
+  <li>Write the decision version: “Is there a tour shorter than K?”</li>
+  <li>Show that a yes answer has a short proof. The proposed tour is the proof, and we can check its length quickly.</li>
+  <li>Show that Hamiltonian cycle reduces to decision TSP. A Hamiltonian cycle is a tour; set K to the number of cities plus one.</li>
+  <li>Conclude that decision TSP is NP-complete. It is in NP, and an NP-complete problem reduces to it.</li>
+  <li>Write the optimization version: “What is the shortest tour?”</li>
+  <li>Suppose we could solve the optimization version fast. Then we could answer the decision version fast: compute the shortest length and compare it with K.</li>
+  <li>So the optimization version is at least as hard as the decision version. Therefore it is NP-hard.</li>
+  <li>Conclude that no polynomial-time exact algorithm is known for TSP.</li>
+</ol>
+
+<h4>Why exact TSP explodes</h4>
+<div class="math">Exhaustive search: O(n!)   |   Held–Karp DP: O(n²2<sup>n</sup>)</div>
+<p class="small"><b>What this means:</b> both functions grow faster than any polynomial. For n = 30, n! is already enormous. Held–Karp is better, but 2<sup>n</sup> still explodes.</p>
+<p>No polynomial-time exact algorithm is known. Exhaustive search is O(n!), and the standard dynamic-programming solution (Held–Karp) is O(n²2<sup>n</sup>); both are super-polynomial.</p>
+
+<h4>But TSP is approximable</h4>
+<p><b>But TSP is approximable.</b> For Euclidean (metric) TSP, the book gives the twice-around-the-tree algorithm, a 2-approximation: compute an MST, walk around it by DFS, and remove duplicate visits. So exact TSP is intractable, but a near-optimal tour can be found in polynomial time.</p>
+<div class="math">Approximate tour length ≤ 2 × optimal tour length</div>
+<p class="small"><b>What this means:</b> the tour we build is never more than twice as long as the true best tour. That is a proven guarantee, not a hope.</p>
+
+<div class="analogy"><b>Real-life analogy — checking vs solving a puzzle:</b> A teacher can check your solved maze in seconds by following the path. Solving the maze from scratch is much harder. TSP is the same. Checking a tour is easy; finding the best tour is hard. Approximation is like accepting a path that is a little longer, as long as it gets you out quickly.</div>
+
+<div class="confuse"><b>Common confusion:</b> “NP-hard” does not mean “no algorithm exists.” It means “no polynomial-time exact algorithm is known.” Also, the 2-approximation needs the triangle inequality (Euclidean distances). For general TSP with arbitrary distances, this guarantee does not hold. Finally, decision TSP and optimization TSP are different questions.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §5.3 &amp; §5.5.1 TSP, p. 5-12, 5-19 – 5-22</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Comment: "The problem of searching an ordered list or an unordered list belongs to the class of tractable problems."</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q6(c) [4]</p>
+
+<div class="simple"><b>In simple words:</b> Searching an unordered list takes O(n): in the worst case, you check every item. Searching an ordered list takes O(log n): you halve the search range each time. Both are polynomial. So both belong to the tractable class. The ordered list is just faster.</div>
+
+<div class="note"><b>Why we do this:</b> Students often think “log n is fast, n is slow, so only one is tractable.” That is wrong. Tractability is about polynomial versus exponential. Both n and log n are tiny compared with 2<sup>n</sup>.</div>
+
+<h4>The words you need first</h4>
+<ul>
+  <li><b>List:</b> a sequence of items stored one after another.</li>
+  <li><b>Index:</b> the position number of an item, usually starting at 0.</li>
+  <li><b>Unordered list:</b> the items are in no special order.</li>
+  <li><b>Ordered list:</b> the items are sorted, such as 3, 7, 12, 20.</li>
+  <li><b>Linear search:</b> check items one by one from the start.</li>
+  <li><b>Binary search:</b> check the middle item and discard half the list.</li>
+  <li><b>Polynomial:</b> grows no faster than n, n², n³, or some fixed power of n. log n is even smaller.</li>
+  <li><b>O(log n):</b> doubling n adds only one extra step.</li>
+</ul>
+
+<h4>The statement is true</h4>
+<p><b>The statement is true.</b> The book lists both <b>searching an unordered list</b> and <b>searching an ordered list</b> as examples of tractable problems.</p>
+<ul>
+  <li>Unordered list: linear search scans up to n elements → O(n), which is polynomial.</li>
+  <li>Ordered list: binary search halves the interval each time → O(log n), which is even faster (and still tractable).</li>
+</ul>
+
+<h4>Linear search — step-by-step</h4>
+<ol>
+  <li>Start at the first item.</li>
+  <li>Compare the item with the target.</li>
+  <li>If it matches, stop and return its position.</li>
+  <li>If not, move to the next item.</li>
+  <li>If you reach the end with no match, report “not found.”</li>
+</ol>
+<div class="math">Worst case: n comparisons  →  O(n)</div>
+<p class="small"><b>What this means:</b> if the target is last or missing, you touch every item once. That is linear work.</p>
+
+<h4>Binary search — step-by-step</h4>
+<ol>
+  <li>Set low to the first index and high to the last index.</li>
+  <li>Find the middle index mid.</li>
+  <li>If A[mid] equals the target, stop.</li>
+  <li>If A[mid] is too small, move low to mid + 1. The left half is discarded.</li>
+  <li>If A[mid] is too large, move high to mid − 1. The right half is discarded.</li>
+  <li>Repeat until found or low &gt; high.</li>
+</ol>
+<div class="math">Each step halves the list: n → n/2 → n/4 → … → 1<br>
+Number of steps = log<sub>2</sub> n  →  O(log n)</div>
+<p class="small"><b>What this means:</b> doubling the list adds only one extra comparison. A list of 1,000 items needs about 10 checks.</p>
+
+<h4>Why both are tractable</h4>
+<p>Since a polynomial-time algorithm exists for both, both belong to the tractable class. The ordered list is simply the easier of the two.</p>
+<p><b>Compare the growth:</b></p>
+<div class="tbl-wrap">
+<table class="left">
+  <thead><tr><th>n</th><th>Linear search steps</th><th>Binary search steps</th></tr></thead>
+  <tbody>
+    <tr><td>16</td><td>16</td><td>4</td></tr>
+    <tr><td>1,024</td><td>1,024</td><td>10</td></tr>
+    <tr><td>1,048,576</td><td>1,048,576</td><td>20</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small"><b>What this means:</b> the gap is huge in practice, but both columns are polynomial. Neither explodes like 2<sup>n</sup>.</p>
+
+<div class="analogy"><b>Real-life analogy — finding a word:</b> In a shuffled pile of flashcards, you read every card until you find the word. In a dictionary, you open the middle, then the middle of the remaining half, and so on. The dictionary is faster. Both are still “easy” compared with trying every possible arrangement of the alphabet.</div>
+
+<div class="confuse"><b>Common confusion:</b> “O(log n) is small, so it is a different class” is wrong. Both O(n) and O(log n) are within polynomial time. Also, binary search needs the list to be sorted first. Sorting costs extra time, so it pays off only when you search many times.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §5.3 Introduction to Tractable and Non-tractable Problems, p. 5-12</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s55">
+  <h2>5.5 Randomized algorithms <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★★ 5×</span></h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -392,347 +949,8 @@ RANDOMIZED-QUICKSORT(A, p, r)
   </div>
 </section>
 
-<section class="card" id="s51">
-  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>5.1 Amortized analysis — the three methods</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain the methods of amortized analysis with a suitable example.</p>
-      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [10 — short notes on all three] · 2023 Nov Q5(a) [9 — aggregate] · 2024 May Q6(a) [8] · 2025 May Q6(a) [6] · 2025 Nov Q5(c) [6 — any two]</p>
-
-<div class="simple"><b>In simple words:</b> Some operations are cheap almost every time. Once in a while, one operation is very expensive. Amortized analysis finds the fair cost of one operation across a long run. It spreads the rare big cost over the many small ones.</div>
-
-<div class="note"><b>Why we do this:</b> One scary operation can make a good data structure look bad. Amortized analysis shows the real long-run cost. That lets us promise a worst-case total time, not a guess.</div>
-
-<h4>The words you need first</h4>
-<ul>
-  <li><b>Operation:</b> one action on the data, such as PUSH or INCREMENT.</li>
-  <li><b>Data structure:</b> a way to organise data in memory, such as a stack or a counter.</li>
-  <li><b>Sequence:</b> a run of n operations, one after another.</li>
-  <li><b>n:</b> the number of operations in that run.</li>
-  <li><b>Actual cost (c<sub>i</sub>):</b> the real work done by operation i, counted in steps.</li>
-  <li><b>Amortized cost (ĉ<sub>i</sub>):</b> the fair share of the total cost that we charge to operation i.</li>
-  <li><b>O(1):</b> constant time. The work does not grow as n grows.</li>
-  <li><b>O(n):</b> linear time. If n doubles, the work doubles.</li>
-  <li><b>Worst-case sequence:</b> the order of operations that makes the total cost as large as possible.</li>
-</ul>
-
-<h4>What is amortized analysis?</h4>
-<p>According to the book, <b>amortized analysis means finding the average running time per operation over a worst-case sequence of operations</b>. The average cost of a single operation is small when we average over the whole sequence. This holds even if one operation in that sequence is expensive. It therefore guarantees the <b>time per operation in the worst case</b>.</p>
-<p><b>In one line:</b> total work divided by the number of operations gives the fair cost per operation.</p>
-<div class="math">Amortized cost of n operations = <b>total cost of the n operations / n</b></div>
-<p class="small"><b>What this means:</b> add the real cost of all n operations, then divide by n.</p>
-<p>The book gives three commonly used techniques. All three find the same fair cost. They differ only in how they keep the accounts.</p>
-
-<h4>1. Aggregate analysis</h4>
-<p><b>Define:</b> <b>Aggregate analysis</b> adds up the cost of the whole sequence first. Then it divides by n. We do not track single operations.</p>
-<p>Analyse the whole sequence of <b>n</b> operations first. If the sequence takes worst-case time <b>T(n)</b>, the amortized cost of each operation is:</p>
-<div class="math">T(n) / n</div>
-<p class="small"><b>What this means:</b> the total time T(n) is shared equally by all n operations.</p>
-<p><b>Step-by-step:</b></p>
-<ol>
-  <li>Write down the n operations you will perform.</li>
-  <li>Find the total worst-case cost T(n) of the whole sequence.</li>
-  <li>Divide T(n) by n.</li>
-  <li>If the result is a constant, each operation is O(1) amortized.</li>
-</ol>
-<ul>
-  <li>Stack with PUSH, POP and MULTIPOP: n operations cost at most 2n, because each object is pushed once and popped once → <b>O(1)</b> per operation.</li>
-  <li>k-bit binary counter: n INCREMENTs flip fewer than 2n bits → <b>O(1)</b> per increment.</li>
-  <li>The book first gives a loose bound. A sequence with O(n) MULTIPOPs can cost O(n²). That bound is correct but <b>not tight</b>. The tight total is O(n).</li>
-</ul>
-
-<h4>2. Accounting method</h4>
-<p><b>Define:</b> <b>Credit</b> is prepaid work. We charge an operation more than it really costs. The extra amount is saved on a data object. Later, that saved credit pays for a real operation.</p>
-<p>Assign a different charge to each operation; this charge is its <b>amortized cost</b>. It may be more or less than the actual cost.</p>
-<ul>
-  <li>If amortized cost &gt; actual cost, the difference is saved on a specific object as <b>credit</b>.</li>
-  <li>If amortized cost &lt; actual cost, the stored credit is used up.</li>
-  <li>The total amortized cost must be an upper bound on the total actual cost. So total credit never becomes negative.</li>
-</ul>
-<div class="math">Amortized cost = actual cost + credit (deposited or used up)<br>
-Σ c′<sub>i</sub> ≥ Σ c<sub>i</sub>    and    total credit = Σ c′<sub>i</sub> − Σ c<sub>i</sub> ≥ 0</div>
-<p class="small"><b>What this means:</b> the charges we invent must cover all real work. The saved credit is the extra we charged, and it can never go below zero.</p>
-<p><b>Step-by-step:</b></p>
-<ol>
-  <li>Choose a charge (amortized cost) for each operation type.</li>
-  <li>Compare the charge with the real cost.</li>
-  <li>If the charge is bigger, store the difference as credit on an object.</li>
-  <li>If the charge is smaller, spend credit that was stored earlier.</li>
-  <li>Check that total credit never becomes negative.</li>
-  <li>Add all charges. That sum is an upper bound on the real total.</li>
-</ol>
-<p><b>Stack example:</b> charge PUSH 2, POP 0, MULTIPOP 0. The extra 1 from PUSH stays on the pushed object and pays for its later POP or MULTIPOP. Total for n operations is at most 2n, so the amortized cost per operation is 2.</p>
-<p><b>Binary counter example:</b> charge 2 for setting a bit to 1. Of this, 1 pays the actual set and 1 is credit on that bit; when the bit is reset to 0, the stored credit pays for the reset. Total is O(n).</p>
-
-<h4>3. Potential function method</h4>
-<p><b>Define:</b> a <b>potential function Φ</b> is a number that stores “saved energy” for the whole data structure. It works like a battery. An operation can charge the battery or drain it.</p>
-<p>This is similar to the accounting method. Here the prepaid amount is <b>potential “energy” attached to the whole data structure</b>. It is not attached to individual objects. Let D<sub>0</sub>, D<sub>1</sub>, …, D<sub>n</sub> be the data structure after each operation, c<sub>i</sub> the actual cost of operation i, and Φ(D<sub>i</sub>) its potential (a real number).</p>
-<div class="math">c′<sub>i</sub> = c<sub>i</sub> + Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>)<br>
-Σ c′<sub>i</sub> = Σ c<sub>i</sub> + Φ(D<sub>n</sub>) − Φ(D<sub>0</sub>)</div>
-<p class="small"><b>What this means:</b> the fair cost is the real cost plus the change in stored energy. If the operation charges the battery, the fair cost is higher. If it drains the battery, the fair cost is lower.</p>
-<p>Choose Φ(D<sub>0</sub>) = 0 and Φ(D<sub>i</sub>) ≥ 0. Then the amortized cost is an upper bound on the actual cost. A positive potential change means the operation was overcharged; a negative change means stored potential is discharged to pay for the operation.</p>
-<p><b>Step-by-step:</b></p>
-<ol>
-  <li>Pick a potential function Φ for the data structure.</li>
-  <li>Check Φ is never negative and Φ(empty) = 0.</li>
-  <li>For each operation, write its actual cost c<sub>i</sub>.</li>
-  <li>Find the change ΔΦ = Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>).</li>
-  <li>Add them: ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ.</li>
-  <li>If ĉ<sub>i</sub> is a constant, the amortized cost is O(1).</li>
-</ol>
-<ul>
-  <li><b>Stack:</b> Φ = number of elements. PUSH: ΔΦ = +1 → ĉ = 1 + 1 = <b>2</b>. POP: ΔΦ = −1 → ĉ = 1 − 1 = <b>0</b>. MULTIPOP of k′ elements: ΔΦ = −k′ → ĉ = k′ − k′ = <b>0</b>.</li>
-  <li><b>Binary counter:</b> Φ = number of 1 bits. If an INCREMENT resets t bits, actual cost = t + 1 and ΔΦ = 1 − t → ĉ = (t + 1) + (1 − t) = <b>2</b>.</li>
-</ul>
-
-<h4>Comparison of the three methods</h4>
-<div class="tbl-wrap">
-<table class="left">
-  <thead><tr><th>Method</th><th>Idea</th><th>Best used when</th></tr></thead>
-  <tbody>
-    <tr><td>Aggregate</td><td>Analyse the entire sequence first; amortized cost = total / n</td><td>The total cost of the sequence is easy to bound</td></tr>
-    <tr><td>Accounting</td><td>Assign different charges; excess is stored as credit on objects</td><td>Different operations have very different actual costs</td></tr>
-    <tr><td>Potential</td><td>Define a potential function Φ and prove it is a valid potential</td><td>A rigorous proof is needed; the structure has a natural “energy”</td></tr>
-  </tbody>
-</table>
-</div>
-<div class="note"><b>Key line for the examiner:</b> amortized analysis averages over a <em>sequence of operations</em>, not over inputs — so it gives a <b>worst-case guarantee</b>, unlike average-case analysis.</div>
-
-<div class="analogy"><b>Real-life analogy — the metro card:</b> Most rides cost ₹20. One airport trip costs ₹400. Paying per ride makes that one trip look terrible. A monthly pass spreads the ₹400 over all rides, so the average ride is cheap. Amortized analysis is that monthly pass. It does not make the expensive trip cheap. It shows the fair cost per ride.</div>
-
-<div class="confuse"><b>Common confusion:</b> Amortized cost is <b>not</b> average-case cost. Average case averages over random inputs. Amortized cost averages over a sequence of operations and still assumes the worst-case input. Also, “amortized O(1)” does not mean every single operation is O(1). One operation can still be expensive.</div>
-
-      <p class="booksrc">📘 <b>Book:</b> §5.1 Amortized Analysis, p. 5-2 – 5-10</p>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s54">
-  <div class="prio">Priority 3 · ★★★★ 4× repeated</div><h2>5.4 Tractable and intractable problems</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What are tractable and non-tractable (intractable) problems? Give examples.</p>
-      <div class="badges"><span class="b marks">6–7 marks</span><span class="b rep">★★★★ 4×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(a) [part] · 2025 May Q5(b) [7] · 2025 Nov Q5(b) [6]</p>
-
-<div class="simple"><b>In simple words:</b> A tractable problem has a fast algorithm. “Fast” means polynomial time: n, n², n³, and so on. An intractable problem has no known polynomial-time algorithm. Its best exact methods grow exponentially, such as 2<sup>n</sup> or n!. Small inputs may still be solvable, but large inputs explode.</div>
-
-<div class="note"><b>Why we do this:</b> This split tells us what to expect. For tractable problems, we hunt for a better exact algorithm. For intractable problems, we often stop hunting and use approximation or heuristics. That saves months of wasted effort.</div>
-
-<h4>The words you need first</h4>
-<ul>
-  <li><b>Polynomial time:</b> running time bounded by n<sup>c</sup> for some fixed number c, such as n² or n³.</li>
-  <li><b>Exponential time:</b> running time such as 2<sup>n</sup> or n!, which grows far faster than any polynomial as n grows.</li>
-  <li><b>Upper bound:</b> a promise that the algorithm never takes more than this much time.</li>
-  <li><b>Lower bound:</b> a proof that no algorithm can do better than this much time.</li>
-  <li><b>Asymptotic:</b> describes behaviour as n grows very large.</li>
-  <li><b>Tractable:</b> solvable in polynomial time.</li>
-  <li><b>P:</b> the class of problems that have a polynomial-time algorithm.</li>
-  <li><b>NP:</b> the class of problems whose yes answer can be checked quickly.</li>
-  <li><b>Intractable:</b> no polynomial-time algorithm is known; the book says its lower bound is exponential.</li>
-  <li><b>NP-hard:</b> a problem at least as hard as the hardest problems in the class NP. No polynomial exact algorithm is known for it.</li>
-</ul>
-
-<h4>Tractable problem</h4>
-<p>The book defines a <b>tractable problem</b> as a problem that can be solved by a <b>polynomial-time algorithm</b>; its upper bound is polynomial.</p>
-<p><b>Examples (book):</b> (i) searching an unordered list, (ii) searching an ordered list, (iii) sorting a list, (iv) multiplication of integers, (v) finding a minimum spanning tree in a graph.</p>
-<div class="simple"><b>Quick check:</b> if n doubles, a polynomial algorithm slows by a fixed factor. For n², doubling n makes the work 4 times larger. That is manageable.</div>
-
-<h4>Intractable (non-tractable) problem</h4>
-<p>The book defines an <b>intractable problem</b> as a problem that <b>cannot be solved by a polynomial-time algorithm</b>; its lower bound is exponential.</p>
-<p><b>Examples (book):</b> (i) travelling salesman problem, (ii) knapsack problem.</p>
-<p class="small"><b>Exam-safe wording:</b> for NP-hard problems, say “no polynomial-time algorithm is known.” Proving that none can exist is the famous open P vs NP question.</p>
-
-<h4>How to classify a problem — step-by-step</h4>
-<ol>
-  <li>Write down the best exact algorithm you know for the problem.</li>
-  <li>Find its growth rate in terms of input size n.</li>
-  <li>If the growth is log n, n, n log n, n², n³, or any polynomial, call it tractable.</li>
-  <li>If the best known growth is 2<sup>n</sup>, n!, or similar, call it intractable.</li>
-  <li>Check the input size. A small TSP instance can still be solved exactly.</li>
-  <li>If the problem is intractable, look for an approximation algorithm with a proven ratio.</li>
-</ol>
-
-<div class="tbl-wrap">
-<table class="left">
-  <thead><tr><th>Point</th><th>Tractable</th><th>Intractable</th></tr></thead>
-  <tbody>
-    <tr><td>Solvable in polynomial time?</td><td>Yes</td><td>No polynomial-time algorithm is known</td></tr>
-    <tr><td>Bound used by the book</td><td>Upper bound is polynomial</td><td>Lower bound is exponential</td></tr>
-    <tr><td>Book examples</td><td>Searching ordered/unordered list, sorting, integer multiplication, MST</td><td>Travelling salesman problem, knapsack problem</td></tr>
-  </tbody>
-</table>
-</div>
-<p class="small"><b>What this means:</b> the difference is the shape of the growth curve, not the size of the code or the difficulty of the exam question.</p>
-
-<h4>Why the difference matters</h4>
-<ul>
-  <li>For a tractable problem, polynomial growth keeps the running time manageable as the input size increases.</li>
-  <li>For an intractable problem, the best known exact algorithms grow exponentially; even moderate n can be impossible.</li>
-  <li>Intractability is a worst-case asymptotic statement. Small instances of TSP or knapsack can still be solved exactly.</li>
-  <li>The book uses this distinction to motivate approximation algorithms in §5.5: for an NP-hard optimization problem, find a good solution quickly instead of the exact optimum.</li>
-</ul>
-
-<div class="analogy"><b>Real-life analogy — the staircase and the wall:</b> A tractable problem is a staircase. Each extra step costs about the same, so you can climb a hundred steps. An intractable problem is a wall that doubles in height with every step. The first few steps are easy. Then the wall becomes impossible, even though the rule is simple.</div>
-
-<div class="confuse"><b>Common confusion:</b> “Intractable” does not mean “impossible to solve.” It means “no polynomial-time exact algorithm is known.” A 10-city TSP can still be solved by brute force. Also, intractable is not the same as undecidable. Undecidable means no algorithm can ever solve it, even with unlimited time. An intractable problem has an answer; we just cannot find it fast in the worst case.</div>
-
-      <p class="booksrc">📘 <b>Book:</b> §5.3 Introduction to Tractable and Non-tractable Problems, p. 5-12</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What are intractable problems? Does the Travelling Salesman Problem belong to this class? Justify.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q5(b) [6]</p>
-
-<div class="simple"><b>In simple words:</b> The Travelling Salesman Problem (TSP) asks for the shortest tour that visits every city once and returns home. Checking one given tour is easy. Finding the best tour is hard. The decision version is NP-complete, and the optimization version is NP-hard. So yes, TSP is intractable. But we can still find a good tour quickly with approximation.</div>
-
-<div class="note"><b>Why we do this:</b> The examiner wants a chain of reasoning, not just “yes.” We must connect decision version, NP-complete, optimization version, and NP-hard. Then we add the exact costs to prove the problem explodes.</div>
-
-<h4>The words you need first</h4>
-<ul>
-  <li><b>Tour:</b> a closed route that visits every city exactly once.</li>
-  <li><b>Hamiltonian cycle:</b> a cycle that visits every vertex exactly once.</li>
-  <li><b>Decision problem:</b> a question with a yes/no answer.</li>
-  <li><b>Optimization problem:</b> a question that asks for the best value, such as the shortest tour.</li>
-  <li><b>NP:</b> the class of problems whose yes answer can be checked quickly.</li>
-  <li><b>NP-complete:</b> an NP problem that is at least as hard as every other NP problem.</li>
-  <li><b>NP-hard:</b> at least as hard as NP-complete problems; no polynomial exact algorithm is known.</li>
-  <li><b>Reduction:</b> a fast way to turn one problem into another, used to prove hardness.</li>
-  <li><b>Exhaustive search:</b> try every possible tour and keep the shortest.</li>
-  <li><b>Held–Karp:</b> a dynamic-programming method that solves TSP exactly.</li>
-  <li><b>Super-polynomial:</b> grows faster than any fixed power of n, such as 2<sup>n</sup>.</li>
-</ul>
-
-<h4>The book's rule</h4>
-<p><b>Yes, TSP is intractable.</b> The book's rule is: if the <b>decision version</b> of a combinatorial optimization problem is proved <b>NP-complete</b>, then its <b>optimization version</b> is <b>NP-hard</b>.</p>
-<ul>
-  <li><b>Decision TSP:</b> “Is there a tour of length less than K?” We can check a proposed tour in polynomial time. Hamiltonian cycle also reduces to it. So decision TSP is NP-complete.</li>
-  <li><b>Optimization TSP:</b> “What is the shortest tour?” This is NP-hard. The book's Hamiltonian-cycle example makes the same point. The decision version asks if a cycle shorter than k exists; it is NP-complete. The optimization version asks for the shortest cycle; it is NP-hard. Checking whether a cycle is truly the shortest is hard.</li>
-</ul>
-
-<h4>Justify step-by-step</h4>
-<ol>
-  <li>Write the decision version: “Is there a tour shorter than K?”</li>
-  <li>Show that a yes answer has a short proof. The proposed tour is the proof, and we can check its length quickly.</li>
-  <li>Show that Hamiltonian cycle reduces to decision TSP. A Hamiltonian cycle is a tour; set K to the number of cities plus one.</li>
-  <li>Conclude that decision TSP is NP-complete. It is in NP, and an NP-complete problem reduces to it.</li>
-  <li>Write the optimization version: “What is the shortest tour?”</li>
-  <li>Suppose we could solve the optimization version fast. Then we could answer the decision version fast: compute the shortest length and compare it with K.</li>
-  <li>So the optimization version is at least as hard as the decision version. Therefore it is NP-hard.</li>
-  <li>Conclude that no polynomial-time exact algorithm is known for TSP.</li>
-</ol>
-
-<h4>Why exact TSP explodes</h4>
-<div class="math">Exhaustive search: O(n!)   |   Held–Karp DP: O(n²2<sup>n</sup>)</div>
-<p class="small"><b>What this means:</b> both functions grow faster than any polynomial. For n = 30, n! is already enormous. Held–Karp is better, but 2<sup>n</sup> still explodes.</p>
-<p>No polynomial-time exact algorithm is known. Exhaustive search is O(n!), and the standard dynamic-programming solution (Held–Karp) is O(n²2<sup>n</sup>); both are super-polynomial.</p>
-
-<h4>But TSP is approximable</h4>
-<p><b>But TSP is approximable.</b> For Euclidean (metric) TSP, the book gives the twice-around-the-tree algorithm, a 2-approximation: compute an MST, walk around it by DFS, and remove duplicate visits. So exact TSP is intractable, but a near-optimal tour can be found in polynomial time.</p>
-<div class="math">Approximate tour length ≤ 2 × optimal tour length</div>
-<p class="small"><b>What this means:</b> the tour we build is never more than twice as long as the true best tour. That is a proven guarantee, not a hope.</p>
-
-<div class="analogy"><b>Real-life analogy — checking vs solving a puzzle:</b> A teacher can check your solved maze in seconds by following the path. Solving the maze from scratch is much harder. TSP is the same. Checking a tour is easy; finding the best tour is hard. Approximation is like accepting a path that is a little longer, as long as it gets you out quickly.</div>
-
-<div class="confuse"><b>Common confusion:</b> “NP-hard” does not mean “no algorithm exists.” It means “no polynomial-time exact algorithm is known.” Also, the 2-approximation needs the triangle inequality (Euclidean distances). For general TSP with arbitrary distances, this guarantee does not hold. Finally, decision TSP and optimization TSP are different questions.</div>
-
-      <p class="booksrc">📘 <b>Book:</b> §5.3 &amp; §5.5.1 TSP, p. 5-12, 5-19 – 5-22</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Comment: "The problem of searching an ordered list or an unordered list belongs to the class of tractable problems."</p>
-      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q6(c) [4]</p>
-
-<div class="simple"><b>In simple words:</b> Searching an unordered list takes O(n): in the worst case, you check every item. Searching an ordered list takes O(log n): you halve the search range each time. Both are polynomial. So both belong to the tractable class. The ordered list is just faster.</div>
-
-<div class="note"><b>Why we do this:</b> Students often think “log n is fast, n is slow, so only one is tractable.” That is wrong. Tractability is about polynomial versus exponential. Both n and log n are tiny compared with 2<sup>n</sup>.</div>
-
-<h4>The words you need first</h4>
-<ul>
-  <li><b>List:</b> a sequence of items stored one after another.</li>
-  <li><b>Index:</b> the position number of an item, usually starting at 0.</li>
-  <li><b>Unordered list:</b> the items are in no special order.</li>
-  <li><b>Ordered list:</b> the items are sorted, such as 3, 7, 12, 20.</li>
-  <li><b>Linear search:</b> check items one by one from the start.</li>
-  <li><b>Binary search:</b> check the middle item and discard half the list.</li>
-  <li><b>Polynomial:</b> grows no faster than n, n², n³, or some fixed power of n. log n is even smaller.</li>
-  <li><b>O(log n):</b> doubling n adds only one extra step.</li>
-</ul>
-
-<h4>The statement is true</h4>
-<p><b>The statement is true.</b> The book lists both <b>searching an unordered list</b> and <b>searching an ordered list</b> as examples of tractable problems.</p>
-<ul>
-  <li>Unordered list: linear search scans up to n elements → O(n), which is polynomial.</li>
-  <li>Ordered list: binary search halves the interval each time → O(log n), which is even faster (and still tractable).</li>
-</ul>
-
-<h4>Linear search — step-by-step</h4>
-<ol>
-  <li>Start at the first item.</li>
-  <li>Compare the item with the target.</li>
-  <li>If it matches, stop and return its position.</li>
-  <li>If not, move to the next item.</li>
-  <li>If you reach the end with no match, report “not found.”</li>
-</ol>
-<div class="math">Worst case: n comparisons  →  O(n)</div>
-<p class="small"><b>What this means:</b> if the target is last or missing, you touch every item once. That is linear work.</p>
-
-<h4>Binary search — step-by-step</h4>
-<ol>
-  <li>Set low to the first index and high to the last index.</li>
-  <li>Find the middle index mid.</li>
-  <li>If A[mid] equals the target, stop.</li>
-  <li>If A[mid] is too small, move low to mid + 1. The left half is discarded.</li>
-  <li>If A[mid] is too large, move high to mid − 1. The right half is discarded.</li>
-  <li>Repeat until found or low &gt; high.</li>
-</ol>
-<div class="math">Each step halves the list: n → n/2 → n/4 → … → 1<br>
-Number of steps = log<sub>2</sub> n  →  O(log n)</div>
-<p class="small"><b>What this means:</b> doubling the list adds only one extra comparison. A list of 1,000 items needs about 10 checks.</p>
-
-<h4>Why both are tractable</h4>
-<p>Since a polynomial-time algorithm exists for both, both belong to the tractable class. The ordered list is simply the easier of the two.</p>
-<p><b>Compare the growth:</b></p>
-<div class="tbl-wrap">
-<table class="left">
-  <thead><tr><th>n</th><th>Linear search steps</th><th>Binary search steps</th></tr></thead>
-  <tbody>
-    <tr><td>16</td><td>16</td><td>4</td></tr>
-    <tr><td>1,024</td><td>1,024</td><td>10</td></tr>
-    <tr><td>1,048,576</td><td>1,048,576</td><td>20</td></tr>
-  </tbody>
-</table>
-</div>
-<p class="small"><b>What this means:</b> the gap is huge in practice, but both columns are polynomial. Neither explodes like 2<sup>n</sup>.</p>
-
-<div class="analogy"><b>Real-life analogy — finding a word:</b> In a shuffled pile of flashcards, you read every card until you find the word. In a dictionary, you open the middle, then the middle of the remaining half, and so on. The dictionary is faster. Both are still “easy” compared with trying every possible arrangement of the alphabet.</div>
-
-<div class="confuse"><b>Common confusion:</b> “O(log n) is small, so it is a different class” is wrong. Both O(n) and O(log n) are within polynomial time. Also, binary search needs the list to be sorted first. Sorting costs extra time, so it pays off only when you search many times.</div>
-
-      <p class="booksrc">📘 <b>Book:</b> §5.3 Introduction to Tractable and Non-tractable Problems, p. 5-12</p>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="s56">
-  <div class="prio">Priority 4 · ★★★★ 4× repeated</div><h2>5.6 Approximation algorithms <span class="b rep" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
+  <h2>5.6 Approximation algorithms <span class="b rep" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -861,123 +1079,8 @@ Number of steps = log<sub>2</sub> n  →  O(log n)</div>
   </div>
 </section>
 
-<section class="card" id="s52">
-  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>5.2 Stack: PUSH, POP, MULTIPOP <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain amortized analysis using a stack with PUSH, POP and MULTIPOP. Find the amortized cost of each operation using all three methods.</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(a) [9] · 2023 Nov Q5(b) [9] · 2025 Nov Q6(a) [9]</p>
-
-<div class="simple"><b>In simple words:</b> A stack is a pile of plates. PUSH adds a plate on top. POP removes the top plate. MULTIPOP removes many plates in one call. One MULTIPOP can look expensive, but each plate leaves the pile only once. So the total work for n operations is still linear.</div>
-
-<div class="note"><b>Why we do this:</b> One MULTIPOP call can cost O(n). If we multiply that by n operations, we get a loose O(n²) and reject a good design. The expensive call is paid for by the cheap PUSHes before it. Amortized analysis proves the true total is O(n).</div>
-
-<h4>The words you need first</h4>
-<ul>
-  <li><b>Stack:</b> a list where we add and remove only at one end, called the top.</li>
-  <li><b>Array:</b> a row of memory cells, each reached by a position number.</li>
-  <li><b>LIFO:</b> “last in, first out.” The last item pushed is the first item popped.</li>
-  <li><b>PUSH(S, x):</b> put item x on top of stack S.</li>
-  <li><b>POP(S):</b> remove and return the top item.</li>
-  <li><b>MULTIPOP(S, k):</b> remove up to k items from the top in one call.</li>
-  <li><b>Credit:</b> prepaid work saved on an item, used later to pay for its removal.</li>
-  <li><b>O(n²):</b> quadratic time. If n doubles, the work becomes four times larger.</li>
-</ul>
-
-<h4>Operations and actual costs</h4>
-<p>The book implements the stack as an array: PUSH does <code>s[top] = item; top++;</code> and POP does <code>top--; item = s[top];</code>. Both run in O(1). MULTIPOP is:</p>
-<pre><code>Algorithm multiple_pop(st, k)
-while ((!stempty(st)) AND (k != 0))
-{
-    pop(st);
-    k = k - 1;
-}</code></pre>
-<p>It removes at most k elements. For a stack of size 8, removing 4 elements costs 4 pops.</p>
-<div class="tbl-wrap">
-<table>
-  <thead><tr><th>Operation</th><th>Action</th><th>Actual cost</th></tr></thead>
-  <tbody>
-    <tr><td>PUSH(S, x)</td><td>push x onto stack S</td><td>1</td></tr>
-    <tr><td>POP(S)</td><td>remove and return top element</td><td>1</td></tr>
-    <tr><td>MULTIPOP(S, k)</td><td>pop min(k, |S|) elements</td><td>min(k, |S|)</td></tr>
-  </tbody>
-</table>
-</div>
-<p class="small"><b>What this means:</b> PUSH and POP do one unit of work. MULTIPOP does one unit per item it removes, so its cost can be large.</p>
-<p>MULTIPOP looks expensive: if the stack has n elements, one call can cost O(n). The book says a sequence of n operations can contain O(n) such calls. In the loose worst case, that costs O(n²). That bound is correct but <b>not tight</b>. The tight bound follows because each object can be popped only once: <b>total pops = total pushes</b>.</p>
-
-<h4>Method 1 — Aggregate analysis</h4>
-<p><b>Step-by-step:</b></p>
-<ol>
-  <li>Start with an empty stack.</li>
-  <li>Perform n operations in total.</li>
-  <li>Each element is pushed at most once, so there are at most n pushes.</li>
-  <li>Each pushed element can be popped at most once, so there are at most n pops.</li>
-  <li>Add both: total cost ≤ n + n = 2n.</li>
-  <li>Divide by n: amortized cost per operation ≤ 2.</li>
-</ol>
-<div class="math">Total cost of n operations ≤ (number of pushes) + (number of pops) ≤ n + n = 2n<br>
-Amortized cost per operation = 2n / n = <b>2 = O(1)</b></div>
-<p class="small"><b>What this means:</b> even if one MULTIPOP removes n items, those items were already paid for by n PUSHes. The whole run of n operations does at most 2n units of work.</p>
-
-<h4>Method 2 — Accounting method</h4>
-<p>Assign: <b>PUSH = 2, POP = 0, MULTIPOP = 0</b>.</p>
-<p><b>Step-by-step:</b></p>
-<ol>
-  <li>Charge 2 for every PUSH.</li>
-  <li>Use 1 to pay for the actual push.</li>
-  <li>Save the other 1 as credit on the pushed item.</li>
-  <li>Charge 0 for POP. The pop spends the item's saved credit.</li>
-  <li>Charge 0 for MULTIPOP. Each removed item spends its own saved credit.</li>
-  <li>Check the credit never goes negative. Every removed item was pushed first, so it always has its coin.</li>
-</ol>
-<div class="math">Total amortized cost for n operations ≤ 2n  →  amortized cost per operation = 2 = <b>O(1)</b></div>
-<p class="small"><b>What this means:</b> we overcharge each PUSH by 1. That extra coin waits on the item and pays for its future removal.</p>
-
-<h4>Method 3 — Potential function method</h4>
-<p>Let <code>Φ(S) = |S|</code>, the number of objects in the stack. Φ(D<sub>0</sub>) = 0 and Φ(D<sub>i</sub>) ≥ 0. For MULTIPOP, let k′ = min(|S|, k).</p>
-<p><b>Step-by-step:</b></p>
-<ol>
-  <li>Define the potential as the number of items in the stack.</li>
-  <li>Check the empty stack has potential 0, and potential is never negative.</li>
-  <li>PUSH: actual cost 1, potential rises by 1, so ĉ = 1 + 1 = 2.</li>
-  <li>POP: actual cost 1, potential falls by 1, so ĉ = 1 − 1 = 0.</li>
-  <li>MULTIPOP(k): actual cost k′, potential falls by k′, so ĉ = k′ − k′ = 0.</li>
-  <li>All three results are constants, so each operation is O(1) amortized.</li>
-</ol>
-<div class="tbl-wrap">
-<table>
-  <thead><tr><th>Operation</th><th>Actual c<sub>i</sub></th><th>ΔΦ</th><th>Amortized ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ</th></tr></thead>
-  <tbody>
-    <tr><td>PUSH</td><td>1</td><td>+1</td><td>1 + 1 = <b>2</b></td></tr>
-    <tr><td>POP</td><td>1</td><td>−1</td><td>1 − 1 = <b>0</b></td></tr>
-    <tr><td>MULTIPOP(k)</td><td>k′ = min(k, |S|)</td><td>−k′</td><td>k′ − k′ = <b>0</b></td></tr>
-  </tbody>
-</table>
-</div>
-<p class="small"><b>What this means:</b> PUSH stores one unit of “energy” in the stack. POP and MULTIPOP release that energy, so their fair cost is zero.</p>
-<p class="small">The book's MULTIPOP line prints the potential change as k′; because k′ objects leave the stack, the change is actually −k′, which gives the stated amortized cost 0.</p>
-<div class="math"><b>All three operations have amortized cost O(1).</b><br>
-Total for n operations = O(n), even though one MULTIPOP can cost O(n).</div>
-<p class="small"><b>What this means:</b> the scary single call is rare and is paid for by many cheap pushes. The long-run total is linear.</p>
-
-<div class="warn"><b>Common mistake:</b> saying “MULTIPOP is O(n), so the sequence is O(n²)”. That is the <em>worst-case per operation</em>, not the amortized bound. The total is O(n) because each element is popped once.</div>
-
-<div class="analogy"><b>Real-life analogy — a ₹1 coin on every plate:</b> PUSH costs ₹2. You spend ₹1 to place the plate and glue ₹1 to it. POP and MULTIPOP cost ₹0, because each plate pays with its own coin when it leaves. No plate can leave twice, so the coins never run out.</div>
-
-<div class="confuse"><b>Common confusion:</b> “Amortized cost 2” does not mean every operation takes 2 steps. PUSH really takes 1, POP takes 1, and MULTIPOP can take n. It means the <b>average over the sequence</b> is at most 2. Also, this is not probability: we assume the worst-case sequence, not random operations.</div>
-
-      <p class="booksrc">📘 <b>Book:</b> §5.1.1 – 5.1.3 Stack and Binary Counter, p. 5-2 – 5-9</p>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="s57">
-  <div class="prio">Priority 6 · ★★★ 3× repeated</div><h2>5.7 Embedded algorithms &amp; power-optimized scheduling <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
+  <h2>5.7 Embedded algorithms &amp; power-optimized scheduling <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1097,111 +1200,8 @@ Total for n operations = O(n), even though one MULTIPOP can cost O(n).</div>
   </div>
 </section>
 
-<section class="card" id="s53">
-  <div class="prio">Priority 7 · ★★ 2× repeated</div><h2>5.3 Binary counter <span class="b rep" style="font-size:12px;vertical-align:middle">★★ 2×</span></h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Prove that the amortized cost per operation of a k-bit binary counter is O(1), using the aggregate method.</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q5(a) [6] · 2025 Nov Q5(a) [5]</p>
-
-<div class="simple"><b>In simple words:</b> A binary counter counts in bits: 000, 001, 010, 011, and so on. Adding 1 sometimes flips many bits at once. For example, 0111 becomes 1000 and flips four bits. But most increments flip only one bit. Over n increments, the total flips are less than 2n, so the fair cost per increment is constant.</div>
-
-<div class="note"><b>Why we do this:</b> If we look only at the worst single increment, we get O(k) and think the counter is slow. The expensive flips happen rarely. Amortized analysis proves the counter is O(1) per increment on average.</div>
-
-<h4>The words you need first</h4>
-<ul>
-  <li><b>Bit:</b> a digit that is either 0 or 1.</li>
-  <li><b>k-bit counter:</b> a counter stored in k bits, from B[0] to B[k−1].</li>
-  <li><b>LSB:</b> least significant bit, the rightmost bit B[0]. It changes most often.</li>
-  <li><b>Flip:</b> change a bit from 0 to 1, or from 1 to 0.</li>
-  <li><b>INCREMENT:</b> add 1 to the counter.</li>
-  <li><b>Geometric series:</b> a sum where each term is half the one before, such as 1 + ½ + ¼ + … = 2.</li>
-</ul>
-
-<h4>Setup</h4>
-<p>A k-bit binary counter is stored in an array <code>B[0..k−1]</code>, with B[0] the least significant bit. INCREMENT flips a suffix of 1-bits to 0 and the next 0-bit to 1. A <b>suffix</b> is a block of bits at the right end. The book's algorithm is:</p>
-<pre><code>Algorithm Increment(B[0..k-1])
-i = 0
-while ((i &lt; length(B)) AND (B[i] = 1))
-{
-    B[i] = 0
-    i = i + 1
-}
-if (i &lt; length(B)) then
-    B[i] = 1</code></pre>
-<p>The book's 8-bit example starts at 00000000. The costs of successive increments are 1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3, 1, 2, 1, 5, giving a cumulative cost of <b>31 flips for 16 increments</b> (Fig. 5.1.1).</p>
-<div class="math">31 flips / 16 increments ≈ 1.94 flips per increment</div>
-<p class="small"><b>What this means:</b> the pattern repeats in powers of two. One increment costs 5 flips, but the average stays below 2.</p>
-
-<h4>Aggregate analysis</h4>
-<p>In n consecutive INCREMENT operations, count how often each bit flips:</p>
-<div class="tbl-wrap">
-<table>
-  <thead><tr><th>Bit position</th><th>Flips every</th><th>Number of flips in n increments</th></tr></thead>
-  <tbody>
-    <tr><td>B[0] (LSB)</td><td>1 operation</td><td>n</td></tr>
-    <tr><td>B[1]</td><td>2 operations</td><td>n/2</td></tr>
-    <tr><td>B[2]</td><td>4 operations</td><td>n/4</td></tr>
-    <tr><td>B[3]</td><td>8 operations</td><td>n/8</td></tr>
-    <tr><td>…</td><td>…</td><td>…</td></tr>
-    <tr><td>B[i]</td><td>2<sup>i</sup></td><td>⌊n/2<sup>i</sup>⌋</td></tr>
-  </tbody>
-</table>
-</div>
-<p class="small"><b>What this means:</b> the last bit flips on every step, the next bit every second step, the next every fourth step, and so on. Higher bits flip very rarely.</p>
-<p><b>Step-by-step:</b></p>
-<ol>
-  <li>Count flips of B[0]: it flips on every increment, so n flips.</li>
-  <li>Count flips of B[1]: it flips every 2 increments, so about n/2 flips.</li>
-  <li>Count flips of B[i]: it flips every 2<sup>i</sup> increments, so about n/2<sup>i</sup> flips.</li>
-  <li>Add all bit positions from i = 0 to k − 1.</li>
-  <li>Replace the finite sum by the infinite geometric series. This only makes it bigger, so the bound stays safe.</li>
-  <li>Use 1 + ½ + ¼ + … = 2 to get T(n) &lt; 2n.</li>
-  <li>Divide by n: amortized cost per increment &lt; 2, which is O(1).</li>
-</ol>
-<div class="math">T(n) = Σ<sub>i=0</sub><sup>k−1</sup> ⌊n/2<sup>i</sup>⌋ &lt; n · Σ<sub>i=0</sub><sup>∞</sup> (1/2)<sup>i</sup> = 2n<br>
-Worst case for the sequence = O(n)<br>
-Amortized cost per INCREMENT = O(n)/n = <b>O(1)</b></div>
-<p class="small"><b>What this means:</b> the total flips for n increments is below 2n. So each increment gets a fair share below 2, even though one increment can flip k bits.</p>
-
-<h4>Potential method (alternative, for full marks)</h4>
-<p><b>Define:</b> the <b>potential function</b> here is the number of 1-bits in the counter. It measures stored “energy” that the next increment may have to clear.</p>
-<p>Let <code>Φ(D<sub>i</sub>) = b<sub>i</sub></code>, the number of 1-bits after the i-th increment. Suppose the i-th operation resets t<sub>i</sub> bits. Its actual cost is:</p>
-<div class="math">c<sub>i</sub> = t<sub>i</sub> + 1</div>
-<p class="small"><b>What this means:</b> the increment clears t<sub>i</sub> ones and sets one new bit, so it does t<sub>i</sub> + 1 flips.</p>
-<p>If b<sub>i</sub> = 0, the operation resets all k bits, so b<sub>i−1</sub> = t<sub>i</sub> = k. Otherwise b<sub>i</sub> = b<sub>i−1</sub> − t<sub>i</sub> + 1. Hence b<sub>i</sub> ≤ b<sub>i−1</sub> − t<sub>i</sub> + 1, and the potential change is:</p>
-<div class="math">Φ(D<sub>i</sub>) − Φ(D<sub>i−1</sub>) = 1 − t<sub>i</sub><br>
-ĉ<sub>i</sub> = c<sub>i</sub> + ΔΦ = (t<sub>i</sub> + 1) + (1 − t<sub>i</sub>) = <b>2</b></div>
-<p class="small"><b>What this means:</b> clearing t ones releases t units of energy, and setting one new bit stores 1 unit. The two effects cancel, leaving a fair cost of 2.</p>
-<p><b>Step-by-step:</b></p>
-<ol>
-  <li>Define Φ as the number of 1-bits.</li>
-  <li>Check Φ is never negative and the all-zero counter has Φ = 0.</li>
-  <li>Let t<sub>i</sub> be the number of 1-bits that the increment resets.</li>
-  <li>Write the actual cost: c<sub>i</sub> = t<sub>i</sub> + 1.</li>
-  <li>Write the potential change: ΔΦ = 1 − t<sub>i</sub>.</li>
-  <li>Add: ĉ<sub>i</sub> = (t<sub>i</sub> + 1) + (1 − t<sub>i</sub>) = 2.</li>
-  <li>Since Φ ≥ 0 and Φ(D<sub>0</sub>) = 0, total amortized cost is an upper bound on total actual cost.</li>
-</ol>
-<p>Since Φ ≥ 0 and Φ(D<sub>0</sub>) = 0, total amortized cost is an upper bound on total actual cost, so each operation is O(1) amortized.</p>
-
-<div class="note"><b>Worst case vs amortized:</b> a single INCREMENT can flip all k bits → O(k). But n increments cost O(n), so the amortized cost is O(1).</div>
-
-<div class="analogy"><b>Real-life analogy — the car odometer:</b> The last digit rolls on every kilometre. The tens digit rolls every 10 km. The hundreds digit rolls every 100 km. The higher digits move very rarely. If you watch one roll-over, it looks busy. Over a long drive, each kilometre costs about one digit turn.</div>
-
-<div class="confuse"><b>Common confusion:</b> “One increment is O(k), so n increments are O(nk)” is wrong as a tight bound. The expensive all-ones case happens once every 2<sup>k</sup> increments. Also, n is the number of increments, not the number of bits. The O(1) result is per increment over a long sequence.</div>
-
-      <p class="booksrc">📘 <b>Book:</b> §5.1.1 Aggregate Analysis &amp; §5.1.3 Potential Method, p. 5-3 – 5-10</p>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="s58">
-  <div class="prio">Priority 8 · ★★ 2× repeated</div><h2>5.8 Sorting algorithm for embedded systems</h2>
+  <h2>5.8 Sorting algorithm for embedded systems</h2>
 
   <div class="qa">
     <div class="qa-head">

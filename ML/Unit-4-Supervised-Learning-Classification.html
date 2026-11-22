@@ -168,11 +168,11 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h3>ML · Unit 4</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s44">4.4 Ensemble learning <span class="pill">6×</span></a>
-    <a href="#s45">4.5 Multiclass &amp; imbalance <span class="pill">4×</span></a>
     <a href="#s41">4.1 Evaluating classifiers <span class="pill">2×</span></a>
     <a href="#s42">4.2 K-nearest neighbours <span class="pill">2×</span></a>
     <a href="#s43">4.3 Support vector machine <span class="pill">2×</span></a>
+    <a href="#s44">4.4 Ensemble learning <span class="pill">6×</span></a>
+    <a href="#s45">4.5 Multiclass &amp; imbalance <span class="pill">4×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -209,7 +209,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 
   <div class="tbl-wrap">
   <table class="freq">
-    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <thead><tr><th>Rank</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td class="l">Ensemble learning — concept, simple/advanced, why used, example</td><td>2022 Nov Q3(c) [6]; 2023 May Q3(b) [6]; 2023 Nov Q3(b) [9]; 2024 May Q3(a) [5]; 2025 May Q3(b) [6]; 2025 Nov Q4(c) [6]</td><td><span class="stars">★★★★★★</span> 6×</td></tr>
       <tr><td>2</td><td class="l">KNN — algorithm/example, numerical, pros/cons, distance metrics</td><td>2022 Nov Q3(b) [6]; 2023 May Q4(c) [5]; 2024 May Q3(b) [6], Q3(c) [6]; 2025 May Q4(a) [5]; 2025 Nov Q4(b) [6]</td><td><span class="stars">★★★★★★</span> 6×</td></tr>
@@ -235,533 +235,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <div class="tip"><b>Marks strategy:</b> 5–6 mark theory = definition + 4–6 bullets + one example. 6-mark numerical = formula + substitution + answer + interpretation. 9-mark = algorithm/diagram + comparison table + example.</div>
 </section>
 
-<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s44">
-  <div class="prio">Priority 1 · ★★★★★ 6× repeated</div><h2>4.4 Ensemble learning</h2>
-  <p class="lead">An ensemble combines several weak/base models into one stronger model. This is the most repeated Unit-4 topic (6 instances).</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What do you mean by ensemble learning? Explain with an example. Why is ensemble learning used in ML? Write a short note on simple and advanced ensemble methods.</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep hot">★★★★★★ 6×</span></div>
-    </div>
-    <div class="qa-body">
-<p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [6 — simple/advanced] · 2023 May Q3(b) [6] · 2023 Nov Q3(b) [9] · 2024 May Q3(a) [5 — why] · 2025 May Q3(b) [6 — example] · 2025 Nov Q4(c) [6 — why]</p>
-
-      <div class="simple"><b>In simple words:</b> An ensemble asks many models and combines their answers.<br>
-      One model may be wrong, but the group vote is usually steadier.<br>
-      It is the machine-learning version of “ask several experts, then go with the majority”.</div>
-
-      <h4>Why we do this</h4>
-      <p>Different models make different mistakes. If their errors are not identical, combining them cancels part of the error. A group can therefore be more accurate and more stable than any single model, without inventing a new algorithm.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Ensemble</b> — a group of models whose predictions are combined into one answer.</li>
-        <li><b>Base learner</b> — one model inside the ensemble.</li>
-        <li><b>Weak learner</b> — a model that is only slightly better than guessing, such as a one-split tree.</li>
-        <li><b>Voting</b> — choosing the label that most base learners predict.</li>
-        <li><b>Averaging</b> — taking the mean of the base learners' numeric outputs.</li>
-        <li><b>Bagging</b> — training models in parallel on random samples and averaging them.</li>
-        <li><b>Boosting</b> — training models in sequence, each one fixing the previous model's errors.</li>
-        <li><b>Stacking</b> — training a second-level model to combine the base models' outputs.</li>
-        <li><b>Variance</b> — how much predictions change when the training data changes.</li>
-        <li><b>Bias</b> — error caused by a model that is too simple.</li>
-        <li><b>Mode</b> — the most frequent value; the label with the most votes.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Train several models on the same problem.</b> Why: you need more than one opinion before you can combine anything.</li>
-        <li><b>Make them different.</b> Why: if every model sees the same data and makes the same error, voting just repeats that error.</li>
-        <li><b>Collect their predictions for the new point.</b> Why: each model contributes one vote or one number.</li>
-        <li><b>Combine by majority vote for labels, or by average for numbers.</b> Why: the combination is the ensemble's final answer.</li>
-        <li><b>Evaluate the ensemble as one model.</b> Why: a group is only useful if its combined score beats the individual scores.</li>
-      </ol>
-
-      <h4>Definition</h4>
-      <p>Ensemble learning trains <b>multiple models</b> (called base learners) and combines their predictions by voting (classification) or averaging (regression). The combined model is usually more accurate and more stable than any single model.</p>
-      <div class="math">Classification: ŷ = mode(h<sub>1</sub>(x), h<sub>2</sub>(x), …, h<sub>M</sub>(x))<br>
-      Regression: ŷ = (1/M) Σ h<sub>m</sub>(x)</div>
-      <p><b>What this means:</b> for a label, take the answer that appears most often. For a number, take the mean of the M model outputs.</p>
-
-      <h4>Why ensembles are used</h4>
-      <ol>
-        <li><b>Reduce variance</b> — averaging many models cancels their individual errors (bagging).</li>
-        <li><b>Reduce bias</b> — boosting focuses on hard examples and builds a stronger model.</li>
-        <li><b>Improve accuracy</b> — a group of weak learners can outperform a single strong learner.</li>
-        <li><b>Robustness</b> — less sensitive to noise, outliers and the choice of training sample.</li>
-        <li><b>Avoid overfitting</b> — random forest and bagging are much harder to overfit than a single deep tree.</li>
-        <li><b>Handle heterogeneous data</b> — different models capture different patterns (stacking).</li>
-      </ol>
-
-      <h4>Simple vs advanced ensembles (2022 Nov)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Type</th><th>Meaning</th><th>Examples</th></tr></thead>
-        <tbody>
-          <tr><td>Simple ensemble</td><td>Many copies of the <b>same</b> base learner, combined by a fixed rule (vote/average)</td><td>Bagging with decision trees, simple voting, averaging</td></tr>
-          <tr><td>Advanced ensemble</td><td><b>Heterogeneous</b> learners or a learned combination (meta-model), or sequential correction</td><td>Stacking, blending, AdaBoost, gradient boosting, random forest, XGBoost</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="small"><b>What this means:</b> “simple” means one algorithm repeated and combined by a fixed rule. “Advanced” means different algorithms, a learned combiner, or a sequence that corrects itself.</p>
-
-      <h4>Example</h4>
-      <p>Three decision trees classify a loan applicant: Tree 1 = reject, Tree 2 = reject, Tree 3 = approve. Majority vote → <b>reject</b>. If each tree is only 70% accurate but makes different errors, the majority is often more accurate than any single tree.</p>
-
-      <h4>Types of ensemble</h4>
-      <ul>
-        <li><b>Bagging</b> — parallel, bootstrap samples, average/vote (random forest).</li>
-        <li><b>Boosting</b> — sequential, each model fixes the errors of the previous one (AdaBoost, gradient boosting).</li>
-        <li><b>Stacking</b> — train a meta-model on the outputs of several base models.</li>
-        <li><b>Voting</b> — hard vote (labels) or soft vote (probabilities).</li>
-      </ul>
-
-      <div class="analogy"><b>Real-life analogy:</b> Five doctors look at the same scan. Two say “healthy”, three say “check further”. You go with the majority. No single doctor is perfect, but the group is less likely to be fooled by one unusual reading.</div>
-
-      <div class="confuse"><b>Common confusion:</b> An ensemble is not automatically better. If all the models are trained on the same data and make the same mistake, voting just repeats it. The gain comes from <b>diversity</b> — different samples, features, or algorithms.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Explain the random forest algorithm with an example and a suitable diagram.</p>
-      <div class="badges"><span class="b marks">5–9 marks</span><span class="b rep">★★★★ 4×</span></div>
-    </div>
-    <div class="qa-body">
-<p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [5] · 2023 May Q4(b)(i) [6] · 2023 Nov Q3(b) [9] · 2025 Nov Q4(a) [5]</p>
-
-      <div class="simple"><b>In simple words:</b> A random forest is a crowd of decision trees.<br>
-      Each tree learns from a different random sample and sees a random subset of features at each split.<br>
-      The forest combines their votes into one answer.</div>
-
-      <h4>Why we do this</h4>
-      <p>One deep decision tree can memorise its training sample, noise included. Many trees, each trained on a slightly different sample and forced to consider different features, make different mistakes. Averaging those mistakes away gives a much more stable model.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Decision tree</b> — a model that repeatedly splits the data on yes/no questions.</li>
-        <li><b>Bootstrap sample</b> — a random sample of the same size as the original, drawn <b>with replacement</b>, so some rows repeat and some are left out.</li>
-        <li><b>Feature subset</b> — a small random group of input columns considered at one split.</li>
-        <li><b>Majority vote</b> — the label predicted by most trees.</li>
-        <li><b>Pruning</b> — cutting back branches after a tree is built; random forest usually skips this.</li>
-        <li><b>Hyperparameter</b> — a setting chosen before training, such as the number of trees.</li>
-        <li><b>Out-of-bag (OOB) error</b> — an error estimate using the rows each tree did not sample.</li>
-        <li><b>Decorrelate</b> — make the trees less similar so their errors do not all point the same way.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Choose the number of trees T and the number of features m to try at each split.</b> Why: these control the size and diversity of the forest.</li>
-        <li><b>Draw a bootstrap sample for each tree.</b> Why: each tree sees a slightly different world, so their errors differ.</li>
-        <li><b>Grow a tree, but at every node consider only m randomly chosen features.</b> Why: this stops one dominant feature from making every tree identical.</li>
-        <li><b>Let each tree grow deep without pruning.</b> Why: individual trees may overfit, but the average of many decorrelated trees does not.</li>
-        <li><b>Combine the trees by majority vote or average.</b> Why: the group answer is steadier than any single tree.</li>
-      </ol>
-
-      <h4>Definition</h4>
-      <p>Random forest is an ensemble of <b>decision trees</b>. Each tree is trained on a bootstrap sample, and at every split only a <b>random subset of features</b> is considered. The forest combines the trees by majority vote (classification) or average (regression).</p>
-
-      <h4>Algorithm</h4>
-<pre><code>1. Choose the number of trees T and the number of features m
-   (usually m = sqrt(d) for classification, d/3 for regression).
-2. For t = 1 to T:
-     a. Draw a bootstrap sample of size n from the training data.
-     b. Grow a decision tree. At each node:
-          - choose m features at random from all d features
-          - split on the best feature among those m
-     c. Do not prune the tree.
-3. Predict:
-     classification -&gt; majority vote over T trees
-     regression     -&gt; average of T tree outputs</code></pre>
-      <p class="small"><b>What this means:</b> randomness enters twice — once in the rows each tree sees, and once in the features each split is allowed to use.</p>
-
-      <h4>Diagram</h4>
-      <div class="tree">                 Training data
-                       |
-        +--------------+--------------+
-        |              |              |
-   Bootstrap 1    Bootstrap 2    Bootstrap 3
-        |              |              |
-     Tree 1          Tree 2         Tree 3
-   (random m       (random m      (random m
-    features)       features)      features)
-        |              |              |
-      Class A        Class A        Class B
-        +--------------+--------------+
-                       |
-                 Majority vote
-                       |
-                    Class A</div>
-      <p class="small"><b>What this means:</b> each tree sees a different sample and a different feature menu. Two vote A and one votes B, so the forest predicts A.</p>
-
-      <h4>Example</h4>
-      <p>Predict whether a customer will buy a product using age, income, city and previous purchases. Each tree sees a different bootstrap sample and a different random subset of features at each split. Tree 1 says “buy”, Tree 2 says “buy”, Tree 3 says “not buy” → forest predicts <b>buy</b> (2 out of 3).</p>
-
-      <h4>Why it works</h4>
-      <ul>
-        <li><b>Bagging</b> reduces variance by averaging many trees.</li>
-        <li><b>Feature randomness</b> decorrelates the trees; without it, all trees would split on the same dominant feature.</li>
-        <li>No pruning is needed; individual trees may overfit, but the average does not.</li>
-      </ul>
-
-      <h4>Advantages / disadvantages</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
-        <tbody>
-          <tr><td>High accuracy; robust to noise and outliers</td><td>Slow and memory-heavy for many trees</td></tr>
-          <tr><td>Works for classification and regression</td><td>Less interpretable than a single tree</td></tr>
-          <tr><td>Handles high-dimensional data</td><td>Many hyperparameters (T, m, depth)</td></tr>
-          <tr><td>Gives feature importance</td><td>Can overfit small/noisy data if trees are deep</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="small"><b>What this means:</b> you trade simplicity and speed for accuracy and robustness. If you must explain every decision to a human, a single small tree is easier; if you need accuracy, the forest is usually better.</p>
-
-      <h4>Hyperparameters</h4>
-      <p><code>n_estimators</code> (number of trees), <code>max_features</code> (m), <code>max_depth</code>, <code>min_samples_leaf</code>, <code>oob_score</code> (out-of-bag error).</p>
-
-      <div class="analogy"><b>Real-life analogy:</b> Ask 100 doctors for a diagnosis, but give each doctor a different set of test results and let each one look at only a few symptoms at a time. Then take the majority diagnosis. The variety stops them from copying the same mistake.</div>
-
-      <div class="confuse"><b>Common confusion:</b> A random forest is not “one very big tree”. The randomness is in the <b>rows</b> (bootstrap samples) and the <b>features</b> (random subsets), not in the labels. Also, more trees usually improve stability, but they cost time and memory.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Differentiate between bagging and boosting. Explain bagging and boosting used in ensemble learning.</p>
-      <div class="badges"><span class="b marks">4–6 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-<p class="asked"><b>Asked in:</b> 2023 May Q3(b) [6] · 2023 Nov Q3(a) [4] · 2025 May Q4(c) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> Bagging trains many models side by side on different random samples, then averages them.<br>
-      Boosting trains models one after another, and each new model focuses on the previous one's mistakes.<br>
-      Bagging calms an unstable model; boosting strengthens a weak one.</div>
-
-      <h4>Why we do this</h4>
-      <p>Both methods build a group, but they attack different problems. If your model is unstable — small changes in data cause big changes in predictions — bagging helps. If your model is too simple and consistently misses the pattern, boosting helps. Choosing the wrong one wastes effort.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Bootstrap sample</b> — a random sample drawn with replacement, so it can contain duplicates.</li>
-        <li><b>With replacement</b> — after picking a row, you put it back before picking the next one.</li>
-        <li><b>Parallel</b> — all models train independently at the same time.</li>
-        <li><b>Sequential</b> — each model waits for the previous one to finish.</li>
-        <li><b>Weak learner</b> — a simple model that is only slightly better than random, such as a decision stump.</li>
-        <li><b>Stump</b> — a decision tree with a single split.</li>
-        <li><b>Weight</b> — how much attention an example or a model receives.</li>
-        <li><b>Variance</b> — instability caused by sensitivity to the training sample.</li>
-        <li><b>Bias</b> — error caused by a model that is too simple.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Bagging: draw M bootstrap samples from the training set.</b> Why: each sample is slightly different, so each model sees a different version of the data.</li>
-        <li><b>Train one base model on each sample, all in parallel.</b> Why: the models do not depend on each other, so the work can be done at once.</li>
-        <li><b>Combine them by majority vote or average.</b> Why: averaging cancels the random errors that differ between models.</li>
-        <li><b>Boosting: train the first weak model on the full data.</b> Why: it provides a starting point, even if it is only slightly better than guessing.</li>
-        <li><b>Give more weight to the examples it got wrong, then train the next model.</b> Why: the next model is forced to concentrate on the hard cases.</li>
-        <li><b>Combine the models with weights based on their accuracy.</b> Why: better models should have more say in the final vote.</li>
-      </ol>
-
-      <h4>Bagging (Bootstrap Aggregating)</h4>
-      <ul>
-        <li>Draw <b>M bootstrap samples</b> (random sampling <b>with replacement</b>) from the training set.</li>
-        <li>Train one base model on each sample <b>in parallel</b>.</li>
-        <li>Combine by majority vote (classification) or average (regression).</li>
-        <li>Main effect: <b>reduces variance</b>; each sample is slightly different, so errors cancel.</li>
-        <li>Example: random forest = bagging + random feature selection.</li>
-      </ul>
-
-      <h4>Boosting</h4>
-      <ul>
-        <li>Train models <b>sequentially</b>. Each new model focuses on the examples the previous model got wrong.</li>
-        <li>Each model gets a weight α based on its accuracy; the final prediction is a weighted vote.</li>
-        <li>Main effect: <b>reduces bias</b>; a set of weak learners becomes a strong learner.</li>
-        <li>Example: AdaBoost, gradient boosting, XGBoost.</li>
-      </ul>
-
-      <h4>Comparison</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Bagging</th><th>Boosting</th></tr></thead>
-        <tbody>
-          <tr><td>Training order</td><td>Parallel, independent</td><td>Sequential, dependent</td></tr>
-          <tr><td>Data for each model</td><td>Bootstrap sample (with replacement)</td><td>Full data, reweighted each round</td></tr>
-          <tr><td>Focus</td><td>Reduce variance</td><td>Reduce bias</td></tr>
-          <tr><td>Combining</td><td>Equal vote / average</td><td>Weighted vote (α per model)</td></tr>
-          <tr><td>Overfitting risk</td><td>Low</td><td>High if too many rounds / noise</td></tr>
-          <tr><td>Base learners</td><td>Strong, low-bias models (deep trees)</td><td>Weak learners (stumps)</td></tr>
-          <tr><td>Example</td><td>Random forest</td><td>AdaBoost, XGBoost</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="small"><b>What this means:</b> bagging is a crowd of independent opinions with equal say. Boosting is a relay where each runner is chosen to fix the last runner's weakness, and stronger runners get a louder voice.</p>
-
-      <div class="note"><b>One-line memory:</b> bagging = <em>many independent opinions, averaged</em>; boosting = <em>a sequence of students, each fixing the previous one’s mistakes</em>.</div>
-
-      <div class="analogy"><b>Real-life analogy:</b> Bagging is asking ten friends who each read a different newspaper, then taking the majority. Boosting is a study group where each session focuses on the questions the group failed last time.</div>
-
-      <div class="confuse"><b>Common confusion:</b> Bagging mainly reduces variance; boosting mainly reduces bias. They are not interchangeable. Also, “with replacement” means the same row can appear more than once in a bootstrap sample — that is intended, not a bug.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q4</span>Write a short note on AdaBoost.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-<p class="asked"><b>Asked in:</b> 2023 May Q4(b)(ii) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> AdaBoost builds small weak models one at a time.<br>
-      After each round, the examples that were answered wrong get more weight.<br>
-      The next model is forced to pay attention to them, and the final answer is a weighted vote.</div>
-
-      <h4>Why we do this</h4>
-      <p>A single stump — a tree with one split — is barely useful. But a sequence of stumps, each one trained on the mistakes of the last, can form a strong classifier. AdaBoost is the classic proof that many weak learners can add up to a strong one.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>AdaBoost</b> — Adaptive Boosting, a sequential ensemble method.</li>
-        <li><b>Weak learner</b> — a model only slightly better than random guessing.</li>
-        <li><b>Stump</b> — a decision tree with one split and two leaves.</li>
-        <li><b>Sample weight (w<sub>i</sub>)</b> — how much example i matters in the next round.</li>
-        <li><b>Weighted error (ε)</b> — the total weight of the examples a learner got wrong.</li>
-        <li><b>Learner weight (α)</b> — how much voting power a learner gets in the final decision.</li>
-        <li><b>Normalise</b> — rescale the weights so they add up to 1.</li>
-        <li><b>Sign</b> — +1 or −1, used to turn a weighted sum into a class label.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Give every training example the same weight, 1/n.</b> Why: no example is more important at the start.</li>
-        <li><b>Train a weak learner on the weighted data.</b> Why: it produces the first set of predictions.</li>
-        <li><b>Compute the weighted error ε.</b> Why: this measures how much of the total weight the learner got wrong.</li>
-        <li><b>Compute the learner's voting power α = ½ ln((1−ε)/ε).</b> Why: a learner that is right more often than chance gets a positive, larger vote.</li>
-        <li><b>Increase the weights of misclassified examples and decrease the rest, then normalise.</b> Why: the next learner will focus on the hard cases.</li>
-        <li><b>Repeat for T rounds and combine with a weighted vote.</b> Why: the final decision uses all the weak learners, weighted by their quality.</li>
-      </ol>
-
-      <h4>Definition</h4>
-      <p>AdaBoost (Adaptive Boosting) combines many <b>weak learners</b> (usually decision stumps — one-split trees) sequentially. Each new learner focuses on the samples that the previous learners misclassified.</p>
-
-      <h4>Algorithm</h4>
-<pre><code>1. Start with equal weights: w_i = 1/n for i = 1..n.
-2. For t = 1 to T:
-     a. Train weak learner h_t on the weighted data.
-     b. Compute weighted error:
-          eps_t = sum of w_i for misclassified i.
-     c. Compute learner weight:
-          alpha_t = 0.5 * ln((1 - eps_t) / eps_t).
-     d. Update sample weights:
-          w_i = w_i * exp(-alpha_t * y_i * h_t(x_i))
-     e. Normalise weights so they sum to 1.
-3. Final prediction:
-     H(x) = sign( sum alpha_t * h_t(x) ).</code></pre>
-      <p class="small"><b>What this means:</b> step (d) raises the weight when the prediction is wrong and lowers it when it is right. Alpha decides how loudly that learner speaks in the final vote.</p>
-
-      <h4>Key points</h4>
-      <ul>
-        <li>If a learner is better than random (ε &lt; 0.5), α &gt; 0; better learners get more vote.</li>
-        <li>Misclassified samples get larger weights, so the next learner concentrates on them.</li>
-        <li>If ε = 0.5, α = 0 (the learner is useless); if ε → 0, α → large.</li>
-        <li>Training error of the ensemble falls exponentially with the number of rounds.</li>
-        <li>Sensitive to noise and outliers because it keeps increasing their weights.</li>
-      </ul>
-
-      <h4>Small example</h4>
-      <p>Three samples, all weight 1/3. Learner h<sub>1</sub> misclassifies one sample: ε<sub>1</sub> = 1/3.</p>
-      <div class="math">α<sub>1</sub> = ½ ln((1 − 1/3)/(1/3)) = ½ ln(2) = <b>0.3466</b></div>
-      <p>The misclassified sample's weight becomes (1/3)e<sup>0.3466</sup> ≈ 0.471, and the correct ones become (1/3)e<sup>−0.3466</sup> ≈ 0.236. After normalisation, the hard sample has about <b>0.5</b> of the total weight, so the next learner is forced to focus on it.</p>
-      <p class="small"><b>What this means:</b> one third of the data was wrong, but after reweighting that one example carries half the total importance. The next stump cannot ignore it.</p>
-
-      <div class="analogy"><b>Real-life analogy:</b> A coach reviews a practice test and notices which questions you keep failing. The next practice round is packed with those questions. Easier questions you already know get less attention.</div>
-
-      <div class="confuse"><b>Common confusion:</b> α is the learner's voting power, not the learning rate. Also, AdaBoost's habit of increasing weights on hard examples is helpful for genuine hard cases but harmful for noisy outliers — it can end up chasing mislabelled data.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s45">
-  <div class="prio">Priority 2 · ★★★★ 4× repeated</div><h2>4.5 Multiclass classification and imbalanced data</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Differentiate binary classification with multiclass classification with an example. What is multiclass classification? Explain the variants of multiclass classification.</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
-    </div>
-    <div class="qa-body">
-<p class="asked"><b>Asked in:</b> 2023 May Q3(c) [6] · 2024 May Q4(a) [5] · 2025 May Q3(a) [5 — binary vs multiclass] · 2025 Nov Q3(b) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> Binary classification chooses between two labels, such as spam or not spam.<br>
-      Multiclass classification chooses among three or more labels, such as apple, mango, or banana.<br>
-      OvA trains one classifier per class; OvO trains one classifier per pair of classes.</div>
-
-      <h4>Why we do this</h4>
-      <p>Many real problems have more than two answers. A fruit grader cannot be built from a single yes/no question. We reuse binary classifiers by arranging them into a tournament: one class against the rest, or every pair against each other.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Binary classification</b> — choosing between exactly two labels.</li>
-        <li><b>Multiclass classification</b> — choosing one label from three or more classes.</li>
-        <li><b>Classifier</b> — a model that assigns a label.</li>
-        <li><b>Decision boundary</b> — the border in input space where the predicted label changes.</li>
-        <li><b>Hyperplane</b> — a flat boundary; a line in 2-D, a plane in 3-D.</li>
-        <li><b>OvA / OvR</b> — One-vs-All, also called One-vs-Rest: each class against all the others.</li>
-        <li><b>OvO</b> — One-vs-One: one classifier for every pair of classes.</li>
-        <li><b>Confidence score</b> — a number saying how strongly a classifier favours its choice.</li>
-        <li><b>Majority vote</b> — the label with the most individual votes.</li>
-        <li><b>Support</b> — the number of true examples of a class.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Count the classes.</b> Why: two classes use a binary model directly; three or more need a multiclass strategy.</li>
-        <li><b>Choose OvA or OvO.</b> Why: OvA needs fewer classifiers; OvO gives each pair a balanced, simpler problem.</li>
-        <li><b>Train the required binary classifiers.</b> Why: each one learns a single yes/no boundary.</li>
-        <li><b>At prediction time, run all the classifiers.</b> Why: each produces a vote or a confidence score.</li>
-        <li><b>Combine the results.</b> Why: OvA takes the highest confidence; OvO takes the majority vote.</li>
-      </ol>
-
-      <h4>Binary vs multiclass</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Binary classification</th><th>Multiclass classification</th></tr></thead>
-        <tbody>
-          <tr><td>Number of classes</td><td>2</td><td>3 or more</td></tr>
-          <tr><td>Output</td><td>0/1, yes/no, spam/not spam</td><td>One of C labels: A/B/C/D</td></tr>
-          <tr><td>Decision boundary</td><td>One hyperplane</td><td>Several boundaries / regions</td></tr>
-          <tr><td>Algorithms</td><td>Logistic regression, linear SVM, perceptron</td><td>Multinomial logistic regression, decision tree, random forest, KNN, OvO/OvA SVM</td></tr>
-          <tr><td>Metrics</td><td>TP/TN/FP/FN, precision, recall, F1</td><td>Per-class + macro/micro averages, confusion matrix C×C</td></tr>
-          <tr><td>Example</td><td>Email: spam or not spam</td><td>Fruit: apple, mango, banana, orange</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="small"><b>What this means:</b> binary is one border; multiclass is a map divided into several regions. The metrics also grow from four counts to a C×C table.</p>
-
-      <h4>Variants of multiclass classification</h4>
-
-      <h4>(a) One-vs-All (OvA), also called One-vs-Rest (OvR)</h4>
-      <ul>
-        <li>Train <b>C binary classifiers</b>, one per class.</li>
-        <li>Classifier c is trained with class c as positive and all other classes as negative.</li>
-        <li>At prediction time, run all C classifiers and choose the class with the <b>highest score/probability</b>.</li>
-        <li>Example: classes A, B, C → classifiers “A vs {B,C}”, “B vs {A,C}”, “C vs {A,B}”.</li>
-        <li>Cost: C classifiers. Each classifier sees the full dataset.</li>
-      </ul>
-
-      <h4>(b) One-vs-One (OvO)</h4>
-      <ul>
-        <li>Train one binary classifier for <b>every pair of classes</b>.</li>
-        <li>Number of classifiers = <b>C(C−1)/2</b>.</li>
-        <li>At prediction time, each classifier votes for one of its two classes; the class with the most votes wins.</li>
-        <li>Example: classes A, B, C → “A vs B”, “A vs C”, “B vs C” (3 classifiers).</li>
-        <li>Each classifier is trained on only the data of its two classes → cheaper per classifier, but more classifiers.</li>
-      </ul>
-
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>OvA / OvR</th><th>OvO</th></tr></thead>
-        <tbody>
-          <tr><td>Classifiers</td><td>C</td><td>C(C−1)/2</td></tr>
-          <tr><td>Training data per classifier</td><td>All data</td><td>Only the two classes</td></tr>
-          <tr><td>Prediction</td><td>Highest confidence</td><td>Majority vote</td></tr>
-          <tr><td>Class imbalance</td><td>Suffers (one vs all)</td><td>Less severe (balanced pairs)</td></tr>
-          <tr><td>Best for</td><td>Many classes, limited compute</td><td>SVMs, small C</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="small"><b>What this means:</b> OvA is cheaper when there are many classes. OvO is cheaper per classifier and often better for SVMs, but the number of pairs grows quickly.</p>
-
-      <h4>Example with 4 classes</h4>
-      <p>For A, B, C, D: OvA needs <b>4</b> classifiers; OvO needs 4×3/2 = <b>6</b> classifiers. If a new point gets OvO votes A=3, B=1, C=1, D=0, the prediction is <b>A</b>.</p>
-
-      <div class="analogy"><b>Real-life analogy:</b> OvA is asking “is this a cat?” “is this a dog?” “is this a fish?” for every animal and taking the most confident yes. OvO is asking “cat or dog?”, “cat or fish?”, “dog or fish?” and counting wins in a mini tournament.</div>
-
-      <div class="confuse"><b>Common confusion:</b> OvO needs C(C−1)/2 classifiers, not C². Also, OvA trains each classifier on the full dataset, so it is not “smaller data” — it is fewer classifiers, each seeing everything.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Write a short note on handling imbalanced data in multiclass classification.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-<p class="asked"><b>Asked in:</b> 2025 May Q4(b) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> Imbalanced data means one class has far more examples than the others.<br>
-      A lazy model can score 95% by always picking the big class and still be useless for the small ones.<br>
-      The fix is to change the data, the weights, the threshold, or the metric.</div>
-
-      <h4>Why we do this</h4>
-      <p>Accuracy rewards the majority class. In fraud detection or rare-disease screening, the events we care about are rare, so a model can look excellent while missing every important case. We need methods that force the model to notice the minority classes.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Class imbalance</b> — the classes have very different numbers of examples.</li>
-        <li><b>Majority class</b> — the class with the most examples.</li>
-        <li><b>Minority class</b> — a class with far fewer examples.</li>
-        <li><b>Oversampling</b> — adding copies or synthetic examples of the minority class.</li>
-        <li><b>Undersampling</b> — removing examples from the majority class.</li>
-        <li><b>SMOTE</b> — Synthetic Minority Over-sampling Technique; it creates new minority points between existing ones.</li>
-        <li><b>Class weight</b> — a penalty multiplier that makes errors on a class count more.</li>
-        <li><b>Threshold</b> — the probability cut-off used to turn a score into a label.</li>
-        <li><b>Macro F1</b> — the plain average of per-class F1 scores, so every class counts equally.</li>
-        <li><b>PR-AUC</b> — area under the precision–recall curve; useful when positives are rare.</li>
-        <li><b>Balanced accuracy</b> — the average of per-class recall, instead of overall accuracy.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Count the examples in each class.</b> Why: you cannot fix an imbalance you have not measured.</li>
-        <li><b>Split into train and test before doing anything else.</b> Why: resampling first would let copies of the same example appear in both sets.</li>
-        <li><b>Resample only the training set.</b> Why: the test set must reflect the real-world imbalance.</li>
-        <li><b>Add class weights or cost-sensitive penalties.</b> Why: this makes minority mistakes expensive without changing the data.</li>
-        <li><b>Tune the decision threshold per class.</b> Why: the default 0.5 cut-off is arbitrary and usually favours the majority.</li>
-        <li><b>Report macro F1, per-class recall, or PR-AUC.</b> Why: these expose minority performance that accuracy hides.</li>
-      </ol>
-
-      <h4>Problem</h4>
-      <p>Imbalanced data has very different class frequencies (e.g. 95% class A, 5% classes B/C/D). A model can predict the majority class always and still get 95% accuracy, while completely failing on the minority classes. Multiclass imbalance is harder because there can be several minority classes.</p>
-
-      <h4>Techniques</h4>
-      <ol>
-        <li><b>Resampling</b>
-          <ul>
-            <li><b>Oversampling</b> — duplicate minority samples (or use SMOTE to create synthetic ones).</li>
-            <li><b>Undersampling</b> — remove majority samples; risks losing information.</li>
-            <li><b>Hybrid</b> — combine both (e.g. SMOTE + Tomek links).</li>
-          </ul>
-        </li>
-        <li><b>Class weights</b> — set <code>class_weight='balanced'</code>; the loss penalises minority errors more.</li>
-        <li><b>Cost-sensitive learning</b> — assign a higher misclassification cost to minority classes.</li>
-        <li><b>Threshold moving</b> — lower the decision threshold for minority classes; tune per class.</li>
-        <li><b>Better metrics</b> — use macro F1, balanced accuracy, per-class recall, PR-AUC; do not rely on accuracy.</li>
-        <li><b>Ensemble methods</b> — BalancedBagging, EasyEnsemble, RUSBoost; each learner sees a balanced sample.</li>
-        <li><b>One-vs-rest with calibration</b> — train each class against the rest and calibrate probabilities.</li>
-        <li><b>Data collection</b> — the best long-term fix is to collect more minority samples.</li>
-      </ol>
-      <p class="small"><b>What this means:</b> techniques 1–4 change what the model sees or how much it is punished; techniques 5–7 change how you judge or combine it; technique 8 fixes the root cause.</p>
-
-      <div class="warn"><b>Do not resample before splitting.</b> Split train/test first, then resample only the training set. Otherwise the same sample can appear in both sets and the test score becomes optimistic.</div>
-
-      <h4>Example</h4>
-      <p>For classes A (950), B (30), C (20), plain accuracy is misleading. After class weighting and SMOTE, macro F1 might rise from 0.35 to 0.72 even though overall accuracy drops slightly — that is the correct trade-off.</p>
-      <p class="small"><b>What this means:</b> a small drop in accuracy can hide a large gain on the classes you actually care about. Judge the model by the minority-class numbers.</p>
-
-      <div class="analogy"><b>Real-life analogy:</b> A fire alarm that never rings is 99.9% accurate on ordinary days, but useless on the one day there is a fire. You would rather accept a few false alarms than miss the real event.</div>
-
-      <div class="confuse"><b>Common confusion:</b> High accuracy does not mean good minority performance. Also, never resample before splitting the data — that leaks copies into the test set and gives a fake, optimistic score.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s41">
-  <div class="prio">Priority 3 · ★★ 2× repeated</div><h2>4.1 Evaluating classification models</h2>
+<div class="note" id="topic-note">📚 Notes follow the book order (3.1 → 3.2 → …). The frequency table above is sorted by repetition, so use it to decide what to revise first.</div><section class="card" id="s41">
+  <h2>4.1 Evaluating classification models</h2>
   <p class="lead">Syllabus: <em>Accuracy, Precision, Recall, F-score, confusion matrix, cross-validation, micro/macro averages.</em></p>
 
   <div class="qa">
@@ -1286,7 +761,7 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
 </section>
 
 <section class="card" id="s42">
-  <div class="prio">Priority 4 · ★★ 2× repeated</div><h2>4.2 K-nearest neighbours (KNN)</h2>
+  <h2>4.2 K-nearest neighbours (KNN)</h2>
   <p class="lead">KNN is a lazy, non-parametric classifier: it stores the training data and votes among the K closest points.</p>
 
   <div class="qa">
@@ -1564,7 +1039,7 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
   </section>
 
 <section class="card" id="s43">
-  <div class="prio">Priority 5 · ★★ 2× repeated</div><h2>4.3 Support vector machine (SVM)</h2>
+  <h2>4.3 Support vector machine (SVM)</h2>
   <p class="lead">SVM finds the widest possible “street” between two classes. The points on the edge of the street are the support vectors.</p>
 
   <div class="qa">
@@ -1802,6 +1277,531 @@ Round 5  [ TRAIN ][ TRAIN ][ TRAIN ][ TRAIN ][ TEST ]</div>
       <div class="analogy"><b>Real-life analogy:</b> Two rings lie flat on a table, one inside the other. No straight line on the table can separate them. Lift the inner ring into the air and a flat sheet can slide between the two. The kernel lifts the data without you physically moving it.</div>
 
       <div class="confuse"><b>Common confusion:</b> The kernel does not literally transform and store the data; it computes the dot product as if the transformation had happened. Also, a large γ does not mean a “better” kernel — it makes the boundary local and wiggly, which can overfit badly.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s44">
+  <h2>4.4 Ensemble learning</h2>
+  <p class="lead">An ensemble combines several weak/base models into one stronger model. This is the most repeated Unit-4 topic (6 instances).</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What do you mean by ensemble learning? Explain with an example. Why is ensemble learning used in ML? Write a short note on simple and advanced ensemble methods.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep hot">★★★★★★ 6×</span></div>
+    </div>
+    <div class="qa-body">
+<p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [6 — simple/advanced] · 2023 May Q3(b) [6] · 2023 Nov Q3(b) [9] · 2024 May Q3(a) [5 — why] · 2025 May Q3(b) [6 — example] · 2025 Nov Q4(c) [6 — why]</p>
+
+      <div class="simple"><b>In simple words:</b> An ensemble asks many models and combines their answers.<br>
+      One model may be wrong, but the group vote is usually steadier.<br>
+      It is the machine-learning version of “ask several experts, then go with the majority”.</div>
+
+      <h4>Why we do this</h4>
+      <p>Different models make different mistakes. If their errors are not identical, combining them cancels part of the error. A group can therefore be more accurate and more stable than any single model, without inventing a new algorithm.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Ensemble</b> — a group of models whose predictions are combined into one answer.</li>
+        <li><b>Base learner</b> — one model inside the ensemble.</li>
+        <li><b>Weak learner</b> — a model that is only slightly better than guessing, such as a one-split tree.</li>
+        <li><b>Voting</b> — choosing the label that most base learners predict.</li>
+        <li><b>Averaging</b> — taking the mean of the base learners' numeric outputs.</li>
+        <li><b>Bagging</b> — training models in parallel on random samples and averaging them.</li>
+        <li><b>Boosting</b> — training models in sequence, each one fixing the previous model's errors.</li>
+        <li><b>Stacking</b> — training a second-level model to combine the base models' outputs.</li>
+        <li><b>Variance</b> — how much predictions change when the training data changes.</li>
+        <li><b>Bias</b> — error caused by a model that is too simple.</li>
+        <li><b>Mode</b> — the most frequent value; the label with the most votes.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Train several models on the same problem.</b> Why: you need more than one opinion before you can combine anything.</li>
+        <li><b>Make them different.</b> Why: if every model sees the same data and makes the same error, voting just repeats that error.</li>
+        <li><b>Collect their predictions for the new point.</b> Why: each model contributes one vote or one number.</li>
+        <li><b>Combine by majority vote for labels, or by average for numbers.</b> Why: the combination is the ensemble's final answer.</li>
+        <li><b>Evaluate the ensemble as one model.</b> Why: a group is only useful if its combined score beats the individual scores.</li>
+      </ol>
+
+      <h4>Definition</h4>
+      <p>Ensemble learning trains <b>multiple models</b> (called base learners) and combines their predictions by voting (classification) or averaging (regression). The combined model is usually more accurate and more stable than any single model.</p>
+      <div class="math">Classification: ŷ = mode(h<sub>1</sub>(x), h<sub>2</sub>(x), …, h<sub>M</sub>(x))<br>
+      Regression: ŷ = (1/M) Σ h<sub>m</sub>(x)</div>
+      <p><b>What this means:</b> for a label, take the answer that appears most often. For a number, take the mean of the M model outputs.</p>
+
+      <h4>Why ensembles are used</h4>
+      <ol>
+        <li><b>Reduce variance</b> — averaging many models cancels their individual errors (bagging).</li>
+        <li><b>Reduce bias</b> — boosting focuses on hard examples and builds a stronger model.</li>
+        <li><b>Improve accuracy</b> — a group of weak learners can outperform a single strong learner.</li>
+        <li><b>Robustness</b> — less sensitive to noise, outliers and the choice of training sample.</li>
+        <li><b>Avoid overfitting</b> — random forest and bagging are much harder to overfit than a single deep tree.</li>
+        <li><b>Handle heterogeneous data</b> — different models capture different patterns (stacking).</li>
+      </ol>
+
+      <h4>Simple vs advanced ensembles (2022 Nov)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Meaning</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Simple ensemble</td><td>Many copies of the <b>same</b> base learner, combined by a fixed rule (vote/average)</td><td>Bagging with decision trees, simple voting, averaging</td></tr>
+          <tr><td>Advanced ensemble</td><td><b>Heterogeneous</b> learners or a learned combination (meta-model), or sequential correction</td><td>Stacking, blending, AdaBoost, gradient boosting, random forest, XGBoost</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small"><b>What this means:</b> “simple” means one algorithm repeated and combined by a fixed rule. “Advanced” means different algorithms, a learned combiner, or a sequence that corrects itself.</p>
+
+      <h4>Example</h4>
+      <p>Three decision trees classify a loan applicant: Tree 1 = reject, Tree 2 = reject, Tree 3 = approve. Majority vote → <b>reject</b>. If each tree is only 70% accurate but makes different errors, the majority is often more accurate than any single tree.</p>
+
+      <h4>Types of ensemble</h4>
+      <ul>
+        <li><b>Bagging</b> — parallel, bootstrap samples, average/vote (random forest).</li>
+        <li><b>Boosting</b> — sequential, each model fixes the errors of the previous one (AdaBoost, gradient boosting).</li>
+        <li><b>Stacking</b> — train a meta-model on the outputs of several base models.</li>
+        <li><b>Voting</b> — hard vote (labels) or soft vote (probabilities).</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> Five doctors look at the same scan. Two say “healthy”, three say “check further”. You go with the majority. No single doctor is perfect, but the group is less likely to be fooled by one unusual reading.</div>
+
+      <div class="confuse"><b>Common confusion:</b> An ensemble is not automatically better. If all the models are trained on the same data and make the same mistake, voting just repeats it. The gain comes from <b>diversity</b> — different samples, features, or algorithms.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Explain the random forest algorithm with an example and a suitable diagram.</p>
+      <div class="badges"><span class="b marks">5–9 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+<p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [5] · 2023 May Q4(b)(i) [6] · 2023 Nov Q3(b) [9] · 2025 Nov Q4(a) [5]</p>
+
+      <div class="simple"><b>In simple words:</b> A random forest is a crowd of decision trees.<br>
+      Each tree learns from a different random sample and sees a random subset of features at each split.<br>
+      The forest combines their votes into one answer.</div>
+
+      <h4>Why we do this</h4>
+      <p>One deep decision tree can memorise its training sample, noise included. Many trees, each trained on a slightly different sample and forced to consider different features, make different mistakes. Averaging those mistakes away gives a much more stable model.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Decision tree</b> — a model that repeatedly splits the data on yes/no questions.</li>
+        <li><b>Bootstrap sample</b> — a random sample of the same size as the original, drawn <b>with replacement</b>, so some rows repeat and some are left out.</li>
+        <li><b>Feature subset</b> — a small random group of input columns considered at one split.</li>
+        <li><b>Majority vote</b> — the label predicted by most trees.</li>
+        <li><b>Pruning</b> — cutting back branches after a tree is built; random forest usually skips this.</li>
+        <li><b>Hyperparameter</b> — a setting chosen before training, such as the number of trees.</li>
+        <li><b>Out-of-bag (OOB) error</b> — an error estimate using the rows each tree did not sample.</li>
+        <li><b>Decorrelate</b> — make the trees less similar so their errors do not all point the same way.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Choose the number of trees T and the number of features m to try at each split.</b> Why: these control the size and diversity of the forest.</li>
+        <li><b>Draw a bootstrap sample for each tree.</b> Why: each tree sees a slightly different world, so their errors differ.</li>
+        <li><b>Grow a tree, but at every node consider only m randomly chosen features.</b> Why: this stops one dominant feature from making every tree identical.</li>
+        <li><b>Let each tree grow deep without pruning.</b> Why: individual trees may overfit, but the average of many decorrelated trees does not.</li>
+        <li><b>Combine the trees by majority vote or average.</b> Why: the group answer is steadier than any single tree.</li>
+      </ol>
+
+      <h4>Definition</h4>
+      <p>Random forest is an ensemble of <b>decision trees</b>. Each tree is trained on a bootstrap sample, and at every split only a <b>random subset of features</b> is considered. The forest combines the trees by majority vote (classification) or average (regression).</p>
+
+      <h4>Algorithm</h4>
+<pre><code>1. Choose the number of trees T and the number of features m
+   (usually m = sqrt(d) for classification, d/3 for regression).
+2. For t = 1 to T:
+     a. Draw a bootstrap sample of size n from the training data.
+     b. Grow a decision tree. At each node:
+          - choose m features at random from all d features
+          - split on the best feature among those m
+     c. Do not prune the tree.
+3. Predict:
+     classification -&gt; majority vote over T trees
+     regression     -&gt; average of T tree outputs</code></pre>
+      <p class="small"><b>What this means:</b> randomness enters twice — once in the rows each tree sees, and once in the features each split is allowed to use.</p>
+
+      <h4>Diagram</h4>
+      <div class="tree">                 Training data
+                       |
+        +--------------+--------------+
+        |              |              |
+   Bootstrap 1    Bootstrap 2    Bootstrap 3
+        |              |              |
+     Tree 1          Tree 2         Tree 3
+   (random m       (random m      (random m
+    features)       features)      features)
+        |              |              |
+      Class A        Class A        Class B
+        +--------------+--------------+
+                       |
+                 Majority vote
+                       |
+                    Class A</div>
+      <p class="small"><b>What this means:</b> each tree sees a different sample and a different feature menu. Two vote A and one votes B, so the forest predicts A.</p>
+
+      <h4>Example</h4>
+      <p>Predict whether a customer will buy a product using age, income, city and previous purchases. Each tree sees a different bootstrap sample and a different random subset of features at each split. Tree 1 says “buy”, Tree 2 says “buy”, Tree 3 says “not buy” → forest predicts <b>buy</b> (2 out of 3).</p>
+
+      <h4>Why it works</h4>
+      <ul>
+        <li><b>Bagging</b> reduces variance by averaging many trees.</li>
+        <li><b>Feature randomness</b> decorrelates the trees; without it, all trees would split on the same dominant feature.</li>
+        <li>No pruning is needed; individual trees may overfit, but the average does not.</li>
+      </ul>
+
+      <h4>Advantages / disadvantages</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>High accuracy; robust to noise and outliers</td><td>Slow and memory-heavy for many trees</td></tr>
+          <tr><td>Works for classification and regression</td><td>Less interpretable than a single tree</td></tr>
+          <tr><td>Handles high-dimensional data</td><td>Many hyperparameters (T, m, depth)</td></tr>
+          <tr><td>Gives feature importance</td><td>Can overfit small/noisy data if trees are deep</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small"><b>What this means:</b> you trade simplicity and speed for accuracy and robustness. If you must explain every decision to a human, a single small tree is easier; if you need accuracy, the forest is usually better.</p>
+
+      <h4>Hyperparameters</h4>
+      <p><code>n_estimators</code> (number of trees), <code>max_features</code> (m), <code>max_depth</code>, <code>min_samples_leaf</code>, <code>oob_score</code> (out-of-bag error).</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> Ask 100 doctors for a diagnosis, but give each doctor a different set of test results and let each one look at only a few symptoms at a time. Then take the majority diagnosis. The variety stops them from copying the same mistake.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A random forest is not “one very big tree”. The randomness is in the <b>rows</b> (bootstrap samples) and the <b>features</b> (random subsets), not in the labels. Also, more trees usually improve stability, but they cost time and memory.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Differentiate between bagging and boosting. Explain bagging and boosting used in ensemble learning.</p>
+      <div class="badges"><span class="b marks">4–6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+<p class="asked"><b>Asked in:</b> 2023 May Q3(b) [6] · 2023 Nov Q3(a) [4] · 2025 May Q4(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Bagging trains many models side by side on different random samples, then averages them.<br>
+      Boosting trains models one after another, and each new model focuses on the previous one's mistakes.<br>
+      Bagging calms an unstable model; boosting strengthens a weak one.</div>
+
+      <h4>Why we do this</h4>
+      <p>Both methods build a group, but they attack different problems. If your model is unstable — small changes in data cause big changes in predictions — bagging helps. If your model is too simple and consistently misses the pattern, boosting helps. Choosing the wrong one wastes effort.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Bootstrap sample</b> — a random sample drawn with replacement, so it can contain duplicates.</li>
+        <li><b>With replacement</b> — after picking a row, you put it back before picking the next one.</li>
+        <li><b>Parallel</b> — all models train independently at the same time.</li>
+        <li><b>Sequential</b> — each model waits for the previous one to finish.</li>
+        <li><b>Weak learner</b> — a simple model that is only slightly better than random, such as a decision stump.</li>
+        <li><b>Stump</b> — a decision tree with a single split.</li>
+        <li><b>Weight</b> — how much attention an example or a model receives.</li>
+        <li><b>Variance</b> — instability caused by sensitivity to the training sample.</li>
+        <li><b>Bias</b> — error caused by a model that is too simple.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Bagging: draw M bootstrap samples from the training set.</b> Why: each sample is slightly different, so each model sees a different version of the data.</li>
+        <li><b>Train one base model on each sample, all in parallel.</b> Why: the models do not depend on each other, so the work can be done at once.</li>
+        <li><b>Combine them by majority vote or average.</b> Why: averaging cancels the random errors that differ between models.</li>
+        <li><b>Boosting: train the first weak model on the full data.</b> Why: it provides a starting point, even if it is only slightly better than guessing.</li>
+        <li><b>Give more weight to the examples it got wrong, then train the next model.</b> Why: the next model is forced to concentrate on the hard cases.</li>
+        <li><b>Combine the models with weights based on their accuracy.</b> Why: better models should have more say in the final vote.</li>
+      </ol>
+
+      <h4>Bagging (Bootstrap Aggregating)</h4>
+      <ul>
+        <li>Draw <b>M bootstrap samples</b> (random sampling <b>with replacement</b>) from the training set.</li>
+        <li>Train one base model on each sample <b>in parallel</b>.</li>
+        <li>Combine by majority vote (classification) or average (regression).</li>
+        <li>Main effect: <b>reduces variance</b>; each sample is slightly different, so errors cancel.</li>
+        <li>Example: random forest = bagging + random feature selection.</li>
+      </ul>
+
+      <h4>Boosting</h4>
+      <ul>
+        <li>Train models <b>sequentially</b>. Each new model focuses on the examples the previous model got wrong.</li>
+        <li>Each model gets a weight α based on its accuracy; the final prediction is a weighted vote.</li>
+        <li>Main effect: <b>reduces bias</b>; a set of weak learners becomes a strong learner.</li>
+        <li>Example: AdaBoost, gradient boosting, XGBoost.</li>
+      </ul>
+
+      <h4>Comparison</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Bagging</th><th>Boosting</th></tr></thead>
+        <tbody>
+          <tr><td>Training order</td><td>Parallel, independent</td><td>Sequential, dependent</td></tr>
+          <tr><td>Data for each model</td><td>Bootstrap sample (with replacement)</td><td>Full data, reweighted each round</td></tr>
+          <tr><td>Focus</td><td>Reduce variance</td><td>Reduce bias</td></tr>
+          <tr><td>Combining</td><td>Equal vote / average</td><td>Weighted vote (α per model)</td></tr>
+          <tr><td>Overfitting risk</td><td>Low</td><td>High if too many rounds / noise</td></tr>
+          <tr><td>Base learners</td><td>Strong, low-bias models (deep trees)</td><td>Weak learners (stumps)</td></tr>
+          <tr><td>Example</td><td>Random forest</td><td>AdaBoost, XGBoost</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small"><b>What this means:</b> bagging is a crowd of independent opinions with equal say. Boosting is a relay where each runner is chosen to fix the last runner's weakness, and stronger runners get a louder voice.</p>
+
+      <div class="note"><b>One-line memory:</b> bagging = <em>many independent opinions, averaged</em>; boosting = <em>a sequence of students, each fixing the previous one’s mistakes</em>.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> Bagging is asking ten friends who each read a different newspaper, then taking the majority. Boosting is a study group where each session focuses on the questions the group failed last time.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Bagging mainly reduces variance; boosting mainly reduces bias. They are not interchangeable. Also, “with replacement” means the same row can appear more than once in a bootstrap sample — that is intended, not a bug.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Write a short note on AdaBoost.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+<p class="asked"><b>Asked in:</b> 2023 May Q4(b)(ii) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> AdaBoost builds small weak models one at a time.<br>
+      After each round, the examples that were answered wrong get more weight.<br>
+      The next model is forced to pay attention to them, and the final answer is a weighted vote.</div>
+
+      <h4>Why we do this</h4>
+      <p>A single stump — a tree with one split — is barely useful. But a sequence of stumps, each one trained on the mistakes of the last, can form a strong classifier. AdaBoost is the classic proof that many weak learners can add up to a strong one.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>AdaBoost</b> — Adaptive Boosting, a sequential ensemble method.</li>
+        <li><b>Weak learner</b> — a model only slightly better than random guessing.</li>
+        <li><b>Stump</b> — a decision tree with one split and two leaves.</li>
+        <li><b>Sample weight (w<sub>i</sub>)</b> — how much example i matters in the next round.</li>
+        <li><b>Weighted error (ε)</b> — the total weight of the examples a learner got wrong.</li>
+        <li><b>Learner weight (α)</b> — how much voting power a learner gets in the final decision.</li>
+        <li><b>Normalise</b> — rescale the weights so they add up to 1.</li>
+        <li><b>Sign</b> — +1 or −1, used to turn a weighted sum into a class label.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Give every training example the same weight, 1/n.</b> Why: no example is more important at the start.</li>
+        <li><b>Train a weak learner on the weighted data.</b> Why: it produces the first set of predictions.</li>
+        <li><b>Compute the weighted error ε.</b> Why: this measures how much of the total weight the learner got wrong.</li>
+        <li><b>Compute the learner's voting power α = ½ ln((1−ε)/ε).</b> Why: a learner that is right more often than chance gets a positive, larger vote.</li>
+        <li><b>Increase the weights of misclassified examples and decrease the rest, then normalise.</b> Why: the next learner will focus on the hard cases.</li>
+        <li><b>Repeat for T rounds and combine with a weighted vote.</b> Why: the final decision uses all the weak learners, weighted by their quality.</li>
+      </ol>
+
+      <h4>Definition</h4>
+      <p>AdaBoost (Adaptive Boosting) combines many <b>weak learners</b> (usually decision stumps — one-split trees) sequentially. Each new learner focuses on the samples that the previous learners misclassified.</p>
+
+      <h4>Algorithm</h4>
+<pre><code>1. Start with equal weights: w_i = 1/n for i = 1..n.
+2. For t = 1 to T:
+     a. Train weak learner h_t on the weighted data.
+     b. Compute weighted error:
+          eps_t = sum of w_i for misclassified i.
+     c. Compute learner weight:
+          alpha_t = 0.5 * ln((1 - eps_t) / eps_t).
+     d. Update sample weights:
+          w_i = w_i * exp(-alpha_t * y_i * h_t(x_i))
+     e. Normalise weights so they sum to 1.
+3. Final prediction:
+     H(x) = sign( sum alpha_t * h_t(x) ).</code></pre>
+      <p class="small"><b>What this means:</b> step (d) raises the weight when the prediction is wrong and lowers it when it is right. Alpha decides how loudly that learner speaks in the final vote.</p>
+
+      <h4>Key points</h4>
+      <ul>
+        <li>If a learner is better than random (ε &lt; 0.5), α &gt; 0; better learners get more vote.</li>
+        <li>Misclassified samples get larger weights, so the next learner concentrates on them.</li>
+        <li>If ε = 0.5, α = 0 (the learner is useless); if ε → 0, α → large.</li>
+        <li>Training error of the ensemble falls exponentially with the number of rounds.</li>
+        <li>Sensitive to noise and outliers because it keeps increasing their weights.</li>
+      </ul>
+
+      <h4>Small example</h4>
+      <p>Three samples, all weight 1/3. Learner h<sub>1</sub> misclassifies one sample: ε<sub>1</sub> = 1/3.</p>
+      <div class="math">α<sub>1</sub> = ½ ln((1 − 1/3)/(1/3)) = ½ ln(2) = <b>0.3466</b></div>
+      <p>The misclassified sample's weight becomes (1/3)e<sup>0.3466</sup> ≈ 0.471, and the correct ones become (1/3)e<sup>−0.3466</sup> ≈ 0.236. After normalisation, the hard sample has about <b>0.5</b> of the total weight, so the next learner is forced to focus on it.</p>
+      <p class="small"><b>What this means:</b> one third of the data was wrong, but after reweighting that one example carries half the total importance. The next stump cannot ignore it.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A coach reviews a practice test and notices which questions you keep failing. The next practice round is packed with those questions. Easier questions you already know get less attention.</div>
+
+      <div class="confuse"><b>Common confusion:</b> α is the learner's voting power, not the learning rate. Also, AdaBoost's habit of increasing weights on hard examples is helpful for genuine hard cases but harmful for noisy outliers — it can end up chasing mislabelled data.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s45">
+  <h2>4.5 Multiclass classification and imbalanced data</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Differentiate binary classification with multiclass classification with an example. What is multiclass classification? Explain the variants of multiclass classification.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+<p class="asked"><b>Asked in:</b> 2023 May Q3(c) [6] · 2024 May Q4(a) [5] · 2025 May Q3(a) [5 — binary vs multiclass] · 2025 Nov Q3(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Binary classification chooses between two labels, such as spam or not spam.<br>
+      Multiclass classification chooses among three or more labels, such as apple, mango, or banana.<br>
+      OvA trains one classifier per class; OvO trains one classifier per pair of classes.</div>
+
+      <h4>Why we do this</h4>
+      <p>Many real problems have more than two answers. A fruit grader cannot be built from a single yes/no question. We reuse binary classifiers by arranging them into a tournament: one class against the rest, or every pair against each other.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Binary classification</b> — choosing between exactly two labels.</li>
+        <li><b>Multiclass classification</b> — choosing one label from three or more classes.</li>
+        <li><b>Classifier</b> — a model that assigns a label.</li>
+        <li><b>Decision boundary</b> — the border in input space where the predicted label changes.</li>
+        <li><b>Hyperplane</b> — a flat boundary; a line in 2-D, a plane in 3-D.</li>
+        <li><b>OvA / OvR</b> — One-vs-All, also called One-vs-Rest: each class against all the others.</li>
+        <li><b>OvO</b> — One-vs-One: one classifier for every pair of classes.</li>
+        <li><b>Confidence score</b> — a number saying how strongly a classifier favours its choice.</li>
+        <li><b>Majority vote</b> — the label with the most individual votes.</li>
+        <li><b>Support</b> — the number of true examples of a class.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Count the classes.</b> Why: two classes use a binary model directly; three or more need a multiclass strategy.</li>
+        <li><b>Choose OvA or OvO.</b> Why: OvA needs fewer classifiers; OvO gives each pair a balanced, simpler problem.</li>
+        <li><b>Train the required binary classifiers.</b> Why: each one learns a single yes/no boundary.</li>
+        <li><b>At prediction time, run all the classifiers.</b> Why: each produces a vote or a confidence score.</li>
+        <li><b>Combine the results.</b> Why: OvA takes the highest confidence; OvO takes the majority vote.</li>
+      </ol>
+
+      <h4>Binary vs multiclass</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Binary classification</th><th>Multiclass classification</th></tr></thead>
+        <tbody>
+          <tr><td>Number of classes</td><td>2</td><td>3 or more</td></tr>
+          <tr><td>Output</td><td>0/1, yes/no, spam/not spam</td><td>One of C labels: A/B/C/D</td></tr>
+          <tr><td>Decision boundary</td><td>One hyperplane</td><td>Several boundaries / regions</td></tr>
+          <tr><td>Algorithms</td><td>Logistic regression, linear SVM, perceptron</td><td>Multinomial logistic regression, decision tree, random forest, KNN, OvO/OvA SVM</td></tr>
+          <tr><td>Metrics</td><td>TP/TN/FP/FN, precision, recall, F1</td><td>Per-class + macro/micro averages, confusion matrix C×C</td></tr>
+          <tr><td>Example</td><td>Email: spam or not spam</td><td>Fruit: apple, mango, banana, orange</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small"><b>What this means:</b> binary is one border; multiclass is a map divided into several regions. The metrics also grow from four counts to a C×C table.</p>
+
+      <h4>Variants of multiclass classification</h4>
+
+      <h4>(a) One-vs-All (OvA), also called One-vs-Rest (OvR)</h4>
+      <ul>
+        <li>Train <b>C binary classifiers</b>, one per class.</li>
+        <li>Classifier c is trained with class c as positive and all other classes as negative.</li>
+        <li>At prediction time, run all C classifiers and choose the class with the <b>highest score/probability</b>.</li>
+        <li>Example: classes A, B, C → classifiers “A vs {B,C}”, “B vs {A,C}”, “C vs {A,B}”.</li>
+        <li>Cost: C classifiers. Each classifier sees the full dataset.</li>
+      </ul>
+
+      <h4>(b) One-vs-One (OvO)</h4>
+      <ul>
+        <li>Train one binary classifier for <b>every pair of classes</b>.</li>
+        <li>Number of classifiers = <b>C(C−1)/2</b>.</li>
+        <li>At prediction time, each classifier votes for one of its two classes; the class with the most votes wins.</li>
+        <li>Example: classes A, B, C → “A vs B”, “A vs C”, “B vs C” (3 classifiers).</li>
+        <li>Each classifier is trained on only the data of its two classes → cheaper per classifier, but more classifiers.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>OvA / OvR</th><th>OvO</th></tr></thead>
+        <tbody>
+          <tr><td>Classifiers</td><td>C</td><td>C(C−1)/2</td></tr>
+          <tr><td>Training data per classifier</td><td>All data</td><td>Only the two classes</td></tr>
+          <tr><td>Prediction</td><td>Highest confidence</td><td>Majority vote</td></tr>
+          <tr><td>Class imbalance</td><td>Suffers (one vs all)</td><td>Less severe (balanced pairs)</td></tr>
+          <tr><td>Best for</td><td>Many classes, limited compute</td><td>SVMs, small C</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small"><b>What this means:</b> OvA is cheaper when there are many classes. OvO is cheaper per classifier and often better for SVMs, but the number of pairs grows quickly.</p>
+
+      <h4>Example with 4 classes</h4>
+      <p>For A, B, C, D: OvA needs <b>4</b> classifiers; OvO needs 4×3/2 = <b>6</b> classifiers. If a new point gets OvO votes A=3, B=1, C=1, D=0, the prediction is <b>A</b>.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> OvA is asking “is this a cat?” “is this a dog?” “is this a fish?” for every animal and taking the most confident yes. OvO is asking “cat or dog?”, “cat or fish?”, “dog or fish?” and counting wins in a mini tournament.</div>
+
+      <div class="confuse"><b>Common confusion:</b> OvO needs C(C−1)/2 classifiers, not C². Also, OvA trains each classifier on the full dataset, so it is not “smaller data” — it is fewer classifiers, each seeing everything.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Write a short note on handling imbalanced data in multiclass classification.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+<p class="asked"><b>Asked in:</b> 2025 May Q4(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Imbalanced data means one class has far more examples than the others.<br>
+      A lazy model can score 95% by always picking the big class and still be useless for the small ones.<br>
+      The fix is to change the data, the weights, the threshold, or the metric.</div>
+
+      <h4>Why we do this</h4>
+      <p>Accuracy rewards the majority class. In fraud detection or rare-disease screening, the events we care about are rare, so a model can look excellent while missing every important case. We need methods that force the model to notice the minority classes.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Class imbalance</b> — the classes have very different numbers of examples.</li>
+        <li><b>Majority class</b> — the class with the most examples.</li>
+        <li><b>Minority class</b> — a class with far fewer examples.</li>
+        <li><b>Oversampling</b> — adding copies or synthetic examples of the minority class.</li>
+        <li><b>Undersampling</b> — removing examples from the majority class.</li>
+        <li><b>SMOTE</b> — Synthetic Minority Over-sampling Technique; it creates new minority points between existing ones.</li>
+        <li><b>Class weight</b> — a penalty multiplier that makes errors on a class count more.</li>
+        <li><b>Threshold</b> — the probability cut-off used to turn a score into a label.</li>
+        <li><b>Macro F1</b> — the plain average of per-class F1 scores, so every class counts equally.</li>
+        <li><b>PR-AUC</b> — area under the precision–recall curve; useful when positives are rare.</li>
+        <li><b>Balanced accuracy</b> — the average of per-class recall, instead of overall accuracy.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Count the examples in each class.</b> Why: you cannot fix an imbalance you have not measured.</li>
+        <li><b>Split into train and test before doing anything else.</b> Why: resampling first would let copies of the same example appear in both sets.</li>
+        <li><b>Resample only the training set.</b> Why: the test set must reflect the real-world imbalance.</li>
+        <li><b>Add class weights or cost-sensitive penalties.</b> Why: this makes minority mistakes expensive without changing the data.</li>
+        <li><b>Tune the decision threshold per class.</b> Why: the default 0.5 cut-off is arbitrary and usually favours the majority.</li>
+        <li><b>Report macro F1, per-class recall, or PR-AUC.</b> Why: these expose minority performance that accuracy hides.</li>
+      </ol>
+
+      <h4>Problem</h4>
+      <p>Imbalanced data has very different class frequencies (e.g. 95% class A, 5% classes B/C/D). A model can predict the majority class always and still get 95% accuracy, while completely failing on the minority classes. Multiclass imbalance is harder because there can be several minority classes.</p>
+
+      <h4>Techniques</h4>
+      <ol>
+        <li><b>Resampling</b>
+          <ul>
+            <li><b>Oversampling</b> — duplicate minority samples (or use SMOTE to create synthetic ones).</li>
+            <li><b>Undersampling</b> — remove majority samples; risks losing information.</li>
+            <li><b>Hybrid</b> — combine both (e.g. SMOTE + Tomek links).</li>
+          </ul>
+        </li>
+        <li><b>Class weights</b> — set <code>class_weight='balanced'</code>; the loss penalises minority errors more.</li>
+        <li><b>Cost-sensitive learning</b> — assign a higher misclassification cost to minority classes.</li>
+        <li><b>Threshold moving</b> — lower the decision threshold for minority classes; tune per class.</li>
+        <li><b>Better metrics</b> — use macro F1, balanced accuracy, per-class recall, PR-AUC; do not rely on accuracy.</li>
+        <li><b>Ensemble methods</b> — BalancedBagging, EasyEnsemble, RUSBoost; each learner sees a balanced sample.</li>
+        <li><b>One-vs-rest with calibration</b> — train each class against the rest and calibrate probabilities.</li>
+        <li><b>Data collection</b> — the best long-term fix is to collect more minority samples.</li>
+      </ol>
+      <p class="small"><b>What this means:</b> techniques 1–4 change what the model sees or how much it is punished; techniques 5–7 change how you judge or combine it; technique 8 fixes the root cause.</p>
+
+      <div class="warn"><b>Do not resample before splitting.</b> Split train/test first, then resample only the training set. Otherwise the same sample can appear in both sets and the test score becomes optimistic.</div>
+
+      <h4>Example</h4>
+      <p>For classes A (950), B (30), C (20), plain accuracy is misleading. After class weighting and SMOTE, macro F1 might rise from 0.35 to 0.72 even though overall accuracy drops slightly — that is the correct trade-off.</p>
+      <p class="small"><b>What this means:</b> a small drop in accuracy can hide a large gain on the classes you actually care about. Judge the model by the minority-class numbers.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> A fire alarm that never rings is 99.9% accurate on ordinary days, but useless on the one day there is a fire. You would rather accept a few false alarms than miss the real event.</div>
+
+      <div class="confuse"><b>Common confusion:</b> High accuracy does not mean good minority performance. Also, never resample before splitting the data — that leaks copies into the test set and gives a fake, optimistic score.</div>
     </div>
   </div>
 </section>

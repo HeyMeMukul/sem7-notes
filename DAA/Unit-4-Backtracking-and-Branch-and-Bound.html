@@ -115,12 +115,12 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h3>DAA · Unit 4</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
+    <a href="#s41">4.1 Backtracking fundamentals <span class="pill">2×</span></a>
     <a href="#s42">4.2 Sum of subsets <span class="pill">5×</span></a>
     <a href="#s43">4.3 Graph colouring <span class="pill">4×</span></a>
-    <a href="#s45">4.5 0/1 Knapsack (BnB / LC) <span class="pill">2×</span></a>
     <a href="#s44">4.4 Branch &amp; Bound fundamentals <span class="pill">2×</span></a>
+    <a href="#s45">4.5 0/1 Knapsack (BnB / LC) <span class="pill">2×</span></a>
     <a href="#s46">4.6 Travelling salesman (BnB) <span class="pill">2×</span></a>
-    <a href="#s41">4.1 Backtracking fundamentals <span class="pill">2×</span></a>
     <a href="#s47">4.7 Backtracking vs BnB <span class="pill">1×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
@@ -153,7 +153,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h2>📊 PYQ frequency map</h2>
   <div class="tbl-wrap">
   <table class="freq">
-    <thead><tr><th>#</th><th>Question</th><th>Appears in</th><th>Repeat</th></tr></thead>
+    <thead><tr><th>Rank</th><th>Question</th><th>Appears in</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td class="l">Sum of subsets — algorithm + numerical + proof</td><td>2023 Nov Q4b [8]; 2024 May Q4b [9]; 2025 May Q3b [4], Q4a [8]; 2025 Nov Q3a [10]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
       <tr><td>2</td><td class="l">Graph colouring — algorithm + numerical</td><td>2022 Nov Q4b [8]; 2024 May Q3a [9]; 2025 May Q3a [10]; 2025 Nov Q4b [8]</td><td><span class="stars">★★★★</span> 4×</td></tr>
@@ -170,8 +170,111 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <div class="tip"><b>Priority order:</b> sum of subsets → graph colouring → TSP → knapsack BnB. These four cover every 9/10-mark numerical in the last five papers. Theory (principle, control abstraction, comparison) is the easy 8 marks.</div>
 </section>
 
-<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s42">
-  <div class="prio">Priority 1 · ★★★★★ 5× repeated</div><h2>4.2 Sum of subsets <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★★ 5×</span></h2>
+<div class="note" id="topic-note">📚 Notes follow the book order (3.1 → 3.2 → …). The frequency table above is sorted by repetition, so use it to decide what to revise first.</div><section class="card" id="s41">
+  <h2>4.1 Backtracking — principle, control abstraction, time analysis</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain with a suitable example: Backtracking — principle, control abstraction, time analysis of control abstraction.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [8] · 2023 Nov Q3(b) [8]</p>
+<div class="simple"><b>In simple words:</b> Backtracking builds an answer one small choice at a time. After every choice it asks, “Can this still work?” If the answer is no, it undoes that choice and tries the next one. So it never wastes time on a path that is already broken.</div>
+
+<h4>Why we do this</h4>
+<p>Many problems have a huge number of possible answers. Checking every complete answer is too slow. Backtracking stops a bad partial answer immediately. That saves most of the work.</p>
+
+<h4>1. Principle (book §4.1) — step by step</h4>
+<ol>
+<li><b>Write the answer as n slots.</b> The answer is an <b>n-tuple</b> <code>(x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>)</code>. That is just n positions in a row.</li>
+<li><b>List the allowed values for each slot.</b> Slot <code>x<sub>i</sub></code> may take values only from its set <code>S<sub>i</sub></code>. These limits are the <b>explicit constraints</b> — the rules written directly in the problem.</li>
+<li><b>Fill one slot at a time, left to right.</b> Never jump ahead.</li>
+<li><b>Test the partial answer.</b> A <b>bounding function</b> <code>B<sub>k</sub></code> checks the <b>implicit constraints</b> — the real rules, such as “no two queens attack each other”.</li>
+<li><b>Go deeper only if it can still work.</b> A partial answer that passes is called <b>feasible</b> (still able to become a full answer).</li>
+<li><b>Record a full valid answer.</b> If all n slots are filled and valid, print the tuple.</li>
+<li><b>Undo and retry when stuck.</b> If no value works in a slot, step back one slot and try that slot’s next value. This undo step is the <b>backtrack</b>.</li>
+<li><b>Stop</b> when every option has been tried. Stop early only if the question asks for one answer and you found it.</li>
+</ol>
+<p>Depending on the question, the problem may be a <b>decision</b> problem (does any answer exist?), an <b>optimisation</b> problem (which answer is best?), or an <b>enumeration</b> problem (list every answer).</p>
+<p><b>Depth-first search (DFS)</b> means “go as deep as possible before trying a sibling”. Backtracking is DFS with a bounding function. It is much better than <b>brute force</b> (generate every full answer, then test it), because whole subtrees are never generated.</p>
+<p><b>Applications (book §4.3):</b> 8-queens, sum of subsets, graph colouring, Hamiltonian cycle (a cycle that visits every vertex once) and knapsack.</p>
+
+<h4>2. State-space tree terms (book §4.1.1)</h4>
+<p>A <b>state-space tree</b> is a drawing of every partial choice. The root is the empty choice. Each edge adds one choice. Each level is one slot of the answer.</p>
+<div class="tbl-wrap">
+<table class="left">
+<thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+<tbody>
+<tr><td><b>Problem state</b></td><td>Any node in the tree — one partial choice.</td></tr>
+<tr><td><b>Solution state / solution space</b></td><td>A path from the root that builds one full tuple.</td></tr>
+<tr><td><b>Answer state</b></td><td>A leaf that satisfies all implicit constraints.</td></tr>
+<tr><td><b>Live node</b></td><td>A node that is generated, but whose children are not all generated yet.</td></tr>
+<tr><td><b>E-node</b></td><td>The live node whose children are being generated right now. “E” means expanding.</td></tr>
+<tr><td><b>Dead node</b></td><td>A node we will never expand again — it failed a test or cannot help.</td></tr>
+<tr><td><b>Bounding function</b> <code>B<sub>k</sub></code></td><td>A quick test that kills hopeless nodes. It must never kill a node that could still lead to an answer.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>What this means:</b> the tree is not the answer. It is the map of all choices. Backtracking walks this map and cuts dead branches early.</div>
+
+<h4>3. Control abstraction (book §4.2, recursive)</h4>
+<p>An <b>abstraction</b> hides problem details and shows only the common skeleton. A <b>control abstraction</b> is the shared skeleton of an algorithm, written with placeholders for the problem-specific parts. The same skeleton works for queens, colouring and subsets.</p>
+<pre><code>Algorithm Backtrack(k)
+// a[1..k] is a solution vector. On entering, k-1 values are fixed.
+// T(a1,...,a_{k-1}) = set of all values for a_k such that
+// (a1,...,a_k) is a path to a problem state.
+// B_k is the bounding function.
+{
+    for (each a_k that belongs to T(a1, a2, ..., a_{k-1})) do
+    {
+        if (B_k(a1, a2, ..., a_k) = true) then      // feasible sequence
+        {
+            if ((a1, a2, ..., a_k) is a path to an answer node) then
+                print(a[1], a[2], ..., a[k]);
+            if (k &lt; n) then
+                Backtrack(k + 1);                   // find the next set
+        }
+    }
+}</code></pre>
+<div class="note"><b>What this means, line by line:</b> (1) <code>Backtrack(k)</code> means “fill slot k”. (2) <code>T</code> gives the legal values for that slot. (3) <code>B<sub>k</sub></code> rejects a partial answer early. (4) If the partial answer is already complete, print it. (5) If slots remain, go one level deeper. (6) When the loop ends, the function returns — that return is the backtrack.</div>
+<p>The book also gives an iterative form, <code>Non_Rec_Backtrack()</code>. It keeps <code>k</code>, tries the next untried value of <code>a[k]</code>, prints a solution if the node is an answer, increases <code>k</code> on success, and does <code>k := k − 1</code> to backtrack when no value is left.</p>
+
+<h4>4. Time analysis (book §4.2)</h4>
+<p>The running time depends on four things:</p>
+<ol>
+<li>time to generate <code>a[k]</code> — picking the next value;</li>
+<li>number of <code>a[k]</code> values that satisfy the explicit constraints — how many legal choices exist;</li>
+<li>time taken by the bounding function <code>B<sub>k</sub></code> — the cost of one pruning test;</li>
+<li>number of <code>a[k]</code> values that satisfy <code>B<sub>k</sub></code> for all <code>k</code> — how many nodes survive pruning.</li>
+</ol>
+<p>The first three are independent of the data and take <b>polynomial time</b> — time like <code>n</code>, <code>n<sup>2</sup></code> or <code>n<sup>3</sup></code>, not <code>2<sup>n</sup></code>. The fourth depends on the instance. If <code>n!</code> nodes survive the bounding function, then</p>
+<div class="math">T(n) = O(P(n) · n!)</div>
+<p>Here <code>P(n)</code> is the polynomial cost of the first three factors, and <code>n!</code> is the number of surviving nodes. The symbol <code>n!</code> means <code>n × (n−1) × … × 1</code>. The <code>O</code> notation means “grows no faster than”.</p>
+<div class="note"><b>What this means:</b> the bound <code>P(n)</code> is cheap. The explosion comes from the number of surviving nodes. A stronger bounding function reduces that number.</div>
+<p>For specific problems: n-queens <b>O(n!)</b>, sum of subsets <b>O(2<sup>n</sup>)</b>, graph colouring <b>O(n·m<sup>n</sup>)</b>. Space is <b>O(n)</b> for the solution vector and the recursion stack.</p>
+
+<h4>5. Suitable example — 4-queens</h4>
+<p>The <b>4-queens problem</b> asks for 4 queens on a 4×4 chessboard so that no two share a row, column or diagonal. We place one queen per row. So the answer is a tuple of 4 column numbers.</p>
+<ol>
+<li><b>Row 1:</b> try a column.</li>
+<li><b>Row 2:</b> try a column that does not attack row 1.</li>
+<li><b>Check after every placement.</b> Two queens attack if they share a column, or if their row distance equals their column distance (a diagonal).</li>
+<li><b>Dead end?</b> Undo the last queen and try her next column.</li>
+<li><b>All 4 placed?</b> Record the tuple.</li>
+</ol>
+<p>The book’s 4-queen state-space tree (Fig. 4.4.1) first tries a placement that reaches a dead end, backtracks, and finally gives the answer tuple <b>(2, 4, 1, 3)</b>. Read it as: queen in row 1 goes to column 2, row 2 to column 4, row 3 to column 1, row 4 to column 3. No two queens share a row, column or diagonal. The book’s 8-queens solution is the tuple <b>(4, 6, 8, 2, 7, 1, 3, 5)</b>.</p>
+<div class="note"><b>What this means:</b> brute force generates all <code>m<sup>n</sup></code> vectors and tests them at the end. Backtracking tests at every level, so a bad partial vector is killed immediately.</div>
+
+<div class="analogy"><b>Real-life analogy:</b> you are in a maze. You walk down one corridor. If it ends at a wall, you walk back to the last junction and take a different turn. You do not restart the maze from the entrance.</div>
+<div class="confuse"><b>Common confusion:</b> backtracking is not random trial and error, and it is not brute force. It is organised DFS. Also, the “backtrack” is just the function returning one level — you do not throw away the whole answer and start again.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.1 Principle, §4.2 Control Abstraction and Time Analysis, §4.3 Applications &amp; §4.4 The 8-Queen Problem, p. 4-2 – 4-21</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s42">
+  <h2>4.2 Sum of subsets <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★★ 5×</span></h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -504,7 +607,7 @@ Total nodes = 2<sup>n+1</sup> − 1</div>
 </section>
 
 <section class="card" id="s43">
-  <div class="prio">Priority 2 · ★★★★ 4× repeated</div><h2>4.3 Graph colouring <span class="b rep" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
+  <h2>4.3 Graph colouring <span class="b rep" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -714,8 +817,188 @@ Algorithm Gen_Col_Value(k)
   </div>
 </section>
 
+<section class="card" id="s44">
+  <h2>4.4 Branch and Bound — fundamentals</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is the Branch and Bound method? Write the control abstraction for Least-Cost search.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [9] · control abstraction + applications: 2025 Nov Q3(b) [8]</p>
+<div class="simple"><b>In simple words:</b> Branch and Bound finds the <b>best</b> answer, not just any answer. It splits the choices into branches. For each branch it calculates the best score that branch could possibly reach. If that score cannot beat the best answer already found, the whole branch is thrown away.</div>
+
+<h4>Why we do this</h4>
+<p>For optimisation problems, a valid answer is not enough — we need the cheapest or most profitable one. Trying every complete answer is too slow. BnB uses a bound to skip large groups of answers that cannot win.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Optimisation problem</b>: a problem where we want the minimum cost or maximum profit.</li>
+<li><b>Feasible</b>: obeys all the rules. <b>Optimal</b>: the best feasible answer.</li>
+<li><b>Branch</b>: split one partial answer into smaller choices — generate its children.</li>
+<li><b>Bound</b>: an estimate of the best score a branch can still achieve.</li>
+<li><b>Lower bound</b> <code>c^(x)</code>: the smallest cost this branch could possibly have. Used for minimisation.</li>
+<li><b>Upper bound</b> <code>u(x)</code>: the largest profit this branch could possibly have. Used for maximisation.</li>
+<li><b>Live node</b>: a node that is waiting to be explored. <b>E-node</b>: the live node being expanded now.</li>
+<li><b>Queue</b>: a line — first in, first out. <b>Stack</b>: a pile — last in, first out.</li>
+<li><b>FIFO</b>: use a queue. <b>LIFO</b>: use a stack.</li>
+<li><b>BFS</b>: breadth-first search — explore level by level. <b>DFS</b>: depth-first search — go deep first.</li>
+<li><b>LC</b>: least cost — always expand the live node with the smallest cost estimate.</li>
+<li><b>Heap</b> (priority queue): a list that always gives the smallest (or largest) key quickly.</li>
+</ul>
+<h4>What is Branch and Bound? (book §4.7)</h4>
+<p><b>Branch and Bound (BnB)</b> is a general algorithm for finding <b>optimal solutions</b> of optimisation problems. It is used where greedy and dynamic programming fail, but it is slower; in the worst case it takes exponential time, although with good bounding it can run reasonably fast on average.</p>
+<p>The two words describe the two actions:</p>
+<ul>
+<li><b>Branch</b> — partition the problem at a node into smaller subproblems (generate its children).</li>
+<li><b>Bound</b> — compute a lower bound <code>c^(x)</code> and an upper bound <code>u(x)</code> for every child. If a child cannot contain a better answer than the best known, it is <b>killed</b> (pruned).</li>
+</ul>
+<p>BnB builds the state-space tree and generates <b>all children of the E-node</b> before any other live node can become an E-node. It may use <b>BFS</b> (FIFO queue) or <b>DFS</b> (LIFO stack). FIFO BnB is breadth-first; LIFO BnB is depth-first.</p>
+
+<h4>General BnB — step by step</h4>
+<ol>
+<li><b>Put the root in the live list.</b> The root means “no choice made yet”.</li>
+<li><b>Choose an E-node</b> using FIFO, LIFO or LC.</li>
+<li><b>Check for an answer.</b> If this node is a complete final leaf, its path is the answer.</li>
+<li><b>Branch.</b> Generate all children of the E-node.</li>
+<li><b>Bound each child.</b> Estimate the best score it can still reach.</li>
+<li><b>Kill hopeless children.</b> Drop any child whose bound cannot beat the best answer found so far.</li>
+<li><b>Add the survivors</b> to the live list.</li>
+<li><b>Repeat</b> until the live list is empty or optimality is proven.</li>
+</ol>
+
+<h4>Three search strategies (book §4.9)</h4>
+<div class="tbl-wrap">
+<table class="left">
+<thead><tr><th>Strategy</th><th>Live-node list</th><th>E-node chosen</th><th>Search</th></tr></thead>
+<tbody>
+<tr><td><b>FIFO</b></td><td>Queue</td><td>Oldest live node</td><td>Breadth-first</td></tr>
+<tr><td><b>LIFO</b></td><td>Stack</td><td>Newest live node</td><td>Depth-first</td></tr>
+<tr><td><b>LC</b></td><td>Heap (priority queue)</td><td>Smallest <code>c^(x)</code></td><td>Best-cost first</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>What this means:</b> FIFO explores level by level. LIFO goes deep like backtracking. LC always opens the most promising node first. All three use the same bounding idea; only the order of choosing the next node changes.</div>
+<p><b>LC (Least Cost)</b> uses a ranking function. Let <code>g^(x)</code> be an estimate of the extra effort needed to reach an answer node from <code>x</code>, and <code>h(x)</code> the cost of reaching <code>x</code> from the root. Define</p>
+<div class="math">c^(x) = f(h(x)) + g^(x)</div>
+<p>Here <code>f</code> is a function that turns the path cost into a ranking number; in most examples <code>f(h) = h</code>.</p>
+<ul>
+<li>If <code>g^(x) = 0</code> and <code>f(h(x))</code> = level of <code>x</code>, the search is <b>BFS</b>.</li>
+<li>If <code>f(h(x)) = 0</code> and <code>g^(x) ≤ g^(y)</code> whenever <code>y</code> is a child of <code>x</code>, the search is <b>D-search</b> (DFS).</li>
+<li>LC search with a bounding function is called <b>LC Branch and Bound (LCBB)</b>.</li>
+</ul>
+<div class="note"><b>What this means:</b> <code>c^(x)</code> is a total estimate: cost so far plus expected cost remaining. A small <code>c^</code> means “promising”. LC expands the smallest <code>c^</code> first. The two special cases show that BFS and DFS are just different ways of defining this estimate.</div>
+
+<h4>Control abstraction — general BnB (book §4.8)</h4>
+<pre><code>Algorithm Branch_Bound()
+{
+    E ← new(node);          // root / dummy start node
+    // H is the heap of all live nodes
+    // min-heap for minimisation, max-heap for maximisation
+    while (true)
+    {
+        if (E is a final leaf) then
+        {
+            write(path from E to the root);   // optimal solution
+            return;
+        }
+        Expand(E);
+        if (H is empty) then
+        {
+            write("there is no solution");
+            return;
+        }
+        E ← delete_top(H);
+    }
+}
+
+Algorithm Expand(E)
+{
+    Generate all children of E;
+    Compute the approximate cost value of each child;
+    Insert each child into the heap H;
+}</code></pre>
+<div class="note"><b>What this means:</b> <code>E</code> is the node we are working on. <code>Expand</code> creates its children, scores them, and puts them in the heap. Then the heap gives us the next best node. If the heap empties with no final leaf, no solution exists.</div>
+
+<h4>Control abstraction — Least-Cost search (book §4.9)</h4>
+<pre><code>Algorithm LC_search()
+// tr is the state-space tree; x is a node; E is the E-node
+{
+    if (tr is an answer node) then
+    {
+        write(tr);
+        return;
+    }
+    E ← tr;                              // set the E-node
+    repeat
+    {
+        for (each child x of E) do
+        {
+            if (x is an answer node) then
+            {
+                output the path from x to the root;
+                return;
+            }
+            Add_Node(x);                 // add x to the live-node list
+            x.parent ← E;                // path from x to the root
+        }
+        if (no more live nodes) then
+        {
+            write("Can not have answer node!!");
+            return;
+        }
+        E ← Least_cost();                // next E-node with least cost
+    } until (false);
+}</code></pre>
+<p><b>Example of bounding:</b> the book’s Fig. 4.8.1 shows a portion of the 4-queens state-space tree used by BnB. Each node gets a bounding value; the node with the optimum bound becomes the E-node, and children that cannot beat the current best are killed. The numbers outside the nodes show the order of evaluation.</p>
+
+<h4>Applications (asked in 2025 Nov)</h4>
+<ul>
+<li>Job sequencing with deadlines</li>
+<li>Travelling salesman problem (TSP)</li>
+<li>0/1 knapsack problem</li>
+<li>Assignment problem (match jobs to workers at minimum cost) and integer linear programming (optimisation with whole-number variables)</li>
+</ul>
+
+<div class="analogy"><b>Real-life analogy:</b> a courier must pick the cheapest route. For each possible route he asks, “What is the least this route can cost from here?” If that minimum is already more than the best route he has found, he crosses the route out without driving it. That minimum is the bound.</div>
+<div class="confuse"><b>Common confusion:</b> a bound is an <b>estimate</b>, not the real answer. It must be <b>optimistic</b>: never overestimate the cost and never underestimate the profit. A pessimistic bound can kill the true optimum. Also, BnB is not always breadth-first — FIFO, LIFO and LC are all valid.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.7 Principle, §4.8 Control Abstraction, §4.9 FIFO/LIFO/LC Strategies, p. 4-34 – 4-42</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What are the major drawbacks of the branch and bound method?</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q3(c) [4]</p>
+<div class="simple"><b>In simple words:</b> Branch and Bound is designed to give the correct best answer, but it can be very slow. It can also use a lot of memory. Its speed depends completely on how tight the bound is. A weak bound turns it into brute force with extra bookkeeping.</div>
+
+<h4>Why we do this</h4>
+<p>Examiners ask this to check that you know BnB is not a magic fast algorithm. You should be able to say when it struggles, not just how it works.</p>
+
+<h4>Major drawbacks (from the book’s discussion)</h4>
+<ol>
+<li><b>Slower than greedy and DP; exponential worst case.</b> The book states that BnB applies where greedy and dynamic programming fail, but it is much slower. If the bound is weak, most children survive, no pruning happens, and the method degenerates to exhaustive search — <code>O(2<sup>n</sup>)</code> for knapsack/subsets or <code>O(n!)</code> for TSP.</li>
+<li><b>Blind FIFO/LIFO selection; costly LC.</b> The book says selecting the E-node using FIFO or LIFO is “very complicated and somewhat blind”. LC is better but needs a ranking/cost value <code>c^(x)</code> at every node; computing a tight bound (for example, fractional knapsack at every node) itself costs time.</li>
+<li><b>Large live-node list.</b> FIFO/LIFO/LC must store all live nodes in a queue, stack or heap; in the worst case this is exponential, unlike backtracking’s O(n) stack.</li>
+<li><b>Problem-specific bounds.</b> A correct bounding function and branching rule need insight. The book warns that care must be taken while killing live nodes so that at least one answer node is still produced; a bad bound can remove the optimum.</li>
+<li><b>No guaranteed early stop.</b> Finding one complete solution is not enough; the search must continue until the bound proves that no unexplored node can beat it.</li>
+</ol>
+<div class="note"><b>What this means:</b> points 1 and 3 are about time and memory. Points 2 and 4 are about design effort. Point 5 is about correctness: a single good answer does not prove it is the best one.</div>
+<div class="note"><b>Exam-safe one-liner:</b> BnB is exact but can be slow and memory-heavy; its speed depends entirely on how tight the bound is.</div>
+
+<div class="analogy"><b>Real-life analogy:</b> you are planning a trip and pin every possible route on a noticeboard. The board fills the whole wall. If your “minimum possible cost” estimate is vague, you cannot remove any route, so you end up checking them all.</div>
+<div class="confuse"><b>Common confusion:</b> “exponential worst case” does not mean BnB is useless. On many inputs a tight bound prunes almost everything. The drawback is that there is no <b>guarantee</b> of fast running time.</div>
+<p class="booksrc">📘 <b>Book:</b> §4.7 Principle, §4.9 Strategies, §4.10 Concept of Bounding, p. 4-34 – 4-42</p>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s45">
-  <div class="prio">Priority 3 · ★★ 2× repeated</div><h2>4.5 0/1 Knapsack using Branch and Bound</h2>
+  <h2>4.5 0/1 Knapsack using Branch and Bound</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -933,188 +1216,8 @@ while heap is not empty do
   </div>
 </section>
 
-<section class="card" id="s44">
-  <div class="prio">Priority 4 · ★★ 2× repeated</div><h2>4.4 Branch and Bound — fundamentals</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is the Branch and Bound method? Write the control abstraction for Least-Cost search.</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [9] · control abstraction + applications: 2025 Nov Q3(b) [8]</p>
-<div class="simple"><b>In simple words:</b> Branch and Bound finds the <b>best</b> answer, not just any answer. It splits the choices into branches. For each branch it calculates the best score that branch could possibly reach. If that score cannot beat the best answer already found, the whole branch is thrown away.</div>
-
-<h4>Why we do this</h4>
-<p>For optimisation problems, a valid answer is not enough — we need the cheapest or most profitable one. Trying every complete answer is too slow. BnB uses a bound to skip large groups of answers that cannot win.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Optimisation problem</b>: a problem where we want the minimum cost or maximum profit.</li>
-<li><b>Feasible</b>: obeys all the rules. <b>Optimal</b>: the best feasible answer.</li>
-<li><b>Branch</b>: split one partial answer into smaller choices — generate its children.</li>
-<li><b>Bound</b>: an estimate of the best score a branch can still achieve.</li>
-<li><b>Lower bound</b> <code>c^(x)</code>: the smallest cost this branch could possibly have. Used for minimisation.</li>
-<li><b>Upper bound</b> <code>u(x)</code>: the largest profit this branch could possibly have. Used for maximisation.</li>
-<li><b>Live node</b>: a node that is waiting to be explored. <b>E-node</b>: the live node being expanded now.</li>
-<li><b>Queue</b>: a line — first in, first out. <b>Stack</b>: a pile — last in, first out.</li>
-<li><b>FIFO</b>: use a queue. <b>LIFO</b>: use a stack.</li>
-<li><b>BFS</b>: breadth-first search — explore level by level. <b>DFS</b>: depth-first search — go deep first.</li>
-<li><b>LC</b>: least cost — always expand the live node with the smallest cost estimate.</li>
-<li><b>Heap</b> (priority queue): a list that always gives the smallest (or largest) key quickly.</li>
-</ul>
-<h4>What is Branch and Bound? (book §4.7)</h4>
-<p><b>Branch and Bound (BnB)</b> is a general algorithm for finding <b>optimal solutions</b> of optimisation problems. It is used where greedy and dynamic programming fail, but it is slower; in the worst case it takes exponential time, although with good bounding it can run reasonably fast on average.</p>
-<p>The two words describe the two actions:</p>
-<ul>
-<li><b>Branch</b> — partition the problem at a node into smaller subproblems (generate its children).</li>
-<li><b>Bound</b> — compute a lower bound <code>c^(x)</code> and an upper bound <code>u(x)</code> for every child. If a child cannot contain a better answer than the best known, it is <b>killed</b> (pruned).</li>
-</ul>
-<p>BnB builds the state-space tree and generates <b>all children of the E-node</b> before any other live node can become an E-node. It may use <b>BFS</b> (FIFO queue) or <b>DFS</b> (LIFO stack). FIFO BnB is breadth-first; LIFO BnB is depth-first.</p>
-
-<h4>General BnB — step by step</h4>
-<ol>
-<li><b>Put the root in the live list.</b> The root means “no choice made yet”.</li>
-<li><b>Choose an E-node</b> using FIFO, LIFO or LC.</li>
-<li><b>Check for an answer.</b> If this node is a complete final leaf, its path is the answer.</li>
-<li><b>Branch.</b> Generate all children of the E-node.</li>
-<li><b>Bound each child.</b> Estimate the best score it can still reach.</li>
-<li><b>Kill hopeless children.</b> Drop any child whose bound cannot beat the best answer found so far.</li>
-<li><b>Add the survivors</b> to the live list.</li>
-<li><b>Repeat</b> until the live list is empty or optimality is proven.</li>
-</ol>
-
-<h4>Three search strategies (book §4.9)</h4>
-<div class="tbl-wrap">
-<table class="left">
-<thead><tr><th>Strategy</th><th>Live-node list</th><th>E-node chosen</th><th>Search</th></tr></thead>
-<tbody>
-<tr><td><b>FIFO</b></td><td>Queue</td><td>Oldest live node</td><td>Breadth-first</td></tr>
-<tr><td><b>LIFO</b></td><td>Stack</td><td>Newest live node</td><td>Depth-first</td></tr>
-<tr><td><b>LC</b></td><td>Heap (priority queue)</td><td>Smallest <code>c^(x)</code></td><td>Best-cost first</td></tr>
-</tbody>
-</table>
-</div>
-<div class="note"><b>What this means:</b> FIFO explores level by level. LIFO goes deep like backtracking. LC always opens the most promising node first. All three use the same bounding idea; only the order of choosing the next node changes.</div>
-<p><b>LC (Least Cost)</b> uses a ranking function. Let <code>g^(x)</code> be an estimate of the extra effort needed to reach an answer node from <code>x</code>, and <code>h(x)</code> the cost of reaching <code>x</code> from the root. Define</p>
-<div class="math">c^(x) = f(h(x)) + g^(x)</div>
-<p>Here <code>f</code> is a function that turns the path cost into a ranking number; in most examples <code>f(h) = h</code>.</p>
-<ul>
-<li>If <code>g^(x) = 0</code> and <code>f(h(x))</code> = level of <code>x</code>, the search is <b>BFS</b>.</li>
-<li>If <code>f(h(x)) = 0</code> and <code>g^(x) ≤ g^(y)</code> whenever <code>y</code> is a child of <code>x</code>, the search is <b>D-search</b> (DFS).</li>
-<li>LC search with a bounding function is called <b>LC Branch and Bound (LCBB)</b>.</li>
-</ul>
-<div class="note"><b>What this means:</b> <code>c^(x)</code> is a total estimate: cost so far plus expected cost remaining. A small <code>c^</code> means “promising”. LC expands the smallest <code>c^</code> first. The two special cases show that BFS and DFS are just different ways of defining this estimate.</div>
-
-<h4>Control abstraction — general BnB (book §4.8)</h4>
-<pre><code>Algorithm Branch_Bound()
-{
-    E ← new(node);          // root / dummy start node
-    // H is the heap of all live nodes
-    // min-heap for minimisation, max-heap for maximisation
-    while (true)
-    {
-        if (E is a final leaf) then
-        {
-            write(path from E to the root);   // optimal solution
-            return;
-        }
-        Expand(E);
-        if (H is empty) then
-        {
-            write("there is no solution");
-            return;
-        }
-        E ← delete_top(H);
-    }
-}
-
-Algorithm Expand(E)
-{
-    Generate all children of E;
-    Compute the approximate cost value of each child;
-    Insert each child into the heap H;
-}</code></pre>
-<div class="note"><b>What this means:</b> <code>E</code> is the node we are working on. <code>Expand</code> creates its children, scores them, and puts them in the heap. Then the heap gives us the next best node. If the heap empties with no final leaf, no solution exists.</div>
-
-<h4>Control abstraction — Least-Cost search (book §4.9)</h4>
-<pre><code>Algorithm LC_search()
-// tr is the state-space tree; x is a node; E is the E-node
-{
-    if (tr is an answer node) then
-    {
-        write(tr);
-        return;
-    }
-    E ← tr;                              // set the E-node
-    repeat
-    {
-        for (each child x of E) do
-        {
-            if (x is an answer node) then
-            {
-                output the path from x to the root;
-                return;
-            }
-            Add_Node(x);                 // add x to the live-node list
-            x.parent ← E;                // path from x to the root
-        }
-        if (no more live nodes) then
-        {
-            write("Can not have answer node!!");
-            return;
-        }
-        E ← Least_cost();                // next E-node with least cost
-    } until (false);
-}</code></pre>
-<p><b>Example of bounding:</b> the book’s Fig. 4.8.1 shows a portion of the 4-queens state-space tree used by BnB. Each node gets a bounding value; the node with the optimum bound becomes the E-node, and children that cannot beat the current best are killed. The numbers outside the nodes show the order of evaluation.</p>
-
-<h4>Applications (asked in 2025 Nov)</h4>
-<ul>
-<li>Job sequencing with deadlines</li>
-<li>Travelling salesman problem (TSP)</li>
-<li>0/1 knapsack problem</li>
-<li>Assignment problem (match jobs to workers at minimum cost) and integer linear programming (optimisation with whole-number variables)</li>
-</ul>
-
-<div class="analogy"><b>Real-life analogy:</b> a courier must pick the cheapest route. For each possible route he asks, “What is the least this route can cost from here?” If that minimum is already more than the best route he has found, he crosses the route out without driving it. That minimum is the bound.</div>
-<div class="confuse"><b>Common confusion:</b> a bound is an <b>estimate</b>, not the real answer. It must be <b>optimistic</b>: never overestimate the cost and never underestimate the profit. A pessimistic bound can kill the true optimum. Also, BnB is not always breadth-first — FIFO, LIFO and LC are all valid.</div>
-<p class="booksrc">📘 <b>Book:</b> §4.7 Principle, §4.8 Control Abstraction, §4.9 FIFO/LIFO/LC Strategies, p. 4-34 – 4-42</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What are the major drawbacks of the branch and bound method?</p>
-      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q3(c) [4]</p>
-<div class="simple"><b>In simple words:</b> Branch and Bound is designed to give the correct best answer, but it can be very slow. It can also use a lot of memory. Its speed depends completely on how tight the bound is. A weak bound turns it into brute force with extra bookkeeping.</div>
-
-<h4>Why we do this</h4>
-<p>Examiners ask this to check that you know BnB is not a magic fast algorithm. You should be able to say when it struggles, not just how it works.</p>
-
-<h4>Major drawbacks (from the book’s discussion)</h4>
-<ol>
-<li><b>Slower than greedy and DP; exponential worst case.</b> The book states that BnB applies where greedy and dynamic programming fail, but it is much slower. If the bound is weak, most children survive, no pruning happens, and the method degenerates to exhaustive search — <code>O(2<sup>n</sup>)</code> for knapsack/subsets or <code>O(n!)</code> for TSP.</li>
-<li><b>Blind FIFO/LIFO selection; costly LC.</b> The book says selecting the E-node using FIFO or LIFO is “very complicated and somewhat blind”. LC is better but needs a ranking/cost value <code>c^(x)</code> at every node; computing a tight bound (for example, fractional knapsack at every node) itself costs time.</li>
-<li><b>Large live-node list.</b> FIFO/LIFO/LC must store all live nodes in a queue, stack or heap; in the worst case this is exponential, unlike backtracking’s O(n) stack.</li>
-<li><b>Problem-specific bounds.</b> A correct bounding function and branching rule need insight. The book warns that care must be taken while killing live nodes so that at least one answer node is still produced; a bad bound can remove the optimum.</li>
-<li><b>No guaranteed early stop.</b> Finding one complete solution is not enough; the search must continue until the bound proves that no unexplored node can beat it.</li>
-</ol>
-<div class="note"><b>What this means:</b> points 1 and 3 are about time and memory. Points 2 and 4 are about design effort. Point 5 is about correctness: a single good answer does not prove it is the best one.</div>
-<div class="note"><b>Exam-safe one-liner:</b> BnB is exact but can be slow and memory-heavy; its speed depends entirely on how tight the bound is.</div>
-
-<div class="analogy"><b>Real-life analogy:</b> you are planning a trip and pin every possible route on a noticeboard. The board fills the whole wall. If your “minimum possible cost” estimate is vague, you cannot remove any route, so you end up checking them all.</div>
-<div class="confuse"><b>Common confusion:</b> “exponential worst case” does not mean BnB is useless. On many inputs a tight bound prunes almost everything. The drawback is that there is no <b>guarantee</b> of fast running time.</div>
-<p class="booksrc">📘 <b>Book:</b> §4.7 Principle, §4.9 Strategies, §4.10 Concept of Bounding, p. 4-34 – 4-42</p>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="s46">
-  <div class="prio">Priority 5 · ★★ 2× repeated</div><h2>4.6 Travelling Salesman Problem using BnB</h2>
+  <h2>4.6 Travelling Salesman Problem using BnB</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1322,111 +1425,8 @@ Cost = 10 + 25 + 30 + 15 = <b>80</b> (both tours).</div>
   </div>
 </section>
 
-<section class="card" id="s41">
-  <div class="prio">Priority 6 · ★★ 2× repeated</div><h2>4.1 Backtracking — principle, control abstraction, time analysis</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain with a suitable example: Backtracking — principle, control abstraction, time analysis of control abstraction.</p>
-      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [8] · 2023 Nov Q3(b) [8]</p>
-<div class="simple"><b>In simple words:</b> Backtracking builds an answer one small choice at a time. After every choice it asks, “Can this still work?” If the answer is no, it undoes that choice and tries the next one. So it never wastes time on a path that is already broken.</div>
-
-<h4>Why we do this</h4>
-<p>Many problems have a huge number of possible answers. Checking every complete answer is too slow. Backtracking stops a bad partial answer immediately. That saves most of the work.</p>
-
-<h4>1. Principle (book §4.1) — step by step</h4>
-<ol>
-<li><b>Write the answer as n slots.</b> The answer is an <b>n-tuple</b> <code>(x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>)</code>. That is just n positions in a row.</li>
-<li><b>List the allowed values for each slot.</b> Slot <code>x<sub>i</sub></code> may take values only from its set <code>S<sub>i</sub></code>. These limits are the <b>explicit constraints</b> — the rules written directly in the problem.</li>
-<li><b>Fill one slot at a time, left to right.</b> Never jump ahead.</li>
-<li><b>Test the partial answer.</b> A <b>bounding function</b> <code>B<sub>k</sub></code> checks the <b>implicit constraints</b> — the real rules, such as “no two queens attack each other”.</li>
-<li><b>Go deeper only if it can still work.</b> A partial answer that passes is called <b>feasible</b> (still able to become a full answer).</li>
-<li><b>Record a full valid answer.</b> If all n slots are filled and valid, print the tuple.</li>
-<li><b>Undo and retry when stuck.</b> If no value works in a slot, step back one slot and try that slot’s next value. This undo step is the <b>backtrack</b>.</li>
-<li><b>Stop</b> when every option has been tried. Stop early only if the question asks for one answer and you found it.</li>
-</ol>
-<p>Depending on the question, the problem may be a <b>decision</b> problem (does any answer exist?), an <b>optimisation</b> problem (which answer is best?), or an <b>enumeration</b> problem (list every answer).</p>
-<p><b>Depth-first search (DFS)</b> means “go as deep as possible before trying a sibling”. Backtracking is DFS with a bounding function. It is much better than <b>brute force</b> (generate every full answer, then test it), because whole subtrees are never generated.</p>
-<p><b>Applications (book §4.3):</b> 8-queens, sum of subsets, graph colouring, Hamiltonian cycle (a cycle that visits every vertex once) and knapsack.</p>
-
-<h4>2. State-space tree terms (book §4.1.1)</h4>
-<p>A <b>state-space tree</b> is a drawing of every partial choice. The root is the empty choice. Each edge adds one choice. Each level is one slot of the answer.</p>
-<div class="tbl-wrap">
-<table class="left">
-<thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
-<tbody>
-<tr><td><b>Problem state</b></td><td>Any node in the tree — one partial choice.</td></tr>
-<tr><td><b>Solution state / solution space</b></td><td>A path from the root that builds one full tuple.</td></tr>
-<tr><td><b>Answer state</b></td><td>A leaf that satisfies all implicit constraints.</td></tr>
-<tr><td><b>Live node</b></td><td>A node that is generated, but whose children are not all generated yet.</td></tr>
-<tr><td><b>E-node</b></td><td>The live node whose children are being generated right now. “E” means expanding.</td></tr>
-<tr><td><b>Dead node</b></td><td>A node we will never expand again — it failed a test or cannot help.</td></tr>
-<tr><td><b>Bounding function</b> <code>B<sub>k</sub></code></td><td>A quick test that kills hopeless nodes. It must never kill a node that could still lead to an answer.</td></tr>
-</tbody>
-</table>
-</div>
-<div class="note"><b>What this means:</b> the tree is not the answer. It is the map of all choices. Backtracking walks this map and cuts dead branches early.</div>
-
-<h4>3. Control abstraction (book §4.2, recursive)</h4>
-<p>An <b>abstraction</b> hides problem details and shows only the common skeleton. A <b>control abstraction</b> is the shared skeleton of an algorithm, written with placeholders for the problem-specific parts. The same skeleton works for queens, colouring and subsets.</p>
-<pre><code>Algorithm Backtrack(k)
-// a[1..k] is a solution vector. On entering, k-1 values are fixed.
-// T(a1,...,a_{k-1}) = set of all values for a_k such that
-// (a1,...,a_k) is a path to a problem state.
-// B_k is the bounding function.
-{
-    for (each a_k that belongs to T(a1, a2, ..., a_{k-1})) do
-    {
-        if (B_k(a1, a2, ..., a_k) = true) then      // feasible sequence
-        {
-            if ((a1, a2, ..., a_k) is a path to an answer node) then
-                print(a[1], a[2], ..., a[k]);
-            if (k &lt; n) then
-                Backtrack(k + 1);                   // find the next set
-        }
-    }
-}</code></pre>
-<div class="note"><b>What this means, line by line:</b> (1) <code>Backtrack(k)</code> means “fill slot k”. (2) <code>T</code> gives the legal values for that slot. (3) <code>B<sub>k</sub></code> rejects a partial answer early. (4) If the partial answer is already complete, print it. (5) If slots remain, go one level deeper. (6) When the loop ends, the function returns — that return is the backtrack.</div>
-<p>The book also gives an iterative form, <code>Non_Rec_Backtrack()</code>. It keeps <code>k</code>, tries the next untried value of <code>a[k]</code>, prints a solution if the node is an answer, increases <code>k</code> on success, and does <code>k := k − 1</code> to backtrack when no value is left.</p>
-
-<h4>4. Time analysis (book §4.2)</h4>
-<p>The running time depends on four things:</p>
-<ol>
-<li>time to generate <code>a[k]</code> — picking the next value;</li>
-<li>number of <code>a[k]</code> values that satisfy the explicit constraints — how many legal choices exist;</li>
-<li>time taken by the bounding function <code>B<sub>k</sub></code> — the cost of one pruning test;</li>
-<li>number of <code>a[k]</code> values that satisfy <code>B<sub>k</sub></code> for all <code>k</code> — how many nodes survive pruning.</li>
-</ol>
-<p>The first three are independent of the data and take <b>polynomial time</b> — time like <code>n</code>, <code>n<sup>2</sup></code> or <code>n<sup>3</sup></code>, not <code>2<sup>n</sup></code>. The fourth depends on the instance. If <code>n!</code> nodes survive the bounding function, then</p>
-<div class="math">T(n) = O(P(n) · n!)</div>
-<p>Here <code>P(n)</code> is the polynomial cost of the first three factors, and <code>n!</code> is the number of surviving nodes. The symbol <code>n!</code> means <code>n × (n−1) × … × 1</code>. The <code>O</code> notation means “grows no faster than”.</p>
-<div class="note"><b>What this means:</b> the bound <code>P(n)</code> is cheap. The explosion comes from the number of surviving nodes. A stronger bounding function reduces that number.</div>
-<p>For specific problems: n-queens <b>O(n!)</b>, sum of subsets <b>O(2<sup>n</sup>)</b>, graph colouring <b>O(n·m<sup>n</sup>)</b>. Space is <b>O(n)</b> for the solution vector and the recursion stack.</p>
-
-<h4>5. Suitable example — 4-queens</h4>
-<p>The <b>4-queens problem</b> asks for 4 queens on a 4×4 chessboard so that no two share a row, column or diagonal. We place one queen per row. So the answer is a tuple of 4 column numbers.</p>
-<ol>
-<li><b>Row 1:</b> try a column.</li>
-<li><b>Row 2:</b> try a column that does not attack row 1.</li>
-<li><b>Check after every placement.</b> Two queens attack if they share a column, or if their row distance equals their column distance (a diagonal).</li>
-<li><b>Dead end?</b> Undo the last queen and try her next column.</li>
-<li><b>All 4 placed?</b> Record the tuple.</li>
-</ol>
-<p>The book’s 4-queen state-space tree (Fig. 4.4.1) first tries a placement that reaches a dead end, backtracks, and finally gives the answer tuple <b>(2, 4, 1, 3)</b>. Read it as: queen in row 1 goes to column 2, row 2 to column 4, row 3 to column 1, row 4 to column 3. No two queens share a row, column or diagonal. The book’s 8-queens solution is the tuple <b>(4, 6, 8, 2, 7, 1, 3, 5)</b>.</p>
-<div class="note"><b>What this means:</b> brute force generates all <code>m<sup>n</sup></code> vectors and tests them at the end. Backtracking tests at every level, so a bad partial vector is killed immediately.</div>
-
-<div class="analogy"><b>Real-life analogy:</b> you are in a maze. You walk down one corridor. If it ends at a wall, you walk back to the last junction and take a different turn. You do not restart the maze from the entrance.</div>
-<div class="confuse"><b>Common confusion:</b> backtracking is not random trial and error, and it is not brute force. It is organised DFS. Also, the “backtrack” is just the function returning one level — you do not throw away the whole answer and start again.</div>
-<p class="booksrc">📘 <b>Book:</b> §4.1 Principle, §4.2 Control Abstraction and Time Analysis, §4.3 Applications &amp; §4.4 The 8-Queen Problem, p. 4-2 – 4-21</p>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="s47">
-  <div class="prio">Priority 7 · ★ 1× repeated</div><h2>4.7 Backtracking vs Branch and Bound</h2>
+  <h2>4.7 Backtracking vs Branch and Bound</h2>
   <div class="qa">
     <div class="qa-head">
       <p class="qtitle"><span class="qno">Q1</span>Compare backtracking with branch and bound with respect to: search technique, exploration of the state-space tree, and kind of problems that can be solved.</p>

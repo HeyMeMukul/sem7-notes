@@ -156,14 +156,14 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h3>BT · Unit 5</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s54">5.4 Smart contracts <span class="pill">6×</span></a>
     <a href="#s51">5.1 What is Ethereum? <span class="pill">5×</span></a>
     <a href="#s52">5.2 Ethereum networks <span class="pill">4×</span></a>
-    <a href="#s57">5.7 Swarm <span class="pill">4×</span></a>
+    <a href="#s53">5.3 EVM <span class="pill">2×</span></a>
+    <a href="#s54">5.4 Smart contracts <span class="pill">6×</span></a>
     <a href="#s55">5.5 Types of smart contracts <span class="pill">3×</span></a>
     <a href="#s56">5.6 Solidity + deployment <span class="pill">3×</span></a>
+    <a href="#s57">5.7 Swarm <span class="pill">4×</span></a>
     <a href="#s58">5.8 Whisper <span class="pill">3×</span></a>
-    <a href="#s53">5.3 EVM <span class="pill">2×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -198,7 +198,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 
   <div class="tbl-wrap">
   <table class="freq">
-    <thead><tr><th>#</th><th style="text-align:left">Question asked</th><th style="text-align:left">Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <thead><tr><th>Rank</th><th style="text-align:left">Question asked</th><th style="text-align:left">Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td style="text-align:left">Smart contract — concept, example, purpose, types</td><td style="text-align:left">2022 Nov Q6(a) [8] · 2023 Nov Q5(c) [6] · 2024 May Q6(a) [8] · 2025 May Q5(b) [9] · 2025 May Q6(b) [9] · 2025 Nov Q6(a) [8]</td><td><span class="stars">★★★★★</span> 6×</td></tr>
       <tr><td>2</td><td style="text-align:left">What is Ethereum? Features / differs from traditional crypto</td><td style="text-align:left">2022 Nov Q5(a) [8] · 2023 Nov Q5(a) [6] · 2024 May Q5(a) [8] · 2025 May Q5(a) [9] · 2025 Nov Q5(a) [8]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
@@ -218,152 +218,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <div class="tip"><b>Marks strategy:</b> 4 marks = definition + 3 points. 6 marks = definition + working + one example. 9 marks = definition + architecture/steps + <b>table or code</b> + benefits/limitations. For any Solidity question, write a small contract — it proves you can implement, not just define.</div>
 </section>
 
-<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s54">
-  <div class="prio">Priority 1 · ★★★★★ 6× repeated</div><h2>5.4 Smart contracts</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q4</span>Explain the concept of a smart contract with an example. Define smart contracts with a real-world scenario and evaluate their benefits. Discuss the role of gas.</p>
-      <div class="badges"><span class="b marks">6 / 8 / 9 marks</span><span class="b rep hot">★★★★★ 6×</span><span class="b unit">Unit 5</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q6(a) [8 — concept + example] · 2025 May Q5(b) [9 — real-world example + gas] · 2025 Nov Q6(a) [8 — concept + example] · also part of 2022 Nov Q6(a) [8] and 2023 Nov Q5(c) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> A smart contract is a small program that lives on a blockchain. It runs by itself when its conditions are met. No clerk, lawyer or broker has to approve the result. Once deployed, its code cannot be quietly changed.</div>
-
-      <h4>Why we do this</h4>
-      <p>Normal agreements need people to check papers, approve each step and update separate records. That is slow, costly and open to mistakes or favouritism. A smart contract puts the rule and the money in one place, so the result happens automatically and every participant sees the same outcome.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Blockchain:</b> a shared record book copied across many computers, where past entries are very hard to change.</li>
-        <li><b>Ethereum:</b> a blockchain designed to run programs, often called a “world computer”.</li>
-        <li><b>Smart contract:</b> a program stored on a blockchain that runs automatically when its coded conditions are met.</li>
-        <li><b>EVM (Ethereum Virtual Machine):</b> the engine inside every Ethereum node that runs contract code.</li>
-        <li><b>Bytecode:</b> the low-level instruction form of a program that the EVM can execute.</li>
-        <li><b>Solidity:</b> the main programming language used to write Ethereum contracts.</li>
-        <li><b>Gas:</b> a unit that measures computational work and is paid for in ether.</li>
-        <li><b>Blockspace:</b> the limited room in a block for transactions; users compete for it by paying higher fees.</li>
-        <li><b>Ether (ETH):</b> Ethereum’s native money, used to pay gas and to stake.</li>
-        <li><b>Deploy:</b> to publish a contract to the blockchain so that it receives its own address.</li>
-        <li><b>Immutable:</b> cannot be changed after it has been written.</li>
-        <li><b>Deterministic:</b> the same input always produces the same output.</li>
-        <li><b>Oracle:</b> a trusted data feed that brings outside facts, such as a flight delay, onto the blockchain.</li>
-        <li><b>dApp:</b> a decentralised application whose backend rules are smart contracts.</li>
-        <li><b>DAO:</b> a decentralised autonomous organisation, run by code and votes instead of a boss.</li>
-        <li><b>Escrow:</b> a neutral holding place for money until both sides meet the agreed condition.</li>
-        <li><b>ABI:</b> the public menu of functions that tells an app how to call a contract.</li>
-        <li><b>Contract account:</b> an Ethereum account that holds contract code and storage instead of a private key.</li>
-        <li><b>Validator:</b> a computer that checks transactions and helps secure Ethereum under proof of stake.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Write the rule.</b> A developer writes the agreement in Solidity: who pays, which event triggers payment, and how much is paid.</li>
-        <li><b>Compile it.</b> A compiler turns readable code into bytecode that the EVM can run. It also creates the ABI, the list of functions that apps may call.</li>
-        <li><b>Deploy it.</b> A special transaction sends the bytecode to Ethereum. The network stores it and gives it an address, like a house number.</li>
-        <li><b>Fund and call it.</b> A user sends ETH or calls a function. Each call costs gas because it uses computing power.</li>
-        <li><b>Check the condition.</b> The contract reads its own stored data and, if needed, a trusted oracle.</li>
-        <li><b>Apply the result.</b> If the condition is true, the contract pays or updates its records. If it is false, the contract does nothing or rejects the call.</li>
-        <li><b>Record the outcome.</b> Every node runs the same code and reaches the same result, so all copies of the ledger stay in sync.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> A vending machine is a contract built from metal and buttons. You insert the right coins and press A3; the machine gives you the snack without asking a shopkeeper. The rule is fixed, the machine checks the payment itself, and the same action always gives the same result.</div>
-
-      <div class="confuse"><b>Common confusion:</b> A smart contract is not a lawyer and does not understand intent. It only does exactly what its code says. If the code has a bug, or the oracle sends bad data, the contract will still execute the wrong result.</div>
-
-      <h3>The full answer, piece by piece</h3>
-
-      <h4>1. Definition</h4>
-      <p>A <b>smart contract</b> is a program stored on a blockchain that automatically executes the terms of an agreement when predefined conditions are met. The code is immutable after deployment, and every node runs the same code and reaches the same result.</p>
-      <p>The term was coined by <b>Nick Szabo</b> in the 1990s. In Ethereum, a smart contract is a <b>contract account</b> with bytecode and persistent storage.</p>
-      <p class="small"><b>What this means:</b> the contract is not a piece of paper stored in a safe. It is running software whose rules and history are copied across the network.</p>
-
-      <h4>2. Properties</h4>
-      <ul>
-        <li><b>Self-executing:</b> no manual step is needed to enforce the outcome.</li>
-        <li><b>Immutable:</b> the code cannot be changed; a new version must be deployed.</li>
-        <li><b>Deterministic:</b> the same inputs produce the same output on every node.</li>
-        <li><b>Transparent:</b> anyone can read the code and the transaction history.</li>
-        <li><b>Permissionless:</b> anyone can call a public function if they pay gas.</li>
-        <li><b>Composable:</b> contracts can call other contracts, like building blocks that plug together.</li>
-      </ul>
-
-      <h4>3. Real-world example — flight-delay insurance (2025 May Q5b)</h4>
-      <p>An insurer deploys a contract with a pool of ETH. Travellers pay a premium. The contract reads a trusted flight-status oracle. If the flight is delayed by more than 3 hours, the contract automatically pays the traveller; otherwise the premium stays in the pool.</p>
-      <pre class="tree">traveller ── premium ──► [ Insurance contract ]
-                                  │
-                                  │ reads flight oracle
-                                  ▼
-                    delay &gt; 3 hours ?
-                     │              │
-                    yes             no
-                     │              │
-                     ▼              ▼
-             pay traveller      keep premium
-             (no claim form)    (pool grows)</pre>
-      <p class="small"><b>What this means:</b> the payout rule is visible before anyone buys the policy, and the money moves as soon as the trusted data confirms the delay.</p>
-      <p><b>Benefits in this scenario:</b> instant payout, no claim paperwork, no adjuster, transparent rules, no selective denial, and the pool is auditable.</p>
-
-      <h4>4. Benefits and challenges</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Benefits</th><th>Challenges</th></tr></thead>
-        <tbody>
-          <tr><td><b>Disintermediation:</b> removes brokers and escrow agents.</td><td><b>Immutability:</b> a bug cannot be patched; a new contract is needed.</td></tr>
-          <tr><td><b>Near real-time settlement:</b> payment on the trigger event.</td><td><b>Oracle problem:</b> bad external data gives a wrong outcome.</td></tr>
-          <tr><td><b>Transparency:</b> rules and history are visible to all.</td><td><b>Privacy:</b> public code and state expose business logic.</td></tr>
-          <tr><td><b>Lower cost:</b> less paperwork, audit and manual processing.</td><td><b>Legal uncertainty:</b> enforceability varies by country.</td></tr>
-          <tr><td><b>Accuracy:</b> exact code execution, no human discretion.</td><td><b>Bugs:</b> the 2016 DAO hack drained ~$50M of ETH.</td></tr>
-          <tr><td><b>Composability:</b> contracts can call each other.</td><td><b>Gas cost:</b> complex logic is expensive.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="small"><b>What this means:</b> smart contracts are strongest when the rule is simple, the outside data is trustworthy, and the cost of a wrong result is understood before deployment.</p>
-
-      <h4>5. Role of gas (the second half of 2025 May Q5b)</h4>
-      <p><b>Gas</b> is the unit that measures computational work on Ethereum. Every opcode, which is one low-level instruction, has a fixed gas cost. The sender pays:</p>
-      <div class="math">Transaction fee = gas used × gas price<br>
-      gas price = base fee + priority fee (tip)</div>
-      <p class="small"><b>What this means:</b> gas is the fuel meter. A bigger or busier computation burns more fuel, and the fee is the fuel bill.</p>
-      <ul>
-        <li><b>Prevents infinite loops:</b> execution stops when gas runs out (out-of-gas), so a stuck program cannot freeze the chain.</li>
-        <li><b>Pays validators:</b> the fee compensates the nodes that execute and include the transaction.</li>
-        <li><b>Allocates scarce blockspace:</b> users bid more when many people want their transactions included.</li>
-        <li><b>Punishes spam:</b> every computation has a real cost.</li>
-        <li><b>Refund:</b> unused gas is returned; a reverted transaction still pays for the work done.</li>
-      </ul>
-      <p><b>Worked example:</b> a contract call uses 50,000 gas at 30 gwei. A <b>gwei</b> is one billionth of an ETH. Fee = 50,000 × 30 = 1,500,000 gwei = <b>0.0015 ETH</b>. At $3,000 per ETH that is <b>$4.50</b>. The same call at 100 gwei costs 5,000,000 gwei = 0.005 ETH = $15.00.</p>
-
-      <h4>6. Smart-contract lifecycle</h4>
-      <pre class="tree">write Solidity ──► compile (solc) ──► bytecode + ABI
-                                            │
-                                            ▼
-                                  deploy transaction
-                                  (to address 0x0)
-                                            │
-                                            ▼
-                                  contract address
-                                            │
-                              ┌─────────────┴─────────────┐
-                              ▼                           ▼
-                        call function                 read state
-                        (costs gas)                   (free view)
-                              │
-                              ▼
-                     EVM executes + state update</pre>
-      <p class="small"><b>What this means:</b> the readable Solidity file is only the recipe. The blockchain stores the compiled bytecode, and users reach it through its address plus the ABI.</p>
-
-      <h4>7. Important limitation</h4>
-      <p>A contract cannot fetch data from the internet by itself. It needs an <b>oracle</b> (for example Chainlink or API3) to bring off-chain data on-chain. This is the “oracle problem”.</p>
-
-      <div class="tip"><b>9-mark structure:</b> definition (2) + flight-insurance example (2) + gas role and formula (2) + worked fee (1) + benefits/challenges table (2).</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s51">
-  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>5.1 What is Ethereum?</h2>
+<div class="note" id="topic-note">📚 Notes follow the book order (3.1 → 3.2 → …). The frequency table above is sorted by repetition, so use it to decide what to revise first.</div><section class="card" id="s51">
+  <h2>5.1 What is Ethereum?</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -516,7 +372,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 </section>
 
 <section class="card" id="s52">
-  <div class="prio">Priority 3 · ★★★★ 4× repeated</div><h2>5.2 Ethereum networks</h2>
+  <h2>5.2 Ethereum networks</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -634,144 +490,287 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   </div>
 </section>
 
-<section class="card" id="s57">
-  <div class="prio">Priority 4 · ★★★★ 4× repeated</div><h2>5.7 Swarm — decentralized storage</h2>
+<section class="card" id="s53">
+  <h2>5.3 Ethereum Virtual Machine (EVM)</h2>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q7</span>Discuss Swarm, the decentralized storage platform. How does Swarm contribute to decentralized storage in the Ethereum ecosystem?</p>
-      <div class="badges"><span class="b marks">4 / 6 / 9 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 5</span></div>
+      <p class="qtitle"><span class="qno">Q3</span>Explain the Ethereum Virtual Machine in detail. What is the significance of the EVM?</p>
+      <div class="badges"><span class="b marks">4 / 6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 5</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(c) [4] · 2023 Nov Q5(b) [6] · 2024 May Q6(b) [9] · 2025 Nov Q6(b) [9]</p>
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(c) [4] · 2023 Nov Q6(a) [6 — significance]</p>
 
-      <div class="simple"><b>In simple words:</b> Swarm is Ethereum’s shared hard drive. It stores large files off the blockchain, across many computers. The blockchain keeps only a small fingerprint, called a hash, which proves the file is the right one.</div>
+      <div class="simple"><b>In simple words:</b> The EVM is the engine that runs Ethereum programs. Every full node has its own copy of this engine. It executes the same bytecode with the same inputs, so every node reaches the same result.</div>
 
       <h4>Why we do this</h4>
-      <p>Putting a photo, video or whole website on Ethereum would be extremely expensive, because every node would copy it forever. Swarm keeps the heavy data outside the chain but still on a peer-to-peer network, so a dApp can be complete without renting a central server that one company can switch off.</p>
+      <p>A blockchain needs every computer to agree on what happened. If one node ran a contract on a fast gaming PC and another on an old laptop, they might get different results. The EVM removes that problem: it is a fixed, sandboxed machine with a fuel meter, so execution is identical everywhere and always stops.</p>
 
       <h4>Words you need first</h4>
       <ul>
-        <li><b>Swarm:</b> Ethereum’s peer-to-peer storage network for large files.</li>
-        <li><b>Decentralised storage:</b> files spread across many independent computers instead of one company’s server.</li>
-        <li><b>Off-chain:</b> kept outside the blockchain itself, usually with only a hash on-chain.</li>
-        <li><b>Chunk:</b> a small fixed-size piece of a file; Swarm cuts files into chunks of at most 4 KB.</li>
-        <li><b>Hash:</b> a short digital fingerprint of data; change the data and the hash changes.</li>
-        <li><b>P2P (peer-to-peer):</b> computers talking directly to each other without a central server.</li>
-        <li><b>Node:</b> one computer participating in the storage network.</li>
-        <li><b>ENS (Ethereum Name Service):</b> a naming system that maps a readable name to a blockchain address or hash.</li>
-        <li><b>Incentive layer:</b> the payment rules that reward nodes for storing data and serving it.</li>
-        <li><b>dApp:</b> a decentralised application whose rules run on smart contracts.</li>
-        <li><b>IPFS:</b> another content-addressed storage network, not tied to Ethereum.</li>
-        <li><b>IPNS:</b> IPFS’s naming system for pointing a stable name at changing content.</li>
-        <li><b>Pub/sub (publish–subscribe):</b> a messaging pattern where a sender posts to a topic and every subscriber to that topic receives it.</li>
-        <li><b>Pinning:</b> asking an IPFS node to keep a copy of a file so it stays available.</li>
-        <li><b>Geth:</b> a popular Ethereum node client that Swarm can work with.</li>
-        <li><b>BZZ:</b> the accounting token used inside the Swarm network.</li>
-        <li><b>Content integrity:</b> proof that the file you received is exactly the file that was stored.</li>
+        <li><b>EVM (Ethereum Virtual Machine):</b> the software machine that executes Ethereum contract bytecode.</li>
+        <li><b>Virtual machine:</b> a simulated computer that runs inside real computers, with its own rules and memory.</li>
+        <li><b>Bytecode:</b> the low-level instructions that the EVM executes.</li>
+        <li><b>Opcode:</b> one basic instruction, such as ADD or SSTORE.</li>
+        <li><b>Stack:</b> a last-in-first-out workspace where the EVM keeps the values it is working on.</li>
+        <li><b>256-bit word:</b> the standard size of an EVM number, large enough for hashes and elliptic-curve maths.</li>
+        <li><b>State root:</b> a single hash that summarises the entire Ethereum state at one moment.</li>
+        <li><b>Elliptic-curve cryptography:</b> the maths behind Ethereum’s public and private keys and signatures.</li>
+        <li><b>Memory:</b> temporary workspace that disappears after the call.</li>
+        <li><b>Storage:</b> permanent key-value data kept by a contract between calls.</li>
+        <li><b>Program counter:</b> a pointer that tracks which instruction to run next.</li>
+        <li><b>Gas:</b> the fuel unit that pays for each opcode.</li>
+        <li><b>Sandbox:</b> a closed environment where code cannot touch the host computer or other contracts’ data directly.</li>
+        <li><b>Deterministic:</b> the same input always produces the same output.</li>
+        <li><b>State:</b> the current data of all accounts and contracts.</li>
+        <li><b>REVERT:</b> an instruction that undoes state changes but keeps the gas fee.</li>
+        <li><b>JVM (Java Virtual Machine):</b> a general-purpose virtual machine that runs Java programs.</li>
       </ul>
 
       <h4>Step-by-step</h4>
       <ol>
-        <li><b>Split the file.</b> Swarm cuts it into chunks of at most 4 KB, because small pieces are easier to distribute and verify.</li>
-        <li><b>Hash each chunk.</b> Each chunk gets a 32-byte fingerprint, which also acts as its address.</li>
-        <li><b>Build a root hash.</b> The chunk hashes are combined into one root hash that represents the whole file.</li>
-        <li><b>Spread the chunks.</b> Nodes take responsibility for different chunks across the network.</li>
-        <li><b>Pay for storage.</b> The incentive layer rewards the nodes that keep the data available.</li>
-        <li><b>Retrieve by hash.</b> A user asks for the root hash; the network finds the chunks and rebuilds the file.</li>
-        <li><b>Check integrity.</b> The received chunks are hashed again. If a chunk was changed, its hash will not match.</li>
+        <li><b>Fetch.</b> The EVM reads the next opcode at the program counter.</li>
+        <li><b>Decode.</b> It works out what the instruction means and which values it needs.</li>
+        <li><b>Check gas.</b> It verifies that enough gas remains, then deducts the opcode’s fixed cost.</li>
+        <li><b>Execute.</b> It performs the operation and writes the result to the stack, memory or storage.</li>
+        <li><b>Advance.</b> The program counter moves forward, and the cycle repeats.</li>
+        <li><b>Stop or roll back.</b> On STOP or RETURN, the state is committed. On REVERT or out-of-gas, state changes are undone but the gas already used is kept.</li>
       </ol>
 
-      <div class="analogy"><b>Real-life analogy:</b> Swarm is a shared hard drive run by a large library. A book is split into numbered pages, each page has a unique call number, and any branch can fetch the pages. The catalogue entry is the hash; the book itself is not kept in the catalogue.</div>
+      <div class="analogy"><b>Real-life analogy:</b> The EVM is a locked calculator with a fuel meter. You insert a program card, it performs one instruction at a time, and it shuts down when the fuel runs out. It cannot open the desk drawer or talk to the room outside; it can only calculate and update its own notebook.</div>
 
-      <div class="confuse"><b>Common confusion:</b> Swarm does not store files inside the Ethereum blockchain. The blockchain stores a hash or reference; the file lives off-chain on Swarm. The hash is not encryption either — it proves integrity, not secrecy.</div>
+      <div class="confuse"><b>Common confusion:</b> the EVM is not a physical chip or a separate blockchain. It is software that every node runs. It is also not “Turing-complete with no limits”: gas puts a hard limit on every execution, which is why it is often called quasi-Turing-complete.</div>
 
       <h3>The full answer, piece by piece</h3>
 
       <h4>1. Definition</h4>
-      <p><b>Swarm</b> is Ethereum’s <b>decentralised storage platform</b>. It stores large data — DApp front-ends, images, NFT metadata and documents — <b>off-chain</b> across a peer-to-peer network. It is one of the three pillars of Web3: <b>Ethereum contracts</b> (logic), <b>Swarm</b> (storage) and <b>Whisper</b> (messaging).</p>
-      <p class="small"><b>What this means:</b> contracts decide, Swarm stores, and Whisper talks. Together they cover the three basic jobs of an application.</p>
+      <p>The <b>EVM</b> is the runtime environment of Ethereum. It is a <b>stack-based, deterministic, sandboxed virtual machine</b> that executes smart-contract <b>bytecode</b> on every full node. It is the part of Ethereum that turns a transaction into a state change.</p>
+      <p class="small"><b>What this means:</b> a transaction is a request; the EVM is the worker that carries it out and updates the shared record.</p>
 
-      <h4>2. Why it is needed</h4>
+      <h4>2. Key properties</h4>
       <ul>
-        <li>Storing large data on-chain is extremely expensive, because every node replicates it forever.</li>
-        <li>DApps need a place for front-end files and media.</li>
-        <li>Centralised servers create a single point of failure and censorship.</li>
-        <li>IPFS does not guarantee that content stays available unless some node keeps serving it.</li>
+        <li><b>Quasi-Turing-complete:</b> it can compute anything, but every opcode costs gas, so execution always halts.</li>
+        <li><b>256-bit word size:</b> matches the hash and elliptic-curve arithmetic used by Ethereum.</li>
+        <li><b>Stack-based:</b> up to 1024 items; push and pop operations.</li>
+        <li><b>Deterministic:</b> the same code, input and state give the same output on every node.</li>
+        <li><b>Sandboxed:</b> a failed call reverts its state changes; only gas is consumed.</li>
+        <li><b>Single-threaded:</b> contracts execute one after another, not in parallel.</li>
+        <li><b>No system calls or hardware access:</b> it is a pure computation machine.</li>
       </ul>
-      <p class="small"><b>What this means:</b> Swarm solves the “where do the big files live?” problem without handing control back to one cloud provider.</p>
 
-      <h4>3. Architecture</h4>
+      <h4>3. EVM architecture</h4>
+      <pre class="tree">┌─────────────────────────────────────────────────────────┐
+│                      EVM instance                       │
+│                                                         │
+│  ┌──────────────┐   ┌──────────────┐   ┌────────────┐  │
+│  │  CODE (ROM)  │   │    STACK     │   │  MEMORY    │  │
+│  │  bytecode    │   │  1024 words  │   │  volatile  │  │
+│  │  immutable   │   │  256-bit     │   │  zero-init │  │
+│  └──────────────┘   └──────────────┘   └────────────┘  │
+│                                                         │
+│  ┌──────────────┐   ┌──────────────┐   ┌────────────┐  │
+│  │   STORAGE    │   │ PROGRAM      │   │    GAS     │  │
+│  │  persistent  │   │ COUNTER      │   │  remaining │  │
+│  │  key-value   │   │              │   │            │  │
+│  └──────────────┘   └──────────────┘   └────────────┘  │
+│                                                         │
+│  world state: address ──► {balance, nonce, code, root}  │
+└─────────────────────────────────────────────────────────┘</pre>
+      <p class="small"><b>What this means:</b> code is fixed, stack and memory are for current work, storage survives between calls, and gas is checked at every step.</p>
+
+      <h4>4. Execution cycle</h4>
       <ol>
-        <li>A file is split into <b>chunks</b> of at most <b>4 KB</b>.</li>
-        <li>Each chunk is hashed; the <b>32-byte hash</b> is its address.</li>
-        <li>Chunks are distributed across the P2P network; nodes store the chunks they are responsible for.</li>
-        <li>To retrieve a file, the user asks for the root hash; the network resolves the chunks.</li>
-        <li><b>ENS</b> maps a human-readable name to the hash.</li>
-        <li>An <b>incentive layer</b> pays node operators for storage and bandwidth.</li>
+        <li>Fetch the next opcode at the program counter.</li>
+        <li>Decode it and read operands from the stack.</li>
+        <li>Check that enough gas is available; deduct the opcode’s gas cost.</li>
+        <li>Execute the operation; write the result to stack, memory or storage.</li>
+        <li>Increment the program counter and repeat.</li>
+        <li>On <code>STOP</code> or <code>RETURN</code>, commit state. On <code>REVERT</code> or out-of-gas, roll back state and keep the gas fee.</li>
       </ol>
 
-      <pre class="tree">             file (e.g. 10 KB)
-                    │
-        ┌───────────┼───────────┐
-        ▼           ▼           ▼
-     chunk 1     chunk 2     chunk 3     (max 4 KB each)
-     24B1A9      341A0D      FFO19A
-        │           │           │
-        ▼           ▼           ▼
-     node 1      node 2      node 3      (P2P swarm)
-        │           │           │
-        └───────────┴───────────┘
-                    │
-              root hash + ENS name
-                    │
-                    ▼
-             DApp front-end / NFT metadata</pre>
-      <p class="small"><b>What this means:</b> the root hash is the address of the whole file, while each chunk hash is the address of one piece. ENS simply gives that address a human-friendly name.</p>
-
-      <h4>4. Contribution to the Ethereum ecosystem (9-mark answer)</h4>
-      <ul>
-        <li><b>Off-chain scaling:</b> keeps bulk data off the expensive chain while the hash or anchor stays on-chain.</li>
-        <li><b>DApp hosting:</b> front-end HTML, CSS and JavaScript can be served from Swarm, so the whole DApp is decentralised.</li>
-        <li><b>NFT metadata:</b> images and JSON live on Swarm; the token stores the hash.</li>
-        <li><b>Censorship resistance:</b> there is no central server to take down.</li>
-        <li><b>Redundancy:</b> chunks are replicated, so one node failure does not lose the file.</li>
-        <li><b>Ethereum integration:</b> uses the Geth client and an Ethereum account, plus ENS naming and a payment layer.</li>
-        <li><b>Content integrity:</b> the hash proves the data was not modified.</li>
-      </ul>
-
-      <h4>5. Swarm vs IPFS</h4>
+      <h4>5. What the EVM executes</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Point</th><th>Swarm</th><th>IPFS</th></tr></thead>
+        <thead><tr><th>Opcode group</th><th>Examples</th><th>Purpose</th></tr></thead>
         <tbody>
-          <tr><td>Main goal</td><td>Ethereum’s storage layer</td><td>General content-addressed storage</td></tr>
-          <tr><td>Availability</td><td>Incentive layer pays nodes to store</td><td>Content available only while a node pins/serves it</td></tr>
-          <tr><td>Naming</td><td>ENS integration</td><td>IPNS / DNSLink</td></tr>
-          <tr><td>Ethereum coupling</td><td>Geth, account, payments</td><td>Independent</td></tr>
-          <tr><td>Chunk size</td><td>4 KB</td><td>Variable block size</td></tr>
-          <tr><td>Best for</td><td>DApp front-ends, NFT data</td><td>General file sharing</td></tr>
+          <tr><td>Arithmetic</td><td>ADD, MUL, SUB, DIV, EXP</td><td>Math on 256-bit integers</td></tr>
+          <tr><td>Logic / comparison</td><td>AND, OR, XOR, LT, GT, EQ</td><td>Bitwise and boolean logic</td></tr>
+          <tr><td>Stack / memory</td><td>PUSH, POP, MLOAD, MSTORE</td><td>Move data</td></tr>
+          <tr><td>Storage</td><td>SLOAD, SSTORE</td><td>Persistent contract state</td></tr>
+          <tr><td>Control flow</td><td>JUMP, JUMPI, PC</td><td>Loops and branches</td></tr>
+          <tr><td>Calls / create</td><td>CALL, DELEGATECALL, CREATE</td><td>Call other contracts, deploy</td></tr>
+          <tr><td>Logging</td><td>LOG0–LOG4</td><td>Emit events</td></tr>
+          <tr><td>Halting</td><td>STOP, RETURN, REVERT, SELFDESTRUCT</td><td>End execution</td></tr>
         </tbody>
       </table>
       </div>
-      <p class="small"><b>What this means:</b> both use hashes to address content, but Swarm adds a payment layer that is meant to keep data available, while IPFS depends on someone choosing to keep a copy.</p>
+      <p class="small"><b>What this means:</b> the EVM is small on purpose. It has arithmetic, data movement, storage, jumps, calls and logging — enough to build contracts, but not enough to touch the outside world directly.</p>
 
-      <h4>6. How to use Swarm</h4>
+      <h4>6. Significance (6-mark answer)</h4>
+      <ul>
+        <li><b>Portability:</b> one contract runs identically on every node and every EVM-compatible chain.</li>
+        <li><b>Determinism:</b> all nodes compute the same state root, which is necessary for consensus.</li>
+        <li><b>Safety:</b> gas bounds execution, so a malicious contract cannot loop forever.</li>
+        <li><b>Isolation:</b> sandboxing protects the host node from the contract.</li>
+        <li><b>Programmability:</b> it is the engine behind DeFi, NFTs, DAOs and tokens.</li>
+        <li><b>Standardisation:</b> Solidity, Vyper and tooling target the same bytecode, creating a large ecosystem.</li>
+      </ul>
+
+      <h4>7. EVM vs JVM (one line)</h4>
+      <p>The JVM virtualises a general-purpose computer for Java and Scala; the EVM virtualises only a <b>deterministic calculation and storage machine</b> for smart contracts, with gas metering and no OS or hardware interface.</p>
+      <p class="small"><b>What this means:</b> the JVM is built to run many kinds of applications; the EVM is deliberately narrow so that every node can agree on the result.</p>
+
+      <div class="note"><b>4-mark version:</b> definition + stack-based + 256-bit + gas-limited + deterministic. <b>6-mark version:</b> add the architecture diagram and three significance points.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s54">
+  <h2>5.4 Smart contracts</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Explain the concept of a smart contract with an example. Define smart contracts with a real-world scenario and evaluate their benefits. Discuss the role of gas.</p>
+      <div class="badges"><span class="b marks">6 / 8 / 9 marks</span><span class="b rep hot">★★★★★ 6×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q6(a) [8 — concept + example] · 2025 May Q5(b) [9 — real-world example + gas] · 2025 Nov Q6(a) [8 — concept + example] · also part of 2022 Nov Q6(a) [8] and 2023 Nov Q5(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> A smart contract is a small program that lives on a blockchain. It runs by itself when its conditions are met. No clerk, lawyer or broker has to approve the result. Once deployed, its code cannot be quietly changed.</div>
+
+      <h4>Why we do this</h4>
+      <p>Normal agreements need people to check papers, approve each step and update separate records. That is slow, costly and open to mistakes or favouritism. A smart contract puts the rule and the money in one place, so the result happens automatically and every participant sees the same outcome.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Blockchain:</b> a shared record book copied across many computers, where past entries are very hard to change.</li>
+        <li><b>Ethereum:</b> a blockchain designed to run programs, often called a “world computer”.</li>
+        <li><b>Smart contract:</b> a program stored on a blockchain that runs automatically when its coded conditions are met.</li>
+        <li><b>EVM (Ethereum Virtual Machine):</b> the engine inside every Ethereum node that runs contract code.</li>
+        <li><b>Bytecode:</b> the low-level instruction form of a program that the EVM can execute.</li>
+        <li><b>Solidity:</b> the main programming language used to write Ethereum contracts.</li>
+        <li><b>Gas:</b> a unit that measures computational work and is paid for in ether.</li>
+        <li><b>Blockspace:</b> the limited room in a block for transactions; users compete for it by paying higher fees.</li>
+        <li><b>Ether (ETH):</b> Ethereum’s native money, used to pay gas and to stake.</li>
+        <li><b>Deploy:</b> to publish a contract to the blockchain so that it receives its own address.</li>
+        <li><b>Immutable:</b> cannot be changed after it has been written.</li>
+        <li><b>Deterministic:</b> the same input always produces the same output.</li>
+        <li><b>Oracle:</b> a trusted data feed that brings outside facts, such as a flight delay, onto the blockchain.</li>
+        <li><b>dApp:</b> a decentralised application whose backend rules are smart contracts.</li>
+        <li><b>DAO:</b> a decentralised autonomous organisation, run by code and votes instead of a boss.</li>
+        <li><b>Escrow:</b> a neutral holding place for money until both sides meet the agreed condition.</li>
+        <li><b>ABI:</b> the public menu of functions that tells an app how to call a contract.</li>
+        <li><b>Contract account:</b> an Ethereum account that holds contract code and storage instead of a private key.</li>
+        <li><b>Validator:</b> a computer that checks transactions and helps secure Ethereum under proof of stake.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li>Run a Geth node with an account.</li>
-        <li>Install the Swarm client.</li>
-        <li>Start it with <code>swarm --bzzaccount &lt;account&gt;</code>.</li>
-        <li>Open <code>http://localhost:8500</code> and upload a file.</li>
-        <li>Share the resulting hash or ENS name.</li>
+        <li><b>Write the rule.</b> A developer writes the agreement in Solidity: who pays, which event triggers payment, and how much is paid.</li>
+        <li><b>Compile it.</b> A compiler turns readable code into bytecode that the EVM can run. It also creates the ABI, the list of functions that apps may call.</li>
+        <li><b>Deploy it.</b> A special transaction sends the bytecode to Ethereum. The network stores it and gives it an address, like a house number.</li>
+        <li><b>Fund and call it.</b> A user sends ETH or calls a function. Each call costs gas because it uses computing power.</li>
+        <li><b>Check the condition.</b> The contract reads its own stored data and, if needed, a trusted oracle.</li>
+        <li><b>Apply the result.</b> If the condition is true, the contract pays or updates its records. If it is false, the contract does nothing or rejects the call.</li>
+        <li><b>Record the outcome.</b> Every node runs the same code and reaches the same result, so all copies of the ledger stay in sync.</li>
       </ol>
 
-      <div class="note"><b>4-mark version:</b> definition + chunking + off-chain storage + one benefit. <b>9-mark version:</b> add the architecture diagram, the Web3 pillars and the IPFS comparison.</div>
+      <div class="analogy"><b>Real-life analogy:</b> A vending machine is a contract built from metal and buttons. You insert the right coins and press A3; the machine gives you the snack without asking a shopkeeper. The rule is fixed, the machine checks the payment itself, and the same action always gives the same result.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A smart contract is not a lawyer and does not understand intent. It only does exactly what its code says. If the code has a bug, or the oracle sends bad data, the contract will still execute the wrong result.</div>
+
+      <h3>The full answer, piece by piece</h3>
+
+      <h4>1. Definition</h4>
+      <p>A <b>smart contract</b> is a program stored on a blockchain that automatically executes the terms of an agreement when predefined conditions are met. The code is immutable after deployment, and every node runs the same code and reaches the same result.</p>
+      <p>The term was coined by <b>Nick Szabo</b> in the 1990s. In Ethereum, a smart contract is a <b>contract account</b> with bytecode and persistent storage.</p>
+      <p class="small"><b>What this means:</b> the contract is not a piece of paper stored in a safe. It is running software whose rules and history are copied across the network.</p>
+
+      <h4>2. Properties</h4>
+      <ul>
+        <li><b>Self-executing:</b> no manual step is needed to enforce the outcome.</li>
+        <li><b>Immutable:</b> the code cannot be changed; a new version must be deployed.</li>
+        <li><b>Deterministic:</b> the same inputs produce the same output on every node.</li>
+        <li><b>Transparent:</b> anyone can read the code and the transaction history.</li>
+        <li><b>Permissionless:</b> anyone can call a public function if they pay gas.</li>
+        <li><b>Composable:</b> contracts can call other contracts, like building blocks that plug together.</li>
+      </ul>
+
+      <h4>3. Real-world example — flight-delay insurance (2025 May Q5b)</h4>
+      <p>An insurer deploys a contract with a pool of ETH. Travellers pay a premium. The contract reads a trusted flight-status oracle. If the flight is delayed by more than 3 hours, the contract automatically pays the traveller; otherwise the premium stays in the pool.</p>
+      <pre class="tree">traveller ── premium ──► [ Insurance contract ]
+                                  │
+                                  │ reads flight oracle
+                                  ▼
+                    delay &gt; 3 hours ?
+                     │              │
+                    yes             no
+                     │              │
+                     ▼              ▼
+             pay traveller      keep premium
+             (no claim form)    (pool grows)</pre>
+      <p class="small"><b>What this means:</b> the payout rule is visible before anyone buys the policy, and the money moves as soon as the trusted data confirms the delay.</p>
+      <p><b>Benefits in this scenario:</b> instant payout, no claim paperwork, no adjuster, transparent rules, no selective denial, and the pool is auditable.</p>
+
+      <h4>4. Benefits and challenges</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Benefits</th><th>Challenges</th></tr></thead>
+        <tbody>
+          <tr><td><b>Disintermediation:</b> removes brokers and escrow agents.</td><td><b>Immutability:</b> a bug cannot be patched; a new contract is needed.</td></tr>
+          <tr><td><b>Near real-time settlement:</b> payment on the trigger event.</td><td><b>Oracle problem:</b> bad external data gives a wrong outcome.</td></tr>
+          <tr><td><b>Transparency:</b> rules and history are visible to all.</td><td><b>Privacy:</b> public code and state expose business logic.</td></tr>
+          <tr><td><b>Lower cost:</b> less paperwork, audit and manual processing.</td><td><b>Legal uncertainty:</b> enforceability varies by country.</td></tr>
+          <tr><td><b>Accuracy:</b> exact code execution, no human discretion.</td><td><b>Bugs:</b> the 2016 DAO hack drained ~$50M of ETH.</td></tr>
+          <tr><td><b>Composability:</b> contracts can call each other.</td><td><b>Gas cost:</b> complex logic is expensive.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small"><b>What this means:</b> smart contracts are strongest when the rule is simple, the outside data is trustworthy, and the cost of a wrong result is understood before deployment.</p>
+
+      <h4>5. Role of gas (the second half of 2025 May Q5b)</h4>
+      <p><b>Gas</b> is the unit that measures computational work on Ethereum. Every opcode, which is one low-level instruction, has a fixed gas cost. The sender pays:</p>
+      <div class="math">Transaction fee = gas used × gas price<br>
+      gas price = base fee + priority fee (tip)</div>
+      <p class="small"><b>What this means:</b> gas is the fuel meter. A bigger or busier computation burns more fuel, and the fee is the fuel bill.</p>
+      <ul>
+        <li><b>Prevents infinite loops:</b> execution stops when gas runs out (out-of-gas), so a stuck program cannot freeze the chain.</li>
+        <li><b>Pays validators:</b> the fee compensates the nodes that execute and include the transaction.</li>
+        <li><b>Allocates scarce blockspace:</b> users bid more when many people want their transactions included.</li>
+        <li><b>Punishes spam:</b> every computation has a real cost.</li>
+        <li><b>Refund:</b> unused gas is returned; a reverted transaction still pays for the work done.</li>
+      </ul>
+      <p><b>Worked example:</b> a contract call uses 50,000 gas at 30 gwei. A <b>gwei</b> is one billionth of an ETH. Fee = 50,000 × 30 = 1,500,000 gwei = <b>0.0015 ETH</b>. At $3,000 per ETH that is <b>$4.50</b>. The same call at 100 gwei costs 5,000,000 gwei = 0.005 ETH = $15.00.</p>
+
+      <h4>6. Smart-contract lifecycle</h4>
+      <pre class="tree">write Solidity ──► compile (solc) ──► bytecode + ABI
+                                            │
+                                            ▼
+                                  deploy transaction
+                                  (to address 0x0)
+                                            │
+                                            ▼
+                                  contract address
+                                            │
+                              ┌─────────────┴─────────────┐
+                              ▼                           ▼
+                        call function                 read state
+                        (costs gas)                   (free view)
+                              │
+                              ▼
+                     EVM executes + state update</pre>
+      <p class="small"><b>What this means:</b> the readable Solidity file is only the recipe. The blockchain stores the compiled bytecode, and users reach it through its address plus the ABI.</p>
+
+      <h4>7. Important limitation</h4>
+      <p>A contract cannot fetch data from the internet by itself. It needs an <b>oracle</b> (for example Chainlink or API3) to bring off-chain data on-chain. This is the “oracle problem”.</p>
+
+      <div class="tip"><b>9-mark structure:</b> definition (2) + flight-insurance example (2) + gas role and formula (2) + worked fee (1) + benefits/challenges table (2).</div>
     </div>
   </div>
 </section>
 
 <section class="card" id="s55">
-  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>5.5 Types of smart contracts</h2>
+  <h2>5.5 Types of smart contracts</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -868,7 +867,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 </section>
 
 <section class="card" id="s56">
-  <div class="prio">Priority 6 · ★★★ 3× repeated</div><h2>5.6 Solidity — implementation and deployment</h2>
+  <h2>5.6 Solidity — implementation and deployment</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1056,8 +1055,144 @@ contract Shipment {
   </div>
 </section>
 
+<section class="card" id="s57">
+  <h2>5.7 Swarm — decentralized storage</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Discuss Swarm, the decentralized storage platform. How does Swarm contribute to decentralized storage in the Ethereum ecosystem?</p>
+      <div class="badges"><span class="b marks">4 / 6 / 9 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 5</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q5(c) [4] · 2023 Nov Q5(b) [6] · 2024 May Q6(b) [9] · 2025 Nov Q6(b) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> Swarm is Ethereum’s shared hard drive. It stores large files off the blockchain, across many computers. The blockchain keeps only a small fingerprint, called a hash, which proves the file is the right one.</div>
+
+      <h4>Why we do this</h4>
+      <p>Putting a photo, video or whole website on Ethereum would be extremely expensive, because every node would copy it forever. Swarm keeps the heavy data outside the chain but still on a peer-to-peer network, so a dApp can be complete without renting a central server that one company can switch off.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Swarm:</b> Ethereum’s peer-to-peer storage network for large files.</li>
+        <li><b>Decentralised storage:</b> files spread across many independent computers instead of one company’s server.</li>
+        <li><b>Off-chain:</b> kept outside the blockchain itself, usually with only a hash on-chain.</li>
+        <li><b>Chunk:</b> a small fixed-size piece of a file; Swarm cuts files into chunks of at most 4 KB.</li>
+        <li><b>Hash:</b> a short digital fingerprint of data; change the data and the hash changes.</li>
+        <li><b>P2P (peer-to-peer):</b> computers talking directly to each other without a central server.</li>
+        <li><b>Node:</b> one computer participating in the storage network.</li>
+        <li><b>ENS (Ethereum Name Service):</b> a naming system that maps a readable name to a blockchain address or hash.</li>
+        <li><b>Incentive layer:</b> the payment rules that reward nodes for storing data and serving it.</li>
+        <li><b>dApp:</b> a decentralised application whose rules run on smart contracts.</li>
+        <li><b>IPFS:</b> another content-addressed storage network, not tied to Ethereum.</li>
+        <li><b>IPNS:</b> IPFS’s naming system for pointing a stable name at changing content.</li>
+        <li><b>Pub/sub (publish–subscribe):</b> a messaging pattern where a sender posts to a topic and every subscriber to that topic receives it.</li>
+        <li><b>Pinning:</b> asking an IPFS node to keep a copy of a file so it stays available.</li>
+        <li><b>Geth:</b> a popular Ethereum node client that Swarm can work with.</li>
+        <li><b>BZZ:</b> the accounting token used inside the Swarm network.</li>
+        <li><b>Content integrity:</b> proof that the file you received is exactly the file that was stored.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Split the file.</b> Swarm cuts it into chunks of at most 4 KB, because small pieces are easier to distribute and verify.</li>
+        <li><b>Hash each chunk.</b> Each chunk gets a 32-byte fingerprint, which also acts as its address.</li>
+        <li><b>Build a root hash.</b> The chunk hashes are combined into one root hash that represents the whole file.</li>
+        <li><b>Spread the chunks.</b> Nodes take responsibility for different chunks across the network.</li>
+        <li><b>Pay for storage.</b> The incentive layer rewards the nodes that keep the data available.</li>
+        <li><b>Retrieve by hash.</b> A user asks for the root hash; the network finds the chunks and rebuilds the file.</li>
+        <li><b>Check integrity.</b> The received chunks are hashed again. If a chunk was changed, its hash will not match.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Swarm is a shared hard drive run by a large library. A book is split into numbered pages, each page has a unique call number, and any branch can fetch the pages. The catalogue entry is the hash; the book itself is not kept in the catalogue.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Swarm does not store files inside the Ethereum blockchain. The blockchain stores a hash or reference; the file lives off-chain on Swarm. The hash is not encryption either — it proves integrity, not secrecy.</div>
+
+      <h3>The full answer, piece by piece</h3>
+
+      <h4>1. Definition</h4>
+      <p><b>Swarm</b> is Ethereum’s <b>decentralised storage platform</b>. It stores large data — DApp front-ends, images, NFT metadata and documents — <b>off-chain</b> across a peer-to-peer network. It is one of the three pillars of Web3: <b>Ethereum contracts</b> (logic), <b>Swarm</b> (storage) and <b>Whisper</b> (messaging).</p>
+      <p class="small"><b>What this means:</b> contracts decide, Swarm stores, and Whisper talks. Together they cover the three basic jobs of an application.</p>
+
+      <h4>2. Why it is needed</h4>
+      <ul>
+        <li>Storing large data on-chain is extremely expensive, because every node replicates it forever.</li>
+        <li>DApps need a place for front-end files and media.</li>
+        <li>Centralised servers create a single point of failure and censorship.</li>
+        <li>IPFS does not guarantee that content stays available unless some node keeps serving it.</li>
+      </ul>
+      <p class="small"><b>What this means:</b> Swarm solves the “where do the big files live?” problem without handing control back to one cloud provider.</p>
+
+      <h4>3. Architecture</h4>
+      <ol>
+        <li>A file is split into <b>chunks</b> of at most <b>4 KB</b>.</li>
+        <li>Each chunk is hashed; the <b>32-byte hash</b> is its address.</li>
+        <li>Chunks are distributed across the P2P network; nodes store the chunks they are responsible for.</li>
+        <li>To retrieve a file, the user asks for the root hash; the network resolves the chunks.</li>
+        <li><b>ENS</b> maps a human-readable name to the hash.</li>
+        <li>An <b>incentive layer</b> pays node operators for storage and bandwidth.</li>
+      </ol>
+
+      <pre class="tree">             file (e.g. 10 KB)
+                    │
+        ┌───────────┼───────────┐
+        ▼           ▼           ▼
+     chunk 1     chunk 2     chunk 3     (max 4 KB each)
+     24B1A9      341A0D      FFO19A
+        │           │           │
+        ▼           ▼           ▼
+     node 1      node 2      node 3      (P2P swarm)
+        │           │           │
+        └───────────┴───────────┘
+                    │
+              root hash + ENS name
+                    │
+                    ▼
+             DApp front-end / NFT metadata</pre>
+      <p class="small"><b>What this means:</b> the root hash is the address of the whole file, while each chunk hash is the address of one piece. ENS simply gives that address a human-friendly name.</p>
+
+      <h4>4. Contribution to the Ethereum ecosystem (9-mark answer)</h4>
+      <ul>
+        <li><b>Off-chain scaling:</b> keeps bulk data off the expensive chain while the hash or anchor stays on-chain.</li>
+        <li><b>DApp hosting:</b> front-end HTML, CSS and JavaScript can be served from Swarm, so the whole DApp is decentralised.</li>
+        <li><b>NFT metadata:</b> images and JSON live on Swarm; the token stores the hash.</li>
+        <li><b>Censorship resistance:</b> there is no central server to take down.</li>
+        <li><b>Redundancy:</b> chunks are replicated, so one node failure does not lose the file.</li>
+        <li><b>Ethereum integration:</b> uses the Geth client and an Ethereum account, plus ENS naming and a payment layer.</li>
+        <li><b>Content integrity:</b> the hash proves the data was not modified.</li>
+      </ul>
+
+      <h4>5. Swarm vs IPFS</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Swarm</th><th>IPFS</th></tr></thead>
+        <tbody>
+          <tr><td>Main goal</td><td>Ethereum’s storage layer</td><td>General content-addressed storage</td></tr>
+          <tr><td>Availability</td><td>Incentive layer pays nodes to store</td><td>Content available only while a node pins/serves it</td></tr>
+          <tr><td>Naming</td><td>ENS integration</td><td>IPNS / DNSLink</td></tr>
+          <tr><td>Ethereum coupling</td><td>Geth, account, payments</td><td>Independent</td></tr>
+          <tr><td>Chunk size</td><td>4 KB</td><td>Variable block size</td></tr>
+          <tr><td>Best for</td><td>DApp front-ends, NFT data</td><td>General file sharing</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small"><b>What this means:</b> both use hashes to address content, but Swarm adds a payment layer that is meant to keep data available, while IPFS depends on someone choosing to keep a copy.</p>
+
+      <h4>6. How to use Swarm</h4>
+      <ol>
+        <li>Run a Geth node with an account.</li>
+        <li>Install the Swarm client.</li>
+        <li>Start it with <code>swarm --bzzaccount &lt;account&gt;</code>.</li>
+        <li>Open <code>http://localhost:8500</code> and upload a file.</li>
+        <li>Share the resulting hash or ENS name.</li>
+      </ol>
+
+      <div class="note"><b>4-mark version:</b> definition + chunking + off-chain storage + one benefit. <b>9-mark version:</b> add the architecture diagram, the Web3 pillars and the IPFS comparison.</div>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s58">
-  <div class="prio">Priority 7 · ★★★ 3× repeated</div><h2>5.8 Whisper — decentralized messaging</h2>
+  <h2>5.8 Whisper — decentralized messaging</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1196,141 +1331,6 @@ contract Shipment {
       <p class="small"><b>What this means:</b> a complete Web3 app needs all three: contracts to decide, Swarm to store, and Whisper or Waku to communicate.</p>
 
       <div class="note"><b>6-mark version:</b> definition + purpose + 4 features. <b>9-mark version:</b> add the platform list, the diagram and the three-pillar table.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s53">
-  <div class="prio">Priority 8 · ★★ 2× repeated</div><h2>5.3 Ethereum Virtual Machine (EVM)</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Explain the Ethereum Virtual Machine in detail. What is the significance of the EVM?</p>
-      <div class="badges"><span class="b marks">4 / 6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 5</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(c) [4] · 2023 Nov Q6(a) [6 — significance]</p>
-
-      <div class="simple"><b>In simple words:</b> The EVM is the engine that runs Ethereum programs. Every full node has its own copy of this engine. It executes the same bytecode with the same inputs, so every node reaches the same result.</div>
-
-      <h4>Why we do this</h4>
-      <p>A blockchain needs every computer to agree on what happened. If one node ran a contract on a fast gaming PC and another on an old laptop, they might get different results. The EVM removes that problem: it is a fixed, sandboxed machine with a fuel meter, so execution is identical everywhere and always stops.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>EVM (Ethereum Virtual Machine):</b> the software machine that executes Ethereum contract bytecode.</li>
-        <li><b>Virtual machine:</b> a simulated computer that runs inside real computers, with its own rules and memory.</li>
-        <li><b>Bytecode:</b> the low-level instructions that the EVM executes.</li>
-        <li><b>Opcode:</b> one basic instruction, such as ADD or SSTORE.</li>
-        <li><b>Stack:</b> a last-in-first-out workspace where the EVM keeps the values it is working on.</li>
-        <li><b>256-bit word:</b> the standard size of an EVM number, large enough for hashes and elliptic-curve maths.</li>
-        <li><b>State root:</b> a single hash that summarises the entire Ethereum state at one moment.</li>
-        <li><b>Elliptic-curve cryptography:</b> the maths behind Ethereum’s public and private keys and signatures.</li>
-        <li><b>Memory:</b> temporary workspace that disappears after the call.</li>
-        <li><b>Storage:</b> permanent key-value data kept by a contract between calls.</li>
-        <li><b>Program counter:</b> a pointer that tracks which instruction to run next.</li>
-        <li><b>Gas:</b> the fuel unit that pays for each opcode.</li>
-        <li><b>Sandbox:</b> a closed environment where code cannot touch the host computer or other contracts’ data directly.</li>
-        <li><b>Deterministic:</b> the same input always produces the same output.</li>
-        <li><b>State:</b> the current data of all accounts and contracts.</li>
-        <li><b>REVERT:</b> an instruction that undoes state changes but keeps the gas fee.</li>
-        <li><b>JVM (Java Virtual Machine):</b> a general-purpose virtual machine that runs Java programs.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Fetch.</b> The EVM reads the next opcode at the program counter.</li>
-        <li><b>Decode.</b> It works out what the instruction means and which values it needs.</li>
-        <li><b>Check gas.</b> It verifies that enough gas remains, then deducts the opcode’s fixed cost.</li>
-        <li><b>Execute.</b> It performs the operation and writes the result to the stack, memory or storage.</li>
-        <li><b>Advance.</b> The program counter moves forward, and the cycle repeats.</li>
-        <li><b>Stop or roll back.</b> On STOP or RETURN, the state is committed. On REVERT or out-of-gas, state changes are undone but the gas already used is kept.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> The EVM is a locked calculator with a fuel meter. You insert a program card, it performs one instruction at a time, and it shuts down when the fuel runs out. It cannot open the desk drawer or talk to the room outside; it can only calculate and update its own notebook.</div>
-
-      <div class="confuse"><b>Common confusion:</b> the EVM is not a physical chip or a separate blockchain. It is software that every node runs. It is also not “Turing-complete with no limits”: gas puts a hard limit on every execution, which is why it is often called quasi-Turing-complete.</div>
-
-      <h3>The full answer, piece by piece</h3>
-
-      <h4>1. Definition</h4>
-      <p>The <b>EVM</b> is the runtime environment of Ethereum. It is a <b>stack-based, deterministic, sandboxed virtual machine</b> that executes smart-contract <b>bytecode</b> on every full node. It is the part of Ethereum that turns a transaction into a state change.</p>
-      <p class="small"><b>What this means:</b> a transaction is a request; the EVM is the worker that carries it out and updates the shared record.</p>
-
-      <h4>2. Key properties</h4>
-      <ul>
-        <li><b>Quasi-Turing-complete:</b> it can compute anything, but every opcode costs gas, so execution always halts.</li>
-        <li><b>256-bit word size:</b> matches the hash and elliptic-curve arithmetic used by Ethereum.</li>
-        <li><b>Stack-based:</b> up to 1024 items; push and pop operations.</li>
-        <li><b>Deterministic:</b> the same code, input and state give the same output on every node.</li>
-        <li><b>Sandboxed:</b> a failed call reverts its state changes; only gas is consumed.</li>
-        <li><b>Single-threaded:</b> contracts execute one after another, not in parallel.</li>
-        <li><b>No system calls or hardware access:</b> it is a pure computation machine.</li>
-      </ul>
-
-      <h4>3. EVM architecture</h4>
-      <pre class="tree">┌─────────────────────────────────────────────────────────┐
-│                      EVM instance                       │
-│                                                         │
-│  ┌──────────────┐   ┌──────────────┐   ┌────────────┐  │
-│  │  CODE (ROM)  │   │    STACK     │   │  MEMORY    │  │
-│  │  bytecode    │   │  1024 words  │   │  volatile  │  │
-│  │  immutable   │   │  256-bit     │   │  zero-init │  │
-│  └──────────────┘   └──────────────┘   └────────────┘  │
-│                                                         │
-│  ┌──────────────┐   ┌──────────────┐   ┌────────────┐  │
-│  │   STORAGE    │   │ PROGRAM      │   │    GAS     │  │
-│  │  persistent  │   │ COUNTER      │   │  remaining │  │
-│  │  key-value   │   │              │   │            │  │
-│  └──────────────┘   └──────────────┘   └────────────┘  │
-│                                                         │
-│  world state: address ──► {balance, nonce, code, root}  │
-└─────────────────────────────────────────────────────────┘</pre>
-      <p class="small"><b>What this means:</b> code is fixed, stack and memory are for current work, storage survives between calls, and gas is checked at every step.</p>
-
-      <h4>4. Execution cycle</h4>
-      <ol>
-        <li>Fetch the next opcode at the program counter.</li>
-        <li>Decode it and read operands from the stack.</li>
-        <li>Check that enough gas is available; deduct the opcode’s gas cost.</li>
-        <li>Execute the operation; write the result to stack, memory or storage.</li>
-        <li>Increment the program counter and repeat.</li>
-        <li>On <code>STOP</code> or <code>RETURN</code>, commit state. On <code>REVERT</code> or out-of-gas, roll back state and keep the gas fee.</li>
-      </ol>
-
-      <h4>5. What the EVM executes</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Opcode group</th><th>Examples</th><th>Purpose</th></tr></thead>
-        <tbody>
-          <tr><td>Arithmetic</td><td>ADD, MUL, SUB, DIV, EXP</td><td>Math on 256-bit integers</td></tr>
-          <tr><td>Logic / comparison</td><td>AND, OR, XOR, LT, GT, EQ</td><td>Bitwise and boolean logic</td></tr>
-          <tr><td>Stack / memory</td><td>PUSH, POP, MLOAD, MSTORE</td><td>Move data</td></tr>
-          <tr><td>Storage</td><td>SLOAD, SSTORE</td><td>Persistent contract state</td></tr>
-          <tr><td>Control flow</td><td>JUMP, JUMPI, PC</td><td>Loops and branches</td></tr>
-          <tr><td>Calls / create</td><td>CALL, DELEGATECALL, CREATE</td><td>Call other contracts, deploy</td></tr>
-          <tr><td>Logging</td><td>LOG0–LOG4</td><td>Emit events</td></tr>
-          <tr><td>Halting</td><td>STOP, RETURN, REVERT, SELFDESTRUCT</td><td>End execution</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="small"><b>What this means:</b> the EVM is small on purpose. It has arithmetic, data movement, storage, jumps, calls and logging — enough to build contracts, but not enough to touch the outside world directly.</p>
-
-      <h4>6. Significance (6-mark answer)</h4>
-      <ul>
-        <li><b>Portability:</b> one contract runs identically on every node and every EVM-compatible chain.</li>
-        <li><b>Determinism:</b> all nodes compute the same state root, which is necessary for consensus.</li>
-        <li><b>Safety:</b> gas bounds execution, so a malicious contract cannot loop forever.</li>
-        <li><b>Isolation:</b> sandboxing protects the host node from the contract.</li>
-        <li><b>Programmability:</b> it is the engine behind DeFi, NFTs, DAOs and tokens.</li>
-        <li><b>Standardisation:</b> Solidity, Vyper and tooling target the same bytecode, creating a large ecosystem.</li>
-      </ul>
-
-      <h4>7. EVM vs JVM (one line)</h4>
-      <p>The JVM virtualises a general-purpose computer for Java and Scala; the EVM virtualises only a <b>deterministic calculation and storage machine</b> for smart contracts, with gas metering and no OS or hardware interface.</p>
-      <p class="small"><b>What this means:</b> the JVM is built to run many kinds of applications; the EVM is deliberately narrow so that every node can agree on the result.</p>
-
-      <div class="note"><b>4-mark version:</b> definition + stack-based + 256-bit + gas-limited + deterministic. <b>6-mark version:</b> add the architecture diagram and three significance points.</div>
     </div>
   </div>
 </section>

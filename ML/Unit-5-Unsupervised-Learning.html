@@ -173,10 +173,10 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h3>ML · Unit 5</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s54">5.4 Density, graph, spectral <span class="pill">6×</span></a>
     <a href="#s51">5.1 K-means &amp; cluster optimisation <span class="pill">5×</span></a>
-    <a href="#s53">5.3 Hierarchical clustering <span class="pill">5×</span></a>
     <a href="#s52">5.2 K-medoids <span class="pill">4×</span></a>
+    <a href="#s53">5.3 Hierarchical clustering <span class="pill">5×</span></a>
+    <a href="#s54">5.4 Density, graph, spectral <span class="pill">6×</span></a>
     <a href="#s55">5.5 Outlier analysis <span class="pill">3×</span></a>
     <a href="#s56">5.6 Evaluation &amp; elbow <span class="pill">3×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
@@ -215,7 +215,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 
   <div class="tbl-wrap">
   <table class="freq">
-    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <thead><tr><th>Rank</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td class="l">Density-based clustering — DBSCAN / OPTICS / DENCLUE, terms, why used</td><td>2022 Nov Q5(a) [6]; 2023 May Q5(c) [6]; 2023 Nov Q6(a) [9]; 2024 May Q5(b) [6]; 2025 May Q6(c)(ii) [6]; 2025 Nov Q5(c) [6]</td><td><span class="stars">★★★★★★</span> 6×</td></tr>
       <tr><td>2</td><td class="l">K-means — algorithm, steps, example, applications</td><td>2022 Nov Q5(b) [6]; 2023 Nov Q5(a) [8]; 2024 May Q6(b) [6]; 2025 May Q6(b) [6]; 2025 Nov Q5(a) [5]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
@@ -241,8 +241,489 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <div class="tip"><b>Marks strategy:</b> 5–6 mark = definition + algorithm + one example. 8–9 mark = definition + algorithm + <b>fully solved tiny dataset</b> + complexity + comparison table. Always draw the dendrogram or the DBSCAN core/border/noise diagram.</div>
 </section>
 
-<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s54">
-  <div class="prio">Priority 1 · ★★★★★ 6× repeated</div><h2>5.4 Density-based, graph-based and spectral clustering</h2>
+<div class="note" id="topic-note">📚 Notes follow the book order (3.1 → 3.2 → …). The frequency table above is sorted by repetition, so use it to decide what to revise first.</div><section class="card" id="s51">
+  <h2>5.1 K-means and optimisation of clusters</h2>
+  <p class="lead">K-means partitions n points into K clusters by minimising the within-cluster sum of squares (WCSS).</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is K-means clustering? Explain how it works with the essential steps and a suitable example. What are its applications?</p>
+      <div class="badges"><span class="b marks">5–8 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q5(b) [6] · 2023 Nov Q5(a) [8] · 2024 May Q6(b) [6] · 2025 May Q6(b) [6 — essential steps] · 2025 Nov Q5(a) [5 — principles + applications]</p>
+
+      <div class="simple"><b>In simple words:</b> K-means puts K centres into the data.<br>
+Every point joins its nearest centre. Each centre then moves to the average of its points.<br>
+Assign and move again until nothing changes. The result is K groups.</div>
+
+<h4>Why we do this</h4>
+<p>We often have data but no labels: customers, documents, pixels or sensor readings. K-means is a fast way to discover natural groups. It is simple enough to run on large data and it gives a centre for each group, which is easy to explain.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Unsupervised learning</b> — learning from data that has no correct answer column.</li>
+<li><b>Partitional clustering</b> — splitting the data into non-overlapping groups in one shot.</li>
+<li><b>Cluster</b> — a group of points that are more similar to each other than to points outside.</li>
+<li><b>Centroid</b> — the average position of all points in a cluster; it need not be a real data point.</li>
+<li><b>WCSS</b> — within-cluster sum of squares: the total squared distance from each point to its own centroid. Lower means tighter clusters.</li>
+<li><b>Convergence</b> — the point where assignments and centroids stop changing.</li>
+<li><b>Local optimum</b> — a good answer that may not be the best possible answer, because the starting position trapped us.</li>
+<li><b>k-means++</b> — a smarter way to pick starting centres so they are spread far apart.</li>
+<li><b>Feature scaling</b> — putting columns on similar ranges so one large-number column does not dominate distance.</li>
+<li><b>Outlier</b> — a value very different from the rest; it can drag a centroid toward itself.</li>
+<li><b>Euclidean distance</b> — the straight-line distance between two points.</li>
+<li><b>Iteration</b> — one round of assigning points and moving centroids.</li>
+<li><b>Convex cluster</b> — a round blob that contains the straight line between any two of its points.</li>
+<li><b>Vector quantisation</b> — replacing each point with its nearest centroid.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Choose K.</b> K is the number of groups you want. K-means cannot discover K by itself.</li>
+<li><b>Place K initial centroids.</b> Pick K real points or use k-means++. Good spread gives a better final answer.</li>
+<li><b>Assign every point to its nearest centroid.</b> “Nearest” is usually Euclidean distance. This creates K temporary clusters.</li>
+<li><b>Move each centroid to the mean of its points.</b> The centre now represents the group better than the old guess did.</li>
+<li><b>Repeat assign and move.</b> Each round lowers WCSS or leaves it unchanged, so the loop eventually stops.</li>
+<li><b>Stop when centroids stop moving.</b> That is convergence. Report the clusters and their centroids.</li>
+</ol>
+
+<h4>The objective K-means minimises</h4>
+<div class="math">Minimise  WCSS = Σ<sub>k=1..K</sub> Σ<sub>x∈C<sub>k</sub></sub> ‖x − μ<sub>k</sub>‖²</div>
+<p class="small"><b>What this means:</b> the double sum adds up the squared distance of every point x to the centroid μ<sub>k</sub> of its own cluster C<sub>k</sub>. K-means tries to make this total as small as possible, i.e. make every cluster tight.</p>
+
+<h4>The algorithm in compact exam form</h4>
+<pre><code>1. Choose K (number of clusters).
+2. Select K initial centroids (random points or k-means++).
+3. Repeat:
+     a. Assignment: assign each point to the nearest centroid.
+     b. Update: recompute each centroid as the mean of its points.
+     c. If centroids do not change (or max iterations reached), stop.
+4. Return the K clusters.</code></pre>
+<p class="small"><b>What this means:</b> assignment and update are two halves of one improvement step. Assignment decides who belongs where; update decides where the centre should sit.</p>
+
+<h4>Worked example — 7 points, K = 2</h4>
+<p>Data (A, B scores): 1=(1,1), 2=(1.5,2), 3=(3,4), 4=(5,7), 5=(3.5,5), 6=(4.5,5), 7=(3.5,4.5). The initial centroids are point 1 (1,1) and point 4 (5,7), the two farthest points.</p>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Iteration</th><th>Centroid C1</th><th>Centroid C2</th><th>Cluster 1 members</th><th>Cluster 2 members</th></tr></thead>
+        <tbody>
+          <tr><td>0 (init)</td><td>(1.00, 1.00)</td><td>(5.00, 7.00)</td><td>1, 2, 3</td><td>4, 5, 6, 7</td></tr>
+          <tr><td>1</td><td>(1.83, 2.33)</td><td>(4.13, 5.38)</td><td>1, 2</td><td>3, 4, 5, 6, 7</td></tr>
+          <tr><td>2</td><td>(1.25, 1.50)</td><td>(3.90, 5.10)</td><td>1, 2</td><td>3, 4, 5, 6, 7</td></tr>
+          <tr><td>3</td><td>(1.25, 1.50)</td><td>(3.90, 5.10)</td><td>1, 2</td><td>3, 4, 5, 6, 7</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> the memberships change in the first two rounds, then stop. A stable membership means the centroids can no longer move, so the algorithm is done.</p>
+<p>At iteration 3 the centroids stop changing, so the algorithm has converged.</p>
+<div class="math"><b>Final clusters:</b> C1 = {1, 2} with centroid (1.25, 1.50)<br>
+      C2 = {3, 4, 5, 6, 7} with centroid (3.90, 5.10)<br>
+      <b>WCSS = 8.525</b></div>
+<p class="small"><b>What this means:</b> the first cluster contains the two low-scoring points. The second contains the five higher-scoring points. WCSS = 8.525 is the total squared error of this partition; a smaller value would mean tighter clusters.</p>
+
+<h4>Distance check for the final clusters</h4>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Point</th><th>Coordinates</th><th>Distance to C1</th><th>Distance to C2</th><th>Assigned</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>(1, 1)</td><td>0.559</td><td>5.022</td><td>C1</td></tr>
+          <tr><td>2</td><td>(1.5, 2)</td><td>0.559</td><td>3.920</td><td>C1</td></tr>
+          <tr><td>3</td><td>(3, 4)</td><td>3.052</td><td>1.421</td><td>C2</td></tr>
+          <tr><td>4</td><td>(5, 7)</td><td>6.657</td><td>2.195</td><td>C2</td></tr>
+          <tr><td>5</td><td>(3.5, 5)</td><td>4.161</td><td>0.412</td><td>C2</td></tr>
+          <tr><td>6</td><td>(4.5, 5)</td><td>4.776</td><td>0.608</td><td>C2</td></tr>
+          <tr><td>7</td><td>(3.5, 4.5)</td><td>3.750</td><td>0.721</td><td>C2</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> every point is closer to the centroid of the cluster it was assigned to. That is the check that the final assignment is stable.</p>
+
+<h4>Complexity</h4>
+<p><b>Time:</b> O(n · K · d · I), where n = points, K = clusters, d = dimensions, I = iterations. <b>Space:</b> O(n + K).</p>
+
+<h4>Applications</h4>
+<ul>
+<li>Customer segmentation and market-basket groups.</li>
+<li>Image compression and colour quantisation.</li>
+<li>Document clustering and topic grouping.</li>
+<li>Anomaly detection: points far from every centroid are suspicious.</li>
+<li>Pre-processing for supervised learning (vector quantisation).</li>
+</ul>
+
+<h4>Limitations</h4>
+<ul>
+<li>K must be chosen in advance.</li>
+<li>The answer depends on the initial centroids; use k-means++ or several restarts.</li>
+<li>It assumes round, similar-sized clusters.</li>
+<li>The mean is pulled by outliers.</li>
+<li>It finds a local optimum, not necessarily the global best.</li>
+</ul>
+
+<div class="analogy"><b>Real-life analogy:</b> you are seating friends at K tables so that each table sits close together. Put K table markers on the floor. Each friend walks to the nearest marker. Then move each marker to the average spot of the friends at that table. Repeat. Friends change tables until the layout settles.</div>
+
+<div class="confuse"><b>Common confusion:</b> K-means is not classification, because the clusters have no names or true labels. The centroid is usually not one of the data points; it is an average, like the average age of a group. And “K” is your choice: the algorithm will always return K clusters, even if the data has no natural groups.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>With reference to clustering, explain the issue of “optimisation of clusters”. Write a short note on optimisation of clusters.</p>
+      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q5(a) [6] · 2023 Nov Q6(b)(i) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> Clustering has no answer key, so “best” needs a score.<br>
+A good partition is tight inside each cluster and far apart between clusters.<br>
+Optimisation means choosing K and the assignments that balance those two goals without getting trapped by a bad start.</div>
+
+<h4>Why we do this</h4>
+<p>Two runs of K-means can give different clusters. One may split a real group, merge two groups, or leave an empty cluster. Optimisation is the set of checks and fixes that make the result trustworthy instead of accidental.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Optimisation</b> — searching for the best answer according to a measurable score.</li>
+<li><b>Objective function</b> — the score we try to minimise or maximise, such as WCSS.</li>
+<li><b>Compactness</b> — how close the points inside a cluster are to their centroid.</li>
+<li><b>Separation</b> — how far different clusters are from each other.</li>
+<li><b>Local optimum</b> — a solution that is best only in its neighbourhood, not overall.</li>
+<li><b>Global optimum</b> — the best possible solution over all choices.</li>
+<li><b>Empty cluster</b> — a cluster that ends up with no points, so its centroid cannot be updated.</li>
+<li><b>Curse of dimensionality</b> — in many dimensions, distances become similar and clustering loses its power.</li>
+<li><b>PCA</b> — principal component analysis, a way to reduce dimensions while keeping the main variation.</li>
+<li><b>Silhouette score</b> — a number that compares how close a point is to its own cluster versus the next nearest cluster.</li>
+<li><b>WCSS</b> — within-cluster sum of squares; the total squared distance from points to their own centroid.</li>
+<li><b>Elbow method</b> — plotting WCSS against K and choosing the bend in the curve.</li>
+<li><b>Gap statistic</b> — compares the real WCSS curve with the curve expected from random data.</li>
+<li><b>k-means++</b> — a seeding method that places initial centroids far apart.</li>
+<li><b>Convex cluster</b> — a round blob that contains the straight line between any two of its points.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Choose a range of K values.</b> Try several values instead of trusting one guess.</li>
+<li><b>Run K-means several times for each K.</b> Different starts can lead to different local optima; keep the run with the lowest WCSS.</li>
+<li><b>Plot or tabulate the score.</b> Use WCSS, silhouette or the gap statistic to compare K values.</li>
+<li><b>Pick the knee or best score.</b> The knee is where extra clusters stop buying a large improvement.</li>
+<li><b>Inspect the clusters.</b> Look for empty clusters, outliers and groups that are obviously split or merged.</li>
+<li><b>Fix the data if needed.</b> Scale features, remove or cap outliers, or reduce dimensions.</li>
+<li><b>Validate with a second metric.</b> If elbow and silhouette disagree, do not pretend the answer is certain.</li>
+</ol>
+
+<h4>The score being optimised</h4>
+<div class="math">WCSS = Σ<sub>k</sub> Σ<sub>x∈C<sub>k</sub></sub> ‖x − μ<sub>k</sub>‖²</div>
+<p class="small"><b>What this means:</b> WCSS counts squared distance from each point to its own centroid. A low value means compact clusters. But WCSS always falls as K grows, and it reaches zero when every point is its own cluster. So we cannot simply pick the smallest WCSS.</p>
+
+<h4>1. Choosing K</h4>
+<ul>
+<li><b>Elbow method</b> — plot WCSS against K and choose the bend where the fall slows down.</li>
+<li><b>Silhouette score</b> — choose the K with the highest average silhouette.</li>
+<li><b>Gap statistic</b> — compare the real WCSS with the WCSS of random data that has no clusters.</li>
+<li><b>Domain knowledge</b> — the business may already fix K, such as three customer tiers.</li>
+</ul>
+
+<h4>2. Local optima and initialisation</h4>
+<ul>
+<li>K-means converges to a <b>local</b> minimum, not necessarily the global one.</li>
+<li>Bad initial centroids can merge two real clusters or split one real cluster.</li>
+<li><b>k-means++</b> chooses starting centres far apart, which usually improves the result.</li>
+<li>Run the algorithm several times with different seeds and keep the lowest WCSS.</li>
+</ul>
+
+<h4>3. Other optimisation issues</h4>
+<ul>
+<li><b>Empty clusters</b> — reassign the farthest point to the empty cluster or reinitialise its centroid.</li>
+<li><b>Outliers</b> — they pull the mean; use K-medoids or handle the outliers first.</li>
+<li><b>Feature scaling</b> — a large-range feature dominates distance, so normalise the columns.</li>
+<li><b>High dimensions</b> — distances become similar; reduce dimensions with PCA.</li>
+<li><b>Cluster shape</b> — K-means assumes convex, round clusters; density or spectral methods may fit better.</li>
+</ul>
+
+<div class="note"><b>One-line answer:</b> optimisation of clusters = choose K and the partition that minimise intra-cluster distance and maximise inter-cluster distance, while avoiding local optima caused by initialisation and outliers.</div>
+
+<div class="analogy"><b>Real-life analogy:</b> you are arranging tables in a hall. You want each table’s group to sit close together, but the tables themselves to be spread out. If you place the first tables badly, everyone squeezes into one corner and you settle for a poor layout. Trying several starting layouts gives you a better chance of finding a good one.</div>
+
+<div class="confuse"><b>Common confusion:</b> “Lowest WCSS” is not the same as “best clustering”. WCSS always improves as K grows, so the minimum is K = n, which is useless. Optimisation is not only choosing K either; it also covers initialisation, empty clusters, scaling, outliers and cluster shape.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s52">
+  <h2>5.2 K-medoids (PAM)</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Why is K-medoid used? Explain the K-medoid algorithm.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q6(a) [6 — choosing number of clusters] · 2023 Nov Q6(b)(ii) [9] · 2024 May Q5(a) [5] · 2025 Nov Q5(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> K-medoids is K-means with a real data point as each centre.<br>
+That real point is called a medoid. Because it is real, one extreme value cannot drag it away.<br>
+The algorithm swaps medoids with other points whenever the swap lowers the total distance.</div>
+
+<h4>Why we do this</h4>
+<p>K-means uses the mean, which is an invented average. A single billionaire in an income dataset can pull the mean far away from every real customer. K-medoids chooses an actual customer as the representative, so the centre stays sensible and can be shown to a business user.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Medoid</b> — the actual data point in a cluster with the smallest average distance to all other points in that cluster.</li>
+<li><b>Mean</b> — the arithmetic average; it may not be a real data point.</li>
+<li><b>Robust</b> — not easily thrown off by extreme values.</li>
+<li><b>Manhattan distance</b> — distance measured by moving along grid lines, like a taxi in a city.</li>
+<li><b>Dissimilarity matrix</b> — a table of distances between every pair of points.</li>
+<li><b>PAM</b> — Partitioning Around Medoids, the classic K-medoids algorithm.</li>
+<li><b>Cost</b> — the total distance from every point to its nearest medoid.</li>
+<li><b>Swap</b> — replacing one chosen medoid with a non-medoid point.</li>
+<li><b>Euclidean distance</b> — the straight-line distance between two points.</li>
+<li><b>Outlier</b> — a value far from the main pattern; it can drag a mean.</li>
+<li><b>Categorical data</b> — data made of labels or categories rather than numbers.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Choose K and pick K real points as initial medoids.</b> These are the temporary representatives.</li>
+<li><b>Assign every other point to its nearest medoid.</b> This creates K clusters.</li>
+<li><b>Try a swap.</b> For each chosen medoid m and each non-medoid point o, ask: what would the total cost be if o replaced m?</li>
+<li><b>Accept the swap only if the total cost falls.</b> A lower cost means points are, on average, closer to their representative.</li>
+<li><b>Repeat assignment and swaps.</b> Keep going until no swap improves the cost.</li>
+<li><b>Return the final medoids and their clusters.</b> Each medoid is a real example you can inspect.</li>
+</ol>
+
+<h4>PAM in compact exam form</h4>
+<pre><code>1. Choose K objects as initial medoids.
+2. Assign each remaining object to the nearest medoid.
+3. For each medoid m and each non-medoid o:
+     compute the total cost S of swapping m with o
+     (sum of distances from every point to its nearest medoid).
+4. If S &lt; 0, perform the swap (the clustering improves).
+5. Repeat steps 2-4 until no swap improves the cost.
+6. Return the K medoids and their clusters.</code></pre>
+<p class="small"><b>What this means:</b> the inner swap test is why PAM is slow. It checks many possible replacements, but each check is simple: rebuild the assignment and add up the distances.</p>
+
+<h4>The cost function</h4>
+<div class="math">Cost = Σ<sub>i=1..n</sub> min<sub>m∈M</sub> d(x<sub>i</sub>, m)</div>
+<p class="small"><b>What this means:</b> for every point x<sub>i</sub>, find its closest medoid m and add that distance. The algorithm wants this total to be as small as possible. A medoid is “central” because it minimises this kind of total distance within its cluster.</p>
+
+<h4>Complexity</h4>
+<p>Each iteration evaluates K(n−K) swaps, and each evaluation costs O(n). Total ≈ <b>O(K n²)</b> per iteration, which is more expensive than K-means O(nKdI).</p>
+
+<h4>K-means vs K-medoids</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>K-means</th><th>K-medoids</th></tr></thead>
+        <tbody>
+          <tr><td>Centre</td><td>Mean (not a real point)</td><td>Medoid (a real point)</td></tr>
+          <tr><td>Outliers</td><td>Sensitive</td><td>Robust</td></tr>
+          <tr><td>Distance</td><td>Euclidean (to compute mean)</td><td>Any metric</td></tr>
+          <tr><td>Complexity</td><td>O(nKdI)</td><td>O(Kn²) per iteration</td></tr>
+          <tr><td>Cluster shape</td><td>Convex / spherical</td><td>Any shape (distance-based)</td></tr>
+          <tr><td>Use</td><td>Large numeric data</td><td>Noisy data, categorical data, small n</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> K-medoids trades speed for robustness and flexibility. It is the better choice when the data is noisy, the distance is not Euclidean, or the centre must be a real example.</p>
+
+<h4>Choosing the number of clusters in K-medoids</h4>
+<ul>
+<li><b>Elbow method</b> — plot total cost against K and look for the knee.</li>
+<li><b>Silhouette coefficient</b> — choose K with the best average silhouette.</li>
+<li><b>Domain knowledge</b> — the number of natural groups may already be known.</li>
+<li><b>Gap statistic</b> — compare the cost with the cost on a random reference dataset.</li>
+<li>For PAM, the <b>average silhouette width</b> is the standard built-in choice.</li>
+</ul>
+
+<div class="analogy"><b>Real-life analogy:</b> each table at a dinner needs a captain. K-means picks the average position of the table, which may be an empty chair. K-medoids picks an actual person who is closest to everyone at the table. If one guest is unusually far away, the real captain barely moves, while the imaginary average spot can jump across the room.</div>
+
+<div class="confuse"><b>Common confusion:</b> the medoid is not the mean, and it is not simply the point closest to the mean. It is the real point that minimises the total distance to the other members. K-medoids still needs K, and it is slower than K-means, so it is not a free upgrade.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s53">
+  <h2>5.3 Hierarchical clustering</h2>
+  <p class="lead">Hierarchical clustering builds a tree of clusters. Agglomerative = bottom-up; divisive = top-down.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write a short note on hierarchical clustering methods: (i) Agglomerative (ii) Dendrogram. Explain hierarchical clustering with an example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q5(c) [6] · 2023 Nov Q6(a) [9] · 2024 May Q6(c) [6] · 2025 May Q5(a) [6] · 2025 Nov Q6(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Start with every point as its own tiny group.<br>
+Repeatedly merge the two closest groups. Record each merge as a branch in a tree.<br>
+The tree is called a dendrogram. Cut it at any height to get that many clusters.</div>
+
+<h4>Why we do this</h4>
+<p>Sometimes we do not know K, or we want to see groups at several levels: a broad market, then sub-markets, then micro-segments. Hierarchical clustering builds that whole family tree once, so you can choose the level after seeing the result.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Hierarchical clustering</b> — clustering that builds a nested tree of groups rather than one flat split.</li>
+<li><b>Agglomerative</b> — bottom-up: start with single points and merge upward.</li>
+<li><b>Divisive</b> — top-down: start with one group and split downward.</li>
+<li><b>Dendrogram</b> — a tree diagram whose branches show when groups merged and at what distance.</li>
+<li><b>Linkage</b> — the rule for measuring the distance between two clusters.</li>
+<li><b>Single linkage</b> — distance between the closest pair of points in the two clusters.</li>
+<li><b>Complete linkage</b> — distance between the farthest pair of points.</li>
+<li><b>Average linkage</b> — average of all pairwise distances.</li>
+<li><b>Ward linkage</b> — the increase in within-cluster variance caused by a merge.</li>
+<li><b>Cut height</b> — the horizontal line on a dendrogram that decides where the tree is sliced into clusters.</li>
+<li><b>Singleton cluster</b> — a cluster with only one point.</li>
+<li><b>Variance</b> — the average squared spread of values around their mean.</li>
+<li><b>Dissimilarity</b> — a distance-like number that says how different two items are.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Start with n singleton clusters.</b> Each point is its own group, so no information is lost at the start.</li>
+<li><b>Compute all pairwise distances.</b> This distance table is the raw material for every merge.</li>
+<li><b>Find the closest pair of clusters.</b> Merge that pair first; it is the strongest evidence of similarity.</li>
+<li><b>Update distances using the linkage rule.</b> The new cluster’s distance to every other cluster must be recalculated.</li>
+<li><b>Repeat until one cluster remains.</b> Each merge is recorded at its height, producing the dendrogram.</li>
+<li><b>Cut the tree at the height that gives useful groups.</b> A low cut gives many small clusters; a high cut gives few large ones.</li>
+</ol>
+
+<h4>Linkage methods</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Linkage</th><th>Distance between clusters</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td>Single</td><td>Minimum pairwise distance</td><td>Long, chain-like clusters; sensitive to noise</td></tr>
+          <tr><td>Complete</td><td>Maximum pairwise distance</td><td>Compact, similar-size clusters</td></tr>
+          <tr><td>Average</td><td>Average of all pairwise distances</td><td>Compromise</td></tr>
+          <tr><td>Centroid</td><td>Distance between centroids</td><td>Can invert (crossing merges)</td></tr>
+          <tr><td>Ward</td><td>Increase in within-cluster variance</td><td>Compact clusters; popular</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> linkage decides the “distance between groups”. Single linkage looks at the closest members and can create long chains. Complete and Ward prefer compact groups. There is no universally best linkage; it depends on the shape you expect.</p>
+
+<h4>Worked example — one-dimensional data [7, 10, 20, 28, 35]</h4>
+<p><b>Single linkage:</b> the closest pair is 7 and 10, at distance 3. Next, 28 and 35 are closest at 7. Then 20 joins {28,35} at distance 8, because its nearest member is 28. Finally the two remaining clusters join at distance 10, because 7 is 10 away from 20.</p>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Merge</th><th>Distance</th><th>Clusters after merge</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>7 + 10</td><td>3</td><td>{7,10}, {20}, {28}, {35}</td></tr>
+          <tr><td>2</td><td>28 + 35</td><td>7</td><td>{7,10}, {20}, {28,35}</td></tr>
+          <tr><td>3</td><td>20 + {28,35}</td><td>8</td><td>{7,10}, {20,28,35}</td></tr>
+          <tr><td>4</td><td>{7,10} + {20,28,35}</td><td>10</td><td>{7,10,20,28,35}</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> the merge height is the distance between the closest members of the two groups at that step. The tree keeps a record of every merge, so no merge has to be guessed again.</p>
+
+<h4>The dendrogram</h4>
+<div class="tree">Single-link dendrogram (height on the left)
+
+10 |                    +-----------+
+   |                    |           |
+ 8 |            +-------+           |
+   |            |                   |
+ 7 |      +-----+                   |
+   |      |                         |
+ 3 |  +---+                         |
+   |  |   |                         |
+ 0 +--7---10----20----28----35------+
+        (merges at 3, 7, 8, 10)</div>
+<p class="small"><b>What this means:</b> the y-axis is distance, not time. A branch that joins low down means the groups were very similar. A branch that joins high up means the groups were far apart.</p>
+
+<p><b>Complete linkage:</b> the merges happen at 3, 7, 13 and 28. The first two are the same as single linkage. Then {7,10} joins 20 at max(20−7, 20−10) = 13. The final merge is at max(35−7) = 28, because complete linkage uses the farthest pair.</p>
+
+<h4>Cutting the tree</h4>
+<ul>
+<li>Cut at height 5 → {7,10}, {20}, {28}, {35}: four clusters.</li>
+<li>Cut at height 9 (single link) → {7,10}, {20,28,35}: two clusters.</li>
+<li>Cut at height 14 (complete link) → {7,10,20}, {28,35}: two clusters.</li>
+</ul>
+
+<h4>Advantages and disadvantages</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>No need to choose K in advance</td><td>O(n² log n) or O(n³); slow for large n</td></tr>
+          <tr><td>Dendrogram gives a full hierarchy</td><td>Merges are final; cannot undo</td></tr>
+          <tr><td>Works with any distance metric</td><td>Sensitive to noise and outliers</td></tr>
+          <tr><td>Easy to interpret</td><td>Hard to choose the cut height / linkage</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> the dendrogram gives you every possible K in one run, but the run is slow for large n and a merge can never be undone. One bad early merge stays in the tree forever.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> a family tree. Siblings join at a low branch because they are closely related. Cousins join higher up. Distant relatives join near the root. If you cut the tree at a low height, you get small family units; cut near the top, you get the whole extended family.</div>
+
+<div class="confuse"><b>Common confusion:</b> the height of a dendrogram is a distance, not the number of clusters. Cutting lower gives more clusters, not fewer. Also, “no need to choose K” does not mean “no choices”: you still choose the linkage rule and the cut height, and those choices change the answer.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Compare hierarchical clustering and K-means clustering.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q5(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Hierarchical clustering builds a tree of groups. K-means builds one flat set of groups.<br>
+Hierarchical does not need K first, but it is slow. K-means needs K first, but it is fast.<br>
+Use hierarchical for small data and unknown K; use K-means for large numeric data and a known K.</div>
+
+<h4>Why we do this</h4>
+<p>The exam often asks you to choose between them. The right choice depends on data size, whether K is known, and whether you need a hierarchy or one final split. A clear comparison also shows that you understand what each algorithm assumes.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Flat partition</b> — one final set of non-overlapping clusters, with no levels above or below.</li>
+<li><b>Nested hierarchy</b> — clusters inside clusters, like folders inside folders.</li>
+<li><b>Dendrogram</b> — the tree diagram produced by hierarchical clustering.</li>
+<li><b>Scalability</b> — how well a method handles a growing number of data points.</li>
+<li><b>Convex cluster</b> — a round, blob-like cluster that contains the straight line between any two of its points.</li>
+<li><b>Reversibility</b> — whether a method can undo a bad grouping decision.</li>
+<li><b>Centroid</b> — the average position of a cluster’s points.</li>
+<li><b>Linkage</b> — the rule used to measure the distance between two clusters.</li>
+<li><b>Outlier</b> — a value far from the main pattern.</li>
+<li><b>Big-O notation</b> — a way to describe how running time grows with data size.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Define both methods in one line each.</b> Hierarchical builds a nested tree; K-means partitions into K flat groups.</li>
+<li><b>Compare the need for K.</b> Hierarchical gives every K by cutting the tree; K-means must be told K before it starts.</li>
+<li><b>Compare the output.</b> Hierarchical returns a dendrogram; K-means returns K clusters and their centroids.</li>
+<li><b>Compare cost.</b> Hierarchical is O(n² log n) to O(n³); K-means is O(nKdI), much faster for large n.</li>
+<li><b>Compare shape and outliers.</b> Hierarchical can follow non-round shapes depending on linkage; K-means assumes round clusters and is pulled by outliers.</li>
+<li><b>Finish with a use case.</b> Small taxonomy with unknown K → hierarchical. Large numeric table with known K → K-means.</li>
+</ol>
+
+<h4>The comparison table</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Hierarchical</th><th>K-means</th></tr></thead>
+        <tbody>
+          <tr><td>Approach</td><td>Builds a tree of nested clusters</td><td>Partitions into K flat clusters</td></tr>
+          <tr><td>K</td><td>Not required in advance</td><td>Must be chosen in advance</td></tr>
+          <tr><td>Output</td><td>Dendrogram; any K by cutting</td><td>K clusters and centroids</td></tr>
+          <tr><td>Time</td><td>O(n² log n) to O(n³)</td><td>O(nKdI) — much faster</td></tr>
+          <tr><td>Scalability</td><td>Poor for large n</td><td>Good for large n</td></tr>
+          <tr><td>Cluster shape</td><td>Any shape (depends on linkage)</td><td>Convex / spherical</td></tr>
+          <tr><td>Outliers</td><td>Sensitive</td><td>Sensitive (mean)</td></tr>
+          <tr><td>Reversibility</td><td>Merges cannot be undone</td><td>Iterates until convergence</td></tr>
+          <tr><td>Use</td><td>Small data, taxonomy, unknown K</td><td>Large numeric data, known K</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> the table is not saying one method is better. It is saying they trade different things: hierarchy and flexibility versus speed and simplicity.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> hierarchical clustering is a family tree: you can zoom in on one branch or look at the whole family. K-means is a seating plan for a wedding: you decide the number of tables first, then fill them once. The seating plan is faster, but it does not tell you how the families are related.</div>
+
+<div class="confuse"><b>Common confusion:</b> hierarchical clustering can give you any K by cutting the dendrogram, but it still builds the entire tree, so it is not automatically cheaper. Also, a hierarchical merge is permanent: once two groups join, they cannot split later. K-means can recover from a bad assignment because it iterates.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s54">
+  <h2>5.4 Density-based, graph-based and spectral clustering</h2>
   <p class="lead">Density methods find arbitrary-shaped clusters and label sparse regions as noise. Graph/spectral methods cut a similarity graph.</p>
 
   <div class="qa">
@@ -520,489 +1001,8 @@ Finally, it runs K-means in that new space. This solves shapes that K-means cann
   </div>
 </section>
 
-<section class="card" id="s51">
-  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>5.1 K-means and optimisation of clusters</h2>
-  <p class="lead">K-means partitions n points into K clusters by minimising the within-cluster sum of squares (WCSS).</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is K-means clustering? Explain how it works with the essential steps and a suitable example. What are its applications?</p>
-      <div class="badges"><span class="b marks">5–8 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q5(b) [6] · 2023 Nov Q5(a) [8] · 2024 May Q6(b) [6] · 2025 May Q6(b) [6 — essential steps] · 2025 Nov Q5(a) [5 — principles + applications]</p>
-
-      <div class="simple"><b>In simple words:</b> K-means puts K centres into the data.<br>
-Every point joins its nearest centre. Each centre then moves to the average of its points.<br>
-Assign and move again until nothing changes. The result is K groups.</div>
-
-<h4>Why we do this</h4>
-<p>We often have data but no labels: customers, documents, pixels or sensor readings. K-means is a fast way to discover natural groups. It is simple enough to run on large data and it gives a centre for each group, which is easy to explain.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Unsupervised learning</b> — learning from data that has no correct answer column.</li>
-<li><b>Partitional clustering</b> — splitting the data into non-overlapping groups in one shot.</li>
-<li><b>Cluster</b> — a group of points that are more similar to each other than to points outside.</li>
-<li><b>Centroid</b> — the average position of all points in a cluster; it need not be a real data point.</li>
-<li><b>WCSS</b> — within-cluster sum of squares: the total squared distance from each point to its own centroid. Lower means tighter clusters.</li>
-<li><b>Convergence</b> — the point where assignments and centroids stop changing.</li>
-<li><b>Local optimum</b> — a good answer that may not be the best possible answer, because the starting position trapped us.</li>
-<li><b>k-means++</b> — a smarter way to pick starting centres so they are spread far apart.</li>
-<li><b>Feature scaling</b> — putting columns on similar ranges so one large-number column does not dominate distance.</li>
-<li><b>Outlier</b> — a value very different from the rest; it can drag a centroid toward itself.</li>
-<li><b>Euclidean distance</b> — the straight-line distance between two points.</li>
-<li><b>Iteration</b> — one round of assigning points and moving centroids.</li>
-<li><b>Convex cluster</b> — a round blob that contains the straight line between any two of its points.</li>
-<li><b>Vector quantisation</b> — replacing each point with its nearest centroid.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Choose K.</b> K is the number of groups you want. K-means cannot discover K by itself.</li>
-<li><b>Place K initial centroids.</b> Pick K real points or use k-means++. Good spread gives a better final answer.</li>
-<li><b>Assign every point to its nearest centroid.</b> “Nearest” is usually Euclidean distance. This creates K temporary clusters.</li>
-<li><b>Move each centroid to the mean of its points.</b> The centre now represents the group better than the old guess did.</li>
-<li><b>Repeat assign and move.</b> Each round lowers WCSS or leaves it unchanged, so the loop eventually stops.</li>
-<li><b>Stop when centroids stop moving.</b> That is convergence. Report the clusters and their centroids.</li>
-</ol>
-
-<h4>The objective K-means minimises</h4>
-<div class="math">Minimise  WCSS = Σ<sub>k=1..K</sub> Σ<sub>x∈C<sub>k</sub></sub> ‖x − μ<sub>k</sub>‖²</div>
-<p class="small"><b>What this means:</b> the double sum adds up the squared distance of every point x to the centroid μ<sub>k</sub> of its own cluster C<sub>k</sub>. K-means tries to make this total as small as possible, i.e. make every cluster tight.</p>
-
-<h4>The algorithm in compact exam form</h4>
-<pre><code>1. Choose K (number of clusters).
-2. Select K initial centroids (random points or k-means++).
-3. Repeat:
-     a. Assignment: assign each point to the nearest centroid.
-     b. Update: recompute each centroid as the mean of its points.
-     c. If centroids do not change (or max iterations reached), stop.
-4. Return the K clusters.</code></pre>
-<p class="small"><b>What this means:</b> assignment and update are two halves of one improvement step. Assignment decides who belongs where; update decides where the centre should sit.</p>
-
-<h4>Worked example — 7 points, K = 2</h4>
-<p>Data (A, B scores): 1=(1,1), 2=(1.5,2), 3=(3,4), 4=(5,7), 5=(3.5,5), 6=(4.5,5), 7=(3.5,4.5). The initial centroids are point 1 (1,1) and point 4 (5,7), the two farthest points.</p>
-<div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Iteration</th><th>Centroid C1</th><th>Centroid C2</th><th>Cluster 1 members</th><th>Cluster 2 members</th></tr></thead>
-        <tbody>
-          <tr><td>0 (init)</td><td>(1.00, 1.00)</td><td>(5.00, 7.00)</td><td>1, 2, 3</td><td>4, 5, 6, 7</td></tr>
-          <tr><td>1</td><td>(1.83, 2.33)</td><td>(4.13, 5.38)</td><td>1, 2</td><td>3, 4, 5, 6, 7</td></tr>
-          <tr><td>2</td><td>(1.25, 1.50)</td><td>(3.90, 5.10)</td><td>1, 2</td><td>3, 4, 5, 6, 7</td></tr>
-          <tr><td>3</td><td>(1.25, 1.50)</td><td>(3.90, 5.10)</td><td>1, 2</td><td>3, 4, 5, 6, 7</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the memberships change in the first two rounds, then stop. A stable membership means the centroids can no longer move, so the algorithm is done.</p>
-<p>At iteration 3 the centroids stop changing, so the algorithm has converged.</p>
-<div class="math"><b>Final clusters:</b> C1 = {1, 2} with centroid (1.25, 1.50)<br>
-      C2 = {3, 4, 5, 6, 7} with centroid (3.90, 5.10)<br>
-      <b>WCSS = 8.525</b></div>
-<p class="small"><b>What this means:</b> the first cluster contains the two low-scoring points. The second contains the five higher-scoring points. WCSS = 8.525 is the total squared error of this partition; a smaller value would mean tighter clusters.</p>
-
-<h4>Distance check for the final clusters</h4>
-<div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Point</th><th>Coordinates</th><th>Distance to C1</th><th>Distance to C2</th><th>Assigned</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>(1, 1)</td><td>0.559</td><td>5.022</td><td>C1</td></tr>
-          <tr><td>2</td><td>(1.5, 2)</td><td>0.559</td><td>3.920</td><td>C1</td></tr>
-          <tr><td>3</td><td>(3, 4)</td><td>3.052</td><td>1.421</td><td>C2</td></tr>
-          <tr><td>4</td><td>(5, 7)</td><td>6.657</td><td>2.195</td><td>C2</td></tr>
-          <tr><td>5</td><td>(3.5, 5)</td><td>4.161</td><td>0.412</td><td>C2</td></tr>
-          <tr><td>6</td><td>(4.5, 5)</td><td>4.776</td><td>0.608</td><td>C2</td></tr>
-          <tr><td>7</td><td>(3.5, 4.5)</td><td>3.750</td><td>0.721</td><td>C2</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> every point is closer to the centroid of the cluster it was assigned to. That is the check that the final assignment is stable.</p>
-
-<h4>Complexity</h4>
-<p><b>Time:</b> O(n · K · d · I), where n = points, K = clusters, d = dimensions, I = iterations. <b>Space:</b> O(n + K).</p>
-
-<h4>Applications</h4>
-<ul>
-<li>Customer segmentation and market-basket groups.</li>
-<li>Image compression and colour quantisation.</li>
-<li>Document clustering and topic grouping.</li>
-<li>Anomaly detection: points far from every centroid are suspicious.</li>
-<li>Pre-processing for supervised learning (vector quantisation).</li>
-</ul>
-
-<h4>Limitations</h4>
-<ul>
-<li>K must be chosen in advance.</li>
-<li>The answer depends on the initial centroids; use k-means++ or several restarts.</li>
-<li>It assumes round, similar-sized clusters.</li>
-<li>The mean is pulled by outliers.</li>
-<li>It finds a local optimum, not necessarily the global best.</li>
-</ul>
-
-<div class="analogy"><b>Real-life analogy:</b> you are seating friends at K tables so that each table sits close together. Put K table markers on the floor. Each friend walks to the nearest marker. Then move each marker to the average spot of the friends at that table. Repeat. Friends change tables until the layout settles.</div>
-
-<div class="confuse"><b>Common confusion:</b> K-means is not classification, because the clusters have no names or true labels. The centroid is usually not one of the data points; it is an average, like the average age of a group. And “K” is your choice: the algorithm will always return K clusters, even if the data has no natural groups.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>With reference to clustering, explain the issue of “optimisation of clusters”. Write a short note on optimisation of clusters.</p>
-      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q5(a) [6] · 2023 Nov Q6(b)(i) [9]</p>
-
-      <div class="simple"><b>In simple words:</b> Clustering has no answer key, so “best” needs a score.<br>
-A good partition is tight inside each cluster and far apart between clusters.<br>
-Optimisation means choosing K and the assignments that balance those two goals without getting trapped by a bad start.</div>
-
-<h4>Why we do this</h4>
-<p>Two runs of K-means can give different clusters. One may split a real group, merge two groups, or leave an empty cluster. Optimisation is the set of checks and fixes that make the result trustworthy instead of accidental.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Optimisation</b> — searching for the best answer according to a measurable score.</li>
-<li><b>Objective function</b> — the score we try to minimise or maximise, such as WCSS.</li>
-<li><b>Compactness</b> — how close the points inside a cluster are to their centroid.</li>
-<li><b>Separation</b> — how far different clusters are from each other.</li>
-<li><b>Local optimum</b> — a solution that is best only in its neighbourhood, not overall.</li>
-<li><b>Global optimum</b> — the best possible solution over all choices.</li>
-<li><b>Empty cluster</b> — a cluster that ends up with no points, so its centroid cannot be updated.</li>
-<li><b>Curse of dimensionality</b> — in many dimensions, distances become similar and clustering loses its power.</li>
-<li><b>PCA</b> — principal component analysis, a way to reduce dimensions while keeping the main variation.</li>
-<li><b>Silhouette score</b> — a number that compares how close a point is to its own cluster versus the next nearest cluster.</li>
-<li><b>WCSS</b> — within-cluster sum of squares; the total squared distance from points to their own centroid.</li>
-<li><b>Elbow method</b> — plotting WCSS against K and choosing the bend in the curve.</li>
-<li><b>Gap statistic</b> — compares the real WCSS curve with the curve expected from random data.</li>
-<li><b>k-means++</b> — a seeding method that places initial centroids far apart.</li>
-<li><b>Convex cluster</b> — a round blob that contains the straight line between any two of its points.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Choose a range of K values.</b> Try several values instead of trusting one guess.</li>
-<li><b>Run K-means several times for each K.</b> Different starts can lead to different local optima; keep the run with the lowest WCSS.</li>
-<li><b>Plot or tabulate the score.</b> Use WCSS, silhouette or the gap statistic to compare K values.</li>
-<li><b>Pick the knee or best score.</b> The knee is where extra clusters stop buying a large improvement.</li>
-<li><b>Inspect the clusters.</b> Look for empty clusters, outliers and groups that are obviously split or merged.</li>
-<li><b>Fix the data if needed.</b> Scale features, remove or cap outliers, or reduce dimensions.</li>
-<li><b>Validate with a second metric.</b> If elbow and silhouette disagree, do not pretend the answer is certain.</li>
-</ol>
-
-<h4>The score being optimised</h4>
-<div class="math">WCSS = Σ<sub>k</sub> Σ<sub>x∈C<sub>k</sub></sub> ‖x − μ<sub>k</sub>‖²</div>
-<p class="small"><b>What this means:</b> WCSS counts squared distance from each point to its own centroid. A low value means compact clusters. But WCSS always falls as K grows, and it reaches zero when every point is its own cluster. So we cannot simply pick the smallest WCSS.</p>
-
-<h4>1. Choosing K</h4>
-<ul>
-<li><b>Elbow method</b> — plot WCSS against K and choose the bend where the fall slows down.</li>
-<li><b>Silhouette score</b> — choose the K with the highest average silhouette.</li>
-<li><b>Gap statistic</b> — compare the real WCSS with the WCSS of random data that has no clusters.</li>
-<li><b>Domain knowledge</b> — the business may already fix K, such as three customer tiers.</li>
-</ul>
-
-<h4>2. Local optima and initialisation</h4>
-<ul>
-<li>K-means converges to a <b>local</b> minimum, not necessarily the global one.</li>
-<li>Bad initial centroids can merge two real clusters or split one real cluster.</li>
-<li><b>k-means++</b> chooses starting centres far apart, which usually improves the result.</li>
-<li>Run the algorithm several times with different seeds and keep the lowest WCSS.</li>
-</ul>
-
-<h4>3. Other optimisation issues</h4>
-<ul>
-<li><b>Empty clusters</b> — reassign the farthest point to the empty cluster or reinitialise its centroid.</li>
-<li><b>Outliers</b> — they pull the mean; use K-medoids or handle the outliers first.</li>
-<li><b>Feature scaling</b> — a large-range feature dominates distance, so normalise the columns.</li>
-<li><b>High dimensions</b> — distances become similar; reduce dimensions with PCA.</li>
-<li><b>Cluster shape</b> — K-means assumes convex, round clusters; density or spectral methods may fit better.</li>
-</ul>
-
-<div class="note"><b>One-line answer:</b> optimisation of clusters = choose K and the partition that minimise intra-cluster distance and maximise inter-cluster distance, while avoiding local optima caused by initialisation and outliers.</div>
-
-<div class="analogy"><b>Real-life analogy:</b> you are arranging tables in a hall. You want each table’s group to sit close together, but the tables themselves to be spread out. If you place the first tables badly, everyone squeezes into one corner and you settle for a poor layout. Trying several starting layouts gives you a better chance of finding a good one.</div>
-
-<div class="confuse"><b>Common confusion:</b> “Lowest WCSS” is not the same as “best clustering”. WCSS always improves as K grows, so the minimum is K = n, which is useless. Optimisation is not only choosing K either; it also covers initialisation, empty clusters, scaling, outliers and cluster shape.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s53">
-  <div class="prio">Priority 3 · ★★★★★ 5× repeated</div><h2>5.3 Hierarchical clustering</h2>
-  <p class="lead">Hierarchical clustering builds a tree of clusters. Agglomerative = bottom-up; divisive = top-down.</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Write a short note on hierarchical clustering methods: (i) Agglomerative (ii) Dendrogram. Explain hierarchical clustering with an example.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q5(c) [6] · 2023 Nov Q6(a) [9] · 2024 May Q6(c) [6] · 2025 May Q5(a) [6] · 2025 Nov Q6(b) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> Start with every point as its own tiny group.<br>
-Repeatedly merge the two closest groups. Record each merge as a branch in a tree.<br>
-The tree is called a dendrogram. Cut it at any height to get that many clusters.</div>
-
-<h4>Why we do this</h4>
-<p>Sometimes we do not know K, or we want to see groups at several levels: a broad market, then sub-markets, then micro-segments. Hierarchical clustering builds that whole family tree once, so you can choose the level after seeing the result.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Hierarchical clustering</b> — clustering that builds a nested tree of groups rather than one flat split.</li>
-<li><b>Agglomerative</b> — bottom-up: start with single points and merge upward.</li>
-<li><b>Divisive</b> — top-down: start with one group and split downward.</li>
-<li><b>Dendrogram</b> — a tree diagram whose branches show when groups merged and at what distance.</li>
-<li><b>Linkage</b> — the rule for measuring the distance between two clusters.</li>
-<li><b>Single linkage</b> — distance between the closest pair of points in the two clusters.</li>
-<li><b>Complete linkage</b> — distance between the farthest pair of points.</li>
-<li><b>Average linkage</b> — average of all pairwise distances.</li>
-<li><b>Ward linkage</b> — the increase in within-cluster variance caused by a merge.</li>
-<li><b>Cut height</b> — the horizontal line on a dendrogram that decides where the tree is sliced into clusters.</li>
-<li><b>Singleton cluster</b> — a cluster with only one point.</li>
-<li><b>Variance</b> — the average squared spread of values around their mean.</li>
-<li><b>Dissimilarity</b> — a distance-like number that says how different two items are.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Start with n singleton clusters.</b> Each point is its own group, so no information is lost at the start.</li>
-<li><b>Compute all pairwise distances.</b> This distance table is the raw material for every merge.</li>
-<li><b>Find the closest pair of clusters.</b> Merge that pair first; it is the strongest evidence of similarity.</li>
-<li><b>Update distances using the linkage rule.</b> The new cluster’s distance to every other cluster must be recalculated.</li>
-<li><b>Repeat until one cluster remains.</b> Each merge is recorded at its height, producing the dendrogram.</li>
-<li><b>Cut the tree at the height that gives useful groups.</b> A low cut gives many small clusters; a high cut gives few large ones.</li>
-</ol>
-
-<h4>Linkage methods</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Linkage</th><th>Distance between clusters</th><th>Effect</th></tr></thead>
-        <tbody>
-          <tr><td>Single</td><td>Minimum pairwise distance</td><td>Long, chain-like clusters; sensitive to noise</td></tr>
-          <tr><td>Complete</td><td>Maximum pairwise distance</td><td>Compact, similar-size clusters</td></tr>
-          <tr><td>Average</td><td>Average of all pairwise distances</td><td>Compromise</td></tr>
-          <tr><td>Centroid</td><td>Distance between centroids</td><td>Can invert (crossing merges)</td></tr>
-          <tr><td>Ward</td><td>Increase in within-cluster variance</td><td>Compact clusters; popular</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> linkage decides the “distance between groups”. Single linkage looks at the closest members and can create long chains. Complete and Ward prefer compact groups. There is no universally best linkage; it depends on the shape you expect.</p>
-
-<h4>Worked example — one-dimensional data [7, 10, 20, 28, 35]</h4>
-<p><b>Single linkage:</b> the closest pair is 7 and 10, at distance 3. Next, 28 and 35 are closest at 7. Then 20 joins {28,35} at distance 8, because its nearest member is 28. Finally the two remaining clusters join at distance 10, because 7 is 10 away from 20.</p>
-<div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Step</th><th>Merge</th><th>Distance</th><th>Clusters after merge</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>7 + 10</td><td>3</td><td>{7,10}, {20}, {28}, {35}</td></tr>
-          <tr><td>2</td><td>28 + 35</td><td>7</td><td>{7,10}, {20}, {28,35}</td></tr>
-          <tr><td>3</td><td>20 + {28,35}</td><td>8</td><td>{7,10}, {20,28,35}</td></tr>
-          <tr><td>4</td><td>{7,10} + {20,28,35}</td><td>10</td><td>{7,10,20,28,35}</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the merge height is the distance between the closest members of the two groups at that step. The tree keeps a record of every merge, so no merge has to be guessed again.</p>
-
-<h4>The dendrogram</h4>
-<div class="tree">Single-link dendrogram (height on the left)
-
-10 |                    +-----------+
-   |                    |           |
- 8 |            +-------+           |
-   |            |                   |
- 7 |      +-----+                   |
-   |      |                         |
- 3 |  +---+                         |
-   |  |   |                         |
- 0 +--7---10----20----28----35------+
-        (merges at 3, 7, 8, 10)</div>
-<p class="small"><b>What this means:</b> the y-axis is distance, not time. A branch that joins low down means the groups were very similar. A branch that joins high up means the groups were far apart.</p>
-
-<p><b>Complete linkage:</b> the merges happen at 3, 7, 13 and 28. The first two are the same as single linkage. Then {7,10} joins 20 at max(20−7, 20−10) = 13. The final merge is at max(35−7) = 28, because complete linkage uses the farthest pair.</p>
-
-<h4>Cutting the tree</h4>
-<ul>
-<li>Cut at height 5 → {7,10}, {20}, {28}, {35}: four clusters.</li>
-<li>Cut at height 9 (single link) → {7,10}, {20,28,35}: two clusters.</li>
-<li>Cut at height 14 (complete link) → {7,10,20}, {28,35}: two clusters.</li>
-</ul>
-
-<h4>Advantages and disadvantages</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
-        <tbody>
-          <tr><td>No need to choose K in advance</td><td>O(n² log n) or O(n³); slow for large n</td></tr>
-          <tr><td>Dendrogram gives a full hierarchy</td><td>Merges are final; cannot undo</td></tr>
-          <tr><td>Works with any distance metric</td><td>Sensitive to noise and outliers</td></tr>
-          <tr><td>Easy to interpret</td><td>Hard to choose the cut height / linkage</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the dendrogram gives you every possible K in one run, but the run is slow for large n and a merge can never be undone. One bad early merge stays in the tree forever.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> a family tree. Siblings join at a low branch because they are closely related. Cousins join higher up. Distant relatives join near the root. If you cut the tree at a low height, you get small family units; cut near the top, you get the whole extended family.</div>
-
-<div class="confuse"><b>Common confusion:</b> the height of a dendrogram is a distance, not the number of clusters. Cutting lower gives more clusters, not fewer. Also, “no need to choose K” does not mean “no choices”: you still choose the linkage rule and the cut height, and those choices change the answer.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Compare hierarchical clustering and K-means clustering.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q5(b) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> Hierarchical clustering builds a tree of groups. K-means builds one flat set of groups.<br>
-Hierarchical does not need K first, but it is slow. K-means needs K first, but it is fast.<br>
-Use hierarchical for small data and unknown K; use K-means for large numeric data and a known K.</div>
-
-<h4>Why we do this</h4>
-<p>The exam often asks you to choose between them. The right choice depends on data size, whether K is known, and whether you need a hierarchy or one final split. A clear comparison also shows that you understand what each algorithm assumes.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Flat partition</b> — one final set of non-overlapping clusters, with no levels above or below.</li>
-<li><b>Nested hierarchy</b> — clusters inside clusters, like folders inside folders.</li>
-<li><b>Dendrogram</b> — the tree diagram produced by hierarchical clustering.</li>
-<li><b>Scalability</b> — how well a method handles a growing number of data points.</li>
-<li><b>Convex cluster</b> — a round, blob-like cluster that contains the straight line between any two of its points.</li>
-<li><b>Reversibility</b> — whether a method can undo a bad grouping decision.</li>
-<li><b>Centroid</b> — the average position of a cluster’s points.</li>
-<li><b>Linkage</b> — the rule used to measure the distance between two clusters.</li>
-<li><b>Outlier</b> — a value far from the main pattern.</li>
-<li><b>Big-O notation</b> — a way to describe how running time grows with data size.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Define both methods in one line each.</b> Hierarchical builds a nested tree; K-means partitions into K flat groups.</li>
-<li><b>Compare the need for K.</b> Hierarchical gives every K by cutting the tree; K-means must be told K before it starts.</li>
-<li><b>Compare the output.</b> Hierarchical returns a dendrogram; K-means returns K clusters and their centroids.</li>
-<li><b>Compare cost.</b> Hierarchical is O(n² log n) to O(n³); K-means is O(nKdI), much faster for large n.</li>
-<li><b>Compare shape and outliers.</b> Hierarchical can follow non-round shapes depending on linkage; K-means assumes round clusters and is pulled by outliers.</li>
-<li><b>Finish with a use case.</b> Small taxonomy with unknown K → hierarchical. Large numeric table with known K → K-means.</li>
-</ol>
-
-<h4>The comparison table</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Hierarchical</th><th>K-means</th></tr></thead>
-        <tbody>
-          <tr><td>Approach</td><td>Builds a tree of nested clusters</td><td>Partitions into K flat clusters</td></tr>
-          <tr><td>K</td><td>Not required in advance</td><td>Must be chosen in advance</td></tr>
-          <tr><td>Output</td><td>Dendrogram; any K by cutting</td><td>K clusters and centroids</td></tr>
-          <tr><td>Time</td><td>O(n² log n) to O(n³)</td><td>O(nKdI) — much faster</td></tr>
-          <tr><td>Scalability</td><td>Poor for large n</td><td>Good for large n</td></tr>
-          <tr><td>Cluster shape</td><td>Any shape (depends on linkage)</td><td>Convex / spherical</td></tr>
-          <tr><td>Outliers</td><td>Sensitive</td><td>Sensitive (mean)</td></tr>
-          <tr><td>Reversibility</td><td>Merges cannot be undone</td><td>Iterates until convergence</td></tr>
-          <tr><td>Use</td><td>Small data, taxonomy, unknown K</td><td>Large numeric data, known K</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the table is not saying one method is better. It is saying they trade different things: hierarchy and flexibility versus speed and simplicity.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> hierarchical clustering is a family tree: you can zoom in on one branch or look at the whole family. K-means is a seating plan for a wedding: you decide the number of tables first, then fill them once. The seating plan is faster, but it does not tell you how the families are related.</div>
-
-<div class="confuse"><b>Common confusion:</b> hierarchical clustering can give you any K by cutting the dendrogram, but it still builds the entire tree, so it is not automatically cheaper. Also, a hierarchical merge is permanent: once two groups join, they cannot split later. K-means can recover from a bad assignment because it iterates.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s52">
-  <div class="prio">Priority 4 · ★★★★ 4× repeated</div><h2>5.2 K-medoids (PAM)</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Why is K-medoid used? Explain the K-medoid algorithm.</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q6(a) [6 — choosing number of clusters] · 2023 Nov Q6(b)(ii) [9] · 2024 May Q5(a) [5] · 2025 Nov Q5(b) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> K-medoids is K-means with a real data point as each centre.<br>
-That real point is called a medoid. Because it is real, one extreme value cannot drag it away.<br>
-The algorithm swaps medoids with other points whenever the swap lowers the total distance.</div>
-
-<h4>Why we do this</h4>
-<p>K-means uses the mean, which is an invented average. A single billionaire in an income dataset can pull the mean far away from every real customer. K-medoids chooses an actual customer as the representative, so the centre stays sensible and can be shown to a business user.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Medoid</b> — the actual data point in a cluster with the smallest average distance to all other points in that cluster.</li>
-<li><b>Mean</b> — the arithmetic average; it may not be a real data point.</li>
-<li><b>Robust</b> — not easily thrown off by extreme values.</li>
-<li><b>Manhattan distance</b> — distance measured by moving along grid lines, like a taxi in a city.</li>
-<li><b>Dissimilarity matrix</b> — a table of distances between every pair of points.</li>
-<li><b>PAM</b> — Partitioning Around Medoids, the classic K-medoids algorithm.</li>
-<li><b>Cost</b> — the total distance from every point to its nearest medoid.</li>
-<li><b>Swap</b> — replacing one chosen medoid with a non-medoid point.</li>
-<li><b>Euclidean distance</b> — the straight-line distance between two points.</li>
-<li><b>Outlier</b> — a value far from the main pattern; it can drag a mean.</li>
-<li><b>Categorical data</b> — data made of labels or categories rather than numbers.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Choose K and pick K real points as initial medoids.</b> These are the temporary representatives.</li>
-<li><b>Assign every other point to its nearest medoid.</b> This creates K clusters.</li>
-<li><b>Try a swap.</b> For each chosen medoid m and each non-medoid point o, ask: what would the total cost be if o replaced m?</li>
-<li><b>Accept the swap only if the total cost falls.</b> A lower cost means points are, on average, closer to their representative.</li>
-<li><b>Repeat assignment and swaps.</b> Keep going until no swap improves the cost.</li>
-<li><b>Return the final medoids and their clusters.</b> Each medoid is a real example you can inspect.</li>
-</ol>
-
-<h4>PAM in compact exam form</h4>
-<pre><code>1. Choose K objects as initial medoids.
-2. Assign each remaining object to the nearest medoid.
-3. For each medoid m and each non-medoid o:
-     compute the total cost S of swapping m with o
-     (sum of distances from every point to its nearest medoid).
-4. If S &lt; 0, perform the swap (the clustering improves).
-5. Repeat steps 2-4 until no swap improves the cost.
-6. Return the K medoids and their clusters.</code></pre>
-<p class="small"><b>What this means:</b> the inner swap test is why PAM is slow. It checks many possible replacements, but each check is simple: rebuild the assignment and add up the distances.</p>
-
-<h4>The cost function</h4>
-<div class="math">Cost = Σ<sub>i=1..n</sub> min<sub>m∈M</sub> d(x<sub>i</sub>, m)</div>
-<p class="small"><b>What this means:</b> for every point x<sub>i</sub>, find its closest medoid m and add that distance. The algorithm wants this total to be as small as possible. A medoid is “central” because it minimises this kind of total distance within its cluster.</p>
-
-<h4>Complexity</h4>
-<p>Each iteration evaluates K(n−K) swaps, and each evaluation costs O(n). Total ≈ <b>O(K n²)</b> per iteration, which is more expensive than K-means O(nKdI).</p>
-
-<h4>K-means vs K-medoids</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>K-means</th><th>K-medoids</th></tr></thead>
-        <tbody>
-          <tr><td>Centre</td><td>Mean (not a real point)</td><td>Medoid (a real point)</td></tr>
-          <tr><td>Outliers</td><td>Sensitive</td><td>Robust</td></tr>
-          <tr><td>Distance</td><td>Euclidean (to compute mean)</td><td>Any metric</td></tr>
-          <tr><td>Complexity</td><td>O(nKdI)</td><td>O(Kn²) per iteration</td></tr>
-          <tr><td>Cluster shape</td><td>Convex / spherical</td><td>Any shape (distance-based)</td></tr>
-          <tr><td>Use</td><td>Large numeric data</td><td>Noisy data, categorical data, small n</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> K-medoids trades speed for robustness and flexibility. It is the better choice when the data is noisy, the distance is not Euclidean, or the centre must be a real example.</p>
-
-<h4>Choosing the number of clusters in K-medoids</h4>
-<ul>
-<li><b>Elbow method</b> — plot total cost against K and look for the knee.</li>
-<li><b>Silhouette coefficient</b> — choose K with the best average silhouette.</li>
-<li><b>Domain knowledge</b> — the number of natural groups may already be known.</li>
-<li><b>Gap statistic</b> — compare the cost with the cost on a random reference dataset.</li>
-<li>For PAM, the <b>average silhouette width</b> is the standard built-in choice.</li>
-</ul>
-
-<div class="analogy"><b>Real-life analogy:</b> each table at a dinner needs a captain. K-means picks the average position of the table, which may be an empty chair. K-medoids picks an actual person who is closest to everyone at the table. If one guest is unusually far away, the real captain barely moves, while the imaginary average spot can jump across the room.</div>
-
-<div class="confuse"><b>Common confusion:</b> the medoid is not the mean, and it is not simply the point closest to the mean. It is the real point that minimises the total distance to the other members. K-medoids still needs K, and it is slower than K-means, so it is not a free upgrade.</div>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="s55">
-  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>5.5 Outlier analysis</h2>
+  <h2>5.5 Outlier analysis</h2>
   <p class="lead">An outlier is an observation that deviates so much from the rest of the data that it looks like it was generated by a different mechanism.</p>
 
   <div class="qa">
@@ -1335,7 +1335,7 @@ Never delete automatically. A rare value may be the most important fact in the d
 </section>
 
 <section class="card" id="s56">
-  <div class="prio">Priority 6 · ★★★ 3× repeated</div><h2>5.6 Evaluation of clustering — elbow, intrinsic/extrinsic</h2>
+  <h2>5.6 Evaluation of clustering — elbow, intrinsic/extrinsic</h2>
 
   <div class="qa">
     <div class="qa-head">

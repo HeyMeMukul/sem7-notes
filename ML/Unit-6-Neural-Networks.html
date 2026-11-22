@@ -173,13 +173,13 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h3>ML · Unit 6</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s66">6.6 Recurrent networks <span class="pill">6×</span></a>
-    <a href="#s67">6.7 Convolutional networks <span class="pill">5×</span></a>
-    <a href="#s62">6.2 Perceptron, single layer, MLP <span class="pill">3×</span></a>
     <a href="#s61">6.1 ANN basics &amp; architecture <span class="pill">3×</span></a>
+    <a href="#s62">6.2 Perceptron, single layer, MLP <span class="pill">3×</span></a>
+    <a href="#s63">6.3 Backpropagation <span class="pill">2×</span></a>
     <a href="#s64">6.4 FLANN &amp; RBF <span class="pill">3×</span></a>
     <a href="#s65">6.5 Activation functions <span class="pill">2×</span></a>
-    <a href="#s63">6.3 Backpropagation <span class="pill">2×</span></a>
+    <a href="#s66">6.6 Recurrent networks <span class="pill">6×</span></a>
+    <a href="#s67">6.7 Convolutional networks <span class="pill">5×</span></a>
     <a href="#s68">6.8 Recommendation systems <span class="pill">1×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
@@ -217,7 +217,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 
   <div class="tbl-wrap">
   <table class="freq">
-    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <thead><tr><th>Rank</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td class="l">Recurrent neural network — working, example, applications, RNN vs CNN</td><td>2022 Nov Q8(b) [6]; 2023 May Q7(c) [6]; 2023 Nov Q7(c) [5]; 2024 May Q8(c) [6]; 2025 May Q7(b) [6]; 2025 Nov Q7(b) [6]</td><td><span class="stars">★★★★★★</span> 6×</td></tr>
       <tr><td>2</td><td class="l">CNN — architecture, working, example</td><td>2022 Nov Q8(c) [6]; 2023 May Q7(c) [6]; 2024 May Q7(c) [6]; 2025 May Q7(c) [6]; 2025 Nov Q8(b) [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
@@ -241,505 +241,269 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <div class="tip"><b>Marks strategy:</b> 5–6 mark = definition + diagram + 4–6 bullets + one example. 8-mark = architecture + forward/backward equations + <b>solved numerical</b> + advantages/limitations. Always draw the network diagram; it earns step marks.</div>
 </section>
 
-<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s66">
-  <div class="prio">Priority 1 · ★★★★★ 6× repeated</div><h2>6.6 Recurrent neural networks (RNN)</h2>
-  <p class="lead">An RNN has a memory: the hidden state from the previous time step is fed back into the current step.</p>
+<div class="note" id="topic-note">📚 Notes follow the book order (3.1 → 3.2 → …). The frequency table above is sorted by repetition, so use it to decide what to revise first.</div><section class="card" id="s61">
+  <h2>6.1 ANN basics and architecture</h2>
+  <p class="lead">An artificial neural network is a graph of simple processing units (neurons) connected by weighted links.</p>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is a recurrent neural network? Explain with a suitable example. Explain RNN and its applications in brief.</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep hot">★★★★★★ 6×</span></div>
+      <p class="qtitle"><span class="qno">Q1</span>Explain ANN with its architecture. Describe the architecture of an artificial neural network.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q8(b) [6] · 2023 Nov Q7(c) [5 — applications] · 2024 May Q8(c) [6] · 2025 Nov Q7(b) [6] · related: 2023 May Q7(c) [6], 2025 May Q7(b) [6]</p>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [5] · 2023 May Q7(a) [5 — building blocks] · 2025 Nov Q7(a) [6]</p>
 
-      <div class="simple"><b>In simple words:</b> An RNN is a neural network with memory.<br>
-It reads a sequence one item at a time and carries a summary of the past forward.<br>
-That summary is called the hidden state. The same weights are reused at every step.</div>
+      <div class="simple"><b>In simple words:</b> An artificial neural network is a graph of small decision-makers called neurons.<br>
+Each neuron takes inputs, multiplies them by weights, adds a bias, and passes the result through an activation.<br>
+Neurons are arranged in layers: input, hidden and output.</div>
 
 <h4>Why we do this</h4>
-<p>In a sentence, a word’s meaning depends on the words before it. A plain feed-forward network sees one fixed input and forgets everything else. An RNN keeps a running memory, so it can handle text, speech, music and time series where order matters.</p>
+<p>Some patterns are too complex for a hand-written rule. An ANN learns the rule from examples by adjusting its weights. With hidden layers and non-linear activations, it can model curved boundaries and high-level features.</p>
 
 <h4>Words you need first</h4>
 <ul>
-<li><b>Sequence</b> — data where order matters, such as words in a sentence or prices over days.</li>
-<li><b>Time step</b> — one position in the sequence, labelled t.</li>
-<li><b>Hidden state (h<sub>t</sub>)</b> — a compressed summary of everything the network has read so far.</li>
-<li><b>Weight</b> — a learnable number that controls how strongly one signal affects another.</li>
-<li><b>Weight sharing</b> — using the same weight matrix at every time step instead of learning a new one for each position.</li>
-<li><b>Feed-forward network</b> — a network where data flows in one direction and there is no memory loop.</li>
-<li><b>BPTT</b> — backpropagation through time: training an RNN by unrolling it across time steps and sending errors backward.</li>
-<li><b>Vanishing gradient</b> — the error signal becomes so small over long sequences that early steps barely learn.</li>
-<li><b>Exploding gradient</b> — the error signal grows too large and makes training unstable.</li>
-<li><b>LSTM / GRU</b> — RNN variants with gates that decide what to remember and what to forget.</li>
-<li><b>Activation function</b> — a non-linear function applied to a neuron’s weighted sum.</li>
-<li><b>Bias</b> — a constant added to a neuron’s sum; it shifts the result.</li>
-<li><b>Gradient clipping</b> — capping the size of a gradient so it cannot explode.</li>
-<li><b>Seq2seq</b> — sequence-to-sequence; a model that turns one sequence into another, such as translation.</li>
+<li><b>Artificial neural network (ANN)</b> — a network of simple computing units connected by weighted links.</li>
+<li><b>Neuron (node/unit)</b> — one computing unit that sums weighted inputs and applies an activation.</li>
+<li><b>Weight</b> — a learnable number that says how strongly one neuron affects another.</li>
+<li><b>Bias</b> — a constant added to a neuron’s sum; it shifts the activation.</li>
+<li><b>Activation function</b> — a non-linear function applied to the weighted sum.</li>
+<li><b>Layer</b> — a group of neurons at the same stage of processing.</li>
+<li><b>Loss function</b> — a number that measures how wrong the prediction is.</li>
+<li><b>Gradient descent</b> — repeatedly moving weights in the direction that lowers the loss.</li>
+<li><b>Backpropagation</b> — the algorithm that computes the gradient for every weight using the chain rule.</li>
+<li><b>Epoch</b> — one full pass over the training data.</li>
+<li><b>Hidden layer</b> — a layer between input and output whose values are not in the data.</li>
+<li><b>Universal approximator</b> — a model that can approximate any continuous function given enough units.</li>
+<li><b>Feature learning</b> — learning useful representations automatically instead of hand-coding them.</li>
+<li><b>GPU</b> — a chip that performs many parallel calculations, useful for neural networks.</li>
+<li><b>Deep network</b> — a network with many hidden layers.</li>
 </ul>
 
 <h4>Step-by-step</h4>
 <ol>
-<li><b>Read the first input x<sub>1</sub>.</b> Combine it with an initial hidden state, usually zeros.</li>
-<li><b>Update the hidden state.</b> Apply weights and an activation to the old state and the new input. The result is h<sub>1</sub>.</li>
-<li><b>Produce an output if needed.</b> A separate weight matrix turns h<sub>1</sub> into y<sub>1</sub>.</li>
-<li><b>Carry h<sub>1</sub> to the next step.</b> At step 2, the network sees both x<sub>2</sub> and the memory h<sub>1</sub>.</li>
-<li><b>Repeat to the end of the sequence.</b> The final hidden state summarises the whole sequence.</li>
-<li><b>Train by unrolling the loop.</b> BPTT treats each time step as a layer, then sends the error backward through all of them.</li>
+<li><b>Send the input through the input layer.</b> The raw features are passed to the hidden layer.</li>
+<li><b>Compute each hidden neuron.</b> Multiply inputs by weights, add the bias, and apply the activation.</li>
+<li><b>Pass the hidden values to the output layer.</b> The output layer produces the prediction.</li>
+<li><b>Measure the loss.</b> Compare the prediction with the target.</li>
+<li><b>Send the error backward.</b> Backpropagation computes how much each weight contributed to the loss.</li>
+<li><b>Update the weights.</b> Take a small step opposite to the gradient.</li>
+<li><b>Repeat for many epochs.</b> Stop when the loss stops improving or a validation score starts to worsen.</li>
 </ol>
 
-<h4>The two equations</h4>
-<div class="math">h<sub>t</sub> = f( W<sub>h</sub> h<sub>t−1</sub> + W<sub>x</sub> x<sub>t</sub> + b<sub>h</sub> )<br>
-      y<sub>t</sub> = g( W<sub>y</sub> h<sub>t</sub> + b<sub>y</sub> )</div>
-<p class="small"><b>What this means:</b> the first line builds the new memory from the old memory (W<sub>h</sub>h<sub>t−1</sub>) and the new input (W<sub>x</sub>x<sub>t</sub>). The second line turns that memory into an output. f and g are activation functions, and b is a bias that shifts the result.</p>
-
-<h4>The unrolled diagram</h4>
-<div class="tree">        y1            y2            y3
-        ^             ^             ^
-        |             |             |
-       [h1] -------&gt; [h2] -------&gt; [h3] ---&gt; ...
-        ^             ^             ^
-        |             |             |
-       [x1]          [x2]          [x3]
-
-   Same weight matrices Wx, Wh, Wy at every step.
-   The horizontal arrows are the memory (hidden state).</div>
-<p class="small"><b>What this means:</b> the loop on the left is drawn as a chain on the right. Each vertical arrow feeds an input; each horizontal arrow carries memory forward. The same W<sub>x</sub>, W<sub>h</sub> and W<sub>y</sub> are used at every step, which is why an RNN can handle sequences of different lengths.</p>
-
-<h4>Why memory matters</h4>
-<p>In “The cat sat on the ___”, a feed-forward network sees only the current word. An RNN remembers “cat” and “sat”, so it can predict “mat”. The hidden state is a compressed summary of the past, not a full copy of every word.</p>
-
-<h4>Types of RNN</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Type</th><th>Input → output</th><th>Example</th></tr></thead>
-        <tbody>
-          <tr><td>One-to-one</td><td>Single → single</td><td>Plain classification</td></tr>
-          <tr><td>One-to-many</td><td>Single → sequence</td><td>Image captioning</td></tr>
-          <tr><td>Many-to-one</td><td>Sequence → single</td><td>Sentiment analysis</td></tr>
-          <tr><td>Many-to-many</td><td>Sequence → sequence</td><td>Machine translation</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the shape of the input and output can change. One image can produce a caption (one-to-many); a whole review can produce one sentiment score (many-to-one); a sentence can produce another sentence (many-to-many).</p>
-
-<h4>Applications</h4>
-<ul>
-<li>Language modelling and text generation.</li>
-<li>Machine translation (sequence-to-sequence).</li>
-<li>Speech recognition.</li>
-<li>Sentiment classification.</li>
-<li>Time-series forecasting for stock, weather and sales.</li>
-<li>Handwriting recognition and video analysis.</li>
-</ul>
-
-<h4>Training and problems</h4>
-<p>RNNs are trained by <b>backpropagation through time (BPTT)</b>: the network is unrolled and the error is propagated backward through every time step.</p>
-<ul>
-<li><b>Vanishing gradient</b> — long sequences make gradients shrink to zero, so the network forgets long-range dependencies.</li>
-<li><b>Exploding gradient</b> — gradients grow without bound; use gradient clipping.</li>
-<li><b>Slow</b> — sequential computation cannot be fully parallelised.</li>
-</ul>
-<p><b>Solutions:</b> LSTM (input, forget and output gates), GRU (reset and update gates), gradient clipping and truncated BPTT.</p>
-
-<h4>RNN vs feed-forward network</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Feed-forward</th><th>RNN</th></tr></thead>
-        <tbody>
-          <tr><td>Input</td><td>Fixed-size vector</td><td>Sequence of any length</td></tr>
-          <tr><td>Memory</td><td>None</td><td>Hidden state</td></tr>
-          <tr><td>Weights</td><td>Different per layer</td><td>Shared across time</td></tr>
-          <tr><td>Order of data</td><td>Irrelevant</td><td>Important</td></tr>
-          <tr><td>Use</td><td>Images, tabular data</td><td>Text, speech, time series</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the key difference is memory. A feed-forward network treats each input as independent. An RNN links inputs across time, so it can use context and order.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> you read a detective novel one word at a time. By chapter five, you remember who the suspects are, what they said, and which clue came first. You do not re-read the whole book at every word. The hidden state is your memory of the story so far.</div>
-
-<div class="confuse"><b>Common confusion:</b> an RNN is not just “a deep feed-forward network”. The loop and the shared weights across time are the whole point. Also, an RNN is still trained with supervision when we have targets; “recurrent” describes the connection pattern, not a different learning rule. And the hidden state is a summary, not a perfect storage of every past input.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Explain the Recurrent Neural Network with an example. Compare it with a simple CNN.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2025 May Q7(b) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> An RNN reads data in order and remembers the previous step.<br>
-A CNN scans an image with small filters and looks for local patterns.<br>
-Use an RNN for sentences, speech and time series. Use a CNN for images and grids.</div>
-
-<h4>Why we do this</h4>
-<p>The exam often asks for a direct comparison. Choosing the right architecture matters: a CNN ignores word order, while an RNN is slow on large images. Knowing the trade-off lets you justify the design instead of listing features.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Recurrence</b> — feeding a previous output or state back into the model.</li>
-<li><b>Convolution</b> — sliding a small filter over the input and computing a dot product at each position.</li>
-<li><b>Filter (kernel)</b> — a small learnable matrix that detects a local pattern.</li>
-<li><b>Parameter sharing</b> — using the same weights at many positions, which reduces the number of parameters.</li>
-<li><b>Memory</b> — the hidden state that carries information from earlier time steps.</li>
-<li><b>Grid data</b> — data arranged in a regular grid, such as pixels in an image.</li>
-<li><b>Sequence data</b> — data where order matters, such as words or sensor readings.</li>
-<li><b>Parallelism</b> — doing many computations at the same time.</li>
-<li><b>RNN</b> — recurrent neural network; a network that carries a hidden state across time.</li>
-<li><b>CNN</b> — convolutional neural network; a network that scans a grid with small filters.</li>
-<li><b>Hidden state</b> — the memory vector carried from one time step to the next.</li>
-<li><b>Sentiment analysis</b> — deciding whether text is positive, negative or neutral.</li>
-<li><b>Bag-of-words</b> — a representation that counts words but ignores their order.</li>
-<li><b>Pooling</b> — shrinking a feature map by summarising small windows.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Walk through the RNN example.</b> Read “The movie was not good” one word at a time. The hidden state after “not” must survive until “good” arrives.</li>
-<li><b>Show how the final state is built.</b> Each word updates the memory; the last state feeds the sentiment classifier.</li>
-<li><b>Describe the CNN side.</b> A filter slides over an image and fires when it sees an edge or texture. Pooling shrinks the result.</li>
-<li><b>Compare the data type.</b> RNN = sequence; CNN = grid.</li>
-<li><b>Compare the sharing direction.</b> RNN shares weights across time; CNN shares them across space.</li>
-<li><b>Compare speed.</b> RNN steps are sequential; CNN positions can be computed in parallel.</li>
-<li><b>Conclude with a use case.</b> Translation → RNN; image classification → CNN.</li>
-</ol>
-
-<h4>RNN example — sentiment analysis</h4>
-<p>The RNN reads “The movie was not good” word by word:</p>
-<div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Step</th><th>Word x<sub>t</sub></th><th>Hidden state h<sub>t</sub></th><th>Meaning captured</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>The</td><td>h1</td><td>start</td></tr>
-          <tr><td>2</td><td>movie</td><td>h2</td><td>subject = movie</td></tr>
-          <tr><td>3</td><td>was</td><td>h3</td><td>past tense</td></tr>
-          <tr><td>4</td><td>not</td><td>h4</td><td>negation</td></tr>
-          <tr><td>5</td><td>good</td><td>h5</td><td>positive word, but negated by h4</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the hidden state after “not” carries the negation forward. When “good” arrives, the network combines it with that memory and outputs <b>negative</b>. A bag-of-words model would see “good” on its own and might predict positive.</p>
-
-<h4>RNN vs CNN</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>RNN</th><th>CNN</th></tr></thead>
-        <tbody>
-          <tr><td>Data type</td><td>Sequential (text, speech, time series)</td><td>Grid (images, video frames)</td></tr>
-          <tr><td>Core operation</td><td>Recurrence: h<sub>t</sub> depends on h<sub>t−1</sub></td><td>Convolution: filter slides over the input</td></tr>
-          <tr><td>Parameter sharing</td><td>Across time steps</td><td>Across spatial positions</td></tr>
-          <tr><td>Memory</td><td>Yes, hidden state</td><td>No explicit memory</td></tr>
-          <tr><td>Parallelism</td><td>Limited (sequential)</td><td>High (all positions at once)</td></tr>
-          <tr><td>Strength</td><td>Order and context</td><td>Local patterns, edges, textures</td></tr>
-          <tr><td>Example</td><td>Machine translation</td><td>Image classification</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> both architectures reuse weights, but for different reasons. The RNN reuses them at every time step so it can handle any sequence length. The CNN reuses them at every image position so it can detect the same pattern anywhere.</p>
-
-<p class="small">For 2023 May Q7(c), “short note on RNN &amp; CNN”, use this table plus one paragraph on each architecture.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> an RNN is a person reading a sentence aloud, remembering the earlier words to understand the ending. A CNN is a person scanning a photograph with a small magnifying glass, looking for edges and textures, then stepping back to see the whole picture.</div>
-
-<div class="confuse"><b>Common confusion:</b> “both share weights” does not mean they are the same. An RNN shares across <em>time</em>; a CNN shares across <em>space</em>. A CNN has no memory of previous images, and an RNN has no natural notion of a 2-D neighbourhood. You can flatten an image into a sequence for an RNN, but you lose the spatial structure that makes a CNN strong.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s67">
-  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>6.7 Convolutional neural networks (CNN)</h2>
-  <p class="lead">A CNN learns local patterns with shared filters, then pools them and classifies with fully connected layers.</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain the Convolutional Neural Network with a suitable example. Draw and explain the CNN architecture.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q8(c) [6 — convolution layer + hidden layer] · 2023 May Q7(c) [6] · 2024 May Q7(c) [6] · 2025 May Q7(c) [6 — architecture] · 2025 Nov Q8(b) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> A CNN scans an image with small filters, like a magnifying glass.<br>
-Each filter learns one local pattern: an edge, a corner or a texture.<br>
-Pooling shrinks the result, and the final layers combine the patterns into a class.</div>
-
-<h4>Why we do this</h4>
-<p>An image has millions of pixels. A fully connected network would need millions of weights and would still struggle to recognise a cat that moved two pixels to the left. A CNN exploits local structure and reuses the same filter everywhere, so it learns with far fewer parameters.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Convolution</b> — sliding a small filter over the input and computing a dot product at each position.</li>
-<li><b>Filter (kernel)</b> — a small learnable matrix, such as 3×3 or 5×5, that detects a pattern.</li>
-<li><b>Feature map</b> — the output grid produced by one filter; it shows where that pattern appeared.</li>
-<li><b>Stride</b> — how many pixels the filter moves at each step.</li>
-<li><b>Padding</b> — extra pixels added around the border to control the output size.</li>
-<li><b>ReLU</b> — an activation that keeps positive values and sets negatives to zero.</li>
-<li><b>Pooling</b> — shrinking a feature map by taking the max or average in small windows.</li>
-<li><b>Flatten</b> — turning a grid of feature maps into one long vector.</li>
-<li><b>Fully connected layer</b> — a standard dense layer where every input connects to every output.</li>
-<li><b>Softmax</b> — turns a vector of scores into probabilities that sum to 1.</li>
-<li><b>Parameter sharing</b> — using one filter at every position instead of learning a separate filter for each position.</li>
-<li><b>Translation invariance</b> — recognising the same object even when it shifts position.</li>
-<li><b>Dot product</b> — multiply matching entries and add them up.</li>
-<li><b>Channel</b> — one slice of an image or one feature map.</li>
-<li><b>Bias</b> — a constant added to each filter’s response.</li>
-<li><b>MNIST</b> — a standard dataset of handwritten digits used to test image models.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Start with the image.</b> A colour image is a grid of height × width × 3 colour channels.</li>
-<li><b>Apply a convolution.</b> Slide each filter over the image and compute a dot product with the patch under it. The result is a feature map.</li>
-<li><b>Apply ReLU.</b> Keep positive responses and set negative ones to zero. This adds non-linearity.</li>
-<li><b>Pool.</b> Shrink each feature map with a small window. This reduces computation and makes the result less sensitive to small shifts.</li>
-<li><b>Repeat convolution and pooling.</b> Early layers detect edges; deeper layers detect shapes and objects.</li>
-<li><b>Flatten.</b> Turn the final grids into one vector.</li>
-<li><b>Classify.</b> Pass the vector through fully connected layers and a softmax to get class probabilities.</li>
-</ol>
+<h4>The neuron equation</h4>
+<div class="math">y = f( Σ<sub>i=1..n</sub> w<sub>i</sub> x<sub>i</sub> + b )</div>
+<p class="small"><b>What this means:</b> the neuron adds up every input × weight, adds the bias, then applies the activation f. The weights decide what matters; the bias shifts the decision; f adds the bend.</p>
 
 <h4>Architecture</h4>
-<div class="tree">INPUT        CONV + ReLU      POOL        CONV + ReLU     POOL      FLATTEN    FC      SOFTMAX
-32x32x3 ---&gt; 28x28x8 -----&gt; 14x14x8 --&gt; 12x12x16 ----&gt; 6x6x16 --&gt; vector --&gt; 128 --&gt; 10
-             (5x5 filter)   (2x2)       (3x3 filter)    (2x2)
-   |             |               |            |              |          |        |        |
- raw pixels   edges          shrink      shapes         shrink     features  classify  probabilities</div>
-<p class="small"><b>What this means:</b> the spatial size shrinks while the number of channels grows. The network trades “where exactly” for “what pattern”. By the end, a small grid describes high-level features, and the fully connected layer makes the decision.</p>
+<div class="tree">        INPUT LAYER          HIDDEN LAYER(S)         OUTPUT LAYER
+          x1 o ---- w11 ----\
+             \               \
+          x2 o ---- w12 -------o h1 ---\
+             \               /          \
+          x3 o ---- w13 ----/            \      w_out
+             \                             o ---------&gt; y
+          x4 o ---- w14 -------o h2 ---/
+             \               /          /
+          x5 o ---- w15 ----/          /
+                          ...         /
+                        (weights)    /
+                                   (bias b)
+   Each circle = neuron; each arrow = weighted connection.
+   Hidden layers learn features; output layer gives the prediction.</div>
+<p class="small"><b>What this means:</b> the input layer holds the features, the hidden layers build intermediate representations, and the output layer gives the answer. Every arrow is a weight, and every neuron has a bias.</p>
 
-<h4>Layer by layer</h4>
+<h4>Layers</h4>
 <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Layer</th><th>Operation</th><th>Purpose</th></tr></thead>
+        <thead><tr><th>Layer</th><th>Function</th></tr></thead>
         <tbody>
-          <tr><td>Convolution</td><td>Slide a filter over the input; compute dot products</td><td>Detect edges, corners, textures</td></tr>
-          <tr><td>ReLU</td><td>max(0, x)</td><td>Non-linearity; keeps positive activations</td></tr>
-          <tr><td>Pooling</td><td>Max or average over a small window</td><td>Reduce size; translation invariance</td></tr>
-          <tr><td>Flatten</td><td>Convert feature maps to a vector</td><td>Feed to fully connected layers</td></tr>
-          <tr><td>Fully connected</td><td>Standard dense layer</td><td>Combine features for classification</td></tr>
-          <tr><td>Softmax</td><td>Normalise scores to probabilities</td><td>Multiclass output</td></tr>
+          <tr><td>Input layer</td><td>Receives the raw features; no computation (sometimes only scaling)</td></tr>
+          <tr><td>Hidden layer(s)</td><td>Learn intermediate features/representations; apply weights, bias and activation</td></tr>
+          <tr><td>Output layer</td><td>Produces the final prediction (class probability or regression value)</td></tr>
         </tbody>
       </table>
       </div>
-<p class="small"><b>What this means:</b> convolution and pooling do the seeing; flatten and fully connected layers do the deciding; softmax turns the decision into probabilities.</p>
+<p class="small"><b>What this means:</b> the input layer is mostly a holding area. The hidden layers do the feature learning. The output layer formats the answer as a class probability or a regression value.</p>
 
-<h4>Convolution example</h4>
-<p>A 3×3 filter (edge detector) slides over a 5×5 image with stride 1 and no padding. The output is 3×3:</p>
-<div class="math">output size = (W − F + 2P)/S + 1 = (5 − 3 + 0)/1 + 1 = <b>3</b></div>
-<p>Each output cell is the dot product of the filter and a 3×3 patch. The same filter is reused at every position, which is <b>parameter sharing</b>.</p>
-<p class="small"><b>What this means:</b> the output is smaller than the input because the filter can only sit in positions where a full 3×3 patch fits. With a 5×5 image and a 3×3 filter, there are 3 possible positions horizontally and 3 vertically.</p>
+<h4>Learning</h4>
+<p>Training adjusts the weights and biases to minimise a loss function. The most common method is <b>backpropagation with gradient descent</b>:</p>
+<div class="math">w<sub>ij</sub> ← w<sub>ij</sub> − η ∂L/∂w<sub>ij</sub></div>
+<p class="small"><b>What this means:</b> η is the learning rate, and ∂L/∂w<sub>ij</sub> is the gradient: the direction and steepness in which the loss changes when that weight changes. Subtract a small multiple of the gradient to move downhill.</p>
 
-<h4>Example — digit recognition</h4>
-<p>Input 28×28 MNIST digit → conv 5×5 with 8 filters → 24×24×8 → pool 2×2 → 12×12×8 → conv 3×3 with 16 filters → 10×10×16 → pool → 5×5×16 → flatten 400 → dense 128 → softmax 10. The first layers detect edges, the deeper layers detect loops and strokes, and the classifier distinguishes 0–9.</p>
-
-<h4>Why CNN is better than a plain MLP for images</h4>
+<h4>Why ANN works</h4>
 <ul>
-<li><b>Local connectivity</b> — a neuron sees a small patch, matching the local structure of images.</li>
-<li><b>Parameter sharing</b> — one filter is reused everywhere, so there are far fewer weights.</li>
-<li><b>Translation invariance</b> — pooling keeps the object recognisable even if it shifts.</li>
-<li><b>Hierarchy</b> — stacking layers builds edges → shapes → objects.</li>
+<li><b>Non-linear</b> — activation functions let it learn curved boundaries.</li>
+<li><b>Universal approximator</b> — an MLP with enough hidden units can approximate any continuous function.</li>
+<li><b>Feature learning</b> — hidden layers learn features automatically instead of relying on hand-crafted rules.</li>
+<li><b>Parallel</b> — many neurons compute at once, which suits GPUs.</li>
+<li><b>Robust</b> — a distributed representation tolerates noise and partial inputs.</li>
 </ul>
 
-<h4>Convolution layer vs hidden layer (2022 Nov wording)</h4>
-<p>The convolution layer <b>is</b> a hidden layer: it produces hidden feature maps. In a CNN, “hidden layers” usually means the sequence of convolution + ReLU + pooling layers before the fully connected classifier. The convolution layer learns filters; the pooling layer reduces resolution; together they form the hidden representation.</p>
+<h4>Applications</h4>
+<p>Image classification, speech recognition, natural language processing, medical diagnosis, fraud detection, recommendation systems and forecasting.</p>
 
-<div class="analogy"><b>Real-life analogy:</b> you scan a large group photo with a small magnifying glass. One pass looks for vertical edges, another for horizontal edges, another for curves. After each pass, you note only the strongest hit in each small square, so the map gets smaller. At the end, you combine the notes to decide who is in the photo.</div>
+<div class="analogy"><b>Real-life analogy:</b> a factory assembly line. Raw materials enter at one end. Each workstation (layer) performs one transformation and passes the result on. The final station produces the finished product. If the product is faulty, the feedback travels back down the line so each station can adjust its settings.</div>
 
-<div class="confuse"><b>Common confusion:</b> a CNN filter does not look at the whole image at once; it looks at a small patch. Pooling has no learnable weights; it is a fixed shrink operation. And a CNN is still a feed-forward network: the “convolution” changes the connection pattern, not the one-way flow of data.</div>
+<div class="confuse"><b>Common confusion:</b> “neural” does not mean the network copies the brain; it is only loosely inspired by neurons. The input layer usually does no computation. And “deep” means many hidden layers, not many inputs or many outputs.</div>
     </div>
   </div>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What are the different types of padding used in CNN?</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+      <p class="qtitle"><span class="qno">Q2</span>What are the building blocks of a neural network? Elaborate.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
     </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2025 May Q8(b) [6]</p>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q7(a) [5]</p>
 
-      <div class="simple"><b>In simple words:</b> Padding adds extra pixels around the border of an image.<br>
-It stops the image from shrinking too fast and lets the filter see the edges.<br>
-Valid = no padding, same = keep the size, full = maximum overlap.</div>
+      <div class="simple"><b>In simple words:</b> A neural network is built from a few standard parts.<br>
+Neurons do the adding, weights store the importance, bias shifts the decision, and activation adds the bend.<br>
+Layers organise the neurons, and the loss plus optimiser drive the learning.</div>
 
 <h4>Why we do this</h4>
-<p>Every convolution makes the image a little smaller. After many layers, the image can shrink to nothing. Border pixels are also used less often than centre pixels, so information at the edge is lost. Padding solves both problems by adding a frame around the input.</p>
+<p>Exam questions often ask for the building blocks by name. Knowing each part’s job also helps you debug a network: a bad learning rate, a missing activation, or the wrong loss all produce different failures. The blocks are the vocabulary of every architecture you will meet later.</p>
 
 <h4>Words you need first</h4>
 <ul>
-<li><b>Padding (P)</b> — extra rows and columns added around the border of an input.</li>
-<li><b>Valid padding</b> — no padding at all; the filter only sees complete patches.</li>
-<li><b>Same padding</b> — padding chosen so the output has the same width and height as the input.</li>
-<li><b>Full padding</b> — padding so large that the filter overlaps the input at every possible position.</li>
-<li><b>Stride (S)</b> — how many pixels the filter moves between positions.</li>
-<li><b>Filter size (F)</b> — the width and height of the filter, such as 5×5.</li>
-<li><b>Causal padding</b> — padding only on the left, used for time series so the model cannot see the future.</li>
-<li><b>Zero padding</b> — filling the new border with zeros.</li>
-<li><b>Reflection padding</b> — filling the border by mirroring nearby values instead of using zeros.</li>
-<li><b>Convolution</b> — sliding a filter over an input and taking dot products.</li>
-<li><b>Channel</b> — one input slice, such as red, green or blue.</li>
-<li><b>Bias</b> — a constant added to each filter’s output.</li>
-<li><b>VGG / ResNet</b> — well-known deep CNN designs that use many convolution layers.</li>
+<li><b>Neuron (node/unit)</b> — the unit that receives inputs, computes a weighted sum plus bias, and applies an activation.</li>
+<li><b>Weight</b> — a learnable strength on one connection; the main memory of the network.</li>
+<li><b>Bias</b> — a learnable constant that shifts a neuron’s activation.</li>
+<li><b>Activation function</b> — a non-linear function such as sigmoid, tanh, ReLU or softmax.</li>
+<li><b>Layer</b> — a group of neurons at one stage: input, hidden or output.</li>
+<li><b>Loss function</b> — the error measure the network tries to minimise.</li>
+<li><b>Optimiser</b> — the algorithm that updates weights, such as gradient descent, SGD or Adam.</li>
+<li><b>Learning rate (η)</b> — the size of each weight update.</li>
+<li><b>MSE</b> — mean squared error, a loss for regression.</li>
+<li><b>Cross-entropy</b> — a loss for classification that punishes confident wrong answers.</li>
+<li><b>Hidden layer</b> — a layer between input and output that learns intermediate features.</li>
+<li><b>SGD</b> — stochastic gradient descent; updates weights from small batches of data.</li>
+<li><b>Adam</b> — an optimiser that adapts the step size for each weight.</li>
 </ul>
 
 <h4>Step-by-step</h4>
 <ol>
-<li><b>Note the input size W, filter size F, stride S and padding P.</b> These four numbers decide the output size.</li>
-<li><b>Compute the output with the formula.</b> Output = (W − F + 2P)/S + 1.</li>
-<li><b>Choose the padding type for your goal.</b> Keep the size → same. Shrink → valid. Maximum border use → full.</li>
-<li><b>Apply the padding.</b> Add zeros or another chosen value around the border.</li>
-<li><b>Run the convolution.</b> The filter now has valid positions near the edge.</li>
-<li><b>Check the result.</b> Confirm the output size is what the formula predicted.</li>
+<li><b>Build a neuron.</b> Give it weights, a bias and an activation. This is the basic computing unit.</li>
+<li><b>Stack neurons into layers.</b> The input layer receives features; hidden layers transform them; the output layer makes the prediction.</li>
+<li><b>Connect the layers.</b> In a dense network, every neuron in one layer connects to every neuron in the next.</li>
+<li><b>Choose a loss.</b> Use MSE for regression and cross-entropy for classification.</li>
+<li><b>Choose an optimiser and learning rate.</b> The optimiser decides how to use the gradients; the learning rate decides how far to step.</li>
+<li><b>Train.</b> Forward pass → loss → backward pass → weight update → repeat.</li>
 </ol>
 
-<h4>Output-size formula</h4>
-<div class="math">Output size = (W − F + 2P) / S + 1</div>
-<p class="small"><b>What this means:</b> W is the input width, F is the filter width, P is the padding on each side, and S is the stride. Padding adds 2P to the available width because it is added on both sides.</p>
+<h4>The building blocks</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Building block</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>Neuron (node/unit)</td><td>Receives inputs, computes weighted sum + bias, applies activation, sends output</td></tr>
+          <tr><td>Weights (w)</td><td>Learnable strength of each connection; the main memory of the network</td></tr>
+          <tr><td>Bias (b)</td><td>Shifts the activation; allows the neuron to fire even when all inputs are zero</td></tr>
+          <tr><td>Activation function</td><td>Adds non-linearity: step, sigmoid, tanh, ReLU, softmax</td></tr>
+          <tr><td>Layers</td><td>Input, hidden and output layers organise the neurons</td></tr>
+          <tr><td>Loss function</td><td>Measures the error: MSE for regression, cross-entropy for classification</td></tr>
+          <tr><td>Optimiser</td><td>Updates weights: gradient descent, SGD, Adam</td></tr>
+          <tr><td>Learning rate (η)</td><td>Controls the step size of each update</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> a neuron without weights cannot learn; a weight without a bias cannot shift its threshold; an activation without a loss has nothing to optimise. The blocks only work as a system.</p>
 
-<h4>1. Valid padding (P = 0)</h4>
-<ul>
-<li>No padding; the filter only sees complete patches.</li>
-<li>The output shrinks by F − 1: 32×32 with 5×5 → 28×28.</li>
-<li>Simple, but loses border information.</li>
-</ul>
-
-<h4>2. Same padding</h4>
-<ul>
-<li>Pad so that the output has the <b>same</b> width and height as the input (for stride 1).</li>
-<li>For a 5×5 filter, P = 2; for a 3×3 filter, P = 1.</li>
-<li>Formula: P = (F − 1)/2 for odd F and S = 1.</li>
-<li>Most common in deep CNNs such as VGG and ResNet.</li>
-</ul>
-
-<h4>3. Full padding</h4>
-<ul>
-<li>Pad by F − 1 on each side, so the filter is applied at every possible overlap.</li>
-<li>The output is larger than the input: 32×32 with 5×5 → 36×36.</li>
-<li>Rarely used; it keeps maximum border information.</li>
-</ul>
-
-<h4>4. Causal padding (1-D / time series)</h4>
-<p>Pad only on the left, so the output at time t depends only on past inputs. Temporal CNNs use this to avoid looking into the future.</p>
-
-<h4>5. Zero vs other padding values</h4>
-<ul>
-<li><b>Zero padding</b> — the default; adds zeros.</li>
-<li><b>Reflection / replication</b> — mirror or repeat border values; reduces edge artefacts.</li>
-<li><b>Constant padding</b> — any chosen constant.</li>
-</ul>
-
-<h4>Comparison table</h4>
+<h4>Biological analogy</h4>
 <div class="tbl-wrap">
       <table>
-        <thead><tr><th>Type</th><th>P</th><th>32×32, 5×5, S=1</th><th>Effect</th></tr></thead>
+        <thead><tr><th>Biological</th><th>Artificial</th></tr></thead>
         <tbody>
-          <tr><td>Valid</td><td>0</td><td>28×28</td><td>Shrinks; no border padding</td></tr>
-          <tr><td>Same</td><td>2</td><td>32×32</td><td>Preserves size</td></tr>
-          <tr><td>Full</td><td>4</td><td>36×36</td><td>Enlarges; maximum overlap</td></tr>
+          <tr><td>Dendrites</td><td>Inputs</td></tr>
+          <tr><td>Cell body / nucleus</td><td>Node / summation</td></tr>
+          <tr><td>Synapse</td><td>Weight</td></tr>
+          <tr><td>Axon</td><td>Output</td></tr>
+          <tr><td>Firing threshold</td><td>Activation function</td></tr>
         </tbody>
       </table>
       </div>
-<p class="small"><b>What this means:</b> valid shrinks, same preserves and full enlarges. The table uses a 32×32 input, a 5×5 filter and stride 1, so the arithmetic is easy to check.</p>
+<p class="small"><b>What this means:</b> the comparison is loose. Real neurons are far more complex. The useful part is the idea of inputs arriving through connections, a cell body summing them, and a threshold deciding whether to fire.</p>
 
-<h4>Parameter count example</h4>
-<p>Conv layer: 3 input channels, 8 filters of 5×5, one bias per filter:</p>
-<div class="math">params = (5×5×3 + 1) × 8 = 76 × 8 = <b>608</b></div>
-<p>A fully connected layer from 32×32×3 to 28×28×8 would need millions of weights. This is the advantage of parameter sharing.</p>
-<p class="small"><b>What this means:</b> each 5×5 filter has 25 weights per input channel, plus one bias. With 3 input channels, one filter has 5×5×3 + 1 = 76 parameters. Eight filters give 608 parameters in total.</p>
+<div class="analogy"><b>Real-life analogy:</b> a car has an engine, fuel lines, a steering wheel, a dashboard and a driver. The neuron is the engine; weights are the fuel settings; bias is the idle adjustment; activation is the steering response; the loss is the dashboard warning; the optimiser is the driver correcting the course.</div>
 
-<div class="analogy"><b>Real-life analogy:</b> you are writing on a page and your pen keeps running off the edge. Padding is the margin you add around the page. With no margin (valid), the last words get cut. With a matching margin (same), the page stays the same size. With a huge margin (full), you can write every possible overlap, but the page grows.</div>
-
-<div class="confuse"><b>Common confusion:</b> “same padding” means the output has the same <em>size</em>, not the same values. Padding usually adds zeros, which are not learned weights. And full padding is not “better” than same; it simply keeps more border overlap and produces a larger output.</div>
+<div class="confuse"><b>Common confusion:</b> the bias is not a weight on a real input; it is a separate constant with its own learnable value. The learning rate is not the number of epochs; it is the step size within each update. And the loss is not the activation: the loss measures the final error, while the activation shapes each neuron’s output.</div>
     </div>
   </div>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Write a short note on the layers used in CNN: (i) Convolutional layer (ii) Pooling layer.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+      <p class="qtitle"><span class="qno">Q3</span>Explain in brief the types of ANN based on layers.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
     </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2025 May Q8(c) [6]</p>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q8(a) [5]</p>
 
-      <div class="simple"><b>In simple words:</b> A convolution layer slides small filters over the image to find patterns.<br>
-A pooling layer shrinks the result and keeps the strongest response in each small window.<br>
-Convolution learns; pooling only summarises.</div>
+      <div class="simple"><b>In simple words:</b> Networks are grouped by how many hidden layers they have.<br>
+A single-layer network has none. A multilayer network has one or more. A deep network has many.<br>
+Specialised networks such as CNNs and RNNs add their own layer types for images or sequences.</div>
 
 <h4>Why we do this</h4>
-<p>Images contain local patterns: edges, corners, loops and textures. A convolution layer can detect the same pattern anywhere in the image with one small filter. Pooling then reduces the amount of data and makes the network less sensitive to tiny shifts.</p>
+<p>Depth controls what a network can represent. A shallow network can draw a straight boundary; a deeper one can build a hierarchy of features. Knowing the categories helps you choose the right architecture and explain its limits.</p>
 
 <h4>Words you need first</h4>
 <ul>
-<li><b>Filter (kernel)</b> — a small learnable matrix that is slid over the input.</li>
-<li><b>Stride</b> — the number of pixels the filter moves each step.</li>
-<li><b>Padding</b> — extra border pixels that control the output size.</li>
-<li><b>Channel</b> — one slice of the input, such as red, green or blue, or one feature map produced by a filter.</li>
-<li><b>Feature map</b> — the output grid from one filter; it shows where that filter fired.</li>
-<li><b>Dot product</b> — multiply matching entries and add them up.</li>
-<li><b>Pooling</b> — shrinking a feature map by summarising small windows.</li>
-<li><b>Max pooling</b> — keep the largest value in each window.</li>
-<li><b>Average pooling</b> — keep the average value in each window.</li>
-<li><b>Global average pooling</b> — average a whole feature map down to one number.</li>
-<li><b>ReLU</b> — an activation that keeps positive values and sets negatives to zero.</li>
-<li><b>Convolution</b> — sliding a filter over an input and taking dot products.</li>
-<li><b>Bias</b> — a constant added to each filter’s response.</li>
-<li><b>Activation</b> — a function applied after the convolution to add non-linearity.</li>
+<li><b>Single-layer network</b> — input connected directly to output, with no hidden layer.</li>
+<li><b>Multilayer network (MLP)</b> — a network with at least one hidden layer.</li>
+<li><b>Deep neural network</b> — a network with many hidden layers.</li>
+<li><b>Linear decision boundary</b> — a boundary that is a straight line or flat plane.</li>
+<li><b>Non-linear decision boundary</b> — a curved boundary that a linear model cannot draw.</li>
+<li><b>CNN</b> — a network with convolution and pooling layers, used for images and grids.</li>
+<li><b>RNN</b> — a network with a recurrent hidden state, used for sequences.</li>
+<li><b>Autoencoder</b> — a network that compresses input into a smaller code and reconstructs it.</li>
+<li><b>MLP</b> — multilayer perceptron; a fully connected network with at least one hidden layer.</li>
+<li><b>Hidden layer</b> — a layer between input and output.</li>
+<li><b>Overfitting</b> — memorising the training data and failing on new data.</li>
+<li><b>Adaline</b> — an early linear neuron trained by the delta rule.</li>
 </ul>
 
 <h4>Step-by-step</h4>
 <ol>
-<li><b>Place the filter on the top-left patch.</b> The patch has the same size as the filter.</li>
-<li><b>Multiply matching entries and add them.</b> Add the bias. This is one output cell.</li>
-<li><b>Slide the filter by the stride.</b> Repeat until the filter has covered the whole input. The grid of outputs is the feature map.</li>
-<li><b>Apply ReLU.</b> Negative responses become zero; strong positive responses survive.</li>
-<li><b>Pool each small window.</b> Max pooling keeps the strongest hit; average pooling keeps the overall level.</li>
-<li><b>Stack several filters.</b> Each filter produces its own feature map, so the layer output has several channels.</li>
+<li><b>Count the hidden layers.</b> Zero → single-layer. One or two → multilayer. Many → deep.</li>
+<li><b>Check the data type.</b> Grids and images → CNN. Sequences → RNN. General tables → MLP.</li>
+<li><b>Check the task.</b> Compression or denoising → autoencoder. Classification → softmax output. Regression → linear output.</li>
+<li><b>Match depth to difficulty.</b> More layers can learn more abstract features, but they need more data and careful training.</li>
+<li><b>State the trade-off.</b> Deeper is not automatically better; it can overfit and become harder to train.</li>
 </ol>
 
-<h4>(i) Convolutional layer</h4>
-<p>A set of learnable filters slides over the input. At each position it computes the dot product between the filter and the patch, producing a feature map.</p>
-<div class="math">output(i,j) = Σ<sub>m</sub> Σ<sub>n</sub> input(i+m, j+n) · filter(m,n) + bias</div>
-<p class="small"><b>What this means:</b> for output cell (i,j), multiply the input patch starting at (i,j) by the filter, add the bias, and write the result. The same filter is used at every position, which is parameter sharing.</p>
-<ul>
-<li><b>Filter/kernel</b> — a small matrix (3×3, 5×5) learned during training.</li>
-<li><b>Stride</b> — how many pixels the filter moves each step; larger stride → smaller output.</li>
-<li><b>Padding</b> — zeros around the border to control output size.</li>
-<li><b>Channels</b> — each filter produces one feature map; multiple filters produce multiple maps.</li>
-<li><b>Parameter sharing</b> — the same filter is used at all positions.</li>
-<li><b>ReLU</b> usually follows to add non-linearity.</li>
-</ul>
-<p><b>Example:</b> a 3×3 vertical-edge filter <code>[[-1,0,1],[-1,0,1],[-1,0,1]]</code> gives a high response where the image changes from dark to bright horizontally.</p>
+<h4>1. Single-layer network</h4>
+<p>Only an input layer and an output layer, with no hidden layer. Each input connects directly to every output. It can solve only <b>linearly separable</b> problems such as AND and OR, but not XOR.</p>
 
-<h4>(ii) Pooling layer</h4>
-<p>Pooling reduces the spatial size of feature maps. It has no learnable weights.</p>
+<h4>2. Multi-layer network (MLP)</h4>
+<p>One or more <b>hidden layers</b> between input and output. It can learn non-linear boundaries and approximate complex functions. It is trained by backpropagation.</p>
+
+<h4>3. Deep neural network</h4>
+<p>An MLP with many hidden layers, often dozens. Each layer learns increasingly abstract features: edges → shapes → objects. Deep networks are used in image, speech and language tasks.</p>
+
+<h4>4. Specialised layered architectures</h4>
+<ul>
+<li><b>CNN</b> — convolution + pooling layers for grid and image data.</li>
+<li><b>RNN</b> — a recurrent hidden state for sequences.</li>
+<li><b>Autoencoder</b> — encoder and decoder layers for compression and denoising.</li>
+</ul>
+
+<h4>Comparison</h4>
 <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Type</th><th>Operation</th><th>Property</th></tr></thead>
+        <thead><tr><th>Type</th><th>Hidden layers</th><th>Decision boundary</th><th>Example</th></tr></thead>
         <tbody>
-          <tr><td>Max pooling</td><td>Take the maximum in each window</td><td>Keeps the strongest feature; most common</td></tr>
-          <tr><td>Average pooling</td><td>Take the average</td><td>Smoother; keeps overall activation</td></tr>
-          <tr><td>Global average pooling</td><td>Average the whole feature map to one number</td><td>Replaces the flatten + FC layers; reduces overfitting</td></tr>
+          <tr><td>Single-layer</td><td>0</td><td>Linear</td><td>Perceptron, Adaline</td></tr>
+          <tr><td>Multi-layer</td><td>1–2</td><td>Non-linear</td><td>MLP for XOR</td></tr>
+          <tr><td>Deep</td><td>Many</td><td>Highly non-linear</td><td>ResNet, VGG</td></tr>
         </tbody>
       </table>
       </div>
-<p class="small"><b>What this means:</b> max pooling asks “was the pattern present anywhere in this window?” Average pooling asks “how strong was it on average?” Global average pooling turns a whole map into one number, which is useful before the classifier.</p>
-<ul>
-<li><b>Window size</b> — usually 2×2 with stride 2, which halves the size.</li>
-<li><b>Effect</b> — fewer parameters, less computation, and tolerance to small shifts.</li>
-<li><b>No learning</b> — pooling is a fixed operation.</li>
-</ul>
+<p class="small"><b>What this means:</b> the table is a rough guide, not a strict law. A “deep” network is still a multilayer network; the label simply says there are many hidden layers. The real difference is the complexity of the features the network can build.</p>
 
-<h4>Example</h4>
-<p>For the 2×2 window <code>[[1,3],[2,4]]</code>, max pooling gives 4 and average pooling gives 2.5. A 4×4 feature map with 2×2 pooling becomes 2×2.</p>
-<p class="small"><b>What this means:</b> the window is summarised by one number. Max pooling keeps the strongest evidence; average pooling keeps the typical level.</p>
+<div class="analogy"><b>Real-life analogy:</b> one worker can handle a simple task alone. A small team can divide the work and combine results. A large company with many departments can build a complex product, but it also needs more coordination and more training. Depth is the number of management layers.</div>
 
-<h4>Typical block</h4>
-<div class="math">CONV → ReLU → POOL → CONV → ReLU → POOL → FLATTEN → FC → SOFTMAX</div>
-<p class="small"><b>What this means:</b> modern CNNs repeat “convolution → ReLU → pooling” to build a hierarchy of features, then flatten and classify. Some modern designs replace the final flatten + fully connected part with global average pooling.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> a security guard scans a crowd with a small magnifying glass. Each pass looks for one kind of clue: a red hat, a badge, a raised hand. The guard then writes down only the strongest clue in each small section of the crowd. The written summary is the pooled feature map.</div>
-
-<div class="confuse"><b>Common confusion:</b> pooling does not learn anything; it has no weights to train. Convolution filters do learn. Also, a “channel” is not the same as a filter: one filter produces one output channel, but the input may already have several channels such as RGB. And a larger stride is not the same as pooling, although both shrink the output.</div>
+<div class="confuse"><b>Common confusion:</b> “deep” does not automatically mean “more accurate”. Very deep networks can overfit, vanish gradients or be hard to train. Also, a multilayer network usually means at least one hidden layer, not exactly two. And CNNs and RNNs are still layered networks; they are specialised, not a separate category outside neural networks.</div>
     </div>
   </div>
 </section>
 
 <section class="card" id="s62">
-  <div class="prio">Priority 3 · ★★★ 3× repeated</div><h2>6.2 Perceptron, single-layer network and MLP</h2>
+  <h2>6.2 Perceptron, single-layer network and MLP</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1069,709 +833,8 @@ x3 o ----/
 
   </section>
 
-<section class="card" id="s61">
-  <div class="prio">Priority 4 · ★★★ 3× repeated</div><h2>6.1 ANN basics and architecture</h2>
-  <p class="lead">An artificial neural network is a graph of simple processing units (neurons) connected by weighted links.</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain ANN with its architecture. Describe the architecture of an artificial neural network.</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [5] · 2023 May Q7(a) [5 — building blocks] · 2025 Nov Q7(a) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> An artificial neural network is a graph of small decision-makers called neurons.<br>
-Each neuron takes inputs, multiplies them by weights, adds a bias, and passes the result through an activation.<br>
-Neurons are arranged in layers: input, hidden and output.</div>
-
-<h4>Why we do this</h4>
-<p>Some patterns are too complex for a hand-written rule. An ANN learns the rule from examples by adjusting its weights. With hidden layers and non-linear activations, it can model curved boundaries and high-level features.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Artificial neural network (ANN)</b> — a network of simple computing units connected by weighted links.</li>
-<li><b>Neuron (node/unit)</b> — one computing unit that sums weighted inputs and applies an activation.</li>
-<li><b>Weight</b> — a learnable number that says how strongly one neuron affects another.</li>
-<li><b>Bias</b> — a constant added to a neuron’s sum; it shifts the activation.</li>
-<li><b>Activation function</b> — a non-linear function applied to the weighted sum.</li>
-<li><b>Layer</b> — a group of neurons at the same stage of processing.</li>
-<li><b>Loss function</b> — a number that measures how wrong the prediction is.</li>
-<li><b>Gradient descent</b> — repeatedly moving weights in the direction that lowers the loss.</li>
-<li><b>Backpropagation</b> — the algorithm that computes the gradient for every weight using the chain rule.</li>
-<li><b>Epoch</b> — one full pass over the training data.</li>
-<li><b>Hidden layer</b> — a layer between input and output whose values are not in the data.</li>
-<li><b>Universal approximator</b> — a model that can approximate any continuous function given enough units.</li>
-<li><b>Feature learning</b> — learning useful representations automatically instead of hand-coding them.</li>
-<li><b>GPU</b> — a chip that performs many parallel calculations, useful for neural networks.</li>
-<li><b>Deep network</b> — a network with many hidden layers.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Send the input through the input layer.</b> The raw features are passed to the hidden layer.</li>
-<li><b>Compute each hidden neuron.</b> Multiply inputs by weights, add the bias, and apply the activation.</li>
-<li><b>Pass the hidden values to the output layer.</b> The output layer produces the prediction.</li>
-<li><b>Measure the loss.</b> Compare the prediction with the target.</li>
-<li><b>Send the error backward.</b> Backpropagation computes how much each weight contributed to the loss.</li>
-<li><b>Update the weights.</b> Take a small step opposite to the gradient.</li>
-<li><b>Repeat for many epochs.</b> Stop when the loss stops improving or a validation score starts to worsen.</li>
-</ol>
-
-<h4>The neuron equation</h4>
-<div class="math">y = f( Σ<sub>i=1..n</sub> w<sub>i</sub> x<sub>i</sub> + b )</div>
-<p class="small"><b>What this means:</b> the neuron adds up every input × weight, adds the bias, then applies the activation f. The weights decide what matters; the bias shifts the decision; f adds the bend.</p>
-
-<h4>Architecture</h4>
-<div class="tree">        INPUT LAYER          HIDDEN LAYER(S)         OUTPUT LAYER
-          x1 o ---- w11 ----\
-             \               \
-          x2 o ---- w12 -------o h1 ---\
-             \               /          \
-          x3 o ---- w13 ----/            \      w_out
-             \                             o ---------&gt; y
-          x4 o ---- w14 -------o h2 ---/
-             \               /          /
-          x5 o ---- w15 ----/          /
-                          ...         /
-                        (weights)    /
-                                   (bias b)
-   Each circle = neuron; each arrow = weighted connection.
-   Hidden layers learn features; output layer gives the prediction.</div>
-<p class="small"><b>What this means:</b> the input layer holds the features, the hidden layers build intermediate representations, and the output layer gives the answer. Every arrow is a weight, and every neuron has a bias.</p>
-
-<h4>Layers</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Layer</th><th>Function</th></tr></thead>
-        <tbody>
-          <tr><td>Input layer</td><td>Receives the raw features; no computation (sometimes only scaling)</td></tr>
-          <tr><td>Hidden layer(s)</td><td>Learn intermediate features/representations; apply weights, bias and activation</td></tr>
-          <tr><td>Output layer</td><td>Produces the final prediction (class probability or regression value)</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the input layer is mostly a holding area. The hidden layers do the feature learning. The output layer formats the answer as a class probability or a regression value.</p>
-
-<h4>Learning</h4>
-<p>Training adjusts the weights and biases to minimise a loss function. The most common method is <b>backpropagation with gradient descent</b>:</p>
-<div class="math">w<sub>ij</sub> ← w<sub>ij</sub> − η ∂L/∂w<sub>ij</sub></div>
-<p class="small"><b>What this means:</b> η is the learning rate, and ∂L/∂w<sub>ij</sub> is the gradient: the direction and steepness in which the loss changes when that weight changes. Subtract a small multiple of the gradient to move downhill.</p>
-
-<h4>Why ANN works</h4>
-<ul>
-<li><b>Non-linear</b> — activation functions let it learn curved boundaries.</li>
-<li><b>Universal approximator</b> — an MLP with enough hidden units can approximate any continuous function.</li>
-<li><b>Feature learning</b> — hidden layers learn features automatically instead of relying on hand-crafted rules.</li>
-<li><b>Parallel</b> — many neurons compute at once, which suits GPUs.</li>
-<li><b>Robust</b> — a distributed representation tolerates noise and partial inputs.</li>
-</ul>
-
-<h4>Applications</h4>
-<p>Image classification, speech recognition, natural language processing, medical diagnosis, fraud detection, recommendation systems and forecasting.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> a factory assembly line. Raw materials enter at one end. Each workstation (layer) performs one transformation and passes the result on. The final station produces the finished product. If the product is faulty, the feedback travels back down the line so each station can adjust its settings.</div>
-
-<div class="confuse"><b>Common confusion:</b> “neural” does not mean the network copies the brain; it is only loosely inspired by neurons. The input layer usually does no computation. And “deep” means many hidden layers, not many inputs or many outputs.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What are the building blocks of a neural network? Elaborate.</p>
-      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q7(a) [5]</p>
-
-      <div class="simple"><b>In simple words:</b> A neural network is built from a few standard parts.<br>
-Neurons do the adding, weights store the importance, bias shifts the decision, and activation adds the bend.<br>
-Layers organise the neurons, and the loss plus optimiser drive the learning.</div>
-
-<h4>Why we do this</h4>
-<p>Exam questions often ask for the building blocks by name. Knowing each part’s job also helps you debug a network: a bad learning rate, a missing activation, or the wrong loss all produce different failures. The blocks are the vocabulary of every architecture you will meet later.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Neuron (node/unit)</b> — the unit that receives inputs, computes a weighted sum plus bias, and applies an activation.</li>
-<li><b>Weight</b> — a learnable strength on one connection; the main memory of the network.</li>
-<li><b>Bias</b> — a learnable constant that shifts a neuron’s activation.</li>
-<li><b>Activation function</b> — a non-linear function such as sigmoid, tanh, ReLU or softmax.</li>
-<li><b>Layer</b> — a group of neurons at one stage: input, hidden or output.</li>
-<li><b>Loss function</b> — the error measure the network tries to minimise.</li>
-<li><b>Optimiser</b> — the algorithm that updates weights, such as gradient descent, SGD or Adam.</li>
-<li><b>Learning rate (η)</b> — the size of each weight update.</li>
-<li><b>MSE</b> — mean squared error, a loss for regression.</li>
-<li><b>Cross-entropy</b> — a loss for classification that punishes confident wrong answers.</li>
-<li><b>Hidden layer</b> — a layer between input and output that learns intermediate features.</li>
-<li><b>SGD</b> — stochastic gradient descent; updates weights from small batches of data.</li>
-<li><b>Adam</b> — an optimiser that adapts the step size for each weight.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Build a neuron.</b> Give it weights, a bias and an activation. This is the basic computing unit.</li>
-<li><b>Stack neurons into layers.</b> The input layer receives features; hidden layers transform them; the output layer makes the prediction.</li>
-<li><b>Connect the layers.</b> In a dense network, every neuron in one layer connects to every neuron in the next.</li>
-<li><b>Choose a loss.</b> Use MSE for regression and cross-entropy for classification.</li>
-<li><b>Choose an optimiser and learning rate.</b> The optimiser decides how to use the gradients; the learning rate decides how far to step.</li>
-<li><b>Train.</b> Forward pass → loss → backward pass → weight update → repeat.</li>
-</ol>
-
-<h4>The building blocks</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Building block</th><th>Role</th></tr></thead>
-        <tbody>
-          <tr><td>Neuron (node/unit)</td><td>Receives inputs, computes weighted sum + bias, applies activation, sends output</td></tr>
-          <tr><td>Weights (w)</td><td>Learnable strength of each connection; the main memory of the network</td></tr>
-          <tr><td>Bias (b)</td><td>Shifts the activation; allows the neuron to fire even when all inputs are zero</td></tr>
-          <tr><td>Activation function</td><td>Adds non-linearity: step, sigmoid, tanh, ReLU, softmax</td></tr>
-          <tr><td>Layers</td><td>Input, hidden and output layers organise the neurons</td></tr>
-          <tr><td>Loss function</td><td>Measures the error: MSE for regression, cross-entropy for classification</td></tr>
-          <tr><td>Optimiser</td><td>Updates weights: gradient descent, SGD, Adam</td></tr>
-          <tr><td>Learning rate (η)</td><td>Controls the step size of each update</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> a neuron without weights cannot learn; a weight without a bias cannot shift its threshold; an activation without a loss has nothing to optimise. The blocks only work as a system.</p>
-
-<h4>Biological analogy</h4>
-<div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Biological</th><th>Artificial</th></tr></thead>
-        <tbody>
-          <tr><td>Dendrites</td><td>Inputs</td></tr>
-          <tr><td>Cell body / nucleus</td><td>Node / summation</td></tr>
-          <tr><td>Synapse</td><td>Weight</td></tr>
-          <tr><td>Axon</td><td>Output</td></tr>
-          <tr><td>Firing threshold</td><td>Activation function</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the comparison is loose. Real neurons are far more complex. The useful part is the idea of inputs arriving through connections, a cell body summing them, and a threshold deciding whether to fire.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> a car has an engine, fuel lines, a steering wheel, a dashboard and a driver. The neuron is the engine; weights are the fuel settings; bias is the idle adjustment; activation is the steering response; the loss is the dashboard warning; the optimiser is the driver correcting the course.</div>
-
-<div class="confuse"><b>Common confusion:</b> the bias is not a weight on a real input; it is a separate constant with its own learnable value. The learning rate is not the number of epochs; it is the step size within each update. And the loss is not the activation: the loss measures the final error, while the activation shapes each neuron’s output.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Explain in brief the types of ANN based on layers.</p>
-      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q8(a) [5]</p>
-
-      <div class="simple"><b>In simple words:</b> Networks are grouped by how many hidden layers they have.<br>
-A single-layer network has none. A multilayer network has one or more. A deep network has many.<br>
-Specialised networks such as CNNs and RNNs add their own layer types for images or sequences.</div>
-
-<h4>Why we do this</h4>
-<p>Depth controls what a network can represent. A shallow network can draw a straight boundary; a deeper one can build a hierarchy of features. Knowing the categories helps you choose the right architecture and explain its limits.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Single-layer network</b> — input connected directly to output, with no hidden layer.</li>
-<li><b>Multilayer network (MLP)</b> — a network with at least one hidden layer.</li>
-<li><b>Deep neural network</b> — a network with many hidden layers.</li>
-<li><b>Linear decision boundary</b> — a boundary that is a straight line or flat plane.</li>
-<li><b>Non-linear decision boundary</b> — a curved boundary that a linear model cannot draw.</li>
-<li><b>CNN</b> — a network with convolution and pooling layers, used for images and grids.</li>
-<li><b>RNN</b> — a network with a recurrent hidden state, used for sequences.</li>
-<li><b>Autoencoder</b> — a network that compresses input into a smaller code and reconstructs it.</li>
-<li><b>MLP</b> — multilayer perceptron; a fully connected network with at least one hidden layer.</li>
-<li><b>Hidden layer</b> — a layer between input and output.</li>
-<li><b>Overfitting</b> — memorising the training data and failing on new data.</li>
-<li><b>Adaline</b> — an early linear neuron trained by the delta rule.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Count the hidden layers.</b> Zero → single-layer. One or two → multilayer. Many → deep.</li>
-<li><b>Check the data type.</b> Grids and images → CNN. Sequences → RNN. General tables → MLP.</li>
-<li><b>Check the task.</b> Compression or denoising → autoencoder. Classification → softmax output. Regression → linear output.</li>
-<li><b>Match depth to difficulty.</b> More layers can learn more abstract features, but they need more data and careful training.</li>
-<li><b>State the trade-off.</b> Deeper is not automatically better; it can overfit and become harder to train.</li>
-</ol>
-
-<h4>1. Single-layer network</h4>
-<p>Only an input layer and an output layer, with no hidden layer. Each input connects directly to every output. It can solve only <b>linearly separable</b> problems such as AND and OR, but not XOR.</p>
-
-<h4>2. Multi-layer network (MLP)</h4>
-<p>One or more <b>hidden layers</b> between input and output. It can learn non-linear boundaries and approximate complex functions. It is trained by backpropagation.</p>
-
-<h4>3. Deep neural network</h4>
-<p>An MLP with many hidden layers, often dozens. Each layer learns increasingly abstract features: edges → shapes → objects. Deep networks are used in image, speech and language tasks.</p>
-
-<h4>4. Specialised layered architectures</h4>
-<ul>
-<li><b>CNN</b> — convolution + pooling layers for grid and image data.</li>
-<li><b>RNN</b> — a recurrent hidden state for sequences.</li>
-<li><b>Autoencoder</b> — encoder and decoder layers for compression and denoising.</li>
-</ul>
-
-<h4>Comparison</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Type</th><th>Hidden layers</th><th>Decision boundary</th><th>Example</th></tr></thead>
-        <tbody>
-          <tr><td>Single-layer</td><td>0</td><td>Linear</td><td>Perceptron, Adaline</td></tr>
-          <tr><td>Multi-layer</td><td>1–2</td><td>Non-linear</td><td>MLP for XOR</td></tr>
-          <tr><td>Deep</td><td>Many</td><td>Highly non-linear</td><td>ResNet, VGG</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the table is a rough guide, not a strict law. A “deep” network is still a multilayer network; the label simply says there are many hidden layers. The real difference is the complexity of the features the network can build.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> one worker can handle a simple task alone. A small team can divide the work and combine results. A large company with many departments can build a complex product, but it also needs more coordination and more training. Depth is the number of management layers.</div>
-
-<div class="confuse"><b>Common confusion:</b> “deep” does not automatically mean “more accurate”. Very deep networks can overfit, vanish gradients or be hard to train. Also, a multilayer network usually means at least one hidden layer, not exactly two. And CNNs and RNNs are still layered networks; they are specialised, not a separate category outside neural networks.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s64">
-  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>6.4 FLANN and RBF networks</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Explain Radial Basis Function (RBF) networks in detail. Explain the building blocks of RBF networks.</p>
-      <div class="badges"><span class="b marks">6–8 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [8] · 2024 May Q8(a) [6 — building blocks] · 2025 Nov Q7(c) [6 — building blocks]</p>
-
-      <div class="simple"><b>In simple words:</b> An RBF network has three layers: input, a layer of “bumps”, and a linear output.<br>
-Each bump is strongest near its own centre and fades with distance.<br>
-The output is a weighted sum of those bumps. It is a local approximator.</div>
-
-<h4>Why we do this</h4>
-<p>Sometimes a function is better learned piece by piece. Each RBF unit specialises in one region of the input space, like a local expert. Training is also faster than a full MLP because only the output weights need supervised learning; the hidden layer can be set by clustering.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Radial basis function (RBF)</b> — a function whose value depends only on distance from a centre, usually a Gaussian bump.</li>
-<li><b>Centre (c<sub>j</sub>)</b> — the point in input space where a hidden unit responds most strongly.</li>
-<li><b>Width (σ<sub>j</sub>)</b> — how far a unit’s influence reaches before it fades.</li>
-<li><b>Gaussian</b> — a smooth bell-shaped curve that peaks at its centre.</li>
-<li><b>Local approximation</b> — building a function from many small local pieces rather than one global rule.</li>
-<li><b>Linear output layer</b> — an output that is a weighted sum of hidden values, with no non-linearity.</li>
-<li><b>Least squares</b> — a method that chooses weights to minimise squared error.</li>
-<li><b>Prototype</b> — a representative point; here, the centre of an RBF unit.</li>
-<li><b>k-means</b> — a clustering method that groups points around K centres.</li>
-<li><b>Delta rule</b> — a simple weight update that moves in proportion to the error.</li>
-<li><b>Backpropagation</b> — the chain-rule training method for multilayer networks.</li>
-<li><b>Interpolation</b> — estimating values between known data points.</li>
-<li><b>MLP</b> — multilayer perceptron; a fully connected network with hidden layers.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Choose the number of hidden units m.</b> Each unit will own one centre.</li>
-<li><b>Find the centres.</b> Run k-means on the input data and use the cluster centres, or pick m points at random.</li>
-<li><b>Choose the widths.</b> A common choice is the average distance to the nearest few centres. A small width makes a narrow bump; a large width makes a wide one.</li>
-<li><b>Compute the hidden activations.</b> For each input, calculate how far it is from every centre and apply the Gaussian.</li>
-<li><b>Train the output weights.</b> The hidden layer is fixed, so the output is linear in the weights. Solve a least-squares problem or use the delta rule.</li>
-<li><b>Predict.</b> For a new input, compute the bumps and combine them with the learned output weights.</li>
-</ol>
-
-<h4>Architecture</h4>
-<div class="tree">   INPUT          RBF HIDDEN LAYER                 LINEAR OUTPUT
-    x1 o -------- φ1(x) = exp(-||x-c1||² / 2σ1²) ----\
-       \       /                                      \
-    x2 o ---- φ2(x) = exp(-||x-c2||² / 2σ2²) --------- o ----&gt; y = Σ wj φj(x) + b
-       \     /                                        /
-    x3 o -- φ3(x) = exp(-||x-c3||² / 2σ3²) ---------/
-              (each unit has a centre cj and width σj)</div>
-<p class="small"><b>What this means:</b> each hidden unit has its own centre c<sub>j</sub> and width σ<sub>j</sub>. The output adds the bumps with weights w<sub>j</sub>. Only the output weights are trained by supervised learning; the centres and widths are set separately.</p>
-
-<h4>Building blocks</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Block</th><th>Role</th></tr></thead>
-        <tbody>
-          <tr><td>Input layer</td><td>Receives the feature vector x</td></tr>
-          <tr><td>RBF hidden units</td><td>Compute φ<sub>j</sub>(x); each is a Gaussian “bump” centred at c<sub>j</sub></td></tr>
-          <tr><td>Centres c<sub>j</sub></td><td>Positions in input space where the unit is most active; found by k-means or random selection</td></tr>
-          <tr><td>Widths σ<sub>j</sub></td><td>Controls how far the influence of the unit reaches; often set by a heuristic (e.g. average distance to nearest centres)</td></tr>
-          <tr><td>Output weights w<sub>j</sub></td><td>Linear weights combined with the hidden activations; trained by least squares or LMS</td></tr>
-          <tr><td>Output bias b</td><td>Shifts the final output</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the centres decide <em>where</em> each unit looks, the widths decide <em>how broadly</em> it looks, and the output weights decide <em>how much</em> each unit contributes.</p>
-
-<h4>The Gaussian RBF</h4>
-<div class="math">φ<sub>j</sub>(x) = exp( − ‖x − c<sub>j</sub>‖² / (2σ<sub>j</sub>²) )<br>
-      y(x) = Σ<sub>j=1..m</sub> w<sub>j</sub> φ<sub>j</sub>(x) + b</div>
-<p>φ is 1 at the centre and falls smoothly to 0 far away. The output is a weighted sum of bumps.</p>
-<p class="small"><b>What this means:</b> the numerator measures squared distance from x to the centre. When x = c<sub>j</sub>, the exponent is 0 and φ = 1. As distance grows, the exponent becomes more negative and φ shrinks toward 0.</p>
-
-<h4>Example</h4>
-<p>For a 1-D input, two centres c1 = 2, c2 = 8 with σ = 1. An input x = 2.5 gives φ1 = exp(−0.25/2) = 0.882, φ2 = exp(−30.25/2) ≈ 0. The output is almost entirely determined by the first unit. This is why RBF networks are called <b>local</b> approximators.</p>
-
-<h4>RBF vs MLP</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>RBF network</th><th>MLP</th></tr></thead>
-        <tbody>
-          <tr><td>Hidden units</td><td>Radial basis (Gaussian)</td><td>Sigmoid/ReLU neurons</td></tr>
-          <tr><td>Nature</td><td>Local approximation</td><td>Global approximation</td></tr>
-          <tr><td>Hidden layer training</td><td>Unsupervised (centres) or fixed</td><td>Supervised backpropagation</td></tr>
-          <tr><td>Output layer</td><td>Linear</td><td>Non-linear (usually)</td></tr>
-          <tr><td>Training speed</td><td>Fast (linear least squares)</td><td>Slower (gradient descent)</td></tr>
-          <tr><td>Data need</td><td>More units for high dimensions</td><td>Good for high dimensions</td></tr>
-          <tr><td>Interpretation</td><td>Centres are prototypes</td><td>Weights are distributed</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> an MLP uses global sigmoid/ReLU units and trains everything by backpropagation. An RBF uses local bumps, sets the hidden layer by clustering, and trains only a linear output. RBF is faster to train but needs many units in high dimensions.</p>
-
-<h4>Advantages and disadvantages</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
-        <tbody>
-          <tr><td>Fast training; no backprop through hidden layer</td><td>Many hidden units in high dimensions</td></tr>
-          <tr><td>Good interpolation and function approximation</td><td>Choice of centres/widths is critical</td></tr>
-          <tr><td>Interpretable centres</td><td>Can overfit if too many units</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> the speed advantage comes from not backpropagating through the hidden layer. The weakness is that centres and widths are critical: a bad centre placement leaves a region with no useful bump.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> streetlights placed along a road. Each light is brightest directly underneath and fades with distance. A point on the road is lit mainly by the nearest lamp, with a little light from the next one. The output is the combined brightness of all lamps.</div>
-
-<div class="confuse"><b>Common confusion:</b> an RBF network is not just an MLP with a Gaussian activation. The hidden layer is usually set by clustering and then frozen, and the output layer is linear. The centres are not class labels; they are positions in input space. And “local” does not mean the network can only see one point; the bumps overlap.</div>
-    </div>
-  </div>
-<div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is a Functional Link Artificial Neural Network (FLANN)? Explain its merits over other ANNs.</p>
-      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 Nov Q8(b) [5]</p>
-
-      <div class="simple"><b>In simple words:</b> FLANN expands the inputs with extra non-linear columns, such as sin, cos, products and squares.<br>
-Then it learns with a single linear layer and no hidden layer.<br>
-The expansion gives it curve-fitting power while keeping training fast and simple.</div>
-
-<h4>Why we do this</h4>
-<p>A plain perceptron can only draw a straight boundary. A multilayer network can draw curves but needs backpropagation and careful training. FLANN takes a middle path: it creates non-linear features by hand, then uses a simple linear learner. That makes it fast and easy to analyse.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Functional expansion</b> — replacing the original inputs with extra functions of those inputs, such as sin(x), x² or x1x2.</li>
-<li><b>Basis function</b> — one of the extra functions used in the expansion.</li>
-<li><b>Single-layer perceptron</b> — a linear weighted sum followed by an activation, with no hidden layer.</li>
-<li><b>Delta rule / LMS</b> — a simple gradient-based weight update for a linear unit.</li>
-<li><b>Convex loss</b> — a loss with one global minimum, so training does not get trapped in a local dip.</li>
-<li><b>Overfitting</b> — fitting the training data too closely and failing on new data.</li>
-<li><b>Hyperparameter</b> — a setting chosen before training, such as the expansion order or learning rate.</li>
-<li><b>Backpropagation</b> — the chain-rule training method for multilayer networks.</li>
-<li><b>System identification</b> — building a model of a system from its input–output data.</li>
-<li><b>Expansion order</b> — how many and how complex the added basis terms are.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Start with the input vector x.</b> For two inputs, x = [x1, x2].</li>
-<li><b>Expand it.</b> Add non-linear terms such as sin(πx1), cos(πx1), sin(πx2), cos(πx2), x1x2, x1² and x2².</li>
-<li><b>Feed the expanded vector to a single linear layer.</b> Each expanded term gets a weight.</li>
-<li><b>Train with the delta rule or LMS.</b> Because the model is linear in the expanded features, the loss is convex and training is fast.</li>
-<li><b>Predict.</b> Apply the same expansion to new inputs, then use the learned weights.</li>
-</ol>
-
-<h4>The expansion</h4>
-<div class="math">Input: x = [x1, x2]<br>
-      Expansion: [x1, x2, sin(πx1), cos(πx1), sin(πx2), cos(πx2), x1x2, x1², x2², …]<br>
-      Output: y = f( Σ w<sub>j</sub> φ<sub>j</sub>(x) + b )</div>
-<p class="small"><b>What this means:</b> the original two inputs become a longer vector. The extra terms are fixed functions, not learned. The output is still a weighted sum, but now it is a weighted sum of curved ingredients.</p>
-
-<h4>Architecture</h4>
-<div class="tree">x1 ----&gt; [ functional expansion ] ----&gt; φ1, φ2, ..., φm ----&gt; [ single-layer ] ----&gt; y
-x2 ----&gt; (sin, cos, products, powers)                              perceptron
-                                                                    (weights w)
-No hidden layer: the expansion does the non-linear mapping.</div>
-<p class="small"><b>What this means:</b> the expansion block does the non-linear work. The perceptron after it is linear and has no hidden layer. “No hidden layer” is true, but the model can still fit curves because the inputs were expanded.</p>
-
-<h4>Why it works</h4>
-<p>A linear perceptron can only draw a straight boundary. By adding non-linear terms such as sin, cos and products, the same linear learner can separate a non-linear region in the original space. The expansion raises the dimension; the learning stays linear and fast.</p>
-
-<h4>Merits over other ANNs</h4>
-<ul>
-<li><b>No hidden layer</b> → much fewer weights and faster training.</li>
-<li><b>Simple learning</b> — the delta rule / LMS converges quickly; no backpropagation.</li>
-<li><b>Less computational cost</b> than an MLP with similar approximation power for many problems.</li>
-<li><b>No local-minima problem</b> for the single-layer case, because the loss is convex.</li>
-<li><b>Good for non-linear system identification</b>, function approximation and signal processing.</li>
-<li><b>Fewer hyperparameters</b> — mainly the expansion order and learning rate.</li>
-</ul>
-
-<h4>Limitations</h4>
-<ul>
-<li>The expansion must be chosen by hand; too many terms cause overfitting.</li>
-<li>Not as flexible as a deep network for complex image or text tasks.</li>
-<li>Memory grows with the number of expansion terms.</li>
-</ul>
-
-<div class="analogy"><b>Real-life analogy:</b> a judge can only draw a straight line through the evidence. You give the judge extra columns: “age squared”, “income × age”, and “sin of month”. In this larger table, a straight-line rule can separate a curved pattern. The judge did not get smarter; the table got richer.</div>
-
-<div class="confuse"><b>Common confusion:</b> FLANN has no hidden layer, but it is not a plain linear model on the original inputs. The expansion is fixed by the designer, not learned by backpropagation. And “no local minima” applies to the single-layer convex case; adding a huge expansion can still overfit.</div>
-    </div>
-  </div>
-
-  </section>
-
-<section class="card" id="s65">
-  <div class="prio">Priority 6 · ★★ 2× repeated</div><h2>6.5 Activation functions</h2>
-  <p class="lead">The activation function decides whether a neuron fires and adds the non-linearity that makes deep learning possible.</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is an activation function? Explain with a suitable example. Discuss any two activation functions with example.</p>
-      <div class="badges"><span class="b marks">4–5 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q8(c) [5 — two functions] · 2023 Nov Q8(c) [4 — definition + example]</p>
-
-      <div class="simple"><b>In simple words:</b> An activation function decides how strongly a neuron responds.<br>
-It takes the weighted sum and bends it into an output, such as 0 to 1 or −1 to 1.<br>
-Without it, a deep network would collapse into one plain linear model.</div>
-
-<h4>Why we do this</h4>
-<p>Real data rarely follows a straight line. The activation adds the non-linearity that lets a network learn curves, thresholds and probabilities. It also makes the output usable: a sigmoid can be read as a probability, while a tanh keeps values centred around zero.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Activation function</b> — a function applied to a neuron’s weighted sum to produce its output.</li>
-<li><b>Weighted sum</b> — the total of inputs multiplied by their weights, plus bias.</li>
-<li><b>Non-linearity</b> — a bend or threshold that a straight-line function cannot produce.</li>
-<li><b>Binary sigmoid</b> — a smooth S-shaped function with output between 0 and 1.</li>
-<li><b>Bipolar sigmoid (tanh)</b> — a smooth S-shaped function with output between −1 and 1.</li>
-<li><b>Differentiable</b> — has a derivative, so gradient-based training can use it.</li>
-<li><b>Saturation</b> — the flat region at the ends of a sigmoid, where the gradient is almost zero.</li>
-<li><b>Vanishing gradient</b> — gradients become tiny when many saturated units are stacked.</li>
-<li><b>Probability</b> — a number between 0 and 1 that says how likely a class is.</li>
-<li><b>Bias</b> — a constant added to the weighted sum before the activation.</li>
-<li><b>Derivative</b> — the slope of a function; backpropagation needs it.</li>
-<li><b>Class</b> — one of the possible labels in a classification problem.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Compute the weighted sum.</b> Multiply inputs by weights and add the bias.</li>
-<li><b>Apply the activation.</b> Feed the sum into the chosen function, such as sigmoid or tanh.</li>
-<li><b>Use the output.</b> The next layer receives it, or the final layer turns it into a prediction.</li>
-<li><b>Train with the derivative.</b> Backpropagation multiplies by the activation’s derivative to update the weights.</li>
-<li><b>Watch for saturation.</b> If the output sits at the flat end, the gradient is tiny and learning slows.</li>
-</ol>
-
-<h4>Definition</h4>
-<p>An activation function is a mathematical function applied to the weighted sum of a neuron. It decides the neuron’s output and introduces non-linearity.</p>
-<div class="math">y = f( Σ w<sub>i</sub>x<sub>i</sub> + b )</div>
-<p class="small"><b>What this means:</b> f is the activation. The neuron first computes the weighted sum plus bias, then f turns that number into the final response.</p>
-
-<h4>(i) Binary sigmoid</h4>
-<div class="math">f(x) = 1 / (1 + e<sup>−x</sup>)     range (0, 1)</div>
-<ul>
-<li>Smooth S-shape; differentiable everywhere.</li>
-<li>Output can be read as a probability.</li>
-<li>Used in binary classification output layers.</li>
-<li>Problem: vanishing gradient for very large |x|.</li>
-</ul>
-<p><b>Example:</b> x = 0 → f = 0.5; x = 2 → f = 0.881; x = −2 → f = 0.119.</p>
-<p class="small"><b>What this means:</b> large positive inputs push the output toward 1; large negative inputs push it toward 0. Near 0, the curve is steep, so the neuron learns quickly. At the extremes, the curve is flat, so learning slows.</p>
-
-<h4>(ii) Bipolar sigmoid (tanh)</h4>
-<div class="math">f(x) = (1 − e<sup>−x</sup>) / (1 + e<sup>−x</sup>) = tanh(x/2)    range (−1, 1)</div>
-<ul>
-<li>Zero-centred, so gradient updates are better conditioned than with sigmoid.</li>
-<li>Used in hidden layers of MLPs and RNNs.</li>
-<li>Still saturates at the extremes.</li>
-</ul>
-<p><b>Example:</b> x = 0 → 0; x = 2 → 0.762; x = −2 → −0.762.</p>
-<p class="small"><b>What this means:</b> the output is symmetric around 0. That makes the next layer’s job easier, because positive and negative evidence are balanced. The cost is the same saturation problem at the ends.</p>
-
-<h4>Other common functions</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Function</th><th>Formula</th><th>Range</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td>Step</td><td>1 if x ≥ 0 else 0</td><td>{0,1}</td><td>Perceptron</td></tr>
-          <tr><td>Identity</td><td>x</td><td>(−∞,∞)</td><td>Regression output</td></tr>
-          <tr><td>ReLU</td><td>max(0,x)</td><td>[0,∞)</td><td>Deep hidden layers</td></tr>
-          <tr><td>Leaky ReLU</td><td>max(0.01x,x)</td><td>(−∞,∞)</td><td>Avoids dead neurons</td></tr>
-          <tr><td>Softmax</td><td>e<sup>x<sub>i</sub></sup>/Σe<sup>x<sub>j</sub></sup></td><td>(0,1), sums to 1</td><td>Multiclass output</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> pick the activation by the job. Step is for the classic perceptron; identity is for regression output; ReLU is the default for deep hidden layers; softmax is for multiclass probabilities.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> a dimmer switch. The weighted sum is how far you turn the knob; the activation decides how the light responds. A step switch is either fully on or fully off. A sigmoid dimmer rises smoothly and then flattens at the top. Tanh is a dimmer that can also go negative.</div>
-
-<div class="confuse"><b>Common confusion:</b> the activation is not the loss function. The activation shapes each neuron’s output; the loss measures the final error. A sigmoid output is not automatically a well-calibrated probability, and sigmoid and tanh have different ranges. Also, a network with no activation is still linear no matter how many layers you stack.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Write a short note on the importance of activation functions in neural networks. What is the role of activation functions, and why are they necessary for learning?</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2025 May Q7(a) [5] · 2025 Nov Q8(c) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> Activation functions add the bends that let a network learn complex patterns.<br>
-They also decide when a neuron fires, keep outputs in a useful range, and provide the gradients needed for training.<br>
-Without them, a deep network is just one linear model.</div>
-
-<h4>Why we do this</h4>
-<p>Stacking linear layers does not create a more powerful model: the composition of linear functions is still linear. Activation functions break that collapse. They also make probabilities possible and let backpropagation compute useful weight updates.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Linear function</b> — a function whose graph is a straight line; stacking them still gives a straight line.</li>
-<li><b>Non-linearity</b> — a bend or threshold that a straight line cannot produce.</li>
-<li><b>Saturation</b> — the flat part of a curve where the output barely changes and the gradient is near zero.</li>
-<li><b>Dead ReLU</b> — a ReLU unit that always receives negative input, so it always outputs zero and stops learning.</li>
-<li><b>Gradient</b> — the direction and steepness of change of the loss with respect to a weight.</li>
-<li><b>Sparse activation</b> — many neurons output zero, so only a few are active at a time.</li>
-<li><b>Convergence</b> — the point where training stops improving.</li>
-<li><b>Bounded output</b> — an output restricted to a fixed range, such as 0 to 1.</li>
-<li><b>ReLU</b> — max(0, x); the default activation for deep hidden layers.</li>
-<li><b>Sigmoid / tanh</b> — smooth S-shaped activations with bounded outputs.</li>
-<li><b>Softmax</b> — turns scores into probabilities that sum to 1.</li>
-<li><b>Identity</b> — f(x) = x; used for regression output.</li>
-<li><b>Derivative</b> — the slope of a function; it appears in every gradient.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Add non-linearity.</b> Apply an activation after every hidden weighted sum. This lets the network bend its decision boundary.</li>
-<li><b>Decide firing strength.</b> The activation converts a raw score into a response, such as “not at all”, “a little” or “strongly”.</li>
-<li><b>Keep outputs bounded where useful.</b> Sigmoid and tanh keep values in a fixed range, which stabilises training.</li>
-<li><b>Provide a derivative.</b> Backpropagation multiplies by f′(net); without a derivative, the weight cannot be updated by gradient descent.</li>
-<li><b>Encourage sparsity.</b> ReLU outputs zero for negative inputs, so only some neurons stay active.</li>
-<li><b>Watch for saturation.</b> If f′ is near zero, the weight stops learning; switch activation or adjust the architecture.</li>
-</ol>
-
-<h4>Why they are necessary</h4>
-<ol>
-<li><b>Non-linearity</b> — without an activation, stacking layers is useless: a composition of linear functions is still linear. The network could only draw a straight boundary no matter how deep it is.</li>
-<li><b>Decision making</b> — the activation decides whether a neuron fires and how strongly.</li>
-<li><b>Bounded outputs</b> — sigmoid and tanh keep values in a fixed range, which stabilises training and allows probability interpretation.</li>
-<li><b>Differentiability</b> — sigmoid, tanh and ReLU have gradients, so backpropagation can update the weights.</li>
-<li><b>Feature selection</b> — ReLU outputs zero for negative inputs, producing sparse activations.</li>
-</ol>
-
-<h4>Role in learning</h4>
-<p>The gradient of the loss with respect to a weight includes the derivative of the activation:</p>
-<div class="math">∂L/∂w<sub>ij</sub> = δ<sub>j</sub> · x<sub>i</sub>    where δ<sub>j</sub> contains f′(net<sub>j</sub>)</div>
-<p class="small"><b>What this means:</b> δ<sub>j</sub> carries the activation derivative f′(net<sub>j</sub>). If that derivative is zero, the whole update becomes zero. That is why a saturated sigmoid or a dead ReLU stops learning.</p>
-
-<h4>Choosing an activation</h4>
-<div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Layer</th><th>Typical choice</th><th>Reason</th></tr></thead>
-        <tbody>
-          <tr><td>Hidden (deep)</td><td>ReLU / Leaky ReLU</td><td>Fast, no saturation for positive values</td></tr>
-          <tr><td>Hidden (RNN)</td><td>tanh</td><td>Zero-centred, bounded state</td></tr>
-          <tr><td>Binary output</td><td>Sigmoid</td><td>Probability of class 1</td></tr>
-          <tr><td>Multiclass output</td><td>Softmax</td><td>Probabilities sum to 1</td></tr>
-          <tr><td>Regression output</td><td>Identity</td><td>No range restriction</td></tr>
-        </tbody>
-      </table>
-      </div>
-<p class="small"><b>What this means:</b> there is no single best activation. Match it to the layer’s job: ReLU for deep hidden layers, tanh for recurrent hidden states, sigmoid for binary output, softmax for multiclass output and identity for regression.</p>
-
-<div class="note"><b>One-line answer:</b> activation functions inject non-linearity and differentiability. Without them, a deep network is just one linear model; with them, it can approximate complex functions and train by backpropagation.</div>
-
-<div class="analogy"><b>Real-life analogy:</b> a road with no bends can only take you in one direction. Add bends and junctions, and you can reach many destinations. The activation is the bend. Too sharp a bend at the end of the road (saturation) and traffic stops moving.</div>
-
-<div class="confuse"><b>Common confusion:</b> adding more layers without activations does not make a network deeper in any useful sense; it is still linear. ReLU is not always safe: a unit can “die” if it never receives a positive input. And a bounded output is not always desirable; regression often needs an unbounded identity output.</div>
-    </div>
-  </div>
-<div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What are the different activation functions used in neural networks?</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2024 May Q7(b) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> There are many activation functions, each with a different shape and range.<br>
-Some are good for hidden layers, some for probabilities, and one for plain regression.<br>
-Pick the function that matches the job of the layer.</div>
-
-<h4>Why we do this</h4>
-<p>The exam asks for the types, and a good answer needs more than names. Each function has a range, a derivative and a typical use. Knowing the trade-offs helps you explain why ReLU replaced sigmoid in deep networks and why softmax belongs at the multiclass output.</p>
-
-<h4>Words you need first</h4>
-<ul>
-<li><b>Identity (linear)</b> — f(x) = x; the output is exactly the input.</li>
-<li><b>Step (threshold)</b> — outputs 1 above a threshold and 0 below it.</li>
-<li><b>Sigmoid</b> — a smooth S-curve that squashes values into 0–1.</li>
-<li><b>Tanh</b> — a smooth S-curve that squashes values into −1–1.</li>
-<li><b>ReLU</b> — “rectified linear unit”: max(0, x); negatives become zero.</li>
-<li><b>Leaky ReLU</b> — a ReLU that keeps a small slope for negative inputs.</li>
-<li><b>Parametric ReLU</b> — a leaky ReLU where the negative slope is learned.</li>
-<li><b>Softmax</b> — turns a vector of scores into probabilities that sum to 1.</li>
-<li><b>Swish / GELU</b> — smooth modern activations used in deep networks.</li>
-<li><b>Dead ReLU</b> — a ReLU unit stuck at zero, so it no longer learns.</li>
-<li><b>Gradient descent</b> — moving weights in the direction that lowers the loss.</li>
-<li><b>Derivative</b> — the slope of a function at a point.</li>
-<li><b>Saturation</b> — the flat region of a curve where the gradient is near zero.</li>
-</ul>
-
-<h4>Step-by-step</h4>
-<ol>
-<li><b>Group by the layer’s job.</b> Hidden layer, binary output, multiclass output or regression output.</li>
-<li><b>Pick a hidden activation.</b> ReLU or Leaky ReLU for deep feed-forward networks; tanh for RNNs.</li>
-<li><b>Pick an output activation.</b> Sigmoid for binary, softmax for multiclass, identity for regression.</li>
-<li><b>Check the range.</b> Probabilities must stay in 0–1; regression may need any real value.</li>
-<li><b>Check the gradient.</b> Avoid saturating functions in very deep stacks unless you have a reason.</li>
-<li><b>State the trade-off.</b> Mention speed, saturation and interpretability for each choice.</li>
-</ol>
-
-<h4>1. Identity / linear</h4>
-<div class="math">f(x) = x</div>
-<p>No non-linearity. Used only in the output layer of a regression network. A network with only linear activations collapses to a single linear function.</p>
-
-<h4>2. Binary step / threshold</h4>
-<div class="math">f(x) = 1 if x ≥ 0, else 0</div>
-<p>The original perceptron. Not differentiable at 0, so it cannot be trained by gradient descent.</p>
-
-<h4>3. Sigmoid</h4>
-<div class="math">f(x) = 1/(1+e<sup>−x</sup>)</div>
-<p>Squashes to (0,1). Good for probabilities; suffers from vanishing gradients and is not zero-centred.</p>
-
-<h4>4. Tanh (bipolar sigmoid)</h4>
-<div class="math">f(x) = tanh(x)</div>
-<p>Squashes to (−1,1), zero-centred. Better than sigmoid for hidden layers, but it still saturates.</p>
-
-<h4>5. ReLU</h4>
-<div class="math">f(x) = max(0, x)</div>
-<p>Cheap, non-saturating for positive x, and sparse. The default for deep networks. Problem: “dead ReLU” if a unit always gets negative input.</p>
-
-<h4>6. Leaky ReLU / Parametric ReLU</h4>
-<div class="math">f(x) = x if x &gt; 0, else αx (α = 0.01)</div>
-<p>Keeps a small gradient for negative inputs, so neurons do not die completely.</p>
-
-<h4>7. Softmax</h4>
-<div class="math">f(x<sub>i</sub>) = e<sup>x<sub>i</sub></sup> / Σ<sub>j</sub> e<sup>x<sub>j</sub></sup></div>
-<p>Converts a vector of scores into a probability distribution that sums to 1. Used in the output layer of multiclass classifiers.</p>
-<p class="small"><b>What this means:</b> each function has a job. Identity passes a value through; step makes a hard yes/no; sigmoid and tanh squash; ReLU keeps positive evidence; softmax turns a whole score vector into class probabilities.</p>
-
-<h4>8. Swish / GELU (modern)</h4>
-<p>Smooth variants used in deep networks; they often give slightly better accuracy than ReLU.</p>
-
-<div class="analogy"><b>Real-life analogy:</b> a toolbox. A hammer (ReLU) is the default for many jobs. A precision screwdriver (sigmoid) is for probability outputs. A adjustable wrench (Leaky ReLU) handles the cases where the hammer gets stuck. You choose the tool for the task, not because one tool is “best”.</div>
-
-<div class="confuse"><b>Common confusion:</b> softmax is not for binary classification; use sigmoid there. ReLU is not bounded above, so it is not a probability. Identity is usually only an output activation, not a hidden one. And the step function is historically important but not trainable by gradient descent because its derivative is zero almost everywhere.</div>
-    </div>
-  </div>
-
-  </section>
-
 <section class="card" id="s63">
-  <div class="prio">Priority 7 · ★★ 2× repeated</div><h2>6.3 Backpropagation learning</h2>
+  <h2>6.3 Backpropagation learning</h2>
   <p class="lead">Backpropagation = forward pass to compute the error + backward pass to distribute the error gradient + gradient-descent weight update.</p>
 
   <div class="qa">
@@ -2027,8 +1090,945 @@ They are not opposites. The same network can be feed-forward and trained by back
   </div>
 </section>
 
+<section class="card" id="s64">
+  <h2>6.4 FLANN and RBF networks</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain Radial Basis Function (RBF) networks in detail. Explain the building blocks of RBF networks.</p>
+      <div class="badges"><span class="b marks">6–8 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [8] · 2024 May Q8(a) [6 — building blocks] · 2025 Nov Q7(c) [6 — building blocks]</p>
+
+      <div class="simple"><b>In simple words:</b> An RBF network has three layers: input, a layer of “bumps”, and a linear output.<br>
+Each bump is strongest near its own centre and fades with distance.<br>
+The output is a weighted sum of those bumps. It is a local approximator.</div>
+
+<h4>Why we do this</h4>
+<p>Sometimes a function is better learned piece by piece. Each RBF unit specialises in one region of the input space, like a local expert. Training is also faster than a full MLP because only the output weights need supervised learning; the hidden layer can be set by clustering.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Radial basis function (RBF)</b> — a function whose value depends only on distance from a centre, usually a Gaussian bump.</li>
+<li><b>Centre (c<sub>j</sub>)</b> — the point in input space where a hidden unit responds most strongly.</li>
+<li><b>Width (σ<sub>j</sub>)</b> — how far a unit’s influence reaches before it fades.</li>
+<li><b>Gaussian</b> — a smooth bell-shaped curve that peaks at its centre.</li>
+<li><b>Local approximation</b> — building a function from many small local pieces rather than one global rule.</li>
+<li><b>Linear output layer</b> — an output that is a weighted sum of hidden values, with no non-linearity.</li>
+<li><b>Least squares</b> — a method that chooses weights to minimise squared error.</li>
+<li><b>Prototype</b> — a representative point; here, the centre of an RBF unit.</li>
+<li><b>k-means</b> — a clustering method that groups points around K centres.</li>
+<li><b>Delta rule</b> — a simple weight update that moves in proportion to the error.</li>
+<li><b>Backpropagation</b> — the chain-rule training method for multilayer networks.</li>
+<li><b>Interpolation</b> — estimating values between known data points.</li>
+<li><b>MLP</b> — multilayer perceptron; a fully connected network with hidden layers.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Choose the number of hidden units m.</b> Each unit will own one centre.</li>
+<li><b>Find the centres.</b> Run k-means on the input data and use the cluster centres, or pick m points at random.</li>
+<li><b>Choose the widths.</b> A common choice is the average distance to the nearest few centres. A small width makes a narrow bump; a large width makes a wide one.</li>
+<li><b>Compute the hidden activations.</b> For each input, calculate how far it is from every centre and apply the Gaussian.</li>
+<li><b>Train the output weights.</b> The hidden layer is fixed, so the output is linear in the weights. Solve a least-squares problem or use the delta rule.</li>
+<li><b>Predict.</b> For a new input, compute the bumps and combine them with the learned output weights.</li>
+</ol>
+
+<h4>Architecture</h4>
+<div class="tree">   INPUT          RBF HIDDEN LAYER                 LINEAR OUTPUT
+    x1 o -------- φ1(x) = exp(-||x-c1||² / 2σ1²) ----\
+       \       /                                      \
+    x2 o ---- φ2(x) = exp(-||x-c2||² / 2σ2²) --------- o ----&gt; y = Σ wj φj(x) + b
+       \     /                                        /
+    x3 o -- φ3(x) = exp(-||x-c3||² / 2σ3²) ---------/
+              (each unit has a centre cj and width σj)</div>
+<p class="small"><b>What this means:</b> each hidden unit has its own centre c<sub>j</sub> and width σ<sub>j</sub>. The output adds the bumps with weights w<sub>j</sub>. Only the output weights are trained by supervised learning; the centres and widths are set separately.</p>
+
+<h4>Building blocks</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Block</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>Input layer</td><td>Receives the feature vector x</td></tr>
+          <tr><td>RBF hidden units</td><td>Compute φ<sub>j</sub>(x); each is a Gaussian “bump” centred at c<sub>j</sub></td></tr>
+          <tr><td>Centres c<sub>j</sub></td><td>Positions in input space where the unit is most active; found by k-means or random selection</td></tr>
+          <tr><td>Widths σ<sub>j</sub></td><td>Controls how far the influence of the unit reaches; often set by a heuristic (e.g. average distance to nearest centres)</td></tr>
+          <tr><td>Output weights w<sub>j</sub></td><td>Linear weights combined with the hidden activations; trained by least squares or LMS</td></tr>
+          <tr><td>Output bias b</td><td>Shifts the final output</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> the centres decide <em>where</em> each unit looks, the widths decide <em>how broadly</em> it looks, and the output weights decide <em>how much</em> each unit contributes.</p>
+
+<h4>The Gaussian RBF</h4>
+<div class="math">φ<sub>j</sub>(x) = exp( − ‖x − c<sub>j</sub>‖² / (2σ<sub>j</sub>²) )<br>
+      y(x) = Σ<sub>j=1..m</sub> w<sub>j</sub> φ<sub>j</sub>(x) + b</div>
+<p>φ is 1 at the centre and falls smoothly to 0 far away. The output is a weighted sum of bumps.</p>
+<p class="small"><b>What this means:</b> the numerator measures squared distance from x to the centre. When x = c<sub>j</sub>, the exponent is 0 and φ = 1. As distance grows, the exponent becomes more negative and φ shrinks toward 0.</p>
+
+<h4>Example</h4>
+<p>For a 1-D input, two centres c1 = 2, c2 = 8 with σ = 1. An input x = 2.5 gives φ1 = exp(−0.25/2) = 0.882, φ2 = exp(−30.25/2) ≈ 0. The output is almost entirely determined by the first unit. This is why RBF networks are called <b>local</b> approximators.</p>
+
+<h4>RBF vs MLP</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>RBF network</th><th>MLP</th></tr></thead>
+        <tbody>
+          <tr><td>Hidden units</td><td>Radial basis (Gaussian)</td><td>Sigmoid/ReLU neurons</td></tr>
+          <tr><td>Nature</td><td>Local approximation</td><td>Global approximation</td></tr>
+          <tr><td>Hidden layer training</td><td>Unsupervised (centres) or fixed</td><td>Supervised backpropagation</td></tr>
+          <tr><td>Output layer</td><td>Linear</td><td>Non-linear (usually)</td></tr>
+          <tr><td>Training speed</td><td>Fast (linear least squares)</td><td>Slower (gradient descent)</td></tr>
+          <tr><td>Data need</td><td>More units for high dimensions</td><td>Good for high dimensions</td></tr>
+          <tr><td>Interpretation</td><td>Centres are prototypes</td><td>Weights are distributed</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> an MLP uses global sigmoid/ReLU units and trains everything by backpropagation. An RBF uses local bumps, sets the hidden layer by clustering, and trains only a linear output. RBF is faster to train but needs many units in high dimensions.</p>
+
+<h4>Advantages and disadvantages</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>Fast training; no backprop through hidden layer</td><td>Many hidden units in high dimensions</td></tr>
+          <tr><td>Good interpolation and function approximation</td><td>Choice of centres/widths is critical</td></tr>
+          <tr><td>Interpretable centres</td><td>Can overfit if too many units</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> the speed advantage comes from not backpropagating through the hidden layer. The weakness is that centres and widths are critical: a bad centre placement leaves a region with no useful bump.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> streetlights placed along a road. Each light is brightest directly underneath and fades with distance. A point on the road is lit mainly by the nearest lamp, with a little light from the next one. The output is the combined brightness of all lamps.</div>
+
+<div class="confuse"><b>Common confusion:</b> an RBF network is not just an MLP with a Gaussian activation. The hidden layer is usually set by clustering and then frozen, and the output layer is linear. The centres are not class labels; they are positions in input space. And “local” does not mean the network can only see one point; the bumps overlap.</div>
+    </div>
+  </div>
+<div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is a Functional Link Artificial Neural Network (FLANN)? Explain its merits over other ANNs.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 Nov Q8(b) [5]</p>
+
+      <div class="simple"><b>In simple words:</b> FLANN expands the inputs with extra non-linear columns, such as sin, cos, products and squares.<br>
+Then it learns with a single linear layer and no hidden layer.<br>
+The expansion gives it curve-fitting power while keeping training fast and simple.</div>
+
+<h4>Why we do this</h4>
+<p>A plain perceptron can only draw a straight boundary. A multilayer network can draw curves but needs backpropagation and careful training. FLANN takes a middle path: it creates non-linear features by hand, then uses a simple linear learner. That makes it fast and easy to analyse.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Functional expansion</b> — replacing the original inputs with extra functions of those inputs, such as sin(x), x² or x1x2.</li>
+<li><b>Basis function</b> — one of the extra functions used in the expansion.</li>
+<li><b>Single-layer perceptron</b> — a linear weighted sum followed by an activation, with no hidden layer.</li>
+<li><b>Delta rule / LMS</b> — a simple gradient-based weight update for a linear unit.</li>
+<li><b>Convex loss</b> — a loss with one global minimum, so training does not get trapped in a local dip.</li>
+<li><b>Overfitting</b> — fitting the training data too closely and failing on new data.</li>
+<li><b>Hyperparameter</b> — a setting chosen before training, such as the expansion order or learning rate.</li>
+<li><b>Backpropagation</b> — the chain-rule training method for multilayer networks.</li>
+<li><b>System identification</b> — building a model of a system from its input–output data.</li>
+<li><b>Expansion order</b> — how many and how complex the added basis terms are.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Start with the input vector x.</b> For two inputs, x = [x1, x2].</li>
+<li><b>Expand it.</b> Add non-linear terms such as sin(πx1), cos(πx1), sin(πx2), cos(πx2), x1x2, x1² and x2².</li>
+<li><b>Feed the expanded vector to a single linear layer.</b> Each expanded term gets a weight.</li>
+<li><b>Train with the delta rule or LMS.</b> Because the model is linear in the expanded features, the loss is convex and training is fast.</li>
+<li><b>Predict.</b> Apply the same expansion to new inputs, then use the learned weights.</li>
+</ol>
+
+<h4>The expansion</h4>
+<div class="math">Input: x = [x1, x2]<br>
+      Expansion: [x1, x2, sin(πx1), cos(πx1), sin(πx2), cos(πx2), x1x2, x1², x2², …]<br>
+      Output: y = f( Σ w<sub>j</sub> φ<sub>j</sub>(x) + b )</div>
+<p class="small"><b>What this means:</b> the original two inputs become a longer vector. The extra terms are fixed functions, not learned. The output is still a weighted sum, but now it is a weighted sum of curved ingredients.</p>
+
+<h4>Architecture</h4>
+<div class="tree">x1 ----&gt; [ functional expansion ] ----&gt; φ1, φ2, ..., φm ----&gt; [ single-layer ] ----&gt; y
+x2 ----&gt; (sin, cos, products, powers)                              perceptron
+                                                                    (weights w)
+No hidden layer: the expansion does the non-linear mapping.</div>
+<p class="small"><b>What this means:</b> the expansion block does the non-linear work. The perceptron after it is linear and has no hidden layer. “No hidden layer” is true, but the model can still fit curves because the inputs were expanded.</p>
+
+<h4>Why it works</h4>
+<p>A linear perceptron can only draw a straight boundary. By adding non-linear terms such as sin, cos and products, the same linear learner can separate a non-linear region in the original space. The expansion raises the dimension; the learning stays linear and fast.</p>
+
+<h4>Merits over other ANNs</h4>
+<ul>
+<li><b>No hidden layer</b> → much fewer weights and faster training.</li>
+<li><b>Simple learning</b> — the delta rule / LMS converges quickly; no backpropagation.</li>
+<li><b>Less computational cost</b> than an MLP with similar approximation power for many problems.</li>
+<li><b>No local-minima problem</b> for the single-layer case, because the loss is convex.</li>
+<li><b>Good for non-linear system identification</b>, function approximation and signal processing.</li>
+<li><b>Fewer hyperparameters</b> — mainly the expansion order and learning rate.</li>
+</ul>
+
+<h4>Limitations</h4>
+<ul>
+<li>The expansion must be chosen by hand; too many terms cause overfitting.</li>
+<li>Not as flexible as a deep network for complex image or text tasks.</li>
+<li>Memory grows with the number of expansion terms.</li>
+</ul>
+
+<div class="analogy"><b>Real-life analogy:</b> a judge can only draw a straight line through the evidence. You give the judge extra columns: “age squared”, “income × age”, and “sin of month”. In this larger table, a straight-line rule can separate a curved pattern. The judge did not get smarter; the table got richer.</div>
+
+<div class="confuse"><b>Common confusion:</b> FLANN has no hidden layer, but it is not a plain linear model on the original inputs. The expansion is fixed by the designer, not learned by backpropagation. And “no local minima” applies to the single-layer convex case; adding a huge expansion can still overfit.</div>
+    </div>
+  </div>
+
+  </section>
+
+<section class="card" id="s65">
+  <h2>6.5 Activation functions</h2>
+  <p class="lead">The activation function decides whether a neuron fires and adds the non-linearity that makes deep learning possible.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is an activation function? Explain with a suitable example. Discuss any two activation functions with example.</p>
+      <div class="badges"><span class="b marks">4–5 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2023 May Q8(c) [5 — two functions] · 2023 Nov Q8(c) [4 — definition + example]</p>
+
+      <div class="simple"><b>In simple words:</b> An activation function decides how strongly a neuron responds.<br>
+It takes the weighted sum and bends it into an output, such as 0 to 1 or −1 to 1.<br>
+Without it, a deep network would collapse into one plain linear model.</div>
+
+<h4>Why we do this</h4>
+<p>Real data rarely follows a straight line. The activation adds the non-linearity that lets a network learn curves, thresholds and probabilities. It also makes the output usable: a sigmoid can be read as a probability, while a tanh keeps values centred around zero.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Activation function</b> — a function applied to a neuron’s weighted sum to produce its output.</li>
+<li><b>Weighted sum</b> — the total of inputs multiplied by their weights, plus bias.</li>
+<li><b>Non-linearity</b> — a bend or threshold that a straight-line function cannot produce.</li>
+<li><b>Binary sigmoid</b> — a smooth S-shaped function with output between 0 and 1.</li>
+<li><b>Bipolar sigmoid (tanh)</b> — a smooth S-shaped function with output between −1 and 1.</li>
+<li><b>Differentiable</b> — has a derivative, so gradient-based training can use it.</li>
+<li><b>Saturation</b> — the flat region at the ends of a sigmoid, where the gradient is almost zero.</li>
+<li><b>Vanishing gradient</b> — gradients become tiny when many saturated units are stacked.</li>
+<li><b>Probability</b> — a number between 0 and 1 that says how likely a class is.</li>
+<li><b>Bias</b> — a constant added to the weighted sum before the activation.</li>
+<li><b>Derivative</b> — the slope of a function; backpropagation needs it.</li>
+<li><b>Class</b> — one of the possible labels in a classification problem.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Compute the weighted sum.</b> Multiply inputs by weights and add the bias.</li>
+<li><b>Apply the activation.</b> Feed the sum into the chosen function, such as sigmoid or tanh.</li>
+<li><b>Use the output.</b> The next layer receives it, or the final layer turns it into a prediction.</li>
+<li><b>Train with the derivative.</b> Backpropagation multiplies by the activation’s derivative to update the weights.</li>
+<li><b>Watch for saturation.</b> If the output sits at the flat end, the gradient is tiny and learning slows.</li>
+</ol>
+
+<h4>Definition</h4>
+<p>An activation function is a mathematical function applied to the weighted sum of a neuron. It decides the neuron’s output and introduces non-linearity.</p>
+<div class="math">y = f( Σ w<sub>i</sub>x<sub>i</sub> + b )</div>
+<p class="small"><b>What this means:</b> f is the activation. The neuron first computes the weighted sum plus bias, then f turns that number into the final response.</p>
+
+<h4>(i) Binary sigmoid</h4>
+<div class="math">f(x) = 1 / (1 + e<sup>−x</sup>)     range (0, 1)</div>
+<ul>
+<li>Smooth S-shape; differentiable everywhere.</li>
+<li>Output can be read as a probability.</li>
+<li>Used in binary classification output layers.</li>
+<li>Problem: vanishing gradient for very large |x|.</li>
+</ul>
+<p><b>Example:</b> x = 0 → f = 0.5; x = 2 → f = 0.881; x = −2 → f = 0.119.</p>
+<p class="small"><b>What this means:</b> large positive inputs push the output toward 1; large negative inputs push it toward 0. Near 0, the curve is steep, so the neuron learns quickly. At the extremes, the curve is flat, so learning slows.</p>
+
+<h4>(ii) Bipolar sigmoid (tanh)</h4>
+<div class="math">f(x) = (1 − e<sup>−x</sup>) / (1 + e<sup>−x</sup>) = tanh(x/2)    range (−1, 1)</div>
+<ul>
+<li>Zero-centred, so gradient updates are better conditioned than with sigmoid.</li>
+<li>Used in hidden layers of MLPs and RNNs.</li>
+<li>Still saturates at the extremes.</li>
+</ul>
+<p><b>Example:</b> x = 0 → 0; x = 2 → 0.762; x = −2 → −0.762.</p>
+<p class="small"><b>What this means:</b> the output is symmetric around 0. That makes the next layer’s job easier, because positive and negative evidence are balanced. The cost is the same saturation problem at the ends.</p>
+
+<h4>Other common functions</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Function</th><th>Formula</th><th>Range</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Step</td><td>1 if x ≥ 0 else 0</td><td>{0,1}</td><td>Perceptron</td></tr>
+          <tr><td>Identity</td><td>x</td><td>(−∞,∞)</td><td>Regression output</td></tr>
+          <tr><td>ReLU</td><td>max(0,x)</td><td>[0,∞)</td><td>Deep hidden layers</td></tr>
+          <tr><td>Leaky ReLU</td><td>max(0.01x,x)</td><td>(−∞,∞)</td><td>Avoids dead neurons</td></tr>
+          <tr><td>Softmax</td><td>e<sup>x<sub>i</sub></sup>/Σe<sup>x<sub>j</sub></sup></td><td>(0,1), sums to 1</td><td>Multiclass output</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> pick the activation by the job. Step is for the classic perceptron; identity is for regression output; ReLU is the default for deep hidden layers; softmax is for multiclass probabilities.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> a dimmer switch. The weighted sum is how far you turn the knob; the activation decides how the light responds. A step switch is either fully on or fully off. A sigmoid dimmer rises smoothly and then flattens at the top. Tanh is a dimmer that can also go negative.</div>
+
+<div class="confuse"><b>Common confusion:</b> the activation is not the loss function. The activation shapes each neuron’s output; the loss measures the final error. A sigmoid output is not automatically a well-calibrated probability, and sigmoid and tanh have different ranges. Also, a network with no activation is still linear no matter how many layers you stack.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Write a short note on the importance of activation functions in neural networks. What is the role of activation functions, and why are they necessary for learning?</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2025 May Q7(a) [5] · 2025 Nov Q8(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Activation functions add the bends that let a network learn complex patterns.<br>
+They also decide when a neuron fires, keep outputs in a useful range, and provide the gradients needed for training.<br>
+Without them, a deep network is just one linear model.</div>
+
+<h4>Why we do this</h4>
+<p>Stacking linear layers does not create a more powerful model: the composition of linear functions is still linear. Activation functions break that collapse. They also make probabilities possible and let backpropagation compute useful weight updates.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Linear function</b> — a function whose graph is a straight line; stacking them still gives a straight line.</li>
+<li><b>Non-linearity</b> — a bend or threshold that a straight line cannot produce.</li>
+<li><b>Saturation</b> — the flat part of a curve where the output barely changes and the gradient is near zero.</li>
+<li><b>Dead ReLU</b> — a ReLU unit that always receives negative input, so it always outputs zero and stops learning.</li>
+<li><b>Gradient</b> — the direction and steepness of change of the loss with respect to a weight.</li>
+<li><b>Sparse activation</b> — many neurons output zero, so only a few are active at a time.</li>
+<li><b>Convergence</b> — the point where training stops improving.</li>
+<li><b>Bounded output</b> — an output restricted to a fixed range, such as 0 to 1.</li>
+<li><b>ReLU</b> — max(0, x); the default activation for deep hidden layers.</li>
+<li><b>Sigmoid / tanh</b> — smooth S-shaped activations with bounded outputs.</li>
+<li><b>Softmax</b> — turns scores into probabilities that sum to 1.</li>
+<li><b>Identity</b> — f(x) = x; used for regression output.</li>
+<li><b>Derivative</b> — the slope of a function; it appears in every gradient.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Add non-linearity.</b> Apply an activation after every hidden weighted sum. This lets the network bend its decision boundary.</li>
+<li><b>Decide firing strength.</b> The activation converts a raw score into a response, such as “not at all”, “a little” or “strongly”.</li>
+<li><b>Keep outputs bounded where useful.</b> Sigmoid and tanh keep values in a fixed range, which stabilises training.</li>
+<li><b>Provide a derivative.</b> Backpropagation multiplies by f′(net); without a derivative, the weight cannot be updated by gradient descent.</li>
+<li><b>Encourage sparsity.</b> ReLU outputs zero for negative inputs, so only some neurons stay active.</li>
+<li><b>Watch for saturation.</b> If f′ is near zero, the weight stops learning; switch activation or adjust the architecture.</li>
+</ol>
+
+<h4>Why they are necessary</h4>
+<ol>
+<li><b>Non-linearity</b> — without an activation, stacking layers is useless: a composition of linear functions is still linear. The network could only draw a straight boundary no matter how deep it is.</li>
+<li><b>Decision making</b> — the activation decides whether a neuron fires and how strongly.</li>
+<li><b>Bounded outputs</b> — sigmoid and tanh keep values in a fixed range, which stabilises training and allows probability interpretation.</li>
+<li><b>Differentiability</b> — sigmoid, tanh and ReLU have gradients, so backpropagation can update the weights.</li>
+<li><b>Feature selection</b> — ReLU outputs zero for negative inputs, producing sparse activations.</li>
+</ol>
+
+<h4>Role in learning</h4>
+<p>The gradient of the loss with respect to a weight includes the derivative of the activation:</p>
+<div class="math">∂L/∂w<sub>ij</sub> = δ<sub>j</sub> · x<sub>i</sub>    where δ<sub>j</sub> contains f′(net<sub>j</sub>)</div>
+<p class="small"><b>What this means:</b> δ<sub>j</sub> carries the activation derivative f′(net<sub>j</sub>). If that derivative is zero, the whole update becomes zero. That is why a saturated sigmoid or a dead ReLU stops learning.</p>
+
+<h4>Choosing an activation</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Layer</th><th>Typical choice</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>Hidden (deep)</td><td>ReLU / Leaky ReLU</td><td>Fast, no saturation for positive values</td></tr>
+          <tr><td>Hidden (RNN)</td><td>tanh</td><td>Zero-centred, bounded state</td></tr>
+          <tr><td>Binary output</td><td>Sigmoid</td><td>Probability of class 1</td></tr>
+          <tr><td>Multiclass output</td><td>Softmax</td><td>Probabilities sum to 1</td></tr>
+          <tr><td>Regression output</td><td>Identity</td><td>No range restriction</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> there is no single best activation. Match it to the layer’s job: ReLU for deep hidden layers, tanh for recurrent hidden states, sigmoid for binary output, softmax for multiclass output and identity for regression.</p>
+
+<div class="note"><b>One-line answer:</b> activation functions inject non-linearity and differentiability. Without them, a deep network is just one linear model; with them, it can approximate complex functions and train by backpropagation.</div>
+
+<div class="analogy"><b>Real-life analogy:</b> a road with no bends can only take you in one direction. Add bends and junctions, and you can reach many destinations. The activation is the bend. Too sharp a bend at the end of the road (saturation) and traffic stops moving.</div>
+
+<div class="confuse"><b>Common confusion:</b> adding more layers without activations does not make a network deeper in any useful sense; it is still linear. ReLU is not always safe: a unit can “die” if it never receives a positive input. And a bounded output is not always desirable; regression often needs an unbounded identity output.</div>
+    </div>
+  </div>
+<div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What are the different activation functions used in neural networks?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2024 May Q7(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> There are many activation functions, each with a different shape and range.<br>
+Some are good for hidden layers, some for probabilities, and one for plain regression.<br>
+Pick the function that matches the job of the layer.</div>
+
+<h4>Why we do this</h4>
+<p>The exam asks for the types, and a good answer needs more than names. Each function has a range, a derivative and a typical use. Knowing the trade-offs helps you explain why ReLU replaced sigmoid in deep networks and why softmax belongs at the multiclass output.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Identity (linear)</b> — f(x) = x; the output is exactly the input.</li>
+<li><b>Step (threshold)</b> — outputs 1 above a threshold and 0 below it.</li>
+<li><b>Sigmoid</b> — a smooth S-curve that squashes values into 0–1.</li>
+<li><b>Tanh</b> — a smooth S-curve that squashes values into −1–1.</li>
+<li><b>ReLU</b> — “rectified linear unit”: max(0, x); negatives become zero.</li>
+<li><b>Leaky ReLU</b> — a ReLU that keeps a small slope for negative inputs.</li>
+<li><b>Parametric ReLU</b> — a leaky ReLU where the negative slope is learned.</li>
+<li><b>Softmax</b> — turns a vector of scores into probabilities that sum to 1.</li>
+<li><b>Swish / GELU</b> — smooth modern activations used in deep networks.</li>
+<li><b>Dead ReLU</b> — a ReLU unit stuck at zero, so it no longer learns.</li>
+<li><b>Gradient descent</b> — moving weights in the direction that lowers the loss.</li>
+<li><b>Derivative</b> — the slope of a function at a point.</li>
+<li><b>Saturation</b> — the flat region of a curve where the gradient is near zero.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Group by the layer’s job.</b> Hidden layer, binary output, multiclass output or regression output.</li>
+<li><b>Pick a hidden activation.</b> ReLU or Leaky ReLU for deep feed-forward networks; tanh for RNNs.</li>
+<li><b>Pick an output activation.</b> Sigmoid for binary, softmax for multiclass, identity for regression.</li>
+<li><b>Check the range.</b> Probabilities must stay in 0–1; regression may need any real value.</li>
+<li><b>Check the gradient.</b> Avoid saturating functions in very deep stacks unless you have a reason.</li>
+<li><b>State the trade-off.</b> Mention speed, saturation and interpretability for each choice.</li>
+</ol>
+
+<h4>1. Identity / linear</h4>
+<div class="math">f(x) = x</div>
+<p>No non-linearity. Used only in the output layer of a regression network. A network with only linear activations collapses to a single linear function.</p>
+
+<h4>2. Binary step / threshold</h4>
+<div class="math">f(x) = 1 if x ≥ 0, else 0</div>
+<p>The original perceptron. Not differentiable at 0, so it cannot be trained by gradient descent.</p>
+
+<h4>3. Sigmoid</h4>
+<div class="math">f(x) = 1/(1+e<sup>−x</sup>)</div>
+<p>Squashes to (0,1). Good for probabilities; suffers from vanishing gradients and is not zero-centred.</p>
+
+<h4>4. Tanh (bipolar sigmoid)</h4>
+<div class="math">f(x) = tanh(x)</div>
+<p>Squashes to (−1,1), zero-centred. Better than sigmoid for hidden layers, but it still saturates.</p>
+
+<h4>5. ReLU</h4>
+<div class="math">f(x) = max(0, x)</div>
+<p>Cheap, non-saturating for positive x, and sparse. The default for deep networks. Problem: “dead ReLU” if a unit always gets negative input.</p>
+
+<h4>6. Leaky ReLU / Parametric ReLU</h4>
+<div class="math">f(x) = x if x &gt; 0, else αx (α = 0.01)</div>
+<p>Keeps a small gradient for negative inputs, so neurons do not die completely.</p>
+
+<h4>7. Softmax</h4>
+<div class="math">f(x<sub>i</sub>) = e<sup>x<sub>i</sub></sup> / Σ<sub>j</sub> e<sup>x<sub>j</sub></sup></div>
+<p>Converts a vector of scores into a probability distribution that sums to 1. Used in the output layer of multiclass classifiers.</p>
+<p class="small"><b>What this means:</b> each function has a job. Identity passes a value through; step makes a hard yes/no; sigmoid and tanh squash; ReLU keeps positive evidence; softmax turns a whole score vector into class probabilities.</p>
+
+<h4>8. Swish / GELU (modern)</h4>
+<p>Smooth variants used in deep networks; they often give slightly better accuracy than ReLU.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> a toolbox. A hammer (ReLU) is the default for many jobs. A precision screwdriver (sigmoid) is for probability outputs. A adjustable wrench (Leaky ReLU) handles the cases where the hammer gets stuck. You choose the tool for the task, not because one tool is “best”.</div>
+
+<div class="confuse"><b>Common confusion:</b> softmax is not for binary classification; use sigmoid there. ReLU is not bounded above, so it is not a probability. Identity is usually only an output activation, not a hidden one. And the step function is historically important but not trainable by gradient descent because its derivative is zero almost everywhere.</div>
+    </div>
+  </div>
+
+  </section>
+
+<section class="card" id="s66">
+  <h2>6.6 Recurrent neural networks (RNN)</h2>
+  <p class="lead">An RNN has a memory: the hidden state from the previous time step is fed back into the current step.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is a recurrent neural network? Explain with a suitable example. Explain RNN and its applications in brief.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep hot">★★★★★★ 6×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q8(b) [6] · 2023 Nov Q7(c) [5 — applications] · 2024 May Q8(c) [6] · 2025 Nov Q7(b) [6] · related: 2023 May Q7(c) [6], 2025 May Q7(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> An RNN is a neural network with memory.<br>
+It reads a sequence one item at a time and carries a summary of the past forward.<br>
+That summary is called the hidden state. The same weights are reused at every step.</div>
+
+<h4>Why we do this</h4>
+<p>In a sentence, a word’s meaning depends on the words before it. A plain feed-forward network sees one fixed input and forgets everything else. An RNN keeps a running memory, so it can handle text, speech, music and time series where order matters.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Sequence</b> — data where order matters, such as words in a sentence or prices over days.</li>
+<li><b>Time step</b> — one position in the sequence, labelled t.</li>
+<li><b>Hidden state (h<sub>t</sub>)</b> — a compressed summary of everything the network has read so far.</li>
+<li><b>Weight</b> — a learnable number that controls how strongly one signal affects another.</li>
+<li><b>Weight sharing</b> — using the same weight matrix at every time step instead of learning a new one for each position.</li>
+<li><b>Feed-forward network</b> — a network where data flows in one direction and there is no memory loop.</li>
+<li><b>BPTT</b> — backpropagation through time: training an RNN by unrolling it across time steps and sending errors backward.</li>
+<li><b>Vanishing gradient</b> — the error signal becomes so small over long sequences that early steps barely learn.</li>
+<li><b>Exploding gradient</b> — the error signal grows too large and makes training unstable.</li>
+<li><b>LSTM / GRU</b> — RNN variants with gates that decide what to remember and what to forget.</li>
+<li><b>Activation function</b> — a non-linear function applied to a neuron’s weighted sum.</li>
+<li><b>Bias</b> — a constant added to a neuron’s sum; it shifts the result.</li>
+<li><b>Gradient clipping</b> — capping the size of a gradient so it cannot explode.</li>
+<li><b>Seq2seq</b> — sequence-to-sequence; a model that turns one sequence into another, such as translation.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Read the first input x<sub>1</sub>.</b> Combine it with an initial hidden state, usually zeros.</li>
+<li><b>Update the hidden state.</b> Apply weights and an activation to the old state and the new input. The result is h<sub>1</sub>.</li>
+<li><b>Produce an output if needed.</b> A separate weight matrix turns h<sub>1</sub> into y<sub>1</sub>.</li>
+<li><b>Carry h<sub>1</sub> to the next step.</b> At step 2, the network sees both x<sub>2</sub> and the memory h<sub>1</sub>.</li>
+<li><b>Repeat to the end of the sequence.</b> The final hidden state summarises the whole sequence.</li>
+<li><b>Train by unrolling the loop.</b> BPTT treats each time step as a layer, then sends the error backward through all of them.</li>
+</ol>
+
+<h4>The two equations</h4>
+<div class="math">h<sub>t</sub> = f( W<sub>h</sub> h<sub>t−1</sub> + W<sub>x</sub> x<sub>t</sub> + b<sub>h</sub> )<br>
+      y<sub>t</sub> = g( W<sub>y</sub> h<sub>t</sub> + b<sub>y</sub> )</div>
+<p class="small"><b>What this means:</b> the first line builds the new memory from the old memory (W<sub>h</sub>h<sub>t−1</sub>) and the new input (W<sub>x</sub>x<sub>t</sub>). The second line turns that memory into an output. f and g are activation functions, and b is a bias that shifts the result.</p>
+
+<h4>The unrolled diagram</h4>
+<div class="tree">        y1            y2            y3
+        ^             ^             ^
+        |             |             |
+       [h1] -------&gt; [h2] -------&gt; [h3] ---&gt; ...
+        ^             ^             ^
+        |             |             |
+       [x1]          [x2]          [x3]
+
+   Same weight matrices Wx, Wh, Wy at every step.
+   The horizontal arrows are the memory (hidden state).</div>
+<p class="small"><b>What this means:</b> the loop on the left is drawn as a chain on the right. Each vertical arrow feeds an input; each horizontal arrow carries memory forward. The same W<sub>x</sub>, W<sub>h</sub> and W<sub>y</sub> are used at every step, which is why an RNN can handle sequences of different lengths.</p>
+
+<h4>Why memory matters</h4>
+<p>In “The cat sat on the ___”, a feed-forward network sees only the current word. An RNN remembers “cat” and “sat”, so it can predict “mat”. The hidden state is a compressed summary of the past, not a full copy of every word.</p>
+
+<h4>Types of RNN</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Input → output</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>One-to-one</td><td>Single → single</td><td>Plain classification</td></tr>
+          <tr><td>One-to-many</td><td>Single → sequence</td><td>Image captioning</td></tr>
+          <tr><td>Many-to-one</td><td>Sequence → single</td><td>Sentiment analysis</td></tr>
+          <tr><td>Many-to-many</td><td>Sequence → sequence</td><td>Machine translation</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> the shape of the input and output can change. One image can produce a caption (one-to-many); a whole review can produce one sentiment score (many-to-one); a sentence can produce another sentence (many-to-many).</p>
+
+<h4>Applications</h4>
+<ul>
+<li>Language modelling and text generation.</li>
+<li>Machine translation (sequence-to-sequence).</li>
+<li>Speech recognition.</li>
+<li>Sentiment classification.</li>
+<li>Time-series forecasting for stock, weather and sales.</li>
+<li>Handwriting recognition and video analysis.</li>
+</ul>
+
+<h4>Training and problems</h4>
+<p>RNNs are trained by <b>backpropagation through time (BPTT)</b>: the network is unrolled and the error is propagated backward through every time step.</p>
+<ul>
+<li><b>Vanishing gradient</b> — long sequences make gradients shrink to zero, so the network forgets long-range dependencies.</li>
+<li><b>Exploding gradient</b> — gradients grow without bound; use gradient clipping.</li>
+<li><b>Slow</b> — sequential computation cannot be fully parallelised.</li>
+</ul>
+<p><b>Solutions:</b> LSTM (input, forget and output gates), GRU (reset and update gates), gradient clipping and truncated BPTT.</p>
+
+<h4>RNN vs feed-forward network</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Feed-forward</th><th>RNN</th></tr></thead>
+        <tbody>
+          <tr><td>Input</td><td>Fixed-size vector</td><td>Sequence of any length</td></tr>
+          <tr><td>Memory</td><td>None</td><td>Hidden state</td></tr>
+          <tr><td>Weights</td><td>Different per layer</td><td>Shared across time</td></tr>
+          <tr><td>Order of data</td><td>Irrelevant</td><td>Important</td></tr>
+          <tr><td>Use</td><td>Images, tabular data</td><td>Text, speech, time series</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> the key difference is memory. A feed-forward network treats each input as independent. An RNN links inputs across time, so it can use context and order.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> you read a detective novel one word at a time. By chapter five, you remember who the suspects are, what they said, and which clue came first. You do not re-read the whole book at every word. The hidden state is your memory of the story so far.</div>
+
+<div class="confuse"><b>Common confusion:</b> an RNN is not just “a deep feed-forward network”. The loop and the shared weights across time are the whole point. Also, an RNN is still trained with supervision when we have targets; “recurrent” describes the connection pattern, not a different learning rule. And the hidden state is a summary, not a perfect storage of every past input.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain the Recurrent Neural Network with an example. Compare it with a simple CNN.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2025 May Q7(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> An RNN reads data in order and remembers the previous step.<br>
+A CNN scans an image with small filters and looks for local patterns.<br>
+Use an RNN for sentences, speech and time series. Use a CNN for images and grids.</div>
+
+<h4>Why we do this</h4>
+<p>The exam often asks for a direct comparison. Choosing the right architecture matters: a CNN ignores word order, while an RNN is slow on large images. Knowing the trade-off lets you justify the design instead of listing features.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Recurrence</b> — feeding a previous output or state back into the model.</li>
+<li><b>Convolution</b> — sliding a small filter over the input and computing a dot product at each position.</li>
+<li><b>Filter (kernel)</b> — a small learnable matrix that detects a local pattern.</li>
+<li><b>Parameter sharing</b> — using the same weights at many positions, which reduces the number of parameters.</li>
+<li><b>Memory</b> — the hidden state that carries information from earlier time steps.</li>
+<li><b>Grid data</b> — data arranged in a regular grid, such as pixels in an image.</li>
+<li><b>Sequence data</b> — data where order matters, such as words or sensor readings.</li>
+<li><b>Parallelism</b> — doing many computations at the same time.</li>
+<li><b>RNN</b> — recurrent neural network; a network that carries a hidden state across time.</li>
+<li><b>CNN</b> — convolutional neural network; a network that scans a grid with small filters.</li>
+<li><b>Hidden state</b> — the memory vector carried from one time step to the next.</li>
+<li><b>Sentiment analysis</b> — deciding whether text is positive, negative or neutral.</li>
+<li><b>Bag-of-words</b> — a representation that counts words but ignores their order.</li>
+<li><b>Pooling</b> — shrinking a feature map by summarising small windows.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Walk through the RNN example.</b> Read “The movie was not good” one word at a time. The hidden state after “not” must survive until “good” arrives.</li>
+<li><b>Show how the final state is built.</b> Each word updates the memory; the last state feeds the sentiment classifier.</li>
+<li><b>Describe the CNN side.</b> A filter slides over an image and fires when it sees an edge or texture. Pooling shrinks the result.</li>
+<li><b>Compare the data type.</b> RNN = sequence; CNN = grid.</li>
+<li><b>Compare the sharing direction.</b> RNN shares weights across time; CNN shares them across space.</li>
+<li><b>Compare speed.</b> RNN steps are sequential; CNN positions can be computed in parallel.</li>
+<li><b>Conclude with a use case.</b> Translation → RNN; image classification → CNN.</li>
+</ol>
+
+<h4>RNN example — sentiment analysis</h4>
+<p>The RNN reads “The movie was not good” word by word:</p>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Word x<sub>t</sub></th><th>Hidden state h<sub>t</sub></th><th>Meaning captured</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>The</td><td>h1</td><td>start</td></tr>
+          <tr><td>2</td><td>movie</td><td>h2</td><td>subject = movie</td></tr>
+          <tr><td>3</td><td>was</td><td>h3</td><td>past tense</td></tr>
+          <tr><td>4</td><td>not</td><td>h4</td><td>negation</td></tr>
+          <tr><td>5</td><td>good</td><td>h5</td><td>positive word, but negated by h4</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> the hidden state after “not” carries the negation forward. When “good” arrives, the network combines it with that memory and outputs <b>negative</b>. A bag-of-words model would see “good” on its own and might predict positive.</p>
+
+<h4>RNN vs CNN</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>RNN</th><th>CNN</th></tr></thead>
+        <tbody>
+          <tr><td>Data type</td><td>Sequential (text, speech, time series)</td><td>Grid (images, video frames)</td></tr>
+          <tr><td>Core operation</td><td>Recurrence: h<sub>t</sub> depends on h<sub>t−1</sub></td><td>Convolution: filter slides over the input</td></tr>
+          <tr><td>Parameter sharing</td><td>Across time steps</td><td>Across spatial positions</td></tr>
+          <tr><td>Memory</td><td>Yes, hidden state</td><td>No explicit memory</td></tr>
+          <tr><td>Parallelism</td><td>Limited (sequential)</td><td>High (all positions at once)</td></tr>
+          <tr><td>Strength</td><td>Order and context</td><td>Local patterns, edges, textures</td></tr>
+          <tr><td>Example</td><td>Machine translation</td><td>Image classification</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> both architectures reuse weights, but for different reasons. The RNN reuses them at every time step so it can handle any sequence length. The CNN reuses them at every image position so it can detect the same pattern anywhere.</p>
+
+<p class="small">For 2023 May Q7(c), “short note on RNN &amp; CNN”, use this table plus one paragraph on each architecture.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> an RNN is a person reading a sentence aloud, remembering the earlier words to understand the ending. A CNN is a person scanning a photograph with a small magnifying glass, looking for edges and textures, then stepping back to see the whole picture.</div>
+
+<div class="confuse"><b>Common confusion:</b> “both share weights” does not mean they are the same. An RNN shares across <em>time</em>; a CNN shares across <em>space</em>. A CNN has no memory of previous images, and an RNN has no natural notion of a 2-D neighbourhood. You can flatten an image into a sequence for an RNN, but you lose the spatial structure that makes a CNN strong.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s67">
+  <h2>6.7 Convolutional neural networks (CNN)</h2>
+  <p class="lead">A CNN learns local patterns with shared filters, then pools them and classifies with fully connected layers.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain the Convolutional Neural Network with a suitable example. Draw and explain the CNN architecture.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2022 Nov Q8(c) [6 — convolution layer + hidden layer] · 2023 May Q7(c) [6] · 2024 May Q7(c) [6] · 2025 May Q7(c) [6 — architecture] · 2025 Nov Q8(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> A CNN scans an image with small filters, like a magnifying glass.<br>
+Each filter learns one local pattern: an edge, a corner or a texture.<br>
+Pooling shrinks the result, and the final layers combine the patterns into a class.</div>
+
+<h4>Why we do this</h4>
+<p>An image has millions of pixels. A fully connected network would need millions of weights and would still struggle to recognise a cat that moved two pixels to the left. A CNN exploits local structure and reuses the same filter everywhere, so it learns with far fewer parameters.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Convolution</b> — sliding a small filter over the input and computing a dot product at each position.</li>
+<li><b>Filter (kernel)</b> — a small learnable matrix, such as 3×3 or 5×5, that detects a pattern.</li>
+<li><b>Feature map</b> — the output grid produced by one filter; it shows where that pattern appeared.</li>
+<li><b>Stride</b> — how many pixels the filter moves at each step.</li>
+<li><b>Padding</b> — extra pixels added around the border to control the output size.</li>
+<li><b>ReLU</b> — an activation that keeps positive values and sets negatives to zero.</li>
+<li><b>Pooling</b> — shrinking a feature map by taking the max or average in small windows.</li>
+<li><b>Flatten</b> — turning a grid of feature maps into one long vector.</li>
+<li><b>Fully connected layer</b> — a standard dense layer where every input connects to every output.</li>
+<li><b>Softmax</b> — turns a vector of scores into probabilities that sum to 1.</li>
+<li><b>Parameter sharing</b> — using one filter at every position instead of learning a separate filter for each position.</li>
+<li><b>Translation invariance</b> — recognising the same object even when it shifts position.</li>
+<li><b>Dot product</b> — multiply matching entries and add them up.</li>
+<li><b>Channel</b> — one slice of an image or one feature map.</li>
+<li><b>Bias</b> — a constant added to each filter’s response.</li>
+<li><b>MNIST</b> — a standard dataset of handwritten digits used to test image models.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Start with the image.</b> A colour image is a grid of height × width × 3 colour channels.</li>
+<li><b>Apply a convolution.</b> Slide each filter over the image and compute a dot product with the patch under it. The result is a feature map.</li>
+<li><b>Apply ReLU.</b> Keep positive responses and set negative ones to zero. This adds non-linearity.</li>
+<li><b>Pool.</b> Shrink each feature map with a small window. This reduces computation and makes the result less sensitive to small shifts.</li>
+<li><b>Repeat convolution and pooling.</b> Early layers detect edges; deeper layers detect shapes and objects.</li>
+<li><b>Flatten.</b> Turn the final grids into one vector.</li>
+<li><b>Classify.</b> Pass the vector through fully connected layers and a softmax to get class probabilities.</li>
+</ol>
+
+<h4>Architecture</h4>
+<div class="tree">INPUT        CONV + ReLU      POOL        CONV + ReLU     POOL      FLATTEN    FC      SOFTMAX
+32x32x3 ---&gt; 28x28x8 -----&gt; 14x14x8 --&gt; 12x12x16 ----&gt; 6x6x16 --&gt; vector --&gt; 128 --&gt; 10
+             (5x5 filter)   (2x2)       (3x3 filter)    (2x2)
+   |             |               |            |              |          |        |        |
+ raw pixels   edges          shrink      shapes         shrink     features  classify  probabilities</div>
+<p class="small"><b>What this means:</b> the spatial size shrinks while the number of channels grows. The network trades “where exactly” for “what pattern”. By the end, a small grid describes high-level features, and the fully connected layer makes the decision.</p>
+
+<h4>Layer by layer</h4>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Layer</th><th>Operation</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>Convolution</td><td>Slide a filter over the input; compute dot products</td><td>Detect edges, corners, textures</td></tr>
+          <tr><td>ReLU</td><td>max(0, x)</td><td>Non-linearity; keeps positive activations</td></tr>
+          <tr><td>Pooling</td><td>Max or average over a small window</td><td>Reduce size; translation invariance</td></tr>
+          <tr><td>Flatten</td><td>Convert feature maps to a vector</td><td>Feed to fully connected layers</td></tr>
+          <tr><td>Fully connected</td><td>Standard dense layer</td><td>Combine features for classification</td></tr>
+          <tr><td>Softmax</td><td>Normalise scores to probabilities</td><td>Multiclass output</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> convolution and pooling do the seeing; flatten and fully connected layers do the deciding; softmax turns the decision into probabilities.</p>
+
+<h4>Convolution example</h4>
+<p>A 3×3 filter (edge detector) slides over a 5×5 image with stride 1 and no padding. The output is 3×3:</p>
+<div class="math">output size = (W − F + 2P)/S + 1 = (5 − 3 + 0)/1 + 1 = <b>3</b></div>
+<p>Each output cell is the dot product of the filter and a 3×3 patch. The same filter is reused at every position, which is <b>parameter sharing</b>.</p>
+<p class="small"><b>What this means:</b> the output is smaller than the input because the filter can only sit in positions where a full 3×3 patch fits. With a 5×5 image and a 3×3 filter, there are 3 possible positions horizontally and 3 vertically.</p>
+
+<h4>Example — digit recognition</h4>
+<p>Input 28×28 MNIST digit → conv 5×5 with 8 filters → 24×24×8 → pool 2×2 → 12×12×8 → conv 3×3 with 16 filters → 10×10×16 → pool → 5×5×16 → flatten 400 → dense 128 → softmax 10. The first layers detect edges, the deeper layers detect loops and strokes, and the classifier distinguishes 0–9.</p>
+
+<h4>Why CNN is better than a plain MLP for images</h4>
+<ul>
+<li><b>Local connectivity</b> — a neuron sees a small patch, matching the local structure of images.</li>
+<li><b>Parameter sharing</b> — one filter is reused everywhere, so there are far fewer weights.</li>
+<li><b>Translation invariance</b> — pooling keeps the object recognisable even if it shifts.</li>
+<li><b>Hierarchy</b> — stacking layers builds edges → shapes → objects.</li>
+</ul>
+
+<h4>Convolution layer vs hidden layer (2022 Nov wording)</h4>
+<p>The convolution layer <b>is</b> a hidden layer: it produces hidden feature maps. In a CNN, “hidden layers” usually means the sequence of convolution + ReLU + pooling layers before the fully connected classifier. The convolution layer learns filters; the pooling layer reduces resolution; together they form the hidden representation.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> you scan a large group photo with a small magnifying glass. One pass looks for vertical edges, another for horizontal edges, another for curves. After each pass, you note only the strongest hit in each small square, so the map gets smaller. At the end, you combine the notes to decide who is in the photo.</div>
+
+<div class="confuse"><b>Common confusion:</b> a CNN filter does not look at the whole image at once; it looks at a small patch. Pooling has no learnable weights; it is a fixed shrink operation. And a CNN is still a feed-forward network: the “convolution” changes the connection pattern, not the one-way flow of data.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What are the different types of padding used in CNN?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2025 May Q8(b) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Padding adds extra pixels around the border of an image.<br>
+It stops the image from shrinking too fast and lets the filter see the edges.<br>
+Valid = no padding, same = keep the size, full = maximum overlap.</div>
+
+<h4>Why we do this</h4>
+<p>Every convolution makes the image a little smaller. After many layers, the image can shrink to nothing. Border pixels are also used less often than centre pixels, so information at the edge is lost. Padding solves both problems by adding a frame around the input.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Padding (P)</b> — extra rows and columns added around the border of an input.</li>
+<li><b>Valid padding</b> — no padding at all; the filter only sees complete patches.</li>
+<li><b>Same padding</b> — padding chosen so the output has the same width and height as the input.</li>
+<li><b>Full padding</b> — padding so large that the filter overlaps the input at every possible position.</li>
+<li><b>Stride (S)</b> — how many pixels the filter moves between positions.</li>
+<li><b>Filter size (F)</b> — the width and height of the filter, such as 5×5.</li>
+<li><b>Causal padding</b> — padding only on the left, used for time series so the model cannot see the future.</li>
+<li><b>Zero padding</b> — filling the new border with zeros.</li>
+<li><b>Reflection padding</b> — filling the border by mirroring nearby values instead of using zeros.</li>
+<li><b>Convolution</b> — sliding a filter over an input and taking dot products.</li>
+<li><b>Channel</b> — one input slice, such as red, green or blue.</li>
+<li><b>Bias</b> — a constant added to each filter’s output.</li>
+<li><b>VGG / ResNet</b> — well-known deep CNN designs that use many convolution layers.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Note the input size W, filter size F, stride S and padding P.</b> These four numbers decide the output size.</li>
+<li><b>Compute the output with the formula.</b> Output = (W − F + 2P)/S + 1.</li>
+<li><b>Choose the padding type for your goal.</b> Keep the size → same. Shrink → valid. Maximum border use → full.</li>
+<li><b>Apply the padding.</b> Add zeros or another chosen value around the border.</li>
+<li><b>Run the convolution.</b> The filter now has valid positions near the edge.</li>
+<li><b>Check the result.</b> Confirm the output size is what the formula predicted.</li>
+</ol>
+
+<h4>Output-size formula</h4>
+<div class="math">Output size = (W − F + 2P) / S + 1</div>
+<p class="small"><b>What this means:</b> W is the input width, F is the filter width, P is the padding on each side, and S is the stride. Padding adds 2P to the available width because it is added on both sides.</p>
+
+<h4>1. Valid padding (P = 0)</h4>
+<ul>
+<li>No padding; the filter only sees complete patches.</li>
+<li>The output shrinks by F − 1: 32×32 with 5×5 → 28×28.</li>
+<li>Simple, but loses border information.</li>
+</ul>
+
+<h4>2. Same padding</h4>
+<ul>
+<li>Pad so that the output has the <b>same</b> width and height as the input (for stride 1).</li>
+<li>For a 5×5 filter, P = 2; for a 3×3 filter, P = 1.</li>
+<li>Formula: P = (F − 1)/2 for odd F and S = 1.</li>
+<li>Most common in deep CNNs such as VGG and ResNet.</li>
+</ul>
+
+<h4>3. Full padding</h4>
+<ul>
+<li>Pad by F − 1 on each side, so the filter is applied at every possible overlap.</li>
+<li>The output is larger than the input: 32×32 with 5×5 → 36×36.</li>
+<li>Rarely used; it keeps maximum border information.</li>
+</ul>
+
+<h4>4. Causal padding (1-D / time series)</h4>
+<p>Pad only on the left, so the output at time t depends only on past inputs. Temporal CNNs use this to avoid looking into the future.</p>
+
+<h4>5. Zero vs other padding values</h4>
+<ul>
+<li><b>Zero padding</b> — the default; adds zeros.</li>
+<li><b>Reflection / replication</b> — mirror or repeat border values; reduces edge artefacts.</li>
+<li><b>Constant padding</b> — any chosen constant.</li>
+</ul>
+
+<h4>Comparison table</h4>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>P</th><th>32×32, 5×5, S=1</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td>Valid</td><td>0</td><td>28×28</td><td>Shrinks; no border padding</td></tr>
+          <tr><td>Same</td><td>2</td><td>32×32</td><td>Preserves size</td></tr>
+          <tr><td>Full</td><td>4</td><td>36×36</td><td>Enlarges; maximum overlap</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> valid shrinks, same preserves and full enlarges. The table uses a 32×32 input, a 5×5 filter and stride 1, so the arithmetic is easy to check.</p>
+
+<h4>Parameter count example</h4>
+<p>Conv layer: 3 input channels, 8 filters of 5×5, one bias per filter:</p>
+<div class="math">params = (5×5×3 + 1) × 8 = 76 × 8 = <b>608</b></div>
+<p>A fully connected layer from 32×32×3 to 28×28×8 would need millions of weights. This is the advantage of parameter sharing.</p>
+<p class="small"><b>What this means:</b> each 5×5 filter has 25 weights per input channel, plus one bias. With 3 input channels, one filter has 5×5×3 + 1 = 76 parameters. Eight filters give 608 parameters in total.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> you are writing on a page and your pen keeps running off the edge. Padding is the margin you add around the page. With no margin (valid), the last words get cut. With a matching margin (same), the page stays the same size. With a huge margin (full), you can write every possible overlap, but the page grows.</div>
+
+<div class="confuse"><b>Common confusion:</b> “same padding” means the output has the same <em>size</em>, not the same values. Padding usually adds zeros, which are not learned weights. And full padding is not “better” than same; it simply keeps more border overlap and produces a larger output.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Write a short note on the layers used in CNN: (i) Convolutional layer (ii) Pooling layer.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body"><p class="asked"><b>Asked in:</b> 2025 May Q8(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> A convolution layer slides small filters over the image to find patterns.<br>
+A pooling layer shrinks the result and keeps the strongest response in each small window.<br>
+Convolution learns; pooling only summarises.</div>
+
+<h4>Why we do this</h4>
+<p>Images contain local patterns: edges, corners, loops and textures. A convolution layer can detect the same pattern anywhere in the image with one small filter. Pooling then reduces the amount of data and makes the network less sensitive to tiny shifts.</p>
+
+<h4>Words you need first</h4>
+<ul>
+<li><b>Filter (kernel)</b> — a small learnable matrix that is slid over the input.</li>
+<li><b>Stride</b> — the number of pixels the filter moves each step.</li>
+<li><b>Padding</b> — extra border pixels that control the output size.</li>
+<li><b>Channel</b> — one slice of the input, such as red, green or blue, or one feature map produced by a filter.</li>
+<li><b>Feature map</b> — the output grid from one filter; it shows where that filter fired.</li>
+<li><b>Dot product</b> — multiply matching entries and add them up.</li>
+<li><b>Pooling</b> — shrinking a feature map by summarising small windows.</li>
+<li><b>Max pooling</b> — keep the largest value in each window.</li>
+<li><b>Average pooling</b> — keep the average value in each window.</li>
+<li><b>Global average pooling</b> — average a whole feature map down to one number.</li>
+<li><b>ReLU</b> — an activation that keeps positive values and sets negatives to zero.</li>
+<li><b>Convolution</b> — sliding a filter over an input and taking dot products.</li>
+<li><b>Bias</b> — a constant added to each filter’s response.</li>
+<li><b>Activation</b> — a function applied after the convolution to add non-linearity.</li>
+</ul>
+
+<h4>Step-by-step</h4>
+<ol>
+<li><b>Place the filter on the top-left patch.</b> The patch has the same size as the filter.</li>
+<li><b>Multiply matching entries and add them.</b> Add the bias. This is one output cell.</li>
+<li><b>Slide the filter by the stride.</b> Repeat until the filter has covered the whole input. The grid of outputs is the feature map.</li>
+<li><b>Apply ReLU.</b> Negative responses become zero; strong positive responses survive.</li>
+<li><b>Pool each small window.</b> Max pooling keeps the strongest hit; average pooling keeps the overall level.</li>
+<li><b>Stack several filters.</b> Each filter produces its own feature map, so the layer output has several channels.</li>
+</ol>
+
+<h4>(i) Convolutional layer</h4>
+<p>A set of learnable filters slides over the input. At each position it computes the dot product between the filter and the patch, producing a feature map.</p>
+<div class="math">output(i,j) = Σ<sub>m</sub> Σ<sub>n</sub> input(i+m, j+n) · filter(m,n) + bias</div>
+<p class="small"><b>What this means:</b> for output cell (i,j), multiply the input patch starting at (i,j) by the filter, add the bias, and write the result. The same filter is used at every position, which is parameter sharing.</p>
+<ul>
+<li><b>Filter/kernel</b> — a small matrix (3×3, 5×5) learned during training.</li>
+<li><b>Stride</b> — how many pixels the filter moves each step; larger stride → smaller output.</li>
+<li><b>Padding</b> — zeros around the border to control output size.</li>
+<li><b>Channels</b> — each filter produces one feature map; multiple filters produce multiple maps.</li>
+<li><b>Parameter sharing</b> — the same filter is used at all positions.</li>
+<li><b>ReLU</b> usually follows to add non-linearity.</li>
+</ul>
+<p><b>Example:</b> a 3×3 vertical-edge filter <code>[[-1,0,1],[-1,0,1],[-1,0,1]]</code> gives a high response where the image changes from dark to bright horizontally.</p>
+
+<h4>(ii) Pooling layer</h4>
+<p>Pooling reduces the spatial size of feature maps. It has no learnable weights.</p>
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Operation</th><th>Property</th></tr></thead>
+        <tbody>
+          <tr><td>Max pooling</td><td>Take the maximum in each window</td><td>Keeps the strongest feature; most common</td></tr>
+          <tr><td>Average pooling</td><td>Take the average</td><td>Smoother; keeps overall activation</td></tr>
+          <tr><td>Global average pooling</td><td>Average the whole feature map to one number</td><td>Replaces the flatten + FC layers; reduces overfitting</td></tr>
+        </tbody>
+      </table>
+      </div>
+<p class="small"><b>What this means:</b> max pooling asks “was the pattern present anywhere in this window?” Average pooling asks “how strong was it on average?” Global average pooling turns a whole map into one number, which is useful before the classifier.</p>
+<ul>
+<li><b>Window size</b> — usually 2×2 with stride 2, which halves the size.</li>
+<li><b>Effect</b> — fewer parameters, less computation, and tolerance to small shifts.</li>
+<li><b>No learning</b> — pooling is a fixed operation.</li>
+</ul>
+
+<h4>Example</h4>
+<p>For the 2×2 window <code>[[1,3],[2,4]]</code>, max pooling gives 4 and average pooling gives 2.5. A 4×4 feature map with 2×2 pooling becomes 2×2.</p>
+<p class="small"><b>What this means:</b> the window is summarised by one number. Max pooling keeps the strongest evidence; average pooling keeps the typical level.</p>
+
+<h4>Typical block</h4>
+<div class="math">CONV → ReLU → POOL → CONV → ReLU → POOL → FLATTEN → FC → SOFTMAX</div>
+<p class="small"><b>What this means:</b> modern CNNs repeat “convolution → ReLU → pooling” to build a hierarchy of features, then flatten and classify. Some modern designs replace the final flatten + fully connected part with global average pooling.</p>
+
+<div class="analogy"><b>Real-life analogy:</b> a security guard scans a crowd with a small magnifying glass. Each pass looks for one kind of clue: a red hat, a badge, a raised hand. The guard then writes down only the strongest clue in each small section of the crowd. The written summary is the pooled feature map.</div>
+
+<div class="confuse"><b>Common confusion:</b> pooling does not learn anything; it has no weights to train. Convolution filters do learn. Also, a “channel” is not the same as a filter: one filter produces one output channel, but the input may already have several channels such as RGB. And a larger stride is not the same as pooling, although both shrink the output.</div>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s68">
-  <div class="prio">Priority 8 · ★ 1× repeated</div><h2>6.8 Personalized recommendation</h2>
+  <h2>6.8 Personalized recommendation</h2>
 
   <div class="qa">
     <div class="qa-head">

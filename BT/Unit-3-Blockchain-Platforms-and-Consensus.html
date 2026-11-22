@@ -168,16 +168,16 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h3>BT · Unit 3</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s38">3.8 Proof of Work + mining <span class="pill">5×</span></a>
-    <a href="#s37">3.7 Byzantine Generals <span class="pill">4×</span></a>
-    <a href="#s39">3.9 Proof of Stake <span class="pill">4×</span></a>
-    <a href="#s310">3.10 PoA, PoB, PoET <span class="pill">3×</span></a>
     <a href="#s31">3.1 Public / private / consortium <span class="pill">3×</span></a>
     <a href="#s32">3.2 IOTA &amp; the Tangle <span class="pill">3×</span></a>
-    <a href="#s34">3.4 Bitcoin · Ethereum · Hyperledger <span class="pill">3×</span></a>
-    <a href="#s36">3.6 Consensus fundamentals <span class="pill">2×</span></a>
     <a href="#s33">3.3 Corda and R3 <span class="pill">2×</span></a>
+    <a href="#s34">3.4 Bitcoin · Ethereum · Hyperledger <span class="pill">3×</span></a>
     <a href="#s35">3.5 Bitcoin vs Ethereum <span class="pill">2×</span></a>
+    <a href="#s36">3.6 Consensus fundamentals <span class="pill">2×</span></a>
+    <a href="#s37">3.7 Byzantine Generals <span class="pill">4×</span></a>
+    <a href="#s38">3.8 Proof of Work + mining <span class="pill">5×</span></a>
+    <a href="#s39">3.9 Proof of Stake <span class="pill">4×</span></a>
+    <a href="#s310">3.10 PoA, PoB, PoET <span class="pill">3×</span></a>
     <a href="#s311">3.11 Permissioned vs permissionless</a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
@@ -215,7 +215,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 
   <div class="tbl-wrap">
   <table class="freq">
-    <thead><tr><th>#</th><th style="text-align:left">Question asked</th><th style="text-align:left">Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <thead><tr><th>Rank</th><th style="text-align:left">Question asked</th><th style="text-align:left">Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td style="text-align:left">Proof of Work — mechanism + example</td><td style="text-align:left">2022 Nov Q1(b) [6] · 2023 Nov Q1(b) [6] · 2024 May Q1(a) [8] · 2025 May Q1(a) [8 — bitcoin mining] · 2025 Nov Q1(a) [8]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
       <tr><td>2</td><td style="text-align:left">Proof of Stake — mechanism + example</td><td style="text-align:left">2022 Nov Q1(c) [4] · 2023 Nov Q2(b) [6] · 2024 May Q1(a) [8] · 2025 Nov Q1(a) [8]</td><td><span class="stars">★★★★</span> 4×</td></tr>
@@ -241,8 +241,839 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <div class="tip"><b>Marks strategy (SPPU checking):</b> 4 marks = definition + 4 points. 6 marks = definition + working/steps + one example. 8–9 marks = definition + step-by-step mechanism + <b>solved example with numbers</b> + table or diagram + 2 advantages/limitations. Always draw the flow; examiners give step marks for it.</div>
 </section>
 
-<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s38">
-  <div class="prio">Priority 1 · ★★★★★ 5× repeated</div><h2>3.8 Proof of Work and Bitcoin mining</h2>
+<div class="note" id="topic-note">📚 Notes follow the book order (3.1 → 3.2 → …). The frequency table above is sorted by repetition, so use it to decide what to revise first.</div><section class="card" id="s31">
+  <h2>3.1 Public, private and consortium blockchains</h2>
+  <p class="lead">Syllabus: <em>Types of Blockchain Platforms — Public, Private and Consortium.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain in detail the following blockchain platforms: (i) Public (ii) Private (iii) Consortium. Give the different types of blockchain and state their advantages and disadvantages.</p>
+      <div class="badges"><span class="b marks">8 / 6 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [8] · 2023 Nov Q2(a) [6 — any two] · 2025 May Q2(a) [8 — types + advantages/disadvantages]</p>
+
+      <div class="simple"><b>In simple words:</b> Blockchain platforms differ by who is allowed in.<br>
+      Public is open to anyone; private is controlled by one organisation; consortium is shared by a group.<br>
+      Open networks are transparent but slower; closed networks are faster but need trust in the owner.<br>
+      The type decides who can read, validate and change the ledger.</div>
+
+      <h4>Why we do this</h4>
+      <p>The same blockchain software can serve a public payment network or a private bank network. Access rules change the trust model, speed, privacy and cost, so you must choose the type before choosing the software.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Blockchain platform:</b> the software layer that lets participants create, store, validate and query a shared ledger.</li>
+        <li><b>Node:</b> a computer that keeps a copy of the ledger and checks blocks.</li>
+        <li><b>Validator:</b> a node allowed to approve or add blocks.</li>
+        <li><b>Permissionless:</b> anyone can join and validate without approval.</li>
+        <li><b>Permissioned:</b> only approved, identified members can join or validate.</li>
+        <li><b>Consortium:</b> a group of organisations that jointly own and govern a network.</li>
+        <li><b>Trustless:</b> a design where you do not need to trust a person or company, because rules and incentives enforce behaviour.</li>
+        <li><b>Hybrid blockchain:</b> a mix where one organisation runs the network but a public chain checks some data.</li>
+        <li><b>Throughput:</b> the number of transactions processed per second.</li>
+        <li><b>Public blockchain:</b> an open network where anyone can read, transact and validate.</li>
+        <li><b>Private blockchain:</b> a network where one organisation approves members and validators.</li>
+        <li><b>Consortium blockchain:</b> a network jointly owned and governed by a group of organisations.</li>
+        <li><b>Append-only:</b> data can be added but old entries cannot be edited or deleted.</li>
+        <li><b>Ledger:</b> the record of all transactions and balances.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Byzantine Fault Tolerance (BFT):</b> agreement that still works when some nodes lie.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Decide who may join.</b> Open to all, one organisation, or a fixed group. <i>Why:</i> this is the first dividing line between public and private.</li>
+        <li><b>Decide who may validate.</b> Anonymous miners, the owner's servers, or consortium members. <i>Why:</i> validators control the history.</li>
+        <li><b>Decide who may read.</b> Everyone, only members, or only selected parties. <i>Why:</i> reading rules decide privacy.</li>
+        <li><b>Pick consensus.</b> Public chains often use PoW/PoS; private and consortium chains often use BFT voting. <i>Why:</i> known validators can vote quickly; unknown ones need costly proof.</li>
+        <li><b>Compare the trade-offs.</b> Public = transparent but slow; private = fast but trusted owner; consortium = shared control but slow governance. <i>Why:</i> The comparison turns definitions into a practical choice.</li>
+        <li><b>Write advantages and disadvantages</b> for each type, as the exam asks. <i>Why:</i> The exam awards marks for both sides, not just the definition.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A public blockchain is a public park anyone can enter. A private blockchain is a company office with a badge door. A consortium blockchain is a gated clubhouse owned jointly by several companies.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Private does not always mean secret; it means membership is controlled. A consortium is not the same as a private chain owned by one company. And public does not mean "no rules": the protocol still enforces them.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> A <b>blockchain platform</b> is the software layer that lets participants create, store, validate and query a shared, append-only ledger. The <b>type</b> of platform is decided by <b>who is allowed to join</b>, <b>who validates</b> and <b>who owns the network</b>.</p>
+
+      <h4>The four types (book's classification)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Public</th><th>Private (managed)</th><th>Consortium</th><th>Hybrid</th></tr></thead>
+        <tbody>
+          <tr><td>Who can join</td><td>Anyone, no permission</td><td>Only nodes approved by one organisation</td><td>Only members of a group of organisations</td><td>One organisation controls; public chain supervises some checks</td></tr>
+          <tr><td>Who validates</td><td>Any miner / validator</td><td>The central owner or its chosen validators</td><td>Validators chosen by the consortium</td><td>Mixed</td></tr>
+          <tr><td>Decentralisation</td><td>Fully decentralised</td><td>Partially decentralised</td><td>More decentralised than private, less than public</td><td>Mostly central with public oversight</td></tr>
+          <tr><td>Speed / cost</td><td>Slow, high energy (PoW)</td><td>Fast, cheap</td><td>Fast, cheap</td><td>Medium</td></tr>
+          <tr><td>Transparency</td><td>Everyone can read the ledger</td><td>Read access restricted</td><td>Read access restricted to members</td><td>Selective</td></tr>
+          <tr><td>Trust model</td><td>Trustless; code + economics</td><td>Trust the owner</td><td>Trust the consortium rules</td><td>Mixed</td></tr>
+          <tr><td>Examples</td><td>Bitcoin, Ethereum, Litecoin</td><td>Hyperledger Fabric (single org), Ripple</td><td>R3 Corda, Global Shipping Business Network, Hyperledger</td><td>IBM Food Trust</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> leaving the public column trades openness for speed and privacy. The consensus method changes with that trade, not by accident.</p>
+
+      <h4>Public blockchain</h4>
+      <ul>
+        <li><b>Open access:</b> any node can read the chain, send a transaction and take part in validation.</li>
+        <li><b>Fully decentralised:</b> no single owner; rules are enforced by the protocol and by economic incentives.</li>
+        <li><b>Consensus:</b> usually PoW or PoS; every node stores a copy of the ledger.</li>
+        <li><b>Advantages:</b> censorship-resistant, transparent, anyone can audit, a large number of participants makes tampering hard.</li>
+        <li><b>Disadvantages:</b> slow throughput, high energy use (PoW), public exposure of transaction data, hard to change rules.</li>
+      </ul>
+
+      <h4>Private blockchain</h4>
+      <ul>
+        <li><b>Permissioned:</b> a single organisation decides which nodes join and what rights they get.</li>
+        <li><b>Partially decentralised:</b> the ledger may be replicated, but the central authority controls membership.</li>
+        <li><b>Advantages:</b> high speed, low cost, privacy, easy governance, no need for expensive mining.</li>
+        <li><b>Disadvantages:</b> trust is back on the owner; fewer validators means easier collusion; less transparent.</li>
+      </ul>
+
+      <h4>Consortium blockchain</h4>
+      <ul>
+        <li><b>Permissioned but multi-owner:</b> a group of organisations (banks, shippers, hospitals) jointly runs the network. No single member owns it.</li>
+        <li><b>Better decentralisation than private:</b> no one party can rewrite history alone, so safety improves.</li>
+        <li><b>Advantages:</b> shared truth between competitors, lower settlement cost, privacy between members, good for trade finance and supply chains.</li>
+        <li><b>Disadvantages:</b> forming the consortium is slow (legal, technical and antitrust issues); every member must invest in infrastructure; governance disputes are common.</li>
+      </ul>
+
+      <h4>Diagram: decentralisation spectrum</h4>
+      <pre class="tree">PUBLIC                 CONSORTIUM                 PRIVATE
+open to all            selected organisations     one organisation
+   |                          |                         |
+   v                          v                         v
+[ Bitcoin ]  ------&gt;  [ R3 Corda / GSBN ]  ------&gt;  [ Fabric, single org ]
+more decentralised  ----------------------------&gt;  more centralised
+slower, transparent  ----------------------------&gt;  faster, private</pre>
+      <p><b>What this means:</b> decentralisation and privacy pull in opposite directions here. Public chains protect openness; private chains protect control.</p>
+
+      <div class="tip"><b>8-mark structure:</b> 3 definitions (3) + comparison table (3) + one advantage and one disadvantage each (2). For 2025 May Q2(a), add a short "advantages/disadvantages" list after the table.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s32">
+  <h2>3.2 IOTA and the Tangle</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain IOTA in detail. Explain the role of IOTA in the context of the Internet of Things (IoT).</p>
+      <div class="badges"><span class="b marks">6 / 8 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a)(iv) [8, part] · 2024 May Q2(d) [6] · 2025 Nov Q2(d) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> IOTA is a ledger built for tiny machines, not for people.<br>
+      It has no blocks and no miners; each new transaction approves two older ones.<br>
+      Because there are no fees, a sensor can sell one reading for a tiny amount.<br>
+      The resulting web of transactions is called the Tangle.</div>
+
+      <h4>Why we do this</h4>
+      <p>The Internet of Things needs millions of small payments between sensors, meters and cars. Bitcoin-style fees and 10-minute blocks make those payments too costly and too slow. IOTA was designed around that gap.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>IOTA:</b> a distributed ledger and cryptocurrency designed for machine-to-machine payments.</li>
+        <li><b>MIOTA:</b> the unit of IOTA's native currency (one million IOTA).</li>
+        <li><b>DAG (directed acyclic graph):</b> a network of linked records with arrows and no loops.</li>
+        <li><b>Tangle:</b> IOTA's DAG, where each transaction approves two earlier transactions.</li>
+        <li><b>Tip:</b> a transaction that no later transaction has approved yet.</li>
+        <li><b>Approval:</b> a link from a new transaction to an old one, which confirms the old one.</li>
+        <li><b>Feeless:</b> no transaction fee is charged.</li>
+        <li><b>M2M (machine-to-machine):</b> devices paying and exchanging data without a human.</li>
+        <li><b>Coordinator:</b> a central milestone server that IOTA used in its early years to protect the network.</li>
+        <li><b>Confidence:</b> how strongly a transaction is confirmed, measured by how many later transactions approve it.</li>
+        <li><b>Internet of Things (IoT):</b> a network of everyday devices, sensors and machines that exchange data.</li>
+        <li><b>Proof of Work:</b> a small puzzle that makes spam expensive; IOTA uses a light version.</li>
+        <li><b>Blockchain:</b> a shared ledger of blocks linked in a chain.</li>
+        <li><b>Transaction:</b> a signed request to move value or record data.</li>
+        <li><b>Validation:</b> checking that a transaction follows the rules before accepting it.</li>
+      
+        <li><b>Scalability:</b> the ability to handle more users or transactions without slowing down.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>A device creates a transaction.</b> It states who pays whom and how much. <i>Why:</i> every transfer must be recorded.</li>
+        <li><b>It picks two unapproved tips.</b> <i>Why:</i> approving old work is what confirms the network's history.</li>
+        <li><b>It solves a small PoW puzzle.</b> <i>Why:</i> a tiny cost stops spam, but it is light enough for a sensor.</li>
+        <li><b>It attaches to the Tangle</b> and becomes a new tip. <i>Why:</i> other transactions can now approve it.</li>
+        <li><b>Later transactions approve it.</b> Its confidence grows with each approval. <i>Why:</i> confirmation is cumulative, not a single block.</li>
+        <li><b>No miner and no block are needed.</b> The users do the validation themselves. <i>Why:</i> this removes fees and mining centralisation.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A group of friends writes a shared diary. Before adding your page, you must stamp two earlier pages to confirm them. The more people who stamp your page later, the more trusted it becomes.</div>
+
+      <div class="confuse"><b>Common confusion:</b> IOTA is not a blockchain, because it has no blocks and no chain. "Feeless" also does not mean "no work": each transaction still does a small proof of work.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>IOTA (MIOTA)</b> is a distributed ledger built for the <b>Internet of Things</b>. It records machine-to-machine and device-to-device transactions. Its native currency is <b>MIOTA</b>. Instead of a chain of blocks, IOTA uses a directed acyclic graph (DAG) called the <b>Tangle</b>.</p>
+
+      <h4>Why IOTA was created</h4>
+      <ul>
+        <li>Bitcoin-style chains have <b>transaction fees</b> and limited throughput, which is bad for millions of tiny device payments.</li>
+        <li>PoW mining needs heavy hardware and energy, which is bad for cheap sensors.</li>
+        <li>IOTA aims to be a <b>feeless</b>, <b>scalable</b>, <b>lightweight</b> ledger for connected devices.</li>
+      </ul>
+
+      <h4>How the Tangle works</h4>
+      <ol>
+        <li>Every new transaction must <b>approve two earlier transactions</b> (called tips).</li>
+        <li>To approve them, the sender solves a <b>small proof-of-work puzzle</b>. This is easy compared with Bitcoin mining.</li>
+        <li>The new transaction becomes a new tip. Later transactions approve it, so its <b>confidence</b> (weight) grows.</li>
+        <li>There are <b>no miners and no blocks</b>. The users themselves do the validation.</li>
+        <li>The more devices that join, the more validation capacity the network has, the opposite of a congested blockchain.</li>
+      </ol>
+
+      <pre class="tree">                 TANGLE (DAG)
+        tx A ───────┐
+                    ├────&gt; tx C ─────┐
+        tx B ───────┘                ├────&gt; tx E (new tip)
+                                     │
+        tx D ────────────────────────┘
+
+Each new transaction approves 2 old transactions.
+No blocks. No miners. No fees.</pre>
+      <p><b>What this means:</b> confirmation flows backwards. A transaction is safer when many later transactions point to it, not when a miner puts it in a block.</p>
+
+      <h4>Role of IOTA in IoT (6-mark answer)</h4>
+      <ul>
+        <li><b>Micropayments:</b> a sensor can sell one reading for a tiny amount because there is no fee.</li>
+        <li><b>Machine identity:</b> each device can have an address and a signed transaction history.</li>
+        <li><b>Data integrity:</b> sensor data is anchored on the Tangle, so tampering is detectable.</li>
+        <li><b>M2M economy:</b> smart cars, charging stations and smart meters can settle directly.</li>
+        <li><b>Low footprint:</b> small memory and low power, suitable for constrained devices.</li>
+        <li><b>Scalability:</b> parallel tip approval avoids the single-chain bottleneck.</li>
+      </ul>
+
+      <h4>Advantages and concerns</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Advantages</h4>
+          <ul>
+            <li>Zero transaction fees.</li>
+            <li>High parallelism and scalability.</li>
+            <li>No miners, so no mining centralisation.</li>
+            <li>Designed for tiny devices.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Concerns</h4>
+          <ul>
+            <li>The <b>Coordinator</b> (a central milestone server) was a single point of failure. IOTA planned to remove it ("Coordicide").</li>
+            <li>The original <b>Curl</b> hash had a collision weakness reported by MIT researchers.</li>
+            <li>New consensus design is less battle-tested than Bitcoin.</li>
+            <li>A 2020 phishing attack stole about $3.94 million of MIOTA.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note"><b>One-line answer:</b> IOTA replaces the blockchain with the Tangle, a DAG where each transaction validates two previous transactions. It is feeless, parallel and built for IoT micropayments.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s33">
+  <h2>3.3 Corda and R3</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Describe the features of the Corda blockchain. Justify how it is different. Elaborate CorDapps. / Explain R3.</p>
+      <div class="badges"><span class="b marks">9 / 6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q1(a)(i) [6 — R3 option] · 2025 May Q1(b) [9 — Corda features, difference, CorDapps]</p>
+
+      <div class="simple"><b>In simple words:</b> R3 is a company and consortium of banks.<br>
+      Corda is the private ledger it built for financial deals.<br>
+      Only the parties in a deal see its details, and a special notary stops double-spending.<br>
+      A CorDapp is an app on Corda, built from states, contracts and flows.</div>
+
+      <h4>Why we do this</h4>
+      <p>Banks cannot broadcast every trade to competitors, and they need a deal to be final immediately. Corda keeps data point-to-point, checks each state change with a contract, and uses a notary to guarantee that the same asset is not promised twice.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>R3:</b> a financial-technology company and consortium that builds enterprise distributed-ledger software.</li>
+        <li><b>Corda:</b> R3's open-source, permissioned distributed ledger for business and finance.</li>
+        <li><b>CorDapp:</b> a Corda Distributed Application, installed on Corda nodes.</li>
+        <li><b>State:</b> a shared fact on the Corda ledger, such as "Bank A owes Bank B $1M".</li>
+        <li><b>Contract:</b> code that checks whether a state change is allowed.</li>
+        <li><b>Flow:</b> the workflow that gathers signatures and records a state change.</li>
+        <li><b>Notary:</b> a special Corda node that signs a state only once to stop double-spending.</li>
+        <li><b>Doorman:</b> the Corda service that checks identity and issues certificates at join time.</li>
+        <li><b>Point-to-point:</b> sending data only to the parties involved, not to the whole network.</li>
+        <li><b>Deterministic finality:</b> a deal is final as soon as the required signatures and notary sign exist.</li>
+        <li><b>JVM:</b> Java Virtual Machine, the runtime Corda uses.</li>
+        <li><b>Distributed ledger:</b> a record of transactions copied and kept consistent across many nodes.</li>
+        <li><b>Permissioned:</b> only approved, identified members can join or validate.</li>
+        <li><b>Double-spending:</b> spending the same asset twice.</li>
+        <li><b>Corda Settler:</b> an R3 service for cross-border payments and settlement.</li>
+        <li><b>Kotlin:</b> a programming language that runs on the JVM and is used for Corda.</li>
+        <li><b>Consensus:</b> the rule that gets all honest nodes to accept one history.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>A party starts a flow.</b> The flow describes the business step it wants to perform. <i>Why:</i> Corda separates business workflow from ledger data.</li>
+        <li><b>The flow builds a transaction</b> that proposes a new state and names the input state it replaces. <i>Why:</i> every update must point to the old fact it changes.</li>
+        <li><b>The contract checks the transaction.</b> It enforces rules such as positive amounts and required signatures. <i>Why:</i> no party should be able to write an invalid fact.</li>
+        <li><b>Involved parties sign.</b> Only they see the full details. <i>Why:</i> competitors and outsiders must not learn the trade.</li>
+        <li><b>The notary checks the input state.</b> It signs only if that state has not been used before. <i>Why:</i> this is how Corda prevents double-spending.</li>
+        <li><b>The new state is recorded</b> on the parties' ledgers and the old state is marked consumed. <i>Why:</i> the ledger now has one current version of the fact.</li>
+        <li><b>The deal is final.</b> No mining and no waiting for confirmations. <i>Why:</i> Immediate finality is the main business benefit of Corda.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Two companies sign a private contract at a lawyer's office. Only they see the pages, but the lawyer stamps the contract so it cannot be reused to claim the same asset twice.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Corda is not a Bitcoin-style blockchain: it does not broadcast every transaction to every node and has no native coin. Its "notary" is a validating node, not a public government official.</div>
+
+      <h4>Full answer for the exam</h4>
+      <h4>What is R3?</h4>
+      <p><b>R3</b> is a financial-technology company founded in 2014 by a group of nine financial institutions (including Goldman Sachs, Credit Suisse and J.P. Morgan). It leads a consortium of more than 100 banks and builds distributed-ledger software for financial markets. Its main product is <b>Corda</b>.</p>
+
+      <h4>What is Corda?</h4>
+      <p><b>Corda</b> is an open-source, <b>permissioned</b> distributed ledger platform for business and finance. It runs on the <b>JVM</b> and is written mainly in Kotlin and Java. Unlike Bitcoin, Corda does <b>not</b> broadcast every transaction to every node. It shares data only with the parties who need it.</p>
+
+      <h4>Features of Corda (2025 May Q1b: 9 marks)</h4>
+      <ol>
+        <li><b>Permissioned network:</b> every node has a real-world identity and a certificate from a doorman/network operator. There are no anonymous miners.</li>
+        <li><b>Point-to-point privacy:</b> transaction data goes only to the involved parties and the notary, not to the whole network.</li>
+        <li><b>States:</b> the ledger stores facts (e.g. "Bank A owes Bank B $1M") in <b>state objects</b>, which are immutable. A new version replaces the old one.</li>
+        <li><b>Contracts:</b> each state has a <b>contract</b> that validates every update (e.g. both parties must sign).</li>
+        <li><b>Flows:</b> the business workflow is written as a <b>flow</b>, a sequence of steps that gathers signatures, talks to the counterparty and asks the notary to finalise.</li>
+        <li><b>Notary:</b> a special node that prevents double-spending by signing a state only once. It does not see the full transaction, only the input state reference.</li>
+        <li><b>No native cryptocurrency:</b> Corda settles real assets, not coins. Fees are a business decision, not a mining reward.</li>
+        <li><b>Interoperability:</b> can connect to existing banking systems, databases and other DLTs; supports R3's Corda Settler for cross-border payments.</li>
+        <li><b>Deterministic finality:</b> once the notary signs, the transaction is final. No probabilistic confirmations.</li>
+      </ol>
+
+      <h4>Why Corda is different from Bitcoin/Ethereum</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Bitcoin / Ethereum</th><th>Corda</th></tr></thead>
+        <tbody>
+          <tr><td>Access</td><td>Public, anonymous</td><td>Permissioned, identified parties</td></tr>
+          <tr><td>Data visibility</td><td>Every node sees every transaction</td><td>Only the parties involved see the details</td></tr>
+          <tr><td>Consensus</td><td>PoW / PoS, probabilistic</td><td>Notary + contract validation, deterministic</td></tr>
+          <tr><td>Currency</td><td>BTC / ETH built in</td><td>No native coin; real assets</td></tr>
+          <tr><td>Smart contract</td><td>Solidity on EVM</td><td>Kotlin/Java contract + flow</td></tr>
+          <tr><td>Use case</td><td>Open payments, DeFi</td><td>Banking, trade finance, insurance, capital markets</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> Corda trades openness for privacy and legal certainty. That is exactly what a bank needs, and exactly what a public payment chain refuses to give up.</p>
+
+      <h4>CorDapps</h4>
+      <p>A <b>CorDapp</b> (Corda Distributed Application) is an application built on Corda. It is a normal JAR file that is installed on Corda nodes. It has three parts:</p>
+      <ul>
+        <li><b>States:</b> the shared facts on the ledger (e.g. <code>IOUState</code> with lender, borrower, amount).</li>
+        <li><b>Contracts:</b> code that says which state changes are valid (e.g. amount must be positive, both parties must sign).</li>
+        <li><b>Flows:</b> the workflow that proposes, signs and records the state change.</li>
+      </ul>
+      <pre class="tree">CorDapp = States + Contracts + Flows
+             |          |          |
+             v          v          v
+        "what is true" "what is   "how do we
+                        allowed"   get there"</pre>
+      <p><b>What this means:</b> a CorDapp is not just code; it is data (states), rules (contracts) and process (flows) packaged together.</p>
+
+      <div class="book"><b>Book link:</b> the supplied book covers R3 and Corda Settler in §3.5 (news-style), not Corda's internal architecture. The feature list above is the standard Corda model required by the 2025 paper.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s34">
+  <h2>3.4 Bitcoin, Ethereum and Hyperledger as platforms</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Explain in detail: (i) Bitcoin (ii) Ethereum (iii) Hyperledger. / Explain any two blockchain platforms.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2024 May Q1(b) [6] · 2025 Nov Q1(b) [6]  |  2023 Nov Q1(a) [6 — any two of R3, Ethereum, Hyperledger, Corda; see §3.3 for R3/Corda]</p>
+
+      <div class="simple"><b>In simple words:</b> Bitcoin is digital money.<br>
+      Ethereum is a programmable blockchain that runs apps and smart contracts.<br>
+      Hyperledger is a private, permissioned ledger for businesses.<br>
+      All three are platforms, but they solve different jobs.</div>
+
+      <h4>Why we do this</h4>
+      <p>The exam often says "explain any two platforms". To choose well, you need to know what each platform optimises: simple payments, programmable apps, or private enterprise workflows.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Platform:</b> the base software on which applications and transactions run.</li>
+        <li><b>UTXO:</b> unspent transaction output; Bitcoin's way of tracking money as spendable chunks.</li>
+        <li><b>Account model:</b> a ledger that stores a balance for each account, as Ethereum does.</li>
+        <li><b>Smart contract:</b> code stored on a blockchain that runs automatically when conditions are met.</li>
+        <li><b>EVM:</b> Ethereum Virtual Machine, the runtime that executes Ethereum contracts.</li>
+        <li><b>Solidity:</b> the main programming language for Ethereum contracts.</li>
+        <li><b>Gas:</b> the fee paid to execute computation on Ethereum.</li>
+        <li><b>Turing-complete:</b> able to express any computation, given enough time and memory.</li>
+        <li><b>Permissioned:</b> only approved, identified members can join.</li>
+        <li><b>Chaincode:</b> Hyperledger Fabric's name for a smart contract.</li>
+        <li><b>Channel:</b> a private sub-ledger shared only by selected Fabric members.</li>
+        <li><b>MSP:</b> Membership Service Provider, the Fabric component that issues identities.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>DApp:</b> a decentralised application that runs on a blockchain.</li>
+        <li><b>NFT:</b> a unique token that represents one specific item.</li>
+        <li><b>DAO:</b> a decentralised autonomous organisation governed by token votes.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>State the purpose.</b> Payments, apps, or enterprise records. <i>Why:</i> purpose explains every other design choice.</li>
+        <li><b>State the ledger model.</b> Bitcoin uses UTXOs; Ethereum uses accounts; Fabric uses key-value state. <i>Why:</i> The ledger model changes how balances and transfers are computed.</li>
+        <li><b>State consensus.</b> Bitcoin uses PoW; Ethereum uses PoS; Fabric plugs in Raft or BFT. <i>Why:</i> public chains need costly Sybil resistance; private chains know their members.</li>
+        <li><b>State programmability.</b> Bitcoin has limited Script; Ethereum is Turing-complete; Fabric runs chaincode in Go, Java or JavaScript. <i>Why:</i> Programmability decides what developers can build.</li>
+        <li><b>State privacy and speed.</b> Public chains are transparent and slower; Fabric uses private channels and is faster. <i>Why:</i> Privacy and speed often decide whether a business can use the chain.</li>
+        <li><b>Give one use case each.</b> Payments, DApps/NFTs, supply chain or trade finance. <i>Why:</i> A use case proves you can match the platform to a real job.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Bitcoin is a calculator that does one job very well. Ethereum is a smartphone with an app store. Hyperledger is a company intranet where only staff with badges can log in.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Ethereum is not "just another Bitcoin"; it is a programmable platform. Hyperledger is not a coin; it is a family of enterprise ledgers. Bitcoin's limited script still supports multisignature and time locks.</div>
+
+      <h4>Full answer for the exam</h4>
+      <h4>Bitcoin</h4>
+      <ul>
+        <li><b>What:</b> the first public blockchain and cryptocurrency, released in 2009 by the pseudonymous <b>Satoshi Nakamoto</b>.</li>
+        <li><b>Model:</b> UTXO (unspent transaction output). A transaction spends old outputs and creates new ones.</li>
+        <li><b>Consensus:</b> Proof of Work; one block about every 10 minutes; difficulty adjusts every 2016 blocks.</li>
+        <li><b>Supply:</b> capped at <b>21 million BTC</b>; reward halves every 210,000 blocks (about 4 years).</li>
+        <li><b>Scripting:</b> a limited, non-Turing-complete script for conditions such as multisignature.</li>
+        <li><b>Use:</b> peer-to-peer value transfer, store of value. No general smart contracts.</li>
+      </ul>
+
+      <h4>Ethereum</h4>
+      <ul>
+        <li><b>What:</b> a public, programmable blockchain proposed by <b>Vitalik Buterin</b> in 2013; Frontier released in 2015.</li>
+        <li><b>Model:</b> account-based (externally owned accounts and contract accounts).</li>
+        <li><b>Core:</b> the <b>EVM</b> runs smart-contract bytecode; developers write contracts in <b>Solidity</b>.</li>
+        <li><b>Currency:</b> ether (ETH) pays for gas. There is no hard 21-million cap.</li>
+        <li><b>Consensus:</b> PoW until "The Merge" (2022), then <b>Proof of Stake</b>.</li>
+        <li><b>Use:</b> DApps, tokens (ERC-20), NFTs (ERC-721), DAOs, DeFi.</li>
+      </ul>
+
+      <h4>Hyperledger (Fabric)</h4>
+      <ul>
+        <li><b>What:</b> an open-source, <b>permissioned</b> enterprise blockchain hosted by the Linux Foundation.</li>
+        <li><b>Modular architecture:</b> pluggable consensus, membership, identity and storage.</li>
+        <li><b>Channels:</b> a subset of members can run a private sub-ledger; other members cannot see it.</li>
+        <li><b>Chaincode:</b> smart contracts written in Go, Java or JavaScript. No native cryptocurrency.</li>
+        <li><b>Identity:</b> every participant has a certificate from a membership service provider (MSP).</li>
+        <li><b>Use:</b> supply chain, trade finance, healthcare consortia, banking pilots.</li>
+      </ul>
+
+      <h4>Comparison table (use this for the 6-mark answer)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th><th>Hyperledger Fabric</th></tr></thead>
+        <tbody>
+          <tr><td>Type</td><td>Public</td><td>Public</td><td>Permissioned / private</td></tr>
+          <tr><td>Main purpose</td><td>Digital money</td><td>Smart contracts &amp; DApps</td><td>Enterprise business ledger</td></tr>
+          <tr><td>Consensus</td><td>PoW</td><td>PoS (since 2022)</td><td>Pluggable (Raft, BFT)</td></tr>
+          <tr><td>Smart contracts</td><td>Limited script</td><td>Solidity / EVM</td><td>Chaincode (Go, Java, JS)</td></tr>
+          <tr><td>Currency</td><td>BTC, 21M cap</td><td>ETH, no hard cap</td><td>None</td></tr>
+          <tr><td>Privacy</td><td>Pseudonymous, public</td><td>Pseudonymous, public</td><td>Private channels</td></tr>
+          <tr><td>Speed</td><td>~7 tx/s, 10-min blocks</td><td>~15–30 tx/s, 12-s slots</td><td>Thousands tx/s</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> the rows about consensus, privacy and speed all follow from one choice: whether the network is open to strangers or limited to known members.</p>
+
+      <div class="tip"><b>For "any two":</b> pick Ethereum + Hyperledger if you want a strong contrast (public programmable vs private enterprise). Write one paragraph each and two comparison rows; that is enough for 6 marks.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s35">
+  <h2>3.5 Bitcoin vs Ethereum</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Discuss the difference between Bitcoin and Ethereum.</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [4] · 2025 Nov Q2(a) [4]</p>
+
+      <div class="simple"><b>In simple words:</b> Bitcoin is digital gold: it stores and moves value.<br>
+      Ethereum is a world computer: it also runs programs.<br>
+      Bitcoin uses UTXOs and PoW; Ethereum uses accounts and PoS.<br>
+      Their purposes explain their different designs.</div>
+
+      <h4>Why we do this</h4>
+      <p>Examiners ask for four differences, not twenty. The safest way is to start from purpose, then show how purpose changes the ledger model, consensus and programming.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>UTXO:</b> unspent transaction output; Bitcoin tracks spendable chunks rather than account balances.</li>
+        <li><b>Account model:</b> Ethereum stores a balance and storage for each account.</li>
+        <li><b>EVM:</b> Ethereum Virtual Machine, which runs smart contracts.</li>
+        <li><b>Gas:</b> the unit of computation cost on Ethereum.</li>
+        <li><b>Turing-complete:</b> able to run any computation, subject to gas limits.</li>
+        <li><b>PoW / PoS:</b> proof-based consensus using computing power or locked stake.</li>
+        <li><b>Issuance:</b> the rate at which new coins are created.</li>
+        <li><b>DApp:</b> a decentralised application that runs on a blockchain.</li>
+        <li><b>Smart contract:</b> code on a blockchain that runs automatically when conditions are met.</li>
+        <li><b>Block time:</b> the average time between two blocks.</li>
+        <li><b>Script:</b> Bitcoin's simple language for spending conditions such as multisignature.</li>
+        <li><b>ERC-20:</b> the standard for fungible tokens on Ethereum.</li>
+        <li><b>NFT:</b> a unique token that represents one specific item.</li>
+        <li><b>Store of value:</b> an asset people hold because they expect it to keep value over time.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Compare purpose.</b> Money versus programmable applications. <i>Why:</i> this is the root difference.</li>
+        <li><b>Compare the ledger model.</b> UTXO versus accounts. <i>Why:</i> it changes how a wallet computes a balance.</li>
+        <li><b>Compare consensus.</b> PoW versus PoS. <i>Why:</i> it changes energy use and finality.</li>
+        <li><b>Compare supply.</b> Hard cap of 21 million versus a policy without a hard cap. <i>Why:</i> Supply policy affects scarcity and long-term value.</li>
+        <li><b>Compare programming.</b> Limited Script versus a Turing-complete EVM. <i>Why:</i> Programmability is the main capability gap between the two.</li>
+        <li><b>Finish with one line.</b> Bitcoin is digital gold; Ethereum is a world computer. <i>Why:</i> One sentence gives the examiner a clean conclusion.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Bitcoin is a gold bar in a secure vault: scarce, simple and good for storing value. Ethereum is a smartphone: it can hold money, but it also runs apps.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Ethereum also has money (ETH); it is not "only apps". Bitcoin can run simple scripts for multisignature and time locks. "No hard cap" does not mean Ethereum prints coins without limit; its issuance follows a policy.</div>
+
+      <h4>Full answer for the exam</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th></tr></thead>
+        <tbody>
+          <tr><td>Launched</td><td>2009, Satoshi Nakamoto</td><td>2015, Vitalik Buterin</td></tr>
+          <tr><td>Purpose</td><td>Peer-to-peer electronic cash / store of value</td><td>Programmable platform for smart contracts and DApps</td></tr>
+          <tr><td>Ledger model</td><td>UTXO</td><td>Account-based</td></tr>
+          <tr><td>Consensus</td><td>Proof of Work</td><td>Proof of Stake (since The Merge, 2022)</td></tr>
+          <tr><td>Supply</td><td>Capped at 21 million BTC</td><td>No hard cap; issuance depends on staking</td></tr>
+          <tr><td>Block time</td><td>~10 minutes</td><td>~12-second slots</td></tr>
+          <tr><td>Programming</td><td>Limited Script (non-Turing-complete)</td><td>Turing-complete EVM; Solidity, Vyper</td></tr>
+          <tr><td>Currency</td><td>BTC</td><td>ETH, plus ERC-20 tokens and NFTs</td></tr>
+          <tr><td>Fees</td><td>Paid to miners; depends on block space</td><td>Gas = gas limit × gas price</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> read the table top to bottom. Purpose drives the ledger model, the consensus choice and the programming model.</p>
+      <div class="note"><b>4-mark version:</b> give four differences only: purpose, consensus, supply and programmability. Add one line: "Bitcoin is digital gold; Ethereum is a world computer."</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s36">
+  <h2>3.6 Consensus fundamentals</h2>
+  <p class="lead">Syllabus: <em>Consensus Approach, Consensus Elements, Consensus Algorithms.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q6</span>Explain consensus in blockchain in detail. What is consensus in blockchain?</p>
+      <div class="badges"><span class="b marks">8 / 6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [8] · 2023 Nov Q2(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> Consensus means all nodes agree on one ledger and one order of transactions.<br>
+      Without it, each computer would keep a different story of who paid whom.<br>
+      A consensus algorithm decides who proposes the next block and when it is final.<br>
+      It also stops double-spending and keeps the chain growing when some nodes fail.</div>
+
+      <h4>Why we do this</h4>
+      <p>A blockchain has no central referee. Nodes may be slow, faulty or malicious, and messages can arrive out of order. Consensus is the rule that still produces one shared history from all that noise.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Consensus:</b> agreement by all honest nodes on one ledger state and one transaction order.</li>
+        <li><b>Consensus algorithm:</b> the rules that decide who proposes a block and which blocks are valid.</li>
+        <li><b>Node:</b> a computer that stores the ledger and validates blocks.</li>
+        <li><b>Ledger:</b> the record of all transactions and balances.</li>
+        <li><b>Double-spending:</b> spending the same coin twice.</li>
+        <li><b>Fork:</b> two different blocks that claim the same parent, creating rival histories.</li>
+        <li><b>Fork choice:</b> the rule that picks the canonical branch.</li>
+        <li><b>Finality:</b> the point after which a block cannot be reversed.</li>
+        <li><b>Safety:</b> honest nodes never accept two conflicting final histories.</li>
+        <li><b>Liveness:</b> the chain keeps accepting new blocks and does not freeze.</li>
+        <li><b>Quorum:</b> the minimum votes needed to decide.</li>
+        <li><b>BFT:</b> Byzantine Fault Tolerance, agreement even when some nodes lie.</li>
+        <li><b>Mempool:</b> the waiting area for valid transactions not yet in a block.</li>
+        <li><b>Block reward:</b> new coins paid to the node that creates a block.</li>
+        <li><b>Slashing:</b> destroying part of a validator's stake as a penalty.</li>
+        <li><b>PBFT:</b> Practical Byzantine Fault Tolerance, a voting protocol for known validators.</li>
+        <li><b>Raft:</b> a crash-fault consensus protocol for known servers; it does not handle lying nodes.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Proof of Burn:</b> consensus by destroying coins to earn mining rights.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>A user broadcasts a signed transaction.</b> <i>Why:</i> nodes need proof that the owner authorised it.</li>
+        <li><b>Each node checks the rules.</b> Signature, balance, nonce and format. <i>Why:</i> invalid transactions must never reach a block.</li>
+        <li><b>Valid transactions wait in the mempool.</b> <i>Why:</i> a block has limited space, so ordering matters.</li>
+        <li><b>A proposer or miner selects transactions</b> and builds a candidate block. <i>Why:</i> someone must create the next page.</li>
+        <li><b>Other nodes validate the block.</b> <i>Why:</i> one node's claim is not enough.</li>
+        <li><b>A fork-choice rule picks the branch.</b> Longest chain in PoW, checkpoint in PoS, quorum certificate in BFT. <i>Why:</i> two valid blocks can appear at the same time.</li>
+        <li><b>Finality is reached.</b> More blocks or a supermajority vote makes reversal impractical. <i>Why:</i> Users need to know when a payment can no longer be reversed.</li>
+        <li><b>Rewards and penalties keep nodes honest.</b> Fees and block rewards for good work; slashing or wasted cost for bad work. <i>Why:</i> Incentives make honest behaviour the profitable choice.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A class keeps five copies of the attendance register. Some students may write a different entry in one copy. The class needs a rule that makes all honest copies end up with the same list, even when a few entries disagree.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Consensus does not mean everyone trusts everyone; it means they agree despite distrust. A confirmation is not the same as finality: one block can still be reversed, while a finalised block cannot.</div>
+
+      <h4>Full answer for the exam</h4>
+      <p><b>Definition.</b> <b>Consensus</b> is the process by which all peers (nodes) of a blockchain network agree on <b>one present state of the ledger</b> and on the <b>order of transactions</b>. It creates reliability and trust between nodes that may not know or trust each other.</p>
+      <p>A <b>consensus algorithm</b> is the set of rules that lets all peers reach this agreement. It decides which node proposes the next block and which blocks are valid.</p>
+
+      <h4>Why blockchain needs consensus</h4>
+      <ul>
+        <li>There is no central bank or administrator to decide the true balance.</li>
+        <li>Nodes may be faulty, slow or malicious.</li>
+        <li>It prevents <b>double-spending</b>: the same coin cannot be spent twice.</li>
+        <li>It gives a single history even when messages arrive out of order.</li>
+        <li>It provides <b>fault tolerance</b>: the network keeps working if some nodes fail.</li>
+      </ul>
+
+      <h4>Consensus approach (two main families)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Approach</th><th>Idea</th><th>Examples</th><th>Finality</th></tr></thead>
+        <tbody>
+          <tr><td>Proof-based ("Nakamoto")</td><td>Nodes spend a scarce resource (hash power, stake, burn) for the right to propose a block; the heaviest/longest chain wins.</td><td>PoW, PoS, PoB</td><td>Probabilistic</td></tr>
+          <tr><td>Voting-based (BFT)</td><td>Known validators exchange votes in rounds; a block needs a supermajority (usually 2/3).</td><td>PBFT, IBFT, Tendermint, Raft (crash-only)</td><td>Deterministic</td></tr>
+          <tr><td>Hybrid</td><td>A proof selects the proposer, then validators vote or sign.</td><td>PoA (activity), PoET</td><td>Mixed</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> proof-based chains buy security with a costly resource; voting chains buy speed with known identities. Hybrids combine the two.</p>
+
+      <h4>Consensus elements (the seven pieces)</h4>
+      <ol>
+        <li><b>Nodes / peers:</b> the participants that store the ledger and validate blocks.</li>
+        <li><b>Transactions:</b> signed requests to change state.</li>
+        <li><b>Blocks:</b> an ordered batch of transactions with a header and a hash link to the parent.</li>
+        <li><b>Validation rules:</b> signature, balance, nonce, gas, block format and size checks.</li>
+        <li><b>Fork-choice / finality rule:</b> which branch is canonical (longest chain in PoW; checkpoint finality in PoS; quorum certificate in BFT).</li>
+        <li><b>Incentives and penalties:</b> block reward and fees for honest work; slashing or wasted energy for bad behaviour.</li>
+        <li><b>Agreement and liveness:</b> all honest nodes eventually agree (safety) and the chain keeps growing (liveness).</li>
+      </ol>
+
+      <h4>Diagram: consensus round</h4>
+      <pre class="tree">new transactions
+      │
+      ▼
+[ mempool ] ──► proposer / miner selects txs
+      │
+      ▼
+candidate block ──► other nodes validate
+      │                    │
+      │              valid │ invalid
+      │                    ▼
+      │              reject / penalise
+      ▼
+consensus rule (PoW longest chain / PoS votes / BFT quorum)
+      │
+      ▼
+block appended ──► state updated ──► next round</pre>
+      <p><b>What this means:</b> the loop repeats forever. Every pass adds one block and updates the agreed state.</p>
+
+      <div class="note"><b>For 6 marks:</b> definition (2) + why needed (2) + approach table (2). For 8 marks, add the seven elements and the diagram.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Explain the difference between a permissioned and permissionless consensus approach.</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q2(b) [4] · 2025 Nov Q2(b) [4]</p>
+
+      <div class="simple"><b>In simple words:</b> Permissionless means anyone can join and validate.<br>
+      Permissioned means only approved, known members can join.<br>
+      Open networks need costly proof to stop fake accounts; closed networks can simply vote.<br>
+      That one difference explains the gap in speed, privacy and trust.</div>
+
+      <h4>Why we do this</h4>
+      <p>An open network cannot know who is behind a new node, so it must make identity expensive. A closed network already knows its members, so it can use fast voting. The exam asks you to connect those entry rules to the consensus design.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Permissionless:</b> anyone can join, read, transact and validate without approval.</li>
+        <li><b>Permissioned:</b> only approved and identified members can join or validate.</li>
+        <li><b>Sybil attack:</b> one attacker creates many fake identities to gain influence.</li>
+        <li><b>KYC:</b> Know Your Customer; identity checks used by regulated services.</li>
+        <li><b>Validator:</b> a node that approves or adds blocks.</li>
+        <li><b>BFT:</b> Byzantine Fault Tolerance, voting that survives lying nodes.</li>
+        <li><b>Probabilistic finality:</b> a block becomes safer with each later block but is never absolutely final.</li>
+        <li><b>Deterministic finality:</b> a block is final as soon as the required quorum signs.</li>
+        <li><b>Consortium:</b> a group of organisations that jointly runs a permissioned network.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
+        <li><b>Raft:</b> a fast consensus protocol for known servers that assumes they do not lie.</li>
+        <li><b>Proof of Authority:</b> consensus by a small set of approved, reputable validators.</li>
+        <li><b>Sybil resistance:</b> a rule that makes it expensive or impossible to create many fake identities.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Ask who may join.</b> Anyone or approved members. <i>Why:</i> this decides whether fake identities are cheap.</li>
+        <li><b>Choose Sybil resistance.</b> PoW/PoS cost or identity checks. <i>Why:</i> consensus needs a limit on how many voices one attacker can create.</li>
+        <li><b>Choose the validator set.</b> Open to all, or selected by an operator or consortium. <i>Why:</i> Who validates decides how much trust the network needs.</li>
+        <li><b>Choose the consensus style.</b> Proof-based and probabilistic, or voting-based and deterministic. <i>Why:</i> The validator set limits which consensus style is safe.</li>
+        <li><b>Check speed and privacy.</b> A small known set is faster and can keep data private; a large open set is slower and public. <i>Why:</i> These two properties usually decide the business fit.</li>
+        <li><b>Match the use case.</b> Public payments → permissionless. Bank or supply-chain network → permissioned. <i>Why:</i> The use case is the final test of the choice.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> A public bus lets anyone board and pay per ride. A company shuttle checks your employee badge before you enter. The shuttle is faster and more private, but only because the company controls the door.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Permissioned does not mean fully centralised; a consortium can have many independent owners. Permissionless does not mean lawless: users still follow protocol rules, and exchanges may still require KYC.</div>
+
+      <h4>Full answer for the exam</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Permissionless</th><th>Permissioned</th></tr></thead>
+        <tbody>
+          <tr><td>Who joins</td><td>Anyone, anonymously</td><td>Only approved, identified members</td></tr>
+          <tr><td>Validators</td><td>Unknown; anyone can mine/stake</td><td>Known validators chosen by the operator/consortium</td></tr>
+          <tr><td>Consensus</td><td>PoW / PoS, probabilistic</td><td>BFT voting, Raft, PoA; deterministic finality</td></tr>
+          <tr><td>Speed</td><td>Lower (large network)</td><td>Higher (small, known set)</td></tr>
+          <tr><td>Trust</td><td>Trustless; economic incentives</td><td>Trust in membership and governance</td></tr>
+          <tr><td>Privacy</td><td>Public ledger</td><td>Private channels / need-to-know</td></tr>
+          <tr><td>Examples</td><td>Bitcoin, Ethereum</td><td>Hyperledger Fabric, R3 Corda</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> the consensus row is a consequence, not a free choice. Open entry forces costly proof; closed entry allows fast votes.</p>
+      <p><b>One-line answer:</b> permissionless = open entry + probabilistic proof-based consensus; permissioned = restricted entry + fast voting-based consensus with known identities.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s37">
+  <h2>3.7 Byzantine General Problem</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>What is the Byzantine General Problem? Explain its significance in the context of blockchain consensus.</p>
+      <div class="badges"><span class="b marks">4 / 6 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 3</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(c) [4] · 2023 Nov Q1(c) [6 — with significance] · 2024 May Q2(c) [4] · 2025 Nov Q2(c) [4]</p>
+
+      <div class="simple"><b>In simple words:</b> Several generals must agree to attack or retreat, but messengers may lie.<br>
+      A blockchain has the same problem: some nodes may fail or cheat.<br>
+      Consensus must still produce one agreed history.<br>
+      The Byzantine bound says how many honest participants are needed.</div>
+
+      <h4>Why we do this</h4>
+      <p>A distributed network cannot trust every participant. Some nodes crash, some send conflicting messages, and some are controlled by attackers. The Byzantine problem studies the worst case, where a node can lie deliberately, so the agreed rule must survive it.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Byzantine fault:</b> any failure where a node behaves unpredictably, including sending fake or conflicting messages.</li>
+        <li><b>Node:</b> one computer in the network that stores data and validates messages.</li>
+        <li><b>General:</b> in the story, a commander who must agree on a plan; in blockchain, a node or validator.</li>
+        <li><b>Messenger:</b> the communication channel that carries orders between generals.</li>
+        <li><b>Consensus:</b> one agreed decision or history accepted by all honest participants.</li>
+        <li><b>BFT (Byzantine Fault Tolerance):</b> the ability of a system to agree even when some nodes lie.</li>
+        <li><b>Quorum:</b> the minimum number of votes needed to decide.</li>
+        <li><b>PBFT:</b> Practical Byzantine Fault Tolerance, a voting protocol for known validators.</li>
+        <li><b>Tendermint:</b> a BFT consensus engine used by Cosmos-style chains.</li>
+        <li><b>51% attack:</b> an attack in PoW that needs more than half of the total hash power.</li>
+        <li><b>Validator:</b> a node that votes on blocks in a BFT-style chain.</li>
+        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
+        <li><b>Hash power:</b> the number of hashes per second that a network or attacker can compute.</li>
+        <li><b>Finality:</b> the point after which a decided block cannot be reversed.</li>
+        <li><b>Signed message:</b> a message with a cryptographic proof of its sender, so it cannot be altered.</li>
+      
+        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>The commander sends one order</b> to every general. <i>Why:</i> a decision must start somewhere.</li>
+        <li><b>Each general relays what he heard</b> to the others. <i>Why:</i> no single message can be trusted alone.</li>
+        <li><b>Each general compares all reports.</b> <i>Why:</i> honest reports agree; a traitor's reports conflict.</li>
+        <li><b>Count the conflicting voices.</b> If too many generals are traitors, honest generals cannot tell which order is real. <i>Why:</i> The size of the majority decides whether honest generals can outvote the liars.</li>
+        <li><b>Apply the bound.</b> With oral messages, agreement needs <code>n ≥ 3m + 1</code>, where n is total generals and m is traitors. <i>Why:</i> The bound guarantees that honest voices outnumber traitors even in the worst message pattern.</li>
+        <li><b>Use signatures if possible.</b> Signed messages cannot be changed, so the bound improves to <code>n ≥ m + 2</code>. <i>Why:</i> Unforgeable signatures remove the ability to alter a message in transit.</li>
+        <li><b>Map it to blockchain.</b> Generals become nodes, messages become blocks or votes, traitors become faulty nodes, and agreement becomes one shared ledger. <i>Why:</i> The mapping shows that the old story is a model for distributed agreement.</li>
+        <li><b>Pay for honesty.</b> PoW makes lying expensive; BFT chains use stake or reputation and slash bad validators. <i>Why:</i> agreement needs an incentive, not only a rule.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Five friends plan a surprise party by phone, but two may send different times to different people. You need enough honest friends that the true time wins the majority, even when the liars contradict each other.</div>
+
+      <div class="confuse"><b>Common confusion:</b> A Byzantine fault is not just a crashed computer; it can actively lie. Also, <code>n ≥ 3m + 1</code> counts all generals, not "3 traitors plus 1". One traitor needs four generals in total.</div>
+
+      <h4>Full answer for the exam</h4>
+      <h4>The story</h4>
+      <p>Several Byzantine army divisions surround an enemy city. Each division is commanded by a general. They must agree on a <b>single plan</b>: attack together or retreat together. If some attack and some retreat, they lose. They can communicate only by <b>messengers</b>, and some generals may be <b>traitors</b> who send different messages to different generals.</p>
+      <p>The question is: <b>can the loyal generals still reach agreement?</b></p>
+
+      <h4>Formal statement</h4>
+      <ul>
+        <li>There are <code>n</code> generals and at most <code>m</code> traitors.</li>
+        <li>With <b>oral messages</b> (a traitor can lie and change a message), agreement is possible only if <code>n ≥ 3m + 1</code>.</li>
+        <li>So to tolerate 1 traitor, you need at least <b>4 generals</b>. With only 3 generals and 1 traitor, agreement is impossible.</li>
+        <li>With <b>signed (unforgeable) messages</b>, the bound improves to <code>n ≥ m + 2</code>.</li>
+      </ul>
+
+      <pre class="tree">Case: 3 generals, 1 traitor (C)
+
+        A ─── "attack" ───► B
+        │                   │
+     "retreat"           "attack"
+        │                   │
+        ▼                   ▼
+        C (traitor) ────────┘
+
+A hears "B says retreat"; B hears "A says attack".
+No common plan.  Need n ≥ 3m + 1 = 4.</pre>
+      <p><b>What this means:</b> with three generals and one liar, the two honest generals hear opposite stories and cannot break the tie. One more honest general creates a majority.</p>
+
+      <h4>Mapping to blockchain</h4>
+      <ul>
+        <li><b>Generals</b> → nodes / miners / validators.</li>
+        <li><b>Messages</b> → blocks, votes, transactions.</li>
+        <li><b>Traitors</b> → faulty or malicious nodes (Byzantine faults).</li>
+        <li><b>Agreement</b> → all honest nodes accept the same block order.</li>
+        <li>In a BFT protocol such as PBFT or Tendermint, the network needs <b>more than two-thirds</b> of validators honest (equivalent to <code>n ≥ 3m + 1</code>).</li>
+        <li>Bitcoin's PoW solves the problem <b>probabilistically</b>: an attacker needs more than 50% of hash power to rewrite history (the "51% attack").</li>
+      </ul>
+      <p><b>What this means:</b> BFT chains count votes; PoW chains count work. Both make lying expensive, but only BFT gives immediate finality.</p>
+
+      <h4>Significance (for the 6-mark version)</h4>
+      <ul>
+        <li>It proves that distributed agreement is impossible with too many faulty nodes, so consensus has a <b>hard limit</b>.</li>
+        <li>It explains why blockchain needs <b>redundancy</b> and <b>incentives</b>, not just voting.</li>
+        <li>It justifies the <b>2/3 honest assumption</b> in permissioned BFT chains and the <b>&gt;50% hash</b> assumption in PoW.</li>
+        <li>It explains why exchanges wait for <b>multiple confirmations</b> before accepting a deposit.</li>
+        <li>It is the theoretical base of PBFT, Tendermint, Corda's notary and other enterprise consensus protocols.</li>
+      </ul>
+
+      <div class="tip"><b>Memory hook:</b> "3m + 1": three times the traitors plus one. One traitor → four generals.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s38">
+  <h2>3.8 Proof of Work and Bitcoin mining</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -492,115 +1323,8 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   </div>
 </section>
 
-<section class="card" id="s37">
-  <div class="prio">Priority 2 · ★★★★ 4× repeated</div><h2>3.7 Byzantine General Problem</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q8</span>What is the Byzantine General Problem? Explain its significance in the context of blockchain consensus.</p>
-      <div class="badges"><span class="b marks">4 / 6 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 3</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(c) [4] · 2023 Nov Q1(c) [6 — with significance] · 2024 May Q2(c) [4] · 2025 Nov Q2(c) [4]</p>
-
-      <div class="simple"><b>In simple words:</b> Several generals must agree to attack or retreat, but messengers may lie.<br>
-      A blockchain has the same problem: some nodes may fail or cheat.<br>
-      Consensus must still produce one agreed history.<br>
-      The Byzantine bound says how many honest participants are needed.</div>
-
-      <h4>Why we do this</h4>
-      <p>A distributed network cannot trust every participant. Some nodes crash, some send conflicting messages, and some are controlled by attackers. The Byzantine problem studies the worst case, where a node can lie deliberately, so the agreed rule must survive it.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Byzantine fault:</b> any failure where a node behaves unpredictably, including sending fake or conflicting messages.</li>
-        <li><b>Node:</b> one computer in the network that stores data and validates messages.</li>
-        <li><b>General:</b> in the story, a commander who must agree on a plan; in blockchain, a node or validator.</li>
-        <li><b>Messenger:</b> the communication channel that carries orders between generals.</li>
-        <li><b>Consensus:</b> one agreed decision or history accepted by all honest participants.</li>
-        <li><b>BFT (Byzantine Fault Tolerance):</b> the ability of a system to agree even when some nodes lie.</li>
-        <li><b>Quorum:</b> the minimum number of votes needed to decide.</li>
-        <li><b>PBFT:</b> Practical Byzantine Fault Tolerance, a voting protocol for known validators.</li>
-        <li><b>Tendermint:</b> a BFT consensus engine used by Cosmos-style chains.</li>
-        <li><b>51% attack:</b> an attack in PoW that needs more than half of the total hash power.</li>
-        <li><b>Validator:</b> a node that votes on blocks in a BFT-style chain.</li>
-        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
-        <li><b>Hash power:</b> the number of hashes per second that a network or attacker can compute.</li>
-        <li><b>Finality:</b> the point after which a decided block cannot be reversed.</li>
-        <li><b>Signed message:</b> a message with a cryptographic proof of its sender, so it cannot be altered.</li>
-      
-        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>The commander sends one order</b> to every general. <i>Why:</i> a decision must start somewhere.</li>
-        <li><b>Each general relays what he heard</b> to the others. <i>Why:</i> no single message can be trusted alone.</li>
-        <li><b>Each general compares all reports.</b> <i>Why:</i> honest reports agree; a traitor's reports conflict.</li>
-        <li><b>Count the conflicting voices.</b> If too many generals are traitors, honest generals cannot tell which order is real. <i>Why:</i> The size of the majority decides whether honest generals can outvote the liars.</li>
-        <li><b>Apply the bound.</b> With oral messages, agreement needs <code>n ≥ 3m + 1</code>, where n is total generals and m is traitors. <i>Why:</i> The bound guarantees that honest voices outnumber traitors even in the worst message pattern.</li>
-        <li><b>Use signatures if possible.</b> Signed messages cannot be changed, so the bound improves to <code>n ≥ m + 2</code>. <i>Why:</i> Unforgeable signatures remove the ability to alter a message in transit.</li>
-        <li><b>Map it to blockchain.</b> Generals become nodes, messages become blocks or votes, traitors become faulty nodes, and agreement becomes one shared ledger. <i>Why:</i> The mapping shows that the old story is a model for distributed agreement.</li>
-        <li><b>Pay for honesty.</b> PoW makes lying expensive; BFT chains use stake or reputation and slash bad validators. <i>Why:</i> agreement needs an incentive, not only a rule.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> Five friends plan a surprise party by phone, but two may send different times to different people. You need enough honest friends that the true time wins the majority, even when the liars contradict each other.</div>
-
-      <div class="confuse"><b>Common confusion:</b> A Byzantine fault is not just a crashed computer; it can actively lie. Also, <code>n ≥ 3m + 1</code> counts all generals, not "3 traitors plus 1". One traitor needs four generals in total.</div>
-
-      <h4>Full answer for the exam</h4>
-      <h4>The story</h4>
-      <p>Several Byzantine army divisions surround an enemy city. Each division is commanded by a general. They must agree on a <b>single plan</b>: attack together or retreat together. If some attack and some retreat, they lose. They can communicate only by <b>messengers</b>, and some generals may be <b>traitors</b> who send different messages to different generals.</p>
-      <p>The question is: <b>can the loyal generals still reach agreement?</b></p>
-
-      <h4>Formal statement</h4>
-      <ul>
-        <li>There are <code>n</code> generals and at most <code>m</code> traitors.</li>
-        <li>With <b>oral messages</b> (a traitor can lie and change a message), agreement is possible only if <code>n ≥ 3m + 1</code>.</li>
-        <li>So to tolerate 1 traitor, you need at least <b>4 generals</b>. With only 3 generals and 1 traitor, agreement is impossible.</li>
-        <li>With <b>signed (unforgeable) messages</b>, the bound improves to <code>n ≥ m + 2</code>.</li>
-      </ul>
-
-      <pre class="tree">Case: 3 generals, 1 traitor (C)
-
-        A ─── "attack" ───► B
-        │                   │
-     "retreat"           "attack"
-        │                   │
-        ▼                   ▼
-        C (traitor) ────────┘
-
-A hears "B says retreat"; B hears "A says attack".
-No common plan.  Need n ≥ 3m + 1 = 4.</pre>
-      <p><b>What this means:</b> with three generals and one liar, the two honest generals hear opposite stories and cannot break the tie. One more honest general creates a majority.</p>
-
-      <h4>Mapping to blockchain</h4>
-      <ul>
-        <li><b>Generals</b> → nodes / miners / validators.</li>
-        <li><b>Messages</b> → blocks, votes, transactions.</li>
-        <li><b>Traitors</b> → faulty or malicious nodes (Byzantine faults).</li>
-        <li><b>Agreement</b> → all honest nodes accept the same block order.</li>
-        <li>In a BFT protocol such as PBFT or Tendermint, the network needs <b>more than two-thirds</b> of validators honest (equivalent to <code>n ≥ 3m + 1</code>).</li>
-        <li>Bitcoin's PoW solves the problem <b>probabilistically</b>: an attacker needs more than 50% of hash power to rewrite history (the "51% attack").</li>
-      </ul>
-      <p><b>What this means:</b> BFT chains count votes; PoW chains count work. Both make lying expensive, but only BFT gives immediate finality.</p>
-
-      <h4>Significance (for the 6-mark version)</h4>
-      <ul>
-        <li>It proves that distributed agreement is impossible with too many faulty nodes, so consensus has a <b>hard limit</b>.</li>
-        <li>It explains why blockchain needs <b>redundancy</b> and <b>incentives</b>, not just voting.</li>
-        <li>It justifies the <b>2/3 honest assumption</b> in permissioned BFT chains and the <b>&gt;50% hash</b> assumption in PoW.</li>
-        <li>It explains why exchanges wait for <b>multiple confirmations</b> before accepting a deposit.</li>
-        <li>It is the theoretical base of PBFT, Tendermint, Corda's notary and other enterprise consensus protocols.</li>
-      </ul>
-
-      <div class="tip"><b>Memory hook:</b> "3m + 1": three times the traitors plus one. One traitor → four generals.</div>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="s39">
-  <div class="prio">Priority 3 · ★★★★ 4× repeated</div><h2>3.9 Proof of Stake</h2>
+  <h2>3.9 Proof of Stake</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -726,7 +1450,7 @@ No common plan.  Need n ≥ 3m + 1 = 4.</pre>
 </section>
 
 <section class="card" id="s310">
-  <div class="prio">Priority 4 · ★★★ 3× repeated</div><h2>3.10 Proof of Activity, Proof of Burn, Proof of Elapsed Time</h2>
+  <h2>3.10 Proof of Activity, Proof of Burn, Proof of Elapsed Time</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -972,732 +1696,8 @@ block header  ────────► select N validators
   <div class="note"><b>Syllabus context — PoET:</b> Proof of Elapsed Time is listed in the syllabus but no end-sem paper asks it by name. Learn it as a backup for "any five consensus algorithms": random wait times, Intel SGX trusted execution, first to wake mines, used by Hyperledger Sawtooth.</div>
 </section>
 
-<section class="card" id="s31">
-  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>3.1 Public, private and consortium blockchains</h2>
-  <p class="lead">Syllabus: <em>Types of Blockchain Platforms — Public, Private and Consortium.</em></p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain in detail the following blockchain platforms: (i) Public (ii) Private (iii) Consortium. Give the different types of blockchain and state their advantages and disadvantages.</p>
-      <div class="badges"><span class="b marks">8 / 6 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [8] · 2023 Nov Q2(a) [6 — any two] · 2025 May Q2(a) [8 — types + advantages/disadvantages]</p>
-
-      <div class="simple"><b>In simple words:</b> Blockchain platforms differ by who is allowed in.<br>
-      Public is open to anyone; private is controlled by one organisation; consortium is shared by a group.<br>
-      Open networks are transparent but slower; closed networks are faster but need trust in the owner.<br>
-      The type decides who can read, validate and change the ledger.</div>
-
-      <h4>Why we do this</h4>
-      <p>The same blockchain software can serve a public payment network or a private bank network. Access rules change the trust model, speed, privacy and cost, so you must choose the type before choosing the software.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Blockchain platform:</b> the software layer that lets participants create, store, validate and query a shared ledger.</li>
-        <li><b>Node:</b> a computer that keeps a copy of the ledger and checks blocks.</li>
-        <li><b>Validator:</b> a node allowed to approve or add blocks.</li>
-        <li><b>Permissionless:</b> anyone can join and validate without approval.</li>
-        <li><b>Permissioned:</b> only approved, identified members can join or validate.</li>
-        <li><b>Consortium:</b> a group of organisations that jointly own and govern a network.</li>
-        <li><b>Trustless:</b> a design where you do not need to trust a person or company, because rules and incentives enforce behaviour.</li>
-        <li><b>Hybrid blockchain:</b> a mix where one organisation runs the network but a public chain checks some data.</li>
-        <li><b>Throughput:</b> the number of transactions processed per second.</li>
-        <li><b>Public blockchain:</b> an open network where anyone can read, transact and validate.</li>
-        <li><b>Private blockchain:</b> a network where one organisation approves members and validators.</li>
-        <li><b>Consortium blockchain:</b> a network jointly owned and governed by a group of organisations.</li>
-        <li><b>Append-only:</b> data can be added but old entries cannot be edited or deleted.</li>
-        <li><b>Ledger:</b> the record of all transactions and balances.</li>
-        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
-        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
-        <li><b>Byzantine Fault Tolerance (BFT):</b> agreement that still works when some nodes lie.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Decide who may join.</b> Open to all, one organisation, or a fixed group. <i>Why:</i> this is the first dividing line between public and private.</li>
-        <li><b>Decide who may validate.</b> Anonymous miners, the owner's servers, or consortium members. <i>Why:</i> validators control the history.</li>
-        <li><b>Decide who may read.</b> Everyone, only members, or only selected parties. <i>Why:</i> reading rules decide privacy.</li>
-        <li><b>Pick consensus.</b> Public chains often use PoW/PoS; private and consortium chains often use BFT voting. <i>Why:</i> known validators can vote quickly; unknown ones need costly proof.</li>
-        <li><b>Compare the trade-offs.</b> Public = transparent but slow; private = fast but trusted owner; consortium = shared control but slow governance. <i>Why:</i> The comparison turns definitions into a practical choice.</li>
-        <li><b>Write advantages and disadvantages</b> for each type, as the exam asks. <i>Why:</i> The exam awards marks for both sides, not just the definition.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> A public blockchain is a public park anyone can enter. A private blockchain is a company office with a badge door. A consortium blockchain is a gated clubhouse owned jointly by several companies.</div>
-
-      <div class="confuse"><b>Common confusion:</b> Private does not always mean secret; it means membership is controlled. A consortium is not the same as a private chain owned by one company. And public does not mean "no rules": the protocol still enforces them.</div>
-
-      <h4>Full answer for the exam</h4>
-      <p><b>Definition.</b> A <b>blockchain platform</b> is the software layer that lets participants create, store, validate and query a shared, append-only ledger. The <b>type</b> of platform is decided by <b>who is allowed to join</b>, <b>who validates</b> and <b>who owns the network</b>.</p>
-
-      <h4>The four types (book's classification)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Public</th><th>Private (managed)</th><th>Consortium</th><th>Hybrid</th></tr></thead>
-        <tbody>
-          <tr><td>Who can join</td><td>Anyone, no permission</td><td>Only nodes approved by one organisation</td><td>Only members of a group of organisations</td><td>One organisation controls; public chain supervises some checks</td></tr>
-          <tr><td>Who validates</td><td>Any miner / validator</td><td>The central owner or its chosen validators</td><td>Validators chosen by the consortium</td><td>Mixed</td></tr>
-          <tr><td>Decentralisation</td><td>Fully decentralised</td><td>Partially decentralised</td><td>More decentralised than private, less than public</td><td>Mostly central with public oversight</td></tr>
-          <tr><td>Speed / cost</td><td>Slow, high energy (PoW)</td><td>Fast, cheap</td><td>Fast, cheap</td><td>Medium</td></tr>
-          <tr><td>Transparency</td><td>Everyone can read the ledger</td><td>Read access restricted</td><td>Read access restricted to members</td><td>Selective</td></tr>
-          <tr><td>Trust model</td><td>Trustless; code + economics</td><td>Trust the owner</td><td>Trust the consortium rules</td><td>Mixed</td></tr>
-          <tr><td>Examples</td><td>Bitcoin, Ethereum, Litecoin</td><td>Hyperledger Fabric (single org), Ripple</td><td>R3 Corda, Global Shipping Business Network, Hyperledger</td><td>IBM Food Trust</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>What this means:</b> leaving the public column trades openness for speed and privacy. The consensus method changes with that trade, not by accident.</p>
-
-      <h4>Public blockchain</h4>
-      <ul>
-        <li><b>Open access:</b> any node can read the chain, send a transaction and take part in validation.</li>
-        <li><b>Fully decentralised:</b> no single owner; rules are enforced by the protocol and by economic incentives.</li>
-        <li><b>Consensus:</b> usually PoW or PoS; every node stores a copy of the ledger.</li>
-        <li><b>Advantages:</b> censorship-resistant, transparent, anyone can audit, a large number of participants makes tampering hard.</li>
-        <li><b>Disadvantages:</b> slow throughput, high energy use (PoW), public exposure of transaction data, hard to change rules.</li>
-      </ul>
-
-      <h4>Private blockchain</h4>
-      <ul>
-        <li><b>Permissioned:</b> a single organisation decides which nodes join and what rights they get.</li>
-        <li><b>Partially decentralised:</b> the ledger may be replicated, but the central authority controls membership.</li>
-        <li><b>Advantages:</b> high speed, low cost, privacy, easy governance, no need for expensive mining.</li>
-        <li><b>Disadvantages:</b> trust is back on the owner; fewer validators means easier collusion; less transparent.</li>
-      </ul>
-
-      <h4>Consortium blockchain</h4>
-      <ul>
-        <li><b>Permissioned but multi-owner:</b> a group of organisations (banks, shippers, hospitals) jointly runs the network. No single member owns it.</li>
-        <li><b>Better decentralisation than private:</b> no one party can rewrite history alone, so safety improves.</li>
-        <li><b>Advantages:</b> shared truth between competitors, lower settlement cost, privacy between members, good for trade finance and supply chains.</li>
-        <li><b>Disadvantages:</b> forming the consortium is slow (legal, technical and antitrust issues); every member must invest in infrastructure; governance disputes are common.</li>
-      </ul>
-
-      <h4>Diagram: decentralisation spectrum</h4>
-      <pre class="tree">PUBLIC                 CONSORTIUM                 PRIVATE
-open to all            selected organisations     one organisation
-   |                          |                         |
-   v                          v                         v
-[ Bitcoin ]  ------&gt;  [ R3 Corda / GSBN ]  ------&gt;  [ Fabric, single org ]
-more decentralised  ----------------------------&gt;  more centralised
-slower, transparent  ----------------------------&gt;  faster, private</pre>
-      <p><b>What this means:</b> decentralisation and privacy pull in opposite directions here. Public chains protect openness; private chains protect control.</p>
-
-      <div class="tip"><b>8-mark structure:</b> 3 definitions (3) + comparison table (3) + one advantage and one disadvantage each (2). For 2025 May Q2(a), add a short "advantages/disadvantages" list after the table.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s32">
-  <div class="prio">Priority 6 · ★★★ 3× repeated</div><h2>3.2 IOTA and the Tangle</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Explain IOTA in detail. Explain the role of IOTA in the context of the Internet of Things (IoT).</p>
-      <div class="badges"><span class="b marks">6 / 8 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a)(iv) [8, part] · 2024 May Q2(d) [6] · 2025 Nov Q2(d) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> IOTA is a ledger built for tiny machines, not for people.<br>
-      It has no blocks and no miners; each new transaction approves two older ones.<br>
-      Because there are no fees, a sensor can sell one reading for a tiny amount.<br>
-      The resulting web of transactions is called the Tangle.</div>
-
-      <h4>Why we do this</h4>
-      <p>The Internet of Things needs millions of small payments between sensors, meters and cars. Bitcoin-style fees and 10-minute blocks make those payments too costly and too slow. IOTA was designed around that gap.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>IOTA:</b> a distributed ledger and cryptocurrency designed for machine-to-machine payments.</li>
-        <li><b>MIOTA:</b> the unit of IOTA's native currency (one million IOTA).</li>
-        <li><b>DAG (directed acyclic graph):</b> a network of linked records with arrows and no loops.</li>
-        <li><b>Tangle:</b> IOTA's DAG, where each transaction approves two earlier transactions.</li>
-        <li><b>Tip:</b> a transaction that no later transaction has approved yet.</li>
-        <li><b>Approval:</b> a link from a new transaction to an old one, which confirms the old one.</li>
-        <li><b>Feeless:</b> no transaction fee is charged.</li>
-        <li><b>M2M (machine-to-machine):</b> devices paying and exchanging data without a human.</li>
-        <li><b>Coordinator:</b> a central milestone server that IOTA used in its early years to protect the network.</li>
-        <li><b>Confidence:</b> how strongly a transaction is confirmed, measured by how many later transactions approve it.</li>
-        <li><b>Internet of Things (IoT):</b> a network of everyday devices, sensors and machines that exchange data.</li>
-        <li><b>Proof of Work:</b> a small puzzle that makes spam expensive; IOTA uses a light version.</li>
-        <li><b>Blockchain:</b> a shared ledger of blocks linked in a chain.</li>
-        <li><b>Transaction:</b> a signed request to move value or record data.</li>
-        <li><b>Validation:</b> checking that a transaction follows the rules before accepting it.</li>
-      
-        <li><b>Scalability:</b> the ability to handle more users or transactions without slowing down.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>A device creates a transaction.</b> It states who pays whom and how much. <i>Why:</i> every transfer must be recorded.</li>
-        <li><b>It picks two unapproved tips.</b> <i>Why:</i> approving old work is what confirms the network's history.</li>
-        <li><b>It solves a small PoW puzzle.</b> <i>Why:</i> a tiny cost stops spam, but it is light enough for a sensor.</li>
-        <li><b>It attaches to the Tangle</b> and becomes a new tip. <i>Why:</i> other transactions can now approve it.</li>
-        <li><b>Later transactions approve it.</b> Its confidence grows with each approval. <i>Why:</i> confirmation is cumulative, not a single block.</li>
-        <li><b>No miner and no block are needed.</b> The users do the validation themselves. <i>Why:</i> this removes fees and mining centralisation.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> A group of friends writes a shared diary. Before adding your page, you must stamp two earlier pages to confirm them. The more people who stamp your page later, the more trusted it becomes.</div>
-
-      <div class="confuse"><b>Common confusion:</b> IOTA is not a blockchain, because it has no blocks and no chain. "Feeless" also does not mean "no work": each transaction still does a small proof of work.</div>
-
-      <h4>Full answer for the exam</h4>
-      <p><b>Definition.</b> <b>IOTA (MIOTA)</b> is a distributed ledger built for the <b>Internet of Things</b>. It records machine-to-machine and device-to-device transactions. Its native currency is <b>MIOTA</b>. Instead of a chain of blocks, IOTA uses a directed acyclic graph (DAG) called the <b>Tangle</b>.</p>
-
-      <h4>Why IOTA was created</h4>
-      <ul>
-        <li>Bitcoin-style chains have <b>transaction fees</b> and limited throughput, which is bad for millions of tiny device payments.</li>
-        <li>PoW mining needs heavy hardware and energy, which is bad for cheap sensors.</li>
-        <li>IOTA aims to be a <b>feeless</b>, <b>scalable</b>, <b>lightweight</b> ledger for connected devices.</li>
-      </ul>
-
-      <h4>How the Tangle works</h4>
-      <ol>
-        <li>Every new transaction must <b>approve two earlier transactions</b> (called tips).</li>
-        <li>To approve them, the sender solves a <b>small proof-of-work puzzle</b>. This is easy compared with Bitcoin mining.</li>
-        <li>The new transaction becomes a new tip. Later transactions approve it, so its <b>confidence</b> (weight) grows.</li>
-        <li>There are <b>no miners and no blocks</b>. The users themselves do the validation.</li>
-        <li>The more devices that join, the more validation capacity the network has, the opposite of a congested blockchain.</li>
-      </ol>
-
-      <pre class="tree">                 TANGLE (DAG)
-        tx A ───────┐
-                    ├────&gt; tx C ─────┐
-        tx B ───────┘                ├────&gt; tx E (new tip)
-                                     │
-        tx D ────────────────────────┘
-
-Each new transaction approves 2 old transactions.
-No blocks. No miners. No fees.</pre>
-      <p><b>What this means:</b> confirmation flows backwards. A transaction is safer when many later transactions point to it, not when a miner puts it in a block.</p>
-
-      <h4>Role of IOTA in IoT (6-mark answer)</h4>
-      <ul>
-        <li><b>Micropayments:</b> a sensor can sell one reading for a tiny amount because there is no fee.</li>
-        <li><b>Machine identity:</b> each device can have an address and a signed transaction history.</li>
-        <li><b>Data integrity:</b> sensor data is anchored on the Tangle, so tampering is detectable.</li>
-        <li><b>M2M economy:</b> smart cars, charging stations and smart meters can settle directly.</li>
-        <li><b>Low footprint:</b> small memory and low power, suitable for constrained devices.</li>
-        <li><b>Scalability:</b> parallel tip approval avoids the single-chain bottleneck.</li>
-      </ul>
-
-      <h4>Advantages and concerns</h4>
-      <div class="grid2">
-        <div>
-          <h4 style="margin-top:0">Advantages</h4>
-          <ul>
-            <li>Zero transaction fees.</li>
-            <li>High parallelism and scalability.</li>
-            <li>No miners, so no mining centralisation.</li>
-            <li>Designed for tiny devices.</li>
-          </ul>
-        </div>
-        <div>
-          <h4 style="margin-top:0">Concerns</h4>
-          <ul>
-            <li>The <b>Coordinator</b> (a central milestone server) was a single point of failure. IOTA planned to remove it ("Coordicide").</li>
-            <li>The original <b>Curl</b> hash had a collision weakness reported by MIT researchers.</li>
-            <li>New consensus design is less battle-tested than Bitcoin.</li>
-            <li>A 2020 phishing attack stole about $3.94 million of MIOTA.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="note"><b>One-line answer:</b> IOTA replaces the blockchain with the Tangle, a DAG where each transaction validates two previous transactions. It is feeless, parallel and built for IoT micropayments.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s34">
-  <div class="prio">Priority 7 · ★★★ 3× repeated</div><h2>3.4 Bitcoin, Ethereum and Hyperledger as platforms</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q4</span>Explain in detail: (i) Bitcoin (ii) Ethereum (iii) Hyperledger. / Explain any two blockchain platforms.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span><span class="b unit">Unit 3</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2024 May Q1(b) [6] · 2025 Nov Q1(b) [6]  |  2023 Nov Q1(a) [6 — any two of R3, Ethereum, Hyperledger, Corda; see §3.3 for R3/Corda]</p>
-
-      <div class="simple"><b>In simple words:</b> Bitcoin is digital money.<br>
-      Ethereum is a programmable blockchain that runs apps and smart contracts.<br>
-      Hyperledger is a private, permissioned ledger for businesses.<br>
-      All three are platforms, but they solve different jobs.</div>
-
-      <h4>Why we do this</h4>
-      <p>The exam often says "explain any two platforms". To choose well, you need to know what each platform optimises: simple payments, programmable apps, or private enterprise workflows.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Platform:</b> the base software on which applications and transactions run.</li>
-        <li><b>UTXO:</b> unspent transaction output; Bitcoin's way of tracking money as spendable chunks.</li>
-        <li><b>Account model:</b> a ledger that stores a balance for each account, as Ethereum does.</li>
-        <li><b>Smart contract:</b> code stored on a blockchain that runs automatically when conditions are met.</li>
-        <li><b>EVM:</b> Ethereum Virtual Machine, the runtime that executes Ethereum contracts.</li>
-        <li><b>Solidity:</b> the main programming language for Ethereum contracts.</li>
-        <li><b>Gas:</b> the fee paid to execute computation on Ethereum.</li>
-        <li><b>Turing-complete:</b> able to express any computation, given enough time and memory.</li>
-        <li><b>Permissioned:</b> only approved, identified members can join.</li>
-        <li><b>Chaincode:</b> Hyperledger Fabric's name for a smart contract.</li>
-        <li><b>Channel:</b> a private sub-ledger shared only by selected Fabric members.</li>
-        <li><b>MSP:</b> Membership Service Provider, the Fabric component that issues identities.</li>
-        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
-        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
-        <li><b>DApp:</b> a decentralised application that runs on a blockchain.</li>
-        <li><b>NFT:</b> a unique token that represents one specific item.</li>
-        <li><b>DAO:</b> a decentralised autonomous organisation governed by token votes.</li>
-      
-        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>State the purpose.</b> Payments, apps, or enterprise records. <i>Why:</i> purpose explains every other design choice.</li>
-        <li><b>State the ledger model.</b> Bitcoin uses UTXOs; Ethereum uses accounts; Fabric uses key-value state. <i>Why:</i> The ledger model changes how balances and transfers are computed.</li>
-        <li><b>State consensus.</b> Bitcoin uses PoW; Ethereum uses PoS; Fabric plugs in Raft or BFT. <i>Why:</i> public chains need costly Sybil resistance; private chains know their members.</li>
-        <li><b>State programmability.</b> Bitcoin has limited Script; Ethereum is Turing-complete; Fabric runs chaincode in Go, Java or JavaScript. <i>Why:</i> Programmability decides what developers can build.</li>
-        <li><b>State privacy and speed.</b> Public chains are transparent and slower; Fabric uses private channels and is faster. <i>Why:</i> Privacy and speed often decide whether a business can use the chain.</li>
-        <li><b>Give one use case each.</b> Payments, DApps/NFTs, supply chain or trade finance. <i>Why:</i> A use case proves you can match the platform to a real job.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> Bitcoin is a calculator that does one job very well. Ethereum is a smartphone with an app store. Hyperledger is a company intranet where only staff with badges can log in.</div>
-
-      <div class="confuse"><b>Common confusion:</b> Ethereum is not "just another Bitcoin"; it is a programmable platform. Hyperledger is not a coin; it is a family of enterprise ledgers. Bitcoin's limited script still supports multisignature and time locks.</div>
-
-      <h4>Full answer for the exam</h4>
-      <h4>Bitcoin</h4>
-      <ul>
-        <li><b>What:</b> the first public blockchain and cryptocurrency, released in 2009 by the pseudonymous <b>Satoshi Nakamoto</b>.</li>
-        <li><b>Model:</b> UTXO (unspent transaction output). A transaction spends old outputs and creates new ones.</li>
-        <li><b>Consensus:</b> Proof of Work; one block about every 10 minutes; difficulty adjusts every 2016 blocks.</li>
-        <li><b>Supply:</b> capped at <b>21 million BTC</b>; reward halves every 210,000 blocks (about 4 years).</li>
-        <li><b>Scripting:</b> a limited, non-Turing-complete script for conditions such as multisignature.</li>
-        <li><b>Use:</b> peer-to-peer value transfer, store of value. No general smart contracts.</li>
-      </ul>
-
-      <h4>Ethereum</h4>
-      <ul>
-        <li><b>What:</b> a public, programmable blockchain proposed by <b>Vitalik Buterin</b> in 2013; Frontier released in 2015.</li>
-        <li><b>Model:</b> account-based (externally owned accounts and contract accounts).</li>
-        <li><b>Core:</b> the <b>EVM</b> runs smart-contract bytecode; developers write contracts in <b>Solidity</b>.</li>
-        <li><b>Currency:</b> ether (ETH) pays for gas. There is no hard 21-million cap.</li>
-        <li><b>Consensus:</b> PoW until "The Merge" (2022), then <b>Proof of Stake</b>.</li>
-        <li><b>Use:</b> DApps, tokens (ERC-20), NFTs (ERC-721), DAOs, DeFi.</li>
-      </ul>
-
-      <h4>Hyperledger (Fabric)</h4>
-      <ul>
-        <li><b>What:</b> an open-source, <b>permissioned</b> enterprise blockchain hosted by the Linux Foundation.</li>
-        <li><b>Modular architecture:</b> pluggable consensus, membership, identity and storage.</li>
-        <li><b>Channels:</b> a subset of members can run a private sub-ledger; other members cannot see it.</li>
-        <li><b>Chaincode:</b> smart contracts written in Go, Java or JavaScript. No native cryptocurrency.</li>
-        <li><b>Identity:</b> every participant has a certificate from a membership service provider (MSP).</li>
-        <li><b>Use:</b> supply chain, trade finance, healthcare consortia, banking pilots.</li>
-      </ul>
-
-      <h4>Comparison table (use this for the 6-mark answer)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th><th>Hyperledger Fabric</th></tr></thead>
-        <tbody>
-          <tr><td>Type</td><td>Public</td><td>Public</td><td>Permissioned / private</td></tr>
-          <tr><td>Main purpose</td><td>Digital money</td><td>Smart contracts &amp; DApps</td><td>Enterprise business ledger</td></tr>
-          <tr><td>Consensus</td><td>PoW</td><td>PoS (since 2022)</td><td>Pluggable (Raft, BFT)</td></tr>
-          <tr><td>Smart contracts</td><td>Limited script</td><td>Solidity / EVM</td><td>Chaincode (Go, Java, JS)</td></tr>
-          <tr><td>Currency</td><td>BTC, 21M cap</td><td>ETH, no hard cap</td><td>None</td></tr>
-          <tr><td>Privacy</td><td>Pseudonymous, public</td><td>Pseudonymous, public</td><td>Private channels</td></tr>
-          <tr><td>Speed</td><td>~7 tx/s, 10-min blocks</td><td>~15–30 tx/s, 12-s slots</td><td>Thousands tx/s</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>What this means:</b> the rows about consensus, privacy and speed all follow from one choice: whether the network is open to strangers or limited to known members.</p>
-
-      <div class="tip"><b>For "any two":</b> pick Ethereum + Hyperledger if you want a strong contrast (public programmable vs private enterprise). Write one paragraph each and two comparison rows; that is enough for 6 marks.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s36">
-  <div class="prio">Priority 8 · ★★ 2× repeated</div><h2>3.6 Consensus fundamentals</h2>
-  <p class="lead">Syllabus: <em>Consensus Approach, Consensus Elements, Consensus Algorithms.</em></p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q6</span>Explain consensus in blockchain in detail. What is consensus in blockchain?</p>
-      <div class="badges"><span class="b marks">8 / 6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [8] · 2023 Nov Q2(c) [6]</p>
-
-      <div class="simple"><b>In simple words:</b> Consensus means all nodes agree on one ledger and one order of transactions.<br>
-      Without it, each computer would keep a different story of who paid whom.<br>
-      A consensus algorithm decides who proposes the next block and when it is final.<br>
-      It also stops double-spending and keeps the chain growing when some nodes fail.</div>
-
-      <h4>Why we do this</h4>
-      <p>A blockchain has no central referee. Nodes may be slow, faulty or malicious, and messages can arrive out of order. Consensus is the rule that still produces one shared history from all that noise.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Consensus:</b> agreement by all honest nodes on one ledger state and one transaction order.</li>
-        <li><b>Consensus algorithm:</b> the rules that decide who proposes a block and which blocks are valid.</li>
-        <li><b>Node:</b> a computer that stores the ledger and validates blocks.</li>
-        <li><b>Ledger:</b> the record of all transactions and balances.</li>
-        <li><b>Double-spending:</b> spending the same coin twice.</li>
-        <li><b>Fork:</b> two different blocks that claim the same parent, creating rival histories.</li>
-        <li><b>Fork choice:</b> the rule that picks the canonical branch.</li>
-        <li><b>Finality:</b> the point after which a block cannot be reversed.</li>
-        <li><b>Safety:</b> honest nodes never accept two conflicting final histories.</li>
-        <li><b>Liveness:</b> the chain keeps accepting new blocks and does not freeze.</li>
-        <li><b>Quorum:</b> the minimum votes needed to decide.</li>
-        <li><b>BFT:</b> Byzantine Fault Tolerance, agreement even when some nodes lie.</li>
-        <li><b>Mempool:</b> the waiting area for valid transactions not yet in a block.</li>
-        <li><b>Block reward:</b> new coins paid to the node that creates a block.</li>
-        <li><b>Slashing:</b> destroying part of a validator's stake as a penalty.</li>
-        <li><b>PBFT:</b> Practical Byzantine Fault Tolerance, a voting protocol for known validators.</li>
-        <li><b>Raft:</b> a crash-fault consensus protocol for known servers; it does not handle lying nodes.</li>
-        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
-        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
-        <li><b>Proof of Burn:</b> consensus by destroying coins to earn mining rights.</li>
-      
-        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>A user broadcasts a signed transaction.</b> <i>Why:</i> nodes need proof that the owner authorised it.</li>
-        <li><b>Each node checks the rules.</b> Signature, balance, nonce and format. <i>Why:</i> invalid transactions must never reach a block.</li>
-        <li><b>Valid transactions wait in the mempool.</b> <i>Why:</i> a block has limited space, so ordering matters.</li>
-        <li><b>A proposer or miner selects transactions</b> and builds a candidate block. <i>Why:</i> someone must create the next page.</li>
-        <li><b>Other nodes validate the block.</b> <i>Why:</i> one node's claim is not enough.</li>
-        <li><b>A fork-choice rule picks the branch.</b> Longest chain in PoW, checkpoint in PoS, quorum certificate in BFT. <i>Why:</i> two valid blocks can appear at the same time.</li>
-        <li><b>Finality is reached.</b> More blocks or a supermajority vote makes reversal impractical. <i>Why:</i> Users need to know when a payment can no longer be reversed.</li>
-        <li><b>Rewards and penalties keep nodes honest.</b> Fees and block rewards for good work; slashing or wasted cost for bad work. <i>Why:</i> Incentives make honest behaviour the profitable choice.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> A class keeps five copies of the attendance register. Some students may write a different entry in one copy. The class needs a rule that makes all honest copies end up with the same list, even when a few entries disagree.</div>
-
-      <div class="confuse"><b>Common confusion:</b> Consensus does not mean everyone trusts everyone; it means they agree despite distrust. A confirmation is not the same as finality: one block can still be reversed, while a finalised block cannot.</div>
-
-      <h4>Full answer for the exam</h4>
-      <p><b>Definition.</b> <b>Consensus</b> is the process by which all peers (nodes) of a blockchain network agree on <b>one present state of the ledger</b> and on the <b>order of transactions</b>. It creates reliability and trust between nodes that may not know or trust each other.</p>
-      <p>A <b>consensus algorithm</b> is the set of rules that lets all peers reach this agreement. It decides which node proposes the next block and which blocks are valid.</p>
-
-      <h4>Why blockchain needs consensus</h4>
-      <ul>
-        <li>There is no central bank or administrator to decide the true balance.</li>
-        <li>Nodes may be faulty, slow or malicious.</li>
-        <li>It prevents <b>double-spending</b>: the same coin cannot be spent twice.</li>
-        <li>It gives a single history even when messages arrive out of order.</li>
-        <li>It provides <b>fault tolerance</b>: the network keeps working if some nodes fail.</li>
-      </ul>
-
-      <h4>Consensus approach (two main families)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Approach</th><th>Idea</th><th>Examples</th><th>Finality</th></tr></thead>
-        <tbody>
-          <tr><td>Proof-based ("Nakamoto")</td><td>Nodes spend a scarce resource (hash power, stake, burn) for the right to propose a block; the heaviest/longest chain wins.</td><td>PoW, PoS, PoB</td><td>Probabilistic</td></tr>
-          <tr><td>Voting-based (BFT)</td><td>Known validators exchange votes in rounds; a block needs a supermajority (usually 2/3).</td><td>PBFT, IBFT, Tendermint, Raft (crash-only)</td><td>Deterministic</td></tr>
-          <tr><td>Hybrid</td><td>A proof selects the proposer, then validators vote or sign.</td><td>PoA (activity), PoET</td><td>Mixed</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>What this means:</b> proof-based chains buy security with a costly resource; voting chains buy speed with known identities. Hybrids combine the two.</p>
-
-      <h4>Consensus elements (the seven pieces)</h4>
-      <ol>
-        <li><b>Nodes / peers:</b> the participants that store the ledger and validate blocks.</li>
-        <li><b>Transactions:</b> signed requests to change state.</li>
-        <li><b>Blocks:</b> an ordered batch of transactions with a header and a hash link to the parent.</li>
-        <li><b>Validation rules:</b> signature, balance, nonce, gas, block format and size checks.</li>
-        <li><b>Fork-choice / finality rule:</b> which branch is canonical (longest chain in PoW; checkpoint finality in PoS; quorum certificate in BFT).</li>
-        <li><b>Incentives and penalties:</b> block reward and fees for honest work; slashing or wasted energy for bad behaviour.</li>
-        <li><b>Agreement and liveness:</b> all honest nodes eventually agree (safety) and the chain keeps growing (liveness).</li>
-      </ol>
-
-      <h4>Diagram: consensus round</h4>
-      <pre class="tree">new transactions
-      │
-      ▼
-[ mempool ] ──► proposer / miner selects txs
-      │
-      ▼
-candidate block ──► other nodes validate
-      │                    │
-      │              valid │ invalid
-      │                    ▼
-      │              reject / penalise
-      ▼
-consensus rule (PoW longest chain / PoS votes / BFT quorum)
-      │
-      ▼
-block appended ──► state updated ──► next round</pre>
-      <p><b>What this means:</b> the loop repeats forever. Every pass adds one block and updates the agreed state.</p>
-
-      <div class="note"><b>For 6 marks:</b> definition (2) + why needed (2) + approach table (2). For 8 marks, add the seven elements and the diagram.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q7</span>Explain the difference between a permissioned and permissionless consensus approach.</p>
-      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q2(b) [4] · 2025 Nov Q2(b) [4]</p>
-
-      <div class="simple"><b>In simple words:</b> Permissionless means anyone can join and validate.<br>
-      Permissioned means only approved, known members can join.<br>
-      Open networks need costly proof to stop fake accounts; closed networks can simply vote.<br>
-      That one difference explains the gap in speed, privacy and trust.</div>
-
-      <h4>Why we do this</h4>
-      <p>An open network cannot know who is behind a new node, so it must make identity expensive. A closed network already knows its members, so it can use fast voting. The exam asks you to connect those entry rules to the consensus design.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Permissionless:</b> anyone can join, read, transact and validate without approval.</li>
-        <li><b>Permissioned:</b> only approved and identified members can join or validate.</li>
-        <li><b>Sybil attack:</b> one attacker creates many fake identities to gain influence.</li>
-        <li><b>KYC:</b> Know Your Customer; identity checks used by regulated services.</li>
-        <li><b>Validator:</b> a node that approves or adds blocks.</li>
-        <li><b>BFT:</b> Byzantine Fault Tolerance, voting that survives lying nodes.</li>
-        <li><b>Probabilistic finality:</b> a block becomes safer with each later block but is never absolutely final.</li>
-        <li><b>Deterministic finality:</b> a block is final as soon as the required quorum signs.</li>
-        <li><b>Consortium:</b> a group of organisations that jointly runs a permissioned network.</li>
-        <li><b>Proof of Work:</b> consensus by spending computing power to solve a puzzle.</li>
-        <li><b>Proof of Stake:</b> consensus by locking coins as collateral.</li>
-        <li><b>Raft:</b> a fast consensus protocol for known servers that assumes they do not lie.</li>
-        <li><b>Proof of Authority:</b> consensus by a small set of approved, reputable validators.</li>
-        <li><b>Sybil resistance:</b> a rule that makes it expensive or impossible to create many fake identities.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Ask who may join.</b> Anyone or approved members. <i>Why:</i> this decides whether fake identities are cheap.</li>
-        <li><b>Choose Sybil resistance.</b> PoW/PoS cost or identity checks. <i>Why:</i> consensus needs a limit on how many voices one attacker can create.</li>
-        <li><b>Choose the validator set.</b> Open to all, or selected by an operator or consortium. <i>Why:</i> Who validates decides how much trust the network needs.</li>
-        <li><b>Choose the consensus style.</b> Proof-based and probabilistic, or voting-based and deterministic. <i>Why:</i> The validator set limits which consensus style is safe.</li>
-        <li><b>Check speed and privacy.</b> A small known set is faster and can keep data private; a large open set is slower and public. <i>Why:</i> These two properties usually decide the business fit.</li>
-        <li><b>Match the use case.</b> Public payments → permissionless. Bank or supply-chain network → permissioned. <i>Why:</i> The use case is the final test of the choice.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> A public bus lets anyone board and pay per ride. A company shuttle checks your employee badge before you enter. The shuttle is faster and more private, but only because the company controls the door.</div>
-
-      <div class="confuse"><b>Common confusion:</b> Permissioned does not mean fully centralised; a consortium can have many independent owners. Permissionless does not mean lawless: users still follow protocol rules, and exchanges may still require KYC.</div>
-
-      <h4>Full answer for the exam</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Permissionless</th><th>Permissioned</th></tr></thead>
-        <tbody>
-          <tr><td>Who joins</td><td>Anyone, anonymously</td><td>Only approved, identified members</td></tr>
-          <tr><td>Validators</td><td>Unknown; anyone can mine/stake</td><td>Known validators chosen by the operator/consortium</td></tr>
-          <tr><td>Consensus</td><td>PoW / PoS, probabilistic</td><td>BFT voting, Raft, PoA; deterministic finality</td></tr>
-          <tr><td>Speed</td><td>Lower (large network)</td><td>Higher (small, known set)</td></tr>
-          <tr><td>Trust</td><td>Trustless; economic incentives</td><td>Trust in membership and governance</td></tr>
-          <tr><td>Privacy</td><td>Public ledger</td><td>Private channels / need-to-know</td></tr>
-          <tr><td>Examples</td><td>Bitcoin, Ethereum</td><td>Hyperledger Fabric, R3 Corda</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>What this means:</b> the consensus row is a consequence, not a free choice. Open entry forces costly proof; closed entry allows fast votes.</p>
-      <p><b>One-line answer:</b> permissionless = open entry + probabilistic proof-based consensus; permissioned = restricted entry + fast voting-based consensus with known identities.</p>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s33">
-  <div class="prio">Priority 9 · ★★ 2× repeated</div><h2>3.3 Corda and R3</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Describe the features of the Corda blockchain. Justify how it is different. Elaborate CorDapps. / Explain R3.</p>
-      <div class="badges"><span class="b marks">9 / 6 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q1(a)(i) [6 — R3 option] · 2025 May Q1(b) [9 — Corda features, difference, CorDapps]</p>
-
-      <div class="simple"><b>In simple words:</b> R3 is a company and consortium of banks.<br>
-      Corda is the private ledger it built for financial deals.<br>
-      Only the parties in a deal see its details, and a special notary stops double-spending.<br>
-      A CorDapp is an app on Corda, built from states, contracts and flows.</div>
-
-      <h4>Why we do this</h4>
-      <p>Banks cannot broadcast every trade to competitors, and they need a deal to be final immediately. Corda keeps data point-to-point, checks each state change with a contract, and uses a notary to guarantee that the same asset is not promised twice.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>R3:</b> a financial-technology company and consortium that builds enterprise distributed-ledger software.</li>
-        <li><b>Corda:</b> R3's open-source, permissioned distributed ledger for business and finance.</li>
-        <li><b>CorDapp:</b> a Corda Distributed Application, installed on Corda nodes.</li>
-        <li><b>State:</b> a shared fact on the Corda ledger, such as "Bank A owes Bank B $1M".</li>
-        <li><b>Contract:</b> code that checks whether a state change is allowed.</li>
-        <li><b>Flow:</b> the workflow that gathers signatures and records a state change.</li>
-        <li><b>Notary:</b> a special Corda node that signs a state only once to stop double-spending.</li>
-        <li><b>Doorman:</b> the Corda service that checks identity and issues certificates at join time.</li>
-        <li><b>Point-to-point:</b> sending data only to the parties involved, not to the whole network.</li>
-        <li><b>Deterministic finality:</b> a deal is final as soon as the required signatures and notary sign exist.</li>
-        <li><b>JVM:</b> Java Virtual Machine, the runtime Corda uses.</li>
-        <li><b>Distributed ledger:</b> a record of transactions copied and kept consistent across many nodes.</li>
-        <li><b>Permissioned:</b> only approved, identified members can join or validate.</li>
-        <li><b>Double-spending:</b> spending the same asset twice.</li>
-        <li><b>Corda Settler:</b> an R3 service for cross-border payments and settlement.</li>
-        <li><b>Kotlin:</b> a programming language that runs on the JVM and is used for Corda.</li>
-        <li><b>Consensus:</b> the rule that gets all honest nodes to accept one history.</li>
-      
-        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>A party starts a flow.</b> The flow describes the business step it wants to perform. <i>Why:</i> Corda separates business workflow from ledger data.</li>
-        <li><b>The flow builds a transaction</b> that proposes a new state and names the input state it replaces. <i>Why:</i> every update must point to the old fact it changes.</li>
-        <li><b>The contract checks the transaction.</b> It enforces rules such as positive amounts and required signatures. <i>Why:</i> no party should be able to write an invalid fact.</li>
-        <li><b>Involved parties sign.</b> Only they see the full details. <i>Why:</i> competitors and outsiders must not learn the trade.</li>
-        <li><b>The notary checks the input state.</b> It signs only if that state has not been used before. <i>Why:</i> this is how Corda prevents double-spending.</li>
-        <li><b>The new state is recorded</b> on the parties' ledgers and the old state is marked consumed. <i>Why:</i> the ledger now has one current version of the fact.</li>
-        <li><b>The deal is final.</b> No mining and no waiting for confirmations. <i>Why:</i> Immediate finality is the main business benefit of Corda.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> Two companies sign a private contract at a lawyer's office. Only they see the pages, but the lawyer stamps the contract so it cannot be reused to claim the same asset twice.</div>
-
-      <div class="confuse"><b>Common confusion:</b> Corda is not a Bitcoin-style blockchain: it does not broadcast every transaction to every node and has no native coin. Its "notary" is a validating node, not a public government official.</div>
-
-      <h4>Full answer for the exam</h4>
-      <h4>What is R3?</h4>
-      <p><b>R3</b> is a financial-technology company founded in 2014 by a group of nine financial institutions (including Goldman Sachs, Credit Suisse and J.P. Morgan). It leads a consortium of more than 100 banks and builds distributed-ledger software for financial markets. Its main product is <b>Corda</b>.</p>
-
-      <h4>What is Corda?</h4>
-      <p><b>Corda</b> is an open-source, <b>permissioned</b> distributed ledger platform for business and finance. It runs on the <b>JVM</b> and is written mainly in Kotlin and Java. Unlike Bitcoin, Corda does <b>not</b> broadcast every transaction to every node. It shares data only with the parties who need it.</p>
-
-      <h4>Features of Corda (2025 May Q1b: 9 marks)</h4>
-      <ol>
-        <li><b>Permissioned network:</b> every node has a real-world identity and a certificate from a doorman/network operator. There are no anonymous miners.</li>
-        <li><b>Point-to-point privacy:</b> transaction data goes only to the involved parties and the notary, not to the whole network.</li>
-        <li><b>States:</b> the ledger stores facts (e.g. "Bank A owes Bank B $1M") in <b>state objects</b>, which are immutable. A new version replaces the old one.</li>
-        <li><b>Contracts:</b> each state has a <b>contract</b> that validates every update (e.g. both parties must sign).</li>
-        <li><b>Flows:</b> the business workflow is written as a <b>flow</b>, a sequence of steps that gathers signatures, talks to the counterparty and asks the notary to finalise.</li>
-        <li><b>Notary:</b> a special node that prevents double-spending by signing a state only once. It does not see the full transaction, only the input state reference.</li>
-        <li><b>No native cryptocurrency:</b> Corda settles real assets, not coins. Fees are a business decision, not a mining reward.</li>
-        <li><b>Interoperability:</b> can connect to existing banking systems, databases and other DLTs; supports R3's Corda Settler for cross-border payments.</li>
-        <li><b>Deterministic finality:</b> once the notary signs, the transaction is final. No probabilistic confirmations.</li>
-      </ol>
-
-      <h4>Why Corda is different from Bitcoin/Ethereum</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Bitcoin / Ethereum</th><th>Corda</th></tr></thead>
-        <tbody>
-          <tr><td>Access</td><td>Public, anonymous</td><td>Permissioned, identified parties</td></tr>
-          <tr><td>Data visibility</td><td>Every node sees every transaction</td><td>Only the parties involved see the details</td></tr>
-          <tr><td>Consensus</td><td>PoW / PoS, probabilistic</td><td>Notary + contract validation, deterministic</td></tr>
-          <tr><td>Currency</td><td>BTC / ETH built in</td><td>No native coin; real assets</td></tr>
-          <tr><td>Smart contract</td><td>Solidity on EVM</td><td>Kotlin/Java contract + flow</td></tr>
-          <tr><td>Use case</td><td>Open payments, DeFi</td><td>Banking, trade finance, insurance, capital markets</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>What this means:</b> Corda trades openness for privacy and legal certainty. That is exactly what a bank needs, and exactly what a public payment chain refuses to give up.</p>
-
-      <h4>CorDapps</h4>
-      <p>A <b>CorDapp</b> (Corda Distributed Application) is an application built on Corda. It is a normal JAR file that is installed on Corda nodes. It has three parts:</p>
-      <ul>
-        <li><b>States:</b> the shared facts on the ledger (e.g. <code>IOUState</code> with lender, borrower, amount).</li>
-        <li><b>Contracts:</b> code that says which state changes are valid (e.g. amount must be positive, both parties must sign).</li>
-        <li><b>Flows:</b> the workflow that proposes, signs and records the state change.</li>
-      </ul>
-      <pre class="tree">CorDapp = States + Contracts + Flows
-             |          |          |
-             v          v          v
-        "what is true" "what is   "how do we
-                        allowed"   get there"</pre>
-      <p><b>What this means:</b> a CorDapp is not just code; it is data (states), rules (contracts) and process (flows) packaged together.</p>
-
-      <div class="book"><b>Book link:</b> the supplied book covers R3 and Corda Settler in §3.5 (news-style), not Corda's internal architecture. The feature list above is the standard Corda model required by the 2025 paper.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s35">
-  <div class="prio">Priority 10 · ★★ 2× repeated</div><h2>3.5 Bitcoin vs Ethereum</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q5</span>Discuss the difference between Bitcoin and Ethereum.</p>
-      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 3</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [4] · 2025 Nov Q2(a) [4]</p>
-
-      <div class="simple"><b>In simple words:</b> Bitcoin is digital gold: it stores and moves value.<br>
-      Ethereum is a world computer: it also runs programs.<br>
-      Bitcoin uses UTXOs and PoW; Ethereum uses accounts and PoS.<br>
-      Their purposes explain their different designs.</div>
-
-      <h4>Why we do this</h4>
-      <p>Examiners ask for four differences, not twenty. The safest way is to start from purpose, then show how purpose changes the ledger model, consensus and programming.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>UTXO:</b> unspent transaction output; Bitcoin tracks spendable chunks rather than account balances.</li>
-        <li><b>Account model:</b> Ethereum stores a balance and storage for each account.</li>
-        <li><b>EVM:</b> Ethereum Virtual Machine, which runs smart contracts.</li>
-        <li><b>Gas:</b> the unit of computation cost on Ethereum.</li>
-        <li><b>Turing-complete:</b> able to run any computation, subject to gas limits.</li>
-        <li><b>PoW / PoS:</b> proof-based consensus using computing power or locked stake.</li>
-        <li><b>Issuance:</b> the rate at which new coins are created.</li>
-        <li><b>DApp:</b> a decentralised application that runs on a blockchain.</li>
-        <li><b>Smart contract:</b> code on a blockchain that runs automatically when conditions are met.</li>
-        <li><b>Block time:</b> the average time between two blocks.</li>
-        <li><b>Script:</b> Bitcoin's simple language for spending conditions such as multisignature.</li>
-        <li><b>ERC-20:</b> the standard for fungible tokens on Ethereum.</li>
-        <li><b>NFT:</b> a unique token that represents one specific item.</li>
-        <li><b>Store of value:</b> an asset people hold because they expect it to keep value over time.</li>
-      
-        <li><b>Blockchain:</b> a shared ledger copied across many computers, where old entries are hard to change.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Compare purpose.</b> Money versus programmable applications. <i>Why:</i> this is the root difference.</li>
-        <li><b>Compare the ledger model.</b> UTXO versus accounts. <i>Why:</i> it changes how a wallet computes a balance.</li>
-        <li><b>Compare consensus.</b> PoW versus PoS. <i>Why:</i> it changes energy use and finality.</li>
-        <li><b>Compare supply.</b> Hard cap of 21 million versus a policy without a hard cap. <i>Why:</i> Supply policy affects scarcity and long-term value.</li>
-        <li><b>Compare programming.</b> Limited Script versus a Turing-complete EVM. <i>Why:</i> Programmability is the main capability gap between the two.</li>
-        <li><b>Finish with one line.</b> Bitcoin is digital gold; Ethereum is a world computer. <i>Why:</i> One sentence gives the examiner a clean conclusion.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> Bitcoin is a gold bar in a secure vault: scarce, simple and good for storing value. Ethereum is a smartphone: it can hold money, but it also runs apps.</div>
-
-      <div class="confuse"><b>Common confusion:</b> Ethereum also has money (ETH); it is not "only apps". Bitcoin can run simple scripts for multisignature and time locks. "No hard cap" does not mean Ethereum prints coins without limit; its issuance follows a policy.</div>
-
-      <h4>Full answer for the exam</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th></tr></thead>
-        <tbody>
-          <tr><td>Launched</td><td>2009, Satoshi Nakamoto</td><td>2015, Vitalik Buterin</td></tr>
-          <tr><td>Purpose</td><td>Peer-to-peer electronic cash / store of value</td><td>Programmable platform for smart contracts and DApps</td></tr>
-          <tr><td>Ledger model</td><td>UTXO</td><td>Account-based</td></tr>
-          <tr><td>Consensus</td><td>Proof of Work</td><td>Proof of Stake (since The Merge, 2022)</td></tr>
-          <tr><td>Supply</td><td>Capped at 21 million BTC</td><td>No hard cap; issuance depends on staking</td></tr>
-          <tr><td>Block time</td><td>~10 minutes</td><td>~12-second slots</td></tr>
-          <tr><td>Programming</td><td>Limited Script (non-Turing-complete)</td><td>Turing-complete EVM; Solidity, Vyper</td></tr>
-          <tr><td>Currency</td><td>BTC</td><td>ETH, plus ERC-20 tokens and NFTs</td></tr>
-          <tr><td>Fees</td><td>Paid to miners; depends on block space</td><td>Gas = gas limit × gas price</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>What this means:</b> read the table top to bottom. Purpose drives the ledger model, the consensus choice and the programming model.</p>
-      <div class="note"><b>4-mark version:</b> give four differences only: purpose, consensus, supply and programmability. Add one line: "Bitcoin is digital gold; Ethereum is a world computer."</div>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="s311">
-  <div class="prio">Priority 11 · syllabus support</div><h2>3.11 Full consensus comparison</h2>
+  <h2>3.11 Full consensus comparison</h2>
   <div class="tbl-wrap">
   <table class="left">
     <thead><tr><th>Algorithm</th><th>Resource</th><th>Selection</th><th>Finality</th><th>Energy</th><th>Example</th></tr></thead>

@@ -164,14 +164,14 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <h3>CSDF · Unit 5</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s58">5.8 Seizing &amp; securing a scene <span class="pill">5×</span></a>
+    <a href="#s51">5.1 What data to collect <span class="pill">1×</span></a>
     <a href="#s52">5.2 Validating forensic data <span class="pill">5×</span></a>
     <a href="#s53">5.3 Data-hiding techniques <span class="pill">3×</span></a>
     <a href="#s54">5.4 Remote &amp; live acquisition <span class="pill">3×</span></a>
+    <a href="#s55">5.5 Network forensics <span class="pill">1×</span></a>
     <a href="#s56">5.6 Honeynet project <span class="pill">3×</span></a>
     <a href="#s57">5.7 Identifying digital evidence <span class="pill">2×</span></a>
-    <a href="#s55">5.5 Network forensics <span class="pill">1×</span></a>
-    <a href="#s51">5.1 What data to collect <span class="pill">1×</span></a>
+    <a href="#s58">5.8 Seizing &amp; securing a scene <span class="pill">5×</span></a>
     <a href="#s59">5.9 Digital hash &amp; storage <span class="pill">1×</span></a>
     <a href="#s510">5.10 Search prep &amp; case review</a>
     <a href="#cheat">⚡ Last-minute sheet</a>
@@ -208,7 +208,7 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
 
   <div class="tbl-wrap">
   <table class="freq">
-    <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
+    <thead><tr><th>Rank</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td class="l">Approaches for validating forensic data</td><td>2022 May Q5(b) [9]; 2022 Nov Q5(b) [9]; 2023 May Q5(a) [9]; 2023 Nov Q6(a) [8]; 2025 Nov Q5(a) [9]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
       <tr><td>2</td><td class="l">Approaches for seizing digital evidence at the crime scene</td><td>2022 May Q6(a) [9]; 2022 Nov Q6(a) [9]; 2023 May Q5(b) [8]; 2023 Nov Q6(b) [9]; 2025 Nov Q5(b) [8]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
@@ -232,254 +232,95 @@ color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999p
   <div class="tip"><b>Mark strategy:</b> this unit is definition-heavy. For 8–9 marks: definition + 6–8 numbered points + one diagram (volatility ladder, network tap, or honeynet topology).</div>
 </section>
 
-<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s58">
-  <div class="prio">Priority 1 · ★★★★★ 5× repeated</div><h2>5.8 Seizing &amp; securing the scene</h2>
+<div class="note" id="topic-note">📚 Notes follow the book order (3.1 → 3.2 → …). The frequency table above is sorted by repetition, so use it to decide what to revise first.</div><section class="card" id="s51">
+  <h2>5.1 Determining what data to collect and analyse</h2>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Brief about the approaches for seizing digital evidence at the crime scene. / Describe the process of seizing digital evidence at a crime or incident scene.</p>
-      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body">
-
-      <p class="asked"><b>Asked in:</b> 2022 May Q6(a) [9] · 2022 Nov Q6(a) [9] · 2023 May Q5(b) [8] · 2023 Nov Q6(b) [9] · 2025 Nov Q5(b) [8]</p>
-
-      <div class="simple"><b>In simple words:</b> Seizing means taking a device legally and safely so its data can be examined later. You secure the area, photograph the scene, write down what is running, then decide whether to switch off or copy memory. Every item is labelled, sealed and logged so the court can see that nobody changed it.</div>
-
-      <h4>Why we do this</h4>
-      <p>A computer starts changing the moment it is touched, booted or unplugged. A careless seizure can destroy the very evidence the case depends on, and the defence can then argue that the copy is not the original. A calm, recorded seizure keeps the data usable in court.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Digital evidence</b> — any data stored or sent by a device that can help prove a fact in a case.</li>
-        <li><b>Seizure</b> — legally taking control of a device or data so that it can be examined.</li>
-        <li><b>Search warrant</b> — a judge's written permission to search a place and take specific items.</li>
-        <li><b>Volatile data</b> — data that disappears when the power goes off, such as RAM and open network connections.</li>
-        <li><b>Live acquisition</b> — copying data from a machine while it is still running.</li>
-        <li><b>Write blocker</b> — a device that lets an examiner read a drive but blocks every attempt to write to it.</li>
-        <li><b>Bit-stream image</b> — an exact byte-for-byte copy of a drive, including deleted and empty space.</li>
-        <li><b>Chain of custody</b> — the written record of who handled the evidence, when and why.</li>
-        <li><b>Faraday bag</b> — a metal-lined bag that stops a phone from sending or receiving radio signals.</li>
-        <li><b>RAM</b> — the computer's working memory, which loses its contents when the power goes off.</li>
-        <li><b>ARP cache</b> — a table that maps IP addresses to hardware addresses on a local network.</li>
-        <li><b>Anti-static bag</b> — a protective bag that stops static electricity from damaging a drive or circuit board.</li>
-        <li><b>Tamper-evident tape</b> — tape that shows a visible mark if a seal is broken.</li>
-        <li><b>FOIA</b> — the Freedom of Information Act, a law that lets the public request government records.</li>
-        <li><b>Patriot Act</b> — a US anti-terrorism law that changed some search and surveillance rules.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Secure the scene.</b> Use barrier tape, guards and an entry log. This stops people from deleting files or walking away with devices.</li>
-        <li><b>Photograph before touching anything.</b> Capture the screen, cables, ports and labels. The photo proves the original arrangement if someone later questions it.</li>
-        <li><b>Record the system state.</b> Note the make, model, serial number, operating system, logged-on user, running programs and network connections. This is evidence in its own right.</li>
-        <li><b>Choose the shutdown method.</b> Pulling the plug keeps the disk unchanged but loses RAM. A normal shutdown changes timestamps. Live acquisition saves memory first. Record the reason for your choice.</li>
-        <li><b>Capture volatile data if it matters.</b> Copy RAM, the ARP cache and network connections before they vanish.</li>
-        <li><b>Label every item.</b> Write the exhibit number, date, time, place and officer on the label. A label turns an object into court evidence.</li>
-        <li><b>Package correctly.</b> Use anti-static bags for circuit boards and drives, a Faraday bag for phones, and tamper-evident tape across the seal.</li>
-        <li><b>Transport safely.</b> Keep devices away from heat, magnets, shock and water, and never leave them unattended.</li>
-        <li><b>Record every transfer.</b> The chain-of-custody form must show every person who handled the evidence.</li>
-        <li><b>Image in the lab.</b> Make a bit-stream copy, hash it, compare the hash with the original, and analyse the copy — never the original.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> Seizing a computer is like sealing a room after a burglary. You guard the door, photograph everything in place, list each item, and only then carry it out with a signed receipt.</div>
-
-      <div class="confuse"><b>Common confusion:</b> Many people think the first job is to switch the computer off. Pulling the plug destroys RAM, may lose encryption keys and can trigger a wipe. Sometimes you must copy memory before any shutdown.</div>
-
-      <h3>Full exam answer</h3>
-
-      <h4>1. Two legal settings (book §5.5.2)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Setting</th><th>Power to seize</th><th>Typical approach</th></tr></thead>
-        <tbody>
-          <tr><td><b>Law enforcement</b></td><td>All computing equipment and accessories can be seized with the appropriate search warrant.</td><td>Seize the whole system, photograph, label, transport, image in the lab.</td></tr>
-          <tr><td><b>Corporate / private sector</b></td><td>Similar level of power may exist under company policy, but usually the investigator can only take a <b>screenshot</b> or a copy of the suspect's hard drive.</td><td>Image or copy the drive; leave the machine in place; rely on the employment policy.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="small"><b>What this means:</b> the technical steps are similar, but the legal power is not. Police can take the whole machine under a warrant; a company investigator usually copies the drive and must respect employee privacy and company policy.</p>
-
-      <h4>2. Private-sector vs law-enforcement incident scenes (book §5.5.2)</h4>
-      <ul>
-        <li>Businesses and government bodies that are <b>not</b> part of law enforcement are private-sector organisations. Some of their documents must be made accessible as public records under the Freedom of Information Act (FOIA) and state disclosure rules.</li>
-        <li><b>State public records</b> are open for review. A divorce recorded in a public place becomes public information unless a judge orders the paperwork sealed.</li>
-        <li><b>ISPs</b> are a special case: they may investigate computer misuse by their own employees, but they must protect customer privacy, especially for e-mail.</li>
-        <li>The <b>Patriot Act</b> and Homeland Security legislation changed some rules. “Emergency circumstances” means an immediate danger of death or serious physical harm, such as a bomb threat.</li>
-        <li>The practical difference: police can seize the whole system under a warrant; a corporate investigator usually images or copies the drive and must stay inside company policy.</li>
-      </ul>
-      <p class="small"><b>What this means:</b> before you touch anything, ask who has legal authority and what the policy or warrant allows. The same laptop can be handled in two very different ways.</p>
-
-      <h4>3. The ten-step seizure process (book §5.5.6)</h4>
-      <p>The numbered list above is the exam answer. Remember it as <b>secure → photograph → record → decide → capture → label → package → transport → log → image</b>.</p>
-
-      <h4>4. Approaches to the shutdown decision</h4>
-      <ul>
-        <li><b>Pull the plug</b> — preserves the disk exactly but loses RAM. Use it when the machine is idle and disk evidence is the priority.</li>
-        <li><b>Normal shutdown</b> — lets the operating system flush caches, but changes timestamps and may delete swap or temporary files. Avoid it unless it is necessary.</li>
-        <li><b>Live acquisition then shutdown</b> — best for servers and encrypted disks: capture RAM first, then switch off.</li>
-        <li><b>Network isolation</b> — unplug the network cable rather than the power, to stop remote wiping while keeping RAM intact.</li>
-      </ul>
-      <p class="small"><b>What this means:</b> the shutdown choice is itself evidence. Write down what you did and why, because another examiner must be able to judge whether your choice preserved or destroyed data.</p>
-
-      <div class="note"><b>Legal caution:</b> a badly written warrant can cause the court to dismiss the evidence. Discuss the wording with the prosecutor before the search; keep the seizure within the warrant's scope.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What precautions should investigators take to prevent data alteration or loss during the seizure process? Explain any one in detail.</p>
+      <p class="qtitle"><span class="qno">Q1</span>How do investigators determine which data is relevant to collect and analyse in a digital forensics investigation?</p>
       <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
     </div>
     <div class="qa-body">
 
-      <p class="asked"><b>Asked in:</b> 2024 May Q6(a) [8]</p>
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q5(a) [8]</p>
 
-      <div class="simple"><b>In simple words:</b> Evidence must stay exactly as it was found. Do not boot the machine, run antivirus, open the case or let anyone write to the disk. Photograph it, isolate it from the network, capture memory if needed, seal it, and hash it before and after transport.</div>
+      <div class="simple"><b>In simple words:</b> You do not copy everything blindly. First read the complaint or warrant, list the questions, and choose the sources, keywords and date range that can answer them. Then collect only what is relevant and legally allowed.</div>
 
       <h4>Why we do this</h4>
-      <p>One write can change a timestamp, delete a log or start malware. If that happens, the defence can say the item in court is not the item found at the scene. These precautions keep the original untouched and the copy provably identical.</p>
+      <p>Too little data misses the proof; too much data wastes time, costs money and may go beyond the warrant. A clear plan keeps the investigation focused and defensible.</p>
 
       <h4>Words you need first</h4>
       <ul>
-        <li><b>Data alteration</b> — any change to the content, time or structure of evidence.</li>
-        <li><b>Boot</b> — starting a computer's operating system, which writes to the disk and runs startup programs.</li>
-        <li><b>Write blocker</b> — hardware or software that allows reads but blocks all writes to a drive.</li>
-        <li><b>Anti-static protection</b> — a mat, wrist strap or bag that prevents static electricity from damaging components.</li>
-        <li><b>Volatile data</b> — data that is lost when power is removed, such as RAM and open connections.</li>
-        <li><b>Tamper-evident bag</b> — a bag that shows clearly if it has been opened.</li>
-        <li><b>Hash</b> — a short digital fingerprint that changes if the data changes.</li>
-        <li><b>Chain of custody</b> — the written history of who handled the evidence and when.</li>
-        <li><b>Faraday bag</b> — a signal-blocking bag used for phones and wireless devices.</li>
-        <li><b>Swap file</b> — disk space the operating system uses as extra memory, which can change at boot.</li>
-        <li><b>Booby trap</b> — a hidden program or device that destroys data when someone interferes with the machine.</li>
+        <li><b>Civil investigation</b> — a dispute between people or companies, often controlled by a court order for discovery.</li>
+        <li><b>Criminal investigation</b> — an investigation of an offence, limited by the search warrant.</li>
+        <li><b>Corporate / HR investigation</b> — an internal inquiry into a breach of company policy.</li>
+        <li><b>Discovery</b> — the legal process in which each side must share relevant evidence.</li>
+        <li><b>Search warrant</b> — a judge's written permission to search and seize specific items.</li>
+        <li><b>Scope creep</b> — the investigation slowly grows beyond the original plan because new information appears.</li>
+        <li><b>Keyword list</b> — the names, addresses, account numbers and dates you will search for.</li>
+        <li><b>Date range</b> — the period in which the incident happened.</li>
+        <li><b>Logical copy</b> — a copy of the files and folders, without the deleted or empty space.</li>
+        <li><b>Physical image</b> — a byte-for-byte copy of the whole drive, including slack and unallocated space.</li>
+        <li><b>Unallocated space</b> — disk space that is not currently assigned to any file and may still hold deleted data.</li>
+        <li><b>CMOS</b> — a small battery-backed memory that stores a PC's clock and basic hardware settings.</li>
+        <li><b>Slack space</b> — the unused tail of a file's last cluster, which can still hold data.</li>
       </ul>
 
       <h4>Step-by-step</h4>
       <ol>
-        <li><b>Photograph before touching.</b> Capture the screen, cables, ports and device labels. The photo proves the scene before any hand touched it.</li>
-        <li><b>Do not boot the suspect computer.</b> Booting changes timestamps, runs malware and may destroy evidence. Use a write blocker or a forensic boot CD instead.</li>
-        <li><b>Do not open the case</b> unless you are trained. Handle drives by the edges and use anti-static protection, because a static spark can kill a drive.</li>
-        <li><b>Do not run antivirus or scandisk</b> on the evidence disk. Both programs write to the disk and may quarantine or “repair” the evidence.</li>
-        <li><b>Capture volatile data first</b> if the machine is running. RAM and network state disappear when the power goes off.</li>
-        <li><b>Isolate the machine from the network.</b> Unplug the cable or use a Faraday bag, so the suspect cannot remotely wipe data.</li>
-        <li><b>Use tamper-evident bags and seals.</b> Sign across the seal so any later opening is visible.</li>
-        <li><b>Keep a chain-of-custody record</b> for every item. The court must see an unbroken history.</li>
-        <li><b>Store evidence in a cool, dry, magnetic-free place.</b> Heat, moisture and magnets can destroy data.</li>
-        <li><b>Hash before and after transport and before analysis.</b> Matching hashes prove the item did not change on the way.</li>
+        <li><b>Read the complaint or warrant.</b> Write down exactly what is alleged and what the law allows you to search. This is the boundary of the whole case.</li>
+        <li><b>List the questions to answer.</b> Use who, what, when, where and how. Every source you collect should help answer at least one question.</li>
+        <li><b>Identify likely sources.</b> Consider the PC, server, mobile phone, cloud account, USB drive, printer and router. The answer may be on a device nobody thought to mention.</li>
+        <li><b>Build a keyword list.</b> Include names, e-mail addresses, account numbers, project names and dates. Good keywords save hours of manual review.</li>
+        <li><b>Define the date range.</b> Focus on the period of the incident, so the review does not drown in years of unrelated files.</li>
+        <li><b>Define the file types.</b> Decide whether you need documents, spreadsheets, images, databases or chat logs.</li>
+        <li><b>Decide the depth.</b> A logical copy may be enough for a simple policy case; a full physical image is needed when deleted or hidden data matters.</li>
       </ol>
 
-      <div class="analogy"><b>Real-life analogy:</b> This is like preserving a fingerprint at a crime scene. You photograph it, cover it, and never touch it with bare hands. Every person who lifts the cover is written into the log.</div>
+      <div class="analogy"><b>Real-life analogy:</b> It is like packing for a trip with a strict luggage limit. You choose what the trip actually needs, not everything in the wardrobe, because extra weight slows you down and may cost more.</div>
 
-      <div class="confuse"><b>Common confusion:</b> “I only looked; I did not change anything” is not safe. Opening a file changes its last-access time, and booting the operating system can start malware. Even a preview must go through a write blocker.</div>
+      <div class="confuse"><b>Common confusion:</b> Collecting more data is not automatically safer. Scope creep can take the search beyond the warrant, make the evidence inadmissible and turn a small case into an expensive review.</div>
 
       <h3>Full exam answer</h3>
 
-      <h4>One precaution in detail — never boot the suspect computer</h4>
-      <p>Booting a suspect machine is one of the most common and most damaging mistakes. When Windows starts, it:</p>
+      <h4>1. Start from the type of investigation</h4>
+      <p>The <b>type of investigation</b> and the <b>volume of data</b> determine how the evidence is examined:</p>
       <ul>
-        <li>Updates the <b>last-access time</b> of files, destroying the timeline.</li>
-        <li>Creates, modifies or deletes <b>swap and temporary files</b>.</li>
-        <li>Runs <b>startup programs and malware</b>, which may delete logs or contact a remote server.</li>
-        <li>Mounts the disk read-write, so the operating system can write to it.</li>
-        <li>May trigger a <b>booby trap</b> or “dead man switch” that wipes the drive.</li>
-      </ul>
-      <p><b>Correct procedure:</b> remove the drive, or boot from a trusted forensic CD/USB, connect it through a <b>hardware write blocker</b>, and image it with a tool that reads every sector. Verify the image hash against the source. Only then boot the <i>image</i> in a virtual machine — never the original.</p>
-      <p class="small"><b>What this means:</b> the safest rule is “read the disk, do not run it.” If you must run something, run it on a verified copy in a controlled environment, and record exactly what you did.</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>What steps should be taken to secure a computer incident or crime scene before beginning the search for digital evidence?</p>
-      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-
-      <p class="asked"><b>Asked in:</b> 2025 May Q5(a) [8]</p>
-
-      <div class="simple"><b>In simple words:</b> Before searching, make the area private and safe. Put up tape, post a guard, keep an entry log, and stop anyone from touching the computer. Then photograph the screen and write down what is running.</div>
-
-      <h4>Why we do this</h4>
-      <p>An unsecured scene lets people delete files, unplug devices or leak the investigation. A controlled scene keeps the evidence trustworthy and stops the case from being compromised before the search even starts.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Perimeter</b> — the boundary around the scene that only authorised people may cross.</li>
-        <li><b>Barrier tape</b> — coloured tape that marks the boundary and warns people to stay out.</li>
-        <li><b>Access log</b> — a written list of who entered, when and why.</li>
-        <li><b>Legitimate cause</b> — a lawful, work-related reason for a person to be inside the scene.</li>
-        <li><b>Volatile data</b> — data that disappears when power is lost, such as RAM and network connections.</li>
-        <li><b>Faraday bag</b> — a metal-lined bag that blocks phone signals.</li>
-        <li><b>Chain of custody</b> — the written record of every transfer of evidence.</li>
-        <li><b>Warrant scope</b> — the places and items the warrant actually allows you to search and seize.</li>
-        <li><b>Evidence kit</b> — the prepared set of bags, labels, gloves, camera, write blockers and other tools needed at a scene.</li>
-        <li><b>Scribe</b> — the team member who writes down every action and every person who enters the scene.</li>
+        <li><b>Civil investigation</b> — frequently constrained by a <b>court order for discovery</b>.</li>
+        <li><b>Criminal investigation</b> — restricted to the data specified in the <b>search warrant</b>.</li>
+        <li><b>Corporate / HR investigation</b> — focuses on <b>infringements of corporate policy</b>, often only e-mail or a few specified topics.</li>
       </ul>
 
-      <h4>Step-by-step</h4>
+      <h4>2. Control scope creep</h4>
+      <p><b>Scope creep</b> is when an investigation broadens beyond what was originally planned because unexpected information is found, leading the lawyer to request a search of other places. It increases time and cost. The book's advice:</p>
+      <ul>
+        <li>Document every request for more inquiry.</li>
+        <li>Be able to explain why the investigation took longer than expected.</li>
+        <li>Keep the search <b>comprehensive enough</b> to include all pertinent evidence, but <b>not so extensive</b> that time and money are wasted on irrelevant data.</li>
+        <li>Start with a strategy, but be prepared to modify it when the evidence points elsewhere.</li>
+      </ul>
+      <p class="small"><b>What this means:</b> scope creep is not always wrong, but it must be deliberate and recorded. If the case grows, the paperwork must grow with it.</p>
+
+      <h4>3. The 8-step examination method (book §5.1)</h4>
       <ol>
-        <li><b>Set an outer perimeter.</b> Use tape and guards so onlookers cannot reach the devices.</li>
-        <li><b>Control the entrance.</b> Allow only people with a legitimate cause, and write every name into the access log.</li>
-        <li><b>Make the perimeter wider than you need.</b> It is easy to shrink a scene later; it is embarrassing and unsafe to enlarge it after people have walked through.</li>
-        <li><b>Freeze the device.</b> Tell everyone not to touch the keyboard or mouse, and do not close an open session. The screen itself may be evidence.</li>
-        <li><b>Photograph the screen and the connections.</b> The photo preserves what was displayed before anything changed.</li>
-        <li><b>Record the running state.</b> Note open programs, windows, logged-on users and network connections.</li>
-        <li><b>Isolate the network.</b> Unplug the network cable rather than the power, and put phones in Faraday bags.</li>
-        <li><b>Protect the physical scene.</b> Keep it cool and dry, and keep liquids and heavy equipment away from devices.</li>
-        <li><b>Brief the team and assign roles.</b> Scene security, photography, evidence collection and the scribe should know exactly what they own.</li>
-        <li><b>Start the paperwork.</b> Open the evidence notebook and chain-of-custody form, and record the date, time, place, case number and everyone present.</li>
+        <li>Use only recently erased, reformatted and virus-checked media for target drives.</li>
+        <li>List the components of the suspect's computer and record its state at seizure.</li>
+        <li>If possible, remove the original disk before checking the CMOS date and time for a static acquisition.</li>
+        <li>Note how the data was obtained, including every step used to produce the bit-stream image and the tools employed.</li>
+        <li>Be methodical and logical: list every folder and file, and note where specific evidence is located.</li>
+        <li>Start at the root directory of the partition and look through all folders (a limited search in a civil case).</li>
+        <li>Recover the contents of password-protected files that may be relevant.</li>
+        <li>Determine each executable's purpose by its hash value and known-file comparison.</li>
       </ol>
+      <p class="small"><b>What this means:</b> the examination is a documented sweep, not a random hunt. Start at the root, go folder by folder, and record where each piece of evidence was found.</p>
 
-      <div class="analogy"><b>Real-life analogy:</b> It is like sealing a building after a fire. Nobody enters except the investigator, every entry is written down, and the scene stays exactly as the fire left it until the examination begins.</div>
-
-      <div class="confuse"><b>Common confusion:</b> More people do not mean more security. Every extra person is a contamination risk and must be logged. The best scene is the one with the fewest people who have a real reason to be there.</div>
-
-      <h3>Full exam answer</h3>
-
-      <h4>1. Secure the perimeter (book §5.5.5)</h4>
-      <ul>
-        <li>Protect the evidence and the privacy of the people involved. The inquiry can be compromised if information becomes public.</li>
-        <li>Use <b>yellow barrier tape</b> to keep onlookers away from a crime or computer incident scene.</li>
-        <li>Use <b>police officers or security guards</b> to keep people out. Trespass and obstruction law provide legal grounds to exclude them.</li>
-        <li>Allow entry only to people with a <b>legitimate cause</b> to be there.</li>
-        <li><b>Extend the perimeter</b> beyond the immediate area. It is easier to reduce the scene than to increase it later.</li>
-        <li>Computer investigators are often not in charge of perimeter security. Work with the officer or detective who is.</li>
-      </ul>
-
-      <h4>2. Protect the digital evidence</h4>
-      <ol>
-        <li><b>Do not touch the keyboard or mouse.</b> A screensaver or open session may be evidence.</li>
-        <li><b>Photograph the screen</b> before anything changes.</li>
-        <li><b>Note running programs, open windows and network connections.</b></li>
-        <li><b>Disconnect the network cable</b> — not the power — to stop remote access and wiping.</li>
-        <li><b>Place phones in a Faraday bag</b> and switch off wireless where the law allows.</li>
-        <li><b>Prevent bystanders from using the machine</b> or deleting files.</li>
-        <li><b>Record who enters and leaves</b> the scene and what they touch.</li>
-        <li><b>Keep the scene cool and dry</b>, and protect devices from shocks and liquids.</li>
-      </ol>
-
-      <h4>3. Before the search begins</h4>
-      <ul>
-        <li>Brief the team on the warrant scope and the plan.</li>
-        <li>Assign roles: scene security, photography, evidence collection and scribe.</li>
-        <li>Prepare the evidence kit: bags, seals, labels, gloves, camera, write blockers, Faraday bags and a forensic laptop.</li>
-        <li>Start the <b>evidence notebook</b> and the <b>chain-of-custody form</b>.</li>
-        <li>Record the date, time, place, case number and the names of all people present.</li>
-      </ul>
-
-      <div class="tree">OUTER PERIMETER  ── tape + guard + access log
-        ↓
-INNER SCENE      ── only authorised examiners
-        ↓
-DEVICE           ── photograph → note state → isolate network → seize</div>
-      <p class="small"><b>What this means:</b> work from the outside in. Secure the people and the boundary first, then the device. If you start with the device, the room behind you is still uncontrolled.</p>
+      <div class="note"><b>Example to quote:</b> a worker is accused of running a side business in office hours. The strategy is to focus on <b>temporary Internet files, Internet history and e-mail</b> within the relevant date range — not on the entire disk.</div>
     </div>
   </div>
 </section>
 
 <section class="card" id="s52">
-  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>5.2 Validating forensic data</h2>
+  <h2>5.2 Validating forensic data</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -584,7 +425,7 @@ DEVICE           ── photograph → note state → isolate network → seize<
 </section>
 
 <section class="card" id="s53">
-  <div class="prio">Priority 3 · ★★★ 3× repeated</div><h2>5.3 Addressing data-hiding techniques</h2>
+  <h2>5.3 Addressing data-hiding techniques</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -667,7 +508,7 @@ DEVICE           ── photograph → note state → isolate network → seize<
 </section>
 
 <section class="card" id="s54">
-  <div class="prio">Priority 4 · ★★★ 3× repeated</div><h2>5.4 Remote &amp; live acquisitions</h2>
+  <h2>5.4 Remote &amp; live acquisitions</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -785,183 +626,8 @@ DEVICE           ── photograph → note state → isolate network → seize<
   </div>
 </section>
 
-<section class="card" id="s56">
-  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>5.6 The Honeynet project</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is the honeynet project and how does it contribute to network forensics?</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q5(b) [9] · 2024 May Q5(b) [9] · 2025 May Q5(b) [9]</p>
-
-      <div class="simple"><b>In simple words:</b> A honeypot is a fake computer that looks valuable but holds no real data. A honeynet is a network of these fakes. Investigators watch what attackers do to them, so they can learn new attack methods without putting real systems at risk.</div>
-
-      <h4>Why we do this</h4>
-      <p>You cannot study an attacker if you chase them off immediately. A honeynet gives them a safe target, records every move, and turns the attack into research that protects real networks.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Honeypot</b> — a decoy computer that looks like a normal machine but holds no valuable data.</li>
-        <li><b>Honeynet</b> — a network made of several honeypots.</li>
-        <li><b>Honewall</b> — a monitoring device that watches what happens to the honeypots and controls outgoing traffic.</li>
-        <li><b>Forensic image</b> — an exact copy of a machine's disk taken before and after an attack.</li>
-        <li><b>Production network</b> — the real network that runs the organisation's work.</li>
-        <li><b>Zero-day</b> — an attack that exploits a flaw nobody has fixed or published yet.</li>
-        <li><b>Botnet</b> — a group of infected machines controlled by one attacker.</li>
-        <li><b>Zombie</b> — a single infected machine that follows an attacker's commands.</li>
-        <li><b>DDoS</b> — a distributed denial-of-service attack, where many machines flood a target at once.</li>
-        <li><b>Command and control (C2)</b> — the channel an attacker uses to send orders to infected machines.</li>
-        <li><b>Attribution</b> — working out who or what was responsible for an attack.</li>
-        <li><b>IRC</b> — Internet Relay Chat, an old text chat system often used for command-and-control.</li>
-        <li><b>Entrapment</b> — persuading someone to commit a crime they were not already inclined to commit.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Load the decoy with standard software.</b> It must look like a real machine on the production network, or attackers will ignore it.</li>
-        <li><b>Take a forensic image before deployment.</b> This is the clean “before” picture that later comparison depends on.</li>
-        <li><b>Deploy it as bait.</b> Put it on the network and leave it alone; it is not used for real work.</li>
-        <li><b>Monitor every action.</b> The honewall records connections, downloads and commands while controlling what leaves the network.</li>
-        <li><b>If it is compromised, take it offline and image it again.</b> The “after” image captures the attacker's changes.</li>
-        <li><b>Compare the two images.</b> The difference shows the method of attack and which files were added or altered.</li>
-        <li><b>Store both images in a research database.</b> Other investigators can study the attack and improve detection.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> A honeynet is a fake shop set up to catch thieves. The shelves look real, but there is no cash inside. Police watch what the thieves do, learn their methods, and use that knowledge to protect the real shops on the street.</div>
-
-      <div class="confuse"><b>Common confusion:</b> A honeypot is not a firewall. It does not block an attack; it invites and observes one. It also sees only what is aimed at it, so a quiet honeypot does not prove that the real network was never attacked.</div>
-
-      <h3>Full exam answer</h3>
-
-      <h4>1. Definition</h4>
-      <p>The <b>Honeynet Project</b> is a research project that makes information about honeypots, honeynets and honewalls available in order to <b>thwart Internet and network attackers</b>. Its aims are to create awareness, explain how to protect against threats, show how attackers operate and communicate, and give people tools and methods for their own research.</p>
-
-      <h4>2. Key components</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Component</th><th>What it is</th><th>Purpose</th></tr></thead>
-        <tbody>
-          <tr><td><b>Honeypot</b></td><td>A computer set up to look like any other machine on the network, but with no real data of value.</td><td>Lure attackers away from production systems and observe them.</td></tr>
-          <tr><td><b>Honeynet</b></td><td>A network of honeypots.</td><td>Observe large-scale, multi-host attacks and attacker-to-attacker communication.</td></tr>
-          <tr><td><b>Honewall</b></td><td>A computer that monitors what happens to the honeypots.</td><td>Record the attacker's actions and control outgoing traffic.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="small"><b>What this means:</b> remember the three words in order — one decoy is a honeypot, many decoys form a honeynet, and the monitor that watches them is the honewall.</p>
-
-      <h4>3. How a honeynet works</h4>
-      <p>The seven-step cycle above is the exam answer. The important idea is the <b>before-and-after image comparison</b>: it shows exactly what the attacker changed.</p>
-
-      <h4>4. Contribution to network forensics</h4>
-      <ul>
-        <li><b>Early warning</b> — reveals new attack tools and zero-day techniques before they reach production.</li>
-        <li><b>Behaviour capture</b> — records the full sequence of an attack: scanning, exploit, download and command-and-control.</li>
-        <li><b>Attribution data</b> — source IPs, malware samples, IRC/C2 channels and file hashes.</li>
-        <li><b>Evidence preservation</b> — before-and-after images provide a controlled comparison, which is exactly what a forensic report needs.</li>
-        <li><b>Research database</b> — shared with the community, improving detection signatures.</li>
-        <li><b>DDoS and zero-day research</b> — the project studies distributed denial-of-service and zero-day attacks, including botnets and “zombies”.</li>
-      </ul>
-      <p class="small"><b>What this means:</b> a honeynet is both a trap and a laboratory. It produces evidence of the attack and intelligence that helps every other network defend itself.</p>
-
-      <h4>5. Limitations (good for the last 2 marks)</h4>
-      <ul>
-        <li>A honeypot sees only what is directed at it; it cannot prove that a production system was not attacked.</li>
-        <li>It must be isolated, or it becomes a launch point for attacks on others.</li>
-        <li>Legal and ethical issues arise: entrapment and privacy concerns.</li>
-        <li>Skilled attackers can fingerprint a honeypot and avoid it.</li>
-      </ul>
-
-      <div class="note"><b>Terminology to use:</b> honeypot = single decoy; honeynet = network of decoys; honewall = monitor/control device. The 2023 Nov paper spells it “honeynet”, 2024 May “honey net” and 2025 May “honeyenet” — all the same project.</div>
-    </div>
-  </div>
-</section>
-
-<section class="card" id="s57">
-  <div class="prio">Priority 6 · ★★ 2× repeated</div><h2>5.7 Identifying digital evidence</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain the process of identifying digital evidence in computer forensics. / Describe the steps of identifying digital evidence.</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-
-      <p class="asked"><b>Asked in:</b> 2023 May Q6(a) [9] · 2025 Nov Q6(a) [9]</p>
-
-      <div class="simple"><b>In simple words:</b> Identifying evidence means finding every device and data source that could answer the case questions. You survey the scene, list the devices, decide what is relevant and legally allowed, then preserve it before analysis. If you miss the right source, the rest of the investigation has nothing to work on.</div>
-
-      <h4>Why we do this</h4>
-      <p>Digital evidence can sit in a phone, a router, a cloud account or a backup tape, not only in the obvious laptop. A planned identification process makes sure the important sources are found, legally covered and preserved before anyone can change them.</p>
-
-      <h4>Words you need first</h4>
-      <ul>
-        <li><b>Digital evidence</b> — information stored or transmitted in digital form that can be used in court.</li>
-        <li><b>Computer-generated record</b> — a record created by a program without a human writing it, such as a log entry.</li>
-        <li><b>Computer-stored record</b> — a record typed or saved by a person, such as a document or e-mail.</li>
-        <li><b>Hearsay</b> — a statement made outside court and offered to prove its content; courts usually restrict it.</li>
-        <li><b>Business-record exception</b> — a rule that allows routine business records as evidence even though they are hearsay.</li>
-        <li><b>Chain of custody</b> — the written record of who handled the evidence and when.</li>
-        <li><b>Relevance</b> — the connection between the evidence and a fact the case must prove.</li>
-        <li><b>Artefact</b> — a small trace left by user or system activity, such as a browser entry or a registry key.</li>
-        <li><b>Metadata</b> — data about data, such as a file's author, creation time or size.</li>
-        <li><b>Warrant scope</b> — the places and items the warrant allows you to search and seize.</li>
-        <li><b>FOIA</b> — the Freedom of Information Act, a law that lets the public request government records.</li>
-        <li><b>Testimonial evidence</b> — evidence given by a witness in words, rather than by an object.</li>
-      </ul>
-
-      <h4>Step-by-step</h4>
-      <ol>
-        <li><b>Understand the case.</b> Read the complaint, warrant or policy and list the questions the evidence must answer. This stops you collecting interesting but irrelevant data.</li>
-        <li><b>Survey the scene.</b> Look for every device that may hold data: PCs, laptops, servers, phones, tablets, USB drives, external disks, printers, cameras, routers and smart devices.</li>
-        <li><b>Document the scene.</b> Photograph the area, screen, cable connections and labels, and record serial numbers and the system time. The photo and notes prove the original state.</li>
-        <li><b>Identify potential sources.</b> Consider the local disk, RAM, network shares, cloud accounts, e-mail server, logs, backup tapes and CCTV. Evidence is not always inside the computer case.</li>
-        <li><b>Decide relevance and legal scope.</b> Ask which sources fall within the warrant or policy and which are likely to hold the answer. Relevance without legal authority still cannot be seized.</li>
-        <li><b>Preserve before touching.</b> Capture volatile data, isolate the device, use a write blocker and hash the data. Preservation must happen before analysis.</li>
-        <li><b>Record the chain of custody.</b> Log every item, every transfer and every access, so the court can follow the evidence's history.</li>
-        <li><b>Classify the evidence.</b> Separate computer-generated records from computer-stored records, and real, documentary, testimonial or demonstrative evidence. The class affects how you prove it is authentic.</li>
-        <li><b>Prepare for analysis.</b> Image the media, verify the hash and load the image into the forensic tool. Only then does the detailed examination begin.</li>
-      </ol>
-
-      <div class="analogy"><b>Real-life analogy:</b> It is like searching a house for a missing document. You list every room and cupboard, decide which ones could hold the document, seal each one before searching, and write down every item you remove.</div>
-
-      <div class="confuse"><b>Common confusion:</b> Digital evidence is not only the files a user can see. Deleted files, logs, RAM, metadata and backup copies can all be evidence, and they are often more reliable than the visible document.</div>
-
-      <h3>Full exam answer</h3>
-
-      <h4>1. What digital evidence is</h4>
-      <p><b>Digital evidence</b> is any information stored or transmitted in digital form that can be used in court. US courts accept digital evidence as <b>physical evidence</b>; digital data is treated as a tangible object.</p>
-
-      <h4>2. General tasks performed by investigators</h4>
-      <ul>
-        <li><b>Identify</b> digital information or artefacts that can be used as evidence.</li>
-        <li><b>Collect, preserve and document</b> evidence.</li>
-        <li><b>Analyse, identify and organise</b> evidence.</li>
-        <li><b>Rebuild evidence or repeat a situation</b> to verify that the results can be reproduced reliably.</li>
-      </ul>
-
-      <h4>3. Rules to follow while identifying evidence</h4>
-      <ul>
-        <li>Consistent practices verify your work and enhance your credibility.</li>
-        <li>Comply with the state's rules of evidence or the Federal Rules of Evidence.</li>
-        <li>Evidence admitted in a criminal case can be used in a civil suit, and vice versa.</li>
-        <li>Keep current on rulings about collecting, processing, storing and admitting digital evidence.</li>
-        <li>Digital evidence is unlike other physical evidence because it can be changed more easily; compare the original with the duplicate.</li>
-        <li>Most courts treat computer records as hearsay evidence, with a <b>business-record exception</b> for records of regularly conducted activity.</li>
-        <li>Computer-generated records are authentic if the program that created the output was functioning correctly.</li>
-        <li>Computer-stored records must be shown to be authentic and trustworthy; file metadata can identify the author.</li>
-      </ul>
-      <p class="small"><b>What this means:</b> finding the file is only half the job. You must also show that it is genuine, that it came from the right machine and that the court is allowed to hear it.</p>
-
-      <div class="tip"><b>9-mark answer:</b> definition (1) + 7–9 identification steps (5) + four general tasks (2) + two rules-of-evidence points (1). Use the phrase “identify → preserve → document → analyse → reproduce”.</div>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="s55">
-  <div class="prio">Priority 7 · ★ 1× repeated</div><h2>5.5 Network forensics</h2>
+  <h2>5.5 Network forensics</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1243,95 +909,429 @@ least volatile</div>
   </div>
 </section>
 
-<section class="card" id="s51">
-  <div class="prio">Priority 8 · ★ 1× repeated</div><h2>5.1 Determining what data to collect and analyse</h2>
+<section class="card" id="s56">
+  <h2>5.6 The Honeynet project</h2>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>How do investigators determine which data is relevant to collect and analyse in a digital forensics investigation?</p>
-      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+      <p class="qtitle"><span class="qno">Q1</span>What is the honeynet project and how does it contribute to network forensics?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
 
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q5(a) [8]</p>
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q5(b) [9] · 2024 May Q5(b) [9] · 2025 May Q5(b) [9]</p>
 
-      <div class="simple"><b>In simple words:</b> You do not copy everything blindly. First read the complaint or warrant, list the questions, and choose the sources, keywords and date range that can answer them. Then collect only what is relevant and legally allowed.</div>
+      <div class="simple"><b>In simple words:</b> A honeypot is a fake computer that looks valuable but holds no real data. A honeynet is a network of these fakes. Investigators watch what attackers do to them, so they can learn new attack methods without putting real systems at risk.</div>
 
       <h4>Why we do this</h4>
-      <p>Too little data misses the proof; too much data wastes time, costs money and may go beyond the warrant. A clear plan keeps the investigation focused and defensible.</p>
+      <p>You cannot study an attacker if you chase them off immediately. A honeynet gives them a safe target, records every move, and turns the attack into research that protects real networks.</p>
 
       <h4>Words you need first</h4>
       <ul>
-        <li><b>Civil investigation</b> — a dispute between people or companies, often controlled by a court order for discovery.</li>
-        <li><b>Criminal investigation</b> — an investigation of an offence, limited by the search warrant.</li>
-        <li><b>Corporate / HR investigation</b> — an internal inquiry into a breach of company policy.</li>
-        <li><b>Discovery</b> — the legal process in which each side must share relevant evidence.</li>
-        <li><b>Search warrant</b> — a judge's written permission to search and seize specific items.</li>
-        <li><b>Scope creep</b> — the investigation slowly grows beyond the original plan because new information appears.</li>
-        <li><b>Keyword list</b> — the names, addresses, account numbers and dates you will search for.</li>
-        <li><b>Date range</b> — the period in which the incident happened.</li>
-        <li><b>Logical copy</b> — a copy of the files and folders, without the deleted or empty space.</li>
-        <li><b>Physical image</b> — a byte-for-byte copy of the whole drive, including slack and unallocated space.</li>
-        <li><b>Unallocated space</b> — disk space that is not currently assigned to any file and may still hold deleted data.</li>
-        <li><b>CMOS</b> — a small battery-backed memory that stores a PC's clock and basic hardware settings.</li>
-        <li><b>Slack space</b> — the unused tail of a file's last cluster, which can still hold data.</li>
+        <li><b>Honeypot</b> — a decoy computer that looks like a normal machine but holds no valuable data.</li>
+        <li><b>Honeynet</b> — a network made of several honeypots.</li>
+        <li><b>Honewall</b> — a monitoring device that watches what happens to the honeypots and controls outgoing traffic.</li>
+        <li><b>Forensic image</b> — an exact copy of a machine's disk taken before and after an attack.</li>
+        <li><b>Production network</b> — the real network that runs the organisation's work.</li>
+        <li><b>Zero-day</b> — an attack that exploits a flaw nobody has fixed or published yet.</li>
+        <li><b>Botnet</b> — a group of infected machines controlled by one attacker.</li>
+        <li><b>Zombie</b> — a single infected machine that follows an attacker's commands.</li>
+        <li><b>DDoS</b> — a distributed denial-of-service attack, where many machines flood a target at once.</li>
+        <li><b>Command and control (C2)</b> — the channel an attacker uses to send orders to infected machines.</li>
+        <li><b>Attribution</b> — working out who or what was responsible for an attack.</li>
+        <li><b>IRC</b> — Internet Relay Chat, an old text chat system often used for command-and-control.</li>
+        <li><b>Entrapment</b> — persuading someone to commit a crime they were not already inclined to commit.</li>
       </ul>
 
       <h4>Step-by-step</h4>
       <ol>
-        <li><b>Read the complaint or warrant.</b> Write down exactly what is alleged and what the law allows you to search. This is the boundary of the whole case.</li>
-        <li><b>List the questions to answer.</b> Use who, what, when, where and how. Every source you collect should help answer at least one question.</li>
-        <li><b>Identify likely sources.</b> Consider the PC, server, mobile phone, cloud account, USB drive, printer and router. The answer may be on a device nobody thought to mention.</li>
-        <li><b>Build a keyword list.</b> Include names, e-mail addresses, account numbers, project names and dates. Good keywords save hours of manual review.</li>
-        <li><b>Define the date range.</b> Focus on the period of the incident, so the review does not drown in years of unrelated files.</li>
-        <li><b>Define the file types.</b> Decide whether you need documents, spreadsheets, images, databases or chat logs.</li>
-        <li><b>Decide the depth.</b> A logical copy may be enough for a simple policy case; a full physical image is needed when deleted or hidden data matters.</li>
+        <li><b>Load the decoy with standard software.</b> It must look like a real machine on the production network, or attackers will ignore it.</li>
+        <li><b>Take a forensic image before deployment.</b> This is the clean “before” picture that later comparison depends on.</li>
+        <li><b>Deploy it as bait.</b> Put it on the network and leave it alone; it is not used for real work.</li>
+        <li><b>Monitor every action.</b> The honewall records connections, downloads and commands while controlling what leaves the network.</li>
+        <li><b>If it is compromised, take it offline and image it again.</b> The “after” image captures the attacker's changes.</li>
+        <li><b>Compare the two images.</b> The difference shows the method of attack and which files were added or altered.</li>
+        <li><b>Store both images in a research database.</b> Other investigators can study the attack and improve detection.</li>
       </ol>
 
-      <div class="analogy"><b>Real-life analogy:</b> It is like packing for a trip with a strict luggage limit. You choose what the trip actually needs, not everything in the wardrobe, because extra weight slows you down and may cost more.</div>
+      <div class="analogy"><b>Real-life analogy:</b> A honeynet is a fake shop set up to catch thieves. The shelves look real, but there is no cash inside. Police watch what the thieves do, learn their methods, and use that knowledge to protect the real shops on the street.</div>
 
-      <div class="confuse"><b>Common confusion:</b> Collecting more data is not automatically safer. Scope creep can take the search beyond the warrant, make the evidence inadmissible and turn a small case into an expensive review.</div>
+      <div class="confuse"><b>Common confusion:</b> A honeypot is not a firewall. It does not block an attack; it invites and observes one. It also sees only what is aimed at it, so a quiet honeypot does not prove that the real network was never attacked.</div>
 
       <h3>Full exam answer</h3>
 
-      <h4>1. Start from the type of investigation</h4>
-      <p>The <b>type of investigation</b> and the <b>volume of data</b> determine how the evidence is examined:</p>
+      <h4>1. Definition</h4>
+      <p>The <b>Honeynet Project</b> is a research project that makes information about honeypots, honeynets and honewalls available in order to <b>thwart Internet and network attackers</b>. Its aims are to create awareness, explain how to protect against threats, show how attackers operate and communicate, and give people tools and methods for their own research.</p>
+
+      <h4>2. Key components</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Component</th><th>What it is</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><b>Honeypot</b></td><td>A computer set up to look like any other machine on the network, but with no real data of value.</td><td>Lure attackers away from production systems and observe them.</td></tr>
+          <tr><td><b>Honeynet</b></td><td>A network of honeypots.</td><td>Observe large-scale, multi-host attacks and attacker-to-attacker communication.</td></tr>
+          <tr><td><b>Honewall</b></td><td>A computer that monitors what happens to the honeypots.</td><td>Record the attacker's actions and control outgoing traffic.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small"><b>What this means:</b> remember the three words in order — one decoy is a honeypot, many decoys form a honeynet, and the monitor that watches them is the honewall.</p>
+
+      <h4>3. How a honeynet works</h4>
+      <p>The seven-step cycle above is the exam answer. The important idea is the <b>before-and-after image comparison</b>: it shows exactly what the attacker changed.</p>
+
+      <h4>4. Contribution to network forensics</h4>
       <ul>
-        <li><b>Civil investigation</b> — frequently constrained by a <b>court order for discovery</b>.</li>
-        <li><b>Criminal investigation</b> — restricted to the data specified in the <b>search warrant</b>.</li>
-        <li><b>Corporate / HR investigation</b> — focuses on <b>infringements of corporate policy</b>, often only e-mail or a few specified topics.</li>
+        <li><b>Early warning</b> — reveals new attack tools and zero-day techniques before they reach production.</li>
+        <li><b>Behaviour capture</b> — records the full sequence of an attack: scanning, exploit, download and command-and-control.</li>
+        <li><b>Attribution data</b> — source IPs, malware samples, IRC/C2 channels and file hashes.</li>
+        <li><b>Evidence preservation</b> — before-and-after images provide a controlled comparison, which is exactly what a forensic report needs.</li>
+        <li><b>Research database</b> — shared with the community, improving detection signatures.</li>
+        <li><b>DDoS and zero-day research</b> — the project studies distributed denial-of-service and zero-day attacks, including botnets and “zombies”.</li>
+      </ul>
+      <p class="small"><b>What this means:</b> a honeynet is both a trap and a laboratory. It produces evidence of the attack and intelligence that helps every other network defend itself.</p>
+
+      <h4>5. Limitations (good for the last 2 marks)</h4>
+      <ul>
+        <li>A honeypot sees only what is directed at it; it cannot prove that a production system was not attacked.</li>
+        <li>It must be isolated, or it becomes a launch point for attacks on others.</li>
+        <li>Legal and ethical issues arise: entrapment and privacy concerns.</li>
+        <li>Skilled attackers can fingerprint a honeypot and avoid it.</li>
       </ul>
 
-      <h4>2. Control scope creep</h4>
-      <p><b>Scope creep</b> is when an investigation broadens beyond what was originally planned because unexpected information is found, leading the lawyer to request a search of other places. It increases time and cost. The book's advice:</p>
-      <ul>
-        <li>Document every request for more inquiry.</li>
-        <li>Be able to explain why the investigation took longer than expected.</li>
-        <li>Keep the search <b>comprehensive enough</b> to include all pertinent evidence, but <b>not so extensive</b> that time and money are wasted on irrelevant data.</li>
-        <li>Start with a strategy, but be prepared to modify it when the evidence points elsewhere.</li>
-      </ul>
-      <p class="small"><b>What this means:</b> scope creep is not always wrong, but it must be deliberate and recorded. If the case grows, the paperwork must grow with it.</p>
+      <div class="note"><b>Terminology to use:</b> honeypot = single decoy; honeynet = network of decoys; honewall = monitor/control device. The 2023 Nov paper spells it “honeynet”, 2024 May “honey net” and 2025 May “honeyenet” — all the same project.</div>
+    </div>
+  </div>
+</section>
 
-      <h4>3. The 8-step examination method (book §5.1)</h4>
+<section class="card" id="s57">
+  <h2>5.7 Identifying digital evidence</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain the process of identifying digital evidence in computer forensics. / Describe the steps of identifying digital evidence.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+
+      <p class="asked"><b>Asked in:</b> 2023 May Q6(a) [9] · 2025 Nov Q6(a) [9]</p>
+
+      <div class="simple"><b>In simple words:</b> Identifying evidence means finding every device and data source that could answer the case questions. You survey the scene, list the devices, decide what is relevant and legally allowed, then preserve it before analysis. If you miss the right source, the rest of the investigation has nothing to work on.</div>
+
+      <h4>Why we do this</h4>
+      <p>Digital evidence can sit in a phone, a router, a cloud account or a backup tape, not only in the obvious laptop. A planned identification process makes sure the important sources are found, legally covered and preserved before anyone can change them.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Digital evidence</b> — information stored or transmitted in digital form that can be used in court.</li>
+        <li><b>Computer-generated record</b> — a record created by a program without a human writing it, such as a log entry.</li>
+        <li><b>Computer-stored record</b> — a record typed or saved by a person, such as a document or e-mail.</li>
+        <li><b>Hearsay</b> — a statement made outside court and offered to prove its content; courts usually restrict it.</li>
+        <li><b>Business-record exception</b> — a rule that allows routine business records as evidence even though they are hearsay.</li>
+        <li><b>Chain of custody</b> — the written record of who handled the evidence and when.</li>
+        <li><b>Relevance</b> — the connection between the evidence and a fact the case must prove.</li>
+        <li><b>Artefact</b> — a small trace left by user or system activity, such as a browser entry or a registry key.</li>
+        <li><b>Metadata</b> — data about data, such as a file's author, creation time or size.</li>
+        <li><b>Warrant scope</b> — the places and items the warrant allows you to search and seize.</li>
+        <li><b>FOIA</b> — the Freedom of Information Act, a law that lets the public request government records.</li>
+        <li><b>Testimonial evidence</b> — evidence given by a witness in words, rather than by an object.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
       <ol>
-        <li>Use only recently erased, reformatted and virus-checked media for target drives.</li>
-        <li>List the components of the suspect's computer and record its state at seizure.</li>
-        <li>If possible, remove the original disk before checking the CMOS date and time for a static acquisition.</li>
-        <li>Note how the data was obtained, including every step used to produce the bit-stream image and the tools employed.</li>
-        <li>Be methodical and logical: list every folder and file, and note where specific evidence is located.</li>
-        <li>Start at the root directory of the partition and look through all folders (a limited search in a civil case).</li>
-        <li>Recover the contents of password-protected files that may be relevant.</li>
-        <li>Determine each executable's purpose by its hash value and known-file comparison.</li>
+        <li><b>Understand the case.</b> Read the complaint, warrant or policy and list the questions the evidence must answer. This stops you collecting interesting but irrelevant data.</li>
+        <li><b>Survey the scene.</b> Look for every device that may hold data: PCs, laptops, servers, phones, tablets, USB drives, external disks, printers, cameras, routers and smart devices.</li>
+        <li><b>Document the scene.</b> Photograph the area, screen, cable connections and labels, and record serial numbers and the system time. The photo and notes prove the original state.</li>
+        <li><b>Identify potential sources.</b> Consider the local disk, RAM, network shares, cloud accounts, e-mail server, logs, backup tapes and CCTV. Evidence is not always inside the computer case.</li>
+        <li><b>Decide relevance and legal scope.</b> Ask which sources fall within the warrant or policy and which are likely to hold the answer. Relevance without legal authority still cannot be seized.</li>
+        <li><b>Preserve before touching.</b> Capture volatile data, isolate the device, use a write blocker and hash the data. Preservation must happen before analysis.</li>
+        <li><b>Record the chain of custody.</b> Log every item, every transfer and every access, so the court can follow the evidence's history.</li>
+        <li><b>Classify the evidence.</b> Separate computer-generated records from computer-stored records, and real, documentary, testimonial or demonstrative evidence. The class affects how you prove it is authentic.</li>
+        <li><b>Prepare for analysis.</b> Image the media, verify the hash and load the image into the forensic tool. Only then does the detailed examination begin.</li>
       </ol>
-      <p class="small"><b>What this means:</b> the examination is a documented sweep, not a random hunt. Start at the root, go folder by folder, and record where each piece of evidence was found.</p>
 
-      <div class="note"><b>Example to quote:</b> a worker is accused of running a side business in office hours. The strategy is to focus on <b>temporary Internet files, Internet history and e-mail</b> within the relevant date range — not on the entire disk.</div>
+      <div class="analogy"><b>Real-life analogy:</b> It is like searching a house for a missing document. You list every room and cupboard, decide which ones could hold the document, seal each one before searching, and write down every item you remove.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Digital evidence is not only the files a user can see. Deleted files, logs, RAM, metadata and backup copies can all be evidence, and they are often more reliable than the visible document.</div>
+
+      <h3>Full exam answer</h3>
+
+      <h4>1. What digital evidence is</h4>
+      <p><b>Digital evidence</b> is any information stored or transmitted in digital form that can be used in court. US courts accept digital evidence as <b>physical evidence</b>; digital data is treated as a tangible object.</p>
+
+      <h4>2. General tasks performed by investigators</h4>
+      <ul>
+        <li><b>Identify</b> digital information or artefacts that can be used as evidence.</li>
+        <li><b>Collect, preserve and document</b> evidence.</li>
+        <li><b>Analyse, identify and organise</b> evidence.</li>
+        <li><b>Rebuild evidence or repeat a situation</b> to verify that the results can be reproduced reliably.</li>
+      </ul>
+
+      <h4>3. Rules to follow while identifying evidence</h4>
+      <ul>
+        <li>Consistent practices verify your work and enhance your credibility.</li>
+        <li>Comply with the state's rules of evidence or the Federal Rules of Evidence.</li>
+        <li>Evidence admitted in a criminal case can be used in a civil suit, and vice versa.</li>
+        <li>Keep current on rulings about collecting, processing, storing and admitting digital evidence.</li>
+        <li>Digital evidence is unlike other physical evidence because it can be changed more easily; compare the original with the duplicate.</li>
+        <li>Most courts treat computer records as hearsay evidence, with a <b>business-record exception</b> for records of regularly conducted activity.</li>
+        <li>Computer-generated records are authentic if the program that created the output was functioning correctly.</li>
+        <li>Computer-stored records must be shown to be authentic and trustworthy; file metadata can identify the author.</li>
+      </ul>
+      <p class="small"><b>What this means:</b> finding the file is only half the job. You must also show that it is genuine, that it came from the right machine and that the court is allowed to hear it.</p>
+
+      <div class="tip"><b>9-mark answer:</b> definition (1) + 7–9 identification steps (5) + four general tasks (2) + two rules-of-evidence points (1). Use the phrase “identify → preserve → document → analyse → reproduce”.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s58">
+  <h2>5.8 Seizing &amp; securing the scene</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Brief about the approaches for seizing digital evidence at the crime scene. / Describe the process of seizing digital evidence at a crime or incident scene.</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+
+      <p class="asked"><b>Asked in:</b> 2022 May Q6(a) [9] · 2022 Nov Q6(a) [9] · 2023 May Q5(b) [8] · 2023 Nov Q6(b) [9] · 2025 Nov Q5(b) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> Seizing means taking a device legally and safely so its data can be examined later. You secure the area, photograph the scene, write down what is running, then decide whether to switch off or copy memory. Every item is labelled, sealed and logged so the court can see that nobody changed it.</div>
+
+      <h4>Why we do this</h4>
+      <p>A computer starts changing the moment it is touched, booted or unplugged. A careless seizure can destroy the very evidence the case depends on, and the defence can then argue that the copy is not the original. A calm, recorded seizure keeps the data usable in court.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Digital evidence</b> — any data stored or sent by a device that can help prove a fact in a case.</li>
+        <li><b>Seizure</b> — legally taking control of a device or data so that it can be examined.</li>
+        <li><b>Search warrant</b> — a judge's written permission to search a place and take specific items.</li>
+        <li><b>Volatile data</b> — data that disappears when the power goes off, such as RAM and open network connections.</li>
+        <li><b>Live acquisition</b> — copying data from a machine while it is still running.</li>
+        <li><b>Write blocker</b> — a device that lets an examiner read a drive but blocks every attempt to write to it.</li>
+        <li><b>Bit-stream image</b> — an exact byte-for-byte copy of a drive, including deleted and empty space.</li>
+        <li><b>Chain of custody</b> — the written record of who handled the evidence, when and why.</li>
+        <li><b>Faraday bag</b> — a metal-lined bag that stops a phone from sending or receiving radio signals.</li>
+        <li><b>RAM</b> — the computer's working memory, which loses its contents when the power goes off.</li>
+        <li><b>ARP cache</b> — a table that maps IP addresses to hardware addresses on a local network.</li>
+        <li><b>Anti-static bag</b> — a protective bag that stops static electricity from damaging a drive or circuit board.</li>
+        <li><b>Tamper-evident tape</b> — tape that shows a visible mark if a seal is broken.</li>
+        <li><b>FOIA</b> — the Freedom of Information Act, a law that lets the public request government records.</li>
+        <li><b>Patriot Act</b> — a US anti-terrorism law that changed some search and surveillance rules.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Secure the scene.</b> Use barrier tape, guards and an entry log. This stops people from deleting files or walking away with devices.</li>
+        <li><b>Photograph before touching anything.</b> Capture the screen, cables, ports and labels. The photo proves the original arrangement if someone later questions it.</li>
+        <li><b>Record the system state.</b> Note the make, model, serial number, operating system, logged-on user, running programs and network connections. This is evidence in its own right.</li>
+        <li><b>Choose the shutdown method.</b> Pulling the plug keeps the disk unchanged but loses RAM. A normal shutdown changes timestamps. Live acquisition saves memory first. Record the reason for your choice.</li>
+        <li><b>Capture volatile data if it matters.</b> Copy RAM, the ARP cache and network connections before they vanish.</li>
+        <li><b>Label every item.</b> Write the exhibit number, date, time, place and officer on the label. A label turns an object into court evidence.</li>
+        <li><b>Package correctly.</b> Use anti-static bags for circuit boards and drives, a Faraday bag for phones, and tamper-evident tape across the seal.</li>
+        <li><b>Transport safely.</b> Keep devices away from heat, magnets, shock and water, and never leave them unattended.</li>
+        <li><b>Record every transfer.</b> The chain-of-custody form must show every person who handled the evidence.</li>
+        <li><b>Image in the lab.</b> Make a bit-stream copy, hash it, compare the hash with the original, and analyse the copy — never the original.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> Seizing a computer is like sealing a room after a burglary. You guard the door, photograph everything in place, list each item, and only then carry it out with a signed receipt.</div>
+
+      <div class="confuse"><b>Common confusion:</b> Many people think the first job is to switch the computer off. Pulling the plug destroys RAM, may lose encryption keys and can trigger a wipe. Sometimes you must copy memory before any shutdown.</div>
+
+      <h3>Full exam answer</h3>
+
+      <h4>1. Two legal settings (book §5.5.2)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Setting</th><th>Power to seize</th><th>Typical approach</th></tr></thead>
+        <tbody>
+          <tr><td><b>Law enforcement</b></td><td>All computing equipment and accessories can be seized with the appropriate search warrant.</td><td>Seize the whole system, photograph, label, transport, image in the lab.</td></tr>
+          <tr><td><b>Corporate / private sector</b></td><td>Similar level of power may exist under company policy, but usually the investigator can only take a <b>screenshot</b> or a copy of the suspect's hard drive.</td><td>Image or copy the drive; leave the machine in place; rely on the employment policy.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small"><b>What this means:</b> the technical steps are similar, but the legal power is not. Police can take the whole machine under a warrant; a company investigator usually copies the drive and must respect employee privacy and company policy.</p>
+
+      <h4>2. Private-sector vs law-enforcement incident scenes (book §5.5.2)</h4>
+      <ul>
+        <li>Businesses and government bodies that are <b>not</b> part of law enforcement are private-sector organisations. Some of their documents must be made accessible as public records under the Freedom of Information Act (FOIA) and state disclosure rules.</li>
+        <li><b>State public records</b> are open for review. A divorce recorded in a public place becomes public information unless a judge orders the paperwork sealed.</li>
+        <li><b>ISPs</b> are a special case: they may investigate computer misuse by their own employees, but they must protect customer privacy, especially for e-mail.</li>
+        <li>The <b>Patriot Act</b> and Homeland Security legislation changed some rules. “Emergency circumstances” means an immediate danger of death or serious physical harm, such as a bomb threat.</li>
+        <li>The practical difference: police can seize the whole system under a warrant; a corporate investigator usually images or copies the drive and must stay inside company policy.</li>
+      </ul>
+      <p class="small"><b>What this means:</b> before you touch anything, ask who has legal authority and what the policy or warrant allows. The same laptop can be handled in two very different ways.</p>
+
+      <h4>3. The ten-step seizure process (book §5.5.6)</h4>
+      <p>The numbered list above is the exam answer. Remember it as <b>secure → photograph → record → decide → capture → label → package → transport → log → image</b>.</p>
+
+      <h4>4. Approaches to the shutdown decision</h4>
+      <ul>
+        <li><b>Pull the plug</b> — preserves the disk exactly but loses RAM. Use it when the machine is idle and disk evidence is the priority.</li>
+        <li><b>Normal shutdown</b> — lets the operating system flush caches, but changes timestamps and may delete swap or temporary files. Avoid it unless it is necessary.</li>
+        <li><b>Live acquisition then shutdown</b> — best for servers and encrypted disks: capture RAM first, then switch off.</li>
+        <li><b>Network isolation</b> — unplug the network cable rather than the power, to stop remote wiping while keeping RAM intact.</li>
+      </ul>
+      <p class="small"><b>What this means:</b> the shutdown choice is itself evidence. Write down what you did and why, because another examiner must be able to judge whether your choice preserved or destroyed data.</p>
+
+      <div class="note"><b>Legal caution:</b> a badly written warrant can cause the court to dismiss the evidence. Discuss the wording with the prosecutor before the search; keep the seizure within the warrant's scope.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What precautions should investigators take to prevent data alteration or loss during the seizure process? Explain any one in detail.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+
+      <p class="asked"><b>Asked in:</b> 2024 May Q6(a) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> Evidence must stay exactly as it was found. Do not boot the machine, run antivirus, open the case or let anyone write to the disk. Photograph it, isolate it from the network, capture memory if needed, seal it, and hash it before and after transport.</div>
+
+      <h4>Why we do this</h4>
+      <p>One write can change a timestamp, delete a log or start malware. If that happens, the defence can say the item in court is not the item found at the scene. These precautions keep the original untouched and the copy provably identical.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Data alteration</b> — any change to the content, time or structure of evidence.</li>
+        <li><b>Boot</b> — starting a computer's operating system, which writes to the disk and runs startup programs.</li>
+        <li><b>Write blocker</b> — hardware or software that allows reads but blocks all writes to a drive.</li>
+        <li><b>Anti-static protection</b> — a mat, wrist strap or bag that prevents static electricity from damaging components.</li>
+        <li><b>Volatile data</b> — data that is lost when power is removed, such as RAM and open connections.</li>
+        <li><b>Tamper-evident bag</b> — a bag that shows clearly if it has been opened.</li>
+        <li><b>Hash</b> — a short digital fingerprint that changes if the data changes.</li>
+        <li><b>Chain of custody</b> — the written history of who handled the evidence and when.</li>
+        <li><b>Faraday bag</b> — a signal-blocking bag used for phones and wireless devices.</li>
+        <li><b>Swap file</b> — disk space the operating system uses as extra memory, which can change at boot.</li>
+        <li><b>Booby trap</b> — a hidden program or device that destroys data when someone interferes with the machine.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Photograph before touching.</b> Capture the screen, cables, ports and device labels. The photo proves the scene before any hand touched it.</li>
+        <li><b>Do not boot the suspect computer.</b> Booting changes timestamps, runs malware and may destroy evidence. Use a write blocker or a forensic boot CD instead.</li>
+        <li><b>Do not open the case</b> unless you are trained. Handle drives by the edges and use anti-static protection, because a static spark can kill a drive.</li>
+        <li><b>Do not run antivirus or scandisk</b> on the evidence disk. Both programs write to the disk and may quarantine or “repair” the evidence.</li>
+        <li><b>Capture volatile data first</b> if the machine is running. RAM and network state disappear when the power goes off.</li>
+        <li><b>Isolate the machine from the network.</b> Unplug the cable or use a Faraday bag, so the suspect cannot remotely wipe data.</li>
+        <li><b>Use tamper-evident bags and seals.</b> Sign across the seal so any later opening is visible.</li>
+        <li><b>Keep a chain-of-custody record</b> for every item. The court must see an unbroken history.</li>
+        <li><b>Store evidence in a cool, dry, magnetic-free place.</b> Heat, moisture and magnets can destroy data.</li>
+        <li><b>Hash before and after transport and before analysis.</b> Matching hashes prove the item did not change on the way.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> This is like preserving a fingerprint at a crime scene. You photograph it, cover it, and never touch it with bare hands. Every person who lifts the cover is written into the log.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “I only looked; I did not change anything” is not safe. Opening a file changes its last-access time, and booting the operating system can start malware. Even a preview must go through a write blocker.</div>
+
+      <h3>Full exam answer</h3>
+
+      <h4>One precaution in detail — never boot the suspect computer</h4>
+      <p>Booting a suspect machine is one of the most common and most damaging mistakes. When Windows starts, it:</p>
+      <ul>
+        <li>Updates the <b>last-access time</b> of files, destroying the timeline.</li>
+        <li>Creates, modifies or deletes <b>swap and temporary files</b>.</li>
+        <li>Runs <b>startup programs and malware</b>, which may delete logs or contact a remote server.</li>
+        <li>Mounts the disk read-write, so the operating system can write to it.</li>
+        <li>May trigger a <b>booby trap</b> or “dead man switch” that wipes the drive.</li>
+      </ul>
+      <p><b>Correct procedure:</b> remove the drive, or boot from a trusted forensic CD/USB, connect it through a <b>hardware write blocker</b>, and image it with a tool that reads every sector. Verify the image hash against the source. Only then boot the <i>image</i> in a virtual machine — never the original.</p>
+      <p class="small"><b>What this means:</b> the safest rule is “read the disk, do not run it.” If you must run something, run it on a verified copy in a controlled environment, and record exactly what you did.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>What steps should be taken to secure a computer incident or crime scene before beginning the search for digital evidence?</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+
+      <p class="asked"><b>Asked in:</b> 2025 May Q5(a) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> Before searching, make the area private and safe. Put up tape, post a guard, keep an entry log, and stop anyone from touching the computer. Then photograph the screen and write down what is running.</div>
+
+      <h4>Why we do this</h4>
+      <p>An unsecured scene lets people delete files, unplug devices or leak the investigation. A controlled scene keeps the evidence trustworthy and stops the case from being compromised before the search even starts.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Perimeter</b> — the boundary around the scene that only authorised people may cross.</li>
+        <li><b>Barrier tape</b> — coloured tape that marks the boundary and warns people to stay out.</li>
+        <li><b>Access log</b> — a written list of who entered, when and why.</li>
+        <li><b>Legitimate cause</b> — a lawful, work-related reason for a person to be inside the scene.</li>
+        <li><b>Volatile data</b> — data that disappears when power is lost, such as RAM and network connections.</li>
+        <li><b>Faraday bag</b> — a metal-lined bag that blocks phone signals.</li>
+        <li><b>Chain of custody</b> — the written record of every transfer of evidence.</li>
+        <li><b>Warrant scope</b> — the places and items the warrant actually allows you to search and seize.</li>
+        <li><b>Evidence kit</b> — the prepared set of bags, labels, gloves, camera, write blockers and other tools needed at a scene.</li>
+        <li><b>Scribe</b> — the team member who writes down every action and every person who enters the scene.</li>
+      </ul>
+
+      <h4>Step-by-step</h4>
+      <ol>
+        <li><b>Set an outer perimeter.</b> Use tape and guards so onlookers cannot reach the devices.</li>
+        <li><b>Control the entrance.</b> Allow only people with a legitimate cause, and write every name into the access log.</li>
+        <li><b>Make the perimeter wider than you need.</b> It is easy to shrink a scene later; it is embarrassing and unsafe to enlarge it after people have walked through.</li>
+        <li><b>Freeze the device.</b> Tell everyone not to touch the keyboard or mouse, and do not close an open session. The screen itself may be evidence.</li>
+        <li><b>Photograph the screen and the connections.</b> The photo preserves what was displayed before anything changed.</li>
+        <li><b>Record the running state.</b> Note open programs, windows, logged-on users and network connections.</li>
+        <li><b>Isolate the network.</b> Unplug the network cable rather than the power, and put phones in Faraday bags.</li>
+        <li><b>Protect the physical scene.</b> Keep it cool and dry, and keep liquids and heavy equipment away from devices.</li>
+        <li><b>Brief the team and assign roles.</b> Scene security, photography, evidence collection and the scribe should know exactly what they own.</li>
+        <li><b>Start the paperwork.</b> Open the evidence notebook and chain-of-custody form, and record the date, time, place, case number and everyone present.</li>
+      </ol>
+
+      <div class="analogy"><b>Real-life analogy:</b> It is like sealing a building after a fire. Nobody enters except the investigator, every entry is written down, and the scene stays exactly as the fire left it until the examination begins.</div>
+
+      <div class="confuse"><b>Common confusion:</b> More people do not mean more security. Every extra person is a contamination risk and must be logged. The best scene is the one with the fewest people who have a real reason to be there.</div>
+
+      <h3>Full exam answer</h3>
+
+      <h4>1. Secure the perimeter (book §5.5.5)</h4>
+      <ul>
+        <li>Protect the evidence and the privacy of the people involved. The inquiry can be compromised if information becomes public.</li>
+        <li>Use <b>yellow barrier tape</b> to keep onlookers away from a crime or computer incident scene.</li>
+        <li>Use <b>police officers or security guards</b> to keep people out. Trespass and obstruction law provide legal grounds to exclude them.</li>
+        <li>Allow entry only to people with a <b>legitimate cause</b> to be there.</li>
+        <li><b>Extend the perimeter</b> beyond the immediate area. It is easier to reduce the scene than to increase it later.</li>
+        <li>Computer investigators are often not in charge of perimeter security. Work with the officer or detective who is.</li>
+      </ul>
+
+      <h4>2. Protect the digital evidence</h4>
+      <ol>
+        <li><b>Do not touch the keyboard or mouse.</b> A screensaver or open session may be evidence.</li>
+        <li><b>Photograph the screen</b> before anything changes.</li>
+        <li><b>Note running programs, open windows and network connections.</b></li>
+        <li><b>Disconnect the network cable</b> — not the power — to stop remote access and wiping.</li>
+        <li><b>Place phones in a Faraday bag</b> and switch off wireless where the law allows.</li>
+        <li><b>Prevent bystanders from using the machine</b> or deleting files.</li>
+        <li><b>Record who enters and leaves</b> the scene and what they touch.</li>
+        <li><b>Keep the scene cool and dry</b>, and protect devices from shocks and liquids.</li>
+      </ol>
+
+      <h4>3. Before the search begins</h4>
+      <ul>
+        <li>Brief the team on the warrant scope and the plan.</li>
+        <li>Assign roles: scene security, photography, evidence collection and scribe.</li>
+        <li>Prepare the evidence kit: bags, seals, labels, gloves, camera, write blockers, Faraday bags and a forensic laptop.</li>
+        <li>Start the <b>evidence notebook</b> and the <b>chain-of-custody form</b>.</li>
+        <li>Record the date, time, place, case number and the names of all people present.</li>
+      </ul>
+
+      <div class="tree">OUTER PERIMETER  ── tape + guard + access log
+        ↓
+INNER SCENE      ── only authorised examiners
+        ↓
+DEVICE           ── photograph → note state → isolate network → seize</div>
+      <p class="small"><b>What this means:</b> work from the outside in. Secure the people and the boundary first, then the device. If you start with the device, the room behind you is still uncontrolled.</p>
     </div>
   </div>
 </section>
 
 <section class="card" id="s59">
-  <div class="prio">Priority 9 · ★ 1× repeated</div><h2>5.9 Obtaining a digital hash &amp; storing evidence</h2>
+  <h2>5.9 Obtaining a digital hash &amp; storing evidence</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1427,7 +1427,7 @@ least volatile</div>
 </section>
 
 <section class="card" id="s510">
-  <div class="prio">Priority 10 · syllabus support</div><h2>5.10 Syllabus context — preparing for a search &amp; reviewing a case</h2>
+  <h2>5.10 Syllabus context — preparing for a search &amp; reviewing a case</h2>
   <div class="note"><b>Not a PYQ.</b> These two topics are listed in the Unit-5 syllabus but have not appeared as a standalone end-sem question in the seven papers. They are included for completeness and can be used as supporting points in a seizing or scene-security answer.</div>
 
   <h3>Preparing for a search (book §5.5.4)</h3>
