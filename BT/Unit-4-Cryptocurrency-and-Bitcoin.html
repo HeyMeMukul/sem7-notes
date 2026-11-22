@@ -130,9 +130,15 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -140,14 +146,14 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <h3>BT · Unit 4</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s41">4.1 Cryptocurrency basics</a>
-    <a href="#s42">4.2 Types + safety + Zerocoin</a>
-    <a href="#s43">4.3 Crypto wallets</a>
-    <a href="#s44">4.4 Custodial / hot / cold</a>
-    <a href="#s45">4.5 MetaMask</a>
-    <a href="#s46">4.6 Coinbase vs Binance</a>
-    <a href="#s47">4.7 MetaMask vs Coinbase Wallet</a>
-    <a href="#s48">4.8 Bitcoin in detail</a>
+    <a href="#s42">4.2 Types + safety + Zerocoin <span class="pill">5×</span></a>
+    <a href="#s45">4.5 MetaMask <span class="pill">5×</span></a>
+    <a href="#s46">4.6 Coinbase vs Binance <span class="pill">4×</span></a>
+    <a href="#s48">4.8 Bitcoin in detail <span class="pill">4×</span></a>
+    <a href="#s43">4.3 Crypto wallets <span class="pill">2×</span></a>
+    <a href="#s47">4.7 MetaMask vs Coinbase Wallet <span class="pill">2×</span></a>
+    <a href="#s41">4.1 Cryptocurrency basics <span class="pill">1×</span></a>
+    <a href="#s44">4.4 Custodial / hot / cold <span class="pill">1×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -163,7 +169,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 4 — Cryptocurrency &amp; Bitcoin</h1>
-  <p><b>Subject:</b> Blockchain Technology (410243) &nbsp;·&nbsp; <b>Exam:</b> Saturday, 28 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Blockchain Technology (410243)  ·  <b>Exam:</b> Saturday, 28 Nov 2026, 2:00–4:30 PM  ·  <b>Max marks:</b> 70</p>
   <p>This unit is the <b>wallet unit</b>: types of cryptocurrency, MetaMask, Coinbase vs Binance, custodial vs non-custodial and hot vs cold storage. The 2025 papers made wallets worth 8–9 marks each, so every card includes a comparison table.</p>
   <div class="meta">
     <span class="chip">📄 <b>5</b> end-sem papers analysed</span>
@@ -203,118 +209,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <div class="tip"><b>Marks strategy:</b> 5–6 marks = definition + 4 points + one example. 8–9 marks = definition + working/features + <b>comparison table</b> + benefits/limitations. For wallet questions, always mention <b>who holds the private key</b> — that single line earns marks.</div>
 </section>
 
-<!-- ================= 4.1 ================= -->
-<section class="card" id="s41">
-  <h2>4.1 Cryptocurrency basics</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is cryptocurrency? Explain in detail.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 4</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [6]</p>
-
-      <h4>1. Definition</h4>
-      <p><b>Cryptocurrency</b> is digital or virtual money that uses <b>cryptography</b> to secure transactions, control the creation of new units and verify transfers. It runs on a <b>decentralised</b> blockchain, so no central bank or government issues it.</p>
-
-      <h4>2. Key properties</h4>
-      <ul>
-        <li><b>Digital:</b> exists only as data; no notes or coins.</li>
-        <li><b>Decentralised:</b> a peer-to-peer network maintains the ledger; there is no single administrator.</li>
-        <li><b>Cryptographically secured:</b> public/private keys and hash functions protect ownership.</li>
-        <li><b>Immutable:</b> once confirmed, a transaction is very hard to reverse.</li>
-        <li><b>Pseudo-anonymous:</b> addresses are visible, real names are not.</li>
-        <li><b>Programmable:</b> some currencies (ETH) also run smart contracts.</li>
-        <li><b>Volatile:</b> prices can move sharply because supply and demand are not managed by a central bank.</li>
-      </ul>
-
-      <h4>3. How it works</h4>
-      <ol>
-        <li>A user creates a wallet with a <b>public key</b> (address) and a <b>private key</b> (signature).</li>
-        <li>The sender signs a transaction with the private key and broadcasts it.</li>
-        <li>Nodes check the signature and the balance.</li>
-        <li>Miners/validators put the transaction into a block and reach consensus.</li>
-        <li>The block is appended to the blockchain; the receiver sees the funds after confirmations.</li>
-      </ol>
-
-      <pre class="tree">sender wallet                     receiver wallet
- public key + private key          public key (address)
-        │                                  ▲
-        │ sign transaction                 │
-        ▼                                  │
- [ transaction ] ──► mempool ──► block ────┘
-                        │
-                        ▼
-              consensus + append to chain</pre>
-
-      <h4>4. Advantages and disadvantages</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
-        <tbody>
-          <tr><td>Low transaction cost, especially cross-border</td><td>High price volatility</td></tr>
-          <tr><td>Fast settlement, 24×7</td><td>No central bank protection or insurance</td></tr>
-          <tr><td>No intermediary needed</td><td>Irreversible — lost keys mean lost funds</td></tr>
-          <tr><td>Transparent public ledger</td><td>Exchange hacks, scams and phishing</td></tr>
-          <tr><td>Financial inclusion for the unbanked</td><td>Unclear regulation in many countries</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>5. Examples</h4>
-      <p>Bitcoin (BTC), Ether (ETH), Tether (USDT), XRP, Binance Coin (BNB), Solana (SOL), Cardano (ADA), Monero (XMR).</p>
-
-      <div class="note"><b>Exam line:</b> "Cryptocurrency is not issued by a central bank; it is created by mining or staking and recorded on a distributed ledger secured by cryptography."</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What is the relevance of crypto usage? Discuss with an example.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 4</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [6]</p>
-
-      <h4>1. Why businesses and users adopt crypto</h4>
-      <ul>
-        <li><b>New customers:</b> crypto-paying users are often new customers and spend more per order.</li>
-        <li><b>Cheaper cross-border payments:</b> no correspondent bank chain, so fees and settlement time fall.</li>
-        <li><b>New capital and liquidity:</b> tokenised assets open new investor pools.</li>
-        <li><b>Programmable money:</b> smart contracts enable automatic revenue sharing and reconciliation.</li>
-        <li><b>Treasury diversification:</b> crypto can act as an inflation hedge or a balancing asset.</li>
-        <li><b>Competitive pressure:</b> clients and vendors may want to pay or be paid in crypto.</li>
-      </ul>
-
-      <h4>2. Two adoption paths</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Path</th><th>How it works</th><th>Risk / effort</th></tr></thead>
-        <tbody>
-          <tr><td><b>Hands-off</b></td><td>A third-party processor converts crypto to fiat at checkout; crypto never sits on the company balance sheet.</td><td>Lowest effort; vendor fee; limited control.</td></tr>
-          <tr><td><b>Hands-on</b></td><td>The company holds crypto, manages its own wallet/keys and may use it for treasury and payments.</td><td>Higher effort; custody, accounting and volatility risk.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>3. Example</h4>
-      <p>A coffee chain accepts BTC through a payment processor. The customer pays 0.0002 BTC; the processor instantly converts it to rupees and credits the chain's bank account. The chain gains new customers and avoids chargebacks, while never holding bitcoin itself. This is the <b>hands-off</b> model.</p>
-
-      <h4>4. Relevance in India</h4>
-      <ul>
-        <li>Remittances from workers abroad can be cheaper and faster.</li>
-        <li>Small exporters can receive payment without heavy bank charges.</li>
-        <li>Investors use crypto as an asset class (taxed as a virtual digital asset).</li>
-        <li>However, price volatility and regulatory uncertainty limit everyday retail payments.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 4.2 ================= -->
-<section class="card" id="s42">
-  <h2>4.2 Types of cryptocurrency, safety, Zerocoin / Zerocash</h2>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s42">
+  <div class="prio">Priority 1 · ★★★★★ 5× repeated</div><h2>4.2 Types of cryptocurrency, safety, Zerocoin / Zerocash</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -437,9 +333,249 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </section>
 
-<!-- ================= 4.3 ================= -->
+<section class="card" id="s45">
+  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>4.5 MetaMask in detail</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>What is MetaMask? Illustrate in detail. Discuss its features and importance.</p>
+      <div class="badges"><span class="b marks">5 / 6 / 9 marks</span><span class="b rep hot">★★★★★ 5×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6] · 2023 Nov Q3(c) [5] · 2024 May Q3(a) [9] · 2025 May Q4(b) [9, part] · 2025 Nov Q3(a) [9]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>MetaMask</b> is a non-custodial cryptocurrency wallet and gateway to blockchain apps. It was launched in 2016 by <b>ConsenSys</b>. It is available as a browser extension and a mobile app. It generates and stores the user's private keys on the device, and it lets the user interact with Ethereum and EVM-compatible networks.</p>
+
+      <h4>2. Why it is needed</h4>
+      <ul>
+        <li>A normal browser is centralised; it has no wallet and cannot sign blockchain transactions.</li>
+        <li>DApps need a bridge between the web page and the blockchain.</li>
+        <li>Users need to hold <b>ether</b> to pay gas.</li>
+        <li>Users need a safe place for ERC-20 tokens and NFTs.</li>
+      </ul>
+
+      <h4>3. Key features (2024 May Q3a — 9 marks)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Feature</th><th>Explanation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Non-custodial key storage</b></td><td>The seed phrase and private keys stay on the user's device. ConsenSys cannot move funds.</td></tr>
+          <tr><td><b>Browser extension + mobile app</b></td><td>Works on Chrome, Firefox, Brave, Edge and Android/iOS.</td></tr>
+          <tr><td><b>DApp browser</b></td><td>Injects <code>window.ethereum</code> into web pages so DApps can request accounts and signatures.</td></tr>
+          <tr><td><b>Multi-network</b></td><td>Ethereum Mainnet plus Polygon, BNB Chain, Arbitrum, Optimism, Avalanche and custom RPCs.</td></tr>
+          <tr><td><b>Token management</b></td><td>Adds ERC-20 tokens automatically; shows NFTs.</td></tr>
+          <tr><td><b>Swap and bridge</b></td><td>Built-in token swap and cross-chain bridge (via partners).</td></tr>
+          <tr><td><b>Gas control</b></td><td>Low / market / aggressive gas presets and advanced fee editing.</td></tr>
+          <tr><td><b>HD wallet</b></td><td>One seed phrase derives many accounts (BIP-32/44).</td></tr>
+          <tr><td><b>Hardware wallet support</b></td><td>Can connect to Ledger/Trezor for cold signing.</td></tr>
+          <tr><td><b>Multilingual UI</b></td><td>Supports many languages and has a simple onboarding flow.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>4. How to set up and use MetaMask</h4>
+      <ol>
+        <li>Install the extension from the official site or the mobile app from the official store.</li>
+        <li>Create a new wallet; set a strong password.</li>
+        <li>Write the <b>12-word seed phrase</b> on paper and store it offline.</li>
+        <li>Fund the account with ETH (from an exchange or another wallet).</li>
+        <li>Connect to a DApp; approve the connection request.</li>
+        <li>Confirm the transaction and gas fee in the MetaMask pop-up.</li>
+        <li>Track the transaction on Etherscan.</li>
+      </ol>
+
+      <h4>5. Importance</h4>
+      <ul>
+        <li>It is the <b>default entry point</b> to Ethereum DeFi, NFTs and DAOs.</li>
+        <li>It makes self-custody usable for non-technical people.</li>
+        <li>It standardised the DApp connection flow (<code>eth_requestAccounts</code>).</li>
+        <li>It supports multiple EVM chains with one wallet.</li>
+        <li>It is free and has a large developer ecosystem.</li>
+      </ul>
+
+      <pre class="tree">DApp (web page)
+      │  "connect wallet"
+      ▼
+MetaMask pop-up ──► user approves accounts
+      │
+      ▼
+DApp builds transaction ──► MetaMask shows gas
+      │
+      ▼
+user confirms ──► wallet signs with private key
+      │
+      ▼
+RPC node ──► Ethereum network ──► block explorer</pre>
+
+      <div class="tip"><b>3-mark version:</b> definition + non-custodial + browser extension/DApp gateway. <b>9-mark version:</b> add the feature table, setup steps and importance.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s46">
+  <div class="prio">Priority 3 · ★★★★ 4× repeated</div><h2>4.6 Coinbase vs Binance</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q9</span>Differentiate / compare and contrast Coinbase and Binance.</p>
+      <div class="badges"><span class="b marks">5 / 6 / 8 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [5] · 2023 Nov Q4(a) [6] · 2024 May Q4(a) [8] · 2025 Nov Q4(a) [8]</p>
+
+      <h4>1. One-line definitions</h4>
+      <p><b>Coinbase</b> is a US-based, regulated cryptocurrency exchange and custodial wallet service, known for a simple interface and beginner-friendly compliance.<br>
+      <b>Binance</b> is a global cryptocurrency exchange, the largest by daily trading volume, known for a huge altcoin list, low fees and the BNB Chain ecosystem.</p>
+
+      <h4>2. Comparison table</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Coinbase</th><th>Binance</th></tr></thead>
+        <tbody>
+          <tr><td>Founded</td><td>2012, San Francisco, USA</td><td>2017, Changpeng Zhao; registered in Cayman Islands</td></tr>
+          <tr><td>Type</td><td>Regulated exchange + custodial wallet</td><td>Global exchange + Binance Wallet / Trust Wallet</td></tr>
+          <tr><td>Best for</td><td>Beginners, US/Europe users, compliance</td><td>Active traders, altcoin access, low fees</td></tr>
+          <tr><td>Coin selection</td><td>Fewer, vetted coins</td><td>Hundreds of coins and pairs</td></tr>
+          <tr><td>Fees</td><td>Higher (simple mode); lower in Advanced Trade</td><td>Low spot fees; discount when paying in BNB</td></tr>
+          <tr><td>Custody</td><td>Exchange holds keys; Coinbase Wallet is separate and non-custodial</td><td>Exchange holds keys; Binance Wallet / Trust Wallet for self-custody</td></tr>
+          <tr><td>Regulation</td><td>US-listed company; strong KYC/AML</td><td>Faced investigations and restrictions in several countries</td></tr>
+          <tr><td>Products</td><td>Staking, Earn, NFT, Coinbase Wallet, Base L2</td><td>Spot, futures, staking, Launchpad, BNB Chain, Pay</td></tr>
+          <tr><td>Interface</td><td>Simple and clean</td><td>Feature-rich, denser</td></tr>
+          <tr><td>Availability</td><td>Limited in some countries</td><td>Widely available but banned/restricted in some</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Which one to choose?</h4>
+      <ul>
+        <li><b>Coinbase</b> if you want regulation, insurance-like safeguards, simple UI and are happy with major coins.</li>
+        <li><b>Binance</b> if you want low fees, many altcoins and advanced trading tools — but accept higher regulatory and counterparty risk.</li>
+        <li>For long-term holding, withdraw to a <b>non-custodial wallet</b> (MetaMask, Ledger) instead of leaving funds on either exchange.</li>
+      </ul>
+
+      <div class="note"><b>5-mark version:</b> five rows — founding, type, fees, coin list, regulation. Do not write a full page.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s48">
+  <div class="prio">Priority 4 · ★★★★ 4× repeated</div><h2>4.8 Bitcoin in detail</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q11</span>Explain in detail Bitcoin. / What is bitcoin? / Explain the concept of Bitcoin in Blockchain Technology.</p>
+      <div class="badges"><span class="b marks">4 / 5 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [5] · 2023 Nov Q4(c) [5] · 2024 May Q1(c) [4] · 2025 Nov Q1(c) [4]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Bitcoin (BTC)</b> is the first cryptocurrency and a peer-to-peer electronic cash system. It was described in a 2008 whitepaper by the pseudonymous <b>Satoshi Nakamoto</b> and released as open-source software in <b>2009</b>. It lets two parties transfer value directly without a bank or other intermediary.</p>
+
+      <h4>2. Key facts</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Property</th><th>Value / detail</th></tr></thead>
+        <tbody>
+          <tr><td>Launched</td><td>2009 (whitepaper 2008)</td></tr>
+          <tr><td>Supply cap</td><td>21,000,000 BTC</td></tr>
+          <tr><td>Block time</td><td>~10 minutes</td></tr>
+          <tr><td>Consensus</td><td>Proof of Work (SHA-256)</td></tr>
+          <tr><td>Ledger model</td><td>UTXO (unspent transaction output)</td></tr>
+          <tr><td>Block reward (2024–28)</td><td>3.125 BTC, halves every 210,000 blocks</td></tr>
+          <tr><td>Smallest unit</td><td>1 satoshi = 0.00000001 BTC</td></tr>
+          <tr><td>Scripting</td><td>Limited, non-Turing-complete Script</td></tr>
+          <tr><td>Privacy</td><td>Pseudonymous, public ledger</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. How Bitcoin works</h4>
+      <ol>
+        <li>A user creates a wallet with a public address and a private key.</li>
+        <li>To pay, the user signs a transaction that spends one or more UTXOs.</li>
+        <li>The transaction is broadcast to the peer-to-peer network and waits in the mempool.</li>
+        <li>Miners select transactions, build a block and solve the PoW puzzle.</li>
+        <li>The winning miner broadcasts the block; other nodes verify it.</li>
+        <li>The block is appended to the chain; the receiver sees confirmations.</li>
+        <li>After several confirmations, the payment is treated as final.</li>
+      </ol>
+
+      <pre class="tree">wallet A                       network                      wallet B
+   │                              │                              │
+   │ sign tx (private key)        │                              │
+   ├──────── broadcast ──────────►│                              │
+   │                              ▼                              │
+   │                         mempool                           │
+   │                              │                              │
+   │                       miner builds block                   │
+   │                              │                              │
+   │                         PoW puzzle                          │
+   │                              │                              │
+   │                              ▼                              │
+   │                        block appended ──────► receive BTC   │
+   │                              │                              │
+   │                        confirmations                       │</pre>
+
+      <h4>4. UTXO model (one-mark differentiator)</h4>
+      <p>There are no "balances" inside Bitcoin. A wallet balance is the sum of all <b>unspent outputs</b> that the wallet can unlock. When you pay 0.6 BTC from a 1 BTC UTXO, the transaction creates a 0.6 BTC output to the receiver and a ~0.4 BTC change output back to you (minus fee).</p>
+
+      <h4>5. Significance of Bitcoin (5-mark version)</h4>
+      <ul>
+        <li>First successful solution to the <b>double-spending</b> problem without a central authority.</li>
+        <li>Enables cheap international payments and censorship-resistant value transfer.</li>
+        <li>Fixed supply makes it <b>deflationary</b>; often called "digital gold".</li>
+        <li>Open-source and auditable by anyone.</li>
+        <li>Introduced the blockchain data structure and PoW mining.</li>
+      </ul>
+
+      <h4>6. Mining and reward schedule</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Period</th><th>Reward per block</th><th>Halving year</th></tr></thead>
+        <tbody>
+          <tr><td>2009–2012</td><td>50 BTC</td><td>—</td></tr>
+          <tr><td>2012–2016</td><td>25 BTC</td><td>2012</td></tr>
+          <tr><td>2016–2020</td><td>12.5 BTC</td><td>2016</td></tr>
+          <tr><td>2020–2024</td><td>6.25 BTC</td><td>2020</td></tr>
+          <tr><td>2024–2028</td><td>3.125 BTC</td><td>2024</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Worked example:</b> at 3.125 BTC reward and BTC = $60,000, one block earns 3.125 × 60,000 = <b>$187,500</b> before costs. With 0.05 BTC fees, total = 3.175 × 60,000 = <b>$190,500</b>.</p>
+
+      <h4>7. Advantages and limitations</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Advantages</h4>
+          <ul>
+            <li>Decentralised — no central bank.</li>
+            <li>Fixed supply, inflation-resistant.</li>
+            <li>Borderless and censorship-resistant.</li>
+            <li>Transparent, immutable ledger.</li>
+            <li>Divisible to 8 decimals.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Limitations</h4>
+          <ul>
+            <li>High price volatility.</li>
+            <li>Slow (~7 tx/s) and energy-heavy.</li>
+            <li>Irreversible transactions; lost keys are gone.</li>
+            <li>Pseudonymous, not fully private.</li>
+            <li>Regulatory uncertainty.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note"><b>For 4 marks (2024/2025 Nov Q1c):</b> definition + Satoshi/2009 + 21M cap + PoW + one line on UTXO. Do not write the full mining section.</div>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s43">
-  <h2>4.3 Crypto wallets</h2>
+  <div class="prio">Priority 5 · ★★ 2× repeated</div><h2>4.3 Crypto wallets</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -504,9 +640,161 @@ wallet = key manager, not a coin bank</pre>
   </div>
 </section>
 
-<!-- ================= 4.4 ================= -->
+<section class="card" id="s47">
+  <div class="prio">Priority 6 · ★★ 2× repeated</div><h2>4.7 MetaMask vs Coinbase Wallet</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q10</span>Differentiate between MetaMask and Coinbase wallet.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q4(b) [9] · 2025 Nov Q4(b) [9]</p>
+
+      <p class="small">Note: <b>Coinbase Wallet</b> is the self-custody wallet app, not the Coinbase exchange account. The question compares these two wallets.</p>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>MetaMask</th><th>Coinbase Wallet</th></tr></thead>
+        <tbody>
+          <tr><td>Company</td><td>ConsenSys (2016)</td><td>Coinbase (2018 as Toshi)</td></tr>
+          <tr><td>Custody</td><td>Non-custodial</td><td>Non-custodial</td></tr>
+          <tr><td>Key storage</td><td>Local seed phrase</td><td>Local seed phrase / cloud backup option</td></tr>
+          <tr><td>Main strength</td><td>Deep DApp/DeFi integration</td><td>Simple UI and easy fiat on-ramp</td></tr>
+          <tr><td>Chains</td><td>Ethereum + many EVM chains + custom RPC</td><td>Ethereum, Base, Polygon, Solana, Bitcoin and more</td></tr>
+          <tr><td>DApp browser</td><td>Best-in-class</td><td>Built-in explorer</td></tr>
+          <tr><td>NFT support</td><td>Yes</td><td>Yes, with a gallery</td></tr>
+          <tr><td>KYC</td><td>Not required by the wallet</td><td>Not required for the wallet; required for Coinbase on-ramp</td></tr>
+          <tr><td>Fees</td><td>Network gas + swap fee</td><td>Network gas + swap fee</td></tr>
+          <tr><td>Hardware wallet</td><td>Ledger/Trezor support</td><td>Ledger support</td></tr>
+          <tr><td>Best for</td><td>Power users, DeFi, developers</td><td>Beginners who want a clean app</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Similarities</h4>
+      <ul>
+        <li>Both are free, non-custodial, EVM-compatible wallets.</li>
+        <li>Both use a 12-word seed phrase and support ERC-20 tokens and NFTs.</li>
+        <li>Both can connect to DApps and hardware wallets.</li>
+        <li>Both are hot wallets, so they carry online risk.</li>
+      </ul>
+
+      <div class="tip"><b>9-mark structure:</b> 8-row table (5) + 4 similarities (2) + conclusion: MetaMask for DeFi power users, Coinbase Wallet for beginners (2).</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s41">
+  <div class="prio">Priority 7 · ★ 1× repeated</div><h2>4.1 Cryptocurrency basics</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is cryptocurrency? Explain in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [6]</p>
+
+      <h4>1. Definition</h4>
+      <p><b>Cryptocurrency</b> is digital or virtual money that uses <b>cryptography</b> to secure transactions, control the creation of new units and verify transfers. It runs on a <b>decentralised</b> blockchain, so no central bank or government issues it.</p>
+
+      <h4>2. Key properties</h4>
+      <ul>
+        <li><b>Digital:</b> exists only as data; no notes or coins.</li>
+        <li><b>Decentralised:</b> a peer-to-peer network maintains the ledger; there is no single administrator.</li>
+        <li><b>Cryptographically secured:</b> public/private keys and hash functions protect ownership.</li>
+        <li><b>Immutable:</b> once confirmed, a transaction is very hard to reverse.</li>
+        <li><b>Pseudo-anonymous:</b> addresses are visible, real names are not.</li>
+        <li><b>Programmable:</b> some currencies (ETH) also run smart contracts.</li>
+        <li><b>Volatile:</b> prices can move sharply because supply and demand are not managed by a central bank.</li>
+      </ul>
+
+      <h4>3. How it works</h4>
+      <ol>
+        <li>A user creates a wallet with a <b>public key</b> (address) and a <b>private key</b> (signature).</li>
+        <li>The sender signs a transaction with the private key and broadcasts it.</li>
+        <li>Nodes check the signature and the balance.</li>
+        <li>Miners/validators put the transaction into a block and reach consensus.</li>
+        <li>The block is appended to the blockchain; the receiver sees the funds after confirmations.</li>
+      </ol>
+
+      <pre class="tree">sender wallet                     receiver wallet
+ public key + private key          public key (address)
+        │                                  ▲
+        │ sign transaction                 │
+        ▼                                  │
+ [ transaction ] ──► mempool ──► block ────┘
+                        │
+                        ▼
+              consensus + append to chain</pre>
+
+      <h4>4. Advantages and disadvantages</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>Low transaction cost, especially cross-border</td><td>High price volatility</td></tr>
+          <tr><td>Fast settlement, 24×7</td><td>No central bank protection or insurance</td></tr>
+          <tr><td>No intermediary needed</td><td>Irreversible — lost keys mean lost funds</td></tr>
+          <tr><td>Transparent public ledger</td><td>Exchange hacks, scams and phishing</td></tr>
+          <tr><td>Financial inclusion for the unbanked</td><td>Unclear regulation in many countries</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>5. Examples</h4>
+      <p>Bitcoin (BTC), Ether (ETH), Tether (USDT), XRP, Binance Coin (BNB), Solana (SOL), Cardano (ADA), Monero (XMR).</p>
+
+      <div class="note"><b>Exam line:</b> "Cryptocurrency is not issued by a central bank; it is created by mining or staking and recorded on a distributed ledger secured by cryptography."</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What is the relevance of crypto usage? Discuss with an example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 4</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(b) [6]</p>
+
+      <h4>1. Why businesses and users adopt crypto</h4>
+      <ul>
+        <li><b>New customers:</b> crypto-paying users are often new customers and spend more per order.</li>
+        <li><b>Cheaper cross-border payments:</b> no correspondent bank chain, so fees and settlement time fall.</li>
+        <li><b>New capital and liquidity:</b> tokenised assets open new investor pools.</li>
+        <li><b>Programmable money:</b> smart contracts enable automatic revenue sharing and reconciliation.</li>
+        <li><b>Treasury diversification:</b> crypto can act as an inflation hedge or a balancing asset.</li>
+        <li><b>Competitive pressure:</b> clients and vendors may want to pay or be paid in crypto.</li>
+      </ul>
+
+      <h4>2. Two adoption paths</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Path</th><th>How it works</th><th>Risk / effort</th></tr></thead>
+        <tbody>
+          <tr><td><b>Hands-off</b></td><td>A third-party processor converts crypto to fiat at checkout; crypto never sits on the company balance sheet.</td><td>Lowest effort; vendor fee; limited control.</td></tr>
+          <tr><td><b>Hands-on</b></td><td>The company holds crypto, manages its own wallet/keys and may use it for treasury and payments.</td><td>Higher effort; custody, accounting and volatility risk.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Example</h4>
+      <p>A coffee chain accepts BTC through a payment processor. The customer pays 0.0002 BTC; the processor instantly converts it to rupees and credits the chain's bank account. The chain gains new customers and avoids chargebacks, while never holding bitcoin itself. This is the <b>hands-off</b> model.</p>
+
+      <h4>4. Relevance in India</h4>
+      <ul>
+        <li>Remittances from workers abroad can be cheaper and faster.</li>
+        <li>Small exporters can receive payment without heavy bank charges.</li>
+        <li>Investors use crypto as an asset class (taxed as a virtual digital asset).</li>
+        <li>However, price volatility and regulatory uncertainty limit everyday retail payments.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s44">
-  <h2>4.4 Custodial vs non-custodial, hot vs cold</h2>
+  <div class="prio">Priority 8 · ★ 1× repeated</div><h2>4.4 Custodial vs non-custodial, hot vs cold</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -629,296 +917,14 @@ wallet = key manager, not a coin bank</pre>
   </div>
 </section>
 
+<!-- ================= 4.1 ================= -->
+<!-- ================= 4.2 ================= -->
+<!-- ================= 4.3 ================= -->
+<!-- ================= 4.4 ================= -->
 <!-- ================= 4.5 ================= -->
-<section class="card" id="s45">
-  <h2>4.5 MetaMask in detail</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q8</span>What is MetaMask? Illustrate in detail. Discuss its features and importance.</p>
-      <div class="badges"><span class="b marks">5 / 6 / 9 marks</span><span class="b rep hot">★★★★★ 5×</span><span class="b unit">Unit 4</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6] · 2023 Nov Q3(c) [5] · 2024 May Q3(a) [9] · 2025 May Q4(b) [9, part] · 2025 Nov Q3(a) [9]</p>
-
-      <h4>1. Definition</h4>
-      <p><b>MetaMask</b> is a non-custodial cryptocurrency wallet and gateway to blockchain apps. It was launched in 2016 by <b>ConsenSys</b>. It is available as a browser extension and a mobile app. It generates and stores the user's private keys on the device, and it lets the user interact with Ethereum and EVM-compatible networks.</p>
-
-      <h4>2. Why it is needed</h4>
-      <ul>
-        <li>A normal browser is centralised; it has no wallet and cannot sign blockchain transactions.</li>
-        <li>DApps need a bridge between the web page and the blockchain.</li>
-        <li>Users need to hold <b>ether</b> to pay gas.</li>
-        <li>Users need a safe place for ERC-20 tokens and NFTs.</li>
-      </ul>
-
-      <h4>3. Key features (2024 May Q3a — 9 marks)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Feature</th><th>Explanation</th></tr></thead>
-        <tbody>
-          <tr><td><b>Non-custodial key storage</b></td><td>The seed phrase and private keys stay on the user's device. ConsenSys cannot move funds.</td></tr>
-          <tr><td><b>Browser extension + mobile app</b></td><td>Works on Chrome, Firefox, Brave, Edge and Android/iOS.</td></tr>
-          <tr><td><b>DApp browser</b></td><td>Injects <code>window.ethereum</code> into web pages so DApps can request accounts and signatures.</td></tr>
-          <tr><td><b>Multi-network</b></td><td>Ethereum Mainnet plus Polygon, BNB Chain, Arbitrum, Optimism, Avalanche and custom RPCs.</td></tr>
-          <tr><td><b>Token management</b></td><td>Adds ERC-20 tokens automatically; shows NFTs.</td></tr>
-          <tr><td><b>Swap and bridge</b></td><td>Built-in token swap and cross-chain bridge (via partners).</td></tr>
-          <tr><td><b>Gas control</b></td><td>Low / market / aggressive gas presets and advanced fee editing.</td></tr>
-          <tr><td><b>HD wallet</b></td><td>One seed phrase derives many accounts (BIP-32/44).</td></tr>
-          <tr><td><b>Hardware wallet support</b></td><td>Can connect to Ledger/Trezor for cold signing.</td></tr>
-          <tr><td><b>Multilingual UI</b></td><td>Supports many languages and has a simple onboarding flow.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>4. How to set up and use MetaMask</h4>
-      <ol>
-        <li>Install the extension from the official site or the mobile app from the official store.</li>
-        <li>Create a new wallet; set a strong password.</li>
-        <li>Write the <b>12-word seed phrase</b> on paper and store it offline.</li>
-        <li>Fund the account with ETH (from an exchange or another wallet).</li>
-        <li>Connect to a DApp; approve the connection request.</li>
-        <li>Confirm the transaction and gas fee in the MetaMask pop-up.</li>
-        <li>Track the transaction on Etherscan.</li>
-      </ol>
-
-      <h4>5. Importance</h4>
-      <ul>
-        <li>It is the <b>default entry point</b> to Ethereum DeFi, NFTs and DAOs.</li>
-        <li>It makes self-custody usable for non-technical people.</li>
-        <li>It standardised the DApp connection flow (<code>eth_requestAccounts</code>).</li>
-        <li>It supports multiple EVM chains with one wallet.</li>
-        <li>It is free and has a large developer ecosystem.</li>
-      </ul>
-
-      <pre class="tree">DApp (web page)
-      │  "connect wallet"
-      ▼
-MetaMask pop-up ──► user approves accounts
-      │
-      ▼
-DApp builds transaction ──► MetaMask shows gas
-      │
-      ▼
-user confirms ──► wallet signs with private key
-      │
-      ▼
-RPC node ──► Ethereum network ──► block explorer</pre>
-
-      <div class="tip"><b>3-mark version:</b> definition + non-custodial + browser extension/DApp gateway. <b>9-mark version:</b> add the feature table, setup steps and importance.</div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= 4.6 ================= -->
-<section class="card" id="s46">
-  <h2>4.6 Coinbase vs Binance</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q9</span>Differentiate / compare and contrast Coinbase and Binance.</p>
-      <div class="badges"><span class="b marks">5 / 6 / 8 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 4</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(c) [5] · 2023 Nov Q4(a) [6] · 2024 May Q4(a) [8] · 2025 Nov Q4(a) [8]</p>
-
-      <h4>1. One-line definitions</h4>
-      <p><b>Coinbase</b> is a US-based, regulated cryptocurrency exchange and custodial wallet service, known for a simple interface and beginner-friendly compliance.<br>
-      <b>Binance</b> is a global cryptocurrency exchange, the largest by daily trading volume, known for a huge altcoin list, low fees and the BNB Chain ecosystem.</p>
-
-      <h4>2. Comparison table</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Coinbase</th><th>Binance</th></tr></thead>
-        <tbody>
-          <tr><td>Founded</td><td>2012, San Francisco, USA</td><td>2017, Changpeng Zhao; registered in Cayman Islands</td></tr>
-          <tr><td>Type</td><td>Regulated exchange + custodial wallet</td><td>Global exchange + Binance Wallet / Trust Wallet</td></tr>
-          <tr><td>Best for</td><td>Beginners, US/Europe users, compliance</td><td>Active traders, altcoin access, low fees</td></tr>
-          <tr><td>Coin selection</td><td>Fewer, vetted coins</td><td>Hundreds of coins and pairs</td></tr>
-          <tr><td>Fees</td><td>Higher (simple mode); lower in Advanced Trade</td><td>Low spot fees; discount when paying in BNB</td></tr>
-          <tr><td>Custody</td><td>Exchange holds keys; Coinbase Wallet is separate and non-custodial</td><td>Exchange holds keys; Binance Wallet / Trust Wallet for self-custody</td></tr>
-          <tr><td>Regulation</td><td>US-listed company; strong KYC/AML</td><td>Faced investigations and restrictions in several countries</td></tr>
-          <tr><td>Products</td><td>Staking, Earn, NFT, Coinbase Wallet, Base L2</td><td>Spot, futures, staking, Launchpad, BNB Chain, Pay</td></tr>
-          <tr><td>Interface</td><td>Simple and clean</td><td>Feature-rich, denser</td></tr>
-          <tr><td>Availability</td><td>Limited in some countries</td><td>Widely available but banned/restricted in some</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>3. Which one to choose?</h4>
-      <ul>
-        <li><b>Coinbase</b> if you want regulation, insurance-like safeguards, simple UI and are happy with major coins.</li>
-        <li><b>Binance</b> if you want low fees, many altcoins and advanced trading tools — but accept higher regulatory and counterparty risk.</li>
-        <li>For long-term holding, withdraw to a <b>non-custodial wallet</b> (MetaMask, Ledger) instead of leaving funds on either exchange.</li>
-      </ul>
-
-      <div class="note"><b>5-mark version:</b> five rows — founding, type, fees, coin list, regulation. Do not write a full page.</div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= 4.7 ================= -->
-<section class="card" id="s47">
-  <h2>4.7 MetaMask vs Coinbase Wallet</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q10</span>Differentiate between MetaMask and Coinbase wallet.</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span><span class="b unit">Unit 4</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q4(b) [9] · 2025 Nov Q4(b) [9]</p>
-
-      <p class="small">Note: <b>Coinbase Wallet</b> is the self-custody wallet app, not the Coinbase exchange account. The question compares these two wallets.</p>
-
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>MetaMask</th><th>Coinbase Wallet</th></tr></thead>
-        <tbody>
-          <tr><td>Company</td><td>ConsenSys (2016)</td><td>Coinbase (2018 as Toshi)</td></tr>
-          <tr><td>Custody</td><td>Non-custodial</td><td>Non-custodial</td></tr>
-          <tr><td>Key storage</td><td>Local seed phrase</td><td>Local seed phrase / cloud backup option</td></tr>
-          <tr><td>Main strength</td><td>Deep DApp/DeFi integration</td><td>Simple UI and easy fiat on-ramp</td></tr>
-          <tr><td>Chains</td><td>Ethereum + many EVM chains + custom RPC</td><td>Ethereum, Base, Polygon, Solana, Bitcoin and more</td></tr>
-          <tr><td>DApp browser</td><td>Best-in-class</td><td>Built-in explorer</td></tr>
-          <tr><td>NFT support</td><td>Yes</td><td>Yes, with a gallery</td></tr>
-          <tr><td>KYC</td><td>Not required by the wallet</td><td>Not required for the wallet; required for Coinbase on-ramp</td></tr>
-          <tr><td>Fees</td><td>Network gas + swap fee</td><td>Network gas + swap fee</td></tr>
-          <tr><td>Hardware wallet</td><td>Ledger/Trezor support</td><td>Ledger support</td></tr>
-          <tr><td>Best for</td><td>Power users, DeFi, developers</td><td>Beginners who want a clean app</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Similarities</h4>
-      <ul>
-        <li>Both are free, non-custodial, EVM-compatible wallets.</li>
-        <li>Both use a 12-word seed phrase and support ERC-20 tokens and NFTs.</li>
-        <li>Both can connect to DApps and hardware wallets.</li>
-        <li>Both are hot wallets, so they carry online risk.</li>
-      </ul>
-
-      <div class="tip"><b>9-mark structure:</b> 8-row table (5) + 4 similarities (2) + conclusion: MetaMask for DeFi power users, Coinbase Wallet for beginners (2).</div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= 4.8 ================= -->
-<section class="card" id="s48">
-  <h2>4.8 Bitcoin in detail</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q11</span>Explain in detail Bitcoin. / What is bitcoin? / Explain the concept of Bitcoin in Blockchain Technology.</p>
-      <div class="badges"><span class="b marks">4 / 5 marks</span><span class="b rep">★★★★ 4×</span><span class="b unit">Unit 4</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [5] · 2023 Nov Q4(c) [5] · 2024 May Q1(c) [4] · 2025 Nov Q1(c) [4]</p>
-
-      <h4>1. Definition</h4>
-      <p><b>Bitcoin (BTC)</b> is the first cryptocurrency and a peer-to-peer electronic cash system. It was described in a 2008 whitepaper by the pseudonymous <b>Satoshi Nakamoto</b> and released as open-source software in <b>2009</b>. It lets two parties transfer value directly without a bank or other intermediary.</p>
-
-      <h4>2. Key facts</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Property</th><th>Value / detail</th></tr></thead>
-        <tbody>
-          <tr><td>Launched</td><td>2009 (whitepaper 2008)</td></tr>
-          <tr><td>Supply cap</td><td>21,000,000 BTC</td></tr>
-          <tr><td>Block time</td><td>~10 minutes</td></tr>
-          <tr><td>Consensus</td><td>Proof of Work (SHA-256)</td></tr>
-          <tr><td>Ledger model</td><td>UTXO (unspent transaction output)</td></tr>
-          <tr><td>Block reward (2024–28)</td><td>3.125 BTC, halves every 210,000 blocks</td></tr>
-          <tr><td>Smallest unit</td><td>1 satoshi = 0.00000001 BTC</td></tr>
-          <tr><td>Scripting</td><td>Limited, non-Turing-complete Script</td></tr>
-          <tr><td>Privacy</td><td>Pseudonymous, public ledger</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>3. How Bitcoin works</h4>
-      <ol>
-        <li>A user creates a wallet with a public address and a private key.</li>
-        <li>To pay, the user signs a transaction that spends one or more UTXOs.</li>
-        <li>The transaction is broadcast to the peer-to-peer network and waits in the mempool.</li>
-        <li>Miners select transactions, build a block and solve the PoW puzzle.</li>
-        <li>The winning miner broadcasts the block; other nodes verify it.</li>
-        <li>The block is appended to the chain; the receiver sees confirmations.</li>
-        <li>After several confirmations, the payment is treated as final.</li>
-      </ol>
-
-      <pre class="tree">wallet A                       network                      wallet B
-   │                              │                              │
-   │ sign tx (private key)        │                              │
-   ├──────── broadcast ──────────►│                              │
-   │                              ▼                              │
-   │                         mempool                           │
-   │                              │                              │
-   │                       miner builds block                   │
-   │                              │                              │
-   │                         PoW puzzle                          │
-   │                              │                              │
-   │                              ▼                              │
-   │                        block appended ──────► receive BTC   │
-   │                              │                              │
-   │                        confirmations                       │</pre>
-
-      <h4>4. UTXO model (one-mark differentiator)</h4>
-      <p>There are no "balances" inside Bitcoin. A wallet balance is the sum of all <b>unspent outputs</b> that the wallet can unlock. When you pay 0.6 BTC from a 1 BTC UTXO, the transaction creates a 0.6 BTC output to the receiver and a ~0.4 BTC change output back to you (minus fee).</p>
-
-      <h4>5. Significance of Bitcoin (5-mark version)</h4>
-      <ul>
-        <li>First successful solution to the <b>double-spending</b> problem without a central authority.</li>
-        <li>Enables cheap international payments and censorship-resistant value transfer.</li>
-        <li>Fixed supply makes it <b>deflationary</b>; often called "digital gold".</li>
-        <li>Open-source and auditable by anyone.</li>
-        <li>Introduced the blockchain data structure and PoW mining.</li>
-      </ul>
-
-      <h4>6. Mining and reward schedule</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Period</th><th>Reward per block</th><th>Halving year</th></tr></thead>
-        <tbody>
-          <tr><td>2009–2012</td><td>50 BTC</td><td>—</td></tr>
-          <tr><td>2012–2016</td><td>25 BTC</td><td>2012</td></tr>
-          <tr><td>2016–2020</td><td>12.5 BTC</td><td>2016</td></tr>
-          <tr><td>2020–2024</td><td>6.25 BTC</td><td>2020</td></tr>
-          <tr><td>2024–2028</td><td>3.125 BTC</td><td>2024</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>Worked example:</b> at 3.125 BTC reward and BTC = $60,000, one block earns 3.125 × 60,000 = <b>$187,500</b> before costs. With 0.05 BTC fees, total = 3.175 × 60,000 = <b>$190,500</b>.</p>
-
-      <h4>7. Advantages and limitations</h4>
-      <div class="grid2">
-        <div>
-          <h4 style="margin-top:0">Advantages</h4>
-          <ul>
-            <li>Decentralised — no central bank.</li>
-            <li>Fixed supply, inflation-resistant.</li>
-            <li>Borderless and censorship-resistant.</li>
-            <li>Transparent, immutable ledger.</li>
-            <li>Divisible to 8 decimals.</li>
-          </ul>
-        </div>
-        <div>
-          <h4 style="margin-top:0">Limitations</h4>
-          <ul>
-            <li>High price volatility.</li>
-            <li>Slow (~7 tx/s) and energy-heavy.</li>
-            <li>Irreversible transactions; lost keys are gone.</li>
-            <li>Pseudonymous, not fully private.</li>
-            <li>Regulatory uncertainty.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="note"><b>For 4 marks (2024/2025 Nov Q1c):</b> definition + Satoshi/2009 + 21M cap + PoW + one line on UTXO. Do not write the full mining section.</div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= CHEAT SHEET ================= -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet</h2>

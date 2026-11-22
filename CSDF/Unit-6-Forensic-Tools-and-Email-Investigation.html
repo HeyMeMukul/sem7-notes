@@ -131,9 +131,15 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -141,14 +147,14 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <h3>CSDF · Unit 6</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s61">6.1 Evaluating tool needs</a>
-    <a href="#s62">6.2 Software tools</a>
-    <a href="#s63">6.3 Hardware tools</a>
-    <a href="#s64">6.4 Validating &amp; testing</a>
-    <a href="#s65">6.5 Email investigations</a>
-    <a href="#s66">6.6 Client and server roles</a>
-    <a href="#s67">6.7 Email crimes &amp; servers</a>
-    <a href="#s68">6.8 Email forensic tools</a>
+    <a href="#s62">6.2 Software tools <span class="pill">5×</span></a>
+    <a href="#s64">6.4 Validating &amp; testing <span class="pill">5×</span></a>
+    <a href="#s63">6.3 Hardware tools <span class="pill">4×</span></a>
+    <a href="#s66">6.6 Client and server roles <span class="pill">4×</span></a>
+    <a href="#s65">6.5 Email investigations <span class="pill">3×</span></a>
+    <a href="#s67">6.7 Email crimes &amp; servers <span class="pill">3×</span></a>
+    <a href="#s68">6.8 Email forensic tools <span class="pill">3×</span></a>
+    <a href="#s61">6.1 Evaluating tool needs <span class="pill">2×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -164,7 +170,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 6 — Current Tools &amp; Email Investigation</h1>
-  <p><b>Subject:</b> Cyber Security and Digital Forensics (410244 C) &nbsp;·&nbsp; <b>Exam:</b> Tuesday, 01 Dec 2026, 2:00 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Cyber Security and Digital Forensics (410244 C)  ·  <b>Exam:</b> Tuesday, 01 Dec 2026, 2:00 PM  ·  <b>Max marks:</b> 70</p>
   <p>Q7 and Q8 are Unit 6, and Q8 is often an <b>18-mark “any two short notes”</b> question. The same six short notes rotate every year: hardware tools, validating software, e-mail investigation, e-mail crimes, software tools and client/server roles.</p>
   <div class="meta">
     <span class="chip">📄 <b>7</b> end-sem papers analysed</span>
@@ -184,8 +190,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td class="l">Features of any five computer forensic <b>software</b> tools / one software tool and its purpose</td><td>2022 May Q7(b) [9]; 2022 Nov Q7(b) [9]; 2023 May Q7(a) [9]; 2024 May Q7(b) [9]; 2025 May Q8(c) [9, short note]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
-      <tr><td>2</td><td class="l">Computer forensic <b>hardware</b> tools — features / role / difference from software</td><td>2023 May Q8(a) [9]; 2024 May Q8(a) [9]; 2025 May Q7(b) [9]; 2025 Nov Q7(b) [9]</td><td><span class="stars">★★★★</span> 4×</td></tr>
-      <tr><td>3</td><td class="l">Validating and testing forensics software</td><td>2022 May Q8(b) [9]; 2022 Nov Q8(b) [9]; 2024 May Q8(b) [9]; 2025 May Q8(a) [9]; 2025 Nov Q7(a)(i) [9]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>2</td><td class="l">Validating and testing forensics software</td><td>2022 May Q8(b) [9]; 2022 Nov Q8(b) [9]; 2024 May Q8(b) [9]; 2025 May Q8(a) [9]; 2025 Nov Q7(a)(i) [9]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>3</td><td class="l">Computer forensic <b>hardware</b> tools — features / role / difference from software</td><td>2023 May Q8(a) [9]; 2024 May Q8(a) [9]; 2025 May Q7(b) [9]; 2025 Nov Q7(b) [9]</td><td><span class="stars">★★★★</span> 4×</td></tr>
       <tr><td>4</td><td class="l">Role of client and server in e-mail</td><td>2022 May Q8(a) [8]; 2022 Nov Q8(a) [8]; 2023 May Q8(b)(i) [9]; 2025 Nov Q8(b)(i) [9]</td><td><span class="stars">★★★★</span> 4×</td></tr>
       <tr><td>5</td><td class="l">E-mail investigation / techniques for e-mail forensic investigation</td><td>2023 May Q7(b)(iii) [9]; 2024 May Q8(c) [9]; 2025 May Q8(b) [9]</td><td><span class="stars">★★★</span> 3×</td></tr>
       <tr><td>6</td><td class="l">E-mail crimes and violations</td><td>2023 May Q8(b)(ii) [9]; 2024 May Q7(a) [9]; 2025 Nov Q7(a)(ii) [9]</td><td><span class="stars">★★★</span> 3×</td></tr>
@@ -204,57 +210,50 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <div class="tip"><b>Marks strategy:</b> “any five tools” means exactly five, each with 2–3 features. Do not write ten half-lines. For 18-mark short notes, write ~1.5 pages each: definition, 6–8 points, one example/diagram.</div>
 </section>
 
-<!-- 6.1 -->
-<section class="card" id="s61">
-  <h2>6.1 Evaluating computer forensic tool needs</h2>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s62">
+  <div class="prio">Priority 1 · ★★★★★ 5× repeated</div><h2>6.2 Computer forensics software tools</h2>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What factors should be considered when evaluating computer forensics tool needs for an investigation? Explain any two in detail.</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
+      <p class="qtitle"><span class="qno">Q2</span>State the features of any five computer forensics software tools. / Explain any software tool used in computer forensics investigation and its purpose.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [9] · 2025 May Q7(a) [9]</p>
+      <p class="asked"><b>Asked in:</b> 2022 May Q7(b) [9] · 2022 Nov Q7(b) [9] · 2023 May Q7(a) [9] · 2024 May Q7(b) [9] · 2025 May Q8(c) [9, short note]</p>
 
-      <h4>1. The factors</h4>
-      <ol>
-        <li><b>Nature of the case</b> — criminal, civil, HR or incident response. A criminal case needs court-accepted tools and full documentation; an HR case may need only e-mail review.</li>
-        <li><b>Type of media and file system</b> — FAT, NTFS, ext2/3/4, HFS+, APFS, RAID, SSD, mobile. The tool must support the file system it will meet.</li>
-        <li><b>Volume of data</b> — a single laptop or 50 TB of server storage; this decides the hardware, the indexing time and the licence.</li>
-        <li><b>Encryption and anti-forensics</b> — can the tool detect and handle encrypted containers, hidden partitions and rootkits?</li>
-        <li><b>Acquisition capability</b> — physical, logical, live, remote, mobile. Does it image without changing the source?</li>
-        <li><b>Analysis features</b> — deleted-file recovery, keyword search, timeline, hash filtering, e-mail parsing, registry and browser artefacts.</li>
-        <li><b>Reporting</b> — court-ready reports, export formats, audit trail of every action.</li>
-        <li><b>Validation and court acceptance</b> — has the tool been tested (NIST CFTT)? Has it been accepted in court before?</li>
-        <li><b>Cost and licensing</b> — open-source vs commercial; per-seat, dongle or enterprise licence.</li>
-        <li><b>Training and support</b> — can the team use it? Is vendor support available at short notice?</li>
-        <li><b>Hardware requirements</b> — CPU, RAM, disk, write blockers, forensic workstation.</li>
-        <li><b>Speed and reliability</b> — indexing time, stability on large images, ability to resume.</li>
-      </ol>
+      <h4>1. Five tools with features (write exactly five)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>#</th><th>Tool</th><th>Type</th><th>Features / purpose</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>SANS SIFT</b></td><td>Open-source Live CD (Ubuntu)</td><td>Complete forensic and incident-response toolkit; supports Expert Witness Format (E01), Advanced Forensic Format (AFF) and RAW (dd); includes log2timeline for timelines, Scalpel for carving and Rifiuti for the recycle bin.</td></tr>
+          <tr><td>2</td><td><b>The Sleuth Kit + Autopsy</b></td><td>Open-source toolkit + GUI</td><td>In-depth analysis of file systems; timeline analysis, hash filtering, file-system analysis and keyword search; Autopsy is the graphical front end; modules can be added.</td></tr>
+          <tr><td>3</td><td><b>FTK Imager</b></td><td>Commercial (free imager)</td><td>Preview and image local drives, network drives, CDs/DVDs and memory; create SHA-1/MD5 hashes; export files and folders; recover deleted files from the Recycle Bin; mount an image for review.</td></tr>
+          <tr><td>4</td><td><b>Volatility</b></td><td>Open-source memory framework</td><td>Extracts digital artefacts from RAM dumps; lists running processes, open network sockets, DLLs per process, cached registry hives and process IDs.</td></tr>
+          <tr><td>5</td><td><b>Xplico</b></td><td>Open-source network forensic analysis tool</td><td>Extracts application data from Internet traffic; reconstructs e-mail from POP/IMAP/SMTP; supports HTTP, SIP, IMAP, TCP, UDP; TCP reassembly; output to MySQL or SQLite.</td></tr>
+        </tbody>
+      </table>
+      </div>
 
-      <h4>2. Factor in detail — validation and court acceptance</h4>
-      <p>A tool is only useful if its output survives cross-examination. Before selecting it, check:</p>
+      <h4>2. Alternative five (if you prefer)</h4>
       <ul>
-        <li>Whether the tool has been tested under the <b>NIST Computer Forensics Tool Testing (CFTT)</b> programme.</li>
-        <li>Whether the vendor publishes <b>test reports, version history and known limitations</b>.</li>
-        <li>Whether other examiners have used it and whether it has been <b>accepted in court</b> in your jurisdiction.</li>
-        <li>Whether the tool produces a <b>hash</b> and an <b>audit log</b> that can be independently verified.</li>
-        <li>Whether you can <b>reproduce</b> the result with a second tool.</li>
+        <li><b>ExifTool</b> — reads, writes and edits metadata; fast; supports a large range of file formats; useful for static analysis of suspicious files.</li>
+        <li><b>HxD</b> — user-friendly hex editor; low-level editing of raw disk or RAM; search and replace, checksums, file shredder, concatenation and splitting.</li>
+        <li><b>Bulk Extractor</b> — scans a disk image for credit-card numbers, domains, e-mail addresses, URLs and ZIP files; writes results to text files.</li>
+        <li><b>DEFT</b> — Linux Live CD with mobile, network, data-recovery and hashing tools.</li>
+        <li><b>HELIX3</b> — Linux Live CD for incident response, forensics and e-discovery; hex editors, data carving, password cracking.</li>
+        <li><b>Paladin</b> — Ubuntu Live CD with 80+ tools in 25 categories (imaging, malware analysis, social media, hashing).</li>
+        <li><b>USB Historian</b> — parses USB information from the Windows registry: drive name, serial number, mount time and user account.</li>
+        <li><b>Last Activity View</b> — shows user actions and machine events; exports to CSV/XML/HTML.</li>
       </ul>
 
-      <h4>3. Factor in detail — type of media and file system</h4>
-      <p>A tool that handles NTFS may fail on ext4, HFS+, APFS or a RAID array. Mobile phones need a separate acquisition kit. SSDs need TRIM-aware handling because deleted data may already be gone. The examiner must match the tool to the evidence, not the other way round.</p>
+      <h4>3. “Explain one tool and its purpose” (2024 May)</h4>
+      <p><b>FTK Imager.</b> It is a data-preview and imaging tool. The examiner connects the suspect drive through a write blocker, previews the folders, then creates a bit-stream image in E01 or RAW format. The tool computes MD5/SHA-1 for the source and the image, so integrity can be verified. It can also capture RAM, mount an image as a read-only drive, export files and recover deleted items from the Recycle Bin. Its purpose is to <b>acquire and verify</b> evidence before full analysis in FTK or another suite.</p>
 
-      <div class="tip"><b>9-mark answer:</b> list 8 factors in one line each (5 marks) + explain any two (4 marks). The two easiest to explain are <b>validation/court acceptance</b> and <b>media/file-system support</b>.</div>
+      <div class="tip"><b>“Any five” rule:</b> choose tools from five different categories — one Live CD, one suite, one imager, one memory tool, one network tool. That shows breadth and prevents the answer from looking like five variations of the same thing.</div>
     </div>
   </div>
-</section>
-
-<!-- 6.2 -->
-<section class="card" id="s62">
-  <h2>6.2 Computer forensics software tools</h2>
-
-  <div class="qa">
+<div class="qa">
     <div class="qa-head">
       <p class="qtitle"><span class="qno">Q1</span>Explain types of digital forensics tools. Also explain the task performed by these tools.</p>
       <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep">★★★ 3×</span></div>
@@ -301,102 +300,10 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     </div>
   </div>
 
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>State the features of any five computer forensics software tools. / Explain any software tool used in computer forensics investigation and its purpose.</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 May Q7(b) [9] · 2022 Nov Q7(b) [9] · 2023 May Q7(a) [9] · 2024 May Q7(b) [9] · 2025 May Q8(c) [9, short note]</p>
+  </section>
 
-      <h4>1. Five tools with features (write exactly five)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>#</th><th>Tool</th><th>Type</th><th>Features / purpose</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td><b>SANS SIFT</b></td><td>Open-source Live CD (Ubuntu)</td><td>Complete forensic and incident-response toolkit; supports Expert Witness Format (E01), Advanced Forensic Format (AFF) and RAW (dd); includes log2timeline for timelines, Scalpel for carving and Rifiuti for the recycle bin.</td></tr>
-          <tr><td>2</td><td><b>The Sleuth Kit + Autopsy</b></td><td>Open-source toolkit + GUI</td><td>In-depth analysis of file systems; timeline analysis, hash filtering, file-system analysis and keyword search; Autopsy is the graphical front end; modules can be added.</td></tr>
-          <tr><td>3</td><td><b>FTK Imager</b></td><td>Commercial (free imager)</td><td>Preview and image local drives, network drives, CDs/DVDs and memory; create SHA-1/MD5 hashes; export files and folders; recover deleted files from the Recycle Bin; mount an image for review.</td></tr>
-          <tr><td>4</td><td><b>Volatility</b></td><td>Open-source memory framework</td><td>Extracts digital artefacts from RAM dumps; lists running processes, open network sockets, DLLs per process, cached registry hives and process IDs.</td></tr>
-          <tr><td>5</td><td><b>Xplico</b></td><td>Open-source network forensic analysis tool</td><td>Extracts application data from Internet traffic; reconstructs e-mail from POP/IMAP/SMTP; supports HTTP, SIP, IMAP, TCP, UDP; TCP reassembly; output to MySQL or SQLite.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>2. Alternative five (if you prefer)</h4>
-      <ul>
-        <li><b>ExifTool</b> — reads, writes and edits metadata; fast; supports a large range of file formats; useful for static analysis of suspicious files.</li>
-        <li><b>HxD</b> — user-friendly hex editor; low-level editing of raw disk or RAM; search and replace, checksums, file shredder, concatenation and splitting.</li>
-        <li><b>Bulk Extractor</b> — scans a disk image for credit-card numbers, domains, e-mail addresses, URLs and ZIP files; writes results to text files.</li>
-        <li><b>DEFT</b> — Linux Live CD with mobile, network, data-recovery and hashing tools.</li>
-        <li><b>HELIX3</b> — Linux Live CD for incident response, forensics and e-discovery; hex editors, data carving, password cracking.</li>
-        <li><b>Paladin</b> — Ubuntu Live CD with 80+ tools in 25 categories (imaging, malware analysis, social media, hashing).</li>
-        <li><b>USB Historian</b> — parses USB information from the Windows registry: drive name, serial number, mount time and user account.</li>
-        <li><b>Last Activity View</b> — shows user actions and machine events; exports to CSV/XML/HTML.</li>
-      </ul>
-
-      <h4>3. “Explain one tool and its purpose” (2024 May)</h4>
-      <p><b>FTK Imager.</b> It is a data-preview and imaging tool. The examiner connects the suspect drive through a write blocker, previews the folders, then creates a bit-stream image in E01 or RAW format. The tool computes MD5/SHA-1 for the source and the image, so integrity can be verified. It can also capture RAM, mount an image as a read-only drive, export files and recover deleted items from the Recycle Bin. Its purpose is to <b>acquire and verify</b> evidence before full analysis in FTK or another suite.</p>
-
-      <div class="tip"><b>“Any five” rule:</b> choose tools from five different categories — one Live CD, one suite, one imager, one memory tool, one network tool. That shows breadth and prevents the answer from looking like five variations of the same thing.</div>
-    </div>
-  </div>
-</section>
-
-<!-- 6.3 -->
-<section class="card" id="s63">
-  <h2>6.3 Computer forensics hardware tools</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>State the features of any five computer forensic hardware tools. / What is the role of hardware tools and how do they differ from software tools?</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★ 4×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q8(a) [9] · 2024 May Q8(a) [9, short note] · 2025 May Q7(b) [9, role + difference] · 2025 Nov Q7(b) [9]</p>
-
-      <h4>1. Role of hardware tools</h4>
-      <p>Hardware tools provide the <b>physical capability</b> to acquire, preserve and examine digital evidence. They do not analyse data by themselves; they make sure the data reaches the software in an unaltered state. They are used for <b>imaging, write protection, cloning, mobile acquisition and scene documentation</b>.</p>
-
-      <h4>2. Five hardware tools with features</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>#</th><th>Tool</th><th>Features / purpose</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td><b>Forensic workstation</b></td><td>High-performance PC with multicore CPU, maximum RAM and fast, large disks; multiple bays for suspect drives; write-blocking ports; used to run FTK, EnCase, Autopsy and memory tools. The book's table recommends Intel i7/i9 or Xeon, 12 GB RAM (DDR3) and 64-bit Windows/Linux.</td></tr>
-          <tr><td>2</td><td><b>Hardware write blocker</b></td><td>Connects a suspect drive (IDE/SATA/SCSI/USB) to the workstation and blocks every write command; examples: ACARD AEC-7720WP Ultra-Wide SCSI-to-IDE bridge. It protects the original from accidental change.</td></tr>
-          <tr><td>3</td><td><b>Forensic duplicator / cloning device</b></td><td>Copies one or more drives at high speed without a computer; produces a bit-stream clone; supports hash authentication, write protection, disk wiping and an audit trail.</td></tr>
-          <tr><td>4</td><td><b>Cell-phone / GPS acquisition kit</b></td><td>Cables, adapters and software for thousands of phones, PDAs and GPS units; extracts call logs, SMS, contacts, media and location data; Cellebrite and Paraben are common. The lab needs a wide range of cords because handsets are not uniform.</td></tr>
-          <tr><td>5</td><td><b>Crime-scene kit</b></td><td>Pre-stocked with pens, digital camera, forensically clean storage media, evidence bags, evidence tape, report forms, permanent markers and other common items needed to capture evidence in the field.</td></tr>
-          <tr><td>6</td><td><b>Portable storage / evidence media</b></td><td>External USB/eSATA drives, DVDs and tape for images and archives; must be clean, labelled and hashed before use.</td></tr>
-          <tr><td>7</td><td><b>Cables and adapters</b></td><td>IDE/SATA/SCSI/USB adapters, power cables, network taps; essential for connecting old and new drives.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>3. Hardware vs software tools</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Hardware tools</th><th>Software tools</th></tr></thead>
-        <tbody>
-          <tr><td>Nature</td><td>Physical devices</td><td>Programs running on a computer</td></tr>
-          <tr><td>Main job</td><td>Acquire, protect, clone, connect</td><td>Analyse, search, recover, report</td></tr>
-          <tr><td>Example</td><td>Write blocker, duplicator, workstation</td><td>FTK, EnCase, Autopsy, Volatility</td></tr>
-          <tr><td>Evidence change</td><td>Prevents it at the electrical level</td><td>Can change it if used without a blocker</td></tr>
-          <tr><td>Upgrade</td><td>Replace the device</td><td>Update the software / licence</td></tr>
-          <tr><td>Court proof</td><td>Shows the original was never written</td><td>Shows the analysis is reproducible</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <div class="note"><b>One-line answer for “role”:</b> hardware tools guarantee that the evidence is acquired and preserved without alteration; software tools then analyse the verified copy. Neither replaces the other.</div>
-    </div>
-  </div>
-</section>
-
-<!-- 6.4 -->
 <section class="card" id="s64">
-  <h2>6.4 Validating &amp; testing forensics software</h2>
+  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>6.4 Validating &amp; testing forensics software</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -501,110 +408,58 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </section>
 
-<!-- 6.5 -->
-<section class="card" id="s65">
-  <h2>6.5 E-mail investigations</h2>
+<section class="card" id="s63">
+  <div class="prio">Priority 3 · ★★★★ 4× repeated</div><h2>6.3 Computer forensics hardware tools</h2>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>How does e-mail play a significant role in digital investigations? What types of information can be obtained from an e-mail header that may be relevant in investigations?</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+      <p class="qtitle"><span class="qno">Q1</span>State the features of any five computer forensic hardware tools. / What is the role of hardware tools and how do they differ from software tools?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★ 4×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(a) [9]</p>
+      <p class="asked"><b>Asked in:</b> 2023 May Q8(a) [9] · 2024 May Q8(a) [9, short note] · 2025 May Q7(b) [9, role + difference] · 2025 Nov Q7(b) [9]</p>
 
-      <h4>1. Role of e-mail in investigations</h4>
-      <ul>
-        <li><b>Primary business record</b> — e-mail has largely replaced memos and letters; it contains decisions, approvals and instructions.</li>
-        <li><b>Evidence of intent</b> — people write things in e-mail that they would never put in a formal document.</li>
-        <li><b>Fraud, phishing and spoofing</b> — the message and header show the true sender and route.</li>
-        <li><b>Harassment, threats and stalking</b> — the content, frequency and timestamps establish a pattern.</li>
-        <li><b>Data leakage</b> — attachments show what was sent out and to whom.</li>
-        <li><b>Timeline</b> — the Date and Received lines place the message at a specific time and place.</li>
-        <li><b>Attribution</b> — the originating IP, Message-ID and mail-server logs link the message to an account and a device.</li>
-        <li><b>Civil and criminal proceedings</b> — e-mail has been used effectively in both.</li>
-      </ul>
+      <h4>1. Role of hardware tools</h4>
+      <p>Hardware tools provide the <b>physical capability</b> to acquire, preserve and examine digital evidence. They do not analyse data by themselves; they make sure the data reaches the software in an unaltered state. They are used for <b>imaging, write protection, cloning, mobile acquisition and scene documentation</b>.</p>
 
-      <h4>2. Information in an e-mail header</h4>
+      <h4>2. Five hardware tools with features</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Header field</th><th>What it tells the investigator</th></tr></thead>
+        <thead><tr><th>#</th><th>Tool</th><th>Features / purpose</th></tr></thead>
         <tbody>
-          <tr><td><b>From</b></td><td>Displayed sender address — easily forged, so treat with caution.</td></tr>
-          <tr><td><b>Return-Path</b></td><td>The address to which bounces go; often the real envelope sender.</td></tr>
-          <tr><td><b>Received</b></td><td>Every mail server the message passed through, with date, time and IP. Read <b>bottom-up</b> to trace the route.</td></tr>
-          <tr><td><b>X-Originating-IP</b></td><td>The IP address of the sender's machine, inserted by some web-mail providers.</td></tr>
-          <tr><td><b>Message-ID</b></td><td>Unique identifier created by the originating server; links the message to server logs.</td></tr>
-          <tr><td><b>Date</b></td><td>Date and time the message was sent, including the time zone.</td></tr>
-          <tr><td><b>To / Cc / Bcc</b></td><td>Recipients; Bcc may be missing from the received copy.</td></tr>
-          <tr><td><b>Subject</b></td><td>Topic; may contain keywords relevant to the case.</td></tr>
-          <tr><td><b>Reply-To</b></td><td>A different address than From — a common phishing trick.</td></tr>
-          <tr><td><b>Authentication-Results</b></td><td>SPF, DKIM and DMARC results — shows whether the sender was authorised.</td></tr>
-          <tr><td><b>DKIM-Signature</b></td><td>Cryptographic signature over selected headers and the body; a broken signature suggests tampering.</td></tr>
-          <tr><td><b>MIME-Version / Content-Type</b></td><td>Format of the message and whether it has attachments.</td></tr>
-          <tr><td><b>X-Mailer</b></td><td>The mail client that created the message.</td></tr>
+          <tr><td>1</td><td><b>Forensic workstation</b></td><td>High-performance PC with multicore CPU, maximum RAM and fast, large disks; multiple bays for suspect drives; write-blocking ports; used to run FTK, EnCase, Autopsy and memory tools. The book's table recommends Intel i7/i9 or Xeon, 12 GB RAM (DDR3) and 64-bit Windows/Linux.</td></tr>
+          <tr><td>2</td><td><b>Hardware write blocker</b></td><td>Connects a suspect drive (IDE/SATA/SCSI/USB) to the workstation and blocks every write command; examples: ACARD AEC-7720WP Ultra-Wide SCSI-to-IDE bridge. It protects the original from accidental change.</td></tr>
+          <tr><td>3</td><td><b>Forensic duplicator / cloning device</b></td><td>Copies one or more drives at high speed without a computer; produces a bit-stream clone; supports hash authentication, write protection, disk wiping and an audit trail.</td></tr>
+          <tr><td>4</td><td><b>Cell-phone / GPS acquisition kit</b></td><td>Cables, adapters and software for thousands of phones, PDAs and GPS units; extracts call logs, SMS, contacts, media and location data; Cellebrite and Paraben are common. The lab needs a wide range of cords because handsets are not uniform.</td></tr>
+          <tr><td>5</td><td><b>Crime-scene kit</b></td><td>Pre-stocked with pens, digital camera, forensically clean storage media, evidence bags, evidence tape, report forms, permanent markers and other common items needed to capture evidence in the field.</td></tr>
+          <tr><td>6</td><td><b>Portable storage / evidence media</b></td><td>External USB/eSATA drives, DVDs and tape for images and archives; must be clean, labelled and hashed before use.</td></tr>
+          <tr><td>7</td><td><b>Cables and adapters</b></td><td>IDE/SATA/SCSI/USB adapters, power cables, network taps; essential for connecting old and new drives.</td></tr>
         </tbody>
       </table>
       </div>
 
-      <h4>3. Example header analysis</h4>
-      <pre><code>From: Suvarna Pansambal Tue Feb 2 12:16:14 2016
-X-Originating-IP: [209.85.213.54]
-Received: from 127.0.0.1 (EHLO mail-vk0-f54.google.com) (209.85.213.54)
-          by mta1073.mail.gq1.yahoo.com with SMTP; Tue, 02 Feb 2016 12:16:15 -0800
-Authentication-Results: mta1073.mail.gq1.yahoo.com from=gmail.com;
-          domainkeys=neutral (no sig); from=gmail.com; dkim=pass (ok)
-Message-ID: &lt;...@mail.gmail.com&gt;
-Subject: Threat mail</code></pre>
-      <p><b>Reading it:</b> the message claims to come from a Gmail account, but the <code>Received</code> chain shows it entered through a Google server and was delivered to a Yahoo mailbox. The <code>X-Originating-IP</code> is a Google address, not the sender's home IP. The DKIM result is “pass”, so the message was signed by Gmail, but the display name is not proof of identity. The investigator must obtain the Gmail account details and the Yahoo server logs to identify the actual user.</p>
+      <h4>3. Hardware vs software tools</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Hardware tools</th><th>Software tools</th></tr></thead>
+        <tbody>
+          <tr><td>Nature</td><td>Physical devices</td><td>Programs running on a computer</td></tr>
+          <tr><td>Main job</td><td>Acquire, protect, clone, connect</td><td>Analyse, search, recover, report</td></tr>
+          <tr><td>Example</td><td>Write blocker, duplicator, workstation</td><td>FTK, EnCase, Autopsy, Volatility</td></tr>
+          <tr><td>Evidence change</td><td>Prevents it at the electrical level</td><td>Can change it if used without a blocker</td></tr>
+          <tr><td>Upgrade</td><td>Replace the device</td><td>Update the software / licence</td></tr>
+          <tr><td>Court proof</td><td>Shows the original was never written</td><td>Shows the analysis is reproducible</td></tr>
+        </tbody>
+      </table>
+      </div>
 
-      <div class="note"><b>Key point:</b> the <code>From:</code> line is trivially spoofed. The <b>Received</b> chain, <b>Message-ID</b> and <b>X-Originating-IP</b> are much harder to fake, and server logs are the strongest evidence.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Write a short note on e-mail investigation / techniques for e-mail forensic investigation.</p>
-      <div class="badges"><span class="b marks">9–18 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q7(b)(iii) [9] · 2024 May Q8(c) [9, any two] · 2025 May Q8(b) [9, any two]</p>
-
-      <h4>1. The seven-step e-mail investigation (book §6.5.3)</h4>
-      <ol>
-        <li><b>Examine the e-mail message</b> — the evidence may be on the victim's computer. Take an image of the machine, obtain the password, print the message with its header, and examine the sender's server IP.</li>
-        <li><b>Copy the e-mail message</b> to a USB key.</li>
-        <li><b>Take a printout</b> of the message using the mail program's print option.</li>
-        <li><b>View the mail header</b> — open the mail, right-click, choose “view full header”.</li>
-        <li><b>Examine the e-mail header</b> — the message header and the subject body contain the origin information; the <code>X-Originating-IP</code>, return path and receiver mail ID are visible.</li>
-        <li><b>Examine the attachments</b> — copy and print them; hash them; open them only in a sandbox.</li>
-        <li><b>Trace the e-mail</b> — use the originating IP and domain tools (ARIN, freeality.com) to find the owner; validate the evidence because the address may be fake.</li>
-      </ol>
-
-      <h4>2. Techniques</h4>
-      <ul>
-        <li><b>Header analysis</b> — reconstruct the route from the Received lines.</li>
-        <li><b>Server-log correlation</b> — match Message-ID and timestamps with SMTP, POP and IMAP logs.</li>
-        <li><b>Hash comparison</b> — hash the message file and compare with the copy; any change is detected.</li>
-        <li><b>Attachment analysis</b> — file type, metadata, malware scan, hash lookup.</li>
-        <li><b>Database recovery</b> — Outlook PST/OST, Thunderbird MBOX, Exchange EDB, Lotus NSF.</li>
-        <li><b>Deleted-mail recovery</b> — recover mail files from unallocated space and the recycle bin.</li>
-        <li><b>Domain/IP lookup</b> — whois, ARIN, reverse DNS, geolocation.</li>
-        <li><b>Timeline analysis</b> — order messages and events.</li>
-        <li><b>Legal process</b> — subpoena or warrant to the mail provider for account and login records.</li>
-      </ul>
-
-      <h4>3. A short worked example</h4>
-      <p>A company receives a threatening e-mail. The examiner images the recipient's PC, exports the message with full headers, and notes <code>X-Originating-IP: 209.85.213.54</code> and a Gmail <code>Message-ID</code>. ARIN/whois shows the IP belongs to Google, so the sender used Gmail web-mail. A subpoena to Google yields the account creation IP and login times; the office firewall logs then match one of those logins to an employee's workstation. The attachment hash matches a file found on that workstation. The case is proved by the <b>header + provider records + firewall log + file hash</b>, not by the From line.</p>
-
-      <div class="tip"><b>Short-note answer:</b> 7 numbered steps + 5 techniques + one line on “From is not proof”. For 18 marks, add the worked example and a small header diagram.</div>
+      <div class="note"><b>One-line answer for “role”:</b> hardware tools guarantee that the evidence is acquired and preserved without alteration; software tools then analyse the verified copy. Neither replaces the other.</div>
     </div>
   </div>
 </section>
 
-<!-- 6.6 -->
 <section class="card" id="s66">
-  <h2>6.6 Role of the client and server in e-mail</h2>
+  <div class="prio">Priority 4 · ★★★★ 4× repeated</div><h2>6.6 Role of the client and server in e-mail</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -683,9 +538,108 @@ Sender's mail server ──► DNS/MX lookup ──► Receiver's mail server
   </div>
 </section>
 
-<!-- 6.7 -->
+<section class="card" id="s65">
+  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>6.5 E-mail investigations</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Write a short note on e-mail investigation / techniques for e-mail forensic investigation.</p>
+      <div class="badges"><span class="b marks">9–18 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q7(b)(iii) [9] · 2024 May Q8(c) [9, any two] · 2025 May Q8(b) [9, any two]</p>
+
+      <h4>1. The seven-step e-mail investigation (book §6.5.3)</h4>
+      <ol>
+        <li><b>Examine the e-mail message</b> — the evidence may be on the victim's computer. Take an image of the machine, obtain the password, print the message with its header, and examine the sender's server IP.</li>
+        <li><b>Copy the e-mail message</b> to a USB key.</li>
+        <li><b>Take a printout</b> of the message using the mail program's print option.</li>
+        <li><b>View the mail header</b> — open the mail, right-click, choose “view full header”.</li>
+        <li><b>Examine the e-mail header</b> — the message header and the subject body contain the origin information; the <code>X-Originating-IP</code>, return path and receiver mail ID are visible.</li>
+        <li><b>Examine the attachments</b> — copy and print them; hash them; open them only in a sandbox.</li>
+        <li><b>Trace the e-mail</b> — use the originating IP and domain tools (ARIN, freeality.com) to find the owner; validate the evidence because the address may be fake.</li>
+      </ol>
+
+      <h4>2. Techniques</h4>
+      <ul>
+        <li><b>Header analysis</b> — reconstruct the route from the Received lines.</li>
+        <li><b>Server-log correlation</b> — match Message-ID and timestamps with SMTP, POP and IMAP logs.</li>
+        <li><b>Hash comparison</b> — hash the message file and compare with the copy; any change is detected.</li>
+        <li><b>Attachment analysis</b> — file type, metadata, malware scan, hash lookup.</li>
+        <li><b>Database recovery</b> — Outlook PST/OST, Thunderbird MBOX, Exchange EDB, Lotus NSF.</li>
+        <li><b>Deleted-mail recovery</b> — recover mail files from unallocated space and the recycle bin.</li>
+        <li><b>Domain/IP lookup</b> — whois, ARIN, reverse DNS, geolocation.</li>
+        <li><b>Timeline analysis</b> — order messages and events.</li>
+        <li><b>Legal process</b> — subpoena or warrant to the mail provider for account and login records.</li>
+      </ul>
+
+      <h4>3. A short worked example</h4>
+      <p>A company receives a threatening e-mail. The examiner images the recipient's PC, exports the message with full headers, and notes <code>X-Originating-IP: 209.85.213.54</code> and a Gmail <code>Message-ID</code>. ARIN/whois shows the IP belongs to Google, so the sender used Gmail web-mail. A subpoena to Google yields the account creation IP and login times; the office firewall logs then match one of those logins to an employee's workstation. The attachment hash matches a file found on that workstation. The case is proved by the <b>header + provider records + firewall log + file hash</b>, not by the From line.</p>
+
+      <div class="tip"><b>Short-note answer:</b> 7 numbered steps + 5 techniques + one line on “From is not proof”. For 18 marks, add the worked example and a small header diagram.</div>
+    </div>
+  </div>
+<div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>How does e-mail play a significant role in digital investigations? What types of information can be obtained from an e-mail header that may be relevant in investigations?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(a) [9]</p>
+
+      <h4>1. Role of e-mail in investigations</h4>
+      <ul>
+        <li><b>Primary business record</b> — e-mail has largely replaced memos and letters; it contains decisions, approvals and instructions.</li>
+        <li><b>Evidence of intent</b> — people write things in e-mail that they would never put in a formal document.</li>
+        <li><b>Fraud, phishing and spoofing</b> — the message and header show the true sender and route.</li>
+        <li><b>Harassment, threats and stalking</b> — the content, frequency and timestamps establish a pattern.</li>
+        <li><b>Data leakage</b> — attachments show what was sent out and to whom.</li>
+        <li><b>Timeline</b> — the Date and Received lines place the message at a specific time and place.</li>
+        <li><b>Attribution</b> — the originating IP, Message-ID and mail-server logs link the message to an account and a device.</li>
+        <li><b>Civil and criminal proceedings</b> — e-mail has been used effectively in both.</li>
+      </ul>
+
+      <h4>2. Information in an e-mail header</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Header field</th><th>What it tells the investigator</th></tr></thead>
+        <tbody>
+          <tr><td><b>From</b></td><td>Displayed sender address — easily forged, so treat with caution.</td></tr>
+          <tr><td><b>Return-Path</b></td><td>The address to which bounces go; often the real envelope sender.</td></tr>
+          <tr><td><b>Received</b></td><td>Every mail server the message passed through, with date, time and IP. Read <b>bottom-up</b> to trace the route.</td></tr>
+          <tr><td><b>X-Originating-IP</b></td><td>The IP address of the sender's machine, inserted by some web-mail providers.</td></tr>
+          <tr><td><b>Message-ID</b></td><td>Unique identifier created by the originating server; links the message to server logs.</td></tr>
+          <tr><td><b>Date</b></td><td>Date and time the message was sent, including the time zone.</td></tr>
+          <tr><td><b>To / Cc / Bcc</b></td><td>Recipients; Bcc may be missing from the received copy.</td></tr>
+          <tr><td><b>Subject</b></td><td>Topic; may contain keywords relevant to the case.</td></tr>
+          <tr><td><b>Reply-To</b></td><td>A different address than From — a common phishing trick.</td></tr>
+          <tr><td><b>Authentication-Results</b></td><td>SPF, DKIM and DMARC results — shows whether the sender was authorised.</td></tr>
+          <tr><td><b>DKIM-Signature</b></td><td>Cryptographic signature over selected headers and the body; a broken signature suggests tampering.</td></tr>
+          <tr><td><b>MIME-Version / Content-Type</b></td><td>Format of the message and whether it has attachments.</td></tr>
+          <tr><td><b>X-Mailer</b></td><td>The mail client that created the message.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Example header analysis</h4>
+      <pre><code>From: Suvarna Pansambal Tue Feb 2 12:16:14 2016
+X-Originating-IP: [209.85.213.54]
+Received: from 127.0.0.1 (EHLO mail-vk0-f54.google.com) (209.85.213.54)
+          by mta1073.mail.gq1.yahoo.com with SMTP; Tue, 02 Feb 2016 12:16:15 -0800
+Authentication-Results: mta1073.mail.gq1.yahoo.com from=gmail.com;
+          domainkeys=neutral (no sig); from=gmail.com; dkim=pass (ok)
+Message-ID: &lt;...@mail.gmail.com&gt;
+Subject: Threat mail</code></pre>
+      <p><b>Reading it:</b> the message claims to come from a Gmail account, but the <code>Received</code> chain shows it entered through a Google server and was delivered to a Yahoo mailbox. The <code>X-Originating-IP</code> is a Google address, not the sender's home IP. The DKIM result is “pass”, so the message was signed by Gmail, but the display name is not proof of identity. The investigator must obtain the Gmail account details and the Yahoo server logs to identify the actual user.</p>
+
+      <div class="note"><b>Key point:</b> the <code>From:</code> line is trivially spoofed. The <b>Received</b> chain, <b>Message-ID</b> and <b>X-Originating-IP</b> are much harder to fake, and server logs are the strongest evidence.</div>
+    </div>
+  </div>
+
+  </section>
+
 <section class="card" id="s67">
-  <h2>6.7 E-mail crimes, violations &amp; servers</h2>
+  <div class="prio">Priority 6 · ★★★ 3× repeated</div><h2>6.7 E-mail crimes, violations &amp; servers</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -800,9 +754,8 @@ Sender's mail server ──► DNS/MX lookup ──► Receiver's mail server
   </div>
 </section>
 
-<!-- 6.8 -->
 <section class="card" id="s68">
-  <h2>6.8 Specialised e-mail forensic tools</h2>
+  <div class="prio">Priority 7 · ★★★ 3× repeated</div><h2>6.8 Specialised e-mail forensic tools</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -872,6 +825,59 @@ Sender's mail server ──► DNS/MX lookup ──► Receiver's mail server
   </div>
 </section>
 
+<section class="card" id="s61">
+  <div class="prio">Priority 8 · ★★ 2× repeated</div><h2>6.1 Evaluating computer forensic tool needs</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What factors should be considered when evaluating computer forensics tool needs for an investigation? Explain any two in detail.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [9] · 2025 May Q7(a) [9]</p>
+
+      <h4>1. The factors</h4>
+      <ol>
+        <li><b>Nature of the case</b> — criminal, civil, HR or incident response. A criminal case needs court-accepted tools and full documentation; an HR case may need only e-mail review.</li>
+        <li><b>Type of media and file system</b> — FAT, NTFS, ext2/3/4, HFS+, APFS, RAID, SSD, mobile. The tool must support the file system it will meet.</li>
+        <li><b>Volume of data</b> — a single laptop or 50 TB of server storage; this decides the hardware, the indexing time and the licence.</li>
+        <li><b>Encryption and anti-forensics</b> — can the tool detect and handle encrypted containers, hidden partitions and rootkits?</li>
+        <li><b>Acquisition capability</b> — physical, logical, live, remote, mobile. Does it image without changing the source?</li>
+        <li><b>Analysis features</b> — deleted-file recovery, keyword search, timeline, hash filtering, e-mail parsing, registry and browser artefacts.</li>
+        <li><b>Reporting</b> — court-ready reports, export formats, audit trail of every action.</li>
+        <li><b>Validation and court acceptance</b> — has the tool been tested (NIST CFTT)? Has it been accepted in court before?</li>
+        <li><b>Cost and licensing</b> — open-source vs commercial; per-seat, dongle or enterprise licence.</li>
+        <li><b>Training and support</b> — can the team use it? Is vendor support available at short notice?</li>
+        <li><b>Hardware requirements</b> — CPU, RAM, disk, write blockers, forensic workstation.</li>
+        <li><b>Speed and reliability</b> — indexing time, stability on large images, ability to resume.</li>
+      </ol>
+
+      <h4>2. Factor in detail — validation and court acceptance</h4>
+      <p>A tool is only useful if its output survives cross-examination. Before selecting it, check:</p>
+      <ul>
+        <li>Whether the tool has been tested under the <b>NIST Computer Forensics Tool Testing (CFTT)</b> programme.</li>
+        <li>Whether the vendor publishes <b>test reports, version history and known limitations</b>.</li>
+        <li>Whether other examiners have used it and whether it has been <b>accepted in court</b> in your jurisdiction.</li>
+        <li>Whether the tool produces a <b>hash</b> and an <b>audit log</b> that can be independently verified.</li>
+        <li>Whether you can <b>reproduce</b> the result with a second tool.</li>
+      </ul>
+
+      <h4>3. Factor in detail — type of media and file system</h4>
+      <p>A tool that handles NTFS may fail on ext4, HFS+, APFS or a RAID array. Mobile phones need a separate acquisition kit. SSDs need TRIM-aware handling because deleted data may already be gone. The examiner must match the tool to the evidence, not the other way round.</p>
+
+      <div class="tip"><b>9-mark answer:</b> list 8 factors in one line each (5 marks) + explain any two (4 marks). The two easiest to explain are <b>validation/court acceptance</b> and <b>media/file-system support</b>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6.1 -->
+<!-- 6.2 -->
+<!-- 6.3 -->
+<!-- 6.4 -->
+<!-- 6.5 -->
+<!-- 6.6 -->
+<!-- 6.7 -->
+<!-- 6.8 -->
 <!-- CHEAT -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet</h2>

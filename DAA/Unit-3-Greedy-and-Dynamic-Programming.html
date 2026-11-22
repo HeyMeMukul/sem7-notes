@@ -87,6 +87,10 @@ table.left td,table.left th{text-align:left}
 .tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
 .book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
 .note b,.warn b,.tip b,.book b{color:#fff}
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
 ul,ol{margin:8px 0 8px 22px;padding:0}
 li{margin:5px 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -138,12 +142,18 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 </style>
 <style id="print-callouts">
 @media print{
-  .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
-  .book b,.note b,.warn b,.tip b{color:#000!important}
+  .book,.note,.warn,.tip,.simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .book b,.note b,.warn b,.tip b,.simple b,.analogy b,.confuse b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -152,15 +162,15 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <h3>DAA · Unit 3</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s31">3.1 Greedy strategy</a>
-    <a href="#s32">3.2 Fractional knapsack</a>
-    <a href="#s33">3.3 Job sequencing</a>
-    <a href="#s34">3.4 Activity selection</a>
-    <a href="#s35">3.5 Dynamic programming</a>
-    <a href="#s36">3.6 Matrix chain multiplication</a>
-    <a href="#s37">3.7 Optimal BST</a>
-    <a href="#s38">3.8 0/1 Knapsack (DP)</a>
-    <a href="#s39">3.9 Binomial coefficients</a>
+    <a href="#s33">3.3 Job sequencing <span class="pill">4×</span></a>
+    <a href="#s35">3.5 Dynamic programming <span class="pill">3×</span></a>
+    <a href="#s31">3.1 Greedy strategy <span class="pill">2×</span></a>
+    <a href="#s36">3.6 Matrix chain multiplication <span class="pill">2×</span></a>
+    <a href="#s38">3.8 0/1 Knapsack (DP) <span class="pill">2×</span></a>
+    <a href="#s32">3.2 Fractional knapsack <span class="pill">1×</span></a>
+    <a href="#s34">3.4 Activity selection <span class="pill">1×</span></a>
+    <a href="#s37">3.7 Optimal BST <span class="pill">1×</span></a>
+    <a href="#s39">3.9 Binomial coefficients <span class="pill">1×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -177,7 +187,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 3 — Greedy &amp; Dynamic Programming</h1>
-  <p><b>Subject:</b> Design and Analysis of Algorithms (410241) &nbsp;·&nbsp; <b>Exam:</b> Monday, 23 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Design and Analysis of Algorithms (410241)  ·  <b>Exam:</b> Monday, 23 Nov 2026, 2:00–4:30 PM  ·  <b>Max marks:</b> 70</p>
   <p>Every question below is taken <b>verbatim from the end-sem papers</b> of 2022 Nov, 2023 Nov, 2024 May, 2025 May and 2025 Nov. The badge on each question shows <b>how many times it was repeated</b>. Answers are written to the mark weight (4 / 6 / 8 / 9 / 10 marks).</p>
   <div class="meta">
     <span class="chip">📄 <b>5</b> end-sem papers analysed</span>
@@ -187,6 +197,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <span class="chip">⏱️ Unit weight ≈ <b>18–20 marks</b></span>
   </div>
 </header>
+
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box in each answer. Every step is explained in plain English. You do not need any prior DSA background.</div>
 
 <div class="book"><b>Source:</b> all answers in this unit are re-sourced from the supplied <i>Technical Publications — Design and Analysis of Algorithms</i> (Units 3–6), matched to the exact PYQ wording.</div>
 
@@ -221,203 +233,36 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <div class="tip"><b>Marks strategy (SPPU checking):</b> 3–4 mark = definition + 3 points. 6–7 mark = definition + algorithm/principle + small example. 8–10 mark = definition + control abstraction + <b>full solved numerical/table</b> + complexity. Always draw the DP table; examiners award step marks for it.</div>
 </section>
 
-<!-- ================= 3.1 ================= -->
-<section class="card" id="s31">
-  <h2>3.1 Greedy strategy</h2>
-  <p class="lead">Syllabus: <em>Principle, control abstraction, time analysis of control abstraction, knapsack problem, job scheduling, activity selection.</em></p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain Greedy strategy: Principle, control abstraction, time analysis of control abstraction with suitable example.</p>
-      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(b) [8] · 2024 May Q1(a) [6 — control abstraction + complexity]</p>
-
-      <h4>1. Principle (book §3.1.1)</h4>
-      <p>A greedy algorithm builds the solution <b>step by step</b>, expanding a partially constructed solution until a complete solution is reached. At every step the choice made must be:</p>
-      <ul>
-        <li><b>Feasible</b> — it satisfies the problem's constraints;</li>
-        <li><b>Locally optimal</b> — among all feasible choices, it is the best at that moment;</li>
-        <li><b>Irrevocable</b> — once chosen, it is never changed in later steps.</li>
-      </ul>
-      <p>In short, there must be a “greed” for the optimum solution. The book adds two correctness conditions: the <b>greedy-choice property</b> (a globally optimal solution can be reached by local greedy choices) and <b>optimal substructure</b> (an optimal solution contains optimal solutions of its subproblems).</p>
-
-      <h4>2. Control abstraction (book §3.1.2)</h4>
-<pre><code>Algorithm Greedy(D, n)
-// D is the domain of candidates, |D| = n
-{
-    Solution = ∅;
-    for i = 1 to n do
-    {
-        s = Select(D);                     // pick the best remaining candidate
-        if Feasible(Solution, s) then      // check the constraints
-            Solution = Union(Solution, s); // add it permanently
-    }
-    return Solution;
-}</code></pre>
-      <p><code>Select</code>, <code>Feasible</code> and <code>Union</code> are the three problem-dependent functions. The book lists the applications as knapsack, job sequencing with deadlines, minimum spanning tree, single-source shortest path and Huffman tree.</p>
-
-      <h4>3. Time analysis of the control abstraction</h4>
-      <div class="math">T(n) = T<sub>sort</sub> + n × ( T<sub>Select</sub> + T<sub>Feasible</sub> + T<sub>Union</sub> )</div>
-      <ul>
-        <li>The loop executes exactly <b>n</b> times — one candidate per iteration.</li>
-        <li>If candidates are already sorted by the greedy criterion: <b>O(n)</b> when Select, Feasible and Union are O(1). This is exactly what the book's <code>Knapsack_Greedy</code> shows — the basic operation lies inside the loop, so time = <b>O(n)</b>.</li>
-        <li>If sorting is needed first: <b>O(n log n)</b>.</li>
-        <li>If each feasibility check scans the current solution: <b>O(n²)</b>.</li>
-        <li>Space = <b>O(n)</b> for the candidate array and the solution set.</li>
-      </ul>
-
-      <h4>4. Suitable example — fractional knapsack (book Example 3.2.2)</h4>
-      <p>n = 5, capacity m = 100, profits (10, 20, 30, 40, 50), weights (20, 30, 66, 40, 60). Using the greedy rule “maximum profit/weight first”: x4 has ratio 1 and x5 has 5/6, so take x4 (w = 40) and x5 (w = 60). The capacity is exactly full.</p>
-      <div class="math">x = (0, 0, 0, 1, 1), &nbsp; weight = 100, &nbsp; <b>maximum profit = 40 + 50 = 90</b></div>
-
-      <div class="tip"><b>For 8 marks:</b> principle (3 conditions) + control abstraction + time analysis + one example. Add the two correctness conditions from §3.1.4 — the examiner looks for “greedy-choice property” and “optimal substructure”.</div>
-      <p class="booksrc">📘 <b>Book:</b> §3.1 Introduction to Greedy Strategy, p. 3-2 – 3-4; §3.2 Example 3.2.2, p. 3-6 – 3-7</p>
-      
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Compare greedy algorithmic strategy and dynamic programming strategy.</p>
-      <div class="badges"><span class="b marks">4–6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q1(a)</p>
-
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Greedy method (book §3.5.5)</th><th>Dynamic programming (book §3.5.5)</th></tr></thead>
-        <tbody>
-          <tr><td>Purpose</td><td>Obtains an optimum solution from a set of feasible solutions, then picks the best</td><td>Also obtains an optimum solution, but has no special set of feasible solutions</td></tr>
-          <tr><td>Decision</td><td>Makes the locally best choice and never revises previously generated solutions</td><td>Considers all possible sequences of decisions before choosing the optimum</td></tr>
-          <tr><td>Subproblems</td><td>After a choice only one smaller subproblem remains</td><td>Many overlapping subproblems are solved and their results stored in a table</td></tr>
-          <tr><td>Guarantee</td><td>No guarantee of the optimum; works only with the greedy-choice property + optimal substructure</td><td>Guaranteed optimum when the principle of optimality holds</td></tr>
-          <tr><td>Order</td><td>Top-down, iterative, one pass</td><td>Bottom-up table filling (or recursion with stored results)</td></tr>
-          <tr><td>Time</td><td>Usually O(n log n) or O(n)</td><td>Polynomial but larger, e.g. O(nW), O(n³)</td></tr>
-          <tr><td>Examples</td><td>Fractional knapsack, job sequencing, activity selection, MST, Huffman</td><td>0/1 knapsack, matrix chain, OBST, binomial coefficients, LCS</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="note"><b>One-line answer:</b> Greedy is <em>myopic but fast</em>; DP is <em>exhaustive but safe</em>. The book's key sentence is: greedy gives “no guarantee of getting the optimum solution”, while DP “guarantees the optimal solution using the principle of optimality”.</div>
-      <p class="booksrc">📘 <b>Book:</b> §3.5.5 Difference between Dynamic Programming and Greedy Technique, p. 3-27 – 3-28</p>
-      
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Comment on the statement: "Greedy method always provides the optimal solution."</p>
-      <div class="badges"><span class="b marks">3 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q1(c) [3]</p>
-
-      <p><b>The statement is false.</b> The book says plainly that in the greedy method there is <b>no guarantee of getting the optimum solution</b> (§3.5.5). A greedy algorithm is optimal only when the problem satisfies:</p>
-      <ul>
-        <li><b>Greedy-choice property</b> — a globally optimal solution can be reached by making locally optimal choices;</li>
-        <li><b>Optimal substructure</b> — an optimal solution contains optimal solutions of its subproblems.</li>
-      </ul>
-      <p><b>Counter-example — 0/1 knapsack:</b> capacity 10, items (w, p) = (6, 30), (5, 25), (5, 25). All ratios are 5, so greedy takes the 6 kg item first and earns 30; the remaining capacity 4 cannot hold a 5 kg item. The optimal choice is both 5 kg items → profit 50. Greedy gives 30, so it is not optimal.</p>
-      <p><b>Why it fails here:</b> the 0/1 restriction makes the choice irreversible and can leave capacity unused. The book's Example 3.2.8 shows the same limitation — after selecting by p/w ratio, object 5 cannot be taken because it does not fit, and no fraction is allowed.</p>
-      <p><b>Where it does work:</b> fractional knapsack, job sequencing with deadlines, activity selection, minimum spanning tree, single-source shortest path and Huffman tree (the book's list of greedy applications).</p>
-      <p class="booksrc">📘 <b>Book:</b> §3.1.4 General Characteristics, p. 3-3; §3.5.5, p. 3-28; §3.2 Example 3.2.8, p. 3-14 – 3-15</p>
-      
-    </div>
-  </div>
-</section>
-
-<!-- ================= 3.2 ================= -->
-<section class="card" id="s32">
-  <h2>3.2 Fractional knapsack &amp; greedy knapsack</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Give a mathematical formulation for: (i) Fractional Knapsack problem (ii) 0/1 Knapsack problem.</p>
-      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q1(a) [8]</p>
-
-      <p>Let there be n items. Item i has weight <code>w<sub>i</sub> &gt; 0</code> and profit <code>p<sub>i</sub> &gt; 0</code>; the knapsack capacity is <code>m</code> (the book uses W); <code>x<sub>i</sub></code> is the fraction of item i selected. The <b>objective function</b> is the total profit. A solution satisfying all constraints is a <b>feasible solution</b>, and the feasible solution with the best objective value is the <b>optimal solution</b> (book §3.1.1).</p>
-
-      <h4>(i) Fractional knapsack (book §3.2)</h4>
-      <div class="math">Maximize&nbsp; Z = Σ<sub>i=1..n</sub> p<sub>i</sub> x<sub>i</sub><br>
-      Subject to&nbsp; Σ<sub>i=1..n</sub> w<sub>i</sub> x<sub>i</sub> ≤ m<br>
-      and&nbsp; 0 ≤ x<sub>i</sub> ≤ 1 &nbsp;&nbsp; for i = 1, 2, …, n</div>
-      <p>Items are <b>divisible</b>: a fraction of an item may be placed in the knapsack. The greedy algorithm sorts by <code>p<sub>i</sub>/w<sub>i</sub></code> and takes items in that order, taking a fraction of the last item if needed.</p>
-
-      <h4>(ii) 0/1 knapsack (book §3.8)</h4>
-      <div class="math">Maximize&nbsp; Z = Σ<sub>i=1..n</sub> p<sub>i</sub> x<sub>i</sub><br>
-      Subject to&nbsp; Σ<sub>i=1..n</sub> w<sub>i</sub> x<sub>i</sub> ≤ W<br>
-      and&nbsp; x<sub>i</sub> = 0 or 1 &nbsp;&nbsp; for i = 1, 2, …, n</div>
-      <p>Each item is either taken completely (<code>x<sub>i</sub> = 1</code>) or rejected (<code>x<sub>i</sub> = 0</code>). The book states that the objective is the <b>maximum profit earned</b>; because of the 0/1 restriction the ratio rule can fail, so dynamic programming is used.</p>
-
-      <div class="note"><b>Key difference:</b> in fractional knapsack the last item may be split (<code>0 ≤ x<sub>i</sub> ≤ 1</code>); in 0/1 knapsack only <code>0</code> or <code>1</code> is allowed. That single change is why fractional knapsack is greedy-solvable and 0/1 knapsack needs DP.</div>
-      <p class="booksrc">📘 <b>Book:</b> §3.2 Knapsack Problem, p. 3-4; §3.8 The 0/1 Knapsack, p. 3-62</p>
-      
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Find an optimal solution for the knapsack instance using greedy method. n = 5, capacity m = 100.<br><span class="small">Objects 01–05, Weight 20/30/66/40/60, Profit 10/20/30/40/50</span></p>
-      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q1(b) [8]</p>
-
-      <h4>Step 1 — write the instance</h4>
-      <p>n = 5, capacity m = 100. The book's Example 3.2.2 uses exactly this data.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Object</th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>x5</th></tr></thead>
-        <tbody>
-          <tr><td>Profit p</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td></tr>
-          <tr><td>Weight w</td><td>20</td><td>30</td><td>66</td><td>40</td><td>60</td></tr>
-          <tr><td>p/w</td><td>1/2</td><td>2/3</td><td>5/11</td><td>1</td><td>5/6</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Step 2 — apply the greedy rule (maximum p/w first)</h4>
-      <p>The ratio order is <b>x4 (1) → x5 (5/6) → x2 (2/3) → x1 (1/2) → x3 (5/11)</b>.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Selected object</th><th>Profit</th><th>Weight</th><th>Remaining weight</th></tr></thead>
-        <tbody>
-          <tr><td>x4</td><td>40</td><td>40</td><td>100 − 40 = 60</td></tr>
-          <tr><td>x5</td><td>50</td><td>60</td><td>60 − 60 = 0</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>x2, x1 and x3 are not selected because the knapsack is already full.</p>
-
-      <h4>Step 3 — result</h4>
-      <div class="math">x = (0, 0, 0, 1, 1) &nbsp;&nbsp;→&nbsp;&nbsp; total weight = 40 + 60 = 100 ≤ 100<br>
-      <b>Maximum profit = 40 + 50 = 90</b></div>
-      <p>Sorting takes <b>O(n log n)</b>; the greedy scan takes <b>O(n)</b>. The book also solves the same instance by “maximum profit first” and “minimum weight first”: maximum profit gives the same 90, while minimum weight gives 78.33 because it ends by taking 1/6 of x5. The ratio method is the standard greedy rule and gives the optimal 90.</p>
-
-      <div class="warn"><b>Exam point:</b> always show the <code>p/w</code> column and the remaining-capacity column. The book's three-method table is exactly what the examiner expects for “using greedy method”.</div>
-      <p class="booksrc">📘 <b>Book:</b> §3.2 Knapsack Problem, Example 3.2.2, p. 3-6 – 3-7</p>
-      
-    </div>
-  </div>
-</section>
-
-<!-- ================= 3.3 ================= -->
-<section class="card" id="s33">
-  <h2>3.3 Job sequencing with deadlines <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s33">
+  <div class="prio">Priority 1 · ★★★★ 4× repeated</div><h2>3.3 Job sequencing with deadlines <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
   <p class="lead">This is the single most repeated Unit-3 question. Learn the algorithm <em>and</em> the three solved instances below.</p>
 
   <div class="qa">
     <div class="qa-head">
       <p class="qtitle"><span class="qno">Q1</span>What is job scheduling algorithm? How can it be solved using the greedy approach? Explain with respect to principle, control abstraction and time analysis, for the given instance.<br><span class="small">Jobs J1–J5, Deadline 2,1,3,2,1, Profit 60,100,20,40,20</span></p>
-      <div class="badges"><span class="b marks">12 marks</span><span class="b rep">★★★ 3×</span></div>
+      <div class="badges"><span class="b marks">12 marks</span><span class="b rep">★★★★ 4×</span></div>
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q2(a) [12] · related: 2023 Nov Q2(b) [6 — steps] · 2023 Nov Q1(a) [9] · 2025 Nov Q1(b) [8]</p>
+
+<div class="simple"><b>In simple words:</b> Each job takes one hour, has a deadline, and pays a profit. Do the highest-profit jobs first. Place each job in the latest free hour before its deadline. If no such hour is free, drop the job.</div>
+
+      <h4>Why we do this</h4>
+      <p>We have more jobs than time. Doing every job is impossible. We want the set of jobs that earns the most money while every chosen job still finishes by its deadline.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Job</b> — one task. Here every job takes exactly <b>one unit of time</b> (one hour).</li>
+        <li><b>Deadline <code>d<sub>i</sub></code></b> — the last hour in which job i may finish. A deadline of 3 means the job can run in hour 1, 2 or 3.</li>
+        <li><b>Profit <code>p<sub>i</sub></code></b> — money earned only if the job finishes by its deadline.</li>
+        <li><b>Slot</b> — one free hour in the schedule. Slot 1 is the first hour, slot 2 the second, and so on.</li>
+        <li><b>Feasible sequence</b> — an order of jobs in which every job finishes by its deadline.</li>
+        <li><b>Discard</b> — leave a job out because no allowed slot is free.</li>
+        <li><b>Optimal sequence</b> — the feasible order with the highest total profit.</li>
+        <li><b><code>J</code> array</b> — the timetable. <code>J[r]</code> stores the job placed in slot r.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> a clinic books patients into hourly slots. The most valuable patients are booked first. Each is placed in the latest slot they can accept, so earlier slots stay free for patients who can only come early. If no slot fits, that patient is not booked.</div>
 
       <h4>Problem statement (book §3.3)</h4>
       <p>There are n jobs to be executed. Each job takes <b>one unit of time</b>, has deadline <code>d<sub>i</sub></code> and gives profit <code>p<sub>i</sub></code> only if it is completed within its deadline. At any time only one job runs. We must obtain a feasible sequence that <b>maximises the total profit</b>.</p>
@@ -425,10 +270,10 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 
       <h4>Greedy strategy (book's 4 steps, §3.3)</h4>
       <ol>
-        <li>Arrange the jobs in <b>descending order of profit</b>.</li>
-        <li>Create a job array <code>J[1..n]</code> and keep all slots free.</li>
-        <li>For each job in that order, insert it at the slot equal to its deadline. If that slot is occupied, search an <b>earlier free slot</b> (<code>&lt; d<sub>i</sub></code>). If no free slot exists, <b>discard</b> the job.</li>
-        <li>Read the filled array from left to right — that is the optimal sequence.</li>
+        <li><b>Arrange the jobs in descending order of profit.</b> <i>Why:</i> a high-profit job should get a slot before a low-profit one takes it.</li>
+        <li><b>Create a job array <code>J[1..n]</code> and keep all slots free.</b> <i>Why:</i> we need a place to record which job runs in which hour.</li>
+        <li><b>For each job in that order, try the slot equal to its deadline.</b> If that slot is occupied, search an <b>earlier free slot</b> (<code>&lt; d<sub>i</sub></code>). If no free slot exists, <b>discard</b> the job. <i>Why latest slot:</i> using the latest possible hour keeps early hours free for jobs with tight deadlines.</li>
+        <li><b>Read the filled array from left to right</b> — that is the optimal sequence. <i>Why:</i> slot 1 runs first, slot 2 next, and so on.</li>
       </ol>
 
       <h4>Algorithm Job_seq (book §3.3)</h4>
@@ -452,10 +297,11 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     }
     return J, count;
 }</code></pre>
-      <p><b>Time:</b> the book states <b>O(n²)</b>, because the insertion/scan runs inside two nested loops. Sorting adds O(n log n). Space is O(n) for J.</p>
+      <p><b>How to read the code:</b> the outer <code>for</code> visits jobs from highest profit to lowest. The inner <code>while</code> walks left from the deadline until it finds a free slot. If <code>r</code> reaches 0, no slot at or before the deadline is free, so the job is dropped.</p>
+      <p><b>Time:</b> the book states <b>O(n²)</b>. For each job we may scan up to n slots, so n jobs × n slots. Sorting adds O(n log n). Space is O(n) for J.</p>
 
       <h4>Solved PYQ instance (2023 Nov Q2a)</h4>
-      <div class="tbl-wrap">
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>Job</th><th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th></tr></thead>
         <tbody>
@@ -464,8 +310,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
-      <p><b>Sorted by profit:</b> J2(100), J1(60), J4(40), J3(20), J5(20).</p>
-      <div class="tbl-wrap">
+      <p><b>Step 1 — sort by profit:</b> J2(100), J1(60), J4(40), J3(20), J5(20). <i>Why:</i> profit decides who gets the first chance at a slot. J3 and J5 tie at 20; the order between them does not change the final profit here.</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>Job considered</th><th>Deadline</th><th>Free slot found</th><th>J array</th><th>Profit so far</th></tr></thead>
         <tbody>
@@ -477,11 +323,20 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
-      <div class="math"><b>Optimal sequence:</b> J2 → J1 → J3 &nbsp;&nbsp;|&nbsp;&nbsp; <b>Maximum profit = 100 + 60 + 20 = 180</b></div>
+      <p><b>Step 2 — read each row:</b></p>
+      <ol>
+        <li><b>J2 has deadline 1.</b> Slot 1 is free, so place J2 there. Profit 100. <i>Why:</i> J2 can only run in hour 1.</li>
+        <li><b>J1 has deadline 2.</b> Slot 2 is free, so place J1 there. Profit 160. <i>Why:</i> use the latest allowed slot.</li>
+        <li><b>J4 has deadline 2.</b> Slot 2 is full, slot 1 is full. No free slot at or before 2, so J4 is dropped. Profit stays 160.</li>
+        <li><b>J3 has deadline 3.</b> Slot 3 is free, so place J3 there. Profit 180.</li>
+        <li><b>J5 has deadline 1.</b> Slot 1 is full. No earlier slot exists, so J5 is dropped. Profit stays 180.</li>
+      </ol>
+<div class="math"><b>Optimal sequence:</b> J2 → J1 → J3   |   <b>Maximum profit = 100 + 60 + 20 = 180</b></div>
+      <p><b>What this means:</b> the timetable is [J2, J1, J3]. J2 runs in hour 1, J1 in hour 2, J3 in hour 3. All three finish by their deadlines, and the total profit is 180.</p>
 
       <h4>Second PYQ instance = book Example 3.3.3</h4>
-      <p>P = (20, 15, 10, 5, 1), D = (2, 2, 1, 3, 3) — the same instance solved in the book, p. 3-20.</p>
-      <div class="tbl-wrap">
+      <p>P = (20, 15, 10, 5, 1), D = (2, 2, 1, 3, 3) — the same instance solved in the book, p. 3-20. The jobs are already in descending profit order, so no sorting is needed.</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>Job</th><th>Deadline</th><th>Assigned slot</th><th>Result</th></tr></thead>
         <tbody>
@@ -493,14 +348,18 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
-      <div class="math"><b>Optimal sequence:</b> J2 → J1 → J4 &nbsp;&nbsp;|&nbsp;&nbsp; <b>Maximum profit = 15 + 20 + 5 = 40</b></div>
+      <p><b>Why each decision:</b> J1 uses slot 2, the latest hour it can accept. J2 then uses slot 1. J3 needs slot 1, but it is full, so J3 is dropped. J4 uses slot 3. J5 needs slot 3, but it is full, so J5 is dropped.</p>
+<div class="math"><b>Optimal sequence:</b> J2 → J1 → J4   |   <b>Maximum profit = 15 + 20 + 5 = 40</b></div>
+      <p><b>What this means:</b> the sequence J2 → J1 → J4 earns 40. Notice that the highest-profit job J1 is <b>not</b> first in the timetable; profit order decides who is considered, not the final running order.</p>
 
       <h4>Book's own Example 3.3.1 (for comparison)</h4>
       <p>n = 7, p = (3, 5, 20, 18, 1, 6, 30), d = (1, 3, 4, 3, 2, 1, 2). Sorted: J7(30,d2), J3(20,d4), J4(18,d3), J6(6,d1), J2(5,d3), J1(3,d1), J5(1,d2). J7→slot 2, J3→slot 4, J4→slot 3, J6→slot 1; the rest are discarded.</p>
-      <div class="math"><b>Book's answer:</b> J6 → J7 → J4 → J3, &nbsp; profit = 6 + 30 + 18 + 20 = 74</div>
+<div class="math"><b>Book's answer:</b> J6 → J7 → J4 → J3,   profit = 6 + 30 + 18 + 20 = 74</div>
+      <p><b>What this means:</b> the four chosen jobs fill slots 1 to 4 in the order J6, J7, J4, J3. Profit is 6 + 30 + 18 + 20 = 74.</p>
 
       <h4>Third PYQ instance (2025 Nov Q1b) — four jobs</h4>
-      <div class="tbl-wrap">
+      <p>Jobs are listed in profit order: A(75), C(50), B(40), D(35).</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>Job</th><th>Deadline</th><th>Profit</th><th>Slot chosen</th><th>Status</th></tr></thead>
         <tbody>
@@ -511,8 +370,11 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
-      <div class="math"><b>Optimal sequence:</b> C → A &nbsp;&nbsp;|&nbsp;&nbsp; <b>Maximum profit = 50 + 75 = 125</b></div>
+      <p><b>Why:</b> A takes slot 2. C takes slot 1. B needs slot 1, but it is full, so B is dropped. D needs slot 2, but it is full, so D is dropped.</p>
+<div class="math"><b>Optimal sequence:</b> C → A   |   <b>Maximum profit = 50 + 75 = 125</b></div>
+      <p><b>What this means:</b> C runs first, then A. Total profit is 125. Dropping B and D is correct because no allowed slot is free.</p>
 
+      <div class="confuse"><b>Common confusion:</b> do not sort by deadline — sort by <b>profit</b>. Do not place a job at its deadline and give up immediately if that slot is full; search <b>earlier</b> slots. A deadline of 3 does not mean “must run in hour 3”; it means “must finish by hour 3”, so hours 1, 2 or 3 are all allowed.</div>
       <div class="tip"><b>Exam shortcut:</b> the book awards marks for the sorted-profit table and the J[] array. Write both even if the final sequence is short.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.3 Scheduling Algorithms — Job Scheduling, p. 3-15 – 3-22</p>
       
@@ -520,86 +382,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </section>
 
-<!-- ================= 3.4 ================= -->
-<section class="card" id="s34">
-  <h2>3.4 Activity selection problem</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Consider seven activities with start and finish times. Using the greedy strategy, compute an execution schedule with the maximum number of non-conflicting activities.<br><span class="small">A(1,3) B(3,4) C(2,5) D(0,7) E(5,9) F(8,10) G(11,12)</span></p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q1(b) [9]</p>
-
-      <h4>Definition (book §3.4)</h4>
-      <p>Given a resource such as a CPU or a lecture hall and n activities, activity i has start time <code>S<sub>i</sub></code> and finish time <code>F<sub>i</sub></code>. The activity-selection problem is to find a <b>maximum-size subset of mutually compatible activities</b> — i.e. maximise the number of lectures in the hall or tasks assigned to the CPU.</p>
-
-      <h4>Greedy rule</h4>
-      <p>Sort the activities by <b>finish time</b> in non-decreasing order. Select the first activity, then repeatedly select the next activity whose <code>S<sub>i</sub> ≥ F<sub>last</sub></code>. Choosing the earliest finish leaves the maximum room for the remaining activities.</p>
-
-      <h4>Algorithm Greedy_Act_sel (book §3.4)</h4>
-<pre><code>Algorithm Greedy_Act_sel(S, F)
-{
-    n = length[S];
-    A = {a1};                 // select the first activity
-    i = 1;                    // last selected activity
-
-    for m = 2 to n do
-    {
-        if (S[m] ≥ F[i]) then // compatible with the last choice
-        {
-            A = A ∪ {a_m};
-            i = m;
-        }
-    }
-    return A;
-}</code></pre>
-      <p><b>Time:</b> O(n) after sorting; with sorting, <b>O(n log n)</b>. Space O(n) for the activity arrays.</p>
-
-      <h4>Step 1 — sort the PYQ activities by finish time</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Activity</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th></tr></thead>
-        <tbody>
-          <tr><td>Start</td><td>1</td><td>3</td><td>2</td><td>0</td><td>5</td><td>8</td><td>11</td></tr>
-          <tr><td>Finish</td><td>3</td><td>4</td><td>5</td><td>7</td><td>9</td><td>10</td><td>12</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Step 2 — greedy selection</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Step</th><th>Activity</th><th>Interval</th><th>Last finish</th><th>Decision</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>A</td><td>1–3</td><td>—</td><td>✅ select</td></tr>
-          <tr><td>2</td><td>B</td><td>3–4</td><td>3</td><td>✅ select (3 ≥ 3)</td></tr>
-          <tr><td>3</td><td>C</td><td>2–5</td><td>4</td><td>❌ overlap</td></tr>
-          <tr><td>4</td><td>D</td><td>0–7</td><td>4</td><td>❌ overlap</td></tr>
-          <tr><td>5</td><td>E</td><td>5–9</td><td>4</td><td>✅ select (5 ≥ 4)</td></tr>
-          <tr><td>6</td><td>F</td><td>8–10</td><td>9</td><td>❌ overlap</td></tr>
-          <tr><td>7</td><td>G</td><td>11–12</td><td>9</td><td>✅ select (11 ≥ 9)</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="math"><b>Optimal schedule:</b> A → B → E → G &nbsp;&nbsp;|&nbsp;&nbsp; <b>Maximum activities = 4</b><br>
-      Time = O(n log n) for sorting + O(n) scan = <b>O(n log n)</b></div>
-
-      <h4>Book's solved example (Example 3.4.1)</h4>
-      <p>For 11 activities with s = (1, 3, 0, 5, 3, 5, 6, 8, 8, 2, 14) and f = (4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16), the book's greedy algorithm selects a1 (f = 4), then a4 (s = 5 ≥ 4), then a8 (s = 8 ≥ 7), then a11 (s = 14 ≥ 11).</p>
-      <div class="math"><b>Book's answer:</b> {a1, a4, a8, a11} — 4 activities</div>
-
-      <div class="note"><b>Why earliest finish works:</b> the book proves that the greedy choice is part of some optimal solution (greedy-choice property) and that the remaining problem has the same form (optimal substructure).</div>
-      <p class="booksrc">📘 <b>Book:</b> §3.4 Activity Selection Problem, p. 3-23 – 3-26</p>
-      
-    </div>
-  </div>
-</section>
-
-<!-- ================= 3.5 ================= -->
 <section class="card" id="s35">
-  <h2>3.5 Dynamic programming — principle &amp; control abstraction</h2>
+  <div class="prio">Priority 2 · ★★★ 3× repeated</div><h2>3.5 Dynamic programming — principle &amp; control abstraction</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -609,18 +393,36 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [8] · 2024 May Q2(a) [8] · 2025 Nov Q2(a) [7]</p>
 
+<div class="simple"><b>In simple words:</b> Dynamic programming (DP) solves a big problem by solving small parts once. It writes each small answer in a table. Then it builds bigger answers from those stored answers, so no part is calculated twice.</div>
+
+      <h4>Why we do this</h4>
+      <p>Some problems repeat the same smaller problem many times. Plain recursion solves it again and again, which is slow. A table turns repeated work into one lookup.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Subproblem</b> — a smaller version of the main problem, such as “best profit using the first 2 items”.</li>
+        <li><b>State</b> — the set of numbers that describes one subproblem, such as <code>(item number, capacity)</code>.</li>
+        <li><b>Overlapping subproblems</b> — the same state appears through more than one path, so it would be solved many times without a table.</li>
+        <li><b>Optimal substructure</b> — the best overall answer is built from best answers to smaller parts.</li>
+        <li><b>Control abstraction</b> — a general algorithm skeleton with the problem-specific details left as blanks.</li>
+        <li><b>Bottom-up</b> — solve the smallest states first, then larger ones, filling the table in order.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> you write answers to practice sums in a notebook. When a later sum needs an earlier answer, you copy it from the notebook instead of solving it again. DP is that notebook, kept in a fixed order.</div>
+
       <h4>What is dynamic programming? (book §3.5)</h4>
       <p>Dynamic programming was invented by <b>Richard Bellman in 1950</b>. It is a technique for solving problems that have <b>overlapping subproblems</b>. Each subproblem is solved <b>only once</b>, and its result is recorded in a table; the final solution is then obtained from that table. It is typically applied to <b>optimization problems</b>, where we want the minimum or maximum value among many possible solutions.</p>
 
-      <h4>Steps of dynamic programming (book §3.5.1)</h4>
+      <h4>Steps of dynamic programming (book §3.5.1) — and why each step exists</h4>
       <ol>
-        <li><b>Characterise the structure</b> of an optimal solution — develop a mathematical notation that expresses any solution and its subsolution.</li>
-        <li><b>Recursively define</b> the value of an optimal solution.</li>
-        <li><b>Compute the value bottom-up</b> using a recurrence relation that relates a solution to its subsolutions.</li>
-        <li><b>Compute an optimal solution</b> from the stored information.</li>
+        <li><b>Characterise the structure of an optimal solution.</b> Write down what a solution looks like and what its parts are. <i>Why:</i> you cannot store an answer until you know what defines it.</li>
+        <li><b>Recursively define the value of an optimal solution.</b> Write a formula that gets a big answer from smaller answers. <i>Why:</i> this formula is the engine of DP.</li>
+        <li><b>Compute the value bottom-up.</b> Fill the table from small states to large states. <i>Why:</i> when a state needs smaller states, they are already in the table.</li>
+        <li><b>Compute an optimal solution from the stored information.</b> Use the stored choices to rebuild the actual answer, not just its value. <i>Why:</i> the exam usually asks which items, which order, or which root.</li>
       </ol>
 
       <h4>Control abstraction (bottom-up table filling)</h4>
+      <p>This skeleton has four jobs: set the base cases, visit states from small to large, try every choice for each state, and keep the best. Only the meaning of “state” and “choice” changes per problem.</p>
 <pre><code>Algorithm DynamicProgramming(n)
 {
     // table[] stores the optimum value of every subproblem
@@ -642,6 +444,18 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     }
     return table[full problem];
 }</code></pre>
+      <p><b>How to read the code:</b></p>
+      <ol>
+        <li><b>Fill the base cases.</b> These are the smallest states, whose answers are known directly. <i>Why:</i> every larger state eventually depends on them.</li>
+        <li><b>Visit states in increasing size.</b> <i>Why:</i> a state can then read smaller states that are already filled.</li>
+        <li><b>Start with the worst value</b> (<code>+∞</code> for a minimum problem, <code>−∞</code> for a maximum problem). <i>Why:</i> the first real choice must beat this placeholder.</li>
+        <li><b>Try each choice.</b> Add the cost of this choice to the stored answer of the smaller state it leads to. <i>Why:</i> this tests one complete way to build the state.</li>
+        <li><b>Keep the best value and remember the choice.</b> <i>Why:</i> the value answers “how good”, the choice answers “how”.</li>
+        <li><b>Return the full problem's cell.</b> <i>Why:</i> the largest state is the answer.</li>
+      </ol>
+
+      <h4>A tiny example — Fibonacci numbers</h4>
+      <p>Fibonacci numbers start 0, 1, 1, 2, 3, 5, …; each one is the sum of the previous two. To get <code>F(5)</code> we need <code>F(4)</code> and <code>F(3)</code>. To get <code>F(4)</code> we need <code>F(3)</code> again. Plain recursion computes <code>F(3)</code> twice. DP computes <code>F(0), F(1), F(2), F(3), F(4), F(5)</code> once each, in that order. That is the whole idea: <b>store, then reuse</b>.</p>
 
       <h4>Elements (book §3.5.3)</h4>
       <ul>
@@ -650,15 +464,18 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       </ul>
 
       <h4>Time analysis</h4>
-      <div class="math">T(n) = (number of distinct states) × (choices per state) × (cost per choice)</div>
+<div class="math">T(n) = (number of distinct states) × (choices per state) × (cost per choice)</div>
+      <p><b>What this means:</b> count the number of table cells, multiply by the number of choices tried in each cell, then multiply by the work per choice.</p>
       <ul>
         <li>0/1 knapsack: table of (n + 1) × (W + 1) entries → <b>O(nW)</b>.</li>
         <li>Matrix chain multiplication: O(n²) states × O(n) splits → <b>O(n³)</b>.</li>
         <li>Optimal BST: <b>O(n³)</b> (the book notes Knuth's improvement to O(n²)).</li>
-        <li>Binomial coefficients: A(n,k) = nk additions → <b>Θ(nk)</b>.</li>
+        <li>Binomial coefficients: A(n,k) = nk additions → <b>Θ(nk)</b>. This means the work grows in proportion to n × k.</li>
         <li>Space equals the table size: O(nW), O(n²), etc.</li>
       </ul>
       <p>The book lists the main applications as multistage graph, travelling salesman, matrix multiplication, longest common subsequence, maximum flow and all-pairs shortest path.</p>
+
+      <div class="confuse"><b>Common confusion:</b> DP is not “recursion only”. Plain recursion without stored answers is still slow. DP is also not divide and conquer: divide-and-conquer parts are independent, while DP parts overlap. And “dynamic” does not mean the program changes while running; it is just the historical name.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.5 Introduction to Dynamic Programming, p. 3-26 – 3-28</p>
       
     </div>
@@ -672,24 +489,48 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 May Q2(a) [7] · related: 2024 May Q1(c) [4]</p>
 
+<div class="simple"><b>In simple words:</b> If a full answer is the best possible, then every piece of it must also be the best way to solve that piece. This lets us build a big best answer from small best answers.</div>
+
+      <h4>Why we do this</h4>
+      <p>DP works by combining answers to smaller parts. That is only safe if a best full answer never contains a badly solved part. The principle of optimality is the promise that makes this safe.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Optimal</b> — the best possible answer under the problem's rules.</li>
+        <li><b>Subsequence of decisions</b> — the later decisions that remain after the first decision is fixed.</li>
+        <li><b>Subproblem</b> — the smaller problem that remains after one decision.</li>
+        <li><b>Principle of optimality</b> — in a best sequence of choices, every later part must also be best for the problem it faces.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> the fastest route from Delhi to Pune goes through Mumbai. Then the Delhi-to-Mumbai part must itself be the fastest Delhi-to-Mumbai route. If a faster one existed, swapping it in would make the whole trip faster — a contradiction.</div>
+
       <h4>Statement (book §3.5.2)</h4>
       <p>The <b>principle of optimality</b> states: <em>“In an optimal sequence of decisions or choices, each subsequence must also be optimal.”</em> In other words, whatever the first decision is, the remaining decisions must form an optimal solution for the subproblem that results from that first decision.</p>
       <p>The book adds: a DP algorithm obtains its solution using this principle, and when the principle cannot be applied it is almost impossible to obtain the solution by dynamic programming.</p>
 
       <h4>Mathematical representation</h4>
       <p>Let <code>OPT(i, j)</code> be the optimum cost for the subproblem from i to j, and let the first decision split it at k. Then the optimum is built from optimum subsolutions:</p>
-      <div class="math">OPT(i, j) = min<sub>i ≤ k &lt; j</sub> { OPT(i, k) + OPT(k+1, j) + cost(i, k, j) }</div>
+<div class="math">OPT(i, j) = min<sub>i ≤ k &lt; j</sub> { OPT(i, k) + OPT(k+1, j) + cost(i, k, j) }</div>
+      <p><b>What this means:</b> “min over k” means try every possible first split. For each split, add the best cost of the left part, the best cost of the right part, and the cost of joining them. Keep the smallest total.</p>
       <p>For matrix chain multiplication the book writes this as:</p>
-      <div class="math">m[i, j] = min<sub>i ≤ k &lt; j</sub> { m[i, k] + m[k+1, j] + P<sub>i−1</sub> P<sub>k</sub> P<sub>j</sub> }, &nbsp;&nbsp; m[i, i] = 0</div>
+<div class="math">m[i, j] = min<sub>i ≤ k &lt; j</sub> { m[i, k] + m[k+1, j] + P<sub>i−1</sub> P<sub>k</sub> P<sub>j</sub> },    m[i, i] = 0</div>
+      <p><b>What this means:</b> <code>m[i, j]</code> is the cheapest way to multiply matrices i to j. The last multiplication joins a left chain and a right chain, and that join costs <code>P<sub>i−1</sub> · P<sub>k</sub> · P<sub>j</sub></code>.</p>
       <p>For a shortest path from s to t through v, the same idea gives:</p>
-      <div class="math">d(s, t) = d(s, v) + d(v, t)</div>
-      <p>i.e. every sub-path of a shortest path is itself a shortest path — the book's example of the principle of optimality.</p>
+<div class="math">d(s, t) = d(s, v) + d(v, t)</div>
+      <p>That is, every sub-path of a shortest path is itself a shortest path — the book's example of the principle of optimality.</p>
 
-      <h4>Book's proof for OBST (Example 3.7.1)</h4>
-      <p>If the left subtree L of an optimal tree T<sub>0n</sub> were not optimal, replace it by a cheaper L′. The new tree has cost C(L′) + C(R) + W &lt; C(L) + C(R) + W = C(T<sub>0n</sub>), contradicting the optimality of T<sub>0n</sub>. Hence L must be optimal; similarly R must be optimal. This proves that OBST follows the principle of optimality.</p>
+      <h4>Book's proof for OBST (Example 3.7.1), step by step</h4>
+      <ol>
+        <li><b>Assume the left subtree L of the optimal tree is not optimal.</b> <i>Why:</i> this is a proof by contradiction — we suppose the opposite of what we want to prove.</li>
+        <li><b>Then a cheaper left subtree L′ exists.</b> Replace L with L′ and keep the same root and right subtree. <i>Why:</i> the tree's sorted order is unchanged, so it is still a valid search tree.</li>
+        <li><b>The new cost is C(L′) + C(R) + W.</b> Since C(L′) &lt; C(L), the new cost is smaller than the old cost. <i>Why:</i> the root and right part did not change, so only the left cost went down.</li>
+        <li><b>This contradicts the claim that the old tree was optimal.</b> Therefore L must be optimal. The same argument shows R must be optimal. <i>Why:</i> an optimal tree cannot contain a part that can be improved.</li>
+      </ol>
 
       <h4>When it fails</h4>
-      <p><b>Longest simple path</b> has no optimal substructure: a longest path from A to D through B need not contain the longest path from A to B, because that sub-path may already use a vertex needed later. DP cannot be applied to such a problem.</p>
+      <p><b>Longest simple path</b> has no optimal substructure. A longest path from A to D through B need not contain the longest path from A to B, because that sub-path may already use a vertex needed later. DP cannot be applied to such a problem.</p>
+
+      <div class="confuse"><b>Common confusion:</b> the principle of optimality is not the same as the greedy-choice property. Greedy needs “best now is safe”. DP needs “best whole contains best parts”. Also, the principle does not say every sub-path of any path is optimal; it says the sub-parts of an <b>optimal</b> solution must be optimal for their own subproblem.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.5.2 Principle of Optimality, p. 3-26 – 3-27; §3.7 OBST, p. 3-35</p>
       
     </div>
@@ -703,20 +544,246 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2024 May Q1(c) [4]</p>
 
-      <p><b>The statement is true in the sense used by the book.</b> Dynamic programming builds the global optimum from optimal solutions of subproblems — it “makes use of the principle of optimality to find the optimal solution from subproblems” (book §3.5.3). If the principle does not hold, an optimal subsolution may lead to a worse or invalid global solution, so the recurrence <code>OPT(i,j) = combine(OPT of parts)</code> cannot guarantee the correct answer.</p>
+<div class="simple"><b>In simple words:</b> The statement is <b>true</b> in the sense the book uses. Dynamic programming (DP) builds a big best answer out of small best answers. If a best part can lead to a bad whole, that building method cannot be trusted.</div>
+
+      <h4>Why we do this</h4>
+      <p>This is a short “comment” question. You must state a verdict, explain the DP assumption, and give one example where the assumption holds and one where it fails.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Principle of optimality</b> — a best full answer is made of best answers to its parts.</li>
+        <li><b>Recurrence</b> — a formula that computes a big answer from smaller answers.</li>
+        <li><b>Feasible</b> — allowed by the rules, even if not the best.</li>
+        <li><b>NP-hard</b> — a problem for which no known fast exact algorithm exists; the running time grows too quickly as the input grows.</li>
+      </ul>
+
+      <p><b>Verdict:</b> the statement is true in the sense used by the book. Dynamic programming builds the global optimum from optimal solutions of subproblems — it “makes use of the principle of optimality to find the optimal solution from subproblems” (book §3.5.3).</p>
+
+      <h4>Step-by-step argument</h4>
+      <ol>
+        <li><b>DP's formula assumes a best whole is made of best parts.</b> For example, <code>OPT(i,j) = combine(OPT of parts)</code>. <i>Why:</i> the formula only stores one best value per part.</li>
+        <li><b>If the principle fails, a best-looking part may be a bad choice for the whole.</b> <i>Why:</i> the part was optimised for itself, not for the larger problem.</li>
+        <li><b>Then the stored value can lead to a worse or invalid full answer.</b> <i>Why:</i> DP has thrown away the other candidate parts, so it cannot recover.</li>
+        <li><b>Therefore DP cannot guarantee the correct optimum.</b> <i>Why:</i> a guarantee needs a proof that the formula is valid for every input.</li>
+      </ol>
       <p>The book states: <em>“When it is not possible to apply the principle of optimality it is almost impossible to obtain the solution using the dynamic programming approach.”</em></p>
       <p><b>Example where it holds:</b> shortest path — every sub-path of a shortest path is a shortest path, so Floyd–Warshall and the MCM recurrence work.</p>
       <p><b>Example where it fails:</b> longest simple path — the longest path from A to D through B may not contain the longest A–B path, because that sub-path can use a vertex needed later. No DP recurrence gives the correct answer; the problem is NP-hard.</p>
-      <p><b>Exam note:</b> DP may still be <em>applied</em> and return a feasible answer, but without the principle of optimality it cannot <em>guarantee</em> optimality. Write this distinction for the 4th mark.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> a relay team's best total time is not always made of the four fastest runners. A runner who is fast alone may refuse the baton change. The “best part” depends on the whole team, so you cannot pick each leg independently.</div>
+
+      <div class="confuse"><b>Common confusion:</b> “cannot be solved by DP” does not mean “no program can ever solve it”. It means DP cannot <b>guarantee</b> the optimum. DP may still run and return a feasible answer, but without the principle that answer may not be the best. Write this distinction for the 4th mark.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.5.2 – §3.5.3, p. 3-26 – 3-27</p>
       
     </div>
   </div>
 </section>
 
-<!-- ================= 3.6 ================= -->
+<section class="card" id="s31">
+  <div class="prio">Priority 3 · ★★ 2× repeated</div><h2>3.1 Greedy strategy</h2>
+  <p class="lead">Syllabus: <em>Principle, control abstraction, time analysis of control abstraction, knapsack problem, job scheduling, activity selection.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain Greedy strategy: Principle, control abstraction, time analysis of control abstraction with suitable example.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(b) [8] · 2024 May Q1(a) [6 — control abstraction + complexity]</p>
+
+<div class="simple"><b>In simple words:</b> A greedy algorithm solves a problem by taking the best-looking choice right now. Then it moves on and never goes back. It is fast, but it is correct only for some problems.</div>
+
+      <h4>Why we do this</h4>
+      <p>Many problems ask for the best total result. Checking every possible combination can take too long. Greedy tries to reach the answer in one pass. At each step it picks the option that looks best at that moment.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Candidate</b> — one possible item or choice that we may add to the answer.</li>
+        <li><b>Feasible</b> — allowed by the problem's rules (for example, the item still fits in the bag).</li>
+        <li><b>Optimal</b> — the best possible answer overall, not just a good one.</li>
+        <li><b>Locally optimal</b> — the best choice right now, looking only at this step.</li>
+        <li><b>Irrevocable</b> — once chosen, the choice is fixed and is never undone.</li>
+        <li><b>Control abstraction</b> — a general skeleton of the algorithm. The skeleton stays the same; three helper functions change from problem to problem.</li>
+        <li><b>Greedy-choice property</b> — a set of best-now choices can lead to the overall best answer.</li>
+        <li><b>Optimal substructure</b> — the overall best answer is built from the best answers to smaller parts.</li>
+        <li><b>O(...) — big-O notation.</b> It describes how the running time grows when the input size n grows. O(n) grows in a straight line. O(n²) grows with n × n. O(n log n) is a little more than linear and is typical of sorting.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> in a sale, you pick the item with the biggest discount first. You do not plan the whole shopping trip. That is greedy: best now, no looking back.</div>
+
+      <h4>1. Principle (book §3.1.1)</h4>
+      <p>A greedy algorithm builds the answer <b>one step at a time</b>. It starts with an empty answer and keeps adding one candidate. At every step the chosen candidate must be three things:</p>
+      <ul>
+        <li><b>Feasible</b> — it satisfies the problem's constraints.</li>
+        <li><b>Locally optimal</b> — among all allowed candidates, it is the best at this moment.</li>
+        <li><b>Irrevocable</b> — once added, it is never removed or changed.</li>
+      </ul>
+      <p>So there must be a “greed” for the best answer. The book adds two conditions for correctness: the <b>greedy-choice property</b> and <b>optimal substructure</b> (both defined above).</p>
+
+      <h4>2. Control abstraction (book §3.1.2)</h4>
+      <p>Think of this as a recipe card. It is the same for every greedy problem. Only <code>Select</code>, <code>Feasible</code> and <code>Union</code> change.</p>
+<pre><code>Algorithm Greedy(D, n)
+// D is the domain of candidates, |D| = n
+{
+    Solution = ∅;
+    for i = 1 to n do
+    {
+        s = Select(D);                     // pick the best remaining candidate
+        if Feasible(Solution, s) then      // check the constraints
+            Solution = Union(Solution, s); // add it permanently
+    }
+    return Solution;
+}</code></pre>
+      <ol>
+        <li><b>Start empty.</b> <code>Solution = ∅</code>. Nothing has been chosen yet.</li>
+        <li><b>Pick the best candidate.</b> <code>s = Select(D)</code> returns the best remaining item. <i>Why:</i> this is the greedy step.</li>
+        <li><b>Check the rules.</b> <code>Feasible(Solution, s)</code> asks “can we add this without breaking a constraint?” <i>Why:</i> a fast answer that breaks the rules is useless.</li>
+        <li><b>Add it permanently.</b> <code>Union</code> puts <code>s</code> into the answer. <i>Why:</i> greedy never takes a choice back.</li>
+        <li><b>Repeat n times</b> — once for each candidate.</li>
+        <li><b>Return the answer.</b></li>
+      </ol>
+      <p><code>Select</code>, <code>Feasible</code> and <code>Union</code> are the three problem-dependent functions. The book lists the applications as knapsack, job sequencing with deadlines, minimum spanning tree, single-source shortest path and Huffman tree. These are other problems that greedy can solve; you do not need them for this question.</p>
+
+      <h4>3. Time analysis of the control abstraction</h4>
+      <p>We count how many times each line runs. The loop runs <b>n</b> times — once per candidate.</p>
+<div class="math">T(n) = T<sub>sort</sub> + n × ( T<sub>Select</sub> + T<sub>Feasible</sub> + T<sub>Union</sub> )</div>
+      <p><b>What this means:</b> total time = sorting time + n × (cost of one selection + one feasibility check + one union).</p>
+      <ul>
+        <li>The loop runs exactly <b>n</b> times — one candidate per round.</li>
+        <li>If candidates are already sorted and the three helpers take O(1): <b>O(n)</b>. The book's <code>Knapsack_Greedy</code> is of this type — the basic operation lies inside the loop, so time = <b>O(n)</b>.</li>
+        <li>If we must sort first: <b>O(n log n)</b>.</li>
+        <li>If each feasibility check scans the answer so far: <b>O(n²)</b>.</li>
+        <li>Space = <b>O(n)</b> for the candidate array and the answer set.</li>
+      </ul>
+      <div class="note"><b>Why O(n log n) is common:</b> sorting n items costs O(n log n), and it is usually the slowest part. The single greedy pass after sorting is only O(n).</div>
+
+      <h4>4. Suitable example — fractional knapsack (book Example 3.2.2)</h4>
+      <p>n = 5, capacity m = 100, profits (10, 20, 30, 40, 50), weights (20, 30, 66, 40, 60). The greedy rule is “take the item with the largest profit per unit weight first”.</p>
+      <ol>
+        <li><b>Compute profit/weight:</b> 10/20 = 0.5, 20/30 = 0.67, 30/66 = 0.45, 40/40 = 1, 50/60 = 0.83. <i>Why:</i> this measures value for each kg.</li>
+        <li><b>Sort by ratio:</b> item 4 (1), item 5 (0.83), item 2 (0.67), item 1 (0.5), item 3 (0.45).</li>
+        <li><b>Take item 4.</b> Weight 40, profit 40. Remaining capacity = 60. <i>Why:</i> it gives the best value per kg.</li>
+        <li><b>Take item 5.</b> Weight 60, profit 50. Remaining capacity = 0.</li>
+        <li><b>Stop.</b> The bag is full, so items 2, 1 and 3 are skipped.</li>
+      </ol>
+<div class="math">x = (0, 0, 0, 1, 1),   weight = 100,   <b>maximum profit = 40 + 50 = 90</b></div>
+      <p><b>What this means:</b> we take all 40 kg of item 4 and all 60 kg of item 5. The capacity is exactly full, and the total profit is 90.</p>
+
+      <div class="confuse"><b>Common confusion:</b> “Greedy” does not mean “pick any item”. It means “pick the best item by the rule”. The rule differs by problem: ratio for knapsack, finish time for activities, profit for jobs. Also, a greedy answer is not always the overall best answer.</div>
+      <div class="tip"><b>For 8 marks:</b> principle (3 conditions) + control abstraction + time analysis + one example. Add the two correctness conditions — the examiner looks for “greedy-choice property” and “optimal substructure”.</div>
+      <p class="booksrc">📘 <b>Book:</b> §3.1 Introduction to Greedy Strategy, p. 3-2 – 3-4; §3.2 Example 3.2.2, p. 3-6 – 3-7</p>
+      
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Compare greedy algorithmic strategy and dynamic programming strategy.</p>
+      <div class="badges"><span class="b marks">4–6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q1(a)</p>
+
+<div class="simple"><b>In simple words:</b> Greedy takes the best choice now and never changes it. Dynamic programming (DP) tries many choices, saves every small answer in a table, and reuses those answers. Greedy is faster. DP is safer.</div>
+
+      <h4>Why we do this</h4>
+      <p>Exams ask you to pick the right tool for a problem. If a safe greedy rule exists, greedy gives a fast answer. If one bad early choice can spoil the result, DP is needed.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Feasible solution</b> — an answer that obeys all the rules of the problem.</li>
+        <li><b>Local choice</b> — the best option at this moment, ignoring future effects.</li>
+        <li><b>Subproblem</b> — a smaller version of the same problem.</li>
+        <li><b>Overlapping subproblems</b> — the same smaller problem appears again and again.</li>
+        <li><b>Table</b> — stored answers for smaller problems, so we do not calculate them twice.</li>
+        <li><b>Principle of optimality</b> — the best overall answer is made of best answers to its parts. The book also calls the related property <b>optimal substructure</b>.</li>
+        <li><b>Top-down</b> — start from the full problem and break it into smaller parts.</li>
+        <li><b>Bottom-up</b> — start from the smallest parts and build up to the full problem.</li>
+        <li><b>Polynomial time</b> — running time grows as a power of n, such as n² or n³. It is considered manageable, unlike exponential time.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> greedy is grabbing the first taxi you see. DP is checking a map app, writing the best route to each landmark in a notebook, and reusing those notes. The notebook takes effort, but no route is worked out twice.</div>
+
+<div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Greedy method (book §3.5.5)</th><th>Dynamic programming (book §3.5.5)</th></tr></thead>
+        <tbody>
+          <tr><td>Purpose</td><td>Obtains an optimum solution from a set of feasible solutions, then picks the best</td><td>Also obtains an optimum solution, but has no special set of feasible solutions</td></tr>
+          <tr><td>Decision</td><td>Makes the locally best choice and never revises previously generated solutions</td><td>Considers all possible sequences of decisions before choosing the optimum</td></tr>
+          <tr><td>Subproblems</td><td>After a choice only one smaller subproblem remains</td><td>Many overlapping subproblems are solved and their results stored in a table</td></tr>
+          <tr><td>Guarantee</td><td>No guarantee of the optimum; works only with the greedy-choice property + optimal substructure</td><td>Guaranteed optimum when the principle of optimality holds</td></tr>
+          <tr><td>Order</td><td>Top-down, iterative, one pass</td><td>Bottom-up table filling (or recursion with stored results)</td></tr>
+          <tr><td>Time</td><td>Usually O(n log n) or O(n)</td><td>Polynomial but larger, e.g. O(nW), O(n³)</td></tr>
+          <tr><td>Examples</td><td>Fractional knapsack, job sequencing, activity selection, MST, Huffman</td><td>0/1 knapsack, matrix chain, OBST, binomial coefficients, LCS</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> read the table row by row. Greedy commits to one path. DP keeps answers for many smaller paths, then chooses the best full path. In <code>O(nW)</code>, W is the knapsack capacity. MST (minimum spanning tree), Huffman coding and LCS (longest common subsequence) are other standard algorithms; here they are only examples.</p>
+
+      <h4>How to choose in the exam (3 steps)</h4>
+      <ol>
+        <li><b>Ask if a local rule is provably safe.</b> Does taking the best item now ever block a better overall answer? If no, greedy is enough. <i>Why:</i> greedy is simpler and faster.</li>
+        <li><b>Ask if the same subproblem repeats.</b> If yes, store its answer once. <i>Why:</i> repeated work is what makes plain recursion slow.</li>
+        <li><b>Check the principle of optimality.</b> If the best full answer must contain best parts, DP can build it. <i>Why:</i> the DP formula depends on this.</li>
+      </ol>
+
+      <div class="note"><b>One-line answer:</b> greedy looks only one step ahead, so it is fast but can be wrong. DP examines all choices for each state, so it is slower but gives the optimum when the principle of optimality holds.</div>
+
+      <div class="confuse"><b>Common confusion:</b> DP is not “try every order by brute force”. It stores each state once and reuses it. Also, greedy is not a special case of DP; they are two different strategies.</div>
+      <p class="booksrc">📘 <b>Book:</b> §3.5.5 Difference between Dynamic Programming and Greedy Technique, p. 3-27 – 3-28</p>
+      
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Comment on the statement: "Greedy method always provides the optimal solution."</p>
+      <div class="badges"><span class="b marks">3 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q1(c) [3]</p>
+
+<div class="simple"><b>In simple words:</b> The statement is <b>false</b>. Greedy is fast, but it can miss the best answer. It works only when taking the best choice now is safe for the overall answer, and when the best whole is built from best parts.</div>
+
+      <h4>Why we do this</h4>
+      <p>“Comment on” questions need a clear verdict, a reason, and one small example. A counterexample proves that “always” is too strong a word.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Greedy-choice property</b> — taking the best option now can still lead to the overall best answer.</li>
+        <li><b>Optimal substructure</b> — the best overall answer contains the best answers to its smaller parts.</li>
+        <li><b>Counterexample</b> — one case where the statement fails. One is enough to disprove “always”.</li>
+      </ul>
+
+      <p><b>Verdict:</b> the statement is false. The book says plainly that in the greedy method there is <b>no guarantee of getting the optimum solution</b> (§3.5.5). A greedy algorithm is optimal only when the problem satisfies:</p>
+      <ul>
+        <li><b>Greedy-choice property</b> — a globally optimal solution can be reached by making locally optimal choices;</li>
+        <li><b>Optimal substructure</b> — an optimal solution contains optimal solutions of its subproblems.</li>
+      </ul>
+
+      <h4>Counterexample, step by step — 0/1 knapsack (take whole items only)</h4>
+      <p>Capacity 10. Items (weight, profit) = (6, 30), (5, 25), (5, 25).</p>
+      <ol>
+        <li><b>Compute each ratio:</b> 30/6 = 5, 25/5 = 5, 25/5 = 5. <i>Why:</i> the greedy rule uses value per kg.</li>
+        <li><b>All ratios tie at 5.</b> Greedy takes the first item, the 6 kg one. <i>Why:</i> it is “best” by the rule, and there is no tie-break rule that looks ahead.</li>
+        <li><b>Profit is now 30.</b> Remaining capacity is 10 − 6 = 4. <i>Why:</i> each chosen item uses space.</li>
+        <li><b>The next items weigh 5 kg each.</b> Neither fits in 4 kg, so greedy stops at profit 30.</li>
+        <li><b>The optimum is both 5 kg items.</b> Weight 10, profit 25 + 25 = 50. So greedy loses by 20.</li>
+      </ol>
+      <p><b>Why it fails here:</b> the 0/1 restriction means an item cannot be split. A choice that looks best now can leave space that is too small for anything else. The book's Example 3.2.8 shows the same limitation — after selecting by p/w ratio, object 5 cannot be taken because it does not fit, and no fraction is allowed.</p>
+      <p><b>Where it does work:</b> fractional knapsack, job sequencing with deadlines, activity selection, minimum spanning tree, single-source shortest path and Huffman tree (the book's list of greedy applications).</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> a traveller with a 10 kg bag grabs one 6 kg item because it has the best value per kg. Later, two 5 kg items would have given more total value, but they no longer fit. Greedy never gets to undo the first grab.</div>
+
+      <div class="confuse"><b>Common confusion:</b> do not say “greedy failed because it picked the heaviest item”. It picked by ratio; all ratios were equal. The failure comes from the all-or-nothing rule plus a tie that greedy cannot resolve by looking ahead. Also, one counterexample is enough — you do not need to prove every case fails.</div>
+      <p class="booksrc">📘 <b>Book:</b> §3.1.4 General Characteristics, p. 3-3; §3.5.5, p. 3-28; §3.2 Example 3.2.8, p. 3-14 – 3-15</p>
+      
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s36">
-  <h2>3.6 Matrix chain multiplication <span class="b rep" style="font-size:12px;vertical-align:middle">★★ 2×</span></h2>
+  <div class="prio">Priority 4 · ★★ 2× repeated</div><h2>3.6 Matrix chain multiplication <span class="b rep" style="font-size:12px;vertical-align:middle">★★ 2×</span></h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -726,14 +793,32 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [10] · same pattern: 2024 May Q2(b) [10]</p>
 
+<div class="simple"><b>In simple words:</b> Multiplying matrices is expensive. The order in which we multiply them changes the cost a lot. Dynamic programming (DP) compares every possible place to split the chain, saves the cheapest result for each part, and builds the cheapest full order.</div>
+
+      <h4>Why we do this</h4>
+      <p>The final product is the same for every order, because matrix multiplication is associative. Associative means <code>(AB)C = A(BC)</code>: changing the brackets does not change the product. Only the number of scalar multiplications changes. A smart order can save a huge amount of work, so we let DP find it.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Matrix</b> — a grid of numbers. A matrix with p rows and q columns is called <code>p×q</code>.</li>
+        <li><b>Scalar multiplication</b> — one number-times-number multiplication inside matrix multiplication. We count these.</li>
+        <li><b>Chain</b> — matrices written side by side, such as <code>A<sub>1</sub>A<sub>2</sub>A<sub>3</sub></code>.</li>
+        <li><b>Parenthesisation</b> — the order of multiplication, shown by brackets. <code>(A<sub>1</sub>A<sub>2</sub>)A<sub>3</sub></code> and <code>A<sub>1</sub>(A<sub>2</sub>A<sub>3</sub>)</code> are different parenthesizations.</li>
+        <li><b><code>m[i][j]</code></b> — the minimum cost to multiply matrices i through j.</li>
+        <li><b><code>s[i][j]</code></b> — the split point k that gives that minimum. It is used to rebuild the brackets.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> you must combine four parcels into one. Combining two small parcels is cheap; combining two huge parcels is expensive. The cheapest order of combining depends on the sizes, so you plan the order before you start.</div>
+
       <h4>Problem (book §3.9)</h4>
-      <p>Given n matrices A<sub>1</sub>, A<sub>2</sub>, …, A<sub>n</sub> with dimensions <code>P<sub>1</sub>×P<sub>2</sub>, P<sub>2</sub>×P<sub>3</sub>, …, P<sub>n</sub>×P<sub>n+1</sub></code>, compute the product A<sub>1</sub>A<sub>2</sub>…A<sub>n</sub> using the <b>minimum number of scalar multiplications</b>. Matrix multiplication is associative, so the answer is the best parenthesisation.</p>
-      <p>Multiplying a <code>p×q</code> matrix by a <code>q×r</code> matrix costs <code>p·q·r</code> scalar multiplications. The book's 3-matrix example: (5×4)(4×6)(6×2) costs 180 as (A1A2)A3 but only 88 as A1(A2A3).</p>
+      <p>Given n matrices A<sub>1</sub>, A<sub>2</sub>, …, A<sub>n</sub> with dimensions <code>P<sub>1</sub>×P<sub>2</sub>, P<sub>2</sub>×P<sub>3</sub>, …, P<sub>n</sub>×P<sub>n+1</sub></code>, compute the product A<sub>1</sub>A<sub>2</sub>…A<sub>n</sub> using the <b>minimum number of scalar multiplications</b>.</p>
+      <p>Multiplying a <code>p×q</code> matrix by a <code>q×r</code> matrix costs <code>p·q·r</code> scalar multiplications. The book's 3-matrix example: (5×4)(4×6)(6×2) costs 180 as (A1A2)A3 but only 88 as A1(A2A3). <b>Same matrices, different cost</b> — that is why order matters.</p>
 
       <h4>Recurrence (book Step 2)</h4>
-      <div class="math">m[i, i] = 0<br>
+<div class="math">m[i, i] = 0<br>
       m[i, j] = min<sub>i ≤ k &lt; j</sub> { m[i, k] + m[k+1, j] + P<sub>i−1</sub> · P<sub>k</sub> · P<sub>j</sub> }</div>
-      <p><code>m[i][j]</code> = minimum cost for A<sub>i</sub>…A<sub>j</sub>; <code>s[i][j]</code> = the split k that gives it.</p>
+      <p><b>What this means:</b> <code>m[i][i] = 0</code> because one matrix needs no multiplication. For a chain i…j, try every split k. The left part i…k and right part k+1…j are already solved. The final join costs <code>P<sub>i−1</sub> · P<sub>k</sub> · P<sub>j</sub></code>.</p>
+      <p>Here <code>m[i][j]</code> = minimum cost for A<sub>i</sub>…A<sub>j</sub>; <code>s[i][j]</code> = the split k that gives it.</p>
 
       <h4>Algorithm Matrix_chain (book §3.9.1)</h4>
 <pre><code>Matrix_chain(P[0..n])
@@ -757,13 +842,14 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         }
     return m[1, n];
 }</code></pre>
-      <p><b>Time O(n³)</b>, space O(n²) — the book's analysis: three nested loops.</p>
+      <p><b>How to read the code:</b> the outer loop fixes the chain length. The middle loop fixes the start i. The inner loop tries every split k. <code>q</code> is the cost of one split, and the smallest <code>q</code> is stored with its split.</p>
 
-      <h4>PYQ instance — 6 matrices</h4>
-      <p>Dimensions: A1 10×20, A2 20×5, A3 5×15, A4 15×50, A5 50×10, A6 10×15, so <code>P = [10, 20, 5, 15, 50, 10, 15]</code>.</p>
+      <h4>Step-by-step for the PYQ instance</h4>
+      <p>Dimensions: A1 10×20, A2 20×5, A3 5×15, A4 15×50, A5 50×10, A6 10×15, so <code>P = [10, 20, 5, 15, 50, 10, 15]</code>. There are 6 matrices, so P has 6 + 1 = 7 numbers. <i>Why:</i> neighbouring matrices share one dimension.</p>
 
       <h4>Step 1 — chains of length 2</h4>
-      <div class="tbl-wrap">
+      <p>A chain of two matrices has only one split, so the cost is just <code>p·q·r</code>.</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>Chain</th><th>Calculation</th><th>m[i][j]</th><th>s</th></tr></thead>
         <tbody>
@@ -775,15 +861,19 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> for example, A1A2 is (10×20)(20×5), so the result is 10×5 and the cost is 10·20·5 = 1000. The middle dimension 20 is used and then disappears.</p>
 
       <h4>Step 2 — chains of length 3 (sample)</h4>
+      <p>Now there are two possible splits: after the first matrix, or after the second. Try both and keep the smaller.</p>
       <p><b>A1A2A3:</b> k=1 → 0 + 1500 + 10·20·15 = 4500; k=2 → 1000 + 0 + 10·5·15 = 1750 → <b>m=1750, s=2</b>.</p>
       <p><b>A2A3A4:</b> k=2 → 0 + 3750 + 20·5·50 = 8750; k=3 → 1500 + 0 + 20·15·50 = 16500 → <b>m=8750, s=2</b>.</p>
       <p><b>A3A4A5:</b> k=3 → 0 + 7500 + 5·15·10 = 8250; k=4 → 3750 + 0 + 5·50·10 = 6250 → <b>m=6250, s=4</b>.</p>
       <p><b>A4A5A6:</b> k=4 → 0 + 7500 + 15·50·15 = 18750; k=5 → 7500 + 0 + 15·10·15 = 9750 → <b>m=9750, s=5</b>.</p>
+      <p><b>Why k=2 wins for A1A2A3:</b> it first forms A1A2 (cost 1000). The final join with A3 is small: 10·5·15 = 750, so the total is 1750. The k=1 order first forms A2A3 (1500), then joins A1 to a 20×15 result at cost 10·20·15 = 3000, giving 4500.</p>
 
       <h4>Step 3 — complete m table</h4>
-      <div class="tbl-wrap">
+      <p>Each cell is filled from smaller chains that are already computed. Read the table by increasing chain length, not row by row.</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>i \ j</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr></thead>
         <tbody>
@@ -796,9 +886,11 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> look at the top-right cell <code>m[1][6] = 8750</code>. It is the cheapest cost for all six matrices, so it is the final answer.</p>
 
       <h4>Step 4 — split table s</h4>
-      <div class="tbl-wrap">
+      <p>The s table stores the winning split for each cell. It is the “recipe” used to rebuild the brackets.</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>i \ j</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr></thead>
         <tbody>
@@ -812,16 +904,24 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       </div>
 
       <h4>Step 5 — build the parenthesisation</h4>
-      <p>s[1][6] = 2 → (A1A2)(A3A4A5A6). s[3][6] = 5 → (A3A4A5)(A6). s[3][5] = 4 → ((A3A4)A5).</p>
-      <div class="math"><b>Optimal order:</b> ( A1 A2 ) ( ( ( A3 A4 ) A5 ) A6 )<br>
+      <ol>
+        <li><b>Start at s[1][6] = 2.</b> Split the chain into A1A2 and A3…A6. <i>Why:</i> the last multiplication joins these two parts.</li>
+        <li><b>The left part A1A2 is already a two-matrix chain.</b> Write it as (A1A2). <i>Why:</i> there is only one way to multiply two matrices.</li>
+        <li><b>Look at the right part A3…A6.</b> s[3][6] = 5, so split it as A3…A5 and A6. <i>Why:</i> repeat the same rule on each part.</li>
+        <li><b>Continue on A3…A5.</b> s[3][5] = 4, so split it as A3A4 and A5.</li>
+        <li><b>Build upward.</b> A3A4 becomes (A3A4), then ((A3A4)A5), then (((A3A4)A5)A6), and finally (A1A2)(((A3A4)A5)A6). <i>Why:</i> each stored split adds one pair of brackets.</li>
+      </ol>
+      <p>Following these three splits gives the final order below.</p>
+<div class="math"><b>Optimal order:</b> ( A1 A2 ) ( ( ( A3 A4 ) A5 ) A6 )<br>
       <b>Minimum scalar multiplications = 8750</b></div>
+      <p><b>What this means:</b> the cheapest order first multiplies A1A2 and A3A4. It then multiplies that A3A4 result by A5, then by A6. Finally it multiplies the A1A2 result with the rest. The total cost is 8750 scalar multiplications.</p>
 
       <h4>Book's solved example (Example 3.9.1)</h4>
       <p>Six matrices 30×35, 35×15, 15×5, 5×10, 10×20, 20×25 → P = [30, 35, 15, 5, 10, 20, 25]. The book's table gives m[1][6] = <b>15125</b> and s[1][6] = 3, so the order is (A1 (A2 A3)) ((A4 A5) A6).</p>
 
       <h4>Second PYQ instance (2024 May) — orders 3×5, 5×4, 4×2, 2×4</h4>
       <p><code>P = [3, 5, 4, 2, 4]</code>, n = 4.</p>
-      <div class="tbl-wrap">
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>i \ j</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
         <tbody>
@@ -833,17 +933,369 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       </table>
       </div>
       <p>s[1][4] = 3 → (A1A2A3)A4; s[1][3] = 1 → (A1(A2A3))A4.</p>
-      <div class="math"><b>Optimal order:</b> ( A1 ( A2 A3 ) ) A4 &nbsp;&nbsp;|&nbsp;&nbsp; <b>Cost = 94</b></div>
+<div class="math"><b>Optimal order:</b> ( A1 ( A2 A3 ) ) A4   |   <b>Cost = 94</b></div>
       <p>Check: A2A3 = 5·4·2 = 40; A1(A2A3) = 3·5·2 = 30 → 70; ×A4 = 3·2·4 = 24 → <b>94</b>.</p>
+
+      <div class="confuse"><b>Common confusion:</b> n matrices need <b>n + 1</b> dimensions in P. The final join cost uses <code>P<sub>i−1</sub> · P<sub>k</sub> · P<sub>j</sub></code>, not <code>P<sub>i</sub> · P<sub>j</sub></code>. Also, <code>s[i][j]</code> is a split point, not a multiplication order by itself; you must follow it recursively to get the brackets.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.9 Chain Matrix Multiplication, p. 3-76 – 3-89</p>
       
     </div>
   </div>
 </section>
 
-<!-- ================= 3.7 ================= -->
+<section class="card" id="s38">
+  <div class="prio">Priority 5 · ★★ 2× repeated</div><h2>3.8 0/1 Knapsack using dynamic programming <span class="b rep" style="font-size:12px;vertical-align:middle">★★ 2×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Find the optimal solution of the 0/1 knapsack problem using dynamic programming.<br><span class="small">Items (weight, profit): (2,12), (1,10), (3,20), (2,15). Capacity = 5.</span></p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q1(b) [9] · 2025 May Q2(b) [10 — capacity 7, items (1,1),(3,4),(4,5),(5,7)]</p>
+
+<div class="simple"><b>In simple words:</b> For each item, you have two choices: take it or skip it. Dynamic programming (DP) records the best profit for every item count and every capacity. Then it reads the table backwards to find which items were taken.</div>
+
+      <h4>Why we do this</h4>
+      <p>Greedy can fail here because a heavy high-value item may block two lighter items that together earn more. DP avoids that mistake by comparing “take” and “skip” for every capacity.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>State</b> — one table cell, described by two numbers: which items are allowed and how much capacity is left.</li>
+        <li><b><code>table[i][j]</code></b> — the best profit using the first i items with capacity j.</li>
+        <li><b>Skip</b> — do not take item i. The answer is the best profit without it.</li>
+        <li><b>Take</b> — include item i. It adds <code>p<sub>i</sub></code> profit and uses <code>w<sub>i</sub></code> capacity.</li>
+        <li><b>Backtracking</b> — walking back through the table to list the chosen items.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> you keep a notebook with one page per number of items and one column per remaining bag space. Each cell says “best profit so far”. For a new item you compare the old best with “take it plus the best using the space left”.</div>
+
+      <h4>Problem and recurrence (book §3.8)</h4>
+      <p>Given n objects, object i has weight <code>w<sub>i</sub></code> and profit <code>p<sub>i</sub></code>; the knapsack capacity is W. Choose <code>x<sub>i</sub> ∈ {0,1}</code> to maximise <code>Σp<sub>i</sub>x<sub>i</sub></code> subject to <code>Σw<sub>i</sub>x<sub>i</sub> ≤ W</code>.</p>
+<div class="math">table[i, j] = max{ table[i−1, j],   p<sub>i</sub> + table[i−1, j−w<sub>i</sub>] }   if j ≥ w<sub>i</sub><br>
+      table[i, j] = table[i−1, j]   if j &lt; w<sub>i</sub><br>
+      table[0, j] = 0,   table[i, 0] = 0</div>
+      <p><b>What this means:</b> for each cell, take the better of two options. Option 1 is skip: copy the row above. Option 2 is take: add this item's profit to the best answer for the remaining capacity, using only earlier items. If the item is heavier than the current capacity, only skip is possible.</p>
+      <p><code>table[i, j]</code> = best profit using the first i objects with capacity j. The answer is <code>table[n, W]</code>. To recover the items, compare <code>table[i, k]</code> with <code>table[i−1, k]</code>: if different, take item i and set <code>k = k − w<sub>i</sub></code>; otherwise skip item i and set <code>i = i − 1</code>.</p>
+
+      <h4>Algorithm Knapsack01 (book's table method)</h4>
+<pre><code>Knapsack01(w[], p[], n, W)
+{
+    for j = 0 to W do table[0][j] = 0;
+    for i = 0 to n do table[i][0] = 0;
+
+    for i = 1 to n do
+        for j = 0 to W do
+        {
+            if (w[i] &gt; j) then
+                table[i][j] = table[i−1][j];
+            else
+                table[i][j] = max(table[i−1][j],
+                                  p[i] + table[i−1][j−w[i]]);
+        }
+    return table[n][W];
+}</code></pre>
+      <p><b>How to read the code:</b> row 0 means “no items”, so every profit is 0. Column 0 means “no capacity”, so every profit is 0. For each item and each capacity, the code chooses the better of skip and take.</p>
+      <p><b>Time O(nW)</b>, space O(nW). There are n rows and W + 1 columns, and each cell does constant work.</p>
+
+      <h4>Step-by-step method</h4>
+      <ol>
+        <li><b>Make row 0 and column 0 zero.</b> <i>Why:</i> no items means no profit; no capacity means no item fits.</li>
+        <li><b>Visit items one by one, from item 1 to item n.</b> <i>Why:</i> each row builds on the row above.</li>
+        <li><b>For each capacity j, check whether the item fits.</b> If <code>w<sub>i</sub> &gt; j</code>, it cannot be taken. <i>Why:</i> the bag is too small.</li>
+        <li><b>If it fits, compare skip and take.</b> Skip copies the cell above. Take adds <code>p<sub>i</sub></code> to the cell at <code>j − w<sub>i</sub></code>. <i>Why:</i> these are the only two choices.</li>
+        <li><b>Store the larger value.</b> <i>Why:</i> we want the best profit, not just any profit.</li>
+        <li><b>Read <code>table[n][W]</code> for the answer.</b> Then backtrack to list the chosen items. <i>Why:</i> the value alone does not say which items were taken.</li>
+      </ol>
+
+      <h4>Solved PYQ instance 1 — capacity 5</h4>
+      <p>Items (weight, profit): 1=(2,12), 2=(1,10), 3=(3,20), 4=(2,15), W = 5.</p>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>i \ w</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+        <tbody>
+          <tr><th>0</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr><th>1 (2,12)</th><td>0</td><td>0</td><td>12</td><td>12</td><td>12</td><td>12</td></tr>
+          <tr><th>2 (1,10)</th><td>0</td><td>10</td><td>12</td><td>22</td><td>22</td><td>22</td></tr>
+          <tr><th>3 (3,20)</th><td>0</td><td>10</td><td>12</td><td>22</td><td>30</td><td>32</td></tr>
+          <tr><th>4 (2,15)</th><td>0</td><td>10</td><td>15</td><td>25</td><td>30</td><td><b>37</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Worked cell, row 3, capacity 5:</b> skip gives table[2][5] = 22. Take gives 20 + table[2][2] = 20 + 12 = 32. The larger is 32, so table[3][5] = 32. <i>Why table[2][2]:</i> item 3 uses 3 capacity, leaving 2, and we may use only earlier items.</p>
+      <p><b>Final cell, row 4, capacity 5:</b> skip gives 32. Take gives 15 + table[3][3] = 15 + 22 = 37. So the best profit is 37.</p>
+      <p><b>Backtracking:</b> table[4][5]=37 ≠ table[3][5]=32 → take item 4, capacity 3. table[3][3]=22 = table[2][3]=22 → skip item 3. table[2][3]=22 ≠ table[1][3]=12 → take item 2, capacity 2. table[1][2]=12 ≠ table[0][2]=0 → take item 1.</p>
+<div class="math"><b>Selected items:</b> 1, 2, 4  |  weight 2+1+2 = 5  |  <b>Maximum profit = 12+10+15 = 37</b></div>
+      <p><b>What this means:</b> items 1, 2 and 4 are chosen. Their weights are 2 + 1 + 2 = 5, exactly the capacity, and their profits add to 37.</p>
+
+      <h4>Solved PYQ instance 2 — capacity 7 (2025 May)</h4>
+      <p>Items A=(1,1), B=(3,4), C=(4,5), D=(5,7), W = 7.</p>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>i \ w</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+        <tbody>
+          <tr><th>0</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr><th>A (1,1)</th><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+          <tr><th>B (3,4)</th><td>0</td><td>1</td><td>1</td><td>4</td><td>5</td><td>5</td><td>5</td><td>5</td></tr>
+          <tr><th>C (4,5)</th><td>0</td><td>1</td><td>1</td><td>4</td><td>5</td><td>6</td><td>6</td><td><b>9</b></td></tr>
+          <tr><th>D (5,7)</th><td>0</td><td>1</td><td>1</td><td>4</td><td>5</td><td>7</td><td>8</td><td>9</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Backtracking:</b> table[4][7]=9 = table[3][7]=9 → skip D. table[3][7]=9 ≠ table[2][7]=5 → take C, capacity 3. table[2][3]=4 ≠ table[1][3]=1 → take B, capacity 0. table[1][0]=0 → skip A.</p>
+<div class="math"><b>Selected items:</b> B, C  |  weight 3+4 = 7  |  <b>Maximum profit = 4+5 = 9</b></div>
+      <p><b>What this means:</b> B and C are chosen. Their weights are 3 + 4 = 7, exactly the capacity, and their profits add to 9.</p>
+
+      <h4>Book's solved examples</h4>
+      <p><b>Example 3.8.1:</b> n = 4, (w, p) = (2,3), (3,4), (4,5), (5,6), W = 5. The book's final table gives <b>7</b>; backtracking selects items <b>1 and 2</b> (weight 2+3 = 5, profit 3+4 = 7).</p>
+      <p><b>Example 3.8.2:</b> n = 3, w = (4,6,8), p = (10,12,15), W = 10 → <b>22</b>, items 1 and 2.</p>
+
+      <div class="warn"><b>Why not greedy:</b> in the second PYQ instance the ratio order is D(1.4), B(1.33), C(1.25), A(1). Greedy takes D then A (profit 8), but the optimal set is B+C (profit 9). This is exactly why the book uses a DP table for 0/1 knapsack.</div>
+
+      <div class="confuse"><b>Common confusion:</b> <code>table[i][j]</code> means the first <b>i items</b>, not item i alone. When taking item i, use row <code>i−1</code>, not row i; using row i would allow the same item to be taken twice. In backtracking, compare with the row <b>above</b>: equal means the item was skipped.</div>
+      <p class="booksrc">📘 <b>Book:</b> §3.8 The 0/1 Knapsack, p. 3-62 – 3-76</p>
+      
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s32">
+  <div class="prio">Priority 6 · ★ 1× repeated</div><h2>3.2 Fractional knapsack &amp; greedy knapsack</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Give a mathematical formulation for: (i) Fractional Knapsack problem (ii) 0/1 Knapsack problem.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q1(a) [8]</p>
+
+<div class="simple"><b>In simple words:</b> Both problems ask “which items should go into a bag of limited capacity to earn the most profit?”. In fractional knapsack you may cut an item and take a part. In 0/1 knapsack you must take the whole item or leave it.</div>
+
+      <h4>Why we do this</h4>
+      <p>A formula removes confusion. It states exactly what we maximise, what limits us, and what values the variables may take. Once the formula is clear, the correct algorithm choice becomes obvious.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Objective function</b> — the quantity we want to make as large as possible. Here it is total profit.</li>
+        <li><b>Constraint</b> — a rule the answer must obey. Here it is the weight limit.</li>
+        <li><b>Feasible solution</b> — any selection that obeys every constraint.</li>
+        <li><b>Optimal solution</b> — the feasible selection with the best objective value (book §3.1.1).</li>
+        <li><b>Divisible</b> — an item can be split into parts, like sugar.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> fractional knapsack is buying sugar by weight — 2.5 kg is fine. 0/1 knapsack is buying a sealed 5 kg packet — you take the whole packet or none.</div>
+
+      <p>Let there be n items. Item i has weight <code>w<sub>i</sub> &gt; 0</code> and profit <code>p<sub>i</sub> &gt; 0</code>. The capacity is <code>m</code> (the book uses W). <code>x<sub>i</sub></code> is the fraction of item i selected.</p>
+
+      <h4>How to write the formulation (4 steps)</h4>
+      <ol>
+        <li><b>Name the decision variable.</b> <code>x<sub>i</sub></code> says how much of item i we take. <i>Why:</i> the answer must be written as numbers we can choose.</li>
+        <li><b>Write the objective.</b> Maximise <code>Z = Σ p<sub>i</sub>x<sub>i</sub></code>. <i>Why:</i> profit grows with the amount taken.</li>
+        <li><b>Write the capacity constraint.</b> <code>Σ w<sub>i</sub>x<sub>i</sub> ≤ m</code>. <i>Why:</i> the bag cannot hold more than its capacity.</li>
+        <li><b>Write the allowed values.</b> <code>0 ≤ x<sub>i</sub> ≤ 1</code> for fractional, <code>x<sub>i</sub> = 0 or 1</code> for 0/1. <i>Why:</i> this one line is the only real difference between the two problems.</li>
+      </ol>
+
+      <h4>(i) Fractional knapsack (book §3.2)</h4>
+<div class="math">Maximize  Z = Σ<sub>i=1..n</sub> p<sub>i</sub> x<sub>i</sub><br>
+      Subject to  Σ<sub>i=1..n</sub> w<sub>i</sub> x<sub>i</sub> ≤ m<br>
+      and  0 ≤ x<sub>i</sub> ≤ 1    for i = 1, 2, …, n</div>
+      <p><b>What this means:</b> “Maximise” sets the goal. “Subject to” lists the limits. The last line allows a fraction, so the bag can be filled exactly.</p>
+      <p>Items are <b>divisible</b>: a fraction of an item may be placed in the knapsack. The greedy algorithm sorts by <code>p<sub>i</sub>/w<sub>i</sub></code> and takes items in that order, taking a fraction of the last item if needed.</p>
+
+      <h4>(ii) 0/1 knapsack (book §3.8)</h4>
+<div class="math">Maximize  Z = Σ<sub>i=1..n</sub> p<sub>i</sub> x<sub>i</sub><br>
+      Subject to  Σ<sub>i=1..n</sub> w<sub>i</sub> x<sub>i</sub> ≤ W<br>
+      and  x<sub>i</sub> = 0 or 1    for i = 1, 2, …, n</div>
+      <p><b>What this means:</b> <code>x<sub>i</sub> = 1</code> means “take the whole item”; <code>x<sub>i</sub> = 0</code> means “leave it”. There is no middle value.</p>
+      <p>Each item is either taken completely or rejected. The book states that the objective is the <b>maximum profit earned</b>; because of the 0/1 restriction the ratio rule can fail, so dynamic programming is used.</p>
+
+      <div class="note"><b>Key difference:</b> in fractional knapsack the last item may be split (<code>0 ≤ x<sub>i</sub> ≤ 1</code>); in 0/1 knapsack only <code>0</code> or <code>1</code> is allowed. That single change is why fractional knapsack is greedy-solvable and 0/1 knapsack needs DP.</div>
+
+      <div class="confuse"><b>Common confusion:</b> students write <code>x<sub>i</sub> ≤ 1</code> for 0/1 knapsack, or allow fractions in the 0/1 formula. Match the allowed values to the problem. Also, <code>≤ m</code> is correct — the bag does not have to be filled exactly.</div>
+      <p class="booksrc">📘 <b>Book:</b> §3.2 Knapsack Problem, p. 3-4; §3.8 The 0/1 Knapsack, p. 3-62</p>
+      
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Find an optimal solution for the knapsack instance using greedy method. n = 5, capacity m = 100.<br><span class="small">Objects 01–05, Weight 20/30/66/40/60, Profit 10/20/30/40/50</span></p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q1(b) [8]</p>
+
+<div class="simple"><b>In simple words:</b> Put the items with the best profit per kg into the bag first. Keep going until the bag is full. If the next item is too big, take only the part that fits.</div>
+
+      <h4>Why we do this</h4>
+      <p>The bag has a fixed capacity, so every kg must earn as much as possible. Profit per kg lets us compare a light costly item with a heavy cheap one in a fair way.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Capacity</b> — the maximum total weight the bag can hold.</li>
+        <li><b>Profit/weight ratio</b> — profit earned by one unit of weight, <code>p/w</code>.</li>
+        <li><b>Fraction</b> — a part of an item, such as half of it. Only allowed in fractional knapsack.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> you fill a jar with the most valuable grain first. If the jar has a little space left, you pour in part of the next grain. You do not waste space.</div>
+
+      <h4>Step-by-step method</h4>
+      <ol>
+        <li><b>Compute <code>p/w</code> for every item.</b> <i>Why:</i> this compares items fairly, no matter how heavy they are.</li>
+        <li><b>Sort from largest ratio to smallest.</b> <i>Why:</i> the best value per kg should get the first chance at the space.</li>
+        <li><b>Take items in that order while they fit.</b> <i>Why:</i> each full item uses capacity and adds its full profit.</li>
+        <li><b>If the next item is too big, take only the fraction that fills the bag.</b> <i>Why:</i> fractional knapsack allows part of an item, so no space is wasted.</li>
+        <li><b>Stop when the bag is full.</b> <i>Why:</i> no more weight can be added.</li>
+      </ol>
+
+      <h4>Step 1 — write the instance</h4>
+      <p>n = 5, capacity m = 100. The book's Example 3.2.2 uses exactly this data. Copy the profits and weights carefully before doing any maths.</p>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Object</th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>x5</th></tr></thead>
+        <tbody>
+          <tr><td>Profit p</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td></tr>
+          <tr><td>Weight w</td><td>20</td><td>30</td><td>66</td><td>40</td><td>60</td></tr>
+          <tr><td>p/w</td><td>1/2</td><td>2/3</td><td>5/11</td><td>1</td><td>5/6</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Step 2 — apply the greedy rule (maximum p/w first)</h4>
+      <p>Divide each profit by its weight. The ratio order is <b>x4 (1) → x5 (5/6) → x2 (2/3) → x1 (1/2) → x3 (5/11)</b>.</p>
+      <p><i>Why sort:</i> the item with the highest ratio gives the most profit for each kg, so it should get space first.</p>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Selected object</th><th>Profit</th><th>Weight</th><th>Remaining weight</th></tr></thead>
+        <tbody>
+          <tr><td>x4</td><td>40</td><td>40</td><td>100 − 40 = 60</td></tr>
+          <tr><td>x5</td><td>50</td><td>60</td><td>60 − 60 = 0</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Reading the table:</b> after x4 the bag has 60 kg free. x5 uses exactly those 60 kg. x2, x1 and x3 are not selected because the knapsack is already full.</p>
+
+      <h4>Step 3 — result</h4>
+<div class="math">x = (0, 0, 0, 1, 1)   →   total weight = 40 + 60 = 100 ≤ 100<br>
+      <b>Maximum profit = 40 + 50 = 90</b></div>
+      <p><b>What this means:</b> the vector says items 4 and 5 are fully taken. The total weight is exactly 100, so the answer is feasible. The profit is 90.</p>
+      <p>Sorting takes <b>O(n log n)</b>; the greedy scan takes <b>O(n)</b>. The book also solves the same instance by “maximum profit first” and “minimum weight first”: maximum profit gives the same 90, while minimum weight gives 78.33 because it ends by taking 1/6 of x5. The ratio method is the standard greedy rule and gives the optimal 90.</p>
+
+      <div class="confuse"><b>Common confusion:</b> do not sort by profit alone or by weight alone — sort by the <b>ratio</b>. In fractional knapsack, do not stop when an item is too big; take the fraction that fits. Here the bag fills exactly, so no fraction is needed, but that is luck, not a rule.</div>
+      <div class="tip"><b>Exam point:</b> always show the <code>p/w</code> column and the remaining-capacity column. The book's three-method table is exactly what the examiner expects for “using greedy method”.</div>
+      <p class="booksrc">📘 <b>Book:</b> §3.2 Knapsack Problem, Example 3.2.2, p. 3-6 – 3-7</p>
+      
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s34">
+  <div class="prio">Priority 7 · ★ 1× repeated</div><h2>3.4 Activity selection problem</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Consider seven activities with start and finish times. Using the greedy strategy, compute an execution schedule with the maximum number of non-conflicting activities.<br><span class="small">A(1,3) B(3,4) C(2,5) D(0,7) E(5,9) F(8,10) G(11,12)</span></p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q1(b) [9]</p>
+
+<div class="simple"><b>In simple words:</b> Pick the activity that finishes earliest. Then pick the next activity that starts after the chosen one ends. Repeat. This fits the largest number of activities into one room.</div>
+
+      <h4>Why we do this</h4>
+      <p>We have one resource, such as a lecture hall or a CPU. Two activities cannot run at the same time. Finishing early frees the resource sooner, so more activities can follow.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Activity</b> — one task with a start time <code>S<sub>i</sub></code> and a finish time <code>F<sub>i</sub></code>.</li>
+        <li><b>Compatible</b> — two activities do not overlap. The next one may start exactly when the previous one ends.</li>
+        <li><b>Maximum-size subset</b> — the largest possible number of activities, not the largest total duration.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> you manage one meeting room. You accept the meeting that ends soonest, so the room becomes free for the next group. A long meeting that blocks the whole morning is a bad first choice, even if it is important.</div>
+
+      <h4>Definition (book §3.4)</h4>
+      <p>Given a resource such as a CPU or a lecture hall and n activities, activity i has start time <code>S<sub>i</sub></code> and finish time <code>F<sub>i</sub></code>. The activity-selection problem is to find a <b>maximum-size subset of mutually compatible activities</b> — that is, maximise the number of lectures in the hall or tasks assigned to the CPU.</p>
+
+      <h4>Greedy rule</h4>
+      <p>Sort the activities by <b>finish time</b> in non-decreasing order. Select the first activity. Then repeatedly select the next activity whose <code>S<sub>i</sub> ≥ F<sub>last</sub></code>. Choosing the earliest finish leaves the maximum room for the remaining activities.</p>
+
+      <h4>Algorithm Greedy_Act_sel (book §3.4)</h4>
+<pre><code>Algorithm Greedy_Act_sel(S, F)
+{
+    n = length[S];
+    A = {a1};                 // select the first activity
+    i = 1;                    // last selected activity
+
+    for m = 2 to n do
+    {
+        if (S[m] ≥ F[i]) then // compatible with the last choice
+        {
+            A = A ∪ {a_m};
+            i = m;
+        }
+    }
+    return A;
+}</code></pre>
+      <p><b>How to read the code:</b> <code>A</code> is the chosen set. <code>i</code> remembers the last chosen activity. The loop checks each later activity <code>m</code>. If it starts at or after the last finish, it is compatible, so it is added and becomes the new last choice.</p>
+
+      <h4>Step 1 — sort the PYQ activities by finish time</h4>
+      <p>The data is already in finish-time order: A(3), B(4), C(5), D(7), E(9), F(10), G(12). <i>Why sort:</i> the greedy rule always looks at the activity that ends next.</p>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Activity</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th></tr></thead>
+        <tbody>
+          <tr><td>Start</td><td>1</td><td>3</td><td>2</td><td>0</td><td>5</td><td>8</td><td>11</td></tr>
+          <tr><td>Finish</td><td>3</td><td>4</td><td>5</td><td>7</td><td>9</td><td>10</td><td>12</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Step 2 — greedy selection</h4>
+<div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Activity</th><th>Interval</th><th>Last finish</th><th>Decision</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>A</td><td>1–3</td><td>—</td><td>✅ select</td></tr>
+          <tr><td>2</td><td>B</td><td>3–4</td><td>3</td><td>✅ select (3 ≥ 3)</td></tr>
+          <tr><td>3</td><td>C</td><td>2–5</td><td>4</td><td>❌ overlap</td></tr>
+          <tr><td>4</td><td>D</td><td>0–7</td><td>4</td><td>❌ overlap</td></tr>
+          <tr><td>5</td><td>E</td><td>5–9</td><td>4</td><td>✅ select (5 ≥ 4)</td></tr>
+          <tr><td>6</td><td>F</td><td>8–10</td><td>9</td><td>❌ overlap</td></tr>
+          <tr><td>7</td><td>G</td><td>11–12</td><td>9</td><td>✅ select (11 ≥ 9)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Why each decision:</b></p>
+      <ol>
+        <li><b>A (1–3):</b> first activity, so select it. Last finish becomes 3.</li>
+        <li><b>B (3–4):</b> starts at 3, and 3 ≥ 3, so it is compatible. Select. Last finish becomes 4.</li>
+        <li><b>C (2–5):</b> starts at 2, which is before 4, so it overlaps. Skip.</li>
+        <li><b>D (0–7):</b> starts at 0, which is before 4, so it overlaps. Skip.</li>
+        <li><b>E (5–9):</b> starts at 5, and 5 ≥ 4, so it is compatible. Select. Last finish becomes 9.</li>
+        <li><b>F (8–10):</b> starts at 8, which is before 9, so it overlaps. Skip.</li>
+        <li><b>G (11–12):</b> starts at 11, and 11 ≥ 9, so it is compatible. Select.</li>
+      </ol>
+<div class="math"><b>Optimal schedule:</b> A → B → E → G   |   <b>Maximum activities = 4</b><br>
+      Time = O(n log n) for sorting + O(n) scan = <b>O(n log n)</b></div>
+      <p><b>What this means:</b> four activities fit: A, B, E, G. The book proves that earliest-finish is optimal, so 4 is the maximum for this data.</p>
+
+      <h4>Book's solved example (Example 3.4.1)</h4>
+      <p>For 11 activities with s = (1, 3, 0, 5, 3, 5, 6, 8, 8, 2, 14) and f = (4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16), the book's greedy algorithm selects a1 (f = 4), then a4 (s = 5 ≥ 4), then a8 (s = 8 ≥ 7), then a11 (s = 14 ≥ 11).</p>
+<div class="math"><b>Book's answer:</b> {a1, a4, a8, a11} — 4 activities</div>
+      <p><b>What this means:</b> at each step the next chosen activity starts after the previous one ends. The count is 4.</p>
+
+      <div class="confuse"><b>Common confusion:</b> do not sort by start time, by duration, or by “most important”. Sort by <b>finish time</b>. Back-to-back is allowed: if one activity ends at 3 and the next starts at 3, they do not conflict. Also, the goal is the <b>count</b> of activities, not total hours used.</div>
+      <div class="note"><b>Why earliest finish works:</b> the book proves that the greedy choice is part of some optimal solution (greedy-choice property) and that the remaining problem has the same form (optimal substructure).</div>
+      <p class="booksrc">📘 <b>Book:</b> §3.4 Activity Selection Problem, p. 3-23 – 3-26</p>
+      
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s37">
-  <h2>3.7 Optimal binary search tree (OBST)</h2>
+  <div class="prio">Priority 8 · ★ 1× repeated</div><h2>3.7 Optimal binary search tree (OBST)</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -852,6 +1304,27 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     </div>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [10]</p>
+
+<div class="simple"><b>In simple words:</b> Put the words you search most often near the top of the tree. Then most searches finish after a few comparisons. Dynamic programming (DP) finds the arrangement with the smallest average search cost.</div>
+
+      <h4>Why we do this</h4>
+      <p>In a binary search tree, a key at depth d needs d + 1 comparisons. Common keys should sit shallow. Rare keys can sit deep. The best shape depends on the probabilities, so we calculate it instead of guessing.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Binary search tree (BST)</b> — a tree where every left key is smaller than the root and every right key is larger.</li>
+        <li><b>Root</b> — the top node of the tree. <b>Child</b> — a node directly below another node.</li>
+        <li><b>Depth</b> — the number of edges from the root down to a node. The root has depth 0.</li>
+        <li><b>Key</b> — the value we search for, such as A, B, C or D.</li>
+        <li><b>Probability <code>p(i)</code></b> — the chance that key i is searched. A larger value means the key is more common.</li>
+        <li><b>Successful search</b> — the key is found. <b>Unsuccessful search</b> — the key is absent.</li>
+        <li><b>Expected cost</b> — the average number of comparisons, weighted by how often each search happens.</li>
+        <li><b><code>W<sub>ij</sub></code></b> — the total probability weight of the keys in the range i…j.</li>
+        <li><b><code>C<sub>ij</sub></code></b> — the minimum cost for that range.</li>
+        <li><b><code>r<sub>ij</sub></code></b> — the root chosen for that range.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> your contacts app shows favourite people at the top. You reach them with one tap; rarely messaged people take more scrolling. OBST arranges keys the same way, with the most-searched key easiest to reach.</div>
 
       <h4>Problem (book §3.7)</h4>
       <p>When we search words in a dictionary, frequently used words should be placed near the root so that the average search time is small. Such a tree — arranged to minimise the search cost — is an <b>optimal binary search tree (OBST)</b>.</p>
@@ -863,9 +1336,11 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         <li>Base: <code>C<sub>ii</sub> = 0</code>, <code>W<sub>ii</sub> = q<sub>i</sub></code>; a single node has <code>W<sub>i,i+1</sub> = q<sub>i</sub> + q<sub>i+1</sub> + p<sub>i+1</sub></code> and <code>C<sub>i,i+1</sub> = W<sub>i,i+1</sub></code>.</li>
         <li><code>W<sub>ij</sub> = W<sub>i,j−1</sub> + p<sub>j</sub> + q<sub>j</sub></code>.</li>
       </ul>
-      <div class="math">C<sub>ij</sub> = min<sub>i &lt; k ≤ j</sub> { C<sub>i,k−1</sub> + C<sub>k,j</sub> } + W<sub>ij</sub><br>
+<div class="math">C<sub>ij</sub> = min<sub>i &lt; k ≤ j</sub> { C<sub>i,k−1</sub> + C<sub>k,j</sub> } + W<sub>ij</sub><br>
       r<sub>ij</sub> = k that gives the minimum</div>
+      <p><b>What this means:</b> try each key k as the root. The left range and right range are solved separately. Add their costs, then add <code>W<sub>ij</sub></code> once.</p>
       <p>The cost formula comes from <code>C(T<sub>0n</sub>) = C(L) + C(R) + W</code>, where <code>W = p<sub>1</sub> + … + p<sub>n</sub> + q<sub>0</sub> + … + q<sub>n</sub></code>.</p>
+      <div class="note"><b>Why add W once:</b> when a subtree is attached under a new root, every node in it gains one extra comparison. Adding W adds one comparison for every key in the range, weighted by its probability.</div>
 
       <h4>Algorithm OBST (book §3.7.1)</h4>
 <pre><code>Algorithm OBST(p, q, n)
@@ -894,13 +1369,24 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         }
     return C[0][n], r;
 }</code></pre>
-      <p><b>Time O(n³)</b>, space O(n²). The book notes that Knuth's range restriction improves it to O(n²).</p>
+      <p><b>How to read the code:</b> first fill the empty ranges and single-key ranges. Then grow the range length m from 2 to n. For each range, try every key k as root, keep the cheapest, and store that k in <code>r</code>.</p>
+      <p><b>Time O(n³)</b>, space O(n²). There are O(n²) ranges, and each tries O(n) roots. The book notes that Knuth's range restriction improves it to O(n²).</p>
+
+      <h4>Step-by-step method</h4>
+      <ol>
+        <li><b>Set the base cases.</b> <code>C[i][i] = 0</code> and <code>W[i][i] = q<sub>i</sub></code>. <i>Why:</i> an empty range costs nothing.</li>
+        <li><b>Fill every one-key range.</b> Its cost equals its weight. <i>Why:</i> one comparison finds the only key.</li>
+        <li><b>Grow the range length from 2 to n.</b> For each range, try every key k as the root. <i>Why:</i> every possible root must be tested before choosing.</li>
+        <li><b>Add left cost + right cost + W.</b> Keep the smallest total and store its root. <i>Why:</i> this is the recurrence in action.</li>
+        <li><b>Read the root of the full range.</b> Split left and right, then repeat on each part. <i>Why:</i> the stored roots rebuild the tree.</li>
+      </ol>
 
       <h4>PYQ instance — 4 keys A, B, C, D</h4>
       <p>Keys in order A &lt; B &lt; C &lt; D with p = (0.1, 0.2, 0.4, 0.3). The PYQ gives only successful-search probabilities, so take all <code>q<sub>i</sub> = 0</code>. Then <code>W(i,j) = Σp</code> and the recurrence becomes the one used below (the tables use the equivalent 1-based form C(i,j) for keys i..j).</p>
 
       <h4>Step 1 — length 1 (single keys)</h4>
-      <div class="tbl-wrap">
+      <p>A single key is its own root. Its cost is just its probability, because one comparison finds it.</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>Range (i, j)</th><th>Key</th><th>W[i][j]</th><th>C[i][j]</th><th>r[i][j]</th></tr></thead>
         <tbody>
@@ -913,7 +1399,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       </div>
 
       <h4>Step 2 — length 2</h4>
-      <div class="tbl-wrap">
+      <p>For two keys there are two possible roots. Try both, add the weight, and keep the cheaper tree.</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>Range (i, j)</th><th>W</th><th>Cost with k = i+1</th><th>Cost with k = j</th><th>C (minimum)</th><th>Root</th></tr></thead>
         <tbody>
@@ -923,9 +1410,11 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
+      <p><b>Worked example, A and B:</b> root A gives cost 0 + 0.2 + 0.3 = 0.5; root B gives 0.1 + 0 + 0.3 = 0.4. Root B wins because B is more likely (0.2) than A (0.1), so B should be one level shallower.</p>
 
       <h4>Step 3 — length 3 and 4</h4>
-      <div class="tbl-wrap">
+      <p>Now each range tries every key inside it as root. The cost for a root is left cost + right cost + W.</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>Range (i, j)</th><th>W</th><th>Cost for each k</th><th>C</th><th>Root</th></tr></thead>
         <tbody>
@@ -935,111 +1424,31 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
+      <p><b>How to read a row:</b> in (0,3) = A,B,C, choosing C as root gives 0.4 + 0.7 = 1.1. The 0.4 is C(0,2), the cost of A,B; the 0.7 is W(0,3). For the full range (0,4), C wins with 1.7.</p>
 
       <h4>Step 4 — construct the tree</h4>
       <p>root[0][4] = C → <b>C is root</b>. Left range A,B → root B. Right range D → root D. B's left child is A.</p>
-      <div class="tree">            C (0.4)
+<div class="tree">            C (0.4)
           /        \
        B (0.2)    D (0.3)
        /
     A (0.1)</div>
-      <p><b>Verification of cost:</b> A depth 2 → 0.1×3 = 0.3; B depth 1 → 0.2×2 = 0.4; C depth 0 → 0.4×1 = 0.4; D depth 1 → 0.3×2 = 0.6. Total = <b>1.7</b>.</p>
-      <div class="math"><b>Optimal expected search cost = 1.7</b>, root = C, order A &lt; B &lt; C &lt; D preserved.</div>
+      <p><b>Verification of cost:</b> A is at depth 2, so it needs 3 comparisons → 0.1×3 = 0.3; B at depth 1 → 0.2×2 = 0.4; C at depth 0 → 0.4×1 = 0.4; D at depth 1 → 0.3×2 = 0.6. Total = <b>1.7</b>.</p>
+<div class="math"><b>Optimal expected search cost = 1.7</b>, root = C, order A &lt; B &lt; C &lt; D preserved.</div>
+      <p><b>What this means:</b> the tree keeps the sorted order A &lt; B &lt; C &lt; D, and the most likely key C is at the root. The expected number of comparisons for one search is 1.7.</p>
 
       <h4>Book's solved example (Example 3.7.1)</h4>
       <p>n = 4 keys do &lt; if &lt; int &lt; while, with p = (3, 3, 1, 1) and q = (2, 3, 1, 1, 1) (probabilities scaled by 16). The book's W, C and r tables give <b>C<sub>04</sub> = 32</b> and <b>r<sub>04</sub> = 2</b>, so <b>“if” is the root</b>, “do” is its left child, and “int” with “while” as its right child forms the right subtree.</p>
+
+      <div class="confuse"><b>Common confusion:</b> do not use the greedy rule “put the most probable key at the root, then repeat”. Moving one key up also pushes other keys down, so a locally good root can raise the total cost. DP tries every root for every range and compares the full weighted cost. Also, cost is <b>weighted depth</b>, not plain height.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.7 OBST, p. 3-34 – 3-62</p>
       
     </div>
   </div>
 </section>
 
-<!-- ================= 3.8 ================= -->
-<section class="card" id="s38">
-  <h2>3.8 0/1 Knapsack using dynamic programming <span class="b rep" style="font-size:12px;vertical-align:middle">★★ 2×</span></h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Find the optimal solution of the 0/1 knapsack problem using dynamic programming.<br><span class="small">Items (weight, profit): (2,12), (1,10), (3,20), (2,15). Capacity = 5.</span></p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q1(b) [9] · 2025 May Q2(b) [10 — capacity 7, items (1,1),(3,4),(4,5),(5,7)]</p>
-
-      <h4>Problem and recurrence (book §3.8)</h4>
-      <p>Given n objects, object i has weight <code>w<sub>i</sub></code> and profit <code>p<sub>i</sub></code>; the knapsack capacity is W. Choose <code>x<sub>i</sub> ∈ {0,1}</code> to maximise <code>Σp<sub>i</sub>x<sub>i</sub></code> subject to <code>Σw<sub>i</sub>x<sub>i</sub> ≤ W</code>.</p>
-      <div class="math">table[i, j] = max{ table[i−1, j], &nbsp; p<sub>i</sub> + table[i−1, j−w<sub>i</sub>] } &nbsp; if j ≥ w<sub>i</sub><br>
-      table[i, j] = table[i−1, j] &nbsp; if j &lt; w<sub>i</sub><br>
-      table[0, j] = 0, &nbsp; table[i, 0] = 0</div>
-      <p><code>table[i, j]</code> = best profit using the first i objects with capacity j. The answer is <code>table[n, W]</code>. To recover the items, compare <code>table[i, k]</code> with <code>table[i−1, k]</code>: if different, take item i and set <code>k = k − w<sub>i</sub></code>; otherwise skip item i and set <code>i = i − 1</code>.</p>
-
-      <h4>Algorithm Knapsack01 (book's table method)</h4>
-<pre><code>Knapsack01(w[], p[], n, W)
-{
-    for j = 0 to W do table[0][j] = 0;
-    for i = 0 to n do table[i][0] = 0;
-
-    for i = 1 to n do
-        for j = 0 to W do
-        {
-            if (w[i] &gt; j) then
-                table[i][j] = table[i−1][j];
-            else
-                table[i][j] = max(table[i−1][j],
-                                  p[i] + table[i−1][j−w[i]]);
-        }
-    return table[n][W];
-}</code></pre>
-      <p><b>Time O(nW)</b>, space O(nW).</p>
-
-      <h4>Solved PYQ instance 1 — capacity 5</h4>
-      <p>Items (weight, profit): 1=(2,12), 2=(1,10), 3=(3,20), 4=(2,15), W = 5.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>i \ w</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
-        <tbody>
-          <tr><th>0</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-          <tr><th>1 (2,12)</th><td>0</td><td>0</td><td>12</td><td>12</td><td>12</td><td>12</td></tr>
-          <tr><th>2 (1,10)</th><td>0</td><td>10</td><td>12</td><td>22</td><td>22</td><td>22</td></tr>
-          <tr><th>3 (3,20)</th><td>0</td><td>10</td><td>12</td><td>22</td><td>30</td><td>32</td></tr>
-          <tr><th>4 (2,15)</th><td>0</td><td>10</td><td>15</td><td>25</td><td>30</td><td><b>37</b></td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>Backtracking:</b> table[4][5]=37 ≠ table[3][5]=32 → take item 4, capacity 3. table[3][3]=22 = table[2][3]=22 → skip item 3. table[2][3]=22 ≠ table[1][3]=12 → take item 2, capacity 2. table[1][2]=12 ≠ table[0][2]=0 → take item 1.</p>
-      <div class="math"><b>Selected items:</b> 1, 2, 4 &nbsp;|&nbsp; weight 2+1+2 = 5 &nbsp;|&nbsp; <b>Maximum profit = 12+10+15 = 37</b></div>
-
-      <h4>Solved PYQ instance 2 — capacity 7 (2025 May)</h4>
-      <p>Items A=(1,1), B=(3,4), C=(4,5), D=(5,7), W = 7.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>i \ w</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
-        <tbody>
-          <tr><th>0</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-          <tr><th>A (1,1)</th><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-          <tr><th>B (3,4)</th><td>0</td><td>1</td><td>1</td><td>4</td><td>5</td><td>5</td><td>5</td><td>5</td></tr>
-          <tr><th>C (4,5)</th><td>0</td><td>1</td><td>1</td><td>4</td><td>5</td><td>6</td><td>6</td><td><b>9</b></td></tr>
-          <tr><th>D (5,7)</th><td>0</td><td>1</td><td>1</td><td>4</td><td>5</td><td>7</td><td>8</td><td>9</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>Backtracking:</b> table[4][7]=9 = table[3][7]=9 → skip D. table[3][7]=9 ≠ table[2][7]=5 → take C, capacity 3. table[2][3]=4 ≠ table[1][3]=1 → take B, capacity 0. table[1][0]=0 → skip A.</p>
-      <div class="math"><b>Selected items:</b> B, C &nbsp;|&nbsp; weight 3+4 = 7 &nbsp;|&nbsp; <b>Maximum profit = 4+5 = 9</b></div>
-
-      <h4>Book's solved examples</h4>
-      <p><b>Example 3.8.1:</b> n = 4, (w, p) = (2,3), (3,4), (4,5), (5,6), W = 5. The book's final table gives <b>7</b>; backtracking selects items <b>1 and 2</b> (weight 2+3 = 5, profit 3+4 = 7).</p>
-      <p><b>Example 3.8.2:</b> n = 3, w = (4,6,8), p = (10,12,15), W = 10 → <b>22</b>, items 1 and 2.</p>
-
-      <div class="warn"><b>Why not greedy:</b> in the second PYQ instance the ratio order is D(1.4), B(1.33), C(1.25), A(1). Greedy takes D then A (profit 8), but the optimal set is B+C (profit 9). This is exactly why the book uses a DP table for 0/1 knapsack.</div>
-      <p class="booksrc">📘 <b>Book:</b> §3.8 The 0/1 Knapsack, p. 3-62 – 3-76</p>
-      
-    </div>
-  </div>
-</section>
-
-<!-- ================= 3.9 ================= -->
 <section class="card" id="s39">
-  <h2>3.9 Binomial coefficients using DP</h2>
+  <div class="prio">Priority 9 · ★ 1× repeated</div><h2>3.9 Binomial coefficients using DP</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1049,13 +1458,28 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 Nov Q2(b) [10]</p>
 
+<div class="simple"><b>In simple words:</b> The coefficients of (x + y)<sup>5</sup> are row 5 of Pascal's triangle (the sixth row, counting row 0). Each number is the sum of the two numbers above it. Dynamic programming (DP) builds the rows one by one and reuses the previous row.</div>
+
+      <h4>Why we do this</h4>
+      <p>The direct formula uses large factorials (products like 1 × 2 × … × n), and plain recursion computes the same smaller values again and again. Building rows from top to bottom computes every value once. It is easy to do by hand and easy to code.</p>
+
+      <h4>Words you need first</h4>
+      <ul>
+        <li><b>Binomial coefficient <code>C(n, k)</code></b> — the number of ways to choose k items from n items. In the expansion, it is the coefficient of the term with k copies of y.</li>
+        <li><b>Pascal's identity</b> — <code>C(n, k) = C(n−1, k−1) + C(n−1, k)</code>. Each entry is the sum of the two entries above it.</li>
+        <li><b>Row</b> — all coefficients for one power n. Row n has n + 1 entries, for k = 0 to n.</li>
+        <li><b>Pascal's triangle</b> — the triangle formed by writing all rows one below another, with 1s at the edges.</li>
+      </ul>
+
+      <div class="analogy"><b>Real-life analogy:</b> Pascal's triangle is a wall of bricks. Each brick rests on the two bricks above it, and its value is their sum. You build the wall from the top down, one row at a time.</div>
+
       <h4>Definition (book §3.6)</h4>
       <p>Computing a binomial coefficient is a typical example of dynamic programming. In the expansion of <code>(a + b)<sup>n</sup></code>, the coefficient of a term is denoted by <code>C(n, k)</code> or <code><sup>n</sup>C<sub>k</sub></code>, where <code>0 ≤ k ≤ n</code>.</p>
 
       <h4>Recurrence (Pascal's identity)</h4>
-      <div class="math">C(n, k) = C(n−1, k−1) + C(n−1, k) &nbsp;&nbsp; for n &gt; k &gt; 0<br>
-      C(n, 0) = 1, &nbsp; C(n, n) = 1</div>
-      <p>Direct recursion is exponential because <code>C(n−1,k−1)</code> and <code>C(n−1,k)</code> overlap. DP fills Pascal's triangle row by row, so every value is computed once.</p>
+<div class="math">C(n, k) = C(n−1, k−1) + C(n−1, k)    for n &gt; k &gt; 0<br>
+      C(n, 0) = 1,   C(n, n) = 1</div>
+      <p><b>What this means:</b> the two edge values are always 1. Every inside value is the sum of the two values directly above it in the previous row. Direct recursion is exponential because <code>C(n−1,k−1)</code> and <code>C(n−1,k)</code> overlap. DP fills Pascal's triangle row by row, so every value is computed once.</p>
 
       <h4>Algorithm Binomial (book §3.6)</h4>
 <pre><code>Algorithm Binomial(n, k)
@@ -1070,10 +1494,22 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         }
     return C[n][k];
 }</code></pre>
+      <p><b>How to read the code:</b> <code>i</code> is the current row, <code>j</code> is the position in that row. The edges (<code>j = 0</code> or <code>i = j</code>) are set to 1. Every other cell adds the two cells above it.</p>
       <p><b>Analysis:</b> the basic operation is one addition. The book counts <code>A(n,k) = nk</code> additions, so the time complexity is <b>Θ(nk)</b>; space is O(nk), which can be reduced to O(k) by keeping only the previous row.</p>
 
+      <h4>Step-by-step for n = 5</h4>
+      <ol>
+        <li><b>Write row 0 as just 1.</b> <i>Why:</i> <code>(x + y)<sup>0</sup> = 1</code>, so there is one coefficient.</li>
+        <li><b>Start each new row with 1.</b> <i>Why:</i> the first term always has coefficient 1.</li>
+        <li><b>Add the two numbers above to get each inside value.</b> <i>Why:</i> this is Pascal's identity.</li>
+        <li><b>End each new row with 1.</b> <i>Why:</i> the last term always has coefficient 1.</li>
+        <li><b>Repeat until row 5.</b> <i>Why:</i> the question asks for the power 5.</li>
+        <li><b>Read row 5 left to right.</b> <i>Why:</i> these six numbers are the coefficients of the six terms.</li>
+      </ol>
+
       <h4>Pascal's triangle up to n = 5</h4>
-      <div class="tbl-wrap">
+      <p>Build row 0 first. Then each new row starts and ends with 1, and every inside number is the sum of the two above it.</p>
+<div class="tbl-wrap">
       <table>
         <thead><tr><th>n</th><th colspan="6">C(n,k) for k = 0…n</th></tr></thead>
         <tbody>
@@ -1086,17 +1522,29 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> row 5 is 1, 5, 10, 10, 5, 1. For example, the first 10 in row 5 is 4 + 6 from row 4. These six numbers are exactly the coefficients we need.</p>
 
       <h4>Expansion</h4>
-      <div class="math">(x + y)<sup>5</sup> = <b>1</b>x<sup>5</sup> + <b>5</b>x<sup>4</sup>y + <b>10</b>x<sup>3</sup>y<sup>2</sup> + <b>10</b>x<sup>2</sup>y<sup>3</sup> + <b>5</b>xy<sup>4</sup> + <b>1</b>y<sup>5</sup></div>
-      <p>The coefficients are row n = 5 of Pascal's triangle: <b>1, 5, 10, 10, 5, 1</b>.</p>
+<div class="math">(x + y)<sup>5</sup> = <b>1</b>x<sup>5</sup> + <b>5</b>x<sup>4</sup>y + <b>10</b>x<sup>3</sup>y<sup>2</sup> + <b>10</b>x<sup>2</sup>y<sup>3</sup> + <b>5</b>xy<sup>4</sup> + <b>1</b>y<sup>5</sup></div>
+      <p><b>What this means:</b> the powers of x count down from 5 to 0, and the powers of y count up from 0 to 5. The coefficients are row n = 5: <b>1, 5, 10, 10, 5, 1</b>.</p>
       <p><b>Book's example:</b> C(4, 2) = C(3,1) + C(3,2) = 3 + 3 = <b>6</b>; the book's C program prints <code>The Binomial Coefficient C(4,2)=6</code>. The same row-by-row method gives the n = 5 row above.</p>
+
+      <div class="confuse"><b>Common confusion:</b> <code>C(n, k)</code> is not <code>n<sup>k</sup></code> and not <code>n × k</code>. Row n has <b>n + 1</b> entries, not n. The edges are always 1. Also, the coefficient of <code>x<sup>5−k</sup>y<sup>k</sup></code> is <code>C(5, k)</code>, so the order of coefficients matches the powers of y going up.</div>
       <p class="booksrc">📘 <b>Book:</b> §3.6 Binomial Coefficients, p. 3-28 – 3-32</p>
       
     </div>
   </div>
 </section>
 
+<!-- ================= 3.1 ================= -->
+<!-- ================= 3.2 ================= -->
+<!-- ================= 3.3 ================= -->
+<!-- ================= 3.4 ================= -->
+<!-- ================= 3.5 ================= -->
+<!-- ================= 3.6 ================= -->
+<!-- ================= 3.7 ================= -->
+<!-- ================= 3.8 ================= -->
+<!-- ================= 3.9 ================= -->
 <!-- ================= CHEAT SHEET ================= -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet</h2>
@@ -1137,7 +1585,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 
   <div class="book"><b>Book citation:</b> Technical Publications — <i>Design and Analysis of Algorithms</i> (Units 3–6), Unit 3: Greedy and Dynamic Programming Algorithmic Strategy, pp. 3-2 – 3-90. All answers above are matched to the exact PYQ wording and mark weights.</div>
 
-  <div class="tip"><b>Exam-day order:</b> attempt the 10-mark numericals first (MCM / OBST / 0-1 knapsack), then job sequencing, then theory (DP control abstraction). Numericals carry step marks and are harder to fake — secure them early.</div>
+  <div class="tip"><b>Exam-day order (highest repeat first):</b> job sequencing (4×) → DP control abstraction (3×) → matrix chain and 0/1 knapsack (2× each) → OBST / activity selection / binomial (1×). Numericals carry step marks — secure them early.</div>
 </section>
 
 <footer>

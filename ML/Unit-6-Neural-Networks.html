@@ -139,9 +139,15 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -150,14 +156,14 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <h3>ML · Unit 6</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s61">6.1 ANN basics &amp; architecture</a>
-    <a href="#s62">6.2 Perceptron, single layer, MLP</a>
-    <a href="#s63">6.3 Backpropagation</a>
-    <a href="#s64">6.4 FLANN &amp; RBF</a>
-    <a href="#s65">6.5 Activation functions</a>
-    <a href="#s66">6.6 Recurrent networks</a>
-    <a href="#s67">6.7 Convolutional networks</a>
-    <a href="#s68">6.8 Recommendation systems</a>
+    <a href="#s66">6.6 Recurrent networks <span class="pill">6×</span></a>
+    <a href="#s67">6.7 Convolutional networks <span class="pill">5×</span></a>
+    <a href="#s62">6.2 Perceptron, single layer, MLP <span class="pill">3×</span></a>
+    <a href="#s61">6.1 ANN basics &amp; architecture <span class="pill">3×</span></a>
+    <a href="#s64">6.4 FLANN &amp; RBF <span class="pill">3×</span></a>
+    <a href="#s65">6.5 Activation functions <span class="pill">2×</span></a>
+    <a href="#s63">6.3 Backpropagation <span class="pill">2×</span></a>
+    <a href="#s68">6.8 Recommendation systems <span class="pill">1×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -174,7 +180,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 6 — Introduction to Neural Networks</h1>
-  <p><b>Subject:</b> Machine Learning (410242) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 26 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Machine Learning (410242)  ·  <b>Exam:</b> Thursday, 26 Nov 2026, 2:00–4:30 PM  ·  <b>Max marks:</b> 70</p>
   <p>All questions are reproduced from the six available end-sem papers (2022 Nov, 2023 May, 2023 Nov, 2024 May, 2025 May, 2025 Nov). The neuron-output and backpropagation numericals are fully solved and checked in Python.</p>
   <div class="meta">
     <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
@@ -202,10 +208,10 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       <tr><td>6</td><td class="l">Multilayer perceptron with diagram</td><td>2023 May Q8(b) [6]; 2024 May Q7(a) [6]; 2025 Nov Q8(a) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
       <tr><td>7</td><td class="l">Radial basis function (RBF) network / building blocks</td><td>2023 Nov Q7(b) [8]; 2024 May Q8(a) [6]; 2025 Nov Q7(c) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
       <tr><td>8</td><td class="l">Perceptron / single-layer neural network</td><td>2023 May Q8(a) [6]; 2023 Nov Q7(a) [4]</td><td><span class="stars">★★</span> 2×</td></tr>
-      <tr><td>9</td><td class="l">Types of ANN based on layers</td><td>2022 Nov Q8(a) [5]</td><td><span class="stars">★</span> 1×</td></tr>
-      <tr><td>10</td><td class="l">FLANN — functional link ANN and its merits</td><td>2023 Nov Q8(b) [5]</td><td><span class="stars">★</span> 1×</td></tr>
-      <tr><td>11</td><td class="l">CNN padding types</td><td>2025 May Q8(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
-      <tr><td>12</td><td class="l">CNN layers — convolution and pooling</td><td>2022 Nov Q8(c) [6]; 2025 May Q8(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td class="l">CNN layers — convolution and pooling</td><td>2022 Nov Q8(c) [6]; 2025 May Q8(c) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>10</td><td class="l">Types of ANN based on layers</td><td>2022 Nov Q8(a) [5]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>11</td><td class="l">FLANN — functional link ANN and its merits</td><td>2023 Nov Q8(b) [5]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>12</td><td class="l">CNN padding types</td><td>2025 May Q8(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
       <tr><td>13</td><td class="l">Personalized and content-based recommendation</td><td>2024 May Q8(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
     </tbody>
   </table>
@@ -216,749 +222,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <div class="tip"><b>Marks strategy:</b> 5–6 mark = definition + diagram + 4–6 bullets + one example. 8-mark = architecture + forward/backward equations + <b>solved numerical</b> + advantages/limitations. Always draw the network diagram; it earns step marks.</div>
 </section>
 
-<!-- ================= 6.1 ================= -->
-<section class="card" id="s61">
-  <h2>6.1 ANN basics and architecture</h2>
-  <p class="lead">An artificial neural network is a graph of simple processing units (neurons) connected by weighted links.</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain ANN with its architecture. Describe the architecture of an artificial neural network.</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [5] · 2023 May Q7(a) [5 — building blocks] · 2025 Nov Q7(a) [6]</p>
-
-      <h4>Definition</h4>
-      <p>An Artificial Neural Network (ANN) is a computational model inspired by the brain. It consists of many interconnected <b>neurons</b> arranged in layers. Each connection has a <b>weight</b>; each neuron adds a <b>bias</b>, computes a weighted sum, and passes it through an <b>activation function</b>.</p>
-      <div class="math">y = f( Σ<sub>i=1..n</sub> w<sub>i</sub> x<sub>i</sub> + b )</div>
-
-      <h4>Architecture</h4>
-      <div class="tree">        INPUT LAYER          HIDDEN LAYER(S)         OUTPUT LAYER
-          x1 o ---- w11 ----\
-             \               \
-          x2 o ---- w12 -------o h1 ---\
-             \               /          \
-          x3 o ---- w13 ----/            \      w_out
-             \                             o ---------> y
-          x4 o ---- w14 -------o h2 ---/
-             \               /          /
-          x5 o ---- w15 ----/          /
-                          ...         /
-                        (weights)    /
-                                   (bias b)
-   Each circle = neuron; each arrow = weighted connection.
-   Hidden layers learn features; output layer gives the prediction.</div>
-
-      <h4>Layers</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Layer</th><th>Function</th></tr></thead>
-        <tbody>
-          <tr><td>Input layer</td><td>Receives the raw features; no computation (sometimes only scaling)</td></tr>
-          <tr><td>Hidden layer(s)</td><td>Learn intermediate features/representations; apply weights, bias and activation</td></tr>
-          <tr><td>Output layer</td><td>Produces the final prediction (class probability or regression value)</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Learning</h4>
-      <p>Training adjusts the weights and biases to minimise a loss function. The most common method is <b>backpropagation with gradient descent</b>:</p>
-      <div class="math">w<sub>ij</sub> ← w<sub>ij</sub> − η ∂L/∂w<sub>ij</sub></div>
-
-      <h4>Why ANN works</h4>
-      <ul>
-        <li><b>Non-linear</b> — activation functions let it learn curved boundaries.</li>
-        <li><b>Universal approximator</b> — an MLP with enough hidden units can approximate any continuous function.</li>
-        <li><b>Feature learning</b> — hidden layers learn features automatically.</li>
-        <li><b>Parallel</b> — many neurons compute at once (GPU-friendly).</li>
-        <li><b>Robust</b> — distributed representation tolerates noise and partial inputs.</li>
-      </ul>
-
-      <h4>Applications</h4>
-      <p>Image classification, speech recognition, natural language processing, medical diagnosis, fraud detection, recommendation systems, forecasting.</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What are the building blocks of a neural network? Elaborate.</p>
-      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q7(a) [5]</p>
-
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Building block</th><th>Role</th></tr></thead>
-        <tbody>
-          <tr><td>Neuron (node/unit)</td><td>Receives inputs, computes weighted sum + bias, applies activation, sends output</td></tr>
-          <tr><td>Weights (w)</td><td>Learnable strength of each connection; the main memory of the network</td></tr>
-          <tr><td>Bias (b)</td><td>Shifts the activation; allows the neuron to fire even when all inputs are zero</td></tr>
-          <tr><td>Activation function</td><td>Adds non-linearity: step, sigmoid, tanh, ReLU, softmax</td></tr>
-          <tr><td>Layers</td><td>Input, hidden and output layers organise the neurons</td></tr>
-          <tr><td>Loss function</td><td>Measures the error: MSE for regression, cross-entropy for classification</td></tr>
-          <tr><td>Optimiser</td><td>Updates weights: gradient descent, SGD, Adam</td></tr>
-          <tr><td>Learning rate (η)</td><td>Controls the step size of each update</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Biological analogy</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Biological</th><th>Artificial</th></tr></thead>
-        <tbody>
-          <tr><td>Dendrites</td><td>Inputs</td></tr>
-          <tr><td>Cell body / nucleus</td><td>Node / summation</td></tr>
-          <tr><td>Synapse</td><td>Weight</td></tr>
-          <tr><td>Axon</td><td>Output</td></tr>
-          <tr><td>Firing threshold</td><td>Activation function</td></tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Explain in brief the types of ANN based on layers.</p>
-      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(a) [5]</p>
-
-      <h4>1. Single-layer network</h4>
-      <p>Only an input layer and an output layer (no hidden layer). Each input connects directly to every output. It can solve only <b>linearly separable</b> problems (AND, OR — not XOR).</p>
-
-      <h4>2. Multi-layer network (MLP)</h4>
-      <p>One or more <b>hidden layers</b> between input and output. It can learn non-linear boundaries and approximate complex functions. It is trained by backpropagation.</p>
-
-      <h4>3. Deep neural network</h4>
-      <p>An MLP with many hidden layers (often dozens). Each layer learns increasingly abstract features: edges → shapes → objects. Used in image, speech and language tasks.</p>
-
-      <h4>4. Specialised layered architectures</h4>
-      <ul>
-        <li><b>CNN</b> — convolution + pooling layers for grid/image data.</li>
-        <li><b>RNN</b> — recurrent hidden state for sequences.</li>
-        <li><b>Autoencoder</b> — encoder/decoder layers for compression and denoising.</li>
-      </ul>
-
-      <h4>Comparison</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Type</th><th>Hidden layers</th><th>Decision boundary</th><th>Example</th></tr></thead>
-        <tbody>
-          <tr><td>Single-layer</td><td>0</td><td>Linear</td><td>Perceptron, Adaline</td></tr>
-          <tr><td>Multi-layer</td><td>1–2</td><td>Non-linear</td><td>MLP for XOR</td></tr>
-          <tr><td>Deep</td><td>Many</td><td>Highly non-linear</td><td>ResNet, VGG</td></tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6.2 ================= -->
-<section class="card" id="s62">
-  <h2>6.2 Perceptron, single-layer network and MLP</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain artificial neural network based on the perceptron concept with a diagram.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q8(a) [6]</p>
-
-      <h4>Perceptron model</h4>
-      <p>The perceptron is the simplest neuron. It computes a weighted sum of inputs, adds a bias, and applies a <b>step function</b>.</p>
-      <div class="math">z = Σ w<sub>i</sub> x<sub>i</sub> + b &nbsp;&nbsp;&nbsp;&nbsp;
-      y = 1 if z ≥ 0, else 0</div>
-
-      <div class="tree">       x1 o ---- w1 ----\
-                          \
-       x2 o ---- w2 -------[ Σ + b ]----[ step ]----> y (0/1)
-                          /
-       x3 o ---- w3 ----/
-                 bias = 1 ---- w0 ----/</div>
-
-      <h4>Learning rule</h4>
-      <p>For each training sample, if the output is wrong:</p>
-      <div class="math">w<sub>i</sub> ← w<sub>i</sub> + η (t − y) x<sub>i</sub><br>
-      b ← b + η (t − y)</div>
-      <p>where t = target, y = actual output, η = learning rate. If the prediction is correct, no update is made.</p>
-
-      <h4>Example — AND gate</h4>
-      <p>With weights w1 = w2 = 1 and bias = −1.5:</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>x1</th><th>x2</th><th>z = x1 + x2 − 1.5</th><th>y</th></tr></thead>
-        <tbody>
-          <tr><td>0</td><td>0</td><td>−1.5</td><td>0</td></tr>
-          <tr><td>0</td><td>1</td><td>−0.5</td><td>0</td></tr>
-          <tr><td>1</td><td>0</td><td>−0.5</td><td>0</td></tr>
-          <tr><td>1</td><td>1</td><td>0.5</td><td>1</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Limitations</h4>
-      <ul>
-        <li>Only linearly separable problems; cannot solve XOR.</li>
-        <li>Step function is not differentiable → cannot use gradient descent.</li>
-        <li>No hidden layer, so no feature learning.</li>
-        <li>Sensitive to initial weights and learning rate.</li>
-      </ul>
-      <p class="small">The XOR limitation is why we need multilayer networks and backpropagation.</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Obtain the output of neuron Y for the network shown in the figure using the activation function: (i) Binary sigmoidal (ii) Bipolar sigmoidal.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(b) [6]</p>
-
-      <h4>Given network (values read from the PDF figure)</h4>
-      <div class="tree">   x1 = 0.8  ---- w1 = 0.1 ----\
-                                  \
-   x2 = 0.6  ---- w2 = 0.3 -------[ Σ ]---- f(net) ----> Y
-                                  /
-   x3 = 0.4  ---- w3 = -0.2 ----/
-                                  \
-   bias = 1.0 ---- w0 = 0.35 ----/</div>
-      <p class="small">The scanned figure is handwritten over a watermark. The standard reading is x1 = 0.8, x2 = 0.6, x3 = 0.4, w1 = 0.1, w2 = 0.3, w3 = −0.2, bias = 1.0 with weight 0.35. If your copy reads x2 = 0.9 and w2 = 0.2, the product is still 0.9×0.2 = 0.18, so the net input does not change. A note at the end covers the other reading x3 = 0.2.</p>
-
-      <h4>Step 1 — net input</h4>
-      <div class="math">net = Σ w<sub>i</sub>x<sub>i</sub> + w<sub>0</sub>·bias<br>
-      net = (0.1×0.8) + (0.3×0.6) + (−0.2×0.4) + (0.35×1.0)<br>
-      net = 0.08 + 0.18 − 0.08 + 0.35 = <b>0.53</b></div>
-
-      <h4>Step 2 — binary sigmoidal output</h4>
-      <div class="math">f(net) = 1 / (1 + e<sup>−net</sup>)<br>
-      f(0.53) = 1 / (1 + e<sup>−0.53</sup>)<br>
-      e<sup>−0.53</sup> = 0.5886<br>
-      f(0.53) = 1 / 1.5886 = <b>0.6295</b></div>
-
-      <h4>Step 3 — bipolar sigmoidal output</h4>
-      <div class="math">f(net) = (1 − e<sup>−net</sup>) / (1 + e<sup>−net</sup>)<br>
-      f(0.53) = (1 − 0.5886) / (1 + 0.5886) = 0.4114 / 1.5886 = <b>0.2590</b></div>
-      <p>Equivalently, bipolar sigmoid = 2 × binary sigmoid − 1 = 2(0.6295) − 1 = <b>0.2590</b>.</p>
-
-      <h4>Step 4 — result</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Activation</th><th>Formula</th><th>Output Y</th></tr></thead>
-        <tbody>
-          <tr><td>Binary sigmoidal</td><td>1/(1+e<sup>−net</sup>)</td><td><b>0.6295</b></td></tr>
-          <tr><td>Bipolar sigmoidal</td><td>(1−e<sup>−net</sup>)/(1+e<sup>−net</sup>)</td><td><b>0.2590</b></td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>If your copy reads x2 = 0.4 and x3 = 0.4</h4>
-      <div class="math">net = 0.08 + 0.08 − 0.08 + 0.35 = <b>0.43</b><br>
-      binary sigmoid = 1/(1+e<sup>−0.43</sup>) = <b>0.6059</b><br>
-      bipolar sigmoid = <b>0.2117</b></div>
-      <p class="small">If your copy reads x3 = 0.2 (instead of 0.4), net = 0.08 + 0.18 − 0.04 + 0.35 = <b>0.57</b>, binary = <b>0.6388</b>, bipolar = <b>0.2775</b>. The method is identical; only the substituted inputs change. State your reading clearly so the examiner can follow.</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Write a note on single-layer neural networks.</p>
-      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(a) [4]</p>
-
-      <h4>Structure</h4>
-      <p>A single-layer network has an input layer and an output layer, with <b>no hidden layer</b>. Every input is connected to every output.</p>
-      <div class="tree">x1 o ----\
-x2 o ------> [ output neuron ] ----> y
-x3 o ----/
-(weights on each arrow)</div>
-
-      <h4>Properties</h4>
-      <ul>
-        <li>Computes a linear combination followed by an activation.</li>
-        <li>Can solve linearly separable problems (AND, OR, NOT).</li>
-        <li>Trained by the perceptron rule or the delta rule (LMS).</li>
-        <li>Fast and simple, but cannot solve XOR or learn complex patterns.</li>
-      </ul>
-
-      <h4>Use</h4>
-      <p>Binary classification with a linear boundary, simple logic gates, and as the output layer of a larger network.</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q4</span>What is a multilayer perceptron? Describe it with a diagram. Describe a multi-layer neural network and explain why backpropagation is required.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q8(b) [6] · 2024 May Q7(a) [6] · 2025 Nov Q8(a) [6]</p>
-
-      <h4>Definition</h4>
-      <p>A Multilayer Perceptron (MLP) is a feed-forward neural network with at least one <b>hidden layer</b> between the input and output layers. Every neuron in one layer connects to every neuron in the next layer (fully connected).</p>
-
-      <h4>Diagram</h4>
-      <div class="tree">      INPUT          HIDDEN 1        HIDDEN 2        OUTPUT
-       x1 o --------- o ------------- o -------------\
-          \         / \             / \              \
-       x2 o ------ o   o --------- o   o ------------- o ----> y1
-          \       / \ /             \ /              /
-       x3 o ---- o   o ------------- o   o ---------/
-          \     /     \             / \            /
-       x4 o -- o       o --------- o   o ---------/----> y2
-             (weights)   (weights)     (weights)
-       Each layer is fully connected to the next.
-       Hidden layers use non-linear activation (ReLU/tanh).</div>
-
-      <h4>Forward pass</h4>
-      <div class="math">a<sup>(1)</sup> = f(W<sup>(1)</sup>x + b<sup>(1)</sup>)<br>
-      a<sup>(2)</sup> = f(W<sup>(2)</sup>a<sup>(1)</sup> + b<sup>(2)</sup>)<br>
-      ŷ = f(W<sup>(3)</sup>a<sup>(2)</sup> + b<sup>(3)</sup>)</div>
-
-      <h4>Why backpropagation is required</h4>
-      <ul>
-        <li>The output error depends on the hidden-layer weights, but there is <b>no direct target</b> for a hidden neuron.</li>
-        <li>Backpropagation uses the <b>chain rule</b> to send the error gradient backwards through the network.</li>
-        <li>It tells every hidden weight whether increasing or decreasing it will reduce the loss.</li>
-        <li>Without it, training a deep network by trial and error would be impossible.</li>
-        <li>The perceptron rule cannot be applied to hidden layers because it needs the target output of each neuron.</li>
-      </ul>
-
-      <h4>Why MLP is powerful</h4>
-      <ul>
-        <li>Non-linear activation → non-linear decision boundaries.</li>
-        <li>Universal approximation: one hidden layer with enough units can approximate any continuous function.</li>
-        <li>Learns hierarchical features.</li>
-        <li>Works for classification (softmax) and regression (linear output).</li>
-      </ul>
-
-      <h4>XOR example</h4>
-      <p>A single perceptron cannot separate XOR. An MLP with two hidden neurons can: the first hidden neuron detects “at least one input is 1” (OR), the second detects “both inputs are 1” (AND), and the output computes OR − AND, which is exactly XOR.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6.3 ================= -->
-<section class="card" id="s63">
-  <h2>6.3 Backpropagation learning</h2>
-  <p class="lead">Backpropagation = forward pass to compute the error + backward pass to distribute the error gradient + gradient-descent weight update.</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Write a short note on the backpropagation network. Describe the characteristics of the backpropagation algorithm.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(c) [6] · 2023 May Q7(b) [6 — characteristics]</p>
-
-      <h4>Definition</h4>
-      <p>Backpropagation (backward propagation of errors) is the supervised learning algorithm for multilayer networks. It computes the gradient of the loss with respect to every weight using the <b>chain rule</b>, then updates the weights by gradient descent.</p>
-
-      <h4>Three stages</h4>
-      <ol>
-        <li><b>Forward pass</b> — feed the input, compute activations layer by layer, get the output.</li>
-        <li><b>Error computation</b> — compare output with target using a loss (MSE or cross-entropy).</li>
-        <li><b>Backward pass</b> — propagate the error gradient from output to input and update weights.</li>
-      </ol>
-
-      <h4>Key equations</h4>
-      <div class="math">Output delta:&nbsp; δ<sub>o</sub> = (t − y) · f′(net<sub>o</sub>)<br>
-      Hidden delta:&nbsp; δ<sub>h</sub> = f′(net<sub>h</sub>) · Σ<sub>k</sub> w<sub>hk</sub> δ<sub>k</sub><br>
-      Weight update:&nbsp; w<sub>ij</sub> ← w<sub>ij</sub> + η δ<sub>j</sub> x<sub>i</sub><br>
-      Bias update:&nbsp; b<sub>j</sub> ← b<sub>j</sub> + η δ<sub>j</sub></div>
-
-      <h4>Characteristics</h4>
-      <ul>
-        <li><b>Supervised</b> — needs input–target pairs.</li>
-        <li><b>Gradient-based</b> — uses the derivative of the activation function; it needs differentiable activations (sigmoid, tanh, ReLU).</li>
-        <li><b>Chain rule</b> — the error is propagated backwards layer by layer.</li>
-        <li><b>Iterative</b> — one pass is called an epoch; training repeats until convergence.</li>
-        <li><b>Local minima</b> — can get stuck in a local minimum because the loss is non-convex.</li>
-        <li><b>Learning rate sensitive</b> — too high diverges, too low is slow.</li>
-        <li><b>Credit assignment</b> — it solves the problem of assigning error blame to hidden neurons.</li>
-        <li><b>Convergence</b> — slower than the perceptron rule but much more powerful.</li>
-      </ul>
-
-      <h4>Advantages / disadvantages</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
-        <tbody>
-          <tr><td>Trains multilayer networks</td><td>Slow convergence</td></tr>
-          <tr><td>Generalises to unseen data</td><td>Can stuck in local minima</td></tr>
-          <tr><td>Works with many activation/loss functions</td><td>Needs careful learning-rate tuning</td></tr>
-          <tr><td>Efficient gradient computation</td><td>Can overfit; needs regularization</td></tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Explain the concept of backpropagation in ANN with an example.</p>
-      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q8(a) [8]</p>
-
-      <h4>Network used</h4>
-      <p>2 inputs → 2 hidden neurons → 1 output. All neurons use the sigmoid function. Initial weights:</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Connection</th><th>Weight</th></tr></thead>
-        <tbody>
-          <tr><td>x1 → h1</td><td>0.5</td></tr>
-          <tr><td>x2 → h1</td><td>0.4</td></tr>
-          <tr><td>x1 → h2</td><td>−0.3</td></tr>
-          <tr><td>x2 → h2</td><td>0.2</td></tr>
-          <tr><td>h1 → y</td><td>0.6</td></tr>
-          <tr><td>h2 → y</td><td>−0.5</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>Bias = 0 for all neurons. Input x = (1, 0), target t = 1, learning rate η = 0.5.</p>
-
-      <h4>Step 1 — forward pass</h4>
-      <div class="math">net<sub>h1</sub> = 0.5×1 + 0.4×0 = 0.5 &nbsp;→&nbsp; h1 = σ(0.5) = 1/(1+e<sup>−0.5</sup>) = <b>0.6225</b><br>
-      net<sub>h2</sub> = −0.3×1 + 0.2×0 = −0.3 &nbsp;→&nbsp; h2 = σ(−0.3) = <b>0.4256</b><br>
-      net<sub>y</sub> = 0.6×0.6225 + (−0.5)×0.4256 = 0.3735 − 0.2128 = 0.1607<br>
-      y = σ(0.1607) = <b>0.5401</b></div>
-      <p>Error = ½(t − y)² = ½(1 − 0.5401)² = <b>0.1058</b>.</p>
-
-      <h4>Step 2 — output delta</h4>
-      <div class="math">δ<sub>o</sub> = (t − y) · y(1 − y)<br>
-      δ<sub>o</sub> = (1 − 0.5401) × 0.5401 × 0.4599 = <b>0.1142</b></div>
-
-      <h4>Step 3 — hidden deltas</h4>
-      <div class="math">δ<sub>h1</sub> = δ<sub>o</sub> · w<sub>h1→y</sub> · h1(1 − h1)<br>
-      = 0.1142 × 0.6 × 0.6225 × 0.3775 = <b>0.0161</b><br><br>
-      δ<sub>h2</sub> = 0.1142 × (−0.5) × 0.4256 × 0.5744 = <b>−0.0140</b></div>
-
-      <h4>Step 4 — weight updates (η = 0.5)</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Weight</th><th>Formula</th><th>Change</th><th>New value</th></tr></thead>
-        <tbody>
-          <tr><td>w<sub>h1→y</sub></td><td>η δ<sub>o</sub> h1 = 0.5×0.1142×0.6225</td><td>+0.0356</td><td>0.6356</td></tr>
-          <tr><td>w<sub>h2→y</sub></td><td>η δ<sub>o</sub> h2 = 0.5×0.1142×0.4256</td><td>+0.0243</td><td>−0.4757</td></tr>
-          <tr><td>w<sub>x1→h1</sub></td><td>η δ<sub>h1</sub> x1 = 0.5×0.0161×1</td><td>+0.0081</td><td>0.5081</td></tr>
-          <tr><td>w<sub>x1→h2</sub></td><td>η δ<sub>h2</sub> x1 = 0.5×(−0.0140)×1</td><td>−0.0070</td><td>−0.3070</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>Weights from x2 do not change because x2 = 0. This is a property of backprop: a zero input contributes zero gradient.</p>
-
-      <h4>Step 5 — new error</h4>
-      <div class="math">new h1 = σ(0.5081) = 0.6244, new h2 = σ(−0.3070) = 0.4239<br>
-      new y = σ(0.6356×0.6244 + (−0.4757)×0.4239) = σ(0.1952) = <b>0.5486</b><br>
-      new error = ½(1 − 0.5486)² = <b>0.1019</b></div>
-      <p>The error fell from 0.1058 to 0.1019 after one pass. Repeat forward + backward for many epochs; the error keeps decreasing.</p>
-
-      <div class="tip"><b>Exam tip:</b> the paper says “with example”, not “derive”. Draw the 2-2-1 network, write the forward equations, compute δ<sub>o</sub> and one hidden δ, update two weights, and state the error decreased. That is an 8-mark answer.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Compare the backpropagation network with the feed-forward network.</p>
-      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q8(a) [5]</p>
-
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Feed-forward network</th><th>Backpropagation network</th></tr></thead>
-        <tbody>
-          <tr><td>Direction of flow</td><td>Input → hidden → output only</td><td>Forward pass + backward error flow</td></tr>
-          <tr><td>Learning</td><td>No built-in learning; weights are fixed or trained by another rule</td><td>Learns by gradient descent on the error</td></tr>
-          <tr><td>Error signal</td><td>Not propagated backwards</td><td>Propagated backwards layer by layer</td></tr>
-          <tr><td>Hidden weights</td><td>Cannot be trained directly</td><td>Trained using the chain rule</td></tr>
-          <tr><td>Activation</td><td>Can be linear or non-linear</td><td>Must be differentiable</td></tr>
-          <tr><td>Use</td><td>Inference / prediction</td><td>Training a multilayer network</td></tr>
-          <tr><td>Example</td><td>A trained MLP during prediction</td><td>The same MLP during training</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="note"><b>Key line:</b> feed-forward describes the <em>architecture</em> (data flows one way); backpropagation describes the <em>training algorithm</em> (error flows backwards). A network can be feed-forward and still be trained by backpropagation.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6.4 ================= -->
-<section class="card" id="s64">
-  <h2>6.4 FLANN and RBF networks</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is a Functional Link Artificial Neural Network (FLANN)? Explain its merits over other ANNs.</p>
-      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q8(b) [5]</p>
-
-      <h4>Definition</h4>
-      <p>FLANN is a <b>single-layer</b> network with <b>no hidden layer</b>. Before learning, the input vector is expanded by a set of non-linear functions (the “functional expansion”). The expanded vector is then fed to a single-layer perceptron.</p>
-      <div class="math">Input: x = [x1, x2]<br>
-      Expansion: [x1, x2, sin(πx1), cos(πx1), sin(πx2), cos(πx2), x1x2, x1², x2², …]<br>
-      Output: y = f( Σ w<sub>j</sub> φ<sub>j</sub>(x) + b )</div>
-
-      <h4>Architecture</h4>
-      <div class="tree">x1 ----> [ functional expansion ] ----> φ1, φ2, ..., φm ----> [ single-layer ] ----> y
-x2 ----> (sin, cos, products, powers)                              perceptron
-                                                                    (weights w)
-No hidden layer: the expansion does the non-linear mapping.</div>
-
-      <h4>Why it works</h4>
-      <p>A linear perceptron can only draw a straight boundary. By adding non-linear terms (sin, cos, products), the same linear learner can separate a non-linear region in the original space. The expansion raises the dimension; the learning stays linear and fast.</p>
-
-      <h4>Merits over other ANNs</h4>
-      <ul>
-        <li><b>No hidden layer</b> → much fewer weights and faster training.</li>
-        <li><b>Simple learning</b> — the delta rule / LMS converges quickly; no backpropagation.</li>
-        <li><b>Less computational cost</b> than MLP with the same approximation power for many problems.</li>
-        <li><b>No local minima</b> problem of deep networks for the single-layer case (convex loss).</li>
-        <li><b>Good for non-linear system identification</b>, function approximation and signal processing.</li>
-        <li><b>Fewer hyperparameters</b> — mainly the expansion order and learning rate.</li>
-      </ul>
-
-      <h4>Limitations</h4>
-      <ul>
-        <li>The expansion must be chosen by hand; too many terms cause overfitting.</li>
-        <li>Not as flexible as a deep network for complex image/text tasks.</li>
-        <li>Memory grows with the number of expansion terms.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Explain Radial Basis Function (RBF) networks in detail. Explain the building blocks of RBF networks.</p>
-      <div class="badges"><span class="b marks">6–8 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [8] · 2024 May Q8(a) [6 — building blocks] · 2025 Nov Q7(c) [6 — building blocks]</p>
-
-      <h4>Definition</h4>
-      <p>An RBF network is a feed-forward network with <b>three layers</b>: an input layer, a hidden layer of <b>radial basis functions</b>, and a linear output layer. Each hidden neuron responds strongly only when the input is close to its centre.</p>
-
-      <h4>Architecture</h4>
-      <div class="tree">   INPUT          RBF HIDDEN LAYER                 LINEAR OUTPUT
-    x1 o -------- φ1(x) = exp(-||x-c1||² / 2σ1²) ----\
-       \       /                                      \
-    x2 o ---- φ2(x) = exp(-||x-c2||² / 2σ2²) --------- o ----> y = Σ wj φj(x) + b
-       \     /                                        /
-    x3 o -- φ3(x) = exp(-||x-c3||² / 2σ3²) ---------/
-              (each unit has a centre cj and width σj)</div>
-
-      <h4>Building blocks</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Block</th><th>Role</th></tr></thead>
-        <tbody>
-          <tr><td>Input layer</td><td>Receives the feature vector x</td></tr>
-          <tr><td>RBF hidden units</td><td>Compute φ<sub>j</sub>(x); each is a Gaussian “bump” centred at c<sub>j</sub></td></tr>
-          <tr><td>Centres c<sub>j</sub></td><td>Positions in input space where the unit is most active; found by k-means or random selection</td></tr>
-          <tr><td>Widths σ<sub>j</sub></td><td>Controls how far the influence of the unit reaches; often set by a heuristic (e.g. average distance to nearest centres)</td></tr>
-          <tr><td>Output weights w<sub>j</sub></td><td>Linear weights combined with the hidden activations; trained by least squares or LMS</td></tr>
-          <tr><td>Output bias b</td><td>Shifts the final output</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Gaussian RBF</h4>
-      <div class="math">φ<sub>j</sub>(x) = exp( − ‖x − c<sub>j</sub>‖² / (2σ<sub>j</sub>²) )<br>
-      y(x) = Σ<sub>j=1..m</sub> w<sub>j</sub> φ<sub>j</sub>(x) + b</div>
-      <p>φ is 1 at the centre and falls smoothly to 0 far away. The output is a weighted sum of bumps.</p>
-
-      <h4>Training (3 steps)</h4>
-      <ol>
-        <li><b>Choose centres</b> — k-means on the input data, or randomly pick m points.</li>
-        <li><b>Choose widths</b> — e.g. σ = average distance to the nearest few centres, or a single width for all units.</li>
-        <li><b>Train output weights</b> — the hidden layer is fixed, so the output is linear in w. Solve the linear least-squares problem (or use the delta rule).</li>
-      </ol>
-
-      <h4>Example</h4>
-      <p>For a 1-D input, two centres c1 = 2, c2 = 8 with σ = 1. An input x = 2.5 gives φ1 = exp(−0.25/2) = 0.882, φ2 = exp(−30.25/2) ≈ 0. The output is almost entirely determined by the first unit. This is why RBF networks are called <b>local</b> approximators.</p>
-
-      <h4>RBF vs MLP</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>RBF network</th><th>MLP</th></tr></thead>
-        <tbody>
-          <tr><td>Hidden units</td><td>Radial basis (Gaussian)</td><td>Sigmoid/ReLU neurons</td></tr>
-          <tr><td>Nature</td><td>Local approximation</td><td>Global approximation</td></tr>
-          <tr><td>Hidden layer training</td><td>Unsupervised (centres) or fixed</td><td>Supervised backpropagation</td></tr>
-          <tr><td>Output layer</td><td>Linear</td><td>Non-linear (usually)</td></tr>
-          <tr><td>Training speed</td><td>Fast (linear least squares)</td><td>Slower (gradient descent)</td></tr>
-          <tr><td>Data need</td><td>More units for high dimensions</td><td>Good for high dimensions</td></tr>
-          <tr><td>Interpretation</td><td>Centres are prototypes</td><td>Weights are distributed</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Advantages / disadvantages</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
-        <tbody>
-          <tr><td>Fast training; no backprop through hidden layer</td><td>Many hidden units in high dimensions</td></tr>
-          <tr><td>Good interpolation and function approximation</td><td>Choice of centres/widths is critical</td></tr>
-          <tr><td>Interpretable centres</td><td>Can overfit if too many units</td></tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6.5 ================= -->
-<section class="card" id="s65">
-  <h2>6.5 Activation functions</h2>
-  <p class="lead">The activation function decides whether a neuron fires and adds the non-linearity that makes deep learning possible.</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is an activation function? Explain with a suitable example. Discuss any two activation functions with example.</p>
-      <div class="badges"><span class="b marks">4–5 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q8(c) [5 — two functions] · 2023 Nov Q8(c) [4 — definition + example]</p>
-
-      <h4>Definition</h4>
-      <p>An activation function is a mathematical function applied to the weighted sum of a neuron. It decides the neuron’s output and introduces non-linearity.</p>
-      <div class="math">y = f( Σ w<sub>i</sub>x<sub>i</sub> + b )</div>
-
-      <h4>(i) Binary sigmoid</h4>
-      <div class="math">f(x) = 1 / (1 + e<sup>−x</sup>) &nbsp;&nbsp;&nbsp; range (0, 1)</div>
-      <ul>
-        <li>Smooth S-shape; differentiable everywhere.</li>
-        <li>Output can be read as a probability.</li>
-        <li>Used in binary classification output layers.</li>
-        <li>Problem: vanishing gradient for very large |x|.</li>
-      </ul>
-      <p><b>Example:</b> x = 0 → f = 0.5; x = 2 → f = 0.881; x = −2 → f = 0.119.</p>
-
-      <h4>(ii) Bipolar sigmoid (tanh)</h4>
-      <div class="math">f(x) = (1 − e<sup>−x</sup>) / (1 + e<sup>−x</sup>) = tanh(x/2) &nbsp;&nbsp; range (−1, 1)</div>
-      <ul>
-        <li>Zero-centred, so gradient updates are better conditioned than sigmoid.</li>
-        <li>Used in hidden layers of MLPs and RNNs.</li>
-        <li>Still saturates at the extremes.</li>
-      </ul>
-      <p><b>Example:</b> x = 0 → 0; x = 2 → 0.762; x = −2 → −0.762.</p>
-
-      <h4>Other common functions</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Function</th><th>Formula</th><th>Range</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td>Step</td><td>1 if x ≥ 0 else 0</td><td>{0,1}</td><td>Perceptron</td></tr>
-          <tr><td>Identity</td><td>x</td><td>(−∞,∞)</td><td>Regression output</td></tr>
-          <tr><td>ReLU</td><td>max(0,x)</td><td>[0,∞)</td><td>Deep hidden layers</td></tr>
-          <tr><td>Leaky ReLU</td><td>max(0.01x,x)</td><td>(−∞,∞)</td><td>Avoids dead neurons</td></tr>
-          <tr><td>Softmax</td><td>e<sup>x<sub>i</sub></sup>/Σe<sup>x<sub>j</sub></sup></td><td>(0,1), sums to 1</td><td>Multiclass output</td></tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What are the different activation functions used in neural networks?</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q7(b) [6]</p>
-
-      <h4>1. Identity / linear</h4>
-      <div class="math">f(x) = x</div>
-      <p>No non-linearity. Used only in the output layer of a regression network. A network with only linear activations collapses to a single linear function.</p>
-
-      <h4>2. Binary step / threshold</h4>
-      <div class="math">f(x) = 1 if x ≥ 0, else 0</div>
-      <p>The original perceptron. Not differentiable at 0, so it cannot be trained by gradient descent.</p>
-
-      <h4>3. Sigmoid</h4>
-      <div class="math">f(x) = 1/(1+e<sup>−x</sup>)</div>
-      <p>Squashes to (0,1). Good for probabilities; suffers from vanishing gradients and is not zero-centred.</p>
-
-      <h4>4. Tanh (bipolar sigmoid)</h4>
-      <div class="math">f(x) = tanh(x)</div>
-      <p>Squashes to (−1,1), zero-centred. Better than sigmoid for hidden layers, still saturates.</p>
-
-      <h4>5. ReLU</h4>
-      <div class="math">f(x) = max(0, x)</div>
-      <p>Cheap, non-saturating for positive x, sparse activation. The default for deep networks. Problem: “dead ReLU” if a unit always gets negative input.</p>
-
-      <h4>6. Leaky ReLU / Parametric ReLU</h4>
-      <div class="math">f(x) = x if x &gt; 0, else αx (α = 0.01)</div>
-      <p>Keeps a small gradient for negative inputs, so neurons do not die.</p>
-
-      <h4>7. Softmax</h4>
-      <div class="math">f(x<sub>i</sub>) = e<sup>x<sub>i</sub></sup> / Σ<sub>j</sub> e<sup>x<sub>j</sub></sup></div>
-      <p>Converts a vector of scores into a probability distribution that sums to 1. Used in the output layer of multiclass classifiers.</p>
-
-      <h4>8. Swish / GELU (modern)</h4>
-      <p>Smooth variants used in deep networks; often give slightly better accuracy than ReLU.</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Write a short note on the importance of activation functions in neural networks. What is the role of activation functions, and why are they necessary for learning?</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q7(a) [5] · 2025 Nov Q8(c) [6]</p>
-
-      <h4>Why they are necessary</h4>
-      <ol>
-        <li><b>Non-linearity</b> — without an activation, stacking layers is useless: a composition of linear functions is still linear. The network could only draw a straight boundary no matter how deep it is.</li>
-        <li><b>Decision making</b> — the activation decides whether a neuron fires and how strongly.</li>
-        <li><b>Bounded outputs</b> — sigmoid/tanh keep values in a fixed range, which stabilises training and allows probability interpretation.</li>
-        <li><b>Differentiability</b> — sigmoid, tanh and ReLU have gradients, so backpropagation can update the weights.</li>
-        <li><b>Feature selection</b> — ReLU outputs zero for negative inputs, producing sparse activations.</li>
-      </ol>
-
-      <h4>Role in learning</h4>
-      <p>The gradient of the loss with respect to a weight includes the derivative of the activation:</p>
-      <div class="math">∂L/∂w<sub>ij</sub> = δ<sub>j</sub> · x<sub>i</sub> &nbsp;&nbsp; where δ<sub>j</sub> contains f′(net<sub>j</sub>)</div>
-      <p>If f′ is zero (saturation or dead ReLU), the weight stops learning. This is why the choice of activation affects convergence speed and final accuracy.</p>
-
-      <h4>Choosing an activation</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Layer</th><th>Typical choice</th><th>Reason</th></tr></thead>
-        <tbody>
-          <tr><td>Hidden (deep)</td><td>ReLU / Leaky ReLU</td><td>Fast, no saturation for positive values</td></tr>
-          <tr><td>Hidden (RNN)</td><td>tanh</td><td>Zero-centred, bounded state</td></tr>
-          <tr><td>Binary output</td><td>Sigmoid</td><td>Probability of class 1</td></tr>
-          <tr><td>Multiclass output</td><td>Softmax</td><td>Probabilities sum to 1</td></tr>
-          <tr><td>Regression output</td><td>Identity</td><td>No range restriction</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <div class="note"><b>One-line answer:</b> activation functions inject non-linearity and differentiability. Without them, a deep network is just one linear model; with them, it can approximate complex functions and train by backpropagation.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6.6 ================= -->
-<section class="card" id="s66">
-  <h2>6.6 Recurrent neural networks (RNN)</h2>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s66">
+  <div class="prio">Priority 1 · ★★★★★ 6× repeated</div><h2>6.6 Recurrent neural networks (RNN)</h2>
   <p class="lead">An RNN has a memory: the hidden state from the previous time step is fed back into the current step.</p>
 
   <div class="qa">
@@ -978,7 +243,7 @@ No hidden layer: the expansion does the non-linear mapping.</div>
       <div class="tree">        y1            y2            y3
         ^             ^             ^
         |             |             |
-       [h1] -------> [h2] -------> [h3] ---> ...
+       [h1] -------&gt; [h2] -------&gt; [h3] ---&gt; ...
         ^             ^             ^
         |             |             |
        [x1]          [x2]          [x3]
@@ -1081,9 +346,8 @@ No hidden layer: the expansion does the non-linear mapping.</div>
   </div>
 </section>
 
-<!-- ================= 6.7 ================= -->
 <section class="card" id="s67">
-  <h2>6.7 Convolutional neural networks (CNN)</h2>
+  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>6.7 Convolutional neural networks (CNN)</h2>
   <p class="lead">A CNN learns local patterns with shared filters, then pools them and classifies with fully connected layers.</p>
 
   <div class="qa">
@@ -1099,7 +363,7 @@ No hidden layer: the expansion does the non-linear mapping.</div>
 
       <h4>Architecture</h4>
       <div class="tree">INPUT        CONV + ReLU      POOL        CONV + ReLU     POOL      FLATTEN    FC      SOFTMAX
-32x32x3 ---> 28x28x8 -----> 14x14x8 --> 12x12x16 ----> 6x6x16 --> vector --> 128 --> 10
+32x32x3 ---&gt; 28x28x8 -----&gt; 14x14x8 --&gt; 12x12x16 ----&gt; 6x6x16 --&gt; vector --&gt; 128 --&gt; 10
              (5x5 filter)   (2x2)       (3x3 filter)    (2x2)
    |             |               |            |              |          |        |        |
  raw pixels   edges          shrink      shapes         shrink     features  classify  probabilities</div>
@@ -1251,9 +515,743 @@ No hidden layer: the expansion does the non-linear mapping.</div>
   </div>
 </section>
 
-<!-- ================= 6.8 ================= -->
+<section class="card" id="s62">
+  <div class="prio">Priority 3 · ★★★ 3× repeated</div><h2>6.2 Perceptron, single-layer network and MLP</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>What is a multilayer perceptron? Describe it with a diagram. Describe a multi-layer neural network and explain why backpropagation is required.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q8(b) [6] · 2024 May Q7(a) [6] · 2025 Nov Q8(a) [6]</p>
+
+      <h4>Definition</h4>
+      <p>A Multilayer Perceptron (MLP) is a feed-forward neural network with at least one <b>hidden layer</b> between the input and output layers. Every neuron in one layer connects to every neuron in the next layer (fully connected).</p>
+
+      <h4>Diagram</h4>
+      <div class="tree">      INPUT          HIDDEN 1        HIDDEN 2        OUTPUT
+       x1 o --------- o ------------- o -------------\
+          \         / \             / \              \
+       x2 o ------ o   o --------- o   o ------------- o ----&gt; y1
+          \       / \ /             \ /              /
+       x3 o ---- o   o ------------- o   o ---------/
+          \     /     \             / \            /
+       x4 o -- o       o --------- o   o ---------/----&gt; y2
+             (weights)   (weights)     (weights)
+       Each layer is fully connected to the next.
+       Hidden layers use non-linear activation (ReLU/tanh).</div>
+
+      <h4>Forward pass</h4>
+      <div class="math">a<sup>(1)</sup> = f(W<sup>(1)</sup>x + b<sup>(1)</sup>)<br>
+      a<sup>(2)</sup> = f(W<sup>(2)</sup>a<sup>(1)</sup> + b<sup>(2)</sup>)<br>
+      ŷ = f(W<sup>(3)</sup>a<sup>(2)</sup> + b<sup>(3)</sup>)</div>
+
+      <h4>Why backpropagation is required</h4>
+      <ul>
+        <li>The output error depends on the hidden-layer weights, but there is <b>no direct target</b> for a hidden neuron.</li>
+        <li>Backpropagation uses the <b>chain rule</b> to send the error gradient backwards through the network.</li>
+        <li>It tells every hidden weight whether increasing or decreasing it will reduce the loss.</li>
+        <li>Without it, training a deep network by trial and error would be impossible.</li>
+        <li>The perceptron rule cannot be applied to hidden layers because it needs the target output of each neuron.</li>
+      </ul>
+
+      <h4>Why MLP is powerful</h4>
+      <ul>
+        <li>Non-linear activation → non-linear decision boundaries.</li>
+        <li>Universal approximation: one hidden layer with enough units can approximate any continuous function.</li>
+        <li>Learns hierarchical features.</li>
+        <li>Works for classification (softmax) and regression (linear output).</li>
+      </ul>
+
+      <h4>XOR example</h4>
+      <p>A single perceptron cannot separate XOR. An MLP with two hidden neurons can: the first hidden neuron detects “at least one input is 1” (OR), the second detects “both inputs are 1” (AND), and the output computes OR − AND, which is exactly XOR.</p>
+    </div>
+  </div>
+<div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain artificial neural network based on the perceptron concept with a diagram.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q8(a) [6]</p>
+
+      <h4>Perceptron model</h4>
+      <p>The perceptron is the simplest neuron. It computes a weighted sum of inputs, adds a bias, and applies a <b>step function</b>.</p>
+      <div class="math">z = Σ w<sub>i</sub> x<sub>i</sub> + b     
+      y = 1 if z ≥ 0, else 0</div>
+
+      <div class="tree">       x1 o ---- w1 ----\
+                          \
+       x2 o ---- w2 -------[ Σ + b ]----[ step ]----&gt; y (0/1)
+                          /
+       x3 o ---- w3 ----/
+                 bias = 1 ---- w0 ----/</div>
+
+      <h4>Learning rule</h4>
+      <p>For each training sample, if the output is wrong:</p>
+      <div class="math">w<sub>i</sub> ← w<sub>i</sub> + η (t − y) x<sub>i</sub><br>
+      b ← b + η (t − y)</div>
+      <p>where t = target, y = actual output, η = learning rate. If the prediction is correct, no update is made.</p>
+
+      <h4>Example — AND gate</h4>
+      <p>With weights w1 = w2 = 1 and bias = −1.5:</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>x1</th><th>x2</th><th>z = x1 + x2 − 1.5</th><th>y</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>0</td><td>−1.5</td><td>0</td></tr>
+          <tr><td>0</td><td>1</td><td>−0.5</td><td>0</td></tr>
+          <tr><td>1</td><td>0</td><td>−0.5</td><td>0</td></tr>
+          <tr><td>1</td><td>1</td><td>0.5</td><td>1</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Limitations</h4>
+      <ul>
+        <li>Only linearly separable problems; cannot solve XOR.</li>
+        <li>Step function is not differentiable → cannot use gradient descent.</li>
+        <li>No hidden layer, so no feature learning.</li>
+        <li>Sensitive to initial weights and learning rate.</li>
+      </ul>
+      <p class="small">The XOR limitation is why we need multilayer networks and backpropagation.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Obtain the output of neuron Y for the network shown in the figure using the activation function: (i) Binary sigmoidal (ii) Bipolar sigmoidal.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(b) [6]</p>
+
+      <h4>Given network (values read from the PDF figure)</h4>
+      <div class="tree">   x1 = 0.8  ---- w1 = 0.1 ----\
+                                  \
+   x2 = 0.6  ---- w2 = 0.3 -------[ Σ ]---- f(net) ----&gt; Y
+                                  /
+   x3 = 0.4  ---- w3 = -0.2 ----/
+                                  \
+   bias = 1.0 ---- w0 = 0.35 ----/</div>
+      <p class="small">The scanned figure is handwritten over a watermark. The standard reading is x1 = 0.8, x2 = 0.6, x3 = 0.4, w1 = 0.1, w2 = 0.3, w3 = −0.2, bias = 1.0 with weight 0.35. If your copy reads x2 = 0.9 and w2 = 0.2, the product is still 0.9×0.2 = 0.18, so the net input does not change. A note at the end covers the other reading x3 = 0.2.</p>
+
+      <h4>Step 1 — net input</h4>
+      <div class="math">net = Σ w<sub>i</sub>x<sub>i</sub> + w<sub>0</sub>·bias<br>
+      net = (0.1×0.8) + (0.3×0.6) + (−0.2×0.4) + (0.35×1.0)<br>
+      net = 0.08 + 0.18 − 0.08 + 0.35 = <b>0.53</b></div>
+
+      <h4>Step 2 — binary sigmoidal output</h4>
+      <div class="math">f(net) = 1 / (1 + e<sup>−net</sup>)<br>
+      f(0.53) = 1 / (1 + e<sup>−0.53</sup>)<br>
+      e<sup>−0.53</sup> = 0.5886<br>
+      f(0.53) = 1 / 1.5886 = <b>0.6295</b></div>
+
+      <h4>Step 3 — bipolar sigmoidal output</h4>
+      <div class="math">f(net) = (1 − e<sup>−net</sup>) / (1 + e<sup>−net</sup>)<br>
+      f(0.53) = (1 − 0.5886) / (1 + 0.5886) = 0.4114 / 1.5886 = <b>0.2590</b></div>
+      <p>Equivalently, bipolar sigmoid = 2 × binary sigmoid − 1 = 2(0.6295) − 1 = <b>0.2590</b>.</p>
+
+      <h4>Step 4 — result</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Activation</th><th>Formula</th><th>Output Y</th></tr></thead>
+        <tbody>
+          <tr><td>Binary sigmoidal</td><td>1/(1+e<sup>−net</sup>)</td><td><b>0.6295</b></td></tr>
+          <tr><td>Bipolar sigmoidal</td><td>(1−e<sup>−net</sup>)/(1+e<sup>−net</sup>)</td><td><b>0.2590</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>If your copy reads x2 = 0.4 and x3 = 0.4</h4>
+      <div class="math">net = 0.08 + 0.08 − 0.08 + 0.35 = <b>0.43</b><br>
+      binary sigmoid = 1/(1+e<sup>−0.43</sup>) = <b>0.6059</b><br>
+      bipolar sigmoid = <b>0.2117</b></div>
+      <p class="small">If your copy reads x3 = 0.2 (instead of 0.4), net = 0.08 + 0.18 − 0.04 + 0.35 = <b>0.57</b>, binary = <b>0.6388</b>, bipolar = <b>0.2775</b>. The method is identical; only the substituted inputs change. State your reading clearly so the examiner can follow.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Write a note on single-layer neural networks.</p>
+      <div class="badges"><span class="b marks">4 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(a) [4]</p>
+
+      <h4>Structure</h4>
+      <p>A single-layer network has an input layer and an output layer, with <b>no hidden layer</b>. Every input is connected to every output.</p>
+      <div class="tree">x1 o ----\
+x2 o ------&gt; [ output neuron ] ----&gt; y
+x3 o ----/
+(weights on each arrow)</div>
+
+      <h4>Properties</h4>
+      <ul>
+        <li>Computes a linear combination followed by an activation.</li>
+        <li>Can solve linearly separable problems (AND, OR, NOT).</li>
+        <li>Trained by the perceptron rule or the delta rule (LMS).</li>
+        <li>Fast and simple, but cannot solve XOR or learn complex patterns.</li>
+      </ul>
+
+      <h4>Use</h4>
+      <p>Binary classification with a linear boundary, simple logic gates, and as the output layer of a larger network.</p>
+    </div>
+  </div>
+
+  </section>
+
+<section class="card" id="s61">
+  <div class="prio">Priority 4 · ★★★ 3× repeated</div><h2>6.1 ANN basics and architecture</h2>
+  <p class="lead">An artificial neural network is a graph of simple processing units (neurons) connected by weighted links.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain ANN with its architecture. Describe the architecture of an artificial neural network.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [5] · 2023 May Q7(a) [5 — building blocks] · 2025 Nov Q7(a) [6]</p>
+
+      <h4>Definition</h4>
+      <p>An Artificial Neural Network (ANN) is a computational model inspired by the brain. It consists of many interconnected <b>neurons</b> arranged in layers. Each connection has a <b>weight</b>; each neuron adds a <b>bias</b>, computes a weighted sum, and passes it through an <b>activation function</b>.</p>
+      <div class="math">y = f( Σ<sub>i=1..n</sub> w<sub>i</sub> x<sub>i</sub> + b )</div>
+
+      <h4>Architecture</h4>
+      <div class="tree">        INPUT LAYER          HIDDEN LAYER(S)         OUTPUT LAYER
+          x1 o ---- w11 ----\
+             \               \
+          x2 o ---- w12 -------o h1 ---\
+             \               /          \
+          x3 o ---- w13 ----/            \      w_out
+             \                             o ---------&gt; y
+          x4 o ---- w14 -------o h2 ---/
+             \               /          /
+          x5 o ---- w15 ----/          /
+                          ...         /
+                        (weights)    /
+                                   (bias b)
+   Each circle = neuron; each arrow = weighted connection.
+   Hidden layers learn features; output layer gives the prediction.</div>
+
+      <h4>Layers</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Layer</th><th>Function</th></tr></thead>
+        <tbody>
+          <tr><td>Input layer</td><td>Receives the raw features; no computation (sometimes only scaling)</td></tr>
+          <tr><td>Hidden layer(s)</td><td>Learn intermediate features/representations; apply weights, bias and activation</td></tr>
+          <tr><td>Output layer</td><td>Produces the final prediction (class probability or regression value)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Learning</h4>
+      <p>Training adjusts the weights and biases to minimise a loss function. The most common method is <b>backpropagation with gradient descent</b>:</p>
+      <div class="math">w<sub>ij</sub> ← w<sub>ij</sub> − η ∂L/∂w<sub>ij</sub></div>
+
+      <h4>Why ANN works</h4>
+      <ul>
+        <li><b>Non-linear</b> — activation functions let it learn curved boundaries.</li>
+        <li><b>Universal approximator</b> — an MLP with enough hidden units can approximate any continuous function.</li>
+        <li><b>Feature learning</b> — hidden layers learn features automatically.</li>
+        <li><b>Parallel</b> — many neurons compute at once (GPU-friendly).</li>
+        <li><b>Robust</b> — distributed representation tolerates noise and partial inputs.</li>
+      </ul>
+
+      <h4>Applications</h4>
+      <p>Image classification, speech recognition, natural language processing, medical diagnosis, fraud detection, recommendation systems, forecasting.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What are the building blocks of a neural network? Elaborate.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q7(a) [5]</p>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Building block</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>Neuron (node/unit)</td><td>Receives inputs, computes weighted sum + bias, applies activation, sends output</td></tr>
+          <tr><td>Weights (w)</td><td>Learnable strength of each connection; the main memory of the network</td></tr>
+          <tr><td>Bias (b)</td><td>Shifts the activation; allows the neuron to fire even when all inputs are zero</td></tr>
+          <tr><td>Activation function</td><td>Adds non-linearity: step, sigmoid, tanh, ReLU, softmax</td></tr>
+          <tr><td>Layers</td><td>Input, hidden and output layers organise the neurons</td></tr>
+          <tr><td>Loss function</td><td>Measures the error: MSE for regression, cross-entropy for classification</td></tr>
+          <tr><td>Optimiser</td><td>Updates weights: gradient descent, SGD, Adam</td></tr>
+          <tr><td>Learning rate (η)</td><td>Controls the step size of each update</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Biological analogy</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Biological</th><th>Artificial</th></tr></thead>
+        <tbody>
+          <tr><td>Dendrites</td><td>Inputs</td></tr>
+          <tr><td>Cell body / nucleus</td><td>Node / summation</td></tr>
+          <tr><td>Synapse</td><td>Weight</td></tr>
+          <tr><td>Axon</td><td>Output</td></tr>
+          <tr><td>Firing threshold</td><td>Activation function</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Explain in brief the types of ANN based on layers.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(a) [5]</p>
+
+      <h4>1. Single-layer network</h4>
+      <p>Only an input layer and an output layer (no hidden layer). Each input connects directly to every output. It can solve only <b>linearly separable</b> problems (AND, OR — not XOR).</p>
+
+      <h4>2. Multi-layer network (MLP)</h4>
+      <p>One or more <b>hidden layers</b> between input and output. It can learn non-linear boundaries and approximate complex functions. It is trained by backpropagation.</p>
+
+      <h4>3. Deep neural network</h4>
+      <p>An MLP with many hidden layers (often dozens). Each layer learns increasingly abstract features: edges → shapes → objects. Used in image, speech and language tasks.</p>
+
+      <h4>4. Specialised layered architectures</h4>
+      <ul>
+        <li><b>CNN</b> — convolution + pooling layers for grid/image data.</li>
+        <li><b>RNN</b> — recurrent hidden state for sequences.</li>
+        <li><b>Autoencoder</b> — encoder/decoder layers for compression and denoising.</li>
+      </ul>
+
+      <h4>Comparison</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Type</th><th>Hidden layers</th><th>Decision boundary</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Single-layer</td><td>0</td><td>Linear</td><td>Perceptron, Adaline</td></tr>
+          <tr><td>Multi-layer</td><td>1–2</td><td>Non-linear</td><td>MLP for XOR</td></tr>
+          <tr><td>Deep</td><td>Many</td><td>Highly non-linear</td><td>ResNet, VGG</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s64">
+  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>6.4 FLANN and RBF networks</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain Radial Basis Function (RBF) networks in detail. Explain the building blocks of RBF networks.</p>
+      <div class="badges"><span class="b marks">6–8 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [8] · 2024 May Q8(a) [6 — building blocks] · 2025 Nov Q7(c) [6 — building blocks]</p>
+
+      <h4>Definition</h4>
+      <p>An RBF network is a feed-forward network with <b>three layers</b>: an input layer, a hidden layer of <b>radial basis functions</b>, and a linear output layer. Each hidden neuron responds strongly only when the input is close to its centre.</p>
+
+      <h4>Architecture</h4>
+      <div class="tree">   INPUT          RBF HIDDEN LAYER                 LINEAR OUTPUT
+    x1 o -------- φ1(x) = exp(-||x-c1||² / 2σ1²) ----\
+       \       /                                      \
+    x2 o ---- φ2(x) = exp(-||x-c2||² / 2σ2²) --------- o ----&gt; y = Σ wj φj(x) + b
+       \     /                                        /
+    x3 o -- φ3(x) = exp(-||x-c3||² / 2σ3²) ---------/
+              (each unit has a centre cj and width σj)</div>
+
+      <h4>Building blocks</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Block</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>Input layer</td><td>Receives the feature vector x</td></tr>
+          <tr><td>RBF hidden units</td><td>Compute φ<sub>j</sub>(x); each is a Gaussian “bump” centred at c<sub>j</sub></td></tr>
+          <tr><td>Centres c<sub>j</sub></td><td>Positions in input space where the unit is most active; found by k-means or random selection</td></tr>
+          <tr><td>Widths σ<sub>j</sub></td><td>Controls how far the influence of the unit reaches; often set by a heuristic (e.g. average distance to nearest centres)</td></tr>
+          <tr><td>Output weights w<sub>j</sub></td><td>Linear weights combined with the hidden activations; trained by least squares or LMS</td></tr>
+          <tr><td>Output bias b</td><td>Shifts the final output</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Gaussian RBF</h4>
+      <div class="math">φ<sub>j</sub>(x) = exp( − ‖x − c<sub>j</sub>‖² / (2σ<sub>j</sub>²) )<br>
+      y(x) = Σ<sub>j=1..m</sub> w<sub>j</sub> φ<sub>j</sub>(x) + b</div>
+      <p>φ is 1 at the centre and falls smoothly to 0 far away. The output is a weighted sum of bumps.</p>
+
+      <h4>Training (3 steps)</h4>
+      <ol>
+        <li><b>Choose centres</b> — k-means on the input data, or randomly pick m points.</li>
+        <li><b>Choose widths</b> — e.g. σ = average distance to the nearest few centres, or a single width for all units.</li>
+        <li><b>Train output weights</b> — the hidden layer is fixed, so the output is linear in w. Solve the linear least-squares problem (or use the delta rule).</li>
+      </ol>
+
+      <h4>Example</h4>
+      <p>For a 1-D input, two centres c1 = 2, c2 = 8 with σ = 1. An input x = 2.5 gives φ1 = exp(−0.25/2) = 0.882, φ2 = exp(−30.25/2) ≈ 0. The output is almost entirely determined by the first unit. This is why RBF networks are called <b>local</b> approximators.</p>
+
+      <h4>RBF vs MLP</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>RBF network</th><th>MLP</th></tr></thead>
+        <tbody>
+          <tr><td>Hidden units</td><td>Radial basis (Gaussian)</td><td>Sigmoid/ReLU neurons</td></tr>
+          <tr><td>Nature</td><td>Local approximation</td><td>Global approximation</td></tr>
+          <tr><td>Hidden layer training</td><td>Unsupervised (centres) or fixed</td><td>Supervised backpropagation</td></tr>
+          <tr><td>Output layer</td><td>Linear</td><td>Non-linear (usually)</td></tr>
+          <tr><td>Training speed</td><td>Fast (linear least squares)</td><td>Slower (gradient descent)</td></tr>
+          <tr><td>Data need</td><td>More units for high dimensions</td><td>Good for high dimensions</td></tr>
+          <tr><td>Interpretation</td><td>Centres are prototypes</td><td>Weights are distributed</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Advantages / disadvantages</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>Fast training; no backprop through hidden layer</td><td>Many hidden units in high dimensions</td></tr>
+          <tr><td>Good interpolation and function approximation</td><td>Choice of centres/widths is critical</td></tr>
+          <tr><td>Interpretable centres</td><td>Can overfit if too many units</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+<div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is a Functional Link Artificial Neural Network (FLANN)? Explain its merits over other ANNs.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q8(b) [5]</p>
+
+      <h4>Definition</h4>
+      <p>FLANN is a <b>single-layer</b> network with <b>no hidden layer</b>. Before learning, the input vector is expanded by a set of non-linear functions (the “functional expansion”). The expanded vector is then fed to a single-layer perceptron.</p>
+      <div class="math">Input: x = [x1, x2]<br>
+      Expansion: [x1, x2, sin(πx1), cos(πx1), sin(πx2), cos(πx2), x1x2, x1², x2², …]<br>
+      Output: y = f( Σ w<sub>j</sub> φ<sub>j</sub>(x) + b )</div>
+
+      <h4>Architecture</h4>
+      <div class="tree">x1 ----&gt; [ functional expansion ] ----&gt; φ1, φ2, ..., φm ----&gt; [ single-layer ] ----&gt; y
+x2 ----&gt; (sin, cos, products, powers)                              perceptron
+                                                                    (weights w)
+No hidden layer: the expansion does the non-linear mapping.</div>
+
+      <h4>Why it works</h4>
+      <p>A linear perceptron can only draw a straight boundary. By adding non-linear terms (sin, cos, products), the same linear learner can separate a non-linear region in the original space. The expansion raises the dimension; the learning stays linear and fast.</p>
+
+      <h4>Merits over other ANNs</h4>
+      <ul>
+        <li><b>No hidden layer</b> → much fewer weights and faster training.</li>
+        <li><b>Simple learning</b> — the delta rule / LMS converges quickly; no backpropagation.</li>
+        <li><b>Less computational cost</b> than MLP with the same approximation power for many problems.</li>
+        <li><b>No local minima</b> problem of deep networks for the single-layer case (convex loss).</li>
+        <li><b>Good for non-linear system identification</b>, function approximation and signal processing.</li>
+        <li><b>Fewer hyperparameters</b> — mainly the expansion order and learning rate.</li>
+      </ul>
+
+      <h4>Limitations</h4>
+      <ul>
+        <li>The expansion must be chosen by hand; too many terms cause overfitting.</li>
+        <li>Not as flexible as a deep network for complex image/text tasks.</li>
+        <li>Memory grows with the number of expansion terms.</li>
+      </ul>
+    </div>
+  </div>
+
+  </section>
+
+<section class="card" id="s65">
+  <div class="prio">Priority 6 · ★★ 2× repeated</div><h2>6.5 Activation functions</h2>
+  <p class="lead">The activation function decides whether a neuron fires and adds the non-linearity that makes deep learning possible.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is an activation function? Explain with a suitable example. Discuss any two activation functions with example.</p>
+      <div class="badges"><span class="b marks">4–5 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q8(c) [5 — two functions] · 2023 Nov Q8(c) [4 — definition + example]</p>
+
+      <h4>Definition</h4>
+      <p>An activation function is a mathematical function applied to the weighted sum of a neuron. It decides the neuron’s output and introduces non-linearity.</p>
+      <div class="math">y = f( Σ w<sub>i</sub>x<sub>i</sub> + b )</div>
+
+      <h4>(i) Binary sigmoid</h4>
+      <div class="math">f(x) = 1 / (1 + e<sup>−x</sup>)     range (0, 1)</div>
+      <ul>
+        <li>Smooth S-shape; differentiable everywhere.</li>
+        <li>Output can be read as a probability.</li>
+        <li>Used in binary classification output layers.</li>
+        <li>Problem: vanishing gradient for very large |x|.</li>
+      </ul>
+      <p><b>Example:</b> x = 0 → f = 0.5; x = 2 → f = 0.881; x = −2 → f = 0.119.</p>
+
+      <h4>(ii) Bipolar sigmoid (tanh)</h4>
+      <div class="math">f(x) = (1 − e<sup>−x</sup>) / (1 + e<sup>−x</sup>) = tanh(x/2)    range (−1, 1)</div>
+      <ul>
+        <li>Zero-centred, so gradient updates are better conditioned than sigmoid.</li>
+        <li>Used in hidden layers of MLPs and RNNs.</li>
+        <li>Still saturates at the extremes.</li>
+      </ul>
+      <p><b>Example:</b> x = 0 → 0; x = 2 → 0.762; x = −2 → −0.762.</p>
+
+      <h4>Other common functions</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Function</th><th>Formula</th><th>Range</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Step</td><td>1 if x ≥ 0 else 0</td><td>{0,1}</td><td>Perceptron</td></tr>
+          <tr><td>Identity</td><td>x</td><td>(−∞,∞)</td><td>Regression output</td></tr>
+          <tr><td>ReLU</td><td>max(0,x)</td><td>[0,∞)</td><td>Deep hidden layers</td></tr>
+          <tr><td>Leaky ReLU</td><td>max(0.01x,x)</td><td>(−∞,∞)</td><td>Avoids dead neurons</td></tr>
+          <tr><td>Softmax</td><td>e<sup>x<sub>i</sub></sup>/Σe<sup>x<sub>j</sub></sup></td><td>(0,1), sums to 1</td><td>Multiclass output</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Write a short note on the importance of activation functions in neural networks. What is the role of activation functions, and why are they necessary for learning?</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q7(a) [5] · 2025 Nov Q8(c) [6]</p>
+
+      <h4>Why they are necessary</h4>
+      <ol>
+        <li><b>Non-linearity</b> — without an activation, stacking layers is useless: a composition of linear functions is still linear. The network could only draw a straight boundary no matter how deep it is.</li>
+        <li><b>Decision making</b> — the activation decides whether a neuron fires and how strongly.</li>
+        <li><b>Bounded outputs</b> — sigmoid/tanh keep values in a fixed range, which stabilises training and allows probability interpretation.</li>
+        <li><b>Differentiability</b> — sigmoid, tanh and ReLU have gradients, so backpropagation can update the weights.</li>
+        <li><b>Feature selection</b> — ReLU outputs zero for negative inputs, producing sparse activations.</li>
+      </ol>
+
+      <h4>Role in learning</h4>
+      <p>The gradient of the loss with respect to a weight includes the derivative of the activation:</p>
+      <div class="math">∂L/∂w<sub>ij</sub> = δ<sub>j</sub> · x<sub>i</sub>    where δ<sub>j</sub> contains f′(net<sub>j</sub>)</div>
+      <p>If f′ is zero (saturation or dead ReLU), the weight stops learning. This is why the choice of activation affects convergence speed and final accuracy.</p>
+
+      <h4>Choosing an activation</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Layer</th><th>Typical choice</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>Hidden (deep)</td><td>ReLU / Leaky ReLU</td><td>Fast, no saturation for positive values</td></tr>
+          <tr><td>Hidden (RNN)</td><td>tanh</td><td>Zero-centred, bounded state</td></tr>
+          <tr><td>Binary output</td><td>Sigmoid</td><td>Probability of class 1</td></tr>
+          <tr><td>Multiclass output</td><td>Softmax</td><td>Probabilities sum to 1</td></tr>
+          <tr><td>Regression output</td><td>Identity</td><td>No range restriction</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note"><b>One-line answer:</b> activation functions inject non-linearity and differentiability. Without them, a deep network is just one linear model; with them, it can approximate complex functions and train by backpropagation.</div>
+    </div>
+  </div>
+<div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What are the different activation functions used in neural networks?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q7(b) [6]</p>
+
+      <h4>1. Identity / linear</h4>
+      <div class="math">f(x) = x</div>
+      <p>No non-linearity. Used only in the output layer of a regression network. A network with only linear activations collapses to a single linear function.</p>
+
+      <h4>2. Binary step / threshold</h4>
+      <div class="math">f(x) = 1 if x ≥ 0, else 0</div>
+      <p>The original perceptron. Not differentiable at 0, so it cannot be trained by gradient descent.</p>
+
+      <h4>3. Sigmoid</h4>
+      <div class="math">f(x) = 1/(1+e<sup>−x</sup>)</div>
+      <p>Squashes to (0,1). Good for probabilities; suffers from vanishing gradients and is not zero-centred.</p>
+
+      <h4>4. Tanh (bipolar sigmoid)</h4>
+      <div class="math">f(x) = tanh(x)</div>
+      <p>Squashes to (−1,1), zero-centred. Better than sigmoid for hidden layers, still saturates.</p>
+
+      <h4>5. ReLU</h4>
+      <div class="math">f(x) = max(0, x)</div>
+      <p>Cheap, non-saturating for positive x, sparse activation. The default for deep networks. Problem: “dead ReLU” if a unit always gets negative input.</p>
+
+      <h4>6. Leaky ReLU / Parametric ReLU</h4>
+      <div class="math">f(x) = x if x &gt; 0, else αx (α = 0.01)</div>
+      <p>Keeps a small gradient for negative inputs, so neurons do not die.</p>
+
+      <h4>7. Softmax</h4>
+      <div class="math">f(x<sub>i</sub>) = e<sup>x<sub>i</sub></sup> / Σ<sub>j</sub> e<sup>x<sub>j</sub></sup></div>
+      <p>Converts a vector of scores into a probability distribution that sums to 1. Used in the output layer of multiclass classifiers.</p>
+
+      <h4>8. Swish / GELU (modern)</h4>
+      <p>Smooth variants used in deep networks; often give slightly better accuracy than ReLU.</p>
+    </div>
+  </div>
+
+  </section>
+
+<section class="card" id="s63">
+  <div class="prio">Priority 7 · ★★ 2× repeated</div><h2>6.3 Backpropagation learning</h2>
+  <p class="lead">Backpropagation = forward pass to compute the error + backward pass to distribute the error gradient + gradient-descent weight update.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write a short note on the backpropagation network. Describe the characteristics of the backpropagation algorithm.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(c) [6] · 2023 May Q7(b) [6 — characteristics]</p>
+
+      <h4>Definition</h4>
+      <p>Backpropagation (backward propagation of errors) is the supervised learning algorithm for multilayer networks. It computes the gradient of the loss with respect to every weight using the <b>chain rule</b>, then updates the weights by gradient descent.</p>
+
+      <h4>Three stages</h4>
+      <ol>
+        <li><b>Forward pass</b> — feed the input, compute activations layer by layer, get the output.</li>
+        <li><b>Error computation</b> — compare output with target using a loss (MSE or cross-entropy).</li>
+        <li><b>Backward pass</b> — propagate the error gradient from output to input and update weights.</li>
+      </ol>
+
+      <h4>Key equations</h4>
+      <div class="math">Output delta:  δ<sub>o</sub> = (t − y) · f′(net<sub>o</sub>)<br>
+      Hidden delta:  δ<sub>h</sub> = f′(net<sub>h</sub>) · Σ<sub>k</sub> w<sub>hk</sub> δ<sub>k</sub><br>
+      Weight update:  w<sub>ij</sub> ← w<sub>ij</sub> + η δ<sub>j</sub> x<sub>i</sub><br>
+      Bias update:  b<sub>j</sub> ← b<sub>j</sub> + η δ<sub>j</sub></div>
+
+      <h4>Characteristics</h4>
+      <ul>
+        <li><b>Supervised</b> — needs input–target pairs.</li>
+        <li><b>Gradient-based</b> — uses the derivative of the activation function; it needs differentiable activations (sigmoid, tanh, ReLU).</li>
+        <li><b>Chain rule</b> — the error is propagated backwards layer by layer.</li>
+        <li><b>Iterative</b> — one pass is called an epoch; training repeats until convergence.</li>
+        <li><b>Local minima</b> — can get stuck in a local minimum because the loss is non-convex.</li>
+        <li><b>Learning rate sensitive</b> — too high diverges, too low is slow.</li>
+        <li><b>Credit assignment</b> — it solves the problem of assigning error blame to hidden neurons.</li>
+        <li><b>Convergence</b> — slower than the perceptron rule but much more powerful.</li>
+      </ul>
+
+      <h4>Advantages / disadvantages</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>Trains multilayer networks</td><td>Slow convergence</td></tr>
+          <tr><td>Generalises to unseen data</td><td>Can stuck in local minima</td></tr>
+          <tr><td>Works with many activation/loss functions</td><td>Needs careful learning-rate tuning</td></tr>
+          <tr><td>Efficient gradient computation</td><td>Can overfit; needs regularization</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain the concept of backpropagation in ANN with an example.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q8(a) [8]</p>
+
+      <h4>Network used</h4>
+      <p>2 inputs → 2 hidden neurons → 1 output. All neurons use the sigmoid function. Initial weights:</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Connection</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td>x1 → h1</td><td>0.5</td></tr>
+          <tr><td>x2 → h1</td><td>0.4</td></tr>
+          <tr><td>x1 → h2</td><td>−0.3</td></tr>
+          <tr><td>x2 → h2</td><td>0.2</td></tr>
+          <tr><td>h1 → y</td><td>0.6</td></tr>
+          <tr><td>h2 → y</td><td>−0.5</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Bias = 0 for all neurons. Input x = (1, 0), target t = 1, learning rate η = 0.5.</p>
+
+      <h4>Step 1 — forward pass</h4>
+      <div class="math">net<sub>h1</sub> = 0.5×1 + 0.4×0 = 0.5  →  h1 = σ(0.5) = 1/(1+e<sup>−0.5</sup>) = <b>0.6225</b><br>
+      net<sub>h2</sub> = −0.3×1 + 0.2×0 = −0.3  →  h2 = σ(−0.3) = <b>0.4256</b><br>
+      net<sub>y</sub> = 0.6×0.6225 + (−0.5)×0.4256 = 0.3735 − 0.2128 = 0.1607<br>
+      y = σ(0.1607) = <b>0.5401</b></div>
+      <p>Error = ½(t − y)² = ½(1 − 0.5401)² = <b>0.1058</b>.</p>
+
+      <h4>Step 2 — output delta</h4>
+      <div class="math">δ<sub>o</sub> = (t − y) · y(1 − y)<br>
+      δ<sub>o</sub> = (1 − 0.5401) × 0.5401 × 0.4599 = <b>0.1142</b></div>
+
+      <h4>Step 3 — hidden deltas</h4>
+      <div class="math">δ<sub>h1</sub> = δ<sub>o</sub> · w<sub>h1→y</sub> · h1(1 − h1)<br>
+      = 0.1142 × 0.6 × 0.6225 × 0.3775 = <b>0.0161</b><br><br>
+      δ<sub>h2</sub> = 0.1142 × (−0.5) × 0.4256 × 0.5744 = <b>−0.0140</b></div>
+
+      <h4>Step 4 — weight updates (η = 0.5)</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Weight</th><th>Formula</th><th>Change</th><th>New value</th></tr></thead>
+        <tbody>
+          <tr><td>w<sub>h1→y</sub></td><td>η δ<sub>o</sub> h1 = 0.5×0.1142×0.6225</td><td>+0.0356</td><td>0.6356</td></tr>
+          <tr><td>w<sub>h2→y</sub></td><td>η δ<sub>o</sub> h2 = 0.5×0.1142×0.4256</td><td>+0.0243</td><td>−0.4757</td></tr>
+          <tr><td>w<sub>x1→h1</sub></td><td>η δ<sub>h1</sub> x1 = 0.5×0.0161×1</td><td>+0.0081</td><td>0.5081</td></tr>
+          <tr><td>w<sub>x1→h2</sub></td><td>η δ<sub>h2</sub> x1 = 0.5×(−0.0140)×1</td><td>−0.0070</td><td>−0.3070</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Weights from x2 do not change because x2 = 0. This is a property of backprop: a zero input contributes zero gradient.</p>
+
+      <h4>Step 5 — new error</h4>
+      <div class="math">new h1 = σ(0.5081) = 0.6244, new h2 = σ(−0.3070) = 0.4239<br>
+      new y = σ(0.6356×0.6244 + (−0.4757)×0.4239) = σ(0.1952) = <b>0.5486</b><br>
+      new error = ½(1 − 0.5486)² = <b>0.1019</b></div>
+      <p>The error fell from 0.1058 to 0.1019 after one pass. Repeat forward + backward for many epochs; the error keeps decreasing.</p>
+
+      <div class="tip"><b>Exam tip:</b> the paper says “with example”, not “derive”. Draw the 2-2-1 network, write the forward equations, compute δ<sub>o</sub> and one hidden δ, update two weights, and state the error decreased. That is an 8-mark answer.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Compare the backpropagation network with the feed-forward network.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q8(a) [5]</p>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Feed-forward network</th><th>Backpropagation network</th></tr></thead>
+        <tbody>
+          <tr><td>Direction of flow</td><td>Input → hidden → output only</td><td>Forward pass + backward error flow</td></tr>
+          <tr><td>Learning</td><td>No built-in learning; weights are fixed or trained by another rule</td><td>Learns by gradient descent on the error</td></tr>
+          <tr><td>Error signal</td><td>Not propagated backwards</td><td>Propagated backwards layer by layer</td></tr>
+          <tr><td>Hidden weights</td><td>Cannot be trained directly</td><td>Trained using the chain rule</td></tr>
+          <tr><td>Activation</td><td>Can be linear or non-linear</td><td>Must be differentiable</td></tr>
+          <tr><td>Use</td><td>Inference / prediction</td><td>Training a multilayer network</td></tr>
+          <tr><td>Example</td><td>A trained MLP during prediction</td><td>The same MLP during training</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note"><b>Key line:</b> feed-forward describes the <em>architecture</em> (data flows one way); backpropagation describes the <em>training algorithm</em> (error flows backwards). A network can be feed-forward and still be trained by backpropagation.</div>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s68">
-  <h2>6.8 Personalized recommendation</h2>
+  <div class="prio">Priority 8 · ★ 1× repeated</div><h2>6.8 Personalized recommendation</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1306,6 +1304,14 @@ No hidden layer: the expansion does the non-linear mapping.</div>
   </div>
 </section>
 
+<!-- ================= 6.1 ================= -->
+<!-- ================= 6.2 ================= -->
+<!-- ================= 6.3 ================= -->
+<!-- ================= 6.4 ================= -->
+<!-- ================= 6.5 ================= -->
+<!-- ================= 6.6 ================= -->
+<!-- ================= 6.7 ================= -->
+<!-- ================= 6.8 ================= -->
 <!-- ================= CHEAT SHEET ================= -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet</h2>

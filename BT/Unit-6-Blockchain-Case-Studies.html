@@ -130,9 +130,15 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -140,16 +146,16 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <h3>BT · Unit 6</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s61">6.1 Prominent applications + architecture</a>
-    <a href="#s62">6.2 Retail</a>
-    <a href="#s63">6.3 Banking &amp; financial services</a>
-    <a href="#s64">6.4 Government</a>
-    <a href="#s65">6.5 Healthcare</a>
-    <a href="#s66">6.6 IoT</a>
-    <a href="#s67">6.7 Energy &amp; utilities</a>
-    <a href="#s68">6.8 Integration with other domains</a>
-    <a href="#s69">6.9 Voting</a>
-    <a href="#s610">6.10 Digital identity</a>
+    <a href="#s63">6.3 Banking &amp; financial services <span class="pill">6×</span></a>
+    <a href="#s64">6.4 Government <span class="pill">5×</span></a>
+    <a href="#s65">6.5 Healthcare <span class="pill">4×</span></a>
+    <a href="#s66">6.6 IoT <span class="pill">4×</span></a>
+    <a href="#s68">6.8 Integration with other domains <span class="pill">3×</span></a>
+    <a href="#s69">6.9 Voting <span class="pill">2×</span></a>
+    <a href="#s61">6.1 Prominent applications + architecture <span class="pill">1×</span></a>
+    <a href="#s62">6.2 Retail <span class="pill">1×</span></a>
+    <a href="#s67">6.7 Energy &amp; utilities <span class="pill">1×</span></a>
+    <a href="#s610">6.10 Digital identity <span class="pill">1×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -165,7 +171,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 6 — Blockchain Case Studies</h1>
-  <p><b>Subject:</b> Blockchain Technology (410243) &nbsp;·&nbsp; <b>Exam:</b> Saturday, 28 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Blockchain Technology (410243)  ·  <b>Exam:</b> Saturday, 28 Nov 2026, 2:00–4:30 PM  ·  <b>Max marks:</b> 70</p>
   <p>The easiest unit to score in — the same seven sectors repeat every year. Banking and financial services is the hottest (6 appearances), followed by government (5). Every 9-mark answer below has a use-case table and an architecture diagram.</p>
   <div class="meta">
     <span class="chip">📄 <b>5</b> end-sem papers analysed</span>
@@ -203,165 +209,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <div class="tip"><b>Marks strategy:</b> 5–6 marks = 5 use cases + 2 benefits. 9 marks = 6–8 use cases + a <b>sector architecture diagram</b> + benefits + 3 challenges. Every answer should mention one real platform (Hyperledger Fabric, R3 Corda, IBM Food Trust) to sound concrete.</div>
 </section>
 
-<!-- ================= 6.1 ================= -->
-<section class="card" id="s61">
-  <h2>6.1 Prominent blockchain applications + one architecture</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>List the prominent blockchain applications. Explain in detail any one with its architecture.</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q7(a) [9]</p>
-
-      <h4>1. The list (book's 14 + 3 useful additions)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>#</th><th>Application</th><th>What it does</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>Money transfers</td><td>Cross-border payments and remittances without correspondent banks.</td></tr>
-          <tr><td>2</td><td>Financial exchanges</td><td>Tokenised securities, trading and settlement.</td></tr>
-          <tr><td>3</td><td>Lending</td><td>DeFi lending pools and collateralised loans.</td></tr>
-          <tr><td>4</td><td>Insurance</td><td>Parametric policies and automatic claims.</td></tr>
-          <tr><td>5</td><td>Real estate</td><td>Land titles, fractional ownership, escrow.</td></tr>
-          <tr><td>6</td><td>Secure personal information</td><td>Digital identity and verifiable credentials.</td></tr>
-          <tr><td>7</td><td>Voting</td><td>Tamper-evident ballots and auditable tallies.</td></tr>
-          <tr><td>8</td><td>Government benefits</td><td>Direct benefit transfer without leakage.</td></tr>
-          <tr><td>9</td><td>Medical information</td><td>Patient-controlled health records.</td></tr>
-          <tr><td>10</td><td>Artist royalties</td><td>Automatic royalty split on every resale.</td></tr>
-          <tr><td>11</td><td>Non-fungible tokens</td><td>Proof of ownership for digital and physical assets.</td></tr>
-          <tr><td>12</td><td>Logistics and supply chain</td><td>Provenance, custody and recall tracking.</td></tr>
-          <tr><td>13</td><td>Secure IoT networks</td><td>Device identity and data integrity.</td></tr>
-          <tr><td>14</td><td>Data storage</td><td>Swarm/IPFS-style decentralised storage.</td></tr>
-          <tr><td>15</td><td>Energy trading</td><td>Peer-to-peer solar power and RECs.</td></tr>
-          <tr><td>16</td><td>Education credentials</td><td>Verifiable degrees and certificates.</td></tr>
-          <tr><td>17</td><td>Digital identity</td><td>Self-sovereign identity and KYC reuse.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>2. Chosen architecture — supply-chain traceability</h4>
-      <p><b>Problem:</b> a food or pharma batch passes through farmer → processor → shipper → warehouse → retailer. Each party keeps its own records, so provenance is slow to verify and recalls are expensive.</p>
-      <p><b>Solution:</b> a permissioned Hyperledger Fabric network with one node per participant and a smart contract for custody and payment.</p>
-
-      <pre class="tree">LAYER 4  Application / dashboard / mobile app
-         ┌──────────────────────────────────────────────┐
-         │ consumer QR scan · auditor view · alerts     │
-         └──────────────────────▲───────────────────────┘
-                                │ API
-LAYER 3  Blockchain network (Hyperledger Fabric)
-         ┌──────────────────────────────────────────────┐
-         │ supplier node · factory node · logistics     │
-         │ node · retailer node · regulator node        │
-         │ smart contract: provenance + payment + recall│
-         └──────────────────────▲───────────────────────┘
-                                │ events
-LAYER 2  Identity + sensors + oracles
-         ┌──────────────────────────────────────────────┐
-         │ MSP certificates · IoT temperature sensor    │
-         │ GPS · QR/RFID scanner · timestamp oracle     │
-         └──────────────────────▲───────────────────────┘
-                                │
-LAYER 1  Physical goods
-         ┌──────────────────────────────────────────────┐
-         │ farm batch → pallet → container → shelf      │
-         └──────────────────────────────────────────────┘</pre>
-
-      <h4>3. End-to-end flow</h4>
-      <ol>
-        <li>The farmer registers a batch; a unique ID and QR code are created on-chain.</li>
-        <li>Every custody change is a signed transaction; the IoT sensor posts temperature and location.</li>
-        <li>The smart contract checks that the temperature stayed within range. If not, it flags the batch.</li>
-        <li>The retailer scans the QR; the customer sees the full journey.</li>
-        <li>On delivery, the contract releases payment automatically.</li>
-        <li>For a recall, the regulator queries the batch ID and finds every affected pallet in seconds.</li>
-      </ol>
-
-      <h4>4. Benefits and challenges</h4>
-      <div class="grid2">
-        <div>
-          <h4 style="margin-top:0">Benefits</h4>
-          <ul>
-            <li>End-to-end provenance and faster recalls.</li>
-            <li>Less counterfeiting and paperwork.</li>
-            <li>Automatic payment and audit trail.</li>
-            <li>Shared truth between competitors.</li>
-            <li>Consumer trust through QR verification.</li>
-          </ul>
-        </div>
-        <div>
-          <h4 style="margin-top:0">Challenges</h4>
-          <ul>
-            <li>Every participant must digitise its records.</li>
-            <li>Sensor/oracle data can be wrong ("garbage in, garbage out").</li>
-            <li>Governance and cost-sharing across companies.</li>
-            <li>Privacy of commercial data.</li>
-            <li>Integration with legacy ERP systems.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="tip"><b>9-mark structure:</b> list of 10–12 applications (3) + one architecture diagram (3) + flow (1.5) + benefits/challenges (1.5).</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6.2 ================= -->
-<section class="card" id="s62">
-  <h2>6.2 Retail</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Explain blockchain applications in retail and banking services.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [6 — retail + banking; banking is in §6.3]</p>
-
-      <h4>1. Retail use cases</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Use case</th><th>How blockchain helps</th></tr></thead>
-        <tbody>
-          <tr><td><b>Provenance and anti-counterfeit</b></td><td>Each product batch has an on-chain ID; the customer scans a QR to see farm/factory, date and custody chain.</td></tr>
-          <tr><td><b>Supply-chain finance</b></td><td>A supplier can prove delivery and get paid early; the smart contract releases funds on receipt.</td></tr>
-          <tr><td><b>Loyalty programmes</b></td><td>Points become tokens that can be transferred or used across brands; no closed database.</td></tr>
-          <tr><td><b>Payments</b></td><td>Crypto or stablecoin checkout with lower card fees; no chargebacks.</td></tr>
-          <tr><td><b>Returns and warranty</b></td><td>A token proves ownership and warranty status; resale keeps the history.</td></tr>
-          <tr><td><b>Inventory visibility</b></td><td>Retailer, warehouse and shipper share one ledger, reducing stock-outs.</td></tr>
-          <tr><td><b>Artist royalties / NFTs</b></td><td>Creators earn a programmed percentage on every resale.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>2. Real example</h4>
-      <p><b>Walmart + IBM Food Trust:</b> tracing a packet of mangoes used to take about <b>7 days</b> of phone calls and paperwork. On the shared ledger it took about <b>2.2 seconds</b>. The same network is used for leafy greens and other suppliers.</p>
-
-      <h4>3. Benefits</h4>
-      <ul>
-        <li>Faster recalls and fewer counterfeit goods.</li>
-        <li>Lower payment and reconciliation cost.</li>
-        <li>Better customer trust through QR provenance.</li>
-        <li>New revenue from tokenised loyalty and NFTs.</li>
-      </ul>
-
-      <h4>4. Challenges</h4>
-      <ul>
-        <li>Small suppliers cannot afford the digitisation.</li>
-        <li>Data entry errors at the first mile.</li>
-        <li>Privacy of pricing and supplier terms.</li>
-        <li>No common standards across retailers.</li>
-      </ul>
-
-      <div class="note"><b>6-mark split for 2022 Q7a:</b> 3 retail use cases (3 marks) + 3 banking use cases (3 marks, from §6.3). Do not write only retail — the question says "retail &amp; banking".</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6.3 ================= -->
-<section class="card" id="s63">
-  <h2>6.3 Banking and financial services</h2>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s63">
+  <div class="prio">Priority 1 · ★★★★★ 6× repeated</div><h2>6.3 Banking and financial services</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -456,9 +305,8 @@ LAYER 1  Physical goods
   </div>
 </section>
 
-<!-- ================= 6.4 ================= -->
 <section class="card" id="s64">
-  <h2>6.4 Government sector</h2>
+  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>6.4 Government sector</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -560,9 +408,8 @@ LAYER 1  Physical goods
   </div>
 </section>
 
-<!-- ================= 6.5 ================= -->
 <section class="card" id="s65">
-  <h2>6.5 Healthcare</h2>
+  <div class="prio">Priority 3 · ★★★★ 4× repeated</div><h2>6.5 Healthcare</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -634,9 +481,8 @@ LAYER 1  Physical goods
   </div>
 </section>
 
-<!-- ================= 6.6 ================= -->
 <section class="card" id="s66">
-  <h2>6.6 Internet of Things (IoT)</h2>
+  <div class="prio">Priority 4 · ★★★★ 4× repeated</div><h2>6.6 Internet of Things (IoT)</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -714,77 +560,8 @@ LAYER 1  Physical goods
   </div>
 </section>
 
-<!-- ================= 6.7 ================= -->
-<section class="card" id="s67">
-  <h2>6.7 Energy and utilities</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q7</span>Explain the use of blockchain in energy and utilities.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [6]</p>
-
-      <h4>1. Why energy needs it</h4>
-      <p>Energy is moving from a few large power plants to millions of small producers (rooftop solar, batteries, EV chargers). Settling thousands of small trades through a utility's central billing system is slow and expensive. Blockchain gives a shared meter-to-money record.</p>
-
-      <h4>2. Five use cases (book)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Use case</th><th>How it works</th><th>Benefit</th></tr></thead>
-        <tbody>
-          <tr><td><b>Peer-to-peer energy trading</b></td><td>A rooftop-solar household sells excess units directly to a neighbour; the trade is recorded on-chain.</td><td>Better price for the seller, cheaper power for the buyer, less grid loss.</td></tr>
-          <tr><td><b>Renewable Energy Certificates (RECs)</b></td><td>Each MWh of green power gets a token; the token is traded and retired on-chain.</td><td>Stops double-counting and certificate fraud; instant verification.</td></tr>
-          <tr><td><b>Automatic settlement of trades</b></td><td>Smart contracts settle generation and consumption data from meters.</td><td>No clearing house or broker; faster, cheaper settlement.</td></tr>
-          <tr><td><b>Microgrids</b></td><td>A local grid balances generation and demand; the ledger records who supplied what.</td><td>Less transmission loss, reliable backup power.</td></tr>
-          <tr><td><b>Smart meters</b></td><td>Meters send signed readings at fixed intervals; billing is automatic.</td><td>Accurate bills, no estimated readings, tamper detection.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>3. Architecture — P2P solar trading</h4>
-      <pre class="tree"> rooftop solar + battery
-        │  smart meter reading (kWh)
-        ▼
- [ local energy market contract ]
-   ├── seller offers 5 kWh at ₹4/unit
-   ├── buyer accepts
-   ├── contract checks meter data
-   └── payment settles instantly
-        │
-        ▼
- distribution grid operator (read-only)
-        │
-        ▼
- REC token issued / retired</pre>
-
-      <h4>4. Benefits</h4>
-      <ul>
-        <li>Lower cost and faster settlement.</li>
-        <li>Transparent REC trading.</li>
-        <li>More renewable adoption.</li>
-        <li>Better grid balancing and outage response.</li>
-        <li>Audit trail for regulators.</li>
-      </ul>
-
-      <h4>5. Challenges</h4>
-      <ul>
-        <li>Meter and oracle trust.</li>
-        <li>Grid codes and utility regulation.</li>
-        <li>High transaction volume from smart meters.</li>
-        <li>Cybersecurity of critical infrastructure.</li>
-        <li>Consumer protection and price volatility.</li>
-      </ul>
-
-      <div class="tip"><b>6-mark structure:</b> one-line problem (1) + five use cases (4) + one benefit/challenge (1).</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6.8 ================= -->
 <section class="card" id="s68">
-  <h2>6.8 Blockchain integration with other domains</h2>
+  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>6.8 Blockchain integration with other domains</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -855,9 +632,8 @@ LAYER 1  Physical goods
   </div>
 </section>
 
-<!-- ================= 6.9 ================= -->
 <section class="card" id="s69">
-  <h2>6.9 Voting — challenges and benefits</h2>
+  <div class="prio">Priority 6 · ★★ 2× repeated</div><h2>6.9 Voting — challenges and benefits</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -936,9 +712,229 @@ LAYER 1  Physical goods
   </div>
 </section>
 
-<!-- ================= 6.10 ================= -->
+<section class="card" id="s61">
+  <div class="prio">Priority 7 · ★ 1× repeated</div><h2>6.1 Prominent blockchain applications + one architecture</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>List the prominent blockchain applications. Explain in detail any one with its architecture.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q7(a) [9]</p>
+
+      <h4>1. The list (book's 14 + 3 useful additions)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>#</th><th>Application</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Money transfers</td><td>Cross-border payments and remittances without correspondent banks.</td></tr>
+          <tr><td>2</td><td>Financial exchanges</td><td>Tokenised securities, trading and settlement.</td></tr>
+          <tr><td>3</td><td>Lending</td><td>DeFi lending pools and collateralised loans.</td></tr>
+          <tr><td>4</td><td>Insurance</td><td>Parametric policies and automatic claims.</td></tr>
+          <tr><td>5</td><td>Real estate</td><td>Land titles, fractional ownership, escrow.</td></tr>
+          <tr><td>6</td><td>Secure personal information</td><td>Digital identity and verifiable credentials.</td></tr>
+          <tr><td>7</td><td>Voting</td><td>Tamper-evident ballots and auditable tallies.</td></tr>
+          <tr><td>8</td><td>Government benefits</td><td>Direct benefit transfer without leakage.</td></tr>
+          <tr><td>9</td><td>Medical information</td><td>Patient-controlled health records.</td></tr>
+          <tr><td>10</td><td>Artist royalties</td><td>Automatic royalty split on every resale.</td></tr>
+          <tr><td>11</td><td>Non-fungible tokens</td><td>Proof of ownership for digital and physical assets.</td></tr>
+          <tr><td>12</td><td>Logistics and supply chain</td><td>Provenance, custody and recall tracking.</td></tr>
+          <tr><td>13</td><td>Secure IoT networks</td><td>Device identity and data integrity.</td></tr>
+          <tr><td>14</td><td>Data storage</td><td>Swarm/IPFS-style decentralised storage.</td></tr>
+          <tr><td>15</td><td>Energy trading</td><td>Peer-to-peer solar power and RECs.</td></tr>
+          <tr><td>16</td><td>Education credentials</td><td>Verifiable degrees and certificates.</td></tr>
+          <tr><td>17</td><td>Digital identity</td><td>Self-sovereign identity and KYC reuse.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Chosen architecture — supply-chain traceability</h4>
+      <p><b>Problem:</b> a food or pharma batch passes through farmer → processor → shipper → warehouse → retailer. Each party keeps its own records, so provenance is slow to verify and recalls are expensive.</p>
+      <p><b>Solution:</b> a permissioned Hyperledger Fabric network with one node per participant and a smart contract for custody and payment.</p>
+
+      <pre class="tree">LAYER 4  Application / dashboard / mobile app
+         ┌──────────────────────────────────────────────┐
+         │ consumer QR scan · auditor view · alerts     │
+         └──────────────────────▲───────────────────────┘
+                                │ API
+LAYER 3  Blockchain network (Hyperledger Fabric)
+         ┌──────────────────────────────────────────────┐
+         │ supplier node · factory node · logistics     │
+         │ node · retailer node · regulator node        │
+         │ smart contract: provenance + payment + recall│
+         └──────────────────────▲───────────────────────┘
+                                │ events
+LAYER 2  Identity + sensors + oracles
+         ┌──────────────────────────────────────────────┐
+         │ MSP certificates · IoT temperature sensor    │
+         │ GPS · QR/RFID scanner · timestamp oracle     │
+         └──────────────────────▲───────────────────────┘
+                                │
+LAYER 1  Physical goods
+         ┌──────────────────────────────────────────────┐
+         │ farm batch → pallet → container → shelf      │
+         └──────────────────────────────────────────────┘</pre>
+
+      <h4>3. End-to-end flow</h4>
+      <ol>
+        <li>The farmer registers a batch; a unique ID and QR code are created on-chain.</li>
+        <li>Every custody change is a signed transaction; the IoT sensor posts temperature and location.</li>
+        <li>The smart contract checks that the temperature stayed within range. If not, it flags the batch.</li>
+        <li>The retailer scans the QR; the customer sees the full journey.</li>
+        <li>On delivery, the contract releases payment automatically.</li>
+        <li>For a recall, the regulator queries the batch ID and finds every affected pallet in seconds.</li>
+      </ol>
+
+      <h4>4. Benefits and challenges</h4>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0">Benefits</h4>
+          <ul>
+            <li>End-to-end provenance and faster recalls.</li>
+            <li>Less counterfeiting and paperwork.</li>
+            <li>Automatic payment and audit trail.</li>
+            <li>Shared truth between competitors.</li>
+            <li>Consumer trust through QR verification.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0">Challenges</h4>
+          <ul>
+            <li>Every participant must digitise its records.</li>
+            <li>Sensor/oracle data can be wrong ("garbage in, garbage out").</li>
+            <li>Governance and cost-sharing across companies.</li>
+            <li>Privacy of commercial data.</li>
+            <li>Integration with legacy ERP systems.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tip"><b>9-mark structure:</b> list of 10–12 applications (3) + one architecture diagram (3) + flow (1.5) + benefits/challenges (1.5).</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s62">
+  <div class="prio">Priority 8 · ★ 1× repeated</div><h2>6.2 Retail</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Explain blockchain applications in retail and banking services.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [6 — retail + banking; banking is in §6.3]</p>
+
+      <h4>1. Retail use cases</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Use case</th><th>How blockchain helps</th></tr></thead>
+        <tbody>
+          <tr><td><b>Provenance and anti-counterfeit</b></td><td>Each product batch has an on-chain ID; the customer scans a QR to see farm/factory, date and custody chain.</td></tr>
+          <tr><td><b>Supply-chain finance</b></td><td>A supplier can prove delivery and get paid early; the smart contract releases funds on receipt.</td></tr>
+          <tr><td><b>Loyalty programmes</b></td><td>Points become tokens that can be transferred or used across brands; no closed database.</td></tr>
+          <tr><td><b>Payments</b></td><td>Crypto or stablecoin checkout with lower card fees; no chargebacks.</td></tr>
+          <tr><td><b>Returns and warranty</b></td><td>A token proves ownership and warranty status; resale keeps the history.</td></tr>
+          <tr><td><b>Inventory visibility</b></td><td>Retailer, warehouse and shipper share one ledger, reducing stock-outs.</td></tr>
+          <tr><td><b>Artist royalties / NFTs</b></td><td>Creators earn a programmed percentage on every resale.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>2. Real example</h4>
+      <p><b>Walmart + IBM Food Trust:</b> tracing a packet of mangoes used to take about <b>7 days</b> of phone calls and paperwork. On the shared ledger it took about <b>2.2 seconds</b>. The same network is used for leafy greens and other suppliers.</p>
+
+      <h4>3. Benefits</h4>
+      <ul>
+        <li>Faster recalls and fewer counterfeit goods.</li>
+        <li>Lower payment and reconciliation cost.</li>
+        <li>Better customer trust through QR provenance.</li>
+        <li>New revenue from tokenised loyalty and NFTs.</li>
+      </ul>
+
+      <h4>4. Challenges</h4>
+      <ul>
+        <li>Small suppliers cannot afford the digitisation.</li>
+        <li>Data entry errors at the first mile.</li>
+        <li>Privacy of pricing and supplier terms.</li>
+        <li>No common standards across retailers.</li>
+      </ul>
+
+      <div class="note"><b>6-mark split for 2022 Q7a:</b> 3 retail use cases (3 marks) + 3 banking use cases (3 marks, from §6.3). Do not write only retail — the question says "retail &amp; banking".</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s67">
+  <div class="prio">Priority 9 · ★ 1× repeated</div><h2>6.7 Energy and utilities</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q7</span>Explain the use of blockchain in energy and utilities.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span><span class="b unit">Unit 6</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [6]</p>
+
+      <h4>1. Why energy needs it</h4>
+      <p>Energy is moving from a few large power plants to millions of small producers (rooftop solar, batteries, EV chargers). Settling thousands of small trades through a utility's central billing system is slow and expensive. Blockchain gives a shared meter-to-money record.</p>
+
+      <h4>2. Five use cases (book)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Use case</th><th>How it works</th><th>Benefit</th></tr></thead>
+        <tbody>
+          <tr><td><b>Peer-to-peer energy trading</b></td><td>A rooftop-solar household sells excess units directly to a neighbour; the trade is recorded on-chain.</td><td>Better price for the seller, cheaper power for the buyer, less grid loss.</td></tr>
+          <tr><td><b>Renewable Energy Certificates (RECs)</b></td><td>Each MWh of green power gets a token; the token is traded and retired on-chain.</td><td>Stops double-counting and certificate fraud; instant verification.</td></tr>
+          <tr><td><b>Automatic settlement of trades</b></td><td>Smart contracts settle generation and consumption data from meters.</td><td>No clearing house or broker; faster, cheaper settlement.</td></tr>
+          <tr><td><b>Microgrids</b></td><td>A local grid balances generation and demand; the ledger records who supplied what.</td><td>Less transmission loss, reliable backup power.</td></tr>
+          <tr><td><b>Smart meters</b></td><td>Meters send signed readings at fixed intervals; billing is automatic.</td><td>Accurate bills, no estimated readings, tamper detection.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. Architecture — P2P solar trading</h4>
+      <pre class="tree"> rooftop solar + battery
+        │  smart meter reading (kWh)
+        ▼
+ [ local energy market contract ]
+   ├── seller offers 5 kWh at ₹4/unit
+   ├── buyer accepts
+   ├── contract checks meter data
+   └── payment settles instantly
+        │
+        ▼
+ distribution grid operator (read-only)
+        │
+        ▼
+ REC token issued / retired</pre>
+
+      <h4>4. Benefits</h4>
+      <ul>
+        <li>Lower cost and faster settlement.</li>
+        <li>Transparent REC trading.</li>
+        <li>More renewable adoption.</li>
+        <li>Better grid balancing and outage response.</li>
+        <li>Audit trail for regulators.</li>
+      </ul>
+
+      <h4>5. Challenges</h4>
+      <ul>
+        <li>Meter and oracle trust.</li>
+        <li>Grid codes and utility regulation.</li>
+        <li>High transaction volume from smart meters.</li>
+        <li>Cybersecurity of critical infrastructure.</li>
+        <li>Consumer protection and price volatility.</li>
+      </ul>
+
+      <div class="tip"><b>6-mark structure:</b> one-line problem (1) + five use cases (4) + one benefit/challenge (1).</div>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s610">
-  <h2>6.10 Digital identity — reducing cyber hacks</h2>
+  <div class="prio">Priority 10 · ★ 1× repeated</div><h2>6.10 Digital identity — reducing cyber hacks</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -1033,6 +1029,16 @@ LAYER 1  Physical goods
   </div>
 </section>
 
+<!-- ================= 6.1 ================= -->
+<!-- ================= 6.2 ================= -->
+<!-- ================= 6.3 ================= -->
+<!-- ================= 6.4 ================= -->
+<!-- ================= 6.5 ================= -->
+<!-- ================= 6.6 ================= -->
+<!-- ================= 6.7 ================= -->
+<!-- ================= 6.8 ================= -->
+<!-- ================= 6.9 ================= -->
+<!-- ================= 6.10 ================= -->
 <!-- ================= CHEAT SHEET ================= -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet</h2>

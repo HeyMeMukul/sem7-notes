@@ -140,9 +140,15 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -151,13 +157,13 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <h3>CSDF · Unit 3</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s31">3.1 What is computer forensics?</a>
-    <a href="#s32">3.2 Use in law enforcement</a>
-    <a href="#s33">3.3 Assistance to HR</a>
-    <a href="#s34">3.4 Computer forensics services</a>
-    <a href="#s35">3.5 Methodology &amp; specialists</a>
-    <a href="#s36">3.6 Types of technology</a>
-    <a href="#s37">3.7 Evidence capture &amp; recovery</a>
+    <a href="#s32">3.2 Use in law enforcement <span class="pill">5×</span></a>
+    <a href="#s34">3.4 Computer forensics services <span class="pill">5×</span></a>
+    <a href="#s37">3.7 Evidence capture &amp; recovery <span class="pill">5×</span></a>
+    <a href="#s35">3.5 Methodology &amp; specialists <span class="pill">4×</span></a>
+    <a href="#s36">3.6 Types of technology <span class="pill">3×</span></a>
+    <a href="#s31">3.1 What is computer forensics? <span class="pill">2×</span></a>
+    <a href="#s33">3.3 Assistance to HR <span class="pill">2×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -174,7 +180,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 3 — Introduction to Digital Forensics</h1>
-  <p><b>Subject:</b> Cyber Security and Digital Forensics (410244 C) &nbsp;·&nbsp; <b>Exam:</b> Tuesday, 01 Dec 2026, 2:00 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Cyber Security and Digital Forensics (410244 C)  ·  <b>Exam:</b> Tuesday, 01 Dec 2026, 2:00 PM  ·  <b>Max marks:</b> 70</p>
   <p>Every question below is taken <b>verbatim from the end-sem papers</b> of 2022 May, 2022 Nov, 2023 May, 2023 Nov, 2024 May, 2025 May and 2025 Nov. The 2022 May and 2022 Nov papers are identical, so both appearances are counted.</p>
   <div class="meta">
     <span class="chip">📄 <b>7</b> end-sem papers analysed</span>
@@ -214,9 +220,374 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <div class="tip"><b>Marks strategy:</b> 8–9 marks = named list (6–8 points) + 2 points explained in 3–4 lines each + one small table/diagram. Do not write only a list; SPPU examiners give step marks for the explanation of “any two”.</div>
 </section>
 
-<!-- ================= 3.1 ================= -->
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s32">
+  <div class="prio">Priority 1 · ★★★★★ 5× repeated</div><h2>3.2 Use of computer forensics in law enforcement</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>How does computer forensics help in law enforcement? / What is the role of digital forensics in law enforcement? / How do law enforcement computer forensic technologies aid in criminal investigation?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q1(a) [9, second part] · 2022 Nov Q1(a) [9, second part] · 2023 May Q2(b) [9] · 2025 May Q1(b) [9] · 2025 Nov Q2(b) [9]</p>
+
+      <h4>1. Core uses given in the book (§3.2)</h4>
+      <ol>
+        <li><b>Recovery of deleted files</b> — papers, graphics and images that the accused removed from the disk.</li>
+        <li><b>Search of unallocated space</b> — the part of the hard disk not used by current files, where old data usually survives.</li>
+        <li><b>Tracing artefacts</b> — the traces of information left behind by the operating system; specialists locate them and determine their significance.</li>
+        <li><b>Processing hidden files</b> — files the user cannot see but which contain data about previous usage; the file's date code shows when it was created, last edited, last accessed and destroyed.</li>
+        <li><b>Running string searches</b> — searching for an e-mail address or keyword when no e-mail client is visible.</li>
+      </ol>
+
+      <h4>2. Wider role in a criminal investigation</h4>
+      <ol>
+        <li><b>Support search and seizure</b> — tell the police which devices to seize and how to seize them without destroying evidence.</li>
+        <li><b>Reconstruct the crime</b> — build a timeline from file timestamps, browser history, logs and e-mail headers.</li>
+        <li><b>Link suspect, victim and device</b> — show that a particular account, USB drive or IP address was used.</li>
+        <li><b>Corroborate or disprove an alibi</b> — login records, GPS data and CCTV metadata.</li>
+        <li><b>Expert witness testimony</b> — explain technical findings in plain language to judges and jurors.</li>
+        <li><b>E-commerce and Internet-abuse investigation</b> — track browsing, e-mail and downloads on a suspect PC.</li>
+      </ol>
+
+      <h4>3. Technologies that aid the investigation</h4>
+      <ul>
+        <li><b>CFX-2000</b> (Computer Forensic Experiment 2000) — a framework for comprehensive forensic analysis. It uses integrated tools and the <b>SI-FI</b> (Synthesizing Information from Forensic Investigations) environment.</li>
+        <li><b>Digital Evidence Bags (DEBs)</b> — secure, tamper-proof containers in which SI-FI stores evidence; authorised users can reopen them while an audit trail maintains integrity.</li>
+        <li><b>NLECTC</b> — National Law Enforcement and Corrections Technology Center; evaluates commercial tools and publishes findings for police agencies.</li>
+        <li><b>Net Threat Analyzer</b> — tracks previous Internet browsing and e-mail activity on an individual PC.</li>
+        <li><b>Forensic workstations and write blockers</b> — image the drive without changing a single bit.</li>
+      </ul>
+
+      <div class="tip"><b>8–9 mark structure:</b> 5 book uses (3 marks) + 4 wider roles (3 marks) + 3 technologies such as CFX-2000 / SI-FI / DEBs (3 marks). This covers all three versions of the question with the same material.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s34">
+  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>3.4 Computer forensics services</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain in detail different Computer Forensics Services. / What are the typical services offered by computer forensics professionals? (explain any two)</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q1(b) [9] · 2022 Nov Q1(b) [9] · 2023 May Q1(a) [8, with military applications] · 2024 May Q1(a) [9, any two] · 2025 Nov Q2(a) [8, with health-care applications]</p>
+
+      <h4>1. The eight core services (book §3.4)</h4>
+      <ol>
+        <li><b>Data seizure</b> — the specialist acts as the representative of the authorities, locates evidence using knowledge of storage technology, and helps seize the equipment in line with legal rules.</li>
+        <li><b>Data duplication / preservation</b> — make an <b>identical copy</b> of the required data so that the original is not altered and the seizure does not put excessive strain on the responding party. All work is done on the duplicate.</li>
+        <li><b>Data recovery</b> — securely extract and analyse otherwise inaccessible material; recover lost evidence from damaged or corrupted storage.</li>
+        <li><b>Document searches</b> — speed up the discovery process and search more than 200,000 electronic documents quickly instead of waiting hours for them to be indexed.</li>
+        <li><b>Media conversion</b> — remove data from outdated and unreadable devices, convert it into usable forms and transfer it to fresh media for examination.</li>
+        <li><b>Expert witness services</b> — describe complicated technical procedures in a way that judges and jurors can grasp, and explain how the evidence was discovered and why it is relevant.</li>
+        <li><b>Computer evidence service options</b> — the service level is chosen to match the investigation (see the five options below).</li>
+        <li><b>Other distinctive services</b> — on-site seizure in criminal investigations, civil-litigation data analysis, employee-activity analysis, help with electronic discovery requests, reports in plain language, expert testimony, Windows and Mac support, quick turnaround.</li>
+      </ol>
+
+      <h4>2. Five service options</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Option</th><th>What the client gets</th></tr></thead>
+        <tbody>
+          <tr><td><b>Standard service</b></td><td>Work during regular business hours until the vital electronic evidence is located.</td></tr>
+          <tr><td><b>On-site service</b></td><td>Experts visit the client's place and provide full digital-evidence management; they make accurate copies of the storage media on site.</td></tr>
+          <tr><td><b>Emergency assistance</b></td><td>Top priority in the laboratory, uninterrupted work until the evidentiary goals are achieved.</td></tr>
+          <tr><td><b>Priority service</b></td><td>8:00 AM to 5:00 PM, Monday to Friday; turnaround is often cut in half.</td></tr>
+          <tr><td><b>Weekend service</b></td><td>8:00 AM to 5:00 PM on Saturday and Sunday, work continues until the goals are achieved.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>3. “Explain any two” — model answer</h4>
+      <p><b>(a) Data duplication / preservation.</b> The expert connects the seized drive through a <b>write blocker</b> and creates a <b>bit-stream image</b> — an exact sector-by-sector copy. A cryptographic hash (MD5/SHA-1) is calculated for the original and for the image. If both hashes match, the copy is verified. The original is sealed and stored; all analysis is done on the copy. This protects the evidence from alteration and allows the defence to re-examine the same data.</p>
+      <p><b>(b) Expert witness service.</b> The expert does not just hand over a technical report. He or she explains to the court, in ordinary language, what was seized, how the image was verified, what was found and what it means. The expert must be independent, must not overstate the findings, and must be ready to answer cross-examination on the tools and procedures used.</p>
+
+      <h4>4. Applications of digital forensics in military</h4>
+      <ul>
+        <li><b>National security and cyber defence</b> — attribution of attacks on defence networks.</li>
+        <li><b>Real-time tracking of hostile activity</b> — difficult when information is buried, deleted or manipulated.</li>
+        <li><b>CFX-2000 / SI-FI</b> — integrated framework and digital evidence bags for military investigators.</li>
+        <li><b>NLECTC collaboration</b> — evaluates commercially available technology and bridges research and practice.</li>
+        <li><b>Intelligence, insider-threat and espionage investigations</b> — recovering classified data that was copied or destroyed.</li>
+      </ul>
+
+      <h4>5. Applications of digital forensics in health care</h4>
+      <ul>
+        <li><b>Electronic health record (EHR) tampering</b> — who changed a diagnosis, prescription or timestamp.</li>
+        <li><b>Medical-device and hospital-network incidents</b> — ransomware, unauthorized access, device logs.</li>
+        <li><b>Insurance and medical-billing fraud</b> — false claims traced through system records.</li>
+        <li><b>HIPAA / privacy-breach investigation</b> — prove whether patient data was accessed or exported.</li>
+        <li><b>Malpractice and negligence cases</b> — reconstruct the order of clinical events from the record audit trail.</li>
+      </ul>
+
+      <div class="warn"><b>Source note:</b> the eight services and five options are from the Technical book §3.4. The <b>health-care</b> list is not developed in the book; it is answered from the syllabus application area and standard health-informatics practice. Keep it to five bullets in the exam.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s37">
+  <div class="prio">Priority 3 · ★★★★★ 5× repeated</div><h2>3.7 Computer forensics evidence and capture — data recovery &amp; backup</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is the significance of data recovery and backup? Explain various data recovery solutions. / Why is data backup &amp; recovery important? / Key components of a data recovery solution / Strategies for effective data backup</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q1(b) [9] · 2023 Nov Q2(b) [9] · 2024 May Q2(b) [9, key components] · 2025 May Q2(b) [9, strategies — any two] · 2025 Nov Q1(b) [9]</p>
+
+      <h4>1. Data recovery defined (book §3.8.1)</h4>
+      <p><b>Data recovery</b> is the process by which highly experienced engineers <b>analyse, remove and restore data from damaged media in an intact format</b>. It is feasible to recover deleted information, forgotten passwords and complete hard drives that were not physically destroyed.</p>
+      <p><b>Why it matters in forensics:</b> the evidence may be the only copy; the suspect may have deleted, formatted or partially overwritten it; the victim may need the data back to continue business. Recovery must be done on a copy, never on the original.</p>
+
+      <h4>2. Data backup and recovery — the concepts</h4>
+      <ul>
+        <li><b>Backup</b> — a second copy of data kept on separate media so that it can be restored after loss, corruption or disaster.</li>
+        <li><b>Recovery</b> — the process of restoring that copy and returning the system to service.</li>
+        <li><b>Backup window</b> — the time span available for backup; usually scheduled in non-production hours when network and CPU use are low.</li>
+        <li><b>Role of backup</b> — recover user mistakes, guarantee that good data was saved, and restore quickly after a failure.</li>
+      </ul>
+
+      <h4>3. Backup obstacles (§3.8.2)</h4>
+      <ol>
+        <li><b>Backup window</b> — the window is short and must fit into non-production time.</li>
+        <li><b>Network bandwidth</b> — a network may be unable to carry hundreds of terabytes in a short period.</li>
+        <li><b>Throughput of the system</b> — three bottlenecks: the source system's ability to send, the backup server's ability to accept from several systems, and the tape device's write speed.</li>
+        <li><b>Shortage of resources</b> — many businesses underspend on data security until it is too late.</li>
+      </ol>
+
+      <h4>4. Problems with today's backup (§3.8.5)</h4>
+      <ul>
+        <li><b>Network backup</b> degrades network performance because backup traffic shares the production network.</li>
+        <li><b>Offline backup</b> reduces data availability while the host is offline.</li>
+        <li><b>Live backup</b> keeps data available but places a significant load on the host.</li>
+        <li><b>Mirroring</b> does not protect against human error or duplication; it also costs about twice as much per megabyte as a single copy.</li>
+      </ul>
+
+      <h4>5. The data-recovery solution (§3.8.7)</h4>
+      <p>A complete solution has four parts:</p>
+      <ol>
+        <li><b>Shrinking expertise, growing complexity</b> — modern systems need monitoring, management and control; few new graduates have mainframe-level exposure.</li>
+        <li><b>Failures</b> — hardware failure, operator error, application logic error, natural disaster, flood, tornado, earthquake, tsunami and terrorism must all be planned for.</li>
+        <li><b>Downtime and budget</b> — fewer people, less processing power and less money; downtime is too costly to allow.</li>
+        <li><b>Recovery: think before backing up</b> — check that image copies, change accumulations and logs are accessible; do not let resources “fall between the gaps”; automate recovery where possible.</li>
+      </ol>
+
+      <h4>6. Components of the BRS (Back-up and Recovery Solution)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Component</th><th>Function</th></tr></thead>
+        <tbody>
+          <tr><td><b>Image Copy</b></td><td>Batch, on-line (fuzzy) or incremental image copies; Snapshot and Instant Snapshot; dynamic allocation of input/output data sets; compression; database-group processing.</td></tr>
+          <tr><td><b>Change Accumulation</b></td><td>Uses many engines, virtual storage and high-speed channels; overlaps work to save elapsed and CPU time.</td></tr>
+          <tr><td><b>Recovery</b></td><td>Recovers multiple databases with a single pass of the log and change-accumulation data sets; point-in-time (PIT) recovery.</td></tr>
+          <tr><td><b>Recovery Manager</b></td><td>Automates and synchronises recovery across applications; groups similar databases; cleans RECON data sets before restart.</td></tr>
+          <tr><td><b>Pointer Checking</b></td><td>Validates the authenticity of database pointers for full-function and Fast Path databases.</td></tr>
+          <tr><td><b>Index Rebuilds</b></td><td>Rebuilds a broken or destroyed index instead of retrieving it.</td></tr>
+          <tr><td><b>Recovery Advisor</b></td><td>Tracks the frequency of image copies and change accumulations; tells whether all databases are backed up.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>7. Strategies for effective backup (2025 May — any two in detail)</h4>
+      <p><b>(a) 3-2-1 rule.</b> Keep <b>three</b> copies of data, on <b>two</b> different types of media, with <b>one</b> copy off-site (or in the cloud). This protects against disk failure, ransomware and site disaster at the same time.</p>
+      <p><b>(b) Full + incremental + periodic test restore.</b> Take a full backup weekly, incremental backups daily, and <b>test the restore</b> at least once a month. A backup that has never been restored is only a hope. Record the restore test in the backup log.</p>
+      <ul>
+        <li>Encrypt backup media and restrict access; a stolen backup is a data breach.</li>
+        <li>Keep backups offline or immutable so ransomware cannot encrypt them.</li>
+        <li>Set a retention schedule that matches legal and business requirements.</li>
+        <li>Use snapshots for quick rollback and tape/cloud for long-term archive.</li>
+        <li>Document the backup window, job schedule and responsible person.</li>
+      </ul>
+
+      <div class="warn"><b>Source note:</b> data recovery, backup obstacles, problems and BRS components are from the Technical book §3.8. The <b>3-2-1 rule</b> and “test the restore” are industry best practice, not printed in the book; they are included because the 2025 May question asks for organisational strategies.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s35">
+  <div class="prio">Priority 4 · ★★★★ 4× repeated</div><h2>3.5 Professional methodology &amp; steps taken by specialists</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What are the benefits of professional forensics methodology? What are the steps taken by computer forensics specialists?</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★ 4×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 May Q2(b) [9] · 2022 Nov Q2(b) [9] · 2023 Nov Q1(a) [9, steps + any two in detail] · 2025 Nov Q1(a) [8, steps only]</p>
+
+      <h4>1. Benefits of professional forensics methodology (book §3.5)</h4>
+      <ol>
+        <li><b>No potential evidence is damaged, deleted or compromised</b> by the investigation technique.</li>
+        <li><b>No computer virus is injected</b> into the subject machine during analysis.</li>
+        <li>Extracted and relevant evidence is <b>managed appropriately and safeguarded</b> against mechanical or electromagnetic harm.</li>
+        <li>A <b>continuous chain of custody</b> is established and maintained.</li>
+        <li><b>Business activity is disrupted for a short time</b>, if at all.</li>
+        <li>Any <b>client–attorney information</b> obtained accidentally is treated ethically and lawfully, and is not disclosed.</li>
+      </ol>
+
+      <h4>2. Nine steps taken by a computer forensics specialist (book §3.6)</h4>
+      <ol>
+        <li><b>Protect</b> the subject computer system from alteration, damage, data corruption or virus introduction.</li>
+        <li><b>Discover</b> all files on the target system — extant normal files, removed but still existing files, hidden files, password-protected files and encrypted files.</li>
+        <li><b>Recover</b> all deleted data detected.</li>
+        <li><b>Reveal</b> the contents of secret folders and temporary or swap files used by applications and the operating system.</li>
+        <li><b>Access</b> the contents of password-protected or encrypted files.</li>
+        <li><b>Examine</b> all potentially relevant data — including unallocated disk space and file slack (the remnant at the end of the last assigned cluster).</li>
+        <li><b>Print</b> an overall study of the system and a list of all potentially relevant files and data identified.</li>
+        <li><b>Provide an opinion</b> on the system layout, file structures, authorship information, attempts to hide/erase/protect/encrypt information, and anything else significant.</li>
+        <li><b>Provide expert consultation and/or testimony</b> as needed.</li>
+      </ol>
+
+      <h4>3. “Explain any two in detail”</h4>
+      <p><b>(a) Discover.</b> The examiner does not look only at visible files. He or she enumerates:</p>
+      <ul>
+        <li><b>Extant files</b> — normal files in the directory tree.</li>
+        <li><b>Removed but still existing files</b> — directory entries deleted by the OS but whose clusters are not yet overwritten.</li>
+        <li><b>Hidden files</b> — marked hidden in the file system attributes.</li>
+        <li><b>Password-protected and encrypted files</b> — identified by extension, file header and entropy; opened with the owner's password or a recovery tool.</li>
+      </ul>
+      <p><b>(b) Examine.</b> The examiner studies the contents and context of each relevant file. This includes <b>unallocated space</b> (clusters not assigned to any file) and <b>file slack</b> (the unused tail of the last cluster, which can contain fragments of an earlier file). The aim is to decide which data is relevant and to record what was found and where.</p>
+
+      <div class="tip"><b>Memory hook — P D R R A E P P E:</b> <b>P</b>rotect, <b>D</b>iscover, <b>R</b>ecover, <b>R</b>eveal, <b>A</b>ccess, <b>E</b>xamine, <b>P</b>rint, <b>P</b>rovide opinion, <b>E</b>xpert testimony. Nine steps = 9 marks; write one line each and you are done.</div>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s36">
+  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>3.6 Types of computer forensics technology</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What are the various business-oriented digital forensic techniques? / In what ways can business benefit from computer forensics technology? / What specific technologies are utilized in the field of business computer forensics?</p>
+      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q2(a) [8, techniques] · 2023 Nov Q1(b) [9, benefits] · 2024 May Q1(b) [9, technologies — any two]</p>
+
+      <h4>1. Business-oriented techniques</h4>
+      <ol>
+        <li><b>Remote monitoring of target computers</b> — DIRT (Data Interception by Remote Transmission) monitors activity from a remote command centre without physical access; it can capture and protect evidence before the suspect is approached.</li>
+        <li><b>Trackable electronic documents</b> — BAIT (Binary Audit Identification Transfer) marks a document so that unauthorized access, download or copying is recorded, and the document can be traced to the person holding it.</li>
+        <li><b>Theft-recovery software</b> — PC PhoneHome reports the location of a stolen laptop or PC to a 24-hour command centre, which works with local police.</li>
+        <li><b>E-discovery and document review</b> — search large mailboxes and file shares for relevant documents in civil litigation.</li>
+        <li><b>Employee-activity analysis</b> — browser history, USB history, e-mail and file access on a business PC.</li>
+        <li><b>Keystroke and screen monitoring</b> — used only under a written, signed monitoring policy.</li>
+        <li><b>Forensic imaging and hash verification</b> — take a verified copy before the machine is rebuilt or returned.</li>
+      </ol>
+
+      <h4>2. How business benefits</h4>
+      <ul>
+        <li><b>Protects intellectual property and trade secrets</b> — proves what was taken and by whom.</li>
+        <li><b>Detects fraud and financial manipulation</b> — reconstructs transactions from accounting and e-mail records.</li>
+        <li><b>Handles employee misconduct</b> — gives defensible evidence for disciplinary action and reduces wrongful-termination risk.</li>
+        <li><b>Supports due diligence</b> — in mergers, acquisitions and vendor disputes.</li>
+        <li><b>Reduces legal cost</b> — targeted e-discovery instead of reviewing every document.</li>
+        <li><b>Protects reputation and customer trust</b> — a proper investigation limits the damage of a breach.</li>
+        <li><b>Meets compliance obligations</b> — audit trails, retention and breach-notification duties.</li>
+        <li><b>Recovers stolen devices and data</b> — theft-recovery technology.</li>
+      </ul>
+
+      <h4>3. Three specific technologies (any two for 9 marks)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Technology</th><th>Full form</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><b>DIRT</b></td><td>Data Interception by Remote Transmission</td><td>Stealth monitoring of all activity on one or more target computers from a remote command centre; captures evidence before physical access; protects suspect sites.</td></tr>
+          <tr><td><b>BAIT</b></td><td>Binary Audit Identification Transfer</td><td>Creates trackable electronic documents; records who accessed, downloaded or copied them, and where they are; supports chain of custody and command.</td></tr>
+          <tr><td><b>PC PhoneHome</b></td><td>—</td><td>Tracks and locates a lost or stolen computer anywhere; alerts a 24-hour command centre that works with local police to recover it.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p><b>Other business forensic services:</b> password and file recovery, recovery of deleted and hidden files, decryption of files and e-mail, e-mail monitoring and authentication, Internet-activity identification, computer-usage supervision, remote network monitoring, tracking stolen electronic files, honeytrap operations, identification of unauthorized software and users.</p>
+
+      <div class="note"><b>Cost argument (good closing line):</b> replacing a stolen computer costs hardware, data re-creation, lost production, investigation, insurance and lost customer trust. Forensic technology is cheaper than the loss it prevents.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>How does computer forensics technology vary across different sectors like military, law enforcement and business?</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [9]</p>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Military</th><th>Law enforcement</th><th>Business</th></tr></thead>
+        <tbody>
+          <tr><td>Goal</td><td>National security, attribution, force protection</td><td>Prosecution, conviction, public safety</td><td>Protect assets, resolve disputes, recover stolen data</td></tr>
+          <tr><td>Typical case</td><td>Cyber attack on defence network, espionage, insider threat</td><td>Fraud, hacking, child abuse material, drug trafficking, e-commerce crime</td><td>Employee misconduct, data theft, IP leakage, litigation</td></tr>
+          <tr><td>Legal basis</td><td>Defence and intelligence law; security clearance</td><td>Search warrant, criminal procedure, chain of custody</td><td>Company policy, employment contract, civil discovery</td></tr>
+          <tr><td>Signature technology</td><td>CFX-2000, SI-FI, digital evidence bags, real-time hostile-activity tracking</td><td>Forensic workstations, Net Threat Analyzer, EnCase/FTK, write blockers</td><td>DIRT remote monitoring, BAIT trackable documents, PC PhoneHome</td></tr>
+          <tr><td>Speed vs depth</td><td>Speed and real-time tracking are critical</td><td>Depth and admissibility are critical</td><td>Least disruption to business; speed and confidentiality</td></tr>
+          <tr><td>Reporting</td><td>Classified intelligence report</td><td>Court report and expert testimony</td><td>Management/HR report, sometimes civil court</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Detail — military technology (§3.7.1)</h4>
+      <ul>
+        <li>Primary goals: <b>speedy finding of evidence</b>, evaluation of the possible impact of harmful behaviour on the victim, and assessment of the perpetrator's purpose and identity.</li>
+        <li><b>Real-time tracking</b> of hostile activity is hard when information is deliberately buried, deleted or manipulated.</li>
+        <li><b>NLECTC</b> (National Law Enforcement and Corrections Technology Center) works with criminal-justice experts to identify technology needs.</li>
+        <li><b>CFX-2000</b> — framework for comprehensive forensic analysis using commercial off-the-shelf tools and R&amp;D prototypes; includes the SI-FI integration environment.</li>
+        <li><b>Digital Evidence Bags (DEBs)</b> — secure, tamper-proof containers; automated auditing preserves integrity when evidence is reopened.</li>
+        <li>Research goal: determine the <b>motive, purpose, target, sophistication, identity and location</b> of cyber criminals and terrorists.</li>
+      </ul>
+
+      <h4>Detail — law enforcement technology (§3.7.2)</h4>
+      <ul>
+        <li><b>E-commerce investigations</b> — Net Threat Analyzer tracks previous browsing and e-mail activity on a PC; it is free to law enforcement and school administrators.</li>
+        <li><b>Programs with two purposes</b> — multiple processes can run at once; the examiner must know these programs.</li>
+        <li><b>Search techniques for text</b> — strings in files, file slack, unallocated space and Windows swap files.</li>
+        <li><b>Fuzzy-logic tools</b> — identify unknown text when the examiner does not know exactly what is stored.</li>
+        <li><b>Disk structure / data encryption / diskette-to-computer matching / data compression / deleted files</b> — the seven core skills listed in the book.</li>
+        <li><b>Internet-abuse detection</b>, <b>memory-resident programs and the boot process</b> — detect hidden software that records keystrokes or hides data.</li>
+      </ul>
+
+      <div class="note"><b>Table + two paragraphs is the ideal 9-mark answer.</b> The comparison table alone earns about 5 marks; the military and law-enforcement detail earns the rest.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>What are some examples of technologies used in computer forensic investigation? Explain any two.</p>
+      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q2(a) [9]</p>
+
+      <p><b>Answer plan:</b> name six technologies in one line each, then explain any two in a short paragraph. The question is Unit-3 “types of technology”, not the Unit-6 tool list — keep the examples broad.</p>
+
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Technology</th><th>Use in investigation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Forensic imaging / bit-stream copy</b></td><td>Exact sector-by-sector copy of a disk; analysis is done on the copy, original is preserved.</td></tr>
+          <tr><td><b>Write blocker</b></td><td>Hardware or software that blocks write commands so the evidence disk is never modified.</td></tr>
+          <tr><td><b>Hashing (MD5 / SHA-1)</b></td><td>Digital fingerprint used to prove that the image and the original are identical.</td></tr>
+          <tr><td><b>Forensic suite (FTK, EnCase, ProDiscover)</b></td><td>Acquisition, keyword search, deleted-file recovery, timeline and report generation.</td></tr>
+          <tr><td><b>Network monitoring / packet capture</b></td><td>tcpdump, Wireshark, Snort — reconstruct a network attack.</td></tr>
+          <tr><td><b>Steganography and encryption detection</b></td><td>Detect data hidden inside images or encrypted containers.</td></tr>
+          <tr><td><b>Mobile and GPS acquisition kit</b></td><td>Extract call logs, messages and location data from phones and GPS units.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p><b>(a) Forensic imaging with hash verification.</b> The examiner connects the suspect drive to a write blocker and runs an imaging tool. The tool reads every sector — allocated, unallocated and slack — and writes a bit-stream image. It computes an MD5 or SHA-1 hash of both the source and the image. If the two hashes are equal, the image is a true copy. The original is sealed; the image is mounted read-only for analysis. This is the foundation of every other technique.</p>
+      <p><b>(b) Forensic suite (FTK / EnCase).</b> The suite indexes the image, recovers deleted files, filters by file type and date, searches keywords, shows e-mail and Internet history, and produces a court-ready report. It also keeps an audit log of every action, which supports the chain of custody.</p>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s31">
-  <h2>3.1 What is computer forensics?</h2>
+  <div class="prio">Priority 6 · ★★ 2× repeated</div><h2>3.1 What is computer forensics?</h2>
   <p class="lead">Book: §3.1–3.2. The definition, aliases and law-enforcement uses come directly from the Technical book.</p>
 
   <div class="qa">
@@ -301,54 +672,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </section>
 
-<!-- ================= 3.2 ================= -->
-<section class="card" id="s32">
-  <h2>3.2 Use of computer forensics in law enforcement</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>How does computer forensics help in law enforcement? / What is the role of digital forensics in law enforcement? / How do law enforcement computer forensic technologies aid in criminal investigation?</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 May Q1(a) [9, second part] · 2022 Nov Q1(a) [9, second part] · 2023 May Q2(b) [9] · 2025 May Q1(b) [9] · 2025 Nov Q2(b) [9]</p>
-
-      <h4>1. Core uses given in the book (§3.2)</h4>
-      <ol>
-        <li><b>Recovery of deleted files</b> — papers, graphics and images that the accused removed from the disk.</li>
-        <li><b>Search of unallocated space</b> — the part of the hard disk not used by current files, where old data usually survives.</li>
-        <li><b>Tracing artefacts</b> — the traces of information left behind by the operating system; specialists locate them and determine their significance.</li>
-        <li><b>Processing hidden files</b> — files the user cannot see but which contain data about previous usage; the file's date code shows when it was created, last edited, last accessed and destroyed.</li>
-        <li><b>Running string searches</b> — searching for an e-mail address or keyword when no e-mail client is visible.</li>
-      </ol>
-
-      <h4>2. Wider role in a criminal investigation</h4>
-      <ol>
-        <li><b>Support search and seizure</b> — tell the police which devices to seize and how to seize them without destroying evidence.</li>
-        <li><b>Reconstruct the crime</b> — build a timeline from file timestamps, browser history, logs and e-mail headers.</li>
-        <li><b>Link suspect, victim and device</b> — show that a particular account, USB drive or IP address was used.</li>
-        <li><b>Corroborate or disprove an alibi</b> — login records, GPS data and CCTV metadata.</li>
-        <li><b>Expert witness testimony</b> — explain technical findings in plain language to judges and jurors.</li>
-        <li><b>E-commerce and Internet-abuse investigation</b> — track browsing, e-mail and downloads on a suspect PC.</li>
-      </ol>
-
-      <h4>3. Technologies that aid the investigation</h4>
-      <ul>
-        <li><b>CFX-2000</b> (Computer Forensic Experiment 2000) — a framework for comprehensive forensic analysis. It uses integrated tools and the <b>SI-FI</b> (Synthesizing Information from Forensic Investigations) environment.</li>
-        <li><b>Digital Evidence Bags (DEBs)</b> — secure, tamper-proof containers in which SI-FI stores evidence; authorised users can reopen them while an audit trail maintains integrity.</li>
-        <li><b>NLECTC</b> — National Law Enforcement and Corrections Technology Center; evaluates commercial tools and publishes findings for police agencies.</li>
-        <li><b>Net Threat Analyzer</b> — tracks previous Internet browsing and e-mail activity on an individual PC.</li>
-        <li><b>Forensic workstations and write blockers</b> — image the drive without changing a single bit.</li>
-      </ul>
-
-      <div class="tip"><b>8–9 mark structure:</b> 5 book uses (3 marks) + 4 wider roles (3 marks) + 3 technologies such as CFX-2000 / SI-FI / DEBs (3 marks). This covers all three versions of the question with the same material.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 3.3 ================= -->
 <section class="card" id="s33">
-  <h2>3.3 Computer forensics assistance to Human Resources</h2>
+  <div class="prio">Priority 7 · ★★ 2× repeated</div><h2>3.3 Computer forensics assistance to Human Resources</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -400,332 +725,13 @@ HR disciplinary hearing / labour court / criminal complaint</code></pre>
   </div>
 </section>
 
+<!-- ================= 3.1 ================= -->
+<!-- ================= 3.2 ================= -->
+<!-- ================= 3.3 ================= -->
 <!-- ================= 3.4 ================= -->
-<section class="card" id="s34">
-  <h2>3.4 Computer forensics services</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain in detail different Computer Forensics Services. / What are the typical services offered by computer forensics professionals? (explain any two)</p>
-      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 May Q1(b) [9] · 2022 Nov Q1(b) [9] · 2023 May Q1(a) [8, with military applications] · 2024 May Q1(a) [9, any two] · 2025 Nov Q2(a) [8, with health-care applications]</p>
-
-      <h4>1. The eight core services (book §3.4)</h4>
-      <ol>
-        <li><b>Data seizure</b> — the specialist acts as the representative of the authorities, locates evidence using knowledge of storage technology, and helps seize the equipment in line with legal rules.</li>
-        <li><b>Data duplication / preservation</b> — make an <b>identical copy</b> of the required data so that the original is not altered and the seizure does not put excessive strain on the responding party. All work is done on the duplicate.</li>
-        <li><b>Data recovery</b> — securely extract and analyse otherwise inaccessible material; recover lost evidence from damaged or corrupted storage.</li>
-        <li><b>Document searches</b> — speed up the discovery process and search more than 200,000 electronic documents quickly instead of waiting hours for them to be indexed.</li>
-        <li><b>Media conversion</b> — remove data from outdated and unreadable devices, convert it into usable forms and transfer it to fresh media for examination.</li>
-        <li><b>Expert witness services</b> — describe complicated technical procedures in a way that judges and jurors can grasp, and explain how the evidence was discovered and why it is relevant.</li>
-        <li><b>Computer evidence service options</b> — the service level is chosen to match the investigation (see the five options below).</li>
-        <li><b>Other distinctive services</b> — on-site seizure in criminal investigations, civil-litigation data analysis, employee-activity analysis, help with electronic discovery requests, reports in plain language, expert testimony, Windows and Mac support, quick turnaround.</li>
-      </ol>
-
-      <h4>2. Five service options</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Option</th><th>What the client gets</th></tr></thead>
-        <tbody>
-          <tr><td><b>Standard service</b></td><td>Work during regular business hours until the vital electronic evidence is located.</td></tr>
-          <tr><td><b>On-site service</b></td><td>Experts visit the client's place and provide full digital-evidence management; they make accurate copies of the storage media on site.</td></tr>
-          <tr><td><b>Emergency assistance</b></td><td>Top priority in the laboratory, uninterrupted work until the evidentiary goals are achieved.</td></tr>
-          <tr><td><b>Priority service</b></td><td>8:00 AM to 5:00 PM, Monday to Friday; turnaround is often cut in half.</td></tr>
-          <tr><td><b>Weekend service</b></td><td>8:00 AM to 5:00 PM on Saturday and Sunday, work continues until the goals are achieved.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>3. “Explain any two” — model answer</h4>
-      <p><b>(a) Data duplication / preservation.</b> The expert connects the seized drive through a <b>write blocker</b> and creates a <b>bit-stream image</b> — an exact sector-by-sector copy. A cryptographic hash (MD5/SHA-1) is calculated for the original and for the image. If both hashes match, the copy is verified. The original is sealed and stored; all analysis is done on the copy. This protects the evidence from alteration and allows the defence to re-examine the same data.</p>
-      <p><b>(b) Expert witness service.</b> The expert does not just hand over a technical report. He or she explains to the court, in ordinary language, what was seized, how the image was verified, what was found and what it means. The expert must be independent, must not overstate the findings, and must be ready to answer cross-examination on the tools and procedures used.</p>
-
-      <h4>4. Applications of digital forensics in military</h4>
-      <ul>
-        <li><b>National security and cyber defence</b> — attribution of attacks on defence networks.</li>
-        <li><b>Real-time tracking of hostile activity</b> — difficult when information is buried, deleted or manipulated.</li>
-        <li><b>CFX-2000 / SI-FI</b> — integrated framework and digital evidence bags for military investigators.</li>
-        <li><b>NLECTC collaboration</b> — evaluates commercially available technology and bridges research and practice.</li>
-        <li><b>Intelligence, insider-threat and espionage investigations</b> — recovering classified data that was copied or destroyed.</li>
-      </ul>
-
-      <h4>5. Applications of digital forensics in health care</h4>
-      <ul>
-        <li><b>Electronic health record (EHR) tampering</b> — who changed a diagnosis, prescription or timestamp.</li>
-        <li><b>Medical-device and hospital-network incidents</b> — ransomware, unauthorized access, device logs.</li>
-        <li><b>Insurance and medical-billing fraud</b> — false claims traced through system records.</li>
-        <li><b>HIPAA / privacy-breach investigation</b> — prove whether patient data was accessed or exported.</li>
-        <li><b>Malpractice and negligence cases</b> — reconstruct the order of clinical events from the record audit trail.</li>
-      </ul>
-
-      <div class="warn"><b>Source note:</b> the eight services and five options are from the Technical book §3.4. The <b>health-care</b> list is not developed in the book; it is answered from the syllabus application area and standard health-informatics practice. Keep it to five bullets in the exam.</div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= 3.5 ================= -->
-<section class="card" id="s35">
-  <h2>3.5 Professional methodology &amp; steps taken by specialists</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What are the benefits of professional forensics methodology? What are the steps taken by computer forensics specialists?</p>
-      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★ 4×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 May Q2(b) [9] · 2022 Nov Q2(b) [9] · 2023 Nov Q1(a) [9, steps + any two in detail] · 2025 Nov Q1(a) [8, steps only]</p>
-
-      <h4>1. Benefits of professional forensics methodology (book §3.5)</h4>
-      <ol>
-        <li><b>No potential evidence is damaged, deleted or compromised</b> by the investigation technique.</li>
-        <li><b>No computer virus is injected</b> into the subject machine during analysis.</li>
-        <li>Extracted and relevant evidence is <b>managed appropriately and safeguarded</b> against mechanical or electromagnetic harm.</li>
-        <li>A <b>continuous chain of custody</b> is established and maintained.</li>
-        <li><b>Business activity is disrupted for a short time</b>, if at all.</li>
-        <li>Any <b>client–attorney information</b> obtained accidentally is treated ethically and lawfully, and is not disclosed.</li>
-      </ol>
-
-      <h4>2. Nine steps taken by a computer forensics specialist (book §3.6)</h4>
-      <ol>
-        <li><b>Protect</b> the subject computer system from alteration, damage, data corruption or virus introduction.</li>
-        <li><b>Discover</b> all files on the target system — extant normal files, removed but still existing files, hidden files, password-protected files and encrypted files.</li>
-        <li><b>Recover</b> all deleted data detected.</li>
-        <li><b>Reveal</b> the contents of secret folders and temporary or swap files used by applications and the operating system.</li>
-        <li><b>Access</b> the contents of password-protected or encrypted files.</li>
-        <li><b>Examine</b> all potentially relevant data — including unallocated disk space and file slack (the remnant at the end of the last assigned cluster).</li>
-        <li><b>Print</b> an overall study of the system and a list of all potentially relevant files and data identified.</li>
-        <li><b>Provide an opinion</b> on the system layout, file structures, authorship information, attempts to hide/erase/protect/encrypt information, and anything else significant.</li>
-        <li><b>Provide expert consultation and/or testimony</b> as needed.</li>
-      </ol>
-
-      <h4>3. “Explain any two in detail”</h4>
-      <p><b>(a) Discover.</b> The examiner does not look only at visible files. He or she enumerates:</p>
-      <ul>
-        <li><b>Extant files</b> — normal files in the directory tree.</li>
-        <li><b>Removed but still existing files</b> — directory entries deleted by the OS but whose clusters are not yet overwritten.</li>
-        <li><b>Hidden files</b> — marked hidden in the file system attributes.</li>
-        <li><b>Password-protected and encrypted files</b> — identified by extension, file header and entropy; opened with the owner's password or a recovery tool.</li>
-      </ul>
-      <p><b>(b) Examine.</b> The examiner studies the contents and context of each relevant file. This includes <b>unallocated space</b> (clusters not assigned to any file) and <b>file slack</b> (the unused tail of the last cluster, which can contain fragments of an earlier file). The aim is to decide which data is relevant and to record what was found and where.</p>
-
-      <div class="tip"><b>Memory hook — P D R R A E P P E:</b> <b>P</b>rotect, <b>D</b>iscover, <b>R</b>ecover, <b>R</b>eveal, <b>A</b>ccess, <b>E</b>xamine, <b>P</b>rint, <b>P</b>rovide opinion, <b>E</b>xpert testimony. Nine steps = 9 marks; write one line each and you are done.</div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= 3.6 ================= -->
-<section class="card" id="s36">
-  <h2>3.6 Types of computer forensics technology</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>How does computer forensics technology vary across different sectors like military, law enforcement and business?</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [9]</p>
-
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Military</th><th>Law enforcement</th><th>Business</th></tr></thead>
-        <tbody>
-          <tr><td>Goal</td><td>National security, attribution, force protection</td><td>Prosecution, conviction, public safety</td><td>Protect assets, resolve disputes, recover stolen data</td></tr>
-          <tr><td>Typical case</td><td>Cyber attack on defence network, espionage, insider threat</td><td>Fraud, hacking, child abuse material, drug trafficking, e-commerce crime</td><td>Employee misconduct, data theft, IP leakage, litigation</td></tr>
-          <tr><td>Legal basis</td><td>Defence and intelligence law; security clearance</td><td>Search warrant, criminal procedure, chain of custody</td><td>Company policy, employment contract, civil discovery</td></tr>
-          <tr><td>Signature technology</td><td>CFX-2000, SI-FI, digital evidence bags, real-time hostile-activity tracking</td><td>Forensic workstations, Net Threat Analyzer, EnCase/FTK, write blockers</td><td>DIRT remote monitoring, BAIT trackable documents, PC PhoneHome</td></tr>
-          <tr><td>Speed vs depth</td><td>Speed and real-time tracking are critical</td><td>Depth and admissibility are critical</td><td>Least disruption to business; speed and confidentiality</td></tr>
-          <tr><td>Reporting</td><td>Classified intelligence report</td><td>Court report and expert testimony</td><td>Management/HR report, sometimes civil court</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Detail — military technology (§3.7.1)</h4>
-      <ul>
-        <li>Primary goals: <b>speedy finding of evidence</b>, evaluation of the possible impact of harmful behaviour on the victim, and assessment of the perpetrator's purpose and identity.</li>
-        <li><b>Real-time tracking</b> of hostile activity is hard when information is deliberately buried, deleted or manipulated.</li>
-        <li><b>NLECTC</b> (National Law Enforcement and Corrections Technology Center) works with criminal-justice experts to identify technology needs.</li>
-        <li><b>CFX-2000</b> — framework for comprehensive forensic analysis using commercial off-the-shelf tools and R&amp;D prototypes; includes the SI-FI integration environment.</li>
-        <li><b>Digital Evidence Bags (DEBs)</b> — secure, tamper-proof containers; automated auditing preserves integrity when evidence is reopened.</li>
-        <li>Research goal: determine the <b>motive, purpose, target, sophistication, identity and location</b> of cyber criminals and terrorists.</li>
-      </ul>
-
-      <h4>Detail — law enforcement technology (§3.7.2)</h4>
-      <ul>
-        <li><b>E-commerce investigations</b> — Net Threat Analyzer tracks previous browsing and e-mail activity on a PC; it is free to law enforcement and school administrators.</li>
-        <li><b>Programs with two purposes</b> — multiple processes can run at once; the examiner must know these programs.</li>
-        <li><b>Search techniques for text</b> — strings in files, file slack, unallocated space and Windows swap files.</li>
-        <li><b>Fuzzy-logic tools</b> — identify unknown text when the examiner does not know exactly what is stored.</li>
-        <li><b>Disk structure / data encryption / diskette-to-computer matching / data compression / deleted files</b> — the seven core skills listed in the book.</li>
-        <li><b>Internet-abuse detection</b>, <b>memory-resident programs and the boot process</b> — detect hidden software that records keystrokes or hides data.</li>
-      </ul>
-
-      <div class="note"><b>Table + two paragraphs is the ideal 9-mark answer.</b> The comparison table alone earns about 5 marks; the military and law-enforcement detail earns the rest.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What are the various business-oriented digital forensic techniques? / In what ways can business benefit from computer forensics technology? / What specific technologies are utilized in the field of business computer forensics?</p>
-      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q2(a) [8, techniques] · 2023 Nov Q1(b) [9, benefits] · 2024 May Q1(b) [9, technologies — any two]</p>
-
-      <h4>1. Business-oriented techniques</h4>
-      <ol>
-        <li><b>Remote monitoring of target computers</b> — DIRT (Data Interception by Remote Transmission) monitors activity from a remote command centre without physical access; it can capture and protect evidence before the suspect is approached.</li>
-        <li><b>Trackable electronic documents</b> — BAIT (Binary Audit Identification Transfer) marks a document so that unauthorized access, download or copying is recorded, and the document can be traced to the person holding it.</li>
-        <li><b>Theft-recovery software</b> — PC PhoneHome reports the location of a stolen laptop or PC to a 24-hour command centre, which works with local police.</li>
-        <li><b>E-discovery and document review</b> — search large mailboxes and file shares for relevant documents in civil litigation.</li>
-        <li><b>Employee-activity analysis</b> — browser history, USB history, e-mail and file access on a business PC.</li>
-        <li><b>Keystroke and screen monitoring</b> — used only under a written, signed monitoring policy.</li>
-        <li><b>Forensic imaging and hash verification</b> — take a verified copy before the machine is rebuilt or returned.</li>
-      </ol>
-
-      <h4>2. How business benefits</h4>
-      <ul>
-        <li><b>Protects intellectual property and trade secrets</b> — proves what was taken and by whom.</li>
-        <li><b>Detects fraud and financial manipulation</b> — reconstructs transactions from accounting and e-mail records.</li>
-        <li><b>Handles employee misconduct</b> — gives defensible evidence for disciplinary action and reduces wrongful-termination risk.</li>
-        <li><b>Supports due diligence</b> — in mergers, acquisitions and vendor disputes.</li>
-        <li><b>Reduces legal cost</b> — targeted e-discovery instead of reviewing every document.</li>
-        <li><b>Protects reputation and customer trust</b> — a proper investigation limits the damage of a breach.</li>
-        <li><b>Meets compliance obligations</b> — audit trails, retention and breach-notification duties.</li>
-        <li><b>Recovers stolen devices and data</b> — theft-recovery technology.</li>
-      </ul>
-
-      <h4>3. Three specific technologies (any two for 9 marks)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Technology</th><th>Full form</th><th>What it does</th></tr></thead>
-        <tbody>
-          <tr><td><b>DIRT</b></td><td>Data Interception by Remote Transmission</td><td>Stealth monitoring of all activity on one or more target computers from a remote command centre; captures evidence before physical access; protects suspect sites.</td></tr>
-          <tr><td><b>BAIT</b></td><td>Binary Audit Identification Transfer</td><td>Creates trackable electronic documents; records who accessed, downloaded or copied them, and where they are; supports chain of custody and command.</td></tr>
-          <tr><td><b>PC PhoneHome</b></td><td>—</td><td>Tracks and locates a lost or stolen computer anywhere; alerts a 24-hour command centre that works with local police to recover it.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <p><b>Other business forensic services:</b> password and file recovery, recovery of deleted and hidden files, decryption of files and e-mail, e-mail monitoring and authentication, Internet-activity identification, computer-usage supervision, remote network monitoring, tracking stolen electronic files, honeytrap operations, identification of unauthorized software and users.</p>
-
-      <div class="note"><b>Cost argument (good closing line):</b> replacing a stolen computer costs hardware, data re-creation, lost production, investigation, insurance and lost customer trust. Forensic technology is cheaper than the loss it prevents.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>What are some examples of technologies used in computer forensic investigation? Explain any two.</p>
-      <div class="badges"><span class="b marks">9 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q2(a) [9]</p>
-
-      <p><b>Answer plan:</b> name six technologies in one line each, then explain any two in a short paragraph. The question is Unit-3 “types of technology”, not the Unit-6 tool list — keep the examples broad.</p>
-
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Technology</th><th>Use in investigation</th></tr></thead>
-        <tbody>
-          <tr><td><b>Forensic imaging / bit-stream copy</b></td><td>Exact sector-by-sector copy of a disk; analysis is done on the copy, original is preserved.</td></tr>
-          <tr><td><b>Write blocker</b></td><td>Hardware or software that blocks write commands so the evidence disk is never modified.</td></tr>
-          <tr><td><b>Hashing (MD5 / SHA-1)</b></td><td>Digital fingerprint used to prove that the image and the original are identical.</td></tr>
-          <tr><td><b>Forensic suite (FTK, EnCase, ProDiscover)</b></td><td>Acquisition, keyword search, deleted-file recovery, timeline and report generation.</td></tr>
-          <tr><td><b>Network monitoring / packet capture</b></td><td>tcpdump, Wireshark, Snort — reconstruct a network attack.</td></tr>
-          <tr><td><b>Steganography and encryption detection</b></td><td>Detect data hidden inside images or encrypted containers.</td></tr>
-          <tr><td><b>Mobile and GPS acquisition kit</b></td><td>Extract call logs, messages and location data from phones and GPS units.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <p><b>(a) Forensic imaging with hash verification.</b> The examiner connects the suspect drive to a write blocker and runs an imaging tool. The tool reads every sector — allocated, unallocated and slack — and writes a bit-stream image. It computes an MD5 or SHA-1 hash of both the source and the image. If the two hashes are equal, the image is a true copy. The original is sealed; the image is mounted read-only for analysis. This is the foundation of every other technique.</p>
-      <p><b>(b) Forensic suite (FTK / EnCase).</b> The suite indexes the image, recovers deleted files, filters by file type and date, searches keywords, shows e-mail and Internet history, and produces a court-ready report. It also keeps an audit log of every action, which supports the chain of custody.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ================= 3.7 ================= -->
-<section class="card" id="s37">
-  <h2>3.7 Computer forensics evidence and capture — data recovery &amp; backup</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is the significance of data recovery and backup? Explain various data recovery solutions. / Why is data backup &amp; recovery important? / Key components of a data recovery solution / Strategies for effective data backup</p>
-      <div class="badges"><span class="b marks">8–9 marks</span><span class="b rep hot">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q1(b) [9] · 2023 Nov Q2(b) [9] · 2024 May Q2(b) [9, key components] · 2025 May Q2(b) [9, strategies — any two] · 2025 Nov Q1(b) [9]</p>
-
-      <h4>1. Data recovery defined (book §3.8.1)</h4>
-      <p><b>Data recovery</b> is the process by which highly experienced engineers <b>analyse, remove and restore data from damaged media in an intact format</b>. It is feasible to recover deleted information, forgotten passwords and complete hard drives that were not physically destroyed.</p>
-      <p><b>Why it matters in forensics:</b> the evidence may be the only copy; the suspect may have deleted, formatted or partially overwritten it; the victim may need the data back to continue business. Recovery must be done on a copy, never on the original.</p>
-
-      <h4>2. Data backup and recovery — the concepts</h4>
-      <ul>
-        <li><b>Backup</b> — a second copy of data kept on separate media so that it can be restored after loss, corruption or disaster.</li>
-        <li><b>Recovery</b> — the process of restoring that copy and returning the system to service.</li>
-        <li><b>Backup window</b> — the time span available for backup; usually scheduled in non-production hours when network and CPU use are low.</li>
-        <li><b>Role of backup</b> — recover user mistakes, guarantee that good data was saved, and restore quickly after a failure.</li>
-      </ul>
-
-      <h4>3. Backup obstacles (§3.8.2)</h4>
-      <ol>
-        <li><b>Backup window</b> — the window is short and must fit into non-production time.</li>
-        <li><b>Network bandwidth</b> — a network may be unable to carry hundreds of terabytes in a short period.</li>
-        <li><b>Throughput of the system</b> — three bottlenecks: the source system's ability to send, the backup server's ability to accept from several systems, and the tape device's write speed.</li>
-        <li><b>Shortage of resources</b> — many businesses underspend on data security until it is too late.</li>
-      </ol>
-
-      <h4>4. Problems with today's backup (§3.8.5)</h4>
-      <ul>
-        <li><b>Network backup</b> degrades network performance because backup traffic shares the production network.</li>
-        <li><b>Offline backup</b> reduces data availability while the host is offline.</li>
-        <li><b>Live backup</b> keeps data available but places a significant load on the host.</li>
-        <li><b>Mirroring</b> does not protect against human error or duplication; it also costs about twice as much per megabyte as a single copy.</li>
-      </ul>
-
-      <h4>5. The data-recovery solution (§3.8.7)</h4>
-      <p>A complete solution has four parts:</p>
-      <ol>
-        <li><b>Shrinking expertise, growing complexity</b> — modern systems need monitoring, management and control; few new graduates have mainframe-level exposure.</li>
-        <li><b>Failures</b> — hardware failure, operator error, application logic error, natural disaster, flood, tornado, earthquake, tsunami and terrorism must all be planned for.</li>
-        <li><b>Downtime and budget</b> — fewer people, less processing power and less money; downtime is too costly to allow.</li>
-        <li><b>Recovery: think before backing up</b> — check that image copies, change accumulations and logs are accessible; do not let resources “fall between the gaps”; automate recovery where possible.</li>
-      </ol>
-
-      <h4>6. Components of the BRS (Back-up and Recovery Solution)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Component</th><th>Function</th></tr></thead>
-        <tbody>
-          <tr><td><b>Image Copy</b></td><td>Batch, on-line (fuzzy) or incremental image copies; Snapshot and Instant Snapshot; dynamic allocation of input/output data sets; compression; database-group processing.</td></tr>
-          <tr><td><b>Change Accumulation</b></td><td>Uses many engines, virtual storage and high-speed channels; overlaps work to save elapsed and CPU time.</td></tr>
-          <tr><td><b>Recovery</b></td><td>Recovers multiple databases with a single pass of the log and change-accumulation data sets; point-in-time (PIT) recovery.</td></tr>
-          <tr><td><b>Recovery Manager</b></td><td>Automates and synchronises recovery across applications; groups similar databases; cleans RECON data sets before restart.</td></tr>
-          <tr><td><b>Pointer Checking</b></td><td>Validates the authenticity of database pointers for full-function and Fast Path databases.</td></tr>
-          <tr><td><b>Index Rebuilds</b></td><td>Rebuilds a broken or destroyed index instead of retrieving it.</td></tr>
-          <tr><td><b>Recovery Advisor</b></td><td>Tracks the frequency of image copies and change accumulations; tells whether all databases are backed up.</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>7. Strategies for effective backup (2025 May — any two in detail)</h4>
-      <p><b>(a) 3-2-1 rule.</b> Keep <b>three</b> copies of data, on <b>two</b> different types of media, with <b>one</b> copy off-site (or in the cloud). This protects against disk failure, ransomware and site disaster at the same time.</p>
-      <p><b>(b) Full + incremental + periodic test restore.</b> Take a full backup weekly, incremental backups daily, and <b>test the restore</b> at least once a month. A backup that has never been restored is only a hope. Record the restore test in the backup log.</p>
-      <ul>
-        <li>Encrypt backup media and restrict access; a stolen backup is a data breach.</li>
-        <li>Keep backups offline or immutable so ransomware cannot encrypt them.</li>
-        <li>Set a retention schedule that matches legal and business requirements.</li>
-        <li>Use snapshots for quick rollback and tape/cloud for long-term archive.</li>
-        <li>Document the backup window, job schedule and responsible person.</li>
-      </ul>
-
-      <div class="warn"><b>Source note:</b> data recovery, backup obstacles, problems and BRS components are from the Technical book §3.8. The <b>3-2-1 rule</b> and “test the restore” are industry best practice, not printed in the book; they are included because the 2025 May question asks for organisational strategies.</div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= CHEAT SHEET ================= -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet</h2>

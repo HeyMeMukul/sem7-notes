@@ -146,9 +146,15 @@ main{min-width:0}
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -157,10 +163,10 @@ main{min-width:0}
   <h3>STQA · Unit 6</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s61">6.1 Six Sigma &amp; TQM</a>
-    <a href="#s62">6.2 Ishikawa 7 tools</a>
-    <a href="#s63">6.3 SQA tasks, metrics, maintenance</a>
-    <a href="#s64">6.4 ISO 9000 &amp; SQA plan</a>
+    <a href="#s61">6.1 Six Sigma &amp; TQM <span class="pill">6×</span></a>
+    <a href="#s62">6.2 Ishikawa 7 tools <span class="pill">4×</span></a>
+    <a href="#s63">6.3 SQA tasks, metrics, maintenance <span class="pill">4×</span></a>
+    <a href="#s64">6.4 ISO 9000 &amp; SQA plan <span class="pill">2×</span></a>
     <a href="#s65">6.5 Syllabus-only concepts</a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
@@ -178,7 +184,7 @@ main{min-width:0}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 6 — Testing Framework &amp; SQA Tools</h1>
-  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D)  ·  <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM  ·  <b>Max marks:</b> 70</p>
   <p>This is the “quality tools” unit. It owns Q7 and Q8 in most papers. All questions are reproduced from the six end-sem papers (2022 Nov – 2025 Nov); repeats include the duplicate Six Sigma question inside the 2022 Nov paper.</p>
   <div class="meta">
     <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
@@ -221,9 +227,8 @@ main{min-width:0}
   <div class="tip"><b>Marks strategy:</b> for 5 marks write definition + 5 points. For 6 marks add a table or diagram. For the 8-mark “activities to achieve quality”, write a lifecycle table with 8 activities and one example each.</div>
 </section>
 
-<!-- ================= 6.1 ================= -->
-<section class="card" id="s61">
-  <h2>6.1 Six Sigma and TQM</h2>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s61">
+  <div class="prio">Priority 1 · ★★★★★ 6× repeated</div><h2>6.1 Six Sigma and TQM</h2>
   <p class="lead">Syllabus: <em>Six Sigma for Software Engineering, Total Quality Management, achieving software quality.</em></p>
 
   <div class="qa">
@@ -288,39 +293,6 @@ main{min-width:0}
       </ol>
       <p><b>Caution from the book:</b> early Six Sigma attempts failed because software metrics were not connected to economic success. Counting mistakes and defects is not a clear sign that a project will succeed — <b>time-to-market</b> and <b>user friendliness</b> are often more important, and reliability is essential only sometimes.</p>
       <p class="booksrc">📘 <b>Book:</b> §6.4 Six Sigma for Software Engineering, p. 6-13 – 6-15</p>
-
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Explain in detail Total Quality Management (TQM).</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(b) [6] · 2023 Nov Q7(a) [6] · 2025 May Q8(b) [6]</p>
-      <p><b>Book definition:</b> Total Quality Management is “a management philosophy embracing all activities through which the needs and expectations of the CUSTOMER and COMMUNITY and the objectives of the organization are satisfied in the most efficient and cost-effective manner by maximising the potential of ALL employees in a continuing drive for improvement.”</p>
-      <p><b>Why TQM is needed:</b> Quality is the fulfilment of the individual needs of the stakeholders, users and customers of a product, service or result of a project. Testing alone does not seem enough — pure curative action like testing cannot produce a high-quality product. TQM says that a <b>good quality product comes from good quality processes</b>. It covers all processes used to deliver the product, not only the development team: procurement, controlling and portfolio management also matter. The overall organisational environment decides how well the task is fulfilled.</p>
-      <h4>1. Six basic concepts of TQM</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Concept</th><th>What the book says</th></tr></thead>
-        <tbody>
-          <tr><td><b>Leadership</b></td><td>Top management must realise the importance of quality. Quality is the responsibility of everybody, but the <b>ultimate responsibility is the CEO</b>. Quality excellence must become part of business strategy, and leaders must lead the implementation.</td></tr>
-          <tr><td><b>Customer satisfaction</b></td><td>The customer is always right; in Japan the customer is “King”. Customer expectations change constantly, and satisfaction is a function of the <b>total experience</b> with the organisation — quality product or service, reasonable price, on-time delivery and outstanding service. The quality system must be examined continually.</td></tr>
-          <tr><td><b>Employee involvement</b></td><td>People are the most important resource and asset. <b>Quality comes from people</b>, so everyone must be involved.</td></tr>
-          <tr><td><b>Continuous process improvement</b></td><td>View all work as a process — production and business. Process includes purchasing, design and invoicing, not only coding.</td></tr>
-          <tr><td><b>Supplier partnership</b></td><td>About <b>40% of product cost</b> comes from purchased materials, so supplier quality management is important. A substantial part of quality problems comes from suppliers; use long-term purchase contracts and supplier management activities.</td></tr>
-          <tr><td><b>Performance measures</b></td><td>Manage by <b>fact, not gut feeling</b>. Measure performance against a baseline, identify potential projects and assess the results of improvement.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <h4>2. TQM in a software organisation</h4>
-      <p>Leadership writes the quality policy; customers are the users and the sponsoring business; employees own reviews and testing; the process is the full SDLC; suppliers are component and tool vendors; performance is measured with defect, service and schedule metrics. Development, procurement and support are all part of the quality system.</p>
-      <h4>3. TQM vs Six Sigma</h4>
-      <p>TQM is a broad management philosophy in which <b>all employees</b> continuously improve every process. Six Sigma is a management approach with a structured, data-driven method and a defect target. The book notes that Six Sigma is <b>not team-driven like TQM</b>; defect metrics are its main tool for leaders.</p>
-      <p><b>One-line answer:</b> TQM means total involvement of people, total coverage of processes and total commitment to customer satisfaction, measured by facts.</p>
-      <p class="booksrc">📘 <b>Book:</b> §6.7 Total Quality Management, p. 6-22 – 6-23</p>
 
     </div>
   </div>
@@ -401,42 +373,44 @@ main{min-width:0}
 
     </div>
   </div>
-</section>
-
-<!-- ================= 6.2 ================= -->
-<section class="card" id="s62">
-  <h2>6.2 Ishikawa's 7 basic tools</h2>
-  <p class="lead">Syllabus: <em>Flow chart, checklists, Pareto diagrams, histogram, run charts, scatter diagrams, control chart, cause-effect diagram.</em></p>
-
-  <div class="qa">
+<div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q4</span>Illustrate Ishikawa's 7 basic tools in detail.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+      <p class="qtitle"><span class="qno">Q2</span>Explain in detail Total Quality Management (TQM).</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [6] · 2024 May Q8(c) [6, basic tools for quality control]</p>
-      <p><b>Book introduction:</b> Most QA people know Ishikawa's Seven Basic Tools of quality. These tools are used “to analyze the reports and find the root cause of the issues in the system.” They are seven different ways to analyse a system.</p>
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(b) [6] · 2023 Nov Q7(a) [6] · 2025 May Q8(b) [6]</p>
+      <p><b>Book definition:</b> Total Quality Management is “a management philosophy embracing all activities through which the needs and expectations of the CUSTOMER and COMMUNITY and the objectives of the organization are satisfied in the most efficient and cost-effective manner by maximising the potential of ALL employees in a continuing drive for improvement.”</p>
+      <p><b>Why TQM is needed:</b> Quality is the fulfilment of the individual needs of the stakeholders, users and customers of a product, service or result of a project. Testing alone does not seem enough — pure curative action like testing cannot produce a high-quality product. TQM says that a <b>good quality product comes from good quality processes</b>. It covers all processes used to deliver the product, not only the development team: procurement, controlling and portfolio management also matter. The overall organisational environment decides how well the task is fulfilled.</p>
+      <h4>1. Six basic concepts of TQM</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>#</th><th>Tool</th><th>What it does (book)</th><th>How to read it / software example</th></tr></thead>
+        <thead><tr><th>Concept</th><th>What the book says</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td><b>Check sheet (checklist)</b></td><td>The most basic quality tool, used for gathering and organising data. Data are collected and tabulated to record the frequency of specific events during a data-collection period. Three types: defect-location, tally and defect-cause check sheets.</td><td>Rows = defect reason, columns = day, tally marks in cells. Easy to apply and understand; gives a clear picture and finds frequent problems. Limitation: it cannot analyse the quality problem deeply into the workplace.</td></tr>
-          <tr><td>2</td><td><b>Pareto diagram</b></td><td>A frequency chart of bars in <b>descending order</b>. The tall bars on the left are more significant. It separates the <b>“vital few” from the “trivial many”</b>.</td><td>In software, X-axis = defect cause, Y-axis = defect count; arrange causes by frequency. It shows which few causes account for most defects and which problem to solve first. Based on the 80-20 principle (20% of causes → 80% of defects), though the split is not always exactly 80-20.</td></tr>
-          <tr><td>3</td><td><b>Histogram</b></td><td>A graphic representation of frequency counts of a sample or population. X-axis = unit intervals of a parameter in ascending order; Y-axis = frequency counts. It shows the distribution of data and the amount of variation in a process.</td><td>Higher bars mean more data values in that class. Look at centre, spread, skew, gaps and outliers. Example: response times grouped into 0.5-second classes.</td></tr>
-          <tr><td>4</td><td><b>Scatter diagram</b></td><td>A two-dimensional plot that detects and analyses the pattern of relationship between two quality/compliance variables. The shape shows the <b>degree and direction</b> of the relationship — weak or strong, positive or negative.</td><td>Plot module size (X) against defect count (Y). A rising pattern is positive correlation; a falling pattern is negative. Correlation does <b>not</b> prove cause and effect, but it can reveal possible causes.</td></tr>
-          <tr><td>5</td><td><b>Run chart</b></td><td>Tracks the performance of a parameter of interest over time. X-axis = time, Y-axis = value of the parameter. Best used for <b>trend analysis</b>, especially when historical data are available for comparison.</td><td>The book's software example is the <b>weekly number of open problems in the backlog</b>, which shows the development team's workload of fixes. Ishikawa also includes pie, bar, compound-bar and circle graphs under run charts.</td></tr>
-          <tr><td>6</td><td><b>Cause-effect (fishbone) diagram</b></td><td>Developed by Ishikawa and associates in Japan in the early 1950s. Also called the Ishikawa diagram or fishbone diagram because its shape looks like a fish skeleton. It explores all potential or real causes (inputs) that produce a single effect (output).</td><td>Effect on the right; main branches are <b>Equipment, Process, People, Materials, Environment and Management</b>. Causes are arranged by level of importance and detail (primary and secondary causes), so the team can search for root causes and compare their relative importance.</td></tr>
-          <tr><td>7</td><td><b>Control chart</b></td><td>A Shewhart control chart, developed by Walter A. Shewhart in the 1920s at Bell Telephone Laboratories. It is a special form of run chart that shows the <b>amount and nature of variation</b> over time. It has a central line, a pair of control limits (and sometimes warning limits).</td><td>X-axis = real time; plot the parameter. If all values stay within the limits and show no particular tendency, the process is <b>in control</b>. If a point falls outside the limits or a trend appears, the process is <b>out of control</b> and needs causal analysis and corrective action. Types: univariate (one characteristic) and multivariate (more than one).</td></tr>
+          <tr><td><b>Leadership</b></td><td>Top management must realise the importance of quality. Quality is the responsibility of everybody, but the <b>ultimate responsibility is the CEO</b>. Quality excellence must become part of business strategy, and leaders must lead the implementation.</td></tr>
+          <tr><td><b>Customer satisfaction</b></td><td>The customer is always right; in Japan the customer is “King”. Customer expectations change constantly, and satisfaction is a function of the <b>total experience</b> with the organisation — quality product or service, reasonable price, on-time delivery and outstanding service. The quality system must be examined continually.</td></tr>
+          <tr><td><b>Employee involvement</b></td><td>People are the most important resource and asset. <b>Quality comes from people</b>, so everyone must be involved.</td></tr>
+          <tr><td><b>Continuous process improvement</b></td><td>View all work as a process — production and business. Process includes purchasing, design and invoicing, not only coding.</td></tr>
+          <tr><td><b>Supplier partnership</b></td><td>About <b>40% of product cost</b> comes from purchased materials, so supplier quality management is important. A substantial part of quality problems comes from suppliers; use long-term purchase contracts and supplier management activities.</td></tr>
+          <tr><td><b>Performance measures</b></td><td>Manage by <b>fact, not gut feeling</b>. Measure performance against a baseline, identify potential projects and assess the results of improvement.</td></tr>
         </tbody>
       </table>
       </div>
-      <h4>How the seven tools work together</h4>
-      <p>A team records 120 defects with a <b>check sheet</b>, ranks them with a <b>Pareto</b>, studies the shape of a <b>histogram</b>, looks for a relationship with a <b>scatter</b> plot, and traces the main cause with a <b>fishbone</b>. After the fix, a <b>run chart</b> shows the trend and a <b>control chart</b> proves whether the process is stable.</p>
-      <p class="small">The SPPU syllabus also names the flow chart among the quality tools; the book's seven are listed above and the flow chart is covered in Q5.</p>
-      <p class="booksrc">📘 <b>Book:</b> §6.11 Ishikawa's 7 Basic Tools, p. 6-31 – 6-37</p>
+      <h4>2. TQM in a software organisation</h4>
+      <p>Leadership writes the quality policy; customers are the users and the sponsoring business; employees own reviews and testing; the process is the full SDLC; suppliers are component and tool vendors; performance is measured with defect, service and schedule metrics. Development, procurement and support are all part of the quality system.</p>
+      <h4>3. TQM vs Six Sigma</h4>
+      <p>TQM is a broad management philosophy in which <b>all employees</b> continuously improve every process. Six Sigma is a management approach with a structured, data-driven method and a defect target. The book notes that Six Sigma is <b>not team-driven like TQM</b>; defect metrics are its main tool for leaders.</p>
+      <p><b>One-line answer:</b> TQM means total involvement of people, total coverage of processes and total commitment to customer satisfaction, measured by facts.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.7 Total Quality Management, p. 6-22 – 6-23</p>
 
     </div>
   </div>
+
+  </section>
+
+<section class="card" id="s62">
+  <div class="prio">Priority 2 · ★★★★ 4× repeated</div><h2>6.2 Ishikawa's 7 basic tools</h2>
+  <p class="lead">Syllabus: <em>Flow chart, checklists, Pareto diagrams, histogram, run charts, scatter diagrams, control chart, cause-effect diagram.</em></p>
 
   <div class="qa">
     <div class="qa-head">
@@ -467,6 +441,36 @@ main{min-width:0}
       <p><b>One-line answer:</b> a flow chart shows <b>process flow</b>; a histogram shows <b>data distribution</b>. Use the flow chart to find <i>where</i> work goes wrong and the histogram to measure <i>how much</i> variation exists.</p>
       <p class="small">The book's Ishikawa chapter lists seven tools without the flow chart; the SPPU syllabus names it, so the flow-chart side above follows the standard process-map symbols.</p>
       <p class="booksrc">📘 <b>Book:</b> §6.11.3 Histogram, p. 6-33; §6.11 Ishikawa's 7 Basic Tools, p. 6-31 – 6-37</p>
+
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>Illustrate Ishikawa's 7 basic tools in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q7(b) [6] · 2024 May Q8(c) [6, basic tools for quality control]</p>
+      <p><b>Book introduction:</b> Most QA people know Ishikawa's Seven Basic Tools of quality. These tools are used “to analyze the reports and find the root cause of the issues in the system.” They are seven different ways to analyse a system.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>#</th><th>Tool</th><th>What it does (book)</th><th>How to read it / software example</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>Check sheet (checklist)</b></td><td>The most basic quality tool, used for gathering and organising data. Data are collected and tabulated to record the frequency of specific events during a data-collection period. Three types: defect-location, tally and defect-cause check sheets.</td><td>Rows = defect reason, columns = day, tally marks in cells. Easy to apply and understand; gives a clear picture and finds frequent problems. Limitation: it cannot analyse the quality problem deeply into the workplace.</td></tr>
+          <tr><td>2</td><td><b>Pareto diagram</b></td><td>A frequency chart of bars in <b>descending order</b>. The tall bars on the left are more significant. It separates the <b>“vital few” from the “trivial many”</b>.</td><td>In software, X-axis = defect cause, Y-axis = defect count; arrange causes by frequency. It shows which few causes account for most defects and which problem to solve first. Based on the 80-20 principle (20% of causes → 80% of defects), though the split is not always exactly 80-20.</td></tr>
+          <tr><td>3</td><td><b>Histogram</b></td><td>A graphic representation of frequency counts of a sample or population. X-axis = unit intervals of a parameter in ascending order; Y-axis = frequency counts. It shows the distribution of data and the amount of variation in a process.</td><td>Higher bars mean more data values in that class. Look at centre, spread, skew, gaps and outliers. Example: response times grouped into 0.5-second classes.</td></tr>
+          <tr><td>4</td><td><b>Scatter diagram</b></td><td>A two-dimensional plot that detects and analyses the pattern of relationship between two quality/compliance variables. The shape shows the <b>degree and direction</b> of the relationship — weak or strong, positive or negative.</td><td>Plot module size (X) against defect count (Y). A rising pattern is positive correlation; a falling pattern is negative. Correlation does <b>not</b> prove cause and effect, but it can reveal possible causes.</td></tr>
+          <tr><td>5</td><td><b>Run chart</b></td><td>Tracks the performance of a parameter of interest over time. X-axis = time, Y-axis = value of the parameter. Best used for <b>trend analysis</b>, especially when historical data are available for comparison.</td><td>The book's software example is the <b>weekly number of open problems in the backlog</b>, which shows the development team's workload of fixes. Ishikawa also includes pie, bar, compound-bar and circle graphs under run charts.</td></tr>
+          <tr><td>6</td><td><b>Cause-effect (fishbone) diagram</b></td><td>Developed by Ishikawa and associates in Japan in the early 1950s. Also called the Ishikawa diagram or fishbone diagram because its shape looks like a fish skeleton. It explores all potential or real causes (inputs) that produce a single effect (output).</td><td>Effect on the right; main branches are <b>Equipment, Process, People, Materials, Environment and Management</b>. Causes are arranged by level of importance and detail (primary and secondary causes), so the team can search for root causes and compare their relative importance.</td></tr>
+          <tr><td>7</td><td><b>Control chart</b></td><td>A Shewhart control chart, developed by Walter A. Shewhart in the 1920s at Bell Telephone Laboratories. It is a special form of run chart that shows the <b>amount and nature of variation</b> over time. It has a central line, a pair of control limits (and sometimes warning limits).</td><td>X-axis = real time; plot the parameter. If all values stay within the limits and show no particular tendency, the process is <b>in control</b>. If a point falls outside the limits or a trend appears, the process is <b>out of control</b> and needs causal analysis and corrective action. Types: univariate (one characteristic) and multivariate (more than one).</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>How the seven tools work together</h4>
+      <p>A team records 120 defects with a <b>check sheet</b>, ranks them with a <b>Pareto</b>, studies the shape of a <b>histogram</b>, looks for a relationship with a <b>scatter</b> plot, and traces the main cause with a <b>fishbone</b>. After the fix, a <b>run chart</b> shows the trend and a <b>control chart</b> proves whether the process is stable.</p>
+      <p class="small">The SPPU syllabus also names the flow chart among the quality tools; the book's seven are listed above and the flow chart is covered in Q5.</p>
+      <p class="booksrc">📘 <b>Book:</b> §6.11 Ishikawa's 7 Basic Tools, p. 6-31 – 6-37</p>
 
     </div>
   </div>
@@ -527,9 +531,8 @@ main{min-width:0}
   </div>
 </section>
 
-<!-- ================= 6.3 ================= -->
 <section class="card" id="s63">
-  <h2>6.3 SQA tasks, metrics and maintenance</h2>
+  <div class="prio">Priority 3 · ★★★★ 4× repeated</div><h2>6.3 SQA tasks, metrics and maintenance</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -748,9 +751,8 @@ main{min-width:0}
   </div>
 </section>
 
-<!-- ================= 6.4 ================= -->
 <section class="card" id="s64">
-  <h2>6.4 ISO 9000 and the SQA plan</h2>
+  <div class="prio">Priority 4 · ★★ 2× repeated</div><h2>6.4 ISO 9000 and the SQA plan</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -837,9 +839,8 @@ main{min-width:0}
   </div>
 </section>
 
-<!-- ================= 6.5 ================= -->
 <section class="card" id="s65">
-  <h2>6.5 Syllabus-only SQA concepts</h2>
+  <div class="prio">Priority 5 · syllabus support</div><h2>6.5 Syllabus-only SQA concepts</h2>
   <div class="note"><b>Not directly asked as a full question:</b> software quality dilemma, elements of SQA, formal approaches to SQA, statistical SQA, product quality metrics and in-process quality metrics. Learn one short paragraph each.</div>
   <div class="tbl-wrap">
   <table class="left">
@@ -857,6 +858,11 @@ main{min-width:0}
   <p class="booksrc">📘 <b>Book:</b> §6.1.3 Quality Dilemma, p. 6-6; §6.2.3 Elements, p. 6-9 – 6-10; §6.2.6 Formal Approaches, p. 6-11 – 6-12; §6.3 Statistical SQA, p. 6-12; §6.8–6.9 Metrics, p. 6-24 – 6-28</p>
 </section>
 
+<!-- ================= 6.1 ================= -->
+<!-- ================= 6.2 ================= -->
+<!-- ================= 6.3 ================= -->
+<!-- ================= 6.4 ================= -->
+<!-- ================= 6.5 ================= -->
 <!-- ================= CHEAT SHEET ================= -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet — Unit 6</h2>

@@ -146,9 +146,15 @@ main{min-width:0}
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -157,9 +163,9 @@ main{min-width:0}
   <h3>STQA · Unit 5</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s51">5.1 Automation fundamentals</a>
-    <a href="#s52">5.2 Selenium tool suite</a>
-    <a href="#s53">5.3 RPA &amp; performance testing</a>
+    <a href="#s51">5.1 Automation fundamentals <span class="pill">5×</span></a>
+    <a href="#s52">5.2 Selenium tool suite <span class="pill">5×</span></a>
+    <a href="#s53">5.3 RPA &amp; performance testing <span class="pill">5×</span></a>
     <a href="#s54">5.4 Syllabus-only tools</a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
@@ -177,7 +183,7 @@ main{min-width:0}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 5 — Automation &amp; Performance Testing</h1>
-  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D)  ·  <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM  ·  <b>Max marks:</b> 70</p>
   <p>This is the <b>highest-yield unit</b>. Its questions fill Q4, Q5 and Q6 in every paper. All questions are reproduced from the six end-sem papers (2022 Nov – 2025 Nov); counts include exact repeats.</p>
   <div class="meta">
     <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
@@ -220,96 +226,9 @@ main{min-width:0}
   <div class="tip"><b>Marks split for 6 marks:</b> definition (1) + 5 numbered points or a table (4) + one example/diagram (1). Always name the tool version and one real command or component.</div>
 </section>
 
-<!-- ================= 5.1 ================= -->
-<section class="card" id="s51">
-  <h2>5.1 Automation testing fundamentals</h2>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s51">
+  <div class="prio">Priority 1 · ★★★★★ 5× repeated</div><h2>5.1 Automation testing fundamentals</h2>
   <p class="lead">Syllabus: <em>What is automation testing, automated testing process, automation frameworks, benefits, how to choose automation testing tools.</em></p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>What is automation testing in software testing? Explain in brief. / Explain it with an example.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q5(a) [6] · 2024 May Q6(a) [6]</p>
-      <p><b>Definition:</b> Automation testing is a software testing technique that uses <b>specialized automated testing software tools</b> to execute a test case suite. Manual testing, in contrast, is performed by a human sitting in front of a computer and carefully executing the test steps.</p>
-      <p>The automation software can <b>feed test data</b> to the test-under-test, <b>compare expected and actual results</b> and <b>generate detailed test reports</b>. Software test automation demands a significant investment of money and resources.</p>
-      <p><b>Goal:</b> to reduce the number of test cases that have to be run manually — <b>not</b> to eliminate manual testing altogether.</p>
-      <h4>1. What tests should be automated (§5.1.1)</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Test type</th><th>Why automate it</th></tr></thead>
-        <tbody>
-          <tr><td><b>A. Regression testing</b></td><td>Regression suites keep growing, and the same variables are filled in many times to make sure new features do not disturb old functions.</td></tr>
-          <tr><td><b>B. Complex functionalities</b></td><td>Tests that need complex calculations and are prone to human error.</td></tr>
-          <tr><td><b>C. Smoke testing</b></td><td>Quickly checks the quality of key functions and shows whether a build needs more in-depth testing.</td></tr>
-          <tr><td><b>D. Data-driven testing</b></td><td>The same operation has to be validated repeatedly with multiple data sets.</td></tr>
-          <tr><td><b>E. Performance testing</b></td><td>Monitors software performance under different conditions — very laborious and time-consuming by hand.</td></tr>
-          <tr><td><b>F. Functional testing</b></td><td>Every developer PR needs quick functional feedback; this is impossible without automation as the organisation grows.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <h4>2. Example — login page with 100 records</h4>
-      <p>A login page has to be checked with 100 username/password pairs. A Selenium script feeds each pair from an Excel file, enters the data, clicks <b>Login</b> and compares the actual page with the expected page. The tool generates the report: 97 pass, 3 fail, in a few minutes. The same work would take a tester hours and is prone to human error.</p>
-      <h4>3. Conclusion</h4>
-      <p>Automation suits stable, repetitive, rule-based and high-risk tests. Exploratory and usability tests still need a human. Automation <b>complements</b> manual testing; it does not replace it.</p>
-      <p class="booksrc">📘 <b>Book:</b> §5.1 Automation Testing, §5.1.1 What Tests should be Automated, p. 5-2</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Differentiate between Manual Testing and Automation Testing.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q5(a) [6]</p>
-      <p><b>Manual testing</b> is performed by a human sitting in front of a computer and carefully executing the test steps. <b>Automation testing</b> is a software testing technique that uses specialized automated testing tools to execute a test case suite.</p>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Manual testing</th><th>Automation testing</th></tr></thead>
-        <tbody>
-          <tr><td>Who executes</td><td>A human tester, step by step</td><td>Specialized testing tools and scripts</td></tr>
-          <tr><td>Test data</td><td>The tester enters the data by hand</td><td>The tool feeds test data to the test-under-test</td></tr>
-          <tr><td>Result checking</td><td>The tester compares expected and actual results</td><td>The tool compares expected and actual results</td></tr>
-          <tr><td>Reports</td><td>Prepared manually</td><td>Detailed test reports generated automatically</td></tr>
-          <tr><td>Initial investment</td><td>Low</td><td>Significant investment of money and resources</td></tr>
-          <tr><td>Speed</td><td>Slow; one step at a time</td><td>Saves a lot of time even for complex and large systems</td></tr>
-          <tr><td>Repeatability</td><td>Each run may vary with tester attention</td><td>Allows repeatable testing with less effort and less time</td></tr>
-          <tr><td>Human error</td><td>Possible, especially in complex calculations</td><td>Removed from execution by the tool</td></tr>
-          <tr><td>Coverage</td><td>Limited by team size and time</td><td>Increases the coverage area and number of tests</td></tr>
-          <tr><td>Best for</td><td>Exploratory, usability and one-off checks</td><td>Regression, complex calculations, smoke, data-driven, performance and functional tests</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>Goal of automation:</b> the book states clearly that automation is meant to <b>reduce the number of test cases run manually</b>, not to eliminate manual testing altogether. The two are complementary.</p>
-      <p class="booksrc">📘 <b>Book:</b> §5.1 Automation Testing, §5.1.1 What Tests should be Automated, §5.4 Benefits of Automation Testing, p. 5-2 – 5-7</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Identify / list and explain different benefits of Automation testing.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★ 4×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(b) [6] · 2023 May Q6(a) [6] · 2024 May Q5(b) [6] · 2025 Nov Q5(a) [6]</p>
-      <ol>
-        <li><b>Enhanced results:</b> automation saves a lot of time even for complex and large systems. It allows repeatable testing and gives better, faster results with significantly less effort and less time.</li>
-        <li><b>Swifter feedback system:</b> automation is very critical in the validation phase. It increases communication between developers, designers and product marketers, gives room for immediate correction of possible defects, and raises the efficiency of the development team.</li>
-        <li><b>Brand enhancement:</b> automated tests reuse quality test data again and again, which saves cost from project management and maintenance. It adds value to all stakeholders, enhances system capability, improves the brand name and brand recall, and therefore increases customer retention.</li>
-        <li><b>Cost-effective:</b> the initial investment is high, but automation saves money in the long run because less time is needed to conduct tests. It also raises work quality, as there is no chance of negligence or human error, and reduces defect fixing in the post-release phase.</li>
-        <li><b>Efficiency testing:</b> automation can be left virtually unattended, leaving room to monitor results at the end of the process. This increases the overall efficiency of the application.</li>
-        <li><b>Increase in coverage area:</b> more tests can be allocated to the application, which leads to higher testing coverage and fewer defects. More features and complex applications can be tested; a manual scenario would need a large team and heavy time.</li>
-        <li><b>Detailed testing:</b> testers have different approaches and focus areas. Automation focuses equally on all areas of inspection, so the final product gets the best quality with emphasis on every aspect.</li>
-        <li><b>Reusability:</b> test automation is iterative in nature. Automated test cases are fully reusable and can test any aspect of the code depending on its importance and the approach used.</li>
-        <li><b>Earlier detection of defects:</b> the tool records defects, so the development and support teams can consider them together and give quick output. This speeds up the project; the earlier a fault is found, the cheaper and easier it is to fix and deploy.</li>
-        <li><b>Time to market:</b> automation reduces the time-to-market launch of an application. It gives consistent execution of test cases, and the test library runs much faster and longer after automation.</li>
-      </ol>
-      <p><b>Balance line:</b> the book also notes that automation demands a significant investment of money and resources, and its goal is to reduce manual test cases — not to remove manual testing.</p>
-      <p class="booksrc">📘 <b>Book:</b> §5.4 Benefits of Automation Testing, p. 5-5 – 5-7</p>
-    </div>
-  </div>
 
   <div class="qa">
     <div class="qa-head">
@@ -369,30 +288,57 @@ main{min-width:0}
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q5</span>Explain different manual testing process.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+      <p class="qtitle"><span class="qno">Q3</span>Identify / list and explain different benefits of Automation testing.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★ 4×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q6(a) [6]</p>
-      <p><b>Manual testing</b> is testing in which a human sits in front of a computer and carefully executes the test steps. The book defines it in §5.1 and treats automation as its helper — automation reduces the number of cases run manually, but does not eliminate manual testing. A manual project still follows a planned process:</p>
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q6(b) [6] · 2023 May Q6(a) [6] · 2024 May Q5(b) [6] · 2025 Nov Q5(a) [6]</p>
+      <ol>
+        <li><b>Enhanced results:</b> automation saves a lot of time even for complex and large systems. It allows repeatable testing and gives better, faster results with significantly less effort and less time.</li>
+        <li><b>Swifter feedback system:</b> automation is very critical in the validation phase. It increases communication between developers, designers and product marketers, gives room for immediate correction of possible defects, and raises the efficiency of the development team.</li>
+        <li><b>Brand enhancement:</b> automated tests reuse quality test data again and again, which saves cost from project management and maintenance. It adds value to all stakeholders, enhances system capability, improves the brand name and brand recall, and therefore increases customer retention.</li>
+        <li><b>Cost-effective:</b> the initial investment is high, but automation saves money in the long run because less time is needed to conduct tests. It also raises work quality, as there is no chance of negligence or human error, and reduces defect fixing in the post-release phase.</li>
+        <li><b>Efficiency testing:</b> automation can be left virtually unattended, leaving room to monitor results at the end of the process. This increases the overall efficiency of the application.</li>
+        <li><b>Increase in coverage area:</b> more tests can be allocated to the application, which leads to higher testing coverage and fewer defects. More features and complex applications can be tested; a manual scenario would need a large team and heavy time.</li>
+        <li><b>Detailed testing:</b> testers have different approaches and focus areas. Automation focuses equally on all areas of inspection, so the final product gets the best quality with emphasis on every aspect.</li>
+        <li><b>Reusability:</b> test automation is iterative in nature. Automated test cases are fully reusable and can test any aspect of the code depending on its importance and the approach used.</li>
+        <li><b>Earlier detection of defects:</b> the tool records defects, so the development and support teams can consider them together and give quick output. This speeds up the project; the earlier a fault is found, the cheaper and easier it is to fix and deploy.</li>
+        <li><b>Time to market:</b> automation reduces the time-to-market launch of an application. It gives consistent execution of test cases, and the test library runs much faster and longer after automation.</li>
+      </ol>
+      <p><b>Balance line:</b> the book also notes that automation demands a significant investment of money and resources, and its goal is to reduce manual test cases — not to remove manual testing.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.4 Benefits of Automation Testing, p. 5-5 – 5-7</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>What is automation testing in software testing? Explain in brief. / Explain it with an example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q5(a) [6] · 2024 May Q6(a) [6]</p>
+      <p><b>Definition:</b> Automation testing is a software testing technique that uses <b>specialized automated testing software tools</b> to execute a test case suite. Manual testing, in contrast, is performed by a human sitting in front of a computer and carefully executing the test steps.</p>
+      <p>The automation software can <b>feed test data</b> to the test-under-test, <b>compare expected and actual results</b> and <b>generate detailed test reports</b>. Software test automation demands a significant investment of money and resources.</p>
+      <p><b>Goal:</b> to reduce the number of test cases that have to be run manually — <b>not</b> to eliminate manual testing altogether.</p>
+      <h4>1. What tests should be automated (§5.1.1)</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Step</th><th>Activity</th><th>Output</th></tr></thead>
+        <thead><tr><th>Test type</th><th>Why automate it</th></tr></thead>
         <tbody>
-          <tr><td>1. Study requirements</td><td>Read the SRS, list testable requirements, note ambiguities and missing information.</td><td>Requirement checklist</td></tr>
-          <tr><td>2. Test planning</td><td>Decide scope, approach, effort, schedule, environment, risks and entry/exit criteria.</td><td>Test plan</td></tr>
-          <tr><td>3. Test case design</td><td>Write steps, test data and expected results; apply black-box and white-box techniques.</td><td>Test cases and test data</td></tr>
-          <tr><td>4. Environment setup</td><td>Install the build and arrange hardware, software, network, browsers and user accounts.</td><td>Ready test environment</td></tr>
-          <tr><td>5. Execution</td><td>The tester carefully executes each step and observes the actual behaviour.</td><td>Actual results</td></tr>
-          <tr><td>6. Result comparison and defect logging</td><td>Compare expected and actual results; record defects with steps, severity and priority; track them to closure.</td><td>Defect report</td></tr>
-          <tr><td>7. Retest and regression</td><td>Verify fixes and re-run the affected and critical tests.</td><td>Updated results</td></tr>
-          <tr><td>8. Test closure</td><td>Summarise coverage, open defects and lessons learned.</td><td>Test closure report</td></tr>
+          <tr><td><b>A. Regression testing</b></td><td>Regression suites keep growing, and the same variables are filled in many times to make sure new features do not disturb old functions.</td></tr>
+          <tr><td><b>B. Complex functionalities</b></td><td>Tests that need complex calculations and are prone to human error.</td></tr>
+          <tr><td><b>C. Smoke testing</b></td><td>Quickly checks the quality of key functions and shows whether a build needs more in-depth testing.</td></tr>
+          <tr><td><b>D. Data-driven testing</b></td><td>The same operation has to be validated repeatedly with multiple data sets.</td></tr>
+          <tr><td><b>E. Performance testing</b></td><td>Monitors software performance under different conditions — very laborious and time-consuming by hand.</td></tr>
+          <tr><td><b>F. Functional testing</b></td><td>Every developer PR needs quick functional feedback; this is impossible without automation as the organisation grows.</td></tr>
         </tbody>
       </table>
       </div>
-      <p><b>Example:</b> for a login page the tester writes cases for valid login, wrong password, blank fields and account lock; executes them in Chrome and Firefox; logs a defect for a blank-password crash; and retests after the fix.</p>
-      <p><b>Book link:</b> manual testing is the human-run form of the testing work; automation takes over only the repetitive, rule-based and high-risk parts listed in §5.1.1.</p>
-      <p class="booksrc">📘 <b>Book:</b> §5.1 Automation Testing (manual testing defined), p. 5-2; process reference §5.2, p. 5-2 – 5-3</p>
+      <h4>2. Example — login page with 100 records</h4>
+      <p>A login page has to be checked with 100 username/password pairs. A Selenium script feeds each pair from an Excel file, enters the data, clicks <b>Login</b> and compares the actual page with the expected page. The tool generates the report: 97 pass, 3 fail, in a few minutes. The same work would take a tester hours and is prone to human error.</p>
+      <h4>3. Conclusion</h4>
+      <p>Automation suits stable, repetitive, rule-based and high-risk tests. Exploratory and usability tests still need a human. Automation <b>complements</b> manual testing; it does not replace it.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.1 Automation Testing, §5.1.1 What Tests should be Automated, p. 5-2</p>
     </div>
   </div>
 
@@ -426,12 +372,113 @@ main{min-width:0}
       <p class="booksrc">📘 <b>Book:</b> §5.5 How to Choose Automation Testing Tools, §5.5.1 Tool Selection Process, §5.5.2 Type of Test Tools, p. 5-7 – 5-9</p>
     </div>
   </div>
-</section>
+<div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Differentiate between Manual Testing and Automation Testing.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q5(a) [6]</p>
+      <p><b>Manual testing</b> is performed by a human sitting in front of a computer and carefully executing the test steps. <b>Automation testing</b> is a software testing technique that uses specialized automated testing tools to execute a test case suite.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Manual testing</th><th>Automation testing</th></tr></thead>
+        <tbody>
+          <tr><td>Who executes</td><td>A human tester, step by step</td><td>Specialized testing tools and scripts</td></tr>
+          <tr><td>Test data</td><td>The tester enters the data by hand</td><td>The tool feeds test data to the test-under-test</td></tr>
+          <tr><td>Result checking</td><td>The tester compares expected and actual results</td><td>The tool compares expected and actual results</td></tr>
+          <tr><td>Reports</td><td>Prepared manually</td><td>Detailed test reports generated automatically</td></tr>
+          <tr><td>Initial investment</td><td>Low</td><td>Significant investment of money and resources</td></tr>
+          <tr><td>Speed</td><td>Slow; one step at a time</td><td>Saves a lot of time even for complex and large systems</td></tr>
+          <tr><td>Repeatability</td><td>Each run may vary with tester attention</td><td>Allows repeatable testing with less effort and less time</td></tr>
+          <tr><td>Human error</td><td>Possible, especially in complex calculations</td><td>Removed from execution by the tool</td></tr>
+          <tr><td>Coverage</td><td>Limited by team size and time</td><td>Increases the coverage area and number of tests</td></tr>
+          <tr><td>Best for</td><td>Exploratory, usability and one-off checks</td><td>Regression, complex calculations, smoke, data-driven, performance and functional tests</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Goal of automation:</b> the book states clearly that automation is meant to <b>reduce the number of test cases run manually</b>, not to eliminate manual testing altogether. The two are complementary.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.1 Automation Testing, §5.1.1 What Tests should be Automated, §5.4 Benefits of Automation Testing, p. 5-2 – 5-7</p>
+    </div>
+  </div>
 
-<!-- ================= 5.2 ================= -->
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Explain different manual testing process.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q6(a) [6]</p>
+      <p><b>Manual testing</b> is testing in which a human sits in front of a computer and carefully executes the test steps. The book defines it in §5.1 and treats automation as its helper — automation reduces the number of cases run manually, but does not eliminate manual testing. A manual project still follows a planned process:</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Step</th><th>Activity</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>1. Study requirements</td><td>Read the SRS, list testable requirements, note ambiguities and missing information.</td><td>Requirement checklist</td></tr>
+          <tr><td>2. Test planning</td><td>Decide scope, approach, effort, schedule, environment, risks and entry/exit criteria.</td><td>Test plan</td></tr>
+          <tr><td>3. Test case design</td><td>Write steps, test data and expected results; apply black-box and white-box techniques.</td><td>Test cases and test data</td></tr>
+          <tr><td>4. Environment setup</td><td>Install the build and arrange hardware, software, network, browsers and user accounts.</td><td>Ready test environment</td></tr>
+          <tr><td>5. Execution</td><td>The tester carefully executes each step and observes the actual behaviour.</td><td>Actual results</td></tr>
+          <tr><td>6. Result comparison and defect logging</td><td>Compare expected and actual results; record defects with steps, severity and priority; track them to closure.</td><td>Defect report</td></tr>
+          <tr><td>7. Retest and regression</td><td>Verify fixes and re-run the affected and critical tests.</td><td>Updated results</td></tr>
+          <tr><td>8. Test closure</td><td>Summarise coverage, open defects and lessons learned.</td><td>Test closure report</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Example:</b> for a login page the tester writes cases for valid login, wrong password, blank fields and account lock; executes them in Chrome and Firefox; logs a defect for a blank-password crash; and retests after the fix.</p>
+      <p><b>Book link:</b> manual testing is the human-run form of the testing work; automation takes over only the repetitive, rule-based and high-risk parts listed in §5.1.1.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.1 Automation Testing (manual testing defined), p. 5-2; process reference §5.2, p. 5-2 – 5-3</p>
+    </div>
+  </div>
+
+  </section>
+
 <section class="card" id="s52">
-  <h2>5.2 Selenium tool suite</h2>
+  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>5.2 Selenium tool suite</h2>
   <p class="lead">Syllabus: <em>Selenium IDE, Selenium RC, Selenium WebDriver, Selenium Grid.</em></p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q8</span>Illustrate Selenium's IDE and explain in detail. (Also printed as “IQE” in some papers.)</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(b) [6] · 2022 Nov Q5(a) [6] · 2023 May Q5(b) [6, printed “IQE”] · 2025 May Q3(b) [6] · 2025 Nov Q6(c) [6, printed “IQE”]</p>
+      <p><b>Definition:</b> Selenium <b>IDE</b> (Integrated Development Environment) is the <b>simplest framework</b> in the Selenium suite and one of the easiest to learn. It is a <b>Firefox plugin</b> that can be installed as easily as any other plugin.</p>
+      <h4>1. Position in the Selenium suite</h4>
+      <p>The Selenium suite has four pieces: IDE, RC, WebDriver and Grid (Fig. 5.6.1). IDE is the entry-level piece, meant for simple work; RC and WebDriver are the programming tools for serious test cases.</p>
+      <h4>2. Key points from the book</h4>
+      <ul>
+        <li><b>Simplest framework:</b> it has the least complexity of the four Selenium components.</li>
+        <li><b>Easiest to learn:</b> a beginner can start without learning a full programming language or a test framework.</li>
+        <li><b>Firefox plugin:</b> it runs inside the Firefox browser and is installed like any other plugin.</li>
+        <li><b>Prototyping tool:</b> because of its simplicity, the book says IDE should <b>only</b> be used as a prototyping tool.</li>
+        <li><b>Limited scope:</b> for more advanced test cases you need <b>Selenium RC or WebDriver</b>.</li>
+      </ul>
+      <h4>3. How it is used</h4>
+      <ol>
+        <li>Install the Selenium IDE plugin in Firefox.</li>
+        <li>Open the application under test and create a small prototype test case.</li>
+        <li>Run the prototype and check the basic flow and its result.</li>
+        <li>If the case needs programming, data-driven input or a larger suite, rebuild it in Selenium RC or WebDriver.</li>
+      </ol>
+      <h4>4. IDE vs RC vs WebDriver</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Selenium IDE</th><th>Selenium RC / WebDriver</th></tr></thead>
+        <tbody>
+          <tr><td>Level</td><td>Simplest framework; easiest to learn</td><td>Advanced frameworks for real test suites</td></tr>
+          <tr><td>Where it runs</td><td>As a Firefox plugin</td><td>Through RC or direct browser control by WebDriver</td></tr>
+          <tr><td>Programming</td><td>Not required for simple prototypes</td><td>Uses Java, C#, PHP, Python, Perl or Ruby</td></tr>
+          <tr><td>Best use</td><td>Prototyping only</td><td>Advanced and complete test cases</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>5. Conclusion</h4>
+      <p>IDE is the quick starting point of Selenium: simple, easy and useful for a prototype. It is not the tool for a full regression suite — that job belongs to RC and WebDriver.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.7 Selenium Tool Suits — 1. Selenium IDE, Fig. 5.6.1, p. 5-10</p>
+    </div>
+  </div>
 
   <div class="qa">
     <div class="qa-head">
@@ -479,49 +526,6 @@ main{min-width:0}
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q8</span>Illustrate Selenium's IDE and explain in detail. (Also printed as “IQE” in some papers.)</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(b) [6] · 2022 Nov Q5(a) [6] · 2023 May Q5(b) [6, printed “IQE”] · 2025 May Q3(b) [6] · 2025 Nov Q6(c) [6, printed “IQE”]</p>
-      <p><b>Definition:</b> Selenium <b>IDE</b> (Integrated Development Environment) is the <b>simplest framework</b> in the Selenium suite and one of the easiest to learn. It is a <b>Firefox plugin</b> that can be installed as easily as any other plugin.</p>
-      <h4>1. Position in the Selenium suite</h4>
-      <p>The Selenium suite has four pieces: IDE, RC, WebDriver and Grid (Fig. 5.6.1). IDE is the entry-level piece, meant for simple work; RC and WebDriver are the programming tools for serious test cases.</p>
-      <h4>2. Key points from the book</h4>
-      <ul>
-        <li><b>Simplest framework:</b> it has the least complexity of the four Selenium components.</li>
-        <li><b>Easiest to learn:</b> a beginner can start without learning a full programming language or a test framework.</li>
-        <li><b>Firefox plugin:</b> it runs inside the Firefox browser and is installed like any other plugin.</li>
-        <li><b>Prototyping tool:</b> because of its simplicity, the book says IDE should <b>only</b> be used as a prototyping tool.</li>
-        <li><b>Limited scope:</b> for more advanced test cases you need <b>Selenium RC or WebDriver</b>.</li>
-      </ul>
-      <h4>3. How it is used</h4>
-      <ol>
-        <li>Install the Selenium IDE plugin in Firefox.</li>
-        <li>Open the application under test and create a small prototype test case.</li>
-        <li>Run the prototype and check the basic flow and its result.</li>
-        <li>If the case needs programming, data-driven input or a larger suite, rebuild it in Selenium RC or WebDriver.</li>
-      </ol>
-      <h4>4. IDE vs RC vs WebDriver</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Selenium IDE</th><th>Selenium RC / WebDriver</th></tr></thead>
-        <tbody>
-          <tr><td>Level</td><td>Simplest framework; easiest to learn</td><td>Advanced frameworks for real test suites</td></tr>
-          <tr><td>Where it runs</td><td>As a Firefox plugin</td><td>Through RC or direct browser control by WebDriver</td></tr>
-          <tr><td>Programming</td><td>Not required for simple prototypes</td><td>Uses Java, C#, PHP, Python, Perl or Ruby</td></tr>
-          <tr><td>Best use</td><td>Prototyping only</td><td>Advanced and complete test cases</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <h4>5. Conclusion</h4>
-      <p>IDE is the quick starting point of Selenium: simple, easy and useful for a prototype. It is not the tool for a full regression suite — that job belongs to RC and WebDriver.</p>
-      <p class="booksrc">📘 <b>Book:</b> §5.7 Selenium Tool Suits — 1. Selenium IDE, Fig. 5.6.1, p. 5-10</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
       <p class="qtitle"><span class="qno">Q9</span>How would you explain Selenium WebDriver? Explain it.</p>
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
@@ -559,47 +563,6 @@ main{min-width:0}
       </div>
       <p><b>Conclusion:</b> WebDriver is preferred over IDE and RC because it is modern, does not depend on JavaScript and talks directly to the browser.</p>
       <p class="booksrc">📘 <b>Book:</b> §5.7 Selenium Tool Suits — 3. Selenium WebDriver, §5.6.1 Introduction to Selenium, p. 5-10 – 5-11</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q10</span>What is Selenium RC? Explain in detail.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q6(b) [6]</p>
-      <p><b>Definition:</b> Selenium <b>Remote Control (RC)</b> was the <b>flagship testing framework</b> of the whole Selenium project for a long time. It was the first automated web testing tool that allowed users to <b>use a programming language they prefer</b>.</p>
-      <h4>1. Key points from the book</h4>
-      <ul>
-        <li><b>Flagship status:</b> RC led the Selenium project for a long time before WebDriver became the main tool.</li>
-        <li><b>Language freedom:</b> testers were not tied to one language; they could write tests in their preferred programming language.</li>
-        <li><b>Supported languages (as of version 2.25.0):</b> Java, C#, PHP, Python, Perl and Ruby.</li>
-        <li><b>JavaScript-based:</b> the book notes that WebDriver, unlike Selenium RC, does not rely on JavaScript for automation — so RC depended on JavaScript to drive the browser.</li>
-        <li><b>Merged into Selenium 2:</b> RC and WebDriver were combined into a single framework to form Selenium 2; Selenium 3 is the new and improved version.</li>
-      </ul>
-      <h4>2. How it works</h4>
-      <ol>
-        <li>The tester writes the test in Java, C#, PHP, Python, Perl or Ruby.</li>
-        <li>The RC test sends its commands to the browser.</li>
-        <li>RC uses JavaScript to carry out the automation in the browser.</li>
-        <li>The result comes back to the test, which checks pass or fail.</li>
-      </ol>
-      <h4>3. RC vs WebDriver</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Selenium RC</th><th>WebDriver</th></tr></thead>
-        <tbody>
-          <tr><td>Role</td><td>Former flagship framework</td><td>Modern, better approach</td></tr>
-          <tr><td>JavaScript</td><td>Relies on JavaScript</td><td>Does not rely on JavaScript</td></tr>
-          <tr><td>Browser control</td><td>Through the RC layer</td><td>Directly communicates with the browser</td></tr>
-          <tr><td>Languages</td><td>Java, C#, PHP, Python, Perl, Ruby</td><td>Java, C#, PHP, Python, Perl, Ruby</td></tr>
-          <tr><td>Status</td><td>Merged into Selenium 2</td><td>Core of Selenium 2 and later</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>Exam line:</b> RC was the first Selenium tool that gave testers a choice of programming language. Its JavaScript-based approach was later replaced by WebDriver’s direct browser communication.</p>
-      <p class="booksrc">📘 <b>Book:</b> §5.7 Selenium Tool Suits — 2. Selenium Remote Control (Selenium RC), §5.6.1, p. 5-10 – 5-11</p>
     </div>
   </div>
 
@@ -647,11 +610,51 @@ main{min-width:0}
       <p class="booksrc">📘 <b>Book:</b> §5.7 Selenium Tool Suits — 4. Selenium Grid, p. 5-11</p>
     </div>
   </div>
-</section>
+<div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q10</span>What is Selenium RC? Explain in detail.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q6(b) [6]</p>
+      <p><b>Definition:</b> Selenium <b>Remote Control (RC)</b> was the <b>flagship testing framework</b> of the whole Selenium project for a long time. It was the first automated web testing tool that allowed users to <b>use a programming language they prefer</b>.</p>
+      <h4>1. Key points from the book</h4>
+      <ul>
+        <li><b>Flagship status:</b> RC led the Selenium project for a long time before WebDriver became the main tool.</li>
+        <li><b>Language freedom:</b> testers were not tied to one language; they could write tests in their preferred programming language.</li>
+        <li><b>Supported languages (as of version 2.25.0):</b> Java, C#, PHP, Python, Perl and Ruby.</li>
+        <li><b>JavaScript-based:</b> the book notes that WebDriver, unlike Selenium RC, does not rely on JavaScript for automation — so RC depended on JavaScript to drive the browser.</li>
+        <li><b>Merged into Selenium 2:</b> RC and WebDriver were combined into a single framework to form Selenium 2; Selenium 3 is the new and improved version.</li>
+      </ul>
+      <h4>2. How it works</h4>
+      <ol>
+        <li>The tester writes the test in Java, C#, PHP, Python, Perl or Ruby.</li>
+        <li>The RC test sends its commands to the browser.</li>
+        <li>RC uses JavaScript to carry out the automation in the browser.</li>
+        <li>The result comes back to the test, which checks pass or fail.</li>
+      </ol>
+      <h4>3. RC vs WebDriver</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Selenium RC</th><th>WebDriver</th></tr></thead>
+        <tbody>
+          <tr><td>Role</td><td>Former flagship framework</td><td>Modern, better approach</td></tr>
+          <tr><td>JavaScript</td><td>Relies on JavaScript</td><td>Does not rely on JavaScript</td></tr>
+          <tr><td>Browser control</td><td>Through the RC layer</td><td>Directly communicates with the browser</td></tr>
+          <tr><td>Languages</td><td>Java, C#, PHP, Python, Perl, Ruby</td><td>Java, C#, PHP, Python, Perl, Ruby</td></tr>
+          <tr><td>Status</td><td>Merged into Selenium 2</td><td>Core of Selenium 2 and later</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Exam line:</b> RC was the first Selenium tool that gave testers a choice of programming language. Its JavaScript-based approach was later replaced by WebDriver’s direct browser communication.</p>
+      <p class="booksrc">📘 <b>Book:</b> §5.7 Selenium Tool Suits — 2. Selenium Remote Control (Selenium RC), §5.6.1, p. 5-10 – 5-11</p>
+    </div>
+  </div>
 
-<!-- ================= 5.3 ================= -->
+  </section>
+
 <section class="card" id="s53">
-  <h2>5.3 RPA and performance testing</h2>
+  <div class="prio">Priority 3 · ★★★★★ 5× repeated</div><h2>5.3 RPA and performance testing</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -781,9 +784,8 @@ main{min-width:0}
   </div>
 </section>
 
-<!-- ================= 5.4 ================= -->
 <section class="card" id="s54">
-  <h2>5.4 Syllabus-only automation tools</h2>
+  <div class="prio">Priority 4 · syllabus support</div><h2>5.4 Syllabus-only automation tools</h2>
   <div class="note"><b>Not asked directly in the six papers:</b> automation frameworks (linear, modular, library architecture, data-driven, keyword-driven, hybrid, behaviour-driven), SoapUI, Tosca and Appium. They are in the syllabus; learn one line each in case a 3–4 mark part appears.</div>
   <div class="tbl-wrap">
   <table class="left">
@@ -804,6 +806,10 @@ main{min-width:0}
   </div>
 </section>
 
+<!-- ================= 5.1 ================= -->
+<!-- ================= 5.2 ================= -->
+<!-- ================= 5.3 ================= -->
+<!-- ================= 5.4 ================= -->
 <!-- ================= CHEAT SHEET ================= -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet — Unit 5</h2>

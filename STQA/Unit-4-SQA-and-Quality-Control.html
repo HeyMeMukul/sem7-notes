@@ -146,9 +146,15 @@ main{min-width:0}
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -157,10 +163,10 @@ main{min-width:0}
   <h3>STQA · Unit 4</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s41">4.1 SQA, QC and QMS</a>
-    <a href="#s42">4.2 Defects &amp; product characteristics</a>
-    <a href="#s43">4.3 Quality planning, control, ISO/CMM</a>
-    <a href="#s44">4.4 Process, customer, quality context</a>
+    <a href="#s43">4.3 Quality planning, control, ISO/CMM <span class="pill">4×</span></a>
+    <a href="#s42">4.2 Defects &amp; product characteristics <span class="pill">3×</span></a>
+    <a href="#s44">4.4 Process, customer, quality context <span class="pill">3×</span></a>
+    <a href="#s41">4.1 SQA, QC and QMS <span class="pill">2×</span></a>
     <a href="#s45">4.5 Syllabus-only topics</a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
@@ -178,7 +184,7 @@ main{min-width:0}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 4 — SQA and Quality Control</h1>
-  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Software Testing &amp; Quality Assurance (410245D)  ·  <b>Exam:</b> Thursday, 03 Dec 2026, 2:00–4:30 PM  ·  <b>Max marks:</b> 70</p>
   <p>All questions are taken <b>verbatim from the six end-sem papers</b> (2022 Nov – 2025 Nov). Unit 4 is the “quality management” half of the paper: QA/QC, QMS, defects, ISO 9001, CMM, quality planning and customer satisfaction.</p>
   <div class="meta">
     <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
@@ -224,190 +230,184 @@ main{min-width:0}
   <div class="note"><b>Priority:</b> ISO 9001 (4×), why defects (3×), CMM levels (3×) and customer satisfaction (3×) cover <b>13 of 34</b> Unit-4 instances. Learn ISO 9001 clauses and the five CMM levels word-perfect — they are almost free marks.</div>
 </section>
 
-<!-- ================= 4.1 ================= -->
-<section class="card" id="s41">
-  <h2>4.1 SQA, QC and QMS</h2>
-  <p class="lead">Syllabus: <em>Software Quality Assurance — introduction, constraints, quality-productivity relationship, requirements, characteristics, development process, types of products, criticality, SQM, defects, processes, QMS structure, pillars, important aspects.</em></p>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s43">
+  <div class="prio">Priority 1 · ★★★★ 4× repeated</div><h2>4.3 Quality planning, control and standards</h2>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Differentiate between Quality Assurance and Quality Control.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+      <p class="qtitle"><span class="qno">Q13</span>Explain why ISO 9001 standard and its importance in software testing.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(a) [6] · 2023 Nov Q4(b) [6]</p>
-      <p><b>Quality Assurance (QA)</b> is a <b>process</b> that ensures the developed software meets and complies with defined or standardised quality specifications. It is an <b>ongoing activity inside the SDLC</b> that routinely checks the software against the desired quality measures. <b>Quality Control (QC)</b> is a <b>deliberate and planned activity</b> that determines the quality of a product with a view to <b>accepting it</b>. If the product does not satisfy the requirements, remedial measures are taken to correct the process or the activity.</p>
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [6] · 2023 May Q3(c) [5] · 2025 May Q4(a) [6] · 2025 Nov Q4(a) [5]</p>
+      <p><b>What it is:</b> <b>ISO 9000</b> is an <b>international set of standards for quality management</b>, applicable to a range of organisations from manufacturing to service industries. Its scope covers <b>hardware, software, processed materials and services</b>, and it outlines the <b>basic elements of a good quality management system</b>. These elements are good business practice.</p>
+      <p><b>ISO 9001</b> is the standard applicable to organisations that <b>design, develop and maintain products</b>. It is a <b>generic model of the quality process</b> that must be instantiated for each organisation. It is the <b>broadest</b> standard of the family and provides a model for <b>design, development, production, installation and servicing</b>.</p>
+      <h4>1. The ISO 9000 family</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Point</th><th>Quality Assurance (QA)</th><th>Quality Control (QC)</th></tr></thead>
+        <thead><tr><th>Standard</th><th>Scope</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td>Book definition</td><td>A planned and systematic pattern of all actions needed to give adequate confidence that the product conforms to established technical requirements (IEEE).</td><td>A deliberate and planned activity to determine the quality of a product before accepting it.</td></tr>
-          <tr><td>Focus</td><td>The <b>engineering process</b> by which products are developed.</td><td>The <b>product</b> and its measurable characteristics.</td></tr>
-          <tr><td>Purpose</td><td>Build quality into the process so that mistakes are <b>prevented</b>.</td><td><b>Detect</b> defects, accept or reject the product, and correct the process if requirements are not met.</td></tr>
-          <tr><td>Nature</td><td><b>Proactive and preventive</b> technique.</td><td><b>Reactive and corrective</b> (detective) activity.</td></tr>
-          <tr><td>When it runs</td><td>From the requirements stage and throughout the SDLC.</td><td>When a work product exists — reviews before release and testing before going live.</td></tr>
-          <tr><td>Typical activities</td><td>Quality management approach, measurement and reporting, software-engineering technology, standards compliance, multi-testing strategy, formal technical reviews.</td><td>Inspection, review, testing, defect logging, measurement, correction and corrective action.</td></tr>
-          <tr><td>Example</td><td>Define coding standards, a review procedure and a training programme so that defects are avoided.</td><td>Run the code inspection and the test cases, record 12 defects, reject the build and send it back for repair.</td></tr>
+          <tr><td><b>ISO 9000</b></td><td>Basic elements of a QMS; hardware, software, processed materials and services.</td><td>Guideline for selection and use; not mandatory for certification.</td></tr>
+          <tr><td><b>ISO 9001</b></td><td>Design, development, production, installation and servicing.</td><td><b>Broadest</b> quality-assurance model; demonstrates an adequate quality system.</td></tr>
+          <tr><td><b>ISO 9002</b></td><td>Production, installation and servicing only.</td><td>Governs manufacture and installation methods.</td></tr>
+          <tr><td><b>ISO 9003</b></td><td>Final inspection and testing.</td><td>For conformance checked mainly by inspection and testing.</td></tr>
+          <tr><td><b>ISO 9004</b></td><td>Guidance for design, implementation and improvement of a quality system.</td><td>For <b>internal use only</b>; not mandatory for certification.</td></tr>
         </tbody>
       </table>
       </div>
-      <p><b>Relationship:</b> QA and QC are complementary. QA makes the process capable; QC proves whether a particular product is acceptable. The book's own comparison adds that <b>SQA is preventive and a part of the SDLC</b>, while <b>testing is corrective and a part of quality control</b>.</p>
-      <p class="booksrc">📘 <b>Book:</b> §4.1 Introduction of SQA, §4.1.1 Differences between SQA and Software Testing, §4.19 Quality Control and Reliability of Quality Process, p. 4-3 – 4-4, 4-35</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Can you clarify Quality Assurance.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q4(b) [6]</p>
-      <p><b>Definition:</b> Software Quality Assurance (SQA) is a <b>process that ensures the developed software meets and complies with defined or standardised quality specifications</b>. It is an <b>ongoing process within the SDLC</b> that routinely checks the developed software to ensure that it meets the desired quality measures.</p>
-      <p><b>IEEE definition:</b> SQA is “a planned and systematic pattern of all actions necessary to provide adequate confidence that an item or product conforms to established technical requirements.” It is also “a set of activities designed to evaluate the process by which the products are developed or manufactured.”</p>
-      <h4>1. Objectives of SQA</h4>
+      <p>A company should first use <b>ISO 9000</b> to design and implement its quality system. Once the system is installed, it may use <b>ISO 9001, 9002 or 9003</b> to demonstrate that the system is adequate.</p>
+      <h4>2. The eight quality management principles (ISO 9000-3)</h4>
+      <div class="math">Customer focus · Leadership · Involvement of people · Process approach · System approach to management · Continual improvement · Factual approach to decision making · Mutually supportive supplier relationships</div>
+      <p>These principles are a set of <b>fundamental beliefs, norms, rules and values</b> accepted as true and used as the basis for quality management. Senior management can use them as a framework for improving performance.</p>
+      <h4>3. ISO 9000-3 requirements for software</h4>
+      <p>ISO 9000-3 contains about <b>20 requirements</b> for software quality management, grouped into five areas:</p>
       <ol>
-        <li>Provide a <b>quality management approach</b> for the project.</li>
-        <li>Set up <b>measurement and reporting mechanisms</b>.</li>
-        <li>Use <b>effective software-engineering technology</b>.</li>
-        <li>Provide a <b>procedure to assure compliance</b> with software-development standards wherever applicable.</li>
-        <li>Draw a <b>multi-testing strategy</b> for the product.</li>
-        <li>Apply <b>formal technical reviews</b> throughout the software process.</li>
+        <li><b>Quality management system</b> — establish and document the QMS.</li>
+        <li><b>Management responsibilities</b> — commitment, customer focus, quality policy, planning, administration, management review.</li>
+        <li><b>Resource management</b> — provision of resources, human resources, facilities, work environment.</li>
+        <li><b>Product realisation</b> — planning, customer-related processes, design and development, purchasing, production and service operations, control of measuring and monitoring devices.</li>
+        <li><b>Measurement, analysis and improvement</b> — planning, measurement and monitoring, control of nonconformity, analysis of data, improvement.</li>
       </ol>
-      <h4>2. Goals of SQA</h4>
-      <ol>
-        <li>SQA activities are <b>planned</b> in advance.</li>
-        <li><b>Non-compliance issues</b> that cannot be resolved inside the project are <b>addressed by senior management</b>.</li>
-        <li>Adherence of products and activities to the applicable <b>standards, procedures and requirements</b> is verified <b>objectively</b>.</li>
-        <li>Affected groups and individuals are <b>informed</b> of SQA activities and results.</li>
-      </ol>
-      <h4>3. QA and testing are not the same</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>SQA</th><th>Software testing</th></tr></thead>
-        <tbody>
-          <tr><td>Concern</td><td>The engineering <b>process</b> that ensures quality.</td><td>The <b>product</b>, tested for problems before it goes live.</td></tr>
-          <tr><td>Purpose</td><td>Ensures that design and functions meet the end user's expectations.</td><td>Ensures that the product is defect-free and secure to use.</td></tr>
-          <tr><td>Nature</td><td><b>Proactive</b> and <b>preventive</b> measure.</td><td><b>Reactive</b> and <b>corrective</b> measure.</td></tr>
-          <tr><td>Scope</td><td>A part of the SDLC; a method to manage quality verification.</td><td>A part of quality control; a method to verify quality validation.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>Example:</b> the team decides that no code is merged without peer review and a documented test record. This rule, the review checklist and the training given to developers are QA. The review meeting and the test run are the checks that show the rule is being followed.</p>
-      <p class="booksrc">📘 <b>Book:</b> §4.1 Introduction of SQA, §4.1.1 Differences between SQA and Software Testing, p. 4-3 – 4-4</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Can you clarify Quality Management System (QMS).</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6] · 2025 May Q3(a) [6]</p>
-      <p><b>Definition:</b> A Quality Management System is the <b>organisational structure, procedures, processes and resources</b> needed to implement quality management. It <b>coordinates and directs the organisation's activities</b> to meet customer and regulatory requirements and to improve effectiveness and efficiency on a continuous basis.</p>
-      <p>The book notes that there is <b>no fixed standard structure</b> for a QMS, but it <b>must be documented</b> in any form that suits the organisation. The reason for starting a QMS must come from <b>top management</b> — not “because competitors are doing it” or “because we want a certificate”.</p>
-      <h4>1. Structure of a QMS (Fig. 4.11.1)</h4>
-<pre class="tree">                   Quality policy            ← first tier
-                           │
-                   Quality objective          ← second tier
-                           │
-                    Quality manual            ← third tier
-                           │
-       ┌───────────────────┼───────────────────┐
-       │                   │                   │
-Quality processes /   Guidelines /        Formats /
-procedures / work     standards           templates
-instructions</pre>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Tier</th><th>What it contains</th><th>Purpose</th></tr></thead>
-        <tbody>
-          <tr><td><b>Quality policy</b></td><td>Top management's statement of intent and direction.</td><td>Basic framework on which the quality temple rests; tells how activities will be conducted.</td></tr>
-          <tr><td><b>Quality objective</b></td><td>Measurable targets set by management.</td><td>Defines progress and achievement in numerical terms.</td></tr>
-          <tr><td><b>Quality manual</b></td><td>The documented QMS, published by management.</td><td>Tells the organisation how the system works.</td></tr>
-          <tr><td><b>Processes, procedures, work instructions</b></td><td>Defined methods for each functional area and project.</td><td>Converts policy into daily work.</td></tr>
-          <tr><td><b>Guidelines and standards</b></td><td>Rules used by teams to reach quality goals.</td><td>Gives a common technical basis for products and services.</td></tr>
-          <tr><td><b>Formats and templates</b></td><td>Common formats for tracking project information.</td><td>Acts as a checklist and keeps records consistent across projects.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <h4>2. Before designing the QMS — review the business</h4>
-      <p>The organisation first reviews its current business to clarify its purpose and market position. The book lists: <b>customer, product, stakeholders, description of the operation, strengths and weaknesses, market share, competitors and the state of competition</b>.</p>
-      <h4>3. Benefits of a QMS</h4>
+      <h4>4. Importance in software testing</h4>
       <ul>
-        <li>Defining, improving and <b>controlling processes</b>.</li>
-        <li><b>Reducing waste</b> and <b>preventing mistakes</b>.</li>
-        <li><b>Lowering costs</b>.</li>
-        <li>Facilitating and identifying <b>training opportunities</b>.</li>
-        <li><b>Engaging staff</b> and setting an organisation-wide direction.</li>
-        <li>Communicating a <b>readiness to produce consistent results</b>.</li>
+        <li>ISO 9003 is directed at <b>final test and inspection</b>, so testing is a recognised part of the quality system.</li>
+        <li>ISO 9000-3 requires <b>documented procedures and work instructions</b>, which include <b>test methods and calibration methods</b>. Testing therefore becomes a defined, repeatable process.</li>
+        <li>The <b>measurement, analysis and improvement</b> group requires <b>control of nonconformity</b> and <b>analysis of data</b> — exactly what a defect log and test report provide.</li>
+        <li>Certification verifies that the organisation's <b>software development and maintenance processes fully comply</b> with the standard, so review and test records become audit evidence.</li>
+        <li>Customers increasingly demand that suppliers are <b>ISO 9000 certified</b>, so certification supports contracts and tenders.</li>
       </ul>
-      <p class="booksrc">📘 <b>Book:</b> §4.11 Quality Management System Structure, §4.12 Pillars of Quality Management System, §4.19.1 Quality Management System Models, p. 4-18 – 4-19, 4-35 – 4-36</p>
+      <h4>5. Certification</h4>
+      <p>Quality standards and procedures are documented in an <b>organisational quality manual</b>, and an <b>external body</b> certifies that the manual and the processes conform to the standard. The book lists <b>four tiers of documentation</b>: (1) the <b>quality manual</b>; (2) <b>quality management procedures</b>; (3) <b>area work instructions</b> — standard operating procedures, test methods, calibration methods; (4) <b>forms, records, books and files</b>. Certification must be maintained through periodic surveillance audits.</p>
+      <p><b>Limitation:</b> ISO 9001 certifies the <b>quality system and processes</b>, not a particular product. A certified organisation can still release a defective product. Certification also has problems of <b>cost, time, level of internal expertise, executive commitment and selection of the registration body</b>. It must therefore be combined with real product testing and measurement.</p>
+      <p class="booksrc">📘 <b>Book:</b> §4.20 International Quality Standards : ISO, §4.20.1 ISO 9001 and ISO 9000-3, §4.20.2 ISO 9000-3 Quality Management System Principles, §4.20.3 ISO 9000-3 Requirements, §4.20.4 Certification According to ISO 9000-3, p. 4-37 – 4-43</p>
     </div>
   </div>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q4</span>With respect to quality management system explain important aspects of quality management.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+      <p class="qtitle"><span class="qno">Q14</span>Can you clarify different levels of CMM. / List and explain limitations of CMM.</p>
+      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★ 3× + CMM limits 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q4(a) [6]</p>
-      <p>For a <b>Total Quality Management (TQM)</b> programme to succeed, the book says that <b>five major things must be in place</b> in the organisation:</p>
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [5] · 2023 Nov Q3(c) [5] · 2025 May Q3(c) [5] · limitations: 2024 May Q4(c) [3] · 2025 Nov Q4(c) [6]</p>
+      <p><b>Definition:</b> The <b>Capability Maturity Model (CMM)</b> was developed by the <b>Software Engineering Institute (SEI) of Carnegie Mellon University</b>. It is a <b>framework that describes the key elements of an effective software process</b>. It applies process-management and quality-improvement concepts to software development and maintenance and acts as a guide for evolving towards a culture of engineering excellence. It is a <b>model for organisational improvement</b>.</p>
+      <p>SEI released CMM for Software <b>version 1.0 in 1991</b>; in <b>2001</b> it released the <b>Capability Maturity Model Integration (CMMI)</b>, which superseded CMM for software.</p>
+      <p>CMM presents a <b>minimum set of recommended practices</b> that have been shown to enhance software development and maintenance capability. It defines the <b>expectation (“what”)</b> without overly constraining the <b>implementation (“how”)</b>. Its key idea is to provide good engineering and organisational management practices <b>“for any project in any environment”</b>.</p>
+      <h4>1. The five maturity levels</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Level</th><th>Name</th><th>Focus</th><th>Description (book)</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>Initial</b></td><td>No focus</td><td>No key process areas. Project success depends primarily on <b>individuals and their heroics</b>.</td></tr>
+          <tr><td>2</td><td><b>Repeatable</b></td><td>Project management</td><td>Basic project-management processes are established to <b>track cost, schedule and functionality</b>.</td></tr>
+          <tr><td>3</td><td><b>Defined</b></td><td>Engineering process</td><td>The software process for management and engineering activities is <b>documented, standardised and integrated</b> into a standard software process for the organisation. All projects use an approved, <b>tailored version</b>. Key process area: defined process management.</td></tr>
+          <tr><td>4</td><td><b>Managed</b></td><td>Product and process quality</td><td>Process controls are in place to <b>measure quality</b>. Detailed measures of management and software processes are collected and used to identify and correct problems with process performance.</td></tr>
+          <tr><td>5</td><td><b>Optimizing</b></td><td>Continuous process improvement</td><td>The key process area is to <b>maintain continuous improvement and optimise existing processes</b>. The organisation can proactively address the strengths and weaknesses of its business processes and software-engineering practices.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Key process area:</b> a group of related activities considered important for an organisation functioning at the appropriate process maturity level. The CMM is organised into five levels, each representing a <b>higher evolutionary stage of process capability</b> and a <b>progressively greater likelihood of producing quality software</b>.</p>
+      <h4>2. Principles of CMM</h4>
+      <ul>
+        <li><b>Quantitative management methods</b> increase the organisation's capability to control quality and improve productivity.</li>
+        <li>The <b>five-level model</b> evaluates achievements and determines the effort needed to reach the next capability.</li>
+        <li><b>Generic process areas</b> define the “what”, not the “how”, so any life-cycle model, design methodology, development tool, programming language and documentation style can be used.</li>
+        <li>CMM is a <b>framework or model, not a standard</b>. Its components are maturity levels, process capability, key process areas, common features, goals and key practices.</li>
+      </ul>
+      <h4>3. Limitations of CMM</h4>
       <ol>
-        <li><b>Continuous improvement:</b> production cycles are kept short and iterative, so fixes and enhancements can be made almost immediately, on the spot.</li>
-        <li><b>Customer satisfaction:</b> it is not enough to reduce errors to an absolute minimum. The organisation must know the <b>needs of its customers</b> and tie those needs into the refactoring process.</li>
-        <li><b>Managerial involvement:</b> managers must actively support the programme; it is not enough for only front-line workers to be knowledgeable.</li>
-        <li><b>Measurability:</b> the ability to <b>accurately measure and record quality and defects</b>.</li>
-        <li><b>Organisational support for total quality:</b> there must be a linkage between the TQM programme and the <b>financial, strategic and human-resources</b> aspects of the organisation.</li>
+        <li><b>Not prescriptive:</b> it defines “what”, not “how”, so every organisation must design its own process.</li>
+        <li><b>Describes a state, not a route:</b> it does not prescribe the specific means of reaching the next level.</li>
+        <li><b>No documentation standard:</b> the model specifies no particular documentation, and the ISO/CMM comparison notes that CMM has “no documentation”.</li>
+        <li><b>No follow-up audits:</b> unlike ISO 9001, CMM has no surveillance audit; it is often used as a <b>self-assessment tool</b>, so the rating depends on internal honesty.</li>
+        <li><b>Process, not product:</b> a maturity level shows a <b>greater likelihood</b> of quality software; it does not guarantee a defect-free product.</li>
+        <li><b>Measurement effort:</b> levels 4 and 5 need detailed quantitative measures of the management and software processes, collected and maintained continuously.</li>
+        <li><b>Model ageing:</b> CMM for software was superseded by <b>CMMI in 2001</b>, so the older model must be migrated.</li>
       </ol>
-      <p>Everyone in the organisation must take part; quality is not the job of one department alone.</p>
-      <h4>Aspects of TQM implementation</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>TQM phase</th><th>TQM element</th><th>Management methods and tools</th></tr></thead>
-        <tbody>
-          <tr><td>Customer focus</td><td>Customer focus</td><td>Customer complaint investigation, market investigation, satisfaction survey, after-sales service, formal feedback system, customer day.</td></tr>
-          <tr><td>Planning process</td><td>Leadership; vision and plan statement</td><td>Top-management commitment, policy, corporate/division/site quality councils; vision and mission statement, quality policy, quality goals, quality planning.</td></tr>
-          <tr><td>Process management</td><td>Supplier quality management; product design</td><td>Supplier audit, training, evaluation, certification; concurrent engineering, reliability engineering, design for manufacturability, DOE, QFD, value engineering, CAD.</td></tr>
-          <tr><td>Process improvement</td><td>Evaluation; process control and improvement</td><td>Strategic and business evaluation, quality costs, benchmarking, quality audit; PDCA cycle, 7 QC tools, SPC, FTA, FMEA, process capability, sampling inspection, self-inspection.</td></tr>
-          <tr><td>Employee participation</td><td>Recognition and reward; education and training; participation; communication</td><td>Bonus and moral awards; quality-awareness programmes; quality control circle, suggestion scheme, job rotation; newsletter, poster, slogan, quality day.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="booksrc">📘 <b>Book:</b> §4.13 Important Aspects of Quality Management, Table “Aspects of Total Quality Management Implementation”, p. 4-19 – 4-20</p>
+      <h4>4. CMMI in one line</h4>
+      <p>CMMI was initiated in <b>1997</b> by the DoD and the National Defense Industrial Association to integrate current and future models. Its five levels are <b>Initial, Managed, Defined, Quantitatively Managed and Optimizing</b> — the CMM “repeatable” level is called <b>Managed</b>, and the CMM “managed” level is called <b>Quantitatively Managed</b>. Its common features are <b>commitment to perform, ability to perform, directing implementation and verifying implementation</b>.</p>
+      <p><b>Benefits:</b> defect rates drop, defects are found earlier, requirements are documented and controlled, estimating becomes more precise, risk management becomes a practice, and development remains agile.</p>
+      <p class="booksrc">📘 <b>Book:</b> §4.21 Capability Maturity Models (CMM), §4.21.1 Principles of CMM, §4.21.2 CMM Levels, §4.21.3 CMMI, §4.21.4 Comparison between ISO 9000 and CMM, p. 4-44 – 4-49</p>
+    </div>
+  </div>
+<div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q11</span>Can you explain quality plan in details.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q3(b) [6] · 2025 Nov Q3(c) [6]</p>
+      <p><b>Definition:</b> Every project needs <b>two plans</b> — a <b>development plan</b> and a <b>quality plan</b>. The book says these plans are based on the proposal material, which is re-examined and updated. They are <b>more comprehensive than the approved proposal</b>, especially regarding the <b>schedule, resource estimates and development risk</b>, and they include additional subjects that were absent from the proposal.</p>
+      <p><b>Objective:</b> planning prepares adequate foundations for the <b>successful and timely completion</b> of the project. It covers scheduling, recruiting team members and allocating resources, resolving development risk, implementing the required SQA activities, and providing management with the data needed for project control.</p>
+      <h4>Elements of the quality plan</h4>
+      <ol>
+        <li><b>List of quality goals:</b> the quality requirements of the developed system. They should reflect the major <b>acceptance criteria</b> in the requirement document (RFP) — for example <b>correctness, reliability, robustness and maintainability</b>.</li>
+        <li><b>Planned review activities:</b> a listing of all reviews — design reviews, technical reviews, managerial reviews, code inspections, and so on. Every review must state:
+          <ul>
+            <li><b>scope</b> — what does it cover;</li>
+            <li><b>type and emphasis</b> — managerial, technical, very detailed;</li>
+            <li><b>schedule</b> — often based on previous reviews and their outcomes;</li>
+            <li><b>procedures</b> — action lists, what is presented and discussed;</li>
+            <li><b>who is to attend</b> — and who has a collateral interest.</li>
+          </ul>
+        </li>
+        <li><b>Planned software tests:</b> a <b>complete list of planned tests</b>.</li>
+        <li><b>Planned acceptance test for externally developed software:</b> a complete set of acceptance tests for <b>purchased, contracted or customer-supplied software</b>. These can run <b>in parallel</b> with the tests of internally developed software. This is especially critical for bought-out software.</li>
+        <li><b>Configuration management:</b> the tools and procedures for managing software configurations, versions and changes.</li>
+      </ol>
+      <p><b>Approval:</b> the quality plan may be included inside the development plan or kept as an <b>independent document</b>. However it is compiled, it must be <b>reviewed and approved by the organisation's standard approval process</b>.</p>
+      <h4>Small projects</h4>
+      <p>Some projects do not need a long, involved plan because they are of short duration, simple, well defined, or executed by a small team. The book's assumptions are: <b>25 people or fewer</b>, the team works together on all phases, resources are limited, <b>testers are often the developers</b>, independent inspection is needed at critical phases, and quality engineers must have technical expertise to add value. Even then, a plan is better than no plan: it gives a thorough understanding of the task, clear responsibility, easier control of delays and a shared view of requirements between customer and developer.</p>
+      <p class="booksrc">📘 <b>Book:</b> §4.17 Quality plan, p. 4-29 – 4-32</p>
     </div>
   </div>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q5</span>Explain in detail the Pillars of Quality Management System.</p>
-      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+      <p class="qtitle"><span class="qno">Q12</span>What do you understand regarding quality control &amp; explain two methods of quality control.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(c) [5]</p>
-      <p>A QMS is built in <b>tiers</b> (Fig. 4.11.1). The first tier is the <b>quality policy</b>, the second tier is the <b>quality objective</b>, and the third tier is the <b>quality manual</b>. The manual is supported by <b>three pillars</b>:</p>
+      <p class="asked"><b>Asked in:</b> 2023 May Q4(b) [6] · 2025 Nov Q4(b) [6]</p>
+      <p><b>Definition:</b> Quality control is a <b>deliberate and planned activity</b> carried out to <b>determine the quality of a product with a view to accepting it</b>. If the product does not satisfy the requirements, <b>appropriate remedial measures are taken to correct the process or the activity</b>. QC is therefore <b>detective and corrective</b>; it produces evidence that the product is acceptable.</p>
+      <p>The book also defines software quality as the <b>degree to which software possesses a desired combination of attributes</b>, the degree to which a system, component or process <b>meets specified requirements</b>, and the degree to which it <b>meets customer or user needs and expectations</b>. Quality means <b>conformance to requirements</b>.</p>
+      <h4>Method 1 — Review and inspection (static quality control)</h4>
+      <ul>
+        <li>Examine requirements, design, code and test documents <b>without executing the program</b>.</li>
+        <li>The quality plan lists the planned reviews: <b>design reviews, technical reviews, managerial reviews and code inspections</b>.</li>
+        <li>Each review has a defined <b>scope, type, schedule, procedure and attendance</b>, so the check is repeatable.</li>
+        <li><b>Finds:</b> faulty requirements, logical design errors, non-compliance with coding and documentation instructions, documentation errors.</li>
+        <li><b>Example:</b> a code inspection finds a missing null check before the code reaches unit testing.</li>
+      </ul>
+      <h4>Method 2 — Testing (dynamic quality control)</h4>
+      <ul>
+        <li><b>Run the program with test cases</b> to detect potential faults. Verification and testing is the phase where the program is executed and its behaviour compared with the expected result.</li>
+        <li>It covers the <b>planned software tests</b> and the <b>planned acceptance tests</b>, including acceptance tests for externally developed software.</li>
+        <li><b>Finds:</b> coding errors, wrong behaviour, integration faults and user-interface/procedure errors.</li>
+        <li><b>Example:</b> run the planned payment tests; 12 fail; log the defects, reject the build and retest after repair.</li>
+      </ul>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Pillar</th><th>What the book says</th><th>Software example</th></tr></thead>
+        <thead><tr><th>Point</th><th>Review / inspection</th><th>Testing</th></tr></thead>
         <tbody>
-          <tr><td><b>1. Quality processes, procedures, work instructions and methods</b></td><td>Defined at organisation level by functional-area experts, and at project and functional level by the experts in those areas separately.</td><td>Requirements process, design procedure, code-review work instruction, test method.</td></tr>
-          <tr><td><b>2. Guidelines and standards</b></td><td>Used by the organisation and project team to achieve the quality goals for the products and services delivered to customers.</td><td>Coding standard, documentation standard, test-case-writing guideline, ISO 9000-3 clauses.</td></tr>
-          <tr><td><b>3. Formats and templates</b></td><td>Common formats and templates used for tracking a project, function and information within the organisation; they act as a checklist to maintain consistency across projects.</td><td>SRS template, test-plan template, defect-report form, review record, metrics sheet.</td></tr>
+          <tr><td>Executes the code?</td><td>No — static examination</td><td>Yes — dynamic execution</td></tr>
+          <tr><td>Typical defects found</td><td>Requirements, design, coding-standard and documentation defects</td><td>Behaviour, calculation, integration and interface defects</td></tr>
+          <tr><td>When it can start</td><td>As soon as the document or code exists</td><td>Only after a runnable build exists</td></tr>
+          <tr><td>Evidence produced</td><td>Review record and action list</td><td>Test report and defect log</td></tr>
         </tbody>
       </table>
       </div>
-      <p><b>How the pillars work together:</b> the <b>policy</b> gives direction, the <b>objectives</b> make it measurable, the <b>manual</b> publishes the system, and the three pillars turn it into everyday work. Processes say <b>who does what and how</b>; standards say <b>what good looks like</b>; formats and templates <b>capture the evidence</b> so that every project follows the same system.</p>
-      <p><b>One-line answer:</b> a QMS stands on documented processes, agreed standards, and common formats and templates, all under a quality policy and measurable objectives.</p>
-      <p class="booksrc">📘 <b>Book:</b> §4.12 Pillars of Quality Management System, §4.11 Quality Management System Structure, p. 4-18 – 4-19</p>
+      <h4>How QC closes the loop</h4>
+      <p>The book describes three levels of response: <b>correction</b> (defects found in the product or service are immediately sorted and fixed — the natural action of a tester), <b>corrective action</b> (find the <b>root cause</b> so that the issue does not come back), and <b>preventive action</b> (act <b>before</b> a non-conformity occurs). Measurement supports all three: the book says the basic reason for measuring software and the software process is to obtain data that helps <b>control schedule, cost and quality</b>, and to monitor progress, quantify trade-offs and predict schedule, cost and quality.</p>
+      <p><b>Reliability link:</b> QC of the process contributes to product reliability. Reliability is the <b>ability of an item to perform a required function under stated conditions for a stated period of time</b>.</p>
+      <p class="booksrc">📘 <b>Book:</b> §4.14 Software Quality Control, §4.8 Software Quality Management, §4.19 Quality Control and Reliability of Quality Process, p. 4-15 – 4-16, 4-21, 4-35</p>
     </div>
   </div>
-</section>
 
-<!-- ================= 4.2 ================= -->
+  </section>
+
 <section class="card" id="s42">
-  <h2>4.2 Defects and product characteristics</h2>
+  <div class="prio">Priority 2 · ★★★ 3× repeated</div><h2>4.2 Defects and product characteristics</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -610,186 +610,8 @@ instructions</pre>
   </div>
 </section>
 
-<!-- ================= 4.3 ================= -->
-<section class="card" id="s43">
-  <h2>4.3 Quality planning, control and standards</h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q11</span>Can you explain quality plan in details.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q3(b) [6] · 2025 Nov Q3(c) [6]</p>
-      <p><b>Definition:</b> Every project needs <b>two plans</b> — a <b>development plan</b> and a <b>quality plan</b>. The book says these plans are based on the proposal material, which is re-examined and updated. They are <b>more comprehensive than the approved proposal</b>, especially regarding the <b>schedule, resource estimates and development risk</b>, and they include additional subjects that were absent from the proposal.</p>
-      <p><b>Objective:</b> planning prepares adequate foundations for the <b>successful and timely completion</b> of the project. It covers scheduling, recruiting team members and allocating resources, resolving development risk, implementing the required SQA activities, and providing management with the data needed for project control.</p>
-      <h4>Elements of the quality plan</h4>
-      <ol>
-        <li><b>List of quality goals:</b> the quality requirements of the developed system. They should reflect the major <b>acceptance criteria</b> in the requirement document (RFP) — for example <b>correctness, reliability, robustness and maintainability</b>.</li>
-        <li><b>Planned review activities:</b> a listing of all reviews — design reviews, technical reviews, managerial reviews, code inspections, and so on. Every review must state:
-          <ul>
-            <li><b>scope</b> — what does it cover;</li>
-            <li><b>type and emphasis</b> — managerial, technical, very detailed;</li>
-            <li><b>schedule</b> — often based on previous reviews and their outcomes;</li>
-            <li><b>procedures</b> — action lists, what is presented and discussed;</li>
-            <li><b>who is to attend</b> — and who has a collateral interest.</li>
-          </ul>
-        </li>
-        <li><b>Planned software tests:</b> a <b>complete list of planned tests</b>.</li>
-        <li><b>Planned acceptance test for externally developed software:</b> a complete set of acceptance tests for <b>purchased, contracted or customer-supplied software</b>. These can run <b>in parallel</b> with the tests of internally developed software. This is especially critical for bought-out software.</li>
-        <li><b>Configuration management:</b> the tools and procedures for managing software configurations, versions and changes.</li>
-      </ol>
-      <p><b>Approval:</b> the quality plan may be included inside the development plan or kept as an <b>independent document</b>. However it is compiled, it must be <b>reviewed and approved by the organisation's standard approval process</b>.</p>
-      <h4>Small projects</h4>
-      <p>Some projects do not need a long, involved plan because they are of short duration, simple, well defined, or executed by a small team. The book's assumptions are: <b>25 people or fewer</b>, the team works together on all phases, resources are limited, <b>testers are often the developers</b>, independent inspection is needed at critical phases, and quality engineers must have technical expertise to add value. Even then, a plan is better than no plan: it gives a thorough understanding of the task, clear responsibility, easier control of delays and a shared view of requirements between customer and developer.</p>
-      <p class="booksrc">📘 <b>Book:</b> §4.17 Quality plan, p. 4-29 – 4-32</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q12</span>What do you understand regarding quality control &amp; explain two methods of quality control.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q4(b) [6] · 2025 Nov Q4(b) [6]</p>
-      <p><b>Definition:</b> Quality control is a <b>deliberate and planned activity</b> carried out to <b>determine the quality of a product with a view to accepting it</b>. If the product does not satisfy the requirements, <b>appropriate remedial measures are taken to correct the process or the activity</b>. QC is therefore <b>detective and corrective</b>; it produces evidence that the product is acceptable.</p>
-      <p>The book also defines software quality as the <b>degree to which software possesses a desired combination of attributes</b>, the degree to which a system, component or process <b>meets specified requirements</b>, and the degree to which it <b>meets customer or user needs and expectations</b>. Quality means <b>conformance to requirements</b>.</p>
-      <h4>Method 1 — Review and inspection (static quality control)</h4>
-      <ul>
-        <li>Examine requirements, design, code and test documents <b>without executing the program</b>.</li>
-        <li>The quality plan lists the planned reviews: <b>design reviews, technical reviews, managerial reviews and code inspections</b>.</li>
-        <li>Each review has a defined <b>scope, type, schedule, procedure and attendance</b>, so the check is repeatable.</li>
-        <li><b>Finds:</b> faulty requirements, logical design errors, non-compliance with coding and documentation instructions, documentation errors.</li>
-        <li><b>Example:</b> a code inspection finds a missing null check before the code reaches unit testing.</li>
-      </ul>
-      <h4>Method 2 — Testing (dynamic quality control)</h4>
-      <ul>
-        <li><b>Run the program with test cases</b> to detect potential faults. Verification and testing is the phase where the program is executed and its behaviour compared with the expected result.</li>
-        <li>It covers the <b>planned software tests</b> and the <b>planned acceptance tests</b>, including acceptance tests for externally developed software.</li>
-        <li><b>Finds:</b> coding errors, wrong behaviour, integration faults and user-interface/procedure errors.</li>
-        <li><b>Example:</b> run the planned payment tests; 12 fail; log the defects, reject the build and retest after repair.</li>
-      </ul>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Review / inspection</th><th>Testing</th></tr></thead>
-        <tbody>
-          <tr><td>Executes the code?</td><td>No — static examination</td><td>Yes — dynamic execution</td></tr>
-          <tr><td>Typical defects found</td><td>Requirements, design, coding-standard and documentation defects</td><td>Behaviour, calculation, integration and interface defects</td></tr>
-          <tr><td>When it can start</td><td>As soon as the document or code exists</td><td>Only after a runnable build exists</td></tr>
-          <tr><td>Evidence produced</td><td>Review record and action list</td><td>Test report and defect log</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <h4>How QC closes the loop</h4>
-      <p>The book describes three levels of response: <b>correction</b> (defects found in the product or service are immediately sorted and fixed — the natural action of a tester), <b>corrective action</b> (find the <b>root cause</b> so that the issue does not come back), and <b>preventive action</b> (act <b>before</b> a non-conformity occurs). Measurement supports all three: the book says the basic reason for measuring software and the software process is to obtain data that helps <b>control schedule, cost and quality</b>, and to monitor progress, quantify trade-offs and predict schedule, cost and quality.</p>
-      <p><b>Reliability link:</b> QC of the process contributes to product reliability. Reliability is the <b>ability of an item to perform a required function under stated conditions for a stated period of time</b>.</p>
-      <p class="booksrc">📘 <b>Book:</b> §4.14 Software Quality Control, §4.8 Software Quality Management, §4.19 Quality Control and Reliability of Quality Process, p. 4-15 – 4-16, 4-21, 4-35</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q13</span>Explain why ISO 9001 standard and its importance in software testing.</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★★ 4×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(a) [6] · 2023 May Q3(c) [5] · 2025 May Q4(a) [6] · 2025 Nov Q4(a) [5]</p>
-      <p><b>What it is:</b> <b>ISO 9000</b> is an <b>international set of standards for quality management</b>, applicable to a range of organisations from manufacturing to service industries. Its scope covers <b>hardware, software, processed materials and services</b>, and it outlines the <b>basic elements of a good quality management system</b>. These elements are good business practice.</p>
-      <p><b>ISO 9001</b> is the standard applicable to organisations that <b>design, develop and maintain products</b>. It is a <b>generic model of the quality process</b> that must be instantiated for each organisation. It is the <b>broadest</b> standard of the family and provides a model for <b>design, development, production, installation and servicing</b>.</p>
-      <h4>1. The ISO 9000 family</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Standard</th><th>Scope</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><b>ISO 9000</b></td><td>Basic elements of a QMS; hardware, software, processed materials and services.</td><td>Guideline for selection and use; not mandatory for certification.</td></tr>
-          <tr><td><b>ISO 9001</b></td><td>Design, development, production, installation and servicing.</td><td><b>Broadest</b> quality-assurance model; demonstrates an adequate quality system.</td></tr>
-          <tr><td><b>ISO 9002</b></td><td>Production, installation and servicing only.</td><td>Governs manufacture and installation methods.</td></tr>
-          <tr><td><b>ISO 9003</b></td><td>Final inspection and testing.</td><td>For conformance checked mainly by inspection and testing.</td></tr>
-          <tr><td><b>ISO 9004</b></td><td>Guidance for design, implementation and improvement of a quality system.</td><td>For <b>internal use only</b>; not mandatory for certification.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>A company should first use <b>ISO 9000</b> to design and implement its quality system. Once the system is installed, it may use <b>ISO 9001, 9002 or 9003</b> to demonstrate that the system is adequate.</p>
-      <h4>2. The eight quality management principles (ISO 9000-3)</h4>
-      <div class="math">Customer focus · Leadership · Involvement of people · Process approach · System approach to management · Continual improvement · Factual approach to decision making · Mutually supportive supplier relationships</div>
-      <p>These principles are a set of <b>fundamental beliefs, norms, rules and values</b> accepted as true and used as the basis for quality management. Senior management can use them as a framework for improving performance.</p>
-      <h4>3. ISO 9000-3 requirements for software</h4>
-      <p>ISO 9000-3 contains about <b>20 requirements</b> for software quality management, grouped into five areas:</p>
-      <ol>
-        <li><b>Quality management system</b> — establish and document the QMS.</li>
-        <li><b>Management responsibilities</b> — commitment, customer focus, quality policy, planning, administration, management review.</li>
-        <li><b>Resource management</b> — provision of resources, human resources, facilities, work environment.</li>
-        <li><b>Product realisation</b> — planning, customer-related processes, design and development, purchasing, production and service operations, control of measuring and monitoring devices.</li>
-        <li><b>Measurement, analysis and improvement</b> — planning, measurement and monitoring, control of nonconformity, analysis of data, improvement.</li>
-      </ol>
-      <h4>4. Importance in software testing</h4>
-      <ul>
-        <li>ISO 9003 is directed at <b>final test and inspection</b>, so testing is a recognised part of the quality system.</li>
-        <li>ISO 9000-3 requires <b>documented procedures and work instructions</b>, which include <b>test methods and calibration methods</b>. Testing therefore becomes a defined, repeatable process.</li>
-        <li>The <b>measurement, analysis and improvement</b> group requires <b>control of nonconformity</b> and <b>analysis of data</b> — exactly what a defect log and test report provide.</li>
-        <li>Certification verifies that the organisation's <b>software development and maintenance processes fully comply</b> with the standard, so review and test records become audit evidence.</li>
-        <li>Customers increasingly demand that suppliers are <b>ISO 9000 certified</b>, so certification supports contracts and tenders.</li>
-      </ul>
-      <h4>5. Certification</h4>
-      <p>Quality standards and procedures are documented in an <b>organisational quality manual</b>, and an <b>external body</b> certifies that the manual and the processes conform to the standard. The book lists <b>four tiers of documentation</b>: (1) the <b>quality manual</b>; (2) <b>quality management procedures</b>; (3) <b>area work instructions</b> — standard operating procedures, test methods, calibration methods; (4) <b>forms, records, books and files</b>. Certification must be maintained through periodic surveillance audits.</p>
-      <p><b>Limitation:</b> ISO 9001 certifies the <b>quality system and processes</b>, not a particular product. A certified organisation can still release a defective product. Certification also has problems of <b>cost, time, level of internal expertise, executive commitment and selection of the registration body</b>. It must therefore be combined with real product testing and measurement.</p>
-      <p class="booksrc">📘 <b>Book:</b> §4.20 International Quality Standards : ISO, §4.20.1 ISO 9001 and ISO 9000-3, §4.20.2 ISO 9000-3 Quality Management System Principles, §4.20.3 ISO 9000-3 Requirements, §4.20.4 Certification According to ISO 9000-3, p. 4-37 – 4-43</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q14</span>Can you clarify different levels of CMM. / List and explain limitations of CMM.</p>
-      <div class="badges"><span class="b marks">5–6 marks</span><span class="b rep">★★★ 3× + CMM limits 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q4(c) [5] · 2023 Nov Q3(c) [5] · 2025 May Q3(c) [5] · limitations: 2024 May Q4(c) [3] · 2025 Nov Q4(c) [6]</p>
-      <p><b>Definition:</b> The <b>Capability Maturity Model (CMM)</b> was developed by the <b>Software Engineering Institute (SEI) of Carnegie Mellon University</b>. It is a <b>framework that describes the key elements of an effective software process</b>. It applies process-management and quality-improvement concepts to software development and maintenance and acts as a guide for evolving towards a culture of engineering excellence. It is a <b>model for organisational improvement</b>.</p>
-      <p>SEI released CMM for Software <b>version 1.0 in 1991</b>; in <b>2001</b> it released the <b>Capability Maturity Model Integration (CMMI)</b>, which superseded CMM for software.</p>
-      <p>CMM presents a <b>minimum set of recommended practices</b> that have been shown to enhance software development and maintenance capability. It defines the <b>expectation (“what”)</b> without overly constraining the <b>implementation (“how”)</b>. Its key idea is to provide good engineering and organisational management practices <b>“for any project in any environment”</b>.</p>
-      <h4>1. The five maturity levels</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Level</th><th>Name</th><th>Focus</th><th>Description (book)</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td><b>Initial</b></td><td>No focus</td><td>No key process areas. Project success depends primarily on <b>individuals and their heroics</b>.</td></tr>
-          <tr><td>2</td><td><b>Repeatable</b></td><td>Project management</td><td>Basic project-management processes are established to <b>track cost, schedule and functionality</b>.</td></tr>
-          <tr><td>3</td><td><b>Defined</b></td><td>Engineering process</td><td>The software process for management and engineering activities is <b>documented, standardised and integrated</b> into a standard software process for the organisation. All projects use an approved, <b>tailored version</b>. Key process area: defined process management.</td></tr>
-          <tr><td>4</td><td><b>Managed</b></td><td>Product and process quality</td><td>Process controls are in place to <b>measure quality</b>. Detailed measures of management and software processes are collected and used to identify and correct problems with process performance.</td></tr>
-          <tr><td>5</td><td><b>Optimizing</b></td><td>Continuous process improvement</td><td>The key process area is to <b>maintain continuous improvement and optimise existing processes</b>. The organisation can proactively address the strengths and weaknesses of its business processes and software-engineering practices.</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>Key process area:</b> a group of related activities considered important for an organisation functioning at the appropriate process maturity level. The CMM is organised into five levels, each representing a <b>higher evolutionary stage of process capability</b> and a <b>progressively greater likelihood of producing quality software</b>.</p>
-      <h4>2. Principles of CMM</h4>
-      <ul>
-        <li><b>Quantitative management methods</b> increase the organisation's capability to control quality and improve productivity.</li>
-        <li>The <b>five-level model</b> evaluates achievements and determines the effort needed to reach the next capability.</li>
-        <li><b>Generic process areas</b> define the “what”, not the “how”, so any life-cycle model, design methodology, development tool, programming language and documentation style can be used.</li>
-        <li>CMM is a <b>framework or model, not a standard</b>. Its components are maturity levels, process capability, key process areas, common features, goals and key practices.</li>
-      </ul>
-      <h4>3. Limitations of CMM</h4>
-      <ol>
-        <li><b>Not prescriptive:</b> it defines “what”, not “how”, so every organisation must design its own process.</li>
-        <li><b>Describes a state, not a route:</b> it does not prescribe the specific means of reaching the next level.</li>
-        <li><b>No documentation standard:</b> the model specifies no particular documentation, and the ISO/CMM comparison notes that CMM has “no documentation”.</li>
-        <li><b>No follow-up audits:</b> unlike ISO 9001, CMM has no surveillance audit; it is often used as a <b>self-assessment tool</b>, so the rating depends on internal honesty.</li>
-        <li><b>Process, not product:</b> a maturity level shows a <b>greater likelihood</b> of quality software; it does not guarantee a defect-free product.</li>
-        <li><b>Measurement effort:</b> levels 4 and 5 need detailed quantitative measures of the management and software processes, collected and maintained continuously.</li>
-        <li><b>Model ageing:</b> CMM for software was superseded by <b>CMMI in 2001</b>, so the older model must be migrated.</li>
-      </ol>
-      <h4>4. CMMI in one line</h4>
-      <p>CMMI was initiated in <b>1997</b> by the DoD and the National Defense Industrial Association to integrate current and future models. Its five levels are <b>Initial, Managed, Defined, Quantitatively Managed and Optimizing</b> — the CMM “repeatable” level is called <b>Managed</b>, and the CMM “managed” level is called <b>Quantitatively Managed</b>. Its common features are <b>commitment to perform, ability to perform, directing implementation and verifying implementation</b>.</p>
-      <p><b>Benefits:</b> defect rates drop, defects are found earlier, requirements are documented and controlled, estimating becomes more precise, risk management becomes a practice, and development remains agile.</p>
-      <p class="booksrc">📘 <b>Book:</b> §4.21 Capability Maturity Models (CMM), §4.21.1 Principles of CMM, §4.21.2 CMM Levels, §4.21.3 CMMI, §4.21.4 Comparison between ISO 9000 and CMM, p. 4-44 – 4-49</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 4.4 ================= -->
 <section class="card" id="s44">
-  <h2>4.4 Process, customer and quality context</h2>
+  <div class="prio">Priority 3 · ★★★ 3× repeated</div><h2>4.4 Process, customer and quality context</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -828,6 +650,34 @@ instructions</pre>
   </div>
 
   <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q18</span>Discuss problematic areas in software development life cycle.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q4(b) [6] · 2025 Nov Q3(b) [6]</p>
+      <p>The book identifies problem areas at almost every stage. The root cause is usually <b>people, communication and an unclear definition of quality</b>, not only technical mistakes.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Problematic area</th><th>What goes wrong (book)</th><th>SQA response</th></tr></thead>
+        <tbody>
+          <tr><td><b>Requirements</b></td><td>The customer's needs are <b>misunderstood or misinterpreted</b>; the customer <b>mis-communicates</b>; the requirements writer <b>inadvertently causes errors</b>.</td><td>Requirements review, prototype, glossary of terms, traceability, customer sign-off.</td></tr>
+          <tr><td><b>Definition of quality</b></td><td>Statements such as “the system will have high performance” or “the system will be user friendly” are acceptable early but become <b>useless</b> because they give <b>no tangible way of measuring behaviour</b>.</td><td>Describe quality as a <b>scenario</b>: “when 100 users start a payment transaction, the payment component will process requests with an average latency of three seconds.”</td></tr>
+          <tr><td><b>Architecture and design</b></td><td>An <b>inexperienced or careless designer</b> can cause problems that appear later.</td><td>Design review, checklists, experienced architect, prototyping.</td></tr>
+          <tr><td><b>Development / coding</b></td><td>This stage is <b>probably responsible for most defects</b>: coding errors and non-compliance with documentation and coding instructions.</td><td>Coding standards, code inspection, static checks, unit testing.</td></tr>
+          <tr><td><b>Testing</b></td><td><b>Shortcomings of the testing process</b>; some defects are also introduced during testing.</td><td>Planned tests in the quality plan, independent test team, entry/exit criteria, regression testing.</td></tr>
+          <tr><td><b>Product visibility</b></td><td>Software is <b>invisible</b>; defects are not visible unless testing procedures are applied, and detection is possible in <b>only one phase</b>.</td><td>Static reviews at every phase plus dynamic testing; do not rely on a single final test.</td></tr>
+          <tr><td><b>Process and methodology choice</b></td><td><b>One methodology is not necessarily suitable for all projects</b>; each suits different technical, organisational, project and team conditions.</td><td>Select and tailor the life-cycle model; define the process, roles and deliverables.</td></tr>
+          <tr><td><b>Planning and documentation</b></td><td>An unplanned project lacks a development plan and quality plan; schedule, resources and risk are not thought through.</td><td>Prepare and approve both plans; define quality goals, reviews, tests and configuration management.</td></tr>
+          <tr><td><b>Communication</b></td><td><b>Client–developer communication failures</b> are one of the nine causes of software errors.</td><td>Single glossary, regular customer reviews, written minutes, prototype demonstration.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Root cause:</b> most problematic areas are <b>process and communication</b> problems. Fixing only the last bug does not help; SQA must fix the <b>requirement, the review, the standard or the test process</b> that allowed the defect in.</p>
+      <p class="booksrc">📘 <b>Book:</b> §4.9 Why Software Has Defects ?, §4.14 Software Quality Control, §4.14.1 Quality Challenges, §4.5 Software Development Process, §4.17 Quality plan, p. 4-6 – 4-7, 4-16, 4-21 – 4-23, 4-29 – 4-30</p>
+    </div>
+  </div>
+<div class="qa">
     <div class="qa-head">
       <p class="qtitle"><span class="qno">Q16</span>Identify different steps involved in Software Development Process.</p>
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
@@ -921,39 +771,190 @@ instructions</pre>
     </div>
   </div>
 
+  </section>
+
+<section class="card" id="s41">
+  <div class="prio">Priority 4 · ★★ 2× repeated</div><h2>4.1 SQA, QC and QMS</h2>
+  <p class="lead">Syllabus: <em>Software Quality Assurance — introduction, constraints, quality-productivity relationship, requirements, characteristics, development process, types of products, criticality, SQM, defects, processes, QMS structure, pillars, important aspects.</em></p>
+
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q18</span>Discuss problematic areas in software development life cycle.</p>
+      <p class="qtitle"><span class="qno">Q1</span>Differentiate between Quality Assurance and Quality Control.</p>
       <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q4(b) [6] · 2025 Nov Q3(b) [6]</p>
-      <p>The book identifies problem areas at almost every stage. The root cause is usually <b>people, communication and an unclear definition of quality</b>, not only technical mistakes.</p>
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(a) [6] · 2023 Nov Q4(b) [6]</p>
+      <p><b>Quality Assurance (QA)</b> is a <b>process</b> that ensures the developed software meets and complies with defined or standardised quality specifications. It is an <b>ongoing activity inside the SDLC</b> that routinely checks the software against the desired quality measures. <b>Quality Control (QC)</b> is a <b>deliberate and planned activity</b> that determines the quality of a product with a view to <b>accepting it</b>. If the product does not satisfy the requirements, remedial measures are taken to correct the process or the activity.</p>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Problematic area</th><th>What goes wrong (book)</th><th>SQA response</th></tr></thead>
+        <thead><tr><th>Point</th><th>Quality Assurance (QA)</th><th>Quality Control (QC)</th></tr></thead>
         <tbody>
-          <tr><td><b>Requirements</b></td><td>The customer's needs are <b>misunderstood or misinterpreted</b>; the customer <b>mis-communicates</b>; the requirements writer <b>inadvertently causes errors</b>.</td><td>Requirements review, prototype, glossary of terms, traceability, customer sign-off.</td></tr>
-          <tr><td><b>Definition of quality</b></td><td>Statements such as “the system will have high performance” or “the system will be user friendly” are acceptable early but become <b>useless</b> because they give <b>no tangible way of measuring behaviour</b>.</td><td>Describe quality as a <b>scenario</b>: “when 100 users start a payment transaction, the payment component will process requests with an average latency of three seconds.”</td></tr>
-          <tr><td><b>Architecture and design</b></td><td>An <b>inexperienced or careless designer</b> can cause problems that appear later.</td><td>Design review, checklists, experienced architect, prototyping.</td></tr>
-          <tr><td><b>Development / coding</b></td><td>This stage is <b>probably responsible for most defects</b>: coding errors and non-compliance with documentation and coding instructions.</td><td>Coding standards, code inspection, static checks, unit testing.</td></tr>
-          <tr><td><b>Testing</b></td><td><b>Shortcomings of the testing process</b>; some defects are also introduced during testing.</td><td>Planned tests in the quality plan, independent test team, entry/exit criteria, regression testing.</td></tr>
-          <tr><td><b>Product visibility</b></td><td>Software is <b>invisible</b>; defects are not visible unless testing procedures are applied, and detection is possible in <b>only one phase</b>.</td><td>Static reviews at every phase plus dynamic testing; do not rely on a single final test.</td></tr>
-          <tr><td><b>Process and methodology choice</b></td><td><b>One methodology is not necessarily suitable for all projects</b>; each suits different technical, organisational, project and team conditions.</td><td>Select and tailor the life-cycle model; define the process, roles and deliverables.</td></tr>
-          <tr><td><b>Planning and documentation</b></td><td>An unplanned project lacks a development plan and quality plan; schedule, resources and risk are not thought through.</td><td>Prepare and approve both plans; define quality goals, reviews, tests and configuration management.</td></tr>
-          <tr><td><b>Communication</b></td><td><b>Client–developer communication failures</b> are one of the nine causes of software errors.</td><td>Single glossary, regular customer reviews, written minutes, prototype demonstration.</td></tr>
+          <tr><td>Book definition</td><td>A planned and systematic pattern of all actions needed to give adequate confidence that the product conforms to established technical requirements (IEEE).</td><td>A deliberate and planned activity to determine the quality of a product before accepting it.</td></tr>
+          <tr><td>Focus</td><td>The <b>engineering process</b> by which products are developed.</td><td>The <b>product</b> and its measurable characteristics.</td></tr>
+          <tr><td>Purpose</td><td>Build quality into the process so that mistakes are <b>prevented</b>.</td><td><b>Detect</b> defects, accept or reject the product, and correct the process if requirements are not met.</td></tr>
+          <tr><td>Nature</td><td><b>Proactive and preventive</b> technique.</td><td><b>Reactive and corrective</b> (detective) activity.</td></tr>
+          <tr><td>When it runs</td><td>From the requirements stage and throughout the SDLC.</td><td>When a work product exists — reviews before release and testing before going live.</td></tr>
+          <tr><td>Typical activities</td><td>Quality management approach, measurement and reporting, software-engineering technology, standards compliance, multi-testing strategy, formal technical reviews.</td><td>Inspection, review, testing, defect logging, measurement, correction and corrective action.</td></tr>
+          <tr><td>Example</td><td>Define coding standards, a review procedure and a training programme so that defects are avoided.</td><td>Run the code inspection and the test cases, record 12 defects, reject the build and send it back for repair.</td></tr>
         </tbody>
       </table>
       </div>
-      <p><b>Root cause:</b> most problematic areas are <b>process and communication</b> problems. Fixing only the last bug does not help; SQA must fix the <b>requirement, the review, the standard or the test process</b> that allowed the defect in.</p>
-      <p class="booksrc">📘 <b>Book:</b> §4.9 Why Software Has Defects ?, §4.14 Software Quality Control, §4.14.1 Quality Challenges, §4.5 Software Development Process, §4.17 Quality plan, p. 4-6 – 4-7, 4-16, 4-21 – 4-23, 4-29 – 4-30</p>
+      <p><b>Relationship:</b> QA and QC are complementary. QA makes the process capable; QC proves whether a particular product is acceptable. The book's own comparison adds that <b>SQA is preventive and a part of the SDLC</b>, while <b>testing is corrective and a part of quality control</b>.</p>
+      <p class="booksrc">📘 <b>Book:</b> §4.1 Introduction of SQA, §4.1.1 Differences between SQA and Software Testing, §4.19 Quality Control and Reliability of Quality Process, p. 4-3 – 4-4, 4-35</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Can you clarify Quality Management System (QMS).</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q3(b) [6] · 2025 May Q3(a) [6]</p>
+      <p><b>Definition:</b> A Quality Management System is the <b>organisational structure, procedures, processes and resources</b> needed to implement quality management. It <b>coordinates and directs the organisation's activities</b> to meet customer and regulatory requirements and to improve effectiveness and efficiency on a continuous basis.</p>
+      <p>The book notes that there is <b>no fixed standard structure</b> for a QMS, but it <b>must be documented</b> in any form that suits the organisation. The reason for starting a QMS must come from <b>top management</b> — not “because competitors are doing it” or “because we want a certificate”.</p>
+      <h4>1. Structure of a QMS (Fig. 4.11.1)</h4>
+<pre class="tree">                   Quality policy            ← first tier
+                           │
+                   Quality objective          ← second tier
+                           │
+                    Quality manual            ← third tier
+                           │
+       ┌───────────────────┼───────────────────┐
+       │                   │                   │
+Quality processes /   Guidelines /        Formats /
+procedures / work     standards           templates
+instructions</pre>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Tier</th><th>What it contains</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><b>Quality policy</b></td><td>Top management's statement of intent and direction.</td><td>Basic framework on which the quality temple rests; tells how activities will be conducted.</td></tr>
+          <tr><td><b>Quality objective</b></td><td>Measurable targets set by management.</td><td>Defines progress and achievement in numerical terms.</td></tr>
+          <tr><td><b>Quality manual</b></td><td>The documented QMS, published by management.</td><td>Tells the organisation how the system works.</td></tr>
+          <tr><td><b>Processes, procedures, work instructions</b></td><td>Defined methods for each functional area and project.</td><td>Converts policy into daily work.</td></tr>
+          <tr><td><b>Guidelines and standards</b></td><td>Rules used by teams to reach quality goals.</td><td>Gives a common technical basis for products and services.</td></tr>
+          <tr><td><b>Formats and templates</b></td><td>Common formats for tracking project information.</td><td>Acts as a checklist and keeps records consistent across projects.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h4>2. Before designing the QMS — review the business</h4>
+      <p>The organisation first reviews its current business to clarify its purpose and market position. The book lists: <b>customer, product, stakeholders, description of the operation, strengths and weaknesses, market share, competitors and the state of competition</b>.</p>
+      <h4>3. Benefits of a QMS</h4>
+      <ul>
+        <li>Defining, improving and <b>controlling processes</b>.</li>
+        <li><b>Reducing waste</b> and <b>preventing mistakes</b>.</li>
+        <li><b>Lowering costs</b>.</li>
+        <li>Facilitating and identifying <b>training opportunities</b>.</li>
+        <li><b>Engaging staff</b> and setting an organisation-wide direction.</li>
+        <li>Communicating a <b>readiness to produce consistent results</b>.</li>
+      </ul>
+      <p class="booksrc">📘 <b>Book:</b> §4.11 Quality Management System Structure, §4.12 Pillars of Quality Management System, §4.19.1 Quality Management System Models, p. 4-18 – 4-19, 4-35 – 4-36</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Can you clarify Quality Assurance.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q4(b) [6]</p>
+      <p><b>Definition:</b> Software Quality Assurance (SQA) is a <b>process that ensures the developed software meets and complies with defined or standardised quality specifications</b>. It is an <b>ongoing process within the SDLC</b> that routinely checks the developed software to ensure that it meets the desired quality measures.</p>
+      <p><b>IEEE definition:</b> SQA is “a planned and systematic pattern of all actions necessary to provide adequate confidence that an item or product conforms to established technical requirements.” It is also “a set of activities designed to evaluate the process by which the products are developed or manufactured.”</p>
+      <h4>1. Objectives of SQA</h4>
+      <ol>
+        <li>Provide a <b>quality management approach</b> for the project.</li>
+        <li>Set up <b>measurement and reporting mechanisms</b>.</li>
+        <li>Use <b>effective software-engineering technology</b>.</li>
+        <li>Provide a <b>procedure to assure compliance</b> with software-development standards wherever applicable.</li>
+        <li>Draw a <b>multi-testing strategy</b> for the product.</li>
+        <li>Apply <b>formal technical reviews</b> throughout the software process.</li>
+      </ol>
+      <h4>2. Goals of SQA</h4>
+      <ol>
+        <li>SQA activities are <b>planned</b> in advance.</li>
+        <li><b>Non-compliance issues</b> that cannot be resolved inside the project are <b>addressed by senior management</b>.</li>
+        <li>Adherence of products and activities to the applicable <b>standards, procedures and requirements</b> is verified <b>objectively</b>.</li>
+        <li>Affected groups and individuals are <b>informed</b> of SQA activities and results.</li>
+      </ol>
+      <h4>3. QA and testing are not the same</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>SQA</th><th>Software testing</th></tr></thead>
+        <tbody>
+          <tr><td>Concern</td><td>The engineering <b>process</b> that ensures quality.</td><td>The <b>product</b>, tested for problems before it goes live.</td></tr>
+          <tr><td>Purpose</td><td>Ensures that design and functions meet the end user's expectations.</td><td>Ensures that the product is defect-free and secure to use.</td></tr>
+          <tr><td>Nature</td><td><b>Proactive</b> and <b>preventive</b> measure.</td><td><b>Reactive</b> and <b>corrective</b> measure.</td></tr>
+          <tr><td>Scope</td><td>A part of the SDLC; a method to manage quality verification.</td><td>A part of quality control; a method to verify quality validation.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Example:</b> the team decides that no code is merged without peer review and a documented test record. This rule, the review checklist and the training given to developers are QA. The review meeting and the test run are the checks that show the rule is being followed.</p>
+      <p class="booksrc">📘 <b>Book:</b> §4.1 Introduction of SQA, §4.1.1 Differences between SQA and Software Testing, p. 4-3 – 4-4</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q4</span>With respect to quality management system explain important aspects of quality management.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 May Q4(a) [6]</p>
+      <p>For a <b>Total Quality Management (TQM)</b> programme to succeed, the book says that <b>five major things must be in place</b> in the organisation:</p>
+      <ol>
+        <li><b>Continuous improvement:</b> production cycles are kept short and iterative, so fixes and enhancements can be made almost immediately, on the spot.</li>
+        <li><b>Customer satisfaction:</b> it is not enough to reduce errors to an absolute minimum. The organisation must know the <b>needs of its customers</b> and tie those needs into the refactoring process.</li>
+        <li><b>Managerial involvement:</b> managers must actively support the programme; it is not enough for only front-line workers to be knowledgeable.</li>
+        <li><b>Measurability:</b> the ability to <b>accurately measure and record quality and defects</b>.</li>
+        <li><b>Organisational support for total quality:</b> there must be a linkage between the TQM programme and the <b>financial, strategic and human-resources</b> aspects of the organisation.</li>
+      </ol>
+      <p>Everyone in the organisation must take part; quality is not the job of one department alone.</p>
+      <h4>Aspects of TQM implementation</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>TQM phase</th><th>TQM element</th><th>Management methods and tools</th></tr></thead>
+        <tbody>
+          <tr><td>Customer focus</td><td>Customer focus</td><td>Customer complaint investigation, market investigation, satisfaction survey, after-sales service, formal feedback system, customer day.</td></tr>
+          <tr><td>Planning process</td><td>Leadership; vision and plan statement</td><td>Top-management commitment, policy, corporate/division/site quality councils; vision and mission statement, quality policy, quality goals, quality planning.</td></tr>
+          <tr><td>Process management</td><td>Supplier quality management; product design</td><td>Supplier audit, training, evaluation, certification; concurrent engineering, reliability engineering, design for manufacturability, DOE, QFD, value engineering, CAD.</td></tr>
+          <tr><td>Process improvement</td><td>Evaluation; process control and improvement</td><td>Strategic and business evaluation, quality costs, benchmarking, quality audit; PDCA cycle, 7 QC tools, SPC, FTA, FMEA, process capability, sampling inspection, self-inspection.</td></tr>
+          <tr><td>Employee participation</td><td>Recognition and reward; education and training; participation; communication</td><td>Bonus and moral awards; quality-awareness programmes; quality control circle, suggestion scheme, job rotation; newsletter, poster, slogan, quality day.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="booksrc">📘 <b>Book:</b> §4.13 Important Aspects of Quality Management, Table “Aspects of Total Quality Management Implementation”, p. 4-19 – 4-20</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q5</span>Explain in detail the Pillars of Quality Management System.</p>
+      <div class="badges"><span class="b marks">5 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q4(c) [5]</p>
+      <p>A QMS is built in <b>tiers</b> (Fig. 4.11.1). The first tier is the <b>quality policy</b>, the second tier is the <b>quality objective</b>, and the third tier is the <b>quality manual</b>. The manual is supported by <b>three pillars</b>:</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Pillar</th><th>What the book says</th><th>Software example</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. Quality processes, procedures, work instructions and methods</b></td><td>Defined at organisation level by functional-area experts, and at project and functional level by the experts in those areas separately.</td><td>Requirements process, design procedure, code-review work instruction, test method.</td></tr>
+          <tr><td><b>2. Guidelines and standards</b></td><td>Used by the organisation and project team to achieve the quality goals for the products and services delivered to customers.</td><td>Coding standard, documentation standard, test-case-writing guideline, ISO 9000-3 clauses.</td></tr>
+          <tr><td><b>3. Formats and templates</b></td><td>Common formats and templates used for tracking a project, function and information within the organisation; they act as a checklist to maintain consistency across projects.</td><td>SRS template, test-plan template, defect-report form, review record, metrics sheet.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>How the pillars work together:</b> the <b>policy</b> gives direction, the <b>objectives</b> make it measurable, the <b>manual</b> publishes the system, and the three pillars turn it into everyday work. Processes say <b>who does what and how</b>; standards say <b>what good looks like</b>; formats and templates <b>capture the evidence</b> so that every project follows the same system.</p>
+      <p><b>One-line answer:</b> a QMS stands on documented processes, agreed standards, and common formats and templates, all under a quality policy and measurable objectives.</p>
+      <p class="booksrc">📘 <b>Book:</b> §4.12 Pillars of Quality Management System, §4.11 Quality Management System Structure, p. 4-18 – 4-19</p>
     </div>
   </div>
 </section>
 
-<!-- ================= 4.5 ================= -->
 <section class="card" id="s45">
-  <h2>4.5 Syllabus-only SQA/QC topics</h2>
+  <div class="prio">Priority 5 · syllabus support</div><h2>4.5 Syllabus-only SQA/QC topics</h2>
   <div class="note"><b>Not directly asked in the six papers:</b> constraints of product quality assessment, quality–productivity relationship, software quality management (SQM), processes related to quality, quality models, quality measurement and metrics, CASE tools, reliability, QMS models and complexity metrics. The book covers each of them, so learn one short paragraph for a possible part question.</div>
   <div class="tbl-wrap">
   <table class="left">
@@ -976,6 +977,11 @@ instructions</pre>
   <p class="booksrc">📘 <b>Book:</b> §4.1.2 Constraints of Software Product Quality Assessment, §4.2 Quality and Productivity Relationship, §4.8 Software Quality Management, §4.10 Processes Related to Software Quality, §4.11–4.12 QMS Structure and Pillars, §4.15 Software Quality Models, §4.16 Quality Measurement and Metrics, §4.18 Quality Tools Including CASE Tools, §4.19 Quality Control and Reliability of Quality Process, §4.20–4.21 ISO and CMM, p. 4-4 – 4-5, 4-15 – 4-19, 4-24 – 4-29, 4-32 – 4-49</p>
 </section>
 
+<!-- ================= 4.1 ================= -->
+<!-- ================= 4.2 ================= -->
+<!-- ================= 4.3 ================= -->
+<!-- ================= 4.4 ================= -->
+<!-- ================= 4.5 ================= -->
 <!-- ================= CHEAT SHEET ================= -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet — Unit 4</h2>

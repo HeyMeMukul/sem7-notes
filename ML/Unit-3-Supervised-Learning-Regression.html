@@ -139,9 +139,15 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
   .book b,.note b,.warn b,.tip b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 
@@ -150,12 +156,12 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <h3>ML · Unit 3</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s31">3.1 Bias, variance, fit</a>
-    <a href="#s32">3.2 Linear regression</a>
-    <a href="#s33">3.3 Lasso &amp; Ridge</a>
-    <a href="#s34">3.4 Gradient descent</a>
-    <a href="#s35">3.5 Evaluation metrics</a>
-    <a href="#s36">3.6 Generalization error</a>
+    <a href="#s35">3.5 Evaluation metrics <span class="pill">7×</span></a>
+    <a href="#s33">3.3 Lasso &amp; Ridge <span class="pill">5×</span></a>
+    <a href="#s32">3.2 Linear regression <span class="pill">4×</span></a>
+    <a href="#s31">3.1 Bias, variance, fit <span class="pill">3×</span></a>
+    <a href="#s34">3.4 Gradient descent <span class="pill">2×</span></a>
+    <a href="#s36">3.6 Generalization error <span class="pill">1×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -172,7 +178,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 <header class="hero">
   <div class="kicker">Savitribai Phule Pune University · B.E. Computer · 2019 Pattern</div>
   <h1>Unit 3 — Supervised Learning: Regression</h1>
-  <p><b>Subject:</b> Machine Learning (410242) &nbsp;·&nbsp; <b>Exam:</b> Thursday, 26 Nov 2026, 2:00–4:30 PM &nbsp;·&nbsp; <b>Max marks:</b> 70</p>
+  <p><b>Subject:</b> Machine Learning (410242)  ·  <b>Exam:</b> Thursday, 26 Nov 2026, 2:00–4:30 PM  ·  <b>Max marks:</b> 70</p>
   <p>Every question below is taken <b>verbatim from the six available end-sem papers</b> (2022 Nov, 2023 May, 2023 Nov, 2024 May, 2025 May, 2025 Nov). Numerical tables that were missing or garbled in the text layer were read from the PDF pages and recomputed in Python.</p>
   <div class="meta">
     <span class="chip">📄 <b>6</b> end-sem papers analysed</span>
@@ -193,15 +199,15 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
     <thead><tr><th>#</th><th>Question asked</th><th>Appears in (year · Q no. · marks)</th><th>Repeat</th></tr></thead>
     <tbody>
       <tr><td>1</td><td class="l">Evaluation metrics — MAE, RMSE, R², importance of metrics</td><td>2022 Nov Q1(c) [6], Q2(c) [6]; 2023 May Q2(b) [6]; 2023 Nov Q2(b) [9]; 2024 May Q2(a) [6]; 2025 May Q2(a) [6]; 2025 Nov Q1(a) [6]</td><td><span class="stars">★★★★★★★</span> 7×</td></tr>
-      <tr><td>2</td><td class="l">Linear regression numerical — find line / predict value</td><td>2022 Nov Q1(b) [6]; 2023 Nov Q1(b) [8]; 2024 May Q1(c) [6]; 2025 May Q2(c) [6]; 2025 Nov Q2(b) [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
-      <tr><td>3</td><td class="l">Lasso and Ridge regression / L2 regularization</td><td>2022 Nov Q2(a) [6]; 2023 May Q1(b) [6]; 2023 Nov Q2(a) [9]; 2025 May Q2(b) [6]; 2025 Nov Q1(c) [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
-      <tr><td>4</td><td class="l">Underfitting vs overfitting + remedies</td><td>2022 Nov Q1(a) [6]; 2023 May Q1(a) [6]; 2023 Nov Q1(a) [6]; 2024 May Q1(b) [6]; 2025 May Q1(b) [6]; 2025 Nov Q2(c) [6]</td><td><span class="stars">★★★★★★</span> 6×</td></tr>
+      <tr><td>2</td><td class="l">Underfitting vs overfitting + remedies</td><td>2022 Nov Q1(a) [6]; 2023 May Q1(a) [6]; 2023 Nov Q1(a) [6]; 2024 May Q1(b) [6]; 2025 May Q1(b) [6]; 2025 Nov Q2(c) [6]</td><td><span class="stars">★★★★★★</span> 6×</td></tr>
+      <tr><td>3</td><td class="l">Linear regression numerical — find line / predict value</td><td>2022 Nov Q1(b) [6]; 2023 Nov Q1(b) [8]; 2024 May Q1(c) [6]; 2025 May Q2(c) [6]; 2025 Nov Q2(b) [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
+      <tr><td>4</td><td class="l">Lasso and Ridge regression / L2 regularization</td><td>2022 Nov Q2(a) [6]; 2023 May Q1(b) [6]; 2023 Nov Q2(a) [9]; 2025 May Q2(b) [6]; 2025 Nov Q1(c) [6]</td><td><span class="stars">★★★★★</span> 5×</td></tr>
       <tr><td>5</td><td class="l">Linear regression / regression — concept and models</td><td>2023 May Q2(a) [6]; 2023 Nov Q2(a) [9]; 2024 May Q1(a) [6]; 2025 May Q1(a) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
       <tr><td>6</td><td class="l">Gradient descent, cost function, batch vs stochastic</td><td>2023 May Q1(c) [6], Q2(c) [6]; 2024 May Q2(c) [6]; 2025 Nov Q1(b) [6]</td><td><span class="stars">★★★★</span> 4×</td></tr>
       <tr><td>7</td><td class="l">Bias–variance trade-off</td><td>2022 Nov Q2(b) [6]; 2023 Nov Q1(c) [4]; 2025 Nov Q2(a) [6]</td><td><span class="stars">★★★</span> 3×</td></tr>
-      <tr><td>8</td><td class="l">Least-squares method in linear regression</td><td>2024 May Q2(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
-      <tr><td>9</td><td class="l">Training error vs generalization error</td><td>2025 May Q1(c) [6]</td><td><span class="stars">★</span> 1×</td></tr>
-      <tr><td>10</td><td class="l">R² as a measure of evaluation (stand-alone question)</td><td>2024 May Q2(a) [6]; 2025 Nov Q1(a) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>8</td><td class="l">R² as a measure of evaluation (stand-alone question)</td><td>2024 May Q2(a) [6]; 2025 Nov Q1(a) [6]</td><td><span class="stars">★★</span> 2×</td></tr>
+      <tr><td>9</td><td class="l">Least-squares method in linear regression</td><td>2024 May Q2(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
+      <tr><td>10</td><td class="l">Training error vs generalization error</td><td>2025 May Q1(c) [6]</td><td><span class="stars">★</span> 1×</td></tr>
       <tr><td>11</td><td class="l">Techniques to reduce underfitting only</td><td>2024 May Q1(b) [6]</td><td><span class="stars">★</span> 1×</td></tr>
     </tbody>
   </table>
@@ -212,130 +218,205 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <div class="tip"><b>Marks strategy:</b> 6-mark numerical = formula + sums table + line + prediction + one-line interpretation. 8–9 mark = add R²/error and a short note. 6-mark theory = definition + 5 bullets + small example. Do not write a full derivation unless the question says “derive”.</div>
 </section>
 
-<!-- ================= 3.1 ================= -->
-<section class="card" id="s31">
-  <h2>3.1 Bias, variance, underfitting and overfitting</h2>
-  <p class="lead">Syllabus: <em>Bias, Variance, Generalization, Underfitting, Overfitting.</em></p>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s35">
+  <div class="prio">Priority 1 · ★★★★★ 7× repeated</div><h2>3.5 Evaluation metrics — MAE, RMSE, R²</h2>
+  <p class="lead">This is the most repeated Unit-3 topic (7 instances). Learn the formulas, the meaning, and one worked evaluation.</p>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain the following terms with suitable examples: (i) Bias (ii) Variance (iii) Underfitting and Overfitting.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+      <p class="qtitle"><span class="qno">Q1</span>Explain the following evaluation metrics: (i) MAE (ii) RMSE (iii) R². Write a short note on evaluation metrics and their importance.</p>
+      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep hot">★★★★★★★ 7×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 May Q1(a) [6] · 2023 Nov Q1(a) [6 — differentiate overfitting and underfitting] · 2025 May Q1(b) [6 — differentiate with example]</p>
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(c) [6] · 2022 Nov Q2(c) [6] · 2023 May Q2(b) [6] · 2023 Nov Q2(b) [9] · 2024 May Q2(a) [6 — R²] · 2025 May Q2(a) [6 — importance] · 2025 Nov Q1(a) [6 — R²]</p>
 
-      <h4>(i) Bias</h4>
-      <p>Bias is the error caused by the <b>simplifying assumptions</b> of a model. It is the difference between the expected prediction of the model and the true value.</p>
-      <div class="math">Bias = E[ f̂(x) ] − f(x)</div>
+      <h4>Why evaluation metrics are needed</h4>
+      <p>A model can fit training data and still fail on new data. Metrics give a <b>number</b> to compare models, tune hyperparameters, and decide whether the model is useful. Different metrics punish different kinds of error, so the choice of metric must match the business cost.</p>
+
+      <h4>(i) Mean Absolute Error (MAE)</h4>
+      <div class="math">MAE = (1/n) Σ<sub>i=1..n</sub> | y<sub>i</sub> − ŷ<sub>i</sub> |</div>
       <ul>
-        <li><b>High bias</b> → the model is too simple; it ignores the real pattern. This causes <b>underfitting</b>.</li>
-        <li><b>Low bias</b> → the model can represent the true pattern. Complex models such as decision trees and KNN have low bias.</li>
-        <li>Example: fitting a straight line to a curved dataset. The line can never follow the curve, so bias is high.</li>
+        <li>Average of the absolute errors, in the <b>same unit</b> as y.</li>
+        <li>Easy to explain: “on average we are off by 4.2 marks”.</li>
+        <li>Treats all errors equally; less sensitive to outliers than RMSE.</li>
+        <li>Not differentiable at zero, so harder to optimise directly.</li>
       </ul>
 
-      <h4>(ii) Variance</h4>
-      <p>Variance is the change in the model’s prediction when the <b>training data changes</b>. A high-variance model memorises the training set, including its noise.</p>
-      <div class="math">Variance = E[ ( f̂(x) − E[f̂(x)] )² ]</div>
+      <h4>(ii) Root Mean Squared Error (RMSE)</h4>
+      <div class="math">MSE = (1/n) Σ (y<sub>i</sub> − ŷ<sub>i</sub>)²      RMSE = √MSE</div>
       <ul>
-        <li><b>High variance</b> → small change in training data gives a very different model. This causes <b>overfitting</b>.</li>
-        <li><b>Low variance</b> → stable predictions. Linear regression has low variance.</li>
-        <li>Example: a deep decision tree that grows until every training point is pure. Change one point and the tree changes.</li>
+        <li>Square root of the average squared error; same unit as y.</li>
+        <li><b>Punishes large errors</b> heavily because of the square.</li>
+        <li>Sensitive to outliers; useful when big errors are costly.</li>
+        <li>Differentiable, so it is a common loss function for training.</li>
       </ul>
 
-      <h4>(iii) Underfitting and overfitting</h4>
-      <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Underfitting</th><th>Overfitting</th></tr></thead>
-        <tbody>
-          <tr><td>Training error</td><td>High</td><td>Very low</td></tr>
-          <tr><td>Test error</td><td>High</td><td>High</td></tr>
-          <tr><td>Bias / variance</td><td>High bias, low variance</td><td>Low bias, high variance</td></tr>
-          <tr><td>Model complexity</td><td>Too simple</td><td>Too complex</td></tr>
-          <tr><td>Cause</td><td>Model cannot capture the pattern</td><td>Model memorises noise</td></tr>
-          <tr><td>Example</td><td>Linear line on a curved scatter plot</td><td>A 20th-degree polynomial through 10 points</td></tr>
-          <tr><td>Remedy</td><td>More features, complex model, less regularization</td><td>More data, regularization, pruning, early stopping</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="tip"><b>One-line answer:</b> underfitting = model too simple (high bias); overfitting = model too complex (high variance). The best model balances both — this is the bias–variance trade-off.</div>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What is the bias–variance trade-off for a machine learning model? Describe its relationship to underfitting and overfitting.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2023 Nov Q1(c) [4] · 2025 Nov Q2(a) [6]</p>
-
-      <h4>Definition</h4>
-      <p>The expected test error of a model can be split into three parts:</p>
-      <div class="math">Total error = Bias² + Variance + Irreducible noise</div>
-      <p>The <b>trade-off</b> means: if we reduce bias by making the model more complex, variance usually increases; if we reduce variance by making it simpler, bias increases. We cannot minimise both at the same time.</p>
-
-      <h4>Why the trade-off happens</h4>
+      <h4>(iii) Coefficient of determination (R²)</h4>
+      <div class="math">R² = 1 − SS<sub>res</sub> / SS<sub>tot</sub><br>
+      SS<sub>res</sub> = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)²    SS<sub>tot</sub> = Σ(y<sub>i</sub> − ȳ)²</div>
       <ul>
-        <li><b>Simple model</b> (linear regression): strong assumptions → high bias, low variance. It gives similar but wrong answers on every training set.</li>
-        <li><b>Complex model</b> (deep tree, high-degree polynomial): few assumptions → low bias, high variance. It fits training data well but changes badly with new data.</li>
-        <li>The <b>sweet spot</b> is the model complexity where validation error is minimum.</li>
+        <li>Proportion of the variance in y explained by the model.</li>
+        <li>Range: <b>−∞ to 1</b>. R² = 1 is perfect; R² = 0 means the model is no better than predicting the mean; negative means worse than the mean.</li>
+        <li>Unit-free, so it is easy to compare different datasets.</li>
+        <li><b>Adjusted R²</b> penalises unnecessary features: R²<sub>adj</sub> = 1 − (1−R²)(n−1)/(n−p−1).</li>
       </ul>
 
+      <h4>Worked evaluation — 2022 Nov data</h4>
+      <p>Line ŷ = 1.5 + 1.3x for x = 1,2,3,4 and y = 3,4,5,7. Predictions: 2.8, 4.1, 5.4, 6.7.</p>
       <div class="tbl-wrap">
       <table>
-        <thead><tr><th>Model complexity</th><th>Bias</th><th>Variance</th><th>Training error</th><th>Test error</th><th>Fit</th></tr></thead>
+        <thead><tr><th>y</th><th>ŷ</th><th>|y − ŷ|</th><th>(y − ŷ)²</th></tr></thead>
         <tbody>
-          <tr><td>Low</td><td>High</td><td>Low</td><td>High</td><td>High</td><td>Underfitting</td></tr>
-          <tr><td>Medium</td><td>Medium</td><td>Medium</td><td>Low</td><td><b>Lowest</b></td><td><b>Good fit</b></td></tr>
-          <tr><td>High</td><td>Low</td><td>High</td><td>Very low</td><td>High</td><td>Overfitting</td></tr>
+          <tr><td>3</td><td>2.8</td><td>0.2</td><td>0.04</td></tr>
+          <tr><td>4</td><td>4.1</td><td>0.1</td><td>0.01</td></tr>
+          <tr><td>5</td><td>5.4</td><td>0.4</td><td>0.16</td></tr>
+          <tr><td>7</td><td>6.7</td><td>0.3</td><td>0.09</td></tr>
+          <tr><th>Σ</th><th>—</th><th>1.0</th><th>0.30</th></tr>
         </tbody>
       </table>
       </div>
-
-      <div class="math">Underfitting ← high bias → increase complexity → <b>optimum</b> → increase complexity → high variance → Overfitting</div>
-      <p class="small">Draw this as a U-shaped test-error curve with bias falling and variance rising. That single diagram answers most of the 6 marks.</p>
+      <div class="math">MAE = 1.0/4 = <b>0.25</b><br>
+      MSE = 0.30/4 = 0.075  →  RMSE = √0.075 = <b>0.2739</b><br>
+      ȳ = 19/4 = 4.75; SS<sub>tot</sub> = (3−4.75)² + (4−4.75)² + (5−4.75)² + (7−4.75)² = 8.75<br>
+      R² = 1 − 0.30/8.75 = 1 − 0.0343 = <b>0.9657</b></div>
+      <p>Interpretation: the line is typically off by 0.25 units, and it explains 96.6% of the variation in y.</p>
     </div>
   </div>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Explain in brief the techniques to reduce underfitting and overfitting. What are the different techniques to reduce underfitting / overfitting?</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+      <p class="qtitle"><span class="qno">Q2</span>What is the R² measure of evaluation? Why is the R² metric required?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [6 — both] · 2024 May Q1(b) [6 — underfitting only] · 2025 Nov Q2(c) [6 — overfitting only]</p>
+      <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [6] · 2025 Nov Q1(a) [6]</p>
 
-      <h4>A. Techniques to reduce underfitting (high bias)</h4>
-      <ol>
-        <li><b>Increase model complexity</b> — add layers/neurons, use a polynomial instead of a straight line, use a deeper tree.</li>
-        <li><b>Add more useful features</b> — the model may be missing the variable that explains the output.</li>
-        <li><b>Reduce regularization</b> — a large λ forces weights to zero and makes the model too simple.</li>
-        <li><b>Train longer</b> — stop early only when validation error starts rising; an underfitted model may need more epochs.</li>
-        <li><b>Reduce bias in the algorithm</b> — use a non-linear model (KNN, SVM-RBF, random forest) instead of a linear one.</li>
-        <li><b>Check data quality</b> — wrong labels or missing features look like underfitting.</li>
-      </ol>
+      <h4>Definition</h4>
+      <p>R² (coefficient of determination) measures how much of the total variation in the dependent variable is explained by the regression model.</p>
+      <div class="math">R² = 1 − Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² / Σ(y<sub>i</sub> − ȳ)² = 1 − SS<sub>res</sub>/SS<sub>tot</sub></div>
 
-      <h4>B. Techniques to reduce overfitting (high variance)</h4>
-      <ol>
-        <li><b>More training data</b> — the best cure; noise gets averaged out.</li>
-        <li><b>Cross-validation</b> — detects overfitting and helps choose hyperparameters.</li>
-        <li><b>Regularization</b> — L1 (Lasso), L2 (Ridge), elastic net; penalises large weights.</li>
-        <li><b>Pruning</b> — cut weak branches of a decision tree.</li>
-        <li><b>Early stopping</b> — stop training when validation loss starts increasing.</li>
-        <li><b>Dropout</b> — randomly switch off neurons in a neural network.</li>
-        <li><b>Ensemble methods</b> — bagging and random forest average many models and reduce variance.</li>
-        <li><b>Feature selection / dimensionality reduction</b> — remove irrelevant and noisy features.</li>
-      </ol>
+      <h4>Interpretation</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>R² value</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>1.0</td><td>Perfect fit; all points lie on the line</td></tr>
+          <tr><td>0.8</td><td>80% of the variation is explained; 20% is unexplained</td></tr>
+          <tr><td>0.0</td><td>Model is no better than predicting the mean</td></tr>
+          <tr><td>&lt; 0</td><td>Model is worse than the mean (possible on test data)</td></tr>
+        </tbody>
+      </table>
+      </div>
 
-      <div class="note"><b>Exam pairing:</b> if the question says “under fitting and over fitting” (2022 Nov), write both lists. If it says only one (2024 May, 2025 Nov), write that list in detail and add one line about the other for completeness.</div>
+      <h4>Why R² is required</h4>
+      <ul>
+        <li><b>Scale-free</b> — MAE and RMSE depend on the unit of y; R² does not, so different models/datasets can be compared.</li>
+        <li><b>Goodness of fit</b> — it says how well the line explains the data, not just how large the error is.</li>
+        <li><b>Baseline comparison</b> — it directly compares the model with the “predict the mean” baseline.</li>
+        <li><b>Model selection</b> — used with adjusted R² to compare models with different numbers of features.</li>
+      </ul>
+
+      <h4>Limitations</h4>
+      <ul>
+        <li>R² always increases when features are added, even useless ones → use adjusted R².</li>
+        <li>A high R² does not prove causation.</li>
+        <li>It can be misleading for non-linear models or extrapolation.</li>
+      </ul>
+      <p class="small">Worked value: for the 2022 Nov data, R² = 0.9657 (see Q1).</p>
     </div>
   </div>
 </section>
 
-<!-- ================= 3.2 ================= -->
+<section class="card" id="s33">
+  <div class="prio">Priority 2 · ★★★★★ 5× repeated</div><h2>3.3 Lasso and Ridge regression</h2>
+  <p class="lead">These are regularised versions of linear regression. They add a penalty for large weights to reduce overfitting.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Explain in brief Lasso and Ridge regression. Differentiate between Lasso regression and Ridge regression.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★★ 5×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [6] · 2023 May Q1(b) [6] · 2025 May Q2(b) [6] · related: 2023 Nov Q2(a) [9 — Ridge concept] · 2025 Nov Q1(c) [6 — purpose of L2 term]</p>
+
+      <h4>Common idea</h4>
+      <p>Ordinary least squares minimises only the squared error. With many features or correlated features, the weights become large and the model overfits. Regularisation adds a <b>penalty term</b> controlled by λ:</p>
+      <div class="math">J(w) = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² + λ · penalty(w)</div>
+
+      <h4>Ridge regression (L2)</h4>
+      <div class="math">J(w) = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² + λ Σ w<sub>j</sub>²</div>
+      <ul>
+        <li>Adds the <b>sum of squared weights</b> (L2 norm).</li>
+        <li>Shrinks weights <b>close to zero</b>, but never exactly zero.</li>
+        <li>Handles <b>multicollinearity</b> well: correlated features share the weight.</li>
+        <li>The solution is stable and has a closed form: w = (XᵀX + λI)⁻¹Xᵀy.</li>
+      </ul>
+
+      <h4>Lasso regression (L1)</h4>
+      <div class="math">J(w) = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² + λ Σ |w<sub>j</sub>|</div>
+      <ul>
+        <li>Adds the <b>sum of absolute weights</b> (L1 norm).</li>
+        <li>Can make some weights <b>exactly zero</b> → automatic feature selection.</li>
+        <li>Produces a <b>sparse</b> model, easier to interpret.</li>
+        <li>With correlated features it may keep one and discard the others arbitrarily.</li>
+      </ul>
+
+      <h4>Difference table</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Ridge (L2)</th><th>Lasso (L1)</th></tr></thead>
+        <tbody>
+          <tr><td>Penalty</td><td>λΣw²</td><td>λΣ|w|</td></tr>
+          <tr><td>Weight values</td><td>Shrunk near zero, rarely zero</td><td>Many become exactly zero</td></tr>
+          <tr><td>Feature selection</td><td>No</td><td>Yes (built-in)</td></tr>
+          <tr><td>Multicollinearity</td><td>Handles well</td><td>May pick one feature arbitrarily</td></tr>
+          <tr><td>Model</td><td>Dense</td><td>Sparse</td></tr>
+          <tr><td>Best when</td><td>All features matter</td><td>Only a few features matter</td></tr>
+          <tr><td>Geometry</td><td>Circular constraint</td><td>Diamond constraint (corners → zeros)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note"><b>λ (lambda):</b> λ = 0 gives ordinary least squares. As λ increases, weights shrink and the model becomes simpler. Choose λ by cross-validation.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What is the primary purpose of the L2 regularization term in the Ridge regression cost function?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q1(c) [6]</p>
+
+      <h4>Purpose</h4>
+      <p>The L2 term <code>λΣw<sub>j</sub>²</code> penalises large coefficients. It forces the model to use <b>small, spread-out weights</b> instead of relying heavily on one feature.</p>
+      <ol>
+        <li><b>Reduce overfitting</b> — large weights make the model sensitive to noise; shrinking them lowers variance.</li>
+        <li><b>Handle multicollinearity</b> — when two features are correlated, OLS gives unstable, opposite large weights. L2 stabilises them.</li>
+        <li><b>Improve numerical stability</b> — adding λI makes XᵀX invertible even when features are linearly dependent.</li>
+        <li><b>Keep all features</b> — unlike Lasso, Ridge shrinks weights but does not remove features.</li>
+      </ol>
+
+      <h4>Effect of λ</h4>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>λ</th><th>Weights</th><th>Model</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>OLS values</td><td>Complex</td><td>May overfit</td></tr>
+          <tr><td>Small</td><td>Slightly shrunk</td><td>Balanced</td><td>Good fit</td></tr>
+          <tr><td>Very large</td><td>≈ 0</td><td>Almost constant</td><td>Underfits</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="math">Ridge solution: w = (XᵀX + λI)⁻¹ Xᵀy</div>
+      <p>The identity matrix I is added to the diagonal, so every eigenvalue increases by λ and the inverse always exists.</p>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s32">
-  <h2>3.2 Regression and linear regression</h2>
+  <div class="prio">Priority 3 · ★★★★ 4× repeated</div><h2>3.2 Regression and linear regression</h2>
   <p class="lead">Syllabus: <em>Linear regression, least squares, regression models.</em> Five full numericals follow — all values recomputed.</p>
 
   <div class="qa">
@@ -370,7 +451,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       </div>
 
       <h4>Linear regression</h4>
-      <div class="math">ŷ = a + bx &nbsp;&nbsp;&nbsp; where b = slope, a = intercept</div>
+      <div class="math">ŷ = a + bx     where b = slope, a = intercept</div>
       <p>The model assumes a straight-line relationship. It is trained by the <b>least-squares method</b>: choose a and b so that the sum of squared vertical distances <code>Σ(y<sub>i</sub> − ŷ<sub>i</sub>)²</code> is minimum.</p>
       <ul>
         <li>Simple to train and interpret.</li>
@@ -391,7 +472,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 
       <h4>Principle</h4>
       <p>The least-squares method chooses the line that makes the <b>sum of squared residuals</b> as small as possible. Squaring removes the sign and punishes large errors more than small ones.</p>
-      <div class="math">Minimise&nbsp; S(a,b) = Σ<sub>i=1..n</sub> (y<sub>i</sub> − a − b x<sub>i</sub>)²</div>
+      <div class="math">Minimise  S(a,b) = Σ<sub>i=1..n</sub> (y<sub>i</sub> − a − b x<sub>i</sub>)²</div>
 
       <h4>Normal equations</h4>
       <p>Differentiate S with respect to a and b and set both derivatives to zero:</p>
@@ -405,7 +486,7 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
       <h4>Small example</h4>
       <p>For (1,3), (2,4), (3,5), (4,7): Σx = 10, Σy = 19, Σxy = 54, Σx² = 30, n = 4.</p>
       <div class="math">b = (4×54 − 10×19) / (4×30 − 100) = 26/20 = <b>1.3</b><br>
-      a = (19 − 1.3×10)/4 = <b>1.5</b> &nbsp;&nbsp;→&nbsp;&nbsp; <b>ŷ = 1.5 + 1.3x</b></div>
+      a = (19 − 1.3×10)/4 = <b>1.5</b>   →   <b>ŷ = 1.5 + 1.3x</b></div>
       <p>The same numbers are used in the full solved numerical below (2022 Nov Q1b).</p>
     </div>
   </div>
@@ -611,98 +692,128 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </section>
 
-<!-- ================= 3.3 ================= -->
-<section class="card" id="s33">
-  <h2>3.3 Lasso and Ridge regression</h2>
-  <p class="lead">These are regularised versions of linear regression. They add a penalty for large weights to reduce overfitting.</p>
+<section class="card" id="s31">
+  <div class="prio">Priority 4 · ★★★ 3× repeated</div><h2>3.1 Bias, variance, underfitting and overfitting</h2>
+  <p class="lead">Syllabus: <em>Bias, Variance, Generalization, Underfitting, Overfitting.</em></p>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain in brief Lasso and Ridge regression. Differentiate between Lasso regression and Ridge regression.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★★★ 5×</span></div>
+      <p class="qtitle"><span class="qno">Q1</span>Explain the following terms with suitable examples: (i) Bias (ii) Variance (iii) Underfitting and Overfitting.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(a) [6] · 2023 May Q1(b) [6] · 2025 May Q2(b) [6] · related: 2023 Nov Q2(a) [9 — Ridge concept] · 2025 Nov Q1(c) [6 — purpose of L2 term]</p>
+      <p class="asked"><b>Asked in:</b> 2023 May Q1(a) [6] · 2023 Nov Q1(a) [6 — differentiate overfitting and underfitting] · 2025 May Q1(b) [6 — differentiate with example]</p>
 
-      <h4>Common idea</h4>
-      <p>Ordinary least squares minimises only the squared error. With many features or correlated features, the weights become large and the model overfits. Regularisation adds a <b>penalty term</b> controlled by λ:</p>
-      <div class="math">J(w) = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² + λ · penalty(w)</div>
-
-      <h4>Ridge regression (L2)</h4>
-      <div class="math">J(w) = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² + λ Σ w<sub>j</sub>²</div>
+      <h4>(i) Bias</h4>
+      <p>Bias is the error caused by the <b>simplifying assumptions</b> of a model. It is the difference between the expected prediction of the model and the true value.</p>
+      <div class="math">Bias = E[ f̂(x) ] − f(x)</div>
       <ul>
-        <li>Adds the <b>sum of squared weights</b> (L2 norm).</li>
-        <li>Shrinks weights <b>close to zero</b>, but never exactly zero.</li>
-        <li>Handles <b>multicollinearity</b> well: correlated features share the weight.</li>
-        <li>The solution is stable and has a closed form: w = (XᵀX + λI)⁻¹Xᵀy.</li>
+        <li><b>High bias</b> → the model is too simple; it ignores the real pattern. This causes <b>underfitting</b>.</li>
+        <li><b>Low bias</b> → the model can represent the true pattern. Complex models such as decision trees and KNN have low bias.</li>
+        <li>Example: fitting a straight line to a curved dataset. The line can never follow the curve, so bias is high.</li>
       </ul>
 
-      <h4>Lasso regression (L1)</h4>
-      <div class="math">J(w) = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² + λ Σ |w<sub>j</sub>|</div>
+      <h4>(ii) Variance</h4>
+      <p>Variance is the change in the model’s prediction when the <b>training data changes</b>. A high-variance model memorises the training set, including its noise.</p>
+      <div class="math">Variance = E[ ( f̂(x) − E[f̂(x)] )² ]</div>
       <ul>
-        <li>Adds the <b>sum of absolute weights</b> (L1 norm).</li>
-        <li>Can make some weights <b>exactly zero</b> → automatic feature selection.</li>
-        <li>Produces a <b>sparse</b> model, easier to interpret.</li>
-        <li>With correlated features it may keep one and discard the others arbitrarily.</li>
+        <li><b>High variance</b> → small change in training data gives a very different model. This causes <b>overfitting</b>.</li>
+        <li><b>Low variance</b> → stable predictions. Linear regression has low variance.</li>
+        <li>Example: a deep decision tree that grows until every training point is pure. Change one point and the tree changes.</li>
       </ul>
 
-      <h4>Difference table</h4>
+      <h4>(iii) Underfitting and overfitting</h4>
       <div class="tbl-wrap">
       <table class="left">
-        <thead><tr><th>Point</th><th>Ridge (L2)</th><th>Lasso (L1)</th></tr></thead>
+        <thead><tr><th>Point</th><th>Underfitting</th><th>Overfitting</th></tr></thead>
         <tbody>
-          <tr><td>Penalty</td><td>λΣw²</td><td>λΣ|w|</td></tr>
-          <tr><td>Weight values</td><td>Shrunk near zero, rarely zero</td><td>Many become exactly zero</td></tr>
-          <tr><td>Feature selection</td><td>No</td><td>Yes (built-in)</td></tr>
-          <tr><td>Multicollinearity</td><td>Handles well</td><td>May pick one feature arbitrarily</td></tr>
-          <tr><td>Model</td><td>Dense</td><td>Sparse</td></tr>
-          <tr><td>Best when</td><td>All features matter</td><td>Only a few features matter</td></tr>
-          <tr><td>Geometry</td><td>Circular constraint</td><td>Diamond constraint (corners → zeros)</td></tr>
+          <tr><td>Training error</td><td>High</td><td>Very low</td></tr>
+          <tr><td>Test error</td><td>High</td><td>High</td></tr>
+          <tr><td>Bias / variance</td><td>High bias, low variance</td><td>Low bias, high variance</td></tr>
+          <tr><td>Model complexity</td><td>Too simple</td><td>Too complex</td></tr>
+          <tr><td>Cause</td><td>Model cannot capture the pattern</td><td>Model memorises noise</td></tr>
+          <tr><td>Example</td><td>Linear line on a curved scatter plot</td><td>A 20th-degree polynomial through 10 points</td></tr>
+          <tr><td>Remedy</td><td>More features, complex model, less regularization</td><td>More data, regularization, pruning, early stopping</td></tr>
         </tbody>
       </table>
       </div>
-
-      <div class="note"><b>λ (lambda):</b> λ = 0 gives ordinary least squares. As λ increases, weights shrink and the model becomes simpler. Choose λ by cross-validation.</div>
+      <div class="tip"><b>One-line answer:</b> underfitting = model too simple (high bias); overfitting = model too complex (high variance). The best model balances both — this is the bias–variance trade-off.</div>
     </div>
   </div>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What is the primary purpose of the L2 regularization term in the Ridge regression cost function?</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+      <p class="qtitle"><span class="qno">Q2</span>What is the bias–variance trade-off for a machine learning model? Describe its relationship to underfitting and overfitting.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q1(c) [6]</p>
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q2(b) [6] · 2023 Nov Q1(c) [4] · 2025 Nov Q2(a) [6]</p>
 
-      <h4>Purpose</h4>
-      <p>The L2 term <code>λΣw<sub>j</sub>²</code> penalises large coefficients. It forces the model to use <b>small, spread-out weights</b> instead of relying heavily on one feature.</p>
-      <ol>
-        <li><b>Reduce overfitting</b> — large weights make the model sensitive to noise; shrinking them lowers variance.</li>
-        <li><b>Handle multicollinearity</b> — when two features are correlated, OLS gives unstable, opposite large weights. L2 stabilises them.</li>
-        <li><b>Improve numerical stability</b> — adding λI makes XᵀX invertible even when features are linearly dependent.</li>
-        <li><b>Keep all features</b> — unlike Lasso, Ridge shrinks weights but does not remove features.</li>
-      </ol>
+      <h4>Definition</h4>
+      <p>The expected test error of a model can be split into three parts:</p>
+      <div class="math">Total error = Bias² + Variance + Irreducible noise</div>
+      <p>The <b>trade-off</b> means: if we reduce bias by making the model more complex, variance usually increases; if we reduce variance by making it simpler, bias increases. We cannot minimise both at the same time.</p>
 
-      <h4>Effect of λ</h4>
+      <h4>Why the trade-off happens</h4>
+      <ul>
+        <li><b>Simple model</b> (linear regression): strong assumptions → high bias, low variance. It gives similar but wrong answers on every training set.</li>
+        <li><b>Complex model</b> (deep tree, high-degree polynomial): few assumptions → low bias, high variance. It fits training data well but changes badly with new data.</li>
+        <li>The <b>sweet spot</b> is the model complexity where validation error is minimum.</li>
+      </ul>
+
       <div class="tbl-wrap">
       <table>
-        <thead><tr><th>λ</th><th>Weights</th><th>Model</th><th>Result</th></tr></thead>
+        <thead><tr><th>Model complexity</th><th>Bias</th><th>Variance</th><th>Training error</th><th>Test error</th><th>Fit</th></tr></thead>
         <tbody>
-          <tr><td>0</td><td>OLS values</td><td>Complex</td><td>May overfit</td></tr>
-          <tr><td>Small</td><td>Slightly shrunk</td><td>Balanced</td><td>Good fit</td></tr>
-          <tr><td>Very large</td><td>≈ 0</td><td>Almost constant</td><td>Underfits</td></tr>
+          <tr><td>Low</td><td>High</td><td>Low</td><td>High</td><td>High</td><td>Underfitting</td></tr>
+          <tr><td>Medium</td><td>Medium</td><td>Medium</td><td>Low</td><td><b>Lowest</b></td><td><b>Good fit</b></td></tr>
+          <tr><td>High</td><td>Low</td><td>High</td><td>Very low</td><td>High</td><td>Overfitting</td></tr>
         </tbody>
       </table>
       </div>
-      <div class="math">Ridge solution: w = (XᵀX + λI)⁻¹ Xᵀy</div>
-      <p>The identity matrix I is added to the diagonal, so every eigenvalue increases by λ and the inverse always exists.</p>
+
+      <div class="math">Underfitting ← high bias → increase complexity → <b>optimum</b> → increase complexity → high variance → Overfitting</div>
+      <p class="small">Draw this as a U-shaped test-error curve with bias falling and variance rising. That single diagram answers most of the 6 marks.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Explain in brief the techniques to reduce underfitting and overfitting. What are the different techniques to reduce underfitting / overfitting?</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(a) [6 — both] · 2024 May Q1(b) [6 — underfitting only] · 2025 Nov Q2(c) [6 — overfitting only]</p>
+
+      <h4>A. Techniques to reduce underfitting (high bias)</h4>
+      <ol>
+        <li><b>Increase model complexity</b> — add layers/neurons, use a polynomial instead of a straight line, use a deeper tree.</li>
+        <li><b>Add more useful features</b> — the model may be missing the variable that explains the output.</li>
+        <li><b>Reduce regularization</b> — a large λ forces weights to zero and makes the model too simple.</li>
+        <li><b>Train longer</b> — stop early only when validation error starts rising; an underfitted model may need more epochs.</li>
+        <li><b>Reduce bias in the algorithm</b> — use a non-linear model (KNN, SVM-RBF, random forest) instead of a linear one.</li>
+        <li><b>Check data quality</b> — wrong labels or missing features look like underfitting.</li>
+      </ol>
+
+      <h4>B. Techniques to reduce overfitting (high variance)</h4>
+      <ol>
+        <li><b>More training data</b> — the best cure; noise gets averaged out.</li>
+        <li><b>Cross-validation</b> — detects overfitting and helps choose hyperparameters.</li>
+        <li><b>Regularization</b> — L1 (Lasso), L2 (Ridge), elastic net; penalises large weights.</li>
+        <li><b>Pruning</b> — cut weak branches of a decision tree.</li>
+        <li><b>Early stopping</b> — stop training when validation loss starts increasing.</li>
+        <li><b>Dropout</b> — randomly switch off neurons in a neural network.</li>
+        <li><b>Ensemble methods</b> — bagging and random forest average many models and reduce variance.</li>
+        <li><b>Feature selection / dimensionality reduction</b> — remove irrelevant and noisy features.</li>
+      </ol>
+
+      <div class="note"><b>Exam pairing:</b> if the question says “under fitting and over fitting” (2022 Nov), write both lists. If it says only one (2024 May, 2025 Nov), write that list in detail and add one line about the other for completeness.</div>
     </div>
   </div>
 </section>
 
-<!-- ================= 3.4 ================= -->
 <section class="card" id="s34">
-  <h2>3.4 Gradient descent</h2>
+  <div class="prio">Priority 5 · ★★ 2× repeated</div><h2>3.4 Gradient descent</h2>
   <p class="lead">Gradient descent is the optimiser that trains linear regression (and neural networks) by repeatedly stepping downhill on the cost function.</p>
 
   <div class="qa">
@@ -803,119 +914,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </section>
 
-<!-- ================= 3.5 ================= -->
-<section class="card" id="s35">
-  <h2>3.5 Evaluation metrics — MAE, RMSE, R²</h2>
-  <p class="lead">This is the most repeated Unit-3 topic (7 instances). Learn the formulas, the meaning, and one worked evaluation.</p>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Explain the following evaluation metrics: (i) MAE (ii) RMSE (iii) R². Write a short note on evaluation metrics and their importance.</p>
-      <div class="badges"><span class="b marks">6–9 marks</span><span class="b rep hot">★★★★★★★ 7×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q1(c) [6] · 2022 Nov Q2(c) [6] · 2023 May Q2(b) [6] · 2023 Nov Q2(b) [9] · 2024 May Q2(a) [6 — R²] · 2025 May Q2(a) [6 — importance] · 2025 Nov Q1(a) [6 — R²]</p>
-
-      <h4>Why evaluation metrics are needed</h4>
-      <p>A model can fit training data and still fail on new data. Metrics give a <b>number</b> to compare models, tune hyperparameters, and decide whether the model is useful. Different metrics punish different kinds of error, so the choice of metric must match the business cost.</p>
-
-      <h4>(i) Mean Absolute Error (MAE)</h4>
-      <div class="math">MAE = (1/n) Σ<sub>i=1..n</sub> | y<sub>i</sub> − ŷ<sub>i</sub> |</div>
-      <ul>
-        <li>Average of the absolute errors, in the <b>same unit</b> as y.</li>
-        <li>Easy to explain: “on average we are off by 4.2 marks”.</li>
-        <li>Treats all errors equally; less sensitive to outliers than RMSE.</li>
-        <li>Not differentiable at zero, so harder to optimise directly.</li>
-      </ul>
-
-      <h4>(ii) Root Mean Squared Error (RMSE)</h4>
-      <div class="math">MSE = (1/n) Σ (y<sub>i</sub> − ŷ<sub>i</sub>)² &nbsp;&nbsp;&nbsp;&nbsp; RMSE = √MSE</div>
-      <ul>
-        <li>Square root of the average squared error; same unit as y.</li>
-        <li><b>Punishes large errors</b> heavily because of the square.</li>
-        <li>Sensitive to outliers; useful when big errors are costly.</li>
-        <li>Differentiable, so it is a common loss function for training.</li>
-      </ul>
-
-      <h4>(iii) Coefficient of determination (R²)</h4>
-      <div class="math">R² = 1 − SS<sub>res</sub> / SS<sub>tot</sub><br>
-      SS<sub>res</sub> = Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² &nbsp;&nbsp; SS<sub>tot</sub> = Σ(y<sub>i</sub> − ȳ)²</div>
-      <ul>
-        <li>Proportion of the variance in y explained by the model.</li>
-        <li>Range: <b>−∞ to 1</b>. R² = 1 is perfect; R² = 0 means the model is no better than predicting the mean; negative means worse than the mean.</li>
-        <li>Unit-free, so it is easy to compare different datasets.</li>
-        <li><b>Adjusted R²</b> penalises unnecessary features: R²<sub>adj</sub> = 1 − (1−R²)(n−1)/(n−p−1).</li>
-      </ul>
-
-      <h4>Worked evaluation — 2022 Nov data</h4>
-      <p>Line ŷ = 1.5 + 1.3x for x = 1,2,3,4 and y = 3,4,5,7. Predictions: 2.8, 4.1, 5.4, 6.7.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>y</th><th>ŷ</th><th>|y − ŷ|</th><th>(y − ŷ)²</th></tr></thead>
-        <tbody>
-          <tr><td>3</td><td>2.8</td><td>0.2</td><td>0.04</td></tr>
-          <tr><td>4</td><td>4.1</td><td>0.1</td><td>0.01</td></tr>
-          <tr><td>5</td><td>5.4</td><td>0.4</td><td>0.16</td></tr>
-          <tr><td>7</td><td>6.7</td><td>0.3</td><td>0.09</td></tr>
-          <tr><th>Σ</th><th>—</th><th>1.0</th><th>0.30</th></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="math">MAE = 1.0/4 = <b>0.25</b><br>
-      MSE = 0.30/4 = 0.075 &nbsp;→&nbsp; RMSE = √0.075 = <b>0.2739</b><br>
-      ȳ = 19/4 = 4.75; SS<sub>tot</sub> = (3−4.75)² + (4−4.75)² + (5−4.75)² + (7−4.75)² = 8.75<br>
-      R² = 1 − 0.30/8.75 = 1 − 0.0343 = <b>0.9657</b></div>
-      <p>Interpretation: the line is typically off by 0.25 units, and it explains 96.6% of the variation in y.</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What is the R² measure of evaluation? Why is the R² metric required?</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q2(a) [6] · 2025 Nov Q1(a) [6]</p>
-
-      <h4>Definition</h4>
-      <p>R² (coefficient of determination) measures how much of the total variation in the dependent variable is explained by the regression model.</p>
-      <div class="math">R² = 1 − Σ(y<sub>i</sub> − ŷ<sub>i</sub>)² / Σ(y<sub>i</sub> − ȳ)² = 1 − SS<sub>res</sub>/SS<sub>tot</sub></div>
-
-      <h4>Interpretation</h4>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>R² value</th><th>Meaning</th></tr></thead>
-        <tbody>
-          <tr><td>1.0</td><td>Perfect fit; all points lie on the line</td></tr>
-          <tr><td>0.8</td><td>80% of the variation is explained; 20% is unexplained</td></tr>
-          <tr><td>0.0</td><td>Model is no better than predicting the mean</td></tr>
-          <tr><td>&lt; 0</td><td>Model is worse than the mean (possible on test data)</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h4>Why R² is required</h4>
-      <ul>
-        <li><b>Scale-free</b> — MAE and RMSE depend on the unit of y; R² does not, so different models/datasets can be compared.</li>
-        <li><b>Goodness of fit</b> — it says how well the line explains the data, not just how large the error is.</li>
-        <li><b>Baseline comparison</b> — it directly compares the model with the “predict the mean” baseline.</li>
-        <li><b>Model selection</b> — used with adjusted R² to compare models with different numbers of features.</li>
-      </ul>
-
-      <h4>Limitations</h4>
-      <ul>
-        <li>R² always increases when features are added, even useless ones → use adjusted R².</li>
-        <li>A high R² does not prove causation.</li>
-        <li>It can be misleading for non-linear models or extrapolation.</li>
-      </ul>
-      <p class="small">Worked value: for the 2022 Nov data, R² = 0.9657 (see Q1).</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 3.6 ================= -->
 <section class="card" id="s36">
-  <h2>3.6 Training error and generalization error</h2>
+  <div class="prio">Priority 6 · ★ 1× repeated</div><h2>3.6 Training error and generalization error</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -962,6 +962,12 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </section>
 
+<!-- ================= 3.1 ================= -->
+<!-- ================= 3.2 ================= -->
+<!-- ================= 3.3 ================= -->
+<!-- ================= 3.4 ================= -->
+<!-- ================= 3.5 ================= -->
+<!-- ================= 3.6 ================= -->
 <!-- ================= CHEAT SHEET ================= -->
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet</h2>

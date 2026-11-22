@@ -57,6 +57,10 @@ table.left td,table.left th{text-align:left}
 .tip{background:#6ee7a810;border-color:#6ee7a835;color:#c9f7de}
 .book{background:#ffc46b0e;border-color:#ffc46b35;color:#ffe6bd}
 .note b,.warn b,.tip b,.book b{color:#fff}
+.simple{background:#6ee7a810;border:1px solid #6ee7a835;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9f7de}
+.analogy{background:#7c9cff10;border:1px solid #7c9cff30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#c9d7ff}
+.confuse{background:#ff8b8b0e;border:1px solid #ff8b8b30;border-radius:12px;padding:12px 16px;margin:12px 0;color:#ffd0d0}
+.simple b,.analogy b,.confuse b{color:#fff}
 .booksrc{margin:14px 0 0;padding-top:9px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px;line-height:1.5}
 ul,ol{margin:8px 0 8px 22px;padding:0}li{margin:5px 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -82,25 +86,31 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
 </style>
 <style id="print-callouts">
 @media print{
-  .book,.note,.warn,.tip{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
-  .book b,.note b,.warn b,.tip b{color:#000!important}
+  .book,.note,.warn,.tip,.simple,.analogy,.confuse{color:#222!important;background:#f7f7f7!important;border-color:#bbb!important}
+  .book b,.note b,.warn b,.tip b,.simple b,.analogy b,.confuse b{color:#000!important}
   .booksrc{color:#333!important}
+  .prio{color:#7a4b00!important;background:#fff3d6!important;border-color:#d9a441!important}
+
 }
 </style>
-</head>
+<style id="priority-css">
+.prio{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+color:#ffc46b;background:#ffc46b14;border:1px solid #ffc46b40;border-radius:999px;padding:3px 10px;margin:0 0 10px}
+.side .pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;background:#ff7aa21f;color:#ffb3c9;margin-left:6px}
+</style></head>
 <body>
 <div class="wrap">
 <aside class="side">
   <h3>DAA · Unit 6</h3>
   <nav id="toc">
     <a href="#map" class="active">📊 PYQ frequency map</a>
-    <a href="#s61">6.1 Multithreaded fundamentals</a>
-    <a href="#s62">6.2 Multithreaded matrix multiplication</a>
-    <a href="#s63">6.3 Multithreaded merge sort</a>
-    <a href="#s64">6.4 Distributed BFS</a>
-    <a href="#s65">6.5 Distributed MST</a>
-    <a href="#s66">6.6 Naive string matching</a>
-    <a href="#s67">6.7 Rabin–Karp algorithm</a>
+    <a href="#s67">6.7 Rabin–Karp algorithm <span class="pill">5×</span></a>
+    <a href="#s63">6.3 Multithreaded merge sort <span class="pill">4×</span></a>
+    <a href="#s61">6.1 Multithreaded fundamentals <span class="pill">3×</span></a>
+    <a href="#s62">6.2 Multithreaded matrix multiplication <span class="pill">3×</span></a>
+    <a href="#s64">6.4 Distributed BFS <span class="pill">3×</span></a>
+    <a href="#s65">6.5 Distributed MST <span class="pill">2×</span></a>
+    <a href="#s66">6.6 Naive string matching <span class="pill">2×</span></a>
     <a href="#cheat">⚡ Last-minute sheet</a>
   </nav>
   <hr class="sep">
@@ -124,6 +134,8 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   </div>
 </header>
 
+<div class="simple"><b>How to read this page:</b> start with the green “In simple words” box. Every algorithm is explained step by step — no prior DSA background needed.</div>
+
 <div class="book"><b>Source:</b> all answers in this unit are re-sourced from the supplied <i>Technical Publications — Design and Analysis of Algorithms</i> (Units 3–6), matched to the exact PYQ wording.</div>
 
 <section class="card" id="map">
@@ -146,199 +158,280 @@ footer{color:var(--dim);font-size:13px;text-align:center;padding:26px 0 50px}
   <div class="tip"><b>High-yield:</b> Rabin–Karp appears in <b>every</b> paper. Learn the rolling-hash formula, the algorithm, and the two solved traces (spurious hits with q = 11, and hash 4133124 with q = 13). That alone is 8–10 marks.</div>
 </section>
 
-<!-- 6.1 -->
-<section class="card" id="s61">
-  <h2>6.1 Multithreaded fundamentals</h2>
+<div class="note" id="priority-note">🔥 Study order: sections are arranged by how often they appear in the papers. Priority 1 is the most repeated question — start there, then work down.</div><section class="card" id="s67">
+  <div class="prio">Priority 1 · ★★★★★ 5× repeated</div><h2>6.7 Rabin–Karp algorithm <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★★ 5×</span></h2>
 
   <div class="qa">
     <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>With respect to multithreaded algorithms explain: analyzing multithreaded algorithms, parallel loops, race conditions.</p>
-      <div class="badges"><span class="b marks">7 marks</span><span class="b rep">★★★ 3×</span></div>
+      <p class="qtitle"><span class="qno">Q1</span>Write the Rabin–Karp string-matching algorithm. For a text of length n and pattern of length m, give the expected and worst-case running times.</p>
+      <div class="badges"><span class="b marks">8–10 marks</span><span class="b rep">★★★★★ 5×</span></div>
     </div>
     <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(b) [7] · 2023 Nov Q7(b) [7] · related: 2025 May Q7(b) [4 — race condition]</p>
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(b) [8] · 2023 Nov Q7(a)(ii) [10 — part of the short-note question] · 2024 May Q7(a) [10] · 2025 May Q8(b) [10] · 2025 Nov Q7(a) [10]</p>
 
-      <h4>(a) Model of a multithreaded execution</h4>
-      <p>The book models a multithreaded computation as a <b>computational DAG</b> G = (V, E). Each vertex is an instruction or a <b>strand</b> (a sequence of non-parallel instructions); each edge (u, v) is a dependency — u must finish before v starts. The book names four kinds of edge:</p>
+      <div class="simple"><b>In simple words:</b> Rabin–Karp turns each window into a number called a hash. It compares the pattern hash with the window hash first. Only when the hashes match does it compare actual characters. A rolling update makes each new hash cheap.</div>
+
+      <h4>Why we do this</h4>
+      <p>Comparing m characters at every position is slow. Comparing two numbers takes constant time. Rabin–Karp uses a cheap fingerprint to skip most windows, then checks characters only for likely matches.</p>
+
+      <h4>Terms you need first</h4>
       <ul>
-        <li><b>Continuation edge</b> — horizontal; v is the next instruction in the same strand.</li>
-        <li><b>Call edge</b> — downward; u calls v as a normal subroutine.</li>
-        <li><b>Spawn edge</b> — downward; u spawns v in parallel.</li>
-        <li><b>Return edge</b> — upward; the next strand after a call returns, or after parallel work joins at a <code>sync</code>.</li>
+        <li><b>Hash</b> — a number that represents a string or a window.</li>
+        <li><b>Hashing</b> — turning data into a fixed-size number.</li>
+        <li><b>Radix-d</b> — treat each character as a digit in base d. Decimal uses d = 10; binary uses d = 2.</li>
+        <li><b>Modulus q</b> — the number we divide by and keep the remainder; it keeps hashes small.</li>
+        <li><b>Rolling hash</b> — update the hash of a window in O(1) when the window slides by one.</li>
+        <li><b>Candidate</b> — a window whose hash equals the pattern hash.</li>
+        <li><b>Spurious hit</b> — a candidate whose characters do not actually match.</li>
+        <li><b>Horner's rule</b> — build a number left to right by multiplying by d and adding the next digit.</li>
+        <li><b>Preprocessing</b> — the initial work before the main scan.</li>
+        <li><b>High-order digit</b> — the leftmost digit, which has the largest weight.</li>
       </ul>
-      <p>A strand with several successors means all but one of them were spawned. A strand with several predecessors is a join at a <code>sync</code>.</p>
 
-      <h4>(b) Analysing a multithreaded algorithm — work and span</h4>
-      <p>The book measures a computation with two quantities:</p>
+      <h4>Idea — hashing instead of comparing every character</h4>
+      <p>The book says Rabin–Karp is based on the <b>hashing technique</b>. Each character is treated as a digit in <b>radix-d</b> notation, and the algorithm uses the equality of two numbers <b>modulo a third number q</b>. For a decimal string d = 10; for a binary string d = 2.</p>
+      <p>Let T[1..n] be the text and P[1..m] the pattern. Define:</p>
       <ul>
-        <li><b>Work T<sub>1</sub></b> — total time to execute the entire computation on <b>one</b> processor; it is the sum of the times taken by all the strands.</li>
-        <li><b>Span T<sub>∞</sub></b> — the longest time to execute the strands along any path in the DAG, i.e. the time on an <b>infinite</b> number of processors.</li>
+        <li><b>p</b> = the decimal value of the pattern P[1..m].</li>
+        <li><b>t<sub>s</sub></b> = the decimal value of the substring T[s+1..s+m], for s = 0, 1, …, n−m.</li>
       </ul>
-      <div class="math"><b>Work law:</b> T<sub>P</sub> ≥ T<sub>1</sub> / P<br>
-      <b>Span law:</b> T<sub>P</sub> ≥ T<sub>∞</sub></div>
-      <p>Work is easy to analyse: ignore the parallel constructs and analyse the serial algorithm. For <code>ParFib(n)</code>, T<sub>1</sub>(n) = T(n) = Θ(φ<sup>n</sup>), where φ = (1+√5)/2 is the golden ratio. Span uses the two composition rules:</p>
-      <div class="math">Series: T<sub>1</sub>(A∪B) = T<sub>1</sub>(A) + T<sub>1</sub>(B), T<sub>∞</sub>(A∪B) = T<sub>∞</sub>(A) + T<sub>∞</sub>(B)<br>
-      Parallel: T<sub>1</sub>(A∪B) = T<sub>1</sub>(A) + T<sub>1</sub>(B), T<sub>∞</sub>(A∪B) = max(T<sub>∞</sub>(A), T<sub>∞</sub>(B))</div>
-      <p>For ParFib, T<sub>∞</sub>(n) = max(T<sub>∞</sub>(n−1), T<sub>∞</sub>(n−2)) + Θ(1) = T<sub>∞</sub>(n−1) + Θ(1) = <b>Θ(n)</b>. Hence parallelism = T<sub>1</sub>/T<sub>∞</sub> = <b>Θ(φ<sup>n</sup>/n)</b>.</p>
-      <p><b>Speedup</b> = T<sub>1</sub>/T<sub>P</sub>. By the work law T<sub>1</sub>/T<sub>P</sub> ≤ P, so speedup cannot exceed the number of processors. If T<sub>1</sub>/T<sub>P</sub> = Θ(P), it is <b>linear speedup</b>; if T<sub>1</sub>/T<sub>P</sub> = P, it is <b>perfect linear speedup</b>. <b>Parallelism</b> = T<sub>1</sub>/T<sub>∞</sub> = work/span can be read three ways: as the average work done per parallel step, as the upper bound on speedup, and as the limit beyond which extra processors cannot give perfect linear speedup. <b>Parallel slackness</b> = parallelism / P = T<sub>1</sub>/(P·T<sub>∞</sub>); if it is below 1, perfect linear speedup is impossible because there are more processors than the work can use, while if it is above 1 the work per processor is the limiting constraint and a scheduler can still aim for linear speedup by spreading the work.</p>
-      <p>The book's own measure: the Fibonacci(6) DAG has <b>17 vertices</b> (17 threads) and <b>8 vertices on the longest path</b>. Taking one unit of time per thread, <b>Work = 17 time units</b> and <b>Span = 8 time units</b>.</p>
+      <p>If p = t<sub>s</sub> (mod q), the window is a <b>candidate</b>; the characters are then checked to confirm the match. A candidate that is not a real match is a <b>spurious hit</b>.</p>
+      <p><b>What this means:</b> the hash is only a filter. A hash match is a maybe. A character check turns a maybe into a yes or no.</p>
 
-      <h4>(c) Parallel loops</h4>
-      <p>Instead of writing <code>spawn</code> for every iteration, the book uses <code>parallel for</code>. All iterations of the loop may execute concurrently. The book's example is matrix–vector multiplication y = A x:</p>
-<pre><code>MatrixVector(A, x)
-1  n = A.rows
-2  let y be a new vector of length n
-3  parallel for i = 1 to n
-4      y_i = 0
-5  parallel for i = 1 to n
-6      for j = 1 to n
-7          y_i = y_i + a_ij * x_j
-8  return y</code></pre>
-      <p>Each i is independent, so all rows can be computed at once. Work T<sub>1</sub>(n) = Θ(n²). Span T<sub>∞</sub>(n) = Θ(log n) [parallel-for control] + Θ(n) [one row's serial multiplication] = <b>Θ(n)</b>. The parallelism is Θ(n).</p>
+      <h4>The book's three steps</h4>
+      <ol>
+        <li>Compute p in <b>O(m)</b> time.</li>
+        <li>Compute all t<sub>s</sub> values in a total of <b>O(n)</b> time.</li>
+        <li>Find all valid shifts s in a total of <b>O(n)</b> time.</li>
+      </ol>
+      <p><b>What this means:</b> one pass builds the pattern hash. One pass rolls through the text. Most shifts cost only a hash comparison.</p>
 
-      <h4>(d) Race conditions</h4>
-      <p>The book defines a multithreaded algorithm as <b>deterministic</b> if it does the same thing on the same input no matter how the instructions are scheduled, and <b>nondeterministic</b> if its behaviour can vary from run to run. A <b>determinacy race</b> occurs when two logically parallel instructions access the same memory location and at least one of them performs a <b>write</b>. This condition is called a <b>race condition</b>.</p>
-<pre><code>a = 0
-parallel for i = 1 to 2 do
-    a = a + 1          // both write the same memory location
-print a</code></pre>
-      <p>Each <code>a = a + 1</code> is three operations: (1) read a into a register, (2) increment the register, (3) write the register back to a. If both threads read a = 0 before either writes, both write 1, so the final value is 1 instead of 2 — a <b>lost update</b>. The book's Fig. 6.1.4 shows the interleaving; the orders (1, 2, 3, 4, 5, 7, 6, 8) and (1, 2, 4, 3, 5, 7, 6, 8) give the wrong answer, while most other orders give 2.</p>
-      <p><b>To avoid it:</b> make the updates independent (use separate accumulators and combine them after the loop), or protect the shared read–modify–write with <code>sync</code>, an atomic operation or a lock so that it becomes one indivisible action.</p>
+      <p>p is computed by <b>Horner's rule</b>:</p>
+      <div class="math">p = P[m] + d(P[m−1] + d(P[m−2] + … + d(P[2] + d·P[1])))</div>
+      <p><b>What this means:</b> start with the last character. Multiply by d and add the previous character. Repeat to the front. This builds the number in one pass.</p>
+      <p>Book's example: P = 41603, m = 5, d = 10, so</p>
+      <div class="math">p = 3 + 10(0) + 10<sup>2</sup>(6) + 10<sup>3</sup>(1) + 10<sup>4</sup>(4) = <b>41603</b></div>
+      <p><b>What this means:</b> the digits 4,1,6,0,3 form the number 41603. Horner's rule gets it without any powers table.</p>
+      <p>After t<sub>s</sub> is known, the next window is obtained in O(1) time by the <b>rolling hash</b>:</p>
+      <div class="math">t<sub>s+1</sub> = d(t<sub>s</sub> − d<sup>m−1</sup>·T[s+1]) + T[s+m+1]</div>
+      <p><b>What this means:</b> remove the leftmost digit's contribution, shift the rest left by one place, and add the new rightmost digit.</p>
+      <p>Because p and t<sub>s</sub> may be very large, all values are kept <b>mod q</b>. With h = d<sup>m−1</sup> mod q, the update becomes:</p>
+      <div class="math">t<sub>s+1</sub> = (d(t<sub>s</sub> − T[s+1]·h) + T[s+m+1]) mod q</div>
+      <p><b>What this means:</b> h stores the weight of the digit that is leaving. The modulo keeps every hash small, so arithmetic stays fast.</p>
 
-      <p class="booksrc">📘 <b>Book:</b> §6.1 Multithreaded Algorithms, p. 6-2 – 6-11</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>What do you understand by the <code>spawn</code> and <code>sync</code> keywords used in multithreaded programming? Explain with a suitable example.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2024 May Q8(b) · 2025 May Q7(c) [6]</p>
-      <p>The book introduces three concurrency keywords: <code>parallel</code> (used with a <code>for</code> loop), <code>spawn</code> and <code>sync</code>. <code>spawn</code> and <code>sync</code> together give dynamic multithreading.</p>
-
-      <h4>spawn</h4>
-      <p><code>spawn</code> creates a <b>new sub-process</b> (a child thread) that runs the named subroutine, and the parent <b>keeps executing the current process</b> immediately. The parent does not wait for the child. In the computational DAG, a <b>spawn edge</b> points down to the child while the parent continues along a continuation edge.</p>
-
-      <h4>sync</h4>
-      <p><code>sync</code> <b>forces the current process to wait until all active parallel threads created by this instance of the program finish</b>. It is the join point — a vertex with several predecessors in the DAG. After <code>sync</code>, all values written by the children are visible, so the parent can safely use them.</p>
-
-      <h4>Example — parallel Fibonacci (book, p. 6-3)</h4>
-<pre><code>ParFib(n)
+      <h4>Algorithm (book)</h4>
+<pre><code>RabinKarp(T[1..n], P[1..m], d, q)
 {
-    if n &lt;= 1
-        return n
-    else
-        x = spawn ParFib(n-1);   // child runs in parallel
-        y = ParFib(n-2);         // parent does this itself
-        sync;                    // wait for the spawned child
-        return x + y;
+    h = d^(m-1) mod q              // high-order digit position
+    p = 0;  t0 = 0
+    for i = 1 to m
+    {
+        p  = (d*p + P[i]) mod q
+        t0 = (d*t0 + T[i]) mod q
+    }
+    for s = 0 to n - m
+    {
+        if (p = t_s) then
+        {
+            if (P[1..m] = T[s+1 .. s+m]) then
+                write("pattern found with shift", s)
+        }
+        if (s &lt; n - m) then
+            t_(s+1) = (d*(t_s - T[s+1]*h) + T[s+m+1]) mod q
+    }
 }</code></pre>
-      <p>Without <code>spawn</code>, <code>Fib(n−1)</code> and <code>Fib(n−2)</code> run one after the other. With <code>spawn</code>, <code>ParFib(n−1)</code> runs as a child while the parent computes <code>ParFib(n−2)</code>; both proceed in parallel. <code>sync</code> then waits for the child, and only after that are x and y added. The book's Fig. 6.1.1 shows the recursion tree, and Fig. 6.1.3 shows the DAG with its spawn, call, continuation and return edges.</p>
-      <div class="note"><b>Remember:</b> <code>spawn</code> = start a parallel child and continue; <code>sync</code> = wait for the children created by this process. A <code>sync</code> is not a barrier for the whole program.</div>
+      <p><b>Step by step:</b></p>
+      <ol>
+        <li>Compute h = d<sup>m−1</sup> mod q.</li>
+        <li>Build p and t<sub>0</sub> with Horner's rule.</li>
+        <li>For each shift s, compare p with t<sub>s</sub>.</li>
+        <li>If they differ, skip the character check.</li>
+        <li>If they match, compare the actual characters.</li>
+        <li>Report s only if the characters also match.</li>
+        <li>Roll t<sub>s</sub> to t<sub>s+1</sub> in O(1), unless this is the last shift.</li>
+      </ol>
 
-      <p class="booksrc">📘 <b>Book:</b> §6.1.1 Introduction, p. 6-2 – 6-3</p>
-    </div>
-  </div>
-</section>
-
-<!-- 6.2 -->
-<section class="card" id="s62">
-  <h2>6.2 Multithreaded matrix multiplication <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Write a simple multithreaded matrix multiplication algorithm based on parallelising the relevant loops of the conventional procedure.</p>
-      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 May Q7(a) [8] · short note: 2022 Nov Q7(a) [10]</p>
-
-      <h4>Book's simple loop-parallel algorithm</h4>
-      <p>The conventional matrix product C = A × B uses three nested loops. The two outer loops (i and j) are independent, so the book parallelises them and leaves the inner k-loop serial inside each thread.</p>
-<pre><code>MatMul(matrix A, matrix B)
-{
-    n = A.rows;
-    let C be a new n × n matrix
-    parallel for i = 1 to n
-        parallel for j = 1 to n
-            c_ij = 0
-            for k = 1 to n
-                c_ij = c_ij + a_ik * b_kj;
-    return C
-}</code></pre>
-      <p>There are n² independent (i, j) pairs; each thread does Θ(n) work for its entry.</p>
-
-      <h4>Analysis (book)</h4>
-      <div class="math">T<sub>1</sub>(n) = Θ(n³) &nbsp;&nbsp; (all n³ multiplications and additions)<br>
-      T<sub>∞</sub>(n) = Θ(n) &nbsp;&nbsp; (one entry's k-loop is the longest path)<br>
-      Parallelism = T<sub>1</sub>/T<sub>∞</sub> = Θ(n³)/Θ(n) = <b>Θ(n²)</b></div>
-      <p>With P = n² processors, T<sub>P</sub> = Θ(n), i.e. near-perfect speedup. The book calls this parallelism very high.</p>
-
-      <h4>Book's second version — divide-and-conquer block multiplication</h4>
-      <p>Split A, B and C into four (n/2)×(n/2) blocks. The product needs <b>8 block multiplications</b> and <b>one block addition</b>:</p>
-      <div class="math">C<sub>11</sub> = A<sub>11</sub>B<sub>11</sub> + A<sub>12</sub>B<sub>21</sub> &nbsp;&nbsp; C<sub>12</sub> = A<sub>11</sub>B<sub>12</sub> + A<sub>12</sub>B<sub>22</sub><br>
-      C<sub>21</sub> = A<sub>21</sub>B<sub>11</sub> + A<sub>22</sub>B<sub>21</sub> &nbsp;&nbsp; C<sub>22</sub> = A<sub>21</sub>B<sub>12</sub> + A<sub>22</sub>B<sub>22</sub></div>
-<pre><code>PMatMulRec(C, A, B)
-1  n = A.rows
-2  if n == 1
-3      c11 = a11 * b11
-4  else let T be a new n × n matrix
-5      partition A, B, C, T into (n/2)×(n/2) submatrices
-6      spawn PMatMulRec(C11, A11, B11)
-7      spawn PMatMulRec(C12, A11, B12)
-8      spawn PMatMulRec(C21, A21, B11)
-9      spawn PMatMulRec(C22, A21, B12)
-10     spawn PMatMulRec(T11, A12, B21)
-11     spawn PMatMulRec(T12, A12, B22)
-12     spawn PMatMulRec(T21, A22, B21)
-13     PMatMulRec(T22, A22, B22)
-14     sync
-15     parallel for i = 1 to n
-16         parallel for j = 1 to n
-17             c_ij = c_ij + t_ij
-18 return C</code></pre>
-      <p>Eight recursive products run in parallel; the final addition of the T block is also parallelised over i and j.</p>
-      <div class="math">M<sub>1</sub>(n) = 8M<sub>1</sub>(n/2) + Θ(n²) = <b>Θ(n³)</b><br>
-      M<sub>∞</sub>(n) = M<sub>∞</sub>(n/2) + Θ(log n) = <b>Θ(log² n)</b><br>
-      Parallelism = Θ(n³)/Θ(log² n) = <b>Θ(n³/log² n)</b></div>
-      <p>This is even higher than the loop version's Θ(n²), because the recursive calls expose much more independent work.</p>
-
-      <p class="booksrc">📘 <b>Book:</b> §6.2.1 Multithreaded Matrix Multiplication, p. 6-11 – 6-14</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>Compare and contrast row-wise and block-wise approaches in multithreaded matrix multiplication with respect to division of work, communication overhead and cache efficiency.</p>
-      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q7(b)</p>
-      <p>The book gives two ways to divide matrix multiplication: (1) the loop-parallel <code>MatMul</code>, where each (i, j) pair (or each row) becomes a thread — the <b>row-wise</b> view; and (2) the recursive <code>PMatMulRec</code>, where the matrices are partitioned into (n/2)×(n/2) blocks — the <b>block-wise</b> view.</p>
+      <h4>Book's solved example (Example 6.4.2)</h4>
+      <p>T = 3141592653589793, P = 26, q = 11. The pattern hash is 26 mod 11 = <b>4</b>. With m = 2, the 15 windows and their mod-11 values are:</p>
       <div class="tbl-wrap">
-      <table class="left">
-        <thead><tr><th>Point</th><th>Row-wise (book's MatMul)</th><th>Block-wise (book's PMatMulRec)</th></tr></thead>
+      <table>
+        <thead><tr><th>Window</th><th>31</th><th>14</th><th>41</th><th>15</th><th>59</th><th>92</th><th>26</th><th>65</th><th>53</th><th>35</th><th>58</th><th>89</th><th>97</th><th>79</th><th>93</th></tr></thead>
         <tbody>
-          <tr><td><b>Division of work</b></td><td>Two parallel <code>for</code> loops over i and j give n² independent entries; a thread may also take a whole row. Simple static partition.</td><td>Split A, B, C into four (n/2)×(n/2) submatrices; 8 recursive products plus one parallel block addition. Work is divided by submatrices, not single entries.</td></tr>
-          <tr><td><b>Communication overhead</b></td><td>A thread needs one row of A and one column of B. The same column of B is read by all n rows, so shared-memory traffic is high.</td><td>A pair of submatrices is reused across the 8 products and the addition; blocks are passed once per level, so there is less repeated traffic.</td></tr>
-          <tr><td><b>Cache efficiency</b></td><td>B is read column-wise, so consecutive accesses are far apart → poor spatial locality and more cache misses.</td><td>Each recursive call works on a square block that fits in cache and is reused → good temporal and spatial locality.</td></tr>
-          <tr><td><b>Scalability</b></td><td>Good for small n; limited by memory bandwidth when n is large.</td><td>Book's parallelism Θ(n³/log² n), higher than the row version's Θ(n²); scales to large n.</td></tr>
-          <tr><td><b>Implementation</b></td><td>Simple triple loop, easy to code and debug.</td><td>More index work (partition, 8 spawns, sync, add), but the same Θ(n³) work with a much smaller span.</td></tr>
+          <tr><td>mod 11</td><td>9</td><td>3</td><td>8</td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td>10</td><td>9</td><td>2</td><td>3</td><td>1</td><td>9</td><td>2</td><td>5</td></tr>
         </tbody>
       </table>
       </div>
-      <div class="note"><b>One-line answer:</b> row-wise is simple but reads B column-wise and is memory-bound; block-wise reuses square submatrices, gives better cache behaviour and exposes the book's higher Θ(n³/log² n) parallelism.</div>
+      <p><b>What this means:</b> only four of the fifteen windows have hash 4. The algorithm does a full character check only on those four.</p>
+      <p><b>The example, step by step:</b></p>
+      <ol>
+        <li>Compute the pattern hash: 26 mod 11 = 4.</li>
+        <li>Check 31, 14 and 41. Their hashes are 9, 3 and 8, so skip all three.</li>
+        <li>Check 15. Its hash is 4, so compare 15 with 26. It is a spurious hit.</li>
+        <li>Check 59. Its hash is 4, but 59 ≠ 26. It is a spurious hit.</li>
+        <li>Check 92. Its hash is 4, but 92 ≠ 26. It is a spurious hit.</li>
+        <li>Check 26. Its hash is 4, and 26 = 26. This is the real match at shift 6.</li>
+        <li>Roll to 65. Its hash is 10, so continue without a character check.</li>
+        <li>No later window has hash 4. Report the match at the 7th position.</li>
+      </ol>
+      <p>Four windows hash to 4: 15, 59, 92 and 26. Only 26 is the real pattern, so 15, 59 and 92 are <b>spurious hits</b>; the book reports the valid match at the <b>7th position</b> (shift s = 6). The rolling check from window 26 to 65 is exactly the book's line:</p>
+      <div class="math">t<sub>s+1</sub> = 10(26 − 10·2) + 5 = 60 + 5 = 65</div>
+      <p><b>What this means:</b> the next window after 26 is 65. The rolling formula gets 65 directly, without rebuilding the number from scratch. Its hash is 65 mod 11 = 10, so the run of hash-4 windows ends.</p>
 
-      <p class="booksrc">📘 <b>Book:</b> §6.2.1 Multithreaded Matrix Multiplication, p. 6-11 – 6-14</p>
+      <h4>Complexity</h4>
+      <div class="math">Preprocessing the pattern and first window = <b>Θ(m)</b><br>
+      Each shift = O(1) hash check, plus O(m) only when the hash matches<br>
+      <b>Expected total = O(n + m)</b><br>
+      <b>Worst case = O((n − m + 1)·m) = O(nm)</b></div>
+      <p><b>What this means:</b> in the normal case, almost every shift is rejected by the hash, so the scan is linear. In the worst case, every window is a spurious hit, so every shift pays the full character check.</p>
+      <p>The worst case occurs when many windows have the same hash as the pattern (many spurious hits), forcing a full character comparison at every shift. This is the book's stated matching time, Θ((n−m+1)m).</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> a security guard compares a fingerprint before comparing the whole face. A matching fingerprint sends the person to a full check. A different fingerprint lets the next person pass quickly. A spurious hit is a similar fingerprint on the wrong person.</div>
+
+      <div class="confuse"><b>Common confusion:</b> a hash match is not a real match. It is only a candidate. The worst case is still O(nm) when many spurious hits occur. Also, d is the alphabet size (10 for digits, 2 for binary), not the modulus q.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §6.4.2 The Rabin Karp Algorithm, p. 6-27 – 6-30</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>With modulus q = 11, how many spurious hits does Rabin–Karp encounter in T = 31415926535, given P mod q = 4?</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2023 Nov Q8(b) [8]</p>
+
+      <div class="simple"><b>In simple words:</b> Some windows have the same hash as the pattern but are not real matches. Those false alarms are spurious hits. This question asks us to count them.</div>
+
+      <h4>Why we do this</h4>
+      <p>Spurious hits are the hidden cost of hashing. Each one forces a full character comparison. Counting them shows why the worst case can be slow even though the hash check is fast.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Hash</b> — a number that represents a string or window.</li>
+        <li><b>Modulus q</b> — the number we divide by and keep the remainder.</li>
+        <li><b>Candidate</b> — a window whose hash equals the pattern hash.</li>
+        <li><b>Spurious hit</b> — a candidate whose characters do not actually match.</li>
+        <li><b>Rolling hash</b> — update the hash in O(1) when the window slides by one.</li>
+      </ul>
+
+      <h4>Step by step</h4>
+      <ol>
+        <li>Read q = 11 and the pattern hash 4.</li>
+        <li>Notice that the pattern is the two-digit string 26, because 26 mod 11 = 4.</li>
+        <li>Set m = 2, d = 10, and h = d<sup>m−1</sup> mod q = 10 mod 11 = 10.</li>
+        <li>Compute each window as 10·first digit + second digit.</li>
+        <li>Reduce each window modulo 11.</li>
+        <li>Mark every window whose hash is 4 as a candidate.</li>
+        <li>Check the characters of each candidate.</li>
+        <li>Count candidates that are not the real pattern.</li>
+      </ol>
+
+      <p>Rabin–Karp compares hash values before comparing characters. With q = 11 and P mod 11 = 4, the pattern is the two-digit string <b>26</b> (26 mod 11 = 4). For m = 2, d = 10, h = d<sup>m−1</sup> mod q = 10 mod 11 = 10. So each window T[s+1..s+2] has value 10·T[s+1] + T[s+2].</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Window</th><th>31</th><th>14</th><th>41</th><th>15</th><th>59</th><th>92</th><th>26</th><th>65</th><th>53</th><th>35</th></tr></thead>
+        <tbody>
+          <tr><td>mod 11</td><td>9</td><td>3</td><td>8</td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td>10</td><td>9</td><td>2</td></tr>
+          <tr><td>Hash = 4?</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td><td>no</td></tr>
+          <tr><td>Result</td><td>—</td><td>—</td><td>—</td><td>spurious</td><td>spurious</td><td>spurious</td><td>✅ real</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> four windows survive the hash filter. Only 26 is the real pattern, so the other three are false alarms.</p>
+      <p>Four windows have hash 4: 15, 59, 92 and 26. Only 26 is the actual pattern; the other three are <b>spurious hits</b>.</p>
+      <div class="math">Hash matches = 4<br>
+      Real matches = 1<br>
+      <b>Spurious hits = 4 − 1 = 3</b> (the windows 15, 59 and 92)</div>
+      <p><b>What this means:</b> count all hash matches first. Subtract the one real match. The remainder is the number of spurious hits.</p>
+      <p><b>Rolling check (book's formula):</b> t<sub>s+1</sub> = (10(t<sub>s</sub> − 10·T[s+1]) + T[s+3]) mod 11.</p>
+      <div class="math">15 (t = 4) → 59: 10(4 − 10·1) + 9 = −51 ≡ 4 (mod 11)<br>
+      59 (4) → 92: 10(4 − 10·5) + 2 = −458 ≡ 4<br>
+      92 (4) → 26: 10(4 − 10·9) + 6 = −854 ≡ 4<br>
+      26 (4) → 65: 10(4 − 10·2) + 5 = −155 ≡ 10   (hash run ends)</div>
+      <p><b>What this means:</b> the hash stays 4 for the run 15, 59, 92, 26. At 65 it changes to 10. Negative values are normal in modular arithmetic; add 11 until the result is between 0 and 10.</p>
+      <p>So the hash matches are the three spurious windows plus the real match. The book's Example 6.4.2 uses the longer text 3141592653589793. The PYQ text is its first 11 digits. So the first ten windows, and the same three spurious hits, are unchanged.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> four people have the same fingerprint as the suspect. Only one is the actual person. The other three are false alarms, just like spurious hits.</div>
+
+      <div class="confuse"><b>Common confusion:</b> do not report 4 spurious hits. Four windows match the hash, but one of them is the real match. Spurious hits are the false alarms only: 4 − 1 = 3.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §6.4.2 The Rabin Karp Algorithm, p. 6-27 – 6-28</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q3</span>Text hash code = 4133124, pattern hash code = 124, q = 13. Apply Rabin–Karp step by step and give the time complexity.</p>
+      <div class="badges"><span class="b marks">10 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q7(a) [10]</p>
+
+      <div class="simple"><b>In simple words:</b> The text is the digit string 4133124 and the pattern is 124. We compute hashes modulo 13 and roll the window one digit at a time. The pattern appears at shift 4, with no false alarms.</div>
+
+      <h4>Why we do this</h4>
+      <p>This is a full numerical run of Rabin–Karp. It shows how h, p and t<sub>0</sub> are computed, how the rolling hash updates, and why a hash match still needs a character check.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Hash</b> — a number that represents a string or window.</li>
+        <li><b>Modulus q</b> — the number we divide by and keep the remainder.</li>
+        <li><b>Rolling hash</b> — update the hash in O(1) when the window slides by one.</li>
+        <li><b>Shift</b> — the starting position of the window in the text.</li>
+        <li><b>Spurious hit</b> — a hash match that is not a real character match.</li>
+      </ul>
+
+      <h4>Step by step</h4>
+      <ol>
+        <li>Set d = 10 because the text is decimal.</li>
+        <li>Set m = 3 because the pattern 124 has three digits.</li>
+        <li>Set q = 13.</li>
+        <li>Compute h = 10<sup>m−1</sup> mod 13 = 10<sup>2</sup> mod 13 = 100 mod 13 = 9.</li>
+        <li>Compute the pattern hash p = 124 mod 13 = 7.</li>
+        <li>Compute the first window hash t<sub>0</sub> = 413 mod 13 = 10.</li>
+        <li>Roll the window right and update the hash each time.</li>
+        <li>When a hash equals 7, compare the three characters.</li>
+        <li>Report the shift if the characters match.</li>
+      </ol>
+
+      <p>Here d = 10, m = 3 (pattern "124") and q = 13. The high-order multiplier is h = d<sup>m−1</sup> mod q = 10<sup>2</sup> mod 13 = 100 mod 13 = <b>9</b>. The pattern hash is p = 124 mod 13 = <b>7</b>. The first window is 413, so t<sub>0</sub> = 413 mod 13 = <b>10</b>.</p>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Shift s</th><th>Window</th><th>Value</th><th>mod 13</th><th>Hash = 7?</th><th>Character check</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>413</td><td>413</td><td>10</td><td>no</td><td>—</td></tr>
+          <tr><td>1</td><td>133</td><td>133</td><td>3</td><td>no</td><td>—</td></tr>
+          <tr><td>2</td><td>331</td><td>331</td><td>6</td><td>no</td><td>—</td></tr>
+          <tr><td>3</td><td>312</td><td>312</td><td>0</td><td>no</td><td>—</td></tr>
+          <tr><td>4</td><td><b>124</b></td><td>124</td><td><b>7</b></td><td><b>yes</b></td><td>1 = 1, 2 = 2, 4 = 4 → <b>match</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> only the last window has hash 7. The first four windows are rejected without any character check.</p>
+      <p><b>Rolling step by step</b> (book's formula t<sub>s+1</sub> = (d(t<sub>s</sub> − T[s+1]·h) + T[s+m+1]) mod q):</p>
+      <div class="math">
+      t<sub>1</sub> = (10(10 − 4·9) + 3) mod 13 = (−260 + 3) mod 13 = <b>3</b><br>
+      t<sub>2</sub> = (10(3 − 1·9) + 1) mod 13 = (−60 + 1) mod 13 = <b>6</b><br>
+      t<sub>3</sub> = (10(6 − 3·9) + 2) mod 13 = (−210 + 2) mod 13 = <b>0</b><br>
+      t<sub>4</sub> = (10(0 − 3·9) + 4) mod 13 = (−270 + 4) mod 13 = <b>7</b>
+      </div>
+      <p><b>What this means:</b> each line removes the left digit, shifts the window, adds the new right digit, and reduces modulo 13. The results 3, 6, 0, 7 match the direct values in the table.</p>
+      <p>These agree with the direct values 133 mod 13 = 3, 331 mod 13 = 6, 312 mod 13 = 0 and 124 mod 13 = 7. At s = 4 the hash equals the pattern hash, and the character-by-character check confirms "124" = "124", so the pattern occurs at <b>shift 4</b>. There are <b>no spurious hits</b>.</p>
+      <p><b>Time complexity:</b> preprocessing the pattern and first window takes Θ(m). Each of the n−m+1 shifts costs O(1) for the rolling hash. It costs O(m) only when the hash matches. Expected <b>O(n + m)</b>; worst case <b>O((n − m + 1)·m) = O(nm)</b> when there are many spurious hits. Here n = 7 and m = 3, so there are 5 shifts.</p>
+      <p><b>What this means:</b> this example has no spurious hits, so it runs in the fast expected case. The scan does 5 hash checks and only one full character check.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> you check a three-digit lottery ticket against the winning number. The hash is a quick first filter. Only a matching hash makes you compare the three digits one by one.</div>
+
+      <div class="confuse"><b>Common confusion:</b> h uses d<sup>m−1</sup>, not d<sup>m</sup>. Negative values in the rolling formula are fine; add 13 until the result is 0 to 12. Also, shift 4 means the match starts at the fifth digit, because shifts start at 0.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §6.4.2 The Rabin Karp Algorithm, p. 6-27 – 6-30</p>
     </div>
   </div>
 </section>
 
-<!-- 6.3 -->
 <section class="card" id="s63">
-  <h2>6.3 Multithreaded merge sort <span class="b rep" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
+  <div class="prio">Priority 2 · ★★★★ 4× repeated</div><h2>6.3 Multithreaded merge sort <span class="b rep" style="font-size:12px;vertical-align:middle">★★★★ 4×</span></h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -348,8 +441,27 @@ print a</code></pre>
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q8(a) [9] · 2023 Nov Q8(a) [9] · 2024 May Q7(b) [8] · short note: 2022 Nov Q7(a)</p>
 
+      <div class="simple"><b>In simple words:</b> Merge sort splits the array in half, sorts each half, then merges the two sorted halves. Multithreading sorts the halves at the same time. Parallel merging also splits the merge step, so many cores can help.</div>
+
+      <h4>Why we do this</h4>
+      <p>Sorting is a basic building block in many programs. Ordinary merge sort has one long serial merge at every level. That merge becomes the bottleneck. Parallel merging removes the bottleneck and lets large machines finish faster.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Merge sort</b> — split the array in half, sort each half, then merge the sorted halves.</li>
+        <li><b>Merge</b> — combine two sorted lists into one sorted list.</li>
+        <li><b>Subarray</b> — a contiguous piece of an array, written A[a..c].</li>
+        <li><b>Median</b> — the middle element of a sorted list.</li>
+        <li><b>Binary search</b> — repeatedly cut a sorted list in half to find a value's position.</li>
+        <li><b>Parallel merge</b> — a merge that splits both lists and merges the parts at the same time.</li>
+        <li><b>Span</b> — the longest chain of dependent steps.</li>
+        <li><b>Spawn</b> — start a child task that runs in parallel.</li>
+        <li><b>Sync</b> — wait for the tasks spawned by this call.</li>
+        <li><b>Pivot</b> — the element used to split the lists; here it is the median x.</li>
+      </ul>
+
       <h4>Step 1 — the book's merge and the simple parallel version</h4>
-      <p><code>Merge(A, a, b, c)</code> assumes that A[a..b] and A[b+1..c] are already sorted, and merges them into the sorted subarray A[a..c]. The book's first parallel version simply spawns the left recursive sort and does the right one in the current thread:</p>
+      <p><code>Merge(A, a, b, c)</code> assumes that A[a..b] and A[b+1..c] are already sorted. It merges them into the sorted subarray A[a..c]. The book's first parallel version simply spawns the left recursive sort and does the right one in the current thread:</p>
 <pre><code>MergeSort(A, a, c)
 {
     if (a &lt; c) then
@@ -359,9 +471,19 @@ print a</code></pre>
         sync
         Merge(A, a, b, c)
 }</code></pre>
+      <p><b>Step by step:</b></p>
+      <ol>
+        <li>If the range has one element, it is already sorted; stop.</li>
+        <li>Find the middle index b.</li>
+        <li>Spawn a child to sort the left half A[a..b].</li>
+        <li>Sort the right half A[b+1..c] in the current thread.</li>
+        <li>Wait at <code>sync</code> for the left half.</li>
+        <li>Merge the two sorted halves into A[a..c].</li>
+      </ol>
       <div class="math">MS<sub>1</sub>(n) = 2MS<sub>1</sub>(n/2) + Θ(n) = <b>Θ(n log n)</b><br>
       MS<sub>∞</sub>(n) = MS<sub>∞</sub>(n/2) + Θ(n) = <b>Θ(n)</b><br>
       Parallelism = Θ(n log n)/Θ(n) = <b>Θ(log n)</b> — low</div>
+      <p><b>What this means:</b> the sorting work is n log n, but the final merge is one serial scan of n elements. Even with infinite cores the span stays n. So only log n parallelism is available.</p>
       <p>The two halves sort in parallel, but the final <code>Merge</code> is still one serial scan of n elements. Even with infinitely many processors the span stays Θ(n), so only Θ(log n) parallelism is available. Hundreds of processors will not help for large n.</p>
 
       <h4>Step 2 — parallel merge: split by the median (book Fig. 6.2.1)</h4>
@@ -378,12 +500,14 @@ print a</code></pre>
         </li>
         <li>Place x between the two merged parts. Its final position is b<sub>3</sub> = a<sub>3</sub> + (b<sub>1</sub> − a<sub>1</sub>) + (b<sub>2</sub> − a<sub>2</sub>).</li>
       </ol>
+      <p><b>What this means:</b> x is a pivot. Everything before x is smaller, and everything after x is larger. The two sides can now be merged independently.</p>
       <div class="tree">First list  T[a1 ...... b1 ...... c1] :   ≤ x  |  x  |  ≥ x
 Second list T[a2 ... b2 ...... c2] :        &lt; x  |  ≥ x
                                                 |
               merge left parts  +  x  +  merge right parts
                                                 |
 Final list  A[a3 ............. b3 ............. c3] :  ≤ x | x | ≥ x</div>
+      <p><b>What this means:</b> the tree shows one split. Each side then repeats the same split, so the merge becomes a balanced recursion.</p>
 
       <h4>Step 3 — the complete pseudocode (book)</h4>
 <pre><code>PMergeSort(Array A, a, c, Array B, m)
@@ -420,28 +544,455 @@ PMerge(T, a1, c1, a2, c2, A, a3)
         sync
 }</code></pre>
       <p>The top-level call is <code>PMergeSort(A, 1, n, B, 1)</code>. The two recursive <code>PMerge</code> calls handle the left and right parts concurrently, and the median is written directly to its final position.</p>
+      <p><b>What the parameters mean:</b></p>
+      <ul>
+        <li><b>A, a..c</b> — the input range to sort.</li>
+        <li><b>B, m</b> — the output array and the position where this range starts.</li>
+        <li><b>T</b> — a temporary array that holds the two sorted halves.</li>
+        <li><b>b'</b> — the number of elements in the left half.</li>
+      </ul>
+      <p><b>What this means:</b> each call sorts into a temporary array. Then PMerge writes the result into the correct place in B. The median goes straight to its final slot, so no extra merge pass is needed.</p>
 
-      <h4>Step 4 — analysis and the parallelism advantage</h4>
+      <h4>Step 4 — a small PMerge trace</h4>
+      <p>Merge the sorted lists [1, 5, 9] and [2, 6, 10].</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Step</th><th>What happens</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Both lists have length 3, so the first list is not shorter</td><td>n1 = n2 = 3</td></tr>
+          <tr><td>2</td><td>Take the median of the first list</td><td>b1 = 2, x = 5</td></tr>
+          <tr><td>3</td><td>Binary search 5 in [2, 6, 10]; it belongs before 6</td><td>b2 = 2</td></tr>
+          <tr><td>4</td><td>Compute the final position of 5</td><td>b3 = 1 + 1 + 1 = 3</td></tr>
+          <tr><td>5</td><td>Write 5 at A[3]</td><td>A[3] = 5</td></tr>
+          <tr><td>6</td><td>Merge left parts [1] and [2]</td><td>[1, 2] at A[1..2]</td></tr>
+          <tr><td>7</td><td>Merge right parts [9] and [6, 10]</td><td>[6, 9, 10] at A[4..6]</td></tr>
+          <tr><td>8</td><td>Final merged list</td><td><b>[1, 2, 5, 6, 9, 10]</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> one median split creates two smaller merge problems. The two problems can run in parallel, and the median is already in place.</p>
+
+      <h4>Step 5 — analysis and the parallelism advantage</h4>
       <div class="math">PMS<sub>1</sub>(n) = 2PMS<sub>1</sub>(n/2) + PM<sub>1</sub>(n) = 2PMS<sub>1</sub>(n/2) + Θ(n) = <b>Θ(n log n)</b><br>
       PMS<sub>∞</sub>(n) = PMS<sub>∞</sub>(n/2) + PM<sub>∞</sub>(n) = PMS<sub>∞</sub>(n/2) + Θ(log² n) = <b>Θ(log³ n)</b><br>
       Parallelism = Θ(n log n)/Θ(log³ n) = <b>Θ(n/log² n)</b></div>
+      <p><b>What this means:</b> the total work stays n log n. The span falls to log³ n. So the available parallelism grows almost linearly with n.</p>
       <p><b>Why this is a significant advantage:</b></p>
       <ul>
         <li>Ordinary merge is a <b>single serial scan</b>, so T<sub>∞</sub>(merge) = Θ(n). An infinite number of processors cannot make it faster than n steps.</li>
         <li>Parallel merge finds the median's rank by <b>binary search</b> and splits both lists, so the merge span falls to PM<sub>∞</sub>(n) = Θ(log² n).</li>
-        <li>The sort span therefore falls from Θ(n) (simple spawn version) to <b>Θ(log³ n)</b>, and parallelism rises from Θ(log n) to <b>Θ(n/log² n)</b> — nearly linear in n.</li>
+        <li>The sort span falls from Θ(n) in the simple spawn version to <b>Θ(log³ n)</b>. Parallelism rises from Θ(log n) to <b>Θ(n/log² n)</b>, which is nearly linear in n.</li>
         <li>The total work is still Θ(n log n), the same as ordinary merge sort; parallel merging does not add asymptotic work.</li>
       </ul>
       <p>In short, parallel merging removes the serial merge bottleneck, which is exactly what allows many cores to be used effectively.</p>
+      <p><b>What this means:</b> parallel merge does not sort faster by doing less work. It sorts faster by removing the long serial wait at each merge.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> two teachers each sort half the exam papers. Then they merge the two sorted piles. Instead of one teacher scanning both piles alone, they split at the middle paper and merge the smaller piles in parallel.</div>
+
+      <div class="confuse"><b>Common confusion:</b> parallel merge does not sort the two halves again. They are already sorted. Also, the total work remains Θ(n log n); only the span improves.</div>
 
       <p class="booksrc">📘 <b>Book:</b> §6.2.2 Multithreaded Merge Sort, p. 6-14 – 6-17</p>
     </div>
   </div>
 </section>
 
-<!-- 6.4 -->
+<section class="card" id="s61">
+  <div class="prio">Priority 3 · ★★★ 3× repeated</div><h2>6.1 Multithreaded fundamentals</h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>With respect to multithreaded algorithms explain: analyzing multithreaded algorithms, parallel loops, race conditions.</p>
+      <div class="badges"><span class="b marks">7 marks</span><span class="b rep">★★★ 3×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2022 Nov Q7(b) [7] · 2023 Nov Q7(b) [7] · related: 2025 May Q7(b) [4 — race condition]</p>
+
+      <div class="simple"><b>In simple words:</b> A multithreaded program splits one job into pieces that run at the same time. We measure the total work, the longest chain of dependent steps, and the speed we gain. We also check that two threads never spoil a shared value.</div>
+
+      <h4>Why we do this</h4>
+      <p>One core can run only one instruction at a time. Extra cores help only when a job has independent parts. This analysis tells us how much speed a job can really gain. It also shows where a shared write can produce a wrong answer.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Thread</b> — one running sequence of instructions inside a program.</li>
+        <li><b>Strand</b> — a straight-line piece of a thread with no parallel branch inside it.</li>
+        <li><b>DAG</b> — a directed acyclic graph: tasks are vertices, arrows show dependencies, and no cycle exists.</li>
+        <li><b>Dependency</b> — a rule that one task must finish before another can start.</li>
+        <li><b>Register</b> — a tiny, fast storage slot inside the CPU.</li>
+        <li><b>Lock</b> — a guard that lets only one thread use a shared value at a time.</li>
+      </ul>
+
+      <h4>(a) Model of a multithreaded execution</h4>
+      <p>The book models a multithreaded computation as a <b>computational DAG</b> G = (V, E). Each vertex is an instruction or a <b>strand</b>. Each edge (u, v) is a dependency: u must finish before v starts. The book names four kinds of edge:</p>
+      <ul>
+        <li><b>Continuation edge</b> — horizontal; v is the next instruction in the same strand.</li>
+        <li><b>Call edge</b> — downward; u calls v as a normal subroutine.</li>
+        <li><b>Spawn edge</b> — downward; u starts v in parallel.</li>
+        <li><b>Return edge</b> — upward; the next strand after a call returns, or after parallel work joins at a <code>sync</code>.</li>
+      </ul>
+      <p>A strand with several successors means all but one of them were spawned. A strand with several predecessors is a join at a <code>sync</code>.</p>
+      <p><b>What this means:</b> the DAG is a map of “what must happen before what”. Wide parts are parallel. Long chains are serial.</p>
+
+      <h4>(b) Analysing a multithreaded algorithm — work and span</h4>
+      <p>Let T<sub>P</sub> be the running time on P processors. The book measures a computation with two quantities:</p>
+      <ul>
+        <li><b>Work T<sub>1</sub></b> — total time to execute the whole computation on <b>one</b> processor. It is the sum of the times taken by all strands.</li>
+        <li><b>Span T<sub>∞</sub></b> — the longest time along any path in the DAG. It is the time on an <b>infinite</b> number of processors.</li>
+      </ul>
+      <div class="math"><b>Work law:</b> T<sub>P</sub> ≥ T<sub>1</sub> / P<br>
+      <b>Span law:</b> T<sub>P</sub> ≥ T<sub>∞</sub></div>
+      <p><b>What this means:</b> with P processors you cannot beat total work divided by P. You also cannot beat the longest chain, even with unlimited cores.</p>
+
+      <p>Work is easy to analyse: ignore the parallel constructs and analyse the serial algorithm. For <code>ParFib(n)</code>, T<sub>1</sub>(n) = T(n) = Θ(φ<sup>n</sup>), where φ = (1+√5)/2 is the golden ratio. Span uses the two composition rules:</p>
+      <div class="math">Series: T<sub>1</sub>(A∪B) = T<sub>1</sub>(A) + T<sub>1</sub>(B), T<sub>∞</sub>(A∪B) = T<sub>∞</sub>(A) + T<sub>∞</sub>(B)<br>
+      Parallel: T<sub>1</sub>(A∪B) = T<sub>1</sub>(A) + T<sub>1</sub>(B), T<sub>∞</sub>(A∪B) = max(T<sub>∞</sub>(A), T<sub>∞</sub>(B))</div>
+      <p><b>What this means:</b> in a series, times add. In parallel, only the slower branch counts. Work adds in both cases because every strand still runs.</p>
+
+      <p>For ParFib, T<sub>∞</sub>(n) = max(T<sub>∞</sub>(n−1), T<sub>∞</sub>(n−2)) + Θ(1) = T<sub>∞</sub>(n−1) + Θ(1) = <b>Θ(n)</b>. Hence parallelism = T<sub>1</sub>/T<sub>∞</sub> = <b>Θ(φ<sup>n</sup>/n)</b>.</p>
+      <p><b>What this means:</b> the work grows exponentially, but the longest chain grows only linearly. So the job has a lot of parallel slack for large n.</p>
+
+      <p><b>Speedup</b> = T<sub>1</sub>/T<sub>P</sub>. By the work law T<sub>1</sub>/T<sub>P</sub> ≤ P, so speedup cannot exceed the number of processors. If T<sub>1</sub>/T<sub>P</sub> = Θ(P), it is <b>linear speedup</b>; if T<sub>1</sub>/T<sub>P</sub> = P, it is <b>perfect linear speedup</b>.</p>
+      <ul>
+        <li><b>Speedup</b> — how many times faster the parallel run is than the one-core run.</li>
+        <li><b>Linear speedup</b> — speedup grows in proportion to the number of processors.</li>
+        <li><b>Perfect linear speedup</b> — P processors give exactly P times the speed.</li>
+        <li><b>Parallelism</b> = T<sub>1</sub>/T<sub>∞</sub> = work/span. It is the maximum useful speedup.</li>
+        <li><b>Parallel slackness</b> = parallelism / P = T<sub>1</sub>/(P·T<sub>∞</sub>). It compares available parallel work with the number of processors.</li>
+      </ul>
+      <p>If slackness is below 1, perfect linear speedup is impossible: there are more processors than the work can use. If it is above 1, work per processor is the limit, and a scheduler can still aim for linear speedup by spreading the work.</p>
+      <p><b>What this means:</b> parallelism is a property of the algorithm. Speedup is what you actually get on P cores. Extra cores beyond the parallelism sit idle.</p>
+
+      <p>The book's own measure: the Fibonacci(6) DAG has <b>17 vertices</b> (17 threads) and <b>8 vertices on the longest path</b>. Taking one unit of time per thread, <b>Work = 17 time units</b> and <b>Span = 8 time units</b>.</p>
+      <p><b>What this means:</b> even with unlimited cores this DAG needs at least 8 time units. With 2 cores it needs at least 17/2 = 8.5 time units.</p>
+
+      <h4>(c) Parallel loops</h4>
+      <p>A <b>parallel for</b> is a loop whose iterations may run at the same time. Instead of writing <code>spawn</code> for every iteration, the book uses <code>parallel for</code>. All iterations of the loop may execute concurrently. The book's example is matrix–vector multiplication y = A x:</p>
+<pre><code>MatrixVector(A, x)
+1  n = A.rows
+2  let y be a new vector of length n
+3  parallel for i = 1 to n
+4      y_i = 0
+5  parallel for i = 1 to n
+6      for j = 1 to n
+7          y_i = y_i + a_ij * x_j
+8  return y</code></pre>
+      <p><b>Step by step:</b></p>
+      <ol>
+        <li>Find the number of rows n.</li>
+        <li>Create the result vector y with n slots.</li>
+        <li>Set every y<sub>i</sub> to 0 in parallel.</li>
+        <li>Give each row i to a thread.</li>
+        <li>Inside that thread, multiply row i by x in a serial j-loop.</li>
+        <li>Return y.</li>
+      </ol>
+      <p>Each i is independent, so all rows can be computed at once. Work T<sub>1</sub>(n) = Θ(n²). Span T<sub>∞</sub>(n) = Θ(log n) [parallel-for control] + Θ(n) [one row's serial multiplication] = <b>Θ(n)</b>. The parallelism is Θ(n).</p>
+      <p><b>What this means:</b> the total work is n² multiply-adds. The longest path is one row of n multiply-adds. So about n threads can be kept busy, and more than n give little benefit.</p>
+
+      <h4>(d) Race conditions</h4>
+      <p>The book defines a multithreaded algorithm as <b>deterministic</b> if it does the same thing on the same input no matter how the instructions are scheduled. It is <b>nondeterministic</b> if its behaviour can vary from run to run. A <b>determinacy race</b> occurs when two logically parallel instructions access the same memory location and at least one of them performs a <b>write</b>. This condition is called a <b>race condition</b>.</p>
+      <ul>
+        <li><b>Race condition</b> — two parallel tasks touch the same memory, and at least one writes it.</li>
+        <li><b>Lost update</b> — one thread's write overwrites another thread's write, so an update disappears.</li>
+        <li><b>Atomic operation</b> — an action that finishes as one indivisible step; no other thread can see it half-done.</li>
+      </ul>
+<pre><code>a = 0
+parallel for i = 1 to 2 do
+    a = a + 1          // both write the same memory location
+print a</code></pre>
+      <p>Each <code>a = a + 1</code> is three operations: (1) read a into a register, (2) increment the register, (3) write the register back to a. If both threads read a = 0 before either writes, both write 1, so the final value is 1 instead of 2 — a <b>lost update</b>. The book's Fig. 6.1.4 shows the interleaving. The orders (1, 2, 3, 4, 5, 7, 6, 8) and (1, 2, 4, 3, 5, 7, 6, 8) give the wrong answer. Most other orders give 2.</p>
+      <p><b>Step by step, the lost update:</b></p>
+      <ol>
+        <li>Start with a = 0.</li>
+        <li>Thread 1 reads a and gets 0.</li>
+        <li>Thread 2 reads a before Thread 1 writes, so it also gets 0.</li>
+        <li>Thread 1 adds 1 in its register and gets 1.</li>
+        <li>Thread 2 adds 1 in its register and gets 1.</li>
+        <li>Thread 1 writes 1 to a.</li>
+        <li>Thread 2 writes 1 to a.</li>
+        <li>Final value is 1, but the correct value is 2.</li>
+      </ol>
+      <p><b>What this means:</b> the final answer depends on timing. The same program can print 1 or 2 on different runs. That is nondeterminism caused by a race.</p>
+
+      <p><b>To avoid it:</b> make the updates independent. Use separate accumulators, then combine them after the loop. Or protect the shared read–modify–write with <code>sync</code>, an atomic operation or a lock. Then the update becomes one indivisible action.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> two clerks update the same bank balance. Both read ₹100 and both add ₹50. Both write ₹150, so one ₹50 deposit vanishes. A lock forces one clerk to finish before the other starts.</div>
+
+      <div class="confuse"><b>Common confusion:</b> parallelism is not the number of cores. It is the maximum useful speedup. A job with parallelism 4 gains almost nothing from 100 cores. Also, span is the longest dependency path, not the sum of all work.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §6.1 Multithreaded Algorithms, p. 6-2 – 6-11</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>What do you understand by the <code>spawn</code> and <code>sync</code> keywords used in multithreaded programming? Explain with a suitable example.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2024 May Q8(b) · 2025 May Q7(c) [6]</p>
+
+      <div class="simple"><b>In simple words:</b> <code>spawn</code> starts a helper task and lets the parent keep working. <code>sync</code> waits until those helpers finish. Together they let one function run parts of itself in parallel.</div>
+
+      <h4>Why we do this</h4>
+      <p>Many recursive algorithms solve two independent subproblems. Running them one after the other wastes cores. <code>spawn</code> exposes the independence, and <code>sync</code> makes sure results are ready before they are combined.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Spawn</b> — a keyword that starts a child task and lets the parent continue.</li>
+        <li><b>Sync</b> — a keyword that makes the parent wait for the children it spawned.</li>
+        <li><b>Parent thread</b> — the thread that creates a child.</li>
+        <li><b>Child thread</b> — the new thread created by <code>spawn</code>.</li>
+        <li><b>Dynamic multithreading</b> — parallelism created while the program runs, not fixed in advance.</li>
+        <li><b>Join</b> — the point where parallel branches meet and continue as one.</li>
+      </ul>
+
+      <p>The book introduces three concurrency keywords: <code>parallel</code> (used with a <code>for</code> loop), <code>spawn</code> and <code>sync</code>. <code>spawn</code> and <code>sync</code> together give dynamic multithreading.</p>
+
+      <h4>spawn</h4>
+      <p><code>spawn</code> creates a <b>new sub-process</b> (a child thread) that runs the named subroutine. The parent <b>keeps executing the current process</b> immediately. The parent does not wait for the child. In the computational DAG, a <b>spawn edge</b> points down to the child. The parent continues along a continuation edge.</p>
+      <p><b>What happens, step by step:</b></p>
+      <ol>
+        <li>The parent reaches a <code>spawn</code> statement.</li>
+        <li>The runtime creates a child thread for that call.</li>
+        <li>The child becomes ready to run on another core.</li>
+        <li>The parent does not block; it executes the next statement.</li>
+        <li>Parent and child now run at the same time.</li>
+      </ol>
+
+      <h4>sync</h4>
+      <p><code>sync</code> <b>forces the current process to wait until all active parallel threads created by this instance of the program finish</b>. It is the join point — a vertex with several predecessors in the DAG. After <code>sync</code>, all values written by the children are visible, so the parent can safely use them.</p>
+      <p><b>What happens, step by step:</b></p>
+      <ol>
+        <li>The parent reaches <code>sync</code>.</li>
+        <li>It waits for every child it spawned.</li>
+        <li>Each child finishes and stores its result.</li>
+        <li>The parent continues with all child writes visible.</li>
+      </ol>
+
+      <h4>Example — parallel Fibonacci (book, p. 6-3)</h4>
+<pre><code>ParFib(n)
+{
+    if n &lt;= 1
+        return n
+    else
+        x = spawn ParFib(n-1);   // child runs in parallel
+        y = ParFib(n-2);         // parent does this itself
+        sync;                    // wait for the spawned child
+        return x + y;
+}</code></pre>
+      <p>Without <code>spawn</code>, <code>Fib(n−1)</code> and <code>Fib(n−2)</code> run one after the other. With <code>spawn</code>, <code>ParFib(n−1)</code> runs as a child while the parent computes <code>ParFib(n−2)</code>. Both proceed in parallel. <code>sync</code> then waits for the child, and only after that are x and y added. The book's Fig. 6.1.1 shows the recursion tree, and Fig. 6.1.3 shows the DAG with its spawn, call, continuation and return edges.</p>
+      <p><b>What this means:</b> the two recursive calls overlap in time. The parent still does real work instead of sitting idle.</p>
+
+      <h4>Small trace: ParFib(4)</h4>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Who</th><th>Action</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Parent</td><td>Calls ParFib(4); spawns a child for ParFib(3)</td><td>waits later</td></tr>
+          <tr><td>Parent</td><td>Computes ParFib(2) itself</td><td>1</td></tr>
+          <tr><td>Child 1</td><td>ParFib(3) spawns Child 2 for ParFib(2)</td><td>waits later</td></tr>
+          <tr><td>Child 1</td><td>Computes ParFib(1) itself</td><td>1</td></tr>
+          <tr><td>Child 2</td><td>ParFib(2) returns</td><td>1</td></tr>
+          <tr><td>Child 1</td><td>After sync, adds 1 + 1</td><td>2</td></tr>
+          <tr><td>Parent</td><td>After sync, adds ParFib(3) + ParFib(2) = 2 + 1</td><td>3</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> Fib(4) = 3 is built from two overlapping branches. The parent and child do useful work at the same time.</p>
+
+      <div class="note"><b>Remember:</b> <code>spawn</code> = start a parallel child and continue; <code>sync</code> = wait for the children created by this process. A <code>sync</code> is not a barrier for the whole program.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> you send two helpers to fetch two boxes and keep assembling the shelf yourself. At <code>sync</code>, you wait at the door until both helpers return. Then you attach the boxes to the shelf.</div>
+
+      <div class="confuse"><b>Common confusion:</b> <code>sync</code> waits only for children spawned by this call, not for every thread in the program. Also, <code>spawn</code> does not run the child immediately; it only makes the child eligible to run.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §6.1.1 Introduction, p. 6-2 – 6-3</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" id="s62">
+  <div class="prio">Priority 4 · ★★★ 3× repeated</div><h2>6.2 Multithreaded matrix multiplication <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q1</span>Write a simple multithreaded matrix multiplication algorithm based on parallelising the relevant loops of the conventional procedure.</p>
+      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★★ 2×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 May Q7(a) [8] · short note: 2022 Nov Q7(a) [10]</p>
+
+      <div class="simple"><b>In simple words:</b> Matrix multiplication fills each cell of C using one row of A and one column of B. Every cell is independent, so we give cells to different threads. A recursive version splits the matrices into blocks and does the same idea with bigger pieces.</div>
+
+      <h4>Why we do this</h4>
+      <p>The ordinary triple loop does about n³ multiply-adds. That is a lot of work, but most of it is independent. Parallel loops are the simplest way to use several cores without changing the math.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Matrix</b> — a rectangular table of numbers.</li>
+        <li><b>Row</b> — one horizontal line of a matrix.</li>
+        <li><b>Column</b> — one vertical line of a matrix.</li>
+        <li><b>Dot product</b> — multiply matching entries and add the results.</li>
+        <li><b>Parallel for</b> — a loop whose iterations may run at the same time.</li>
+        <li><b>Block (submatrix)</b> — a smaller square piece cut from a matrix.</li>
+        <li><b>Spawn</b> — start a child task that runs in parallel.</li>
+        <li><b>Sync</b> — wait for the tasks spawned by this call.</li>
+        <li><b>Span</b> — the longest chain of dependent steps.</li>
+      </ul>
+
+      <h4>Book's simple loop-parallel algorithm</h4>
+      <p>The conventional matrix product C = A × B uses three nested loops. The two outer loops (i and j) are independent, so the book parallelises them and leaves the inner k-loop serial inside each thread.</p>
+      <p><b>Step by step, the serial version:</b></p>
+      <ol>
+        <li>Pick row i of A.</li>
+        <li>Pick column j of B.</li>
+        <li>Set c<sub>ij</sub> = 0.</li>
+        <li>For k = 1 to n, add a<sub>ik</sub> · b<sub>kj</sub> to c<sub>ij</sub>.</li>
+        <li>Store c<sub>ij</sub> in C.</li>
+        <li>Repeat for every (i, j) pair.</li>
+      </ol>
+      <p><b>Step by step, the parallel version:</b></p>
+      <ol>
+        <li>Make the i-loop parallel.</li>
+        <li>Make the j-loop parallel inside it.</li>
+        <li>Each (i, j) pair becomes one independent task.</li>
+        <li>Each task runs its own k-loop and writes only c<sub>ij</sub>.</li>
+        <li>No two tasks write the same cell, so no race condition.</li>
+      </ol>
+<pre><code>MatMul(matrix A, matrix B)
+{
+    n = A.rows;
+    let C be a new n × n matrix
+    parallel for i = 1 to n
+        parallel for j = 1 to n
+            c_ij = 0
+            for k = 1 to n
+                c_ij = c_ij + a_ik * b_kj;
+    return C
+}</code></pre>
+      <p>There are n² independent (i, j) pairs; each thread does Θ(n) work for its entry.</p>
+      <p><b>What this means:</b> the code has the same n³ arithmetic as the serial version. The difference is that many cells are computed at the same time.</p>
+
+      <h4>Analysis (book)</h4>
+      <div class="math">T<sub>1</sub>(n) = Θ(n³)    (all n³ multiplications and additions)<br>
+      T<sub>∞</sub>(n) = Θ(n)    (one entry's k-loop is the longest path)<br>
+      Parallelism = T<sub>1</sub>/T<sub>∞</sub> = Θ(n³)/Θ(n) = <b>Θ(n²)</b></div>
+      <p><b>What this means:</b> the total work is n³. The longest chain is one cell's n multiply-adds, plus loop overhead. So n² cells can run in parallel.</p>
+      <p>With P = n² processors, T<sub>P</sub> = Θ(n), i.e. near-perfect speedup. The book calls this parallelism very high.</p>
+
+      <h4>Book's second version — divide-and-conquer block multiplication</h4>
+      <p>Split A, B and C into four (n/2)×(n/2) blocks. The product needs <b>8 block multiplications</b> and <b>one block addition</b>:</p>
+      <div class="math">C<sub>11</sub> = A<sub>11</sub>B<sub>11</sub> + A<sub>12</sub>B<sub>21</sub>    C<sub>12</sub> = A<sub>11</sub>B<sub>12</sub> + A<sub>12</sub>B<sub>22</sub><br>
+      C<sub>21</sub> = A<sub>21</sub>B<sub>11</sub> + A<sub>22</sub>B<sub>21</sub>    C<sub>22</sub> = A<sub>21</sub>B<sub>12</sub> + A<sub>22</sub>B<sub>22</sub></div>
+      <p><b>What this means:</b> each quarter of C is the sum of two smaller matrix products. That gives 8 products in total.</p>
+<pre><code>PMatMulRec(C, A, B)
+1  n = A.rows
+2  if n == 1
+3      c11 = a11 * b11
+4  else let T be a new n × n matrix
+5      partition A, B, C, T into (n/2)×(n/2) submatrices
+6      spawn PMatMulRec(C11, A11, B11)
+7      spawn PMatMulRec(C12, A11, B12)
+8      spawn PMatMulRec(C21, A21, B11)
+9      spawn PMatMulRec(C22, A21, B12)
+10     spawn PMatMulRec(T11, A12, B21)
+11     spawn PMatMulRec(T12, A12, B22)
+12     spawn PMatMulRec(T21, A22, B21)
+13     PMatMulRec(T22, A22, B22)
+14     sync
+15     parallel for i = 1 to n
+16         parallel for j = 1 to n
+17             c_ij = c_ij + t_ij
+18 return C</code></pre>
+      <p><b>Step by step:</b></p>
+      <ol>
+        <li>If the matrix is 1×1, multiply the two numbers and stop.</li>
+        <li>Otherwise, cut A, B, C and a temporary matrix T into four blocks each.</li>
+        <li>Spawn 8 recursive products: four write into C, four write into T.</li>
+        <li>The parent computes the last product itself.</li>
+        <li>Wait at <code>sync</code> for all 8 products.</li>
+        <li>Add T to C in parallel, one cell per thread.</li>
+        <li>Return C.</li>
+      </ol>
+      <p>Eight recursive products run in parallel; the final addition of the T block is also parallelised over i and j.</p>
+      <p><b>What this means:</b> the recursion turns one big product into many small independent products. The final add joins the two halves of each C block.</p>
+      <div class="math">M<sub>1</sub>(n) = 8M<sub>1</sub>(n/2) + Θ(n²) = <b>Θ(n³)</b><br>
+      M<sub>∞</sub>(n) = M<sub>∞</sub>(n/2) + Θ(log n) = <b>Θ(log² n)</b><br>
+      Parallelism = Θ(n³)/Θ(log² n) = <b>Θ(n³/log² n)</b></div>
+      <p><b>What this means:</b> the work is still n³. The span falls to log² n because each level only needs a parallel add. The available parallelism is much larger than the loop version's n².</p>
+      <p>This is even higher than the loop version's Θ(n²), because the recursive calls expose much more independent work.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> multiply two big tables by cutting each into four quadrants. Eight helpers compute the eight quadrant products. Then pairs of helpers add their quadrants to finish C.</div>
+
+      <div class="confuse"><b>Common confusion:</b> the block version does not reduce the work. It still does Θ(n³) arithmetic. Only the span and the parallel structure improve. Also, it uses 8 products, not 7; 7 is Strassen's method, which is a different algorithm.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §6.2.1 Multithreaded Matrix Multiplication, p. 6-11 – 6-14</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <p class="qtitle"><span class="qno">Q2</span>Compare and contrast row-wise and block-wise approaches in multithreaded matrix multiplication with respect to division of work, communication overhead and cache efficiency.</p>
+      <div class="badges"><span class="b marks">6 marks</span><span class="b rep">★ 1×</span></div>
+    </div>
+    <div class="qa-body">
+      <p class="asked"><b>Asked in:</b> 2025 Nov Q7(b)</p>
+
+      <div class="simple"><b>In simple words:</b> Row-wise gives each thread a row or a cell and reads B column by column. Block-wise gives each thread a square block that fits in cache. Block-wise is more complex, but it usually scales better.</div>
+
+      <h4>Why we do this</h4>
+      <p>Both versions do the same n³ arithmetic. Real speed depends on memory access and communication. A simple version that keeps missing cache can be slower than a complex version that reuses data well.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Row-wise</b> — divide work by rows or cells of the result.</li>
+        <li><b>Block-wise</b> — divide work by square submatrices.</li>
+        <li><b>Communication overhead</b> — time spent moving data between threads or memory levels.</li>
+        <li><b>Cache</b> — small, fast memory close to the CPU.</li>
+        <li><b>Spatial locality</b> — using nearby memory addresses soon after each other.</li>
+        <li><b>Temporal locality</b> — reusing the same data soon after it was loaded.</li>
+        <li><b>Scalability</b> — how well the method keeps speeding up as cores grow.</li>
+        <li><b>Memory bandwidth</b> — how fast data moves between memory and the CPU.</li>
+        <li><b>Static partition</b> — divide the work once, before the loop starts.</li>
+      </ul>
+
+      <p>The book gives two ways to divide matrix multiplication. The first is the loop-parallel <code>MatMul</code>. Each (i, j) pair, or each row, becomes a thread; this is the <b>row-wise</b> view. The second is the recursive <code>PMatMulRec</code>. It partitions the matrices into (n/2)×(n/2) blocks; this is the <b>block-wise</b> view.</p>
+      <div class="tbl-wrap">
+      <table class="left">
+        <thead><tr><th>Point</th><th>Row-wise (book's MatMul)</th><th>Block-wise (book's PMatMulRec)</th></tr></thead>
+        <tbody>
+          <tr><td><b>Division of work</b></td><td>Two parallel <code>for</code> loops over i and j give n² independent entries; a thread may also take a whole row. Simple static partition.</td><td>Split A, B, C into four (n/2)×(n/2) submatrices; 8 recursive products plus one parallel block addition. Work is divided by submatrices, not single entries.</td></tr>
+          <tr><td><b>Communication overhead</b></td><td>A thread needs one row of A and one column of B. The same column of B is read by all n rows, so shared-memory traffic is high.</td><td>A pair of submatrices is reused across the 8 products and the addition; blocks are passed once per level, so there is less repeated traffic.</td></tr>
+          <tr><td><b>Cache efficiency</b></td><td>B is read column-wise, so consecutive accesses are far apart → poor spatial locality and more cache misses.</td><td>Each recursive call works on a square block that fits in cache and is reused → good temporal and spatial locality.</td></tr>
+          <tr><td><b>Scalability</b></td><td>Good for small n; limited by memory bandwidth when n is large.</td><td>Book's parallelism Θ(n³/log² n), higher than the row version's Θ(n²); scales to large n.</td></tr>
+          <tr><td><b>Implementation</b></td><td>Simple triple loop, easy to code and debug.</td><td>More index work (partition, 8 spawns, sync, add), but the same Θ(n³) work with a much smaller span.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>What this means:</b> row-wise is easy but reads B in a cache-unfriendly order. Block-wise keeps small squares in cache and exposes more parallelism. The trade-off is coding complexity.</p>
+
+      <h4>How to choose, step by step</h4>
+      <ol>
+        <li>For small n, or for a quick program, use row-wise.</li>
+        <li>Check how B is read. Column-by-column reads cause many cache misses.</li>
+        <li>For large n and many cores, switch to block-wise.</li>
+        <li>Choose a block size that fits in cache.</li>
+        <li>Measure; the fastest version depends on the machine.</li>
+      </ol>
+
+      <div class="note"><b>One-line answer:</b> row-wise is simple, but it reads B column-wise and is memory-bound. Block-wise reuses square submatrices, gives better cache behaviour, and exposes the book's higher Θ(n³/log² n) parallelism.</div>
+
+      <div class="analogy"><b>Real-life analogy:</b> row-wise is one worker walking to a central shelf for every item. Block-wise gives each worker a box with all the items for one small square, so they rarely walk back.</div>
+
+      <div class="confuse"><b>Common confusion:</b> block-wise does not do less arithmetic. It does the same Θ(n³) work. Its advantage is better cache use and a smaller span. “Row-wise” can mean one row per thread or one cell per thread; the book parallelises both i and j.</div>
+
+      <p class="booksrc">📘 <b>Book:</b> §6.2.1 Multithreaded Matrix Multiplication, p. 6-11 – 6-14</p>
+    </div>
+  </div>
+</section>
+
 <section class="card" id="s64">
-  <h2>6.4 Distributed breadth-first search <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
+  <div class="prio">Priority 5 · ★★★ 3× repeated</div><h2>6.4 Distributed breadth-first search <span class="b rep" style="font-size:12px;vertical-align:middle">★★★ 3×</span></h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -451,15 +1002,41 @@ PMerge(T, a1, c1, a2, c2, A, a3)
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2022 Nov Q7(a) [short note] · 2024 May Q8(a) [10 — with graph] · 2025 May Q8(a) [8]</p>
 
+      <div class="simple"><b>In simple words:</b> BFS visits a graph level by level from a source. In a distributed version, each node tells its neighbours, and all nodes at the same level work in the same round. No central queue is needed.</div>
+
+      <h4>Why we do this</h4>
+      <p>Huge graphs may not fit on one machine. A distributed BFS spreads the graph over many processors. Each processor only needs its local neighbours, and messages travel in parallel.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Graph</b> — a set of nodes joined by edges.</li>
+        <li><b>Vertex (node)</b> — one point in the graph.</li>
+        <li><b>Edge (link)</b> — a connection between two vertices.</li>
+        <li><b>Source</b> — the vertex where BFS starts.</li>
+        <li><b>BFS (breadth-first search)</b> — visit nodes in order of distance from the source.</li>
+        <li><b>Frontier</b> — the set of nodes at the current level that still have to send messages.</li>
+        <li><b>Round</b> — one step in which all current frontier nodes send their messages.</li>
+        <li><b>Message</b> — a small packet sent from one processor to another.</li>
+        <li><b>Parent</b> — the node that first reached a new node; it becomes the new node's parent in the BFS tree.</li>
+        <li><b>BFS tree</b> — the tree formed by parent links from the source.</li>
+        <li><b>Strongly connected</b> — every node can reach every other node.</li>
+        <li><b>Diameter</b> — the longest shortest-path distance between any two nodes.</li>
+        <li><b>Adjacency list</b> — the list of neighbours of one node.</li>
+        <li><b>Level-synchronous</b> — all nodes at one level finish before the next level starts.</li>
+      </ul>
+
       <h4>What is a distributed algorithm?</h4>
-      <p>The book defines distributed algorithms as algorithms that work on a <b>distributed network or a multiprocessor</b>, where the network is created by interconnected processors. They are a sub-type of parallel algorithms: separate parts run simultaneously on independent processors, and each part has only <b>limited information</b> about what the other parts are doing. The main challenge is coordinating the independent parts despite processor failures and unreliable communication links.</p>
+      <p>The book defines distributed algorithms as algorithms that work on a <b>distributed network or a multiprocessor</b>, where the network is created by interconnected processors. They are a sub-type of parallel algorithms. Separate parts run at the same time on independent processors. Each part has only <b>limited information</b> about the others. The main challenge is coordinating the independent parts despite processor failures and unreliable communication links.</p>
+      <p><b>What this means:</b> no processor sees the whole graph. Each one knows only its own neighbours. Coordination happens by sending messages.</p>
 
       <h4>Distributed BFS — the book's algorithm</h4>
-      <p>Distributed BFS <b>minimises the maximum communication time</b> from the process at the distinguished node to all other processes in the network. The book assumes a <b>strongly connected</b> network with a distinguished source node i<sub>0</sub>. The output is a BFS tree rooted at i<sub>0</sub>, produced in a distributed way: every process other than i<sub>0</sub> sets a <b>parent</b> component that says which node is its parent in the tree.</p>
+      <p>Distributed BFS <b>minimises the maximum communication time</b> from the process at the distinguished node to all other processes in the network. The book assumes a <b>strongly connected</b> network with a distinguished source node i<sub>0</sub>. The output is a BFS tree rooted at i<sub>0</sub>. Every process other than i<sub>0</sub> sets a <b>parent</b> field. That field names the node's parent in the tree.</p>
       <p><b>Step 1:</b> at any point during execution there is a set of processes that is marked; initially only i<sub>0</sub> is marked.<br>
       <b>Step 2:</b> process i<sub>0</sub> sends a search message at round 1 to all its outgoing neighbours.<br>
-      <b>Step 3:</b> from round 2 to n, if an unmarked process receives a search message, it marks itself, chooses one of the processes from which it received the message as its parent, and sends the search message to all its outgoing neighbours.<br>
+      <b>Step 3:</b> from round 2 to n, an unmarked process may receive a search message. It marks itself and chooses one sender as its parent. Then it sends the search message to all its outgoing neighbours.<br>
       <b>Step 4:</b> finally a BFS tree is obtained.</p>
+      <p><b>What this means:</b> a node is marked the first time anyone reaches it. That first sender is its parent. Marking prevents a node from joining twice and creating a cycle.</p>
+
       <p>Written as a level-synchronous loop, the same steps are:</p>
 <pre><code>DistributedBFS(G, i0)
     mark i0; parent[i0] = nil; round = 1
@@ -476,6 +1053,18 @@ PMerge(T, a1, c1, a2, c2, A, a3)
         frontier = next
         round = round + 1
     return parent[]                         // the BFS tree</code></pre>
+      <p><b>Step by step, the pseudocode:</b></p>
+      <ol>
+        <li>Mark the source and give it no parent.</li>
+        <li>Put the source in the frontier.</li>
+        <li>While the frontier has nodes, create an empty set called next.</li>
+        <li>In parallel, each frontier node looks at all its neighbours.</li>
+        <li>If a neighbour is unmarked, mark it, set its parent, and add it to next.</li>
+        <li>Wait until every process finishes this round.</li>
+        <li>Replace the frontier with next and increase the round number.</li>
+        <li>When the frontier is empty, return the parent array.</li>
+      </ol>
+      <p><b>What this means:</b> one round explores one more level. The synchronize step keeps all processors on the same level.</p>
 
       <h4>Trace on the 7-vertex graph (2024 May)</h4>
       <p>Edges: A–B, A–C, B–D, B–E, C–F, C–G. Source A.</p>
@@ -490,11 +1079,23 @@ PMerge(T, a1, c1, a2, c2, A, a3)
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> B and C are one hop from A. D, E, F and G are two hops away. No node is visited twice.</p>
+      <p><b>The trace, step by step:</b></p>
+      <ol>
+        <li>Round 1: A is the only frontier node. It sends to B and C.</li>
+        <li>B and C are unmarked, so they mark themselves and set parent A.</li>
+        <li>Round 2: B sends to D and E. C sends to F and G.</li>
+        <li>D, E, F and G are unmarked, so they mark themselves and join the next frontier.</li>
+        <li>Round 3: D, E, F and G find no unmarked neighbours.</li>
+        <li>Round 4: the frontier is empty, so the algorithm stops.</li>
+      </ol>
       <div class="math">BFS tree: A → {B, C}; B → {D, E}; C → {F, G}<br>
       Distances: A = 0, B = C = 1, D = E = F = G = 2</div>
+      <p><b>What this means:</b> the BFS tree stores one shortest path from A to every node. The distance column gives the number of edges on that path.</p>
 
       <h4>Analysis (book)</h4>
       <p>The concurrent execution uses at most <b>|E| messages</b>, where E is the number of edges (links) in the network graph and each message has b bits. The book states the number of communication bits as <b>O(|E|²·b)</b>. Each process is marked once, so the number of rounds is at most n, and each edge is examined at most once from each endpoint.</p>
+      <p><b>What this means:</b> every edge carries only a constant number of messages. The cost grows with the number of edges, not with the number of paths. The round count is bounded by the number of nodes.</p>
 
       <h4>Advantage over conventional BFS</h4>
       <ul>
@@ -506,14 +1107,17 @@ PMerge(T, a1, c1, a2, c2, A, a3)
       </ul>
       <p><b>Cost:</b> one synchronisation per level, and the number of rounds depends on the graph diameter; a long chain needs many rounds.</p>
 
+      <div class="analogy"><b>Real-life analogy:</b> a rumour starts with one person. In round 1, that person tells all friends. In round 2, those friends tell their friends. Everyone at the same distance hears it at the same time, and nobody needs a central announcement board.</div>
+
+      <div class="confuse"><b>Common confusion:</b> a node does not choose its parent randomly. It chooses one node that sent a message in the previous round, so the parent is always one level closer to the source. Also, plain BFS gives shortest paths only in unweighted graphs; weighted graphs need Dijkstra.</div>
+
       <p class="booksrc">📘 <b>Book:</b> §6.3.2 Distributed Breadth First Search, p. 6-17 – 6-18</p>
     </div>
   </div>
 </section>
 
-<!-- 6.5 -->
 <section class="card" id="s65">
-  <h2>6.5 Distributed minimum spanning tree</h2>
+  <div class="prio">Priority 6 · ★★ 2× repeated</div><h2>6.5 Distributed minimum spanning tree</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -523,6 +1127,32 @@ PMerge(T, a1, c1, a2, c2, A, a3)
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2023 Nov Q7(a)(i) [10 — part of the distributed short-note question] · 2025 Nov Q8(b) [8]</p>
 
+      <div class="simple"><b>In simple words:</b> An MST connects all nodes with the cheapest total edge cost and no cycles. In a distributed version, each group of nodes finds its cheapest outgoing edge and merges with another group. Repeat until one group remains.</div>
+
+      <h4>Why we do this</h4>
+      <p>Network designers want the cheapest set of links that keeps every site connected. No single machine may know the whole network. A distributed MST lets each part work with local information and a few messages.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Graph</b> — a set of nodes joined by edges.</li>
+        <li><b>Vertex (node)</b> — one point in the graph.</li>
+        <li><b>Edge (link)</b> — a connection between two vertices.</li>
+        <li><b>Weight</b> — the cost of an edge.</li>
+        <li><b>Circuit (cycle)</b> — a path that starts and ends at the same vertex.</li>
+        <li><b>Spanning tree</b> — a subgraph with all vertices, no cycle, and enough edges to stay connected.</li>
+        <li><b>MST (minimum spanning tree)</b> — a spanning tree with the smallest total weight.</li>
+        <li><b>Component (fragment)</b> — a connected group of nodes that is being built into the final tree.</li>
+        <li><b>Leader</b> — the node that coordinates one component.</li>
+        <li><b>MWOE (minimum weight outgoing edge)</b> — the cheapest edge that leaves a component.</li>
+        <li><b>Phase</b> — one round in which components find their MWOEs and merge.</li>
+        <li><b>Convergecast</b> — collect answers from leaves up to the leader.</li>
+        <li><b>Cut property</b> — the cheapest edge across a cut is safe to add to some MST.</li>
+        <li><b>Kruskal's strategy</b> — add the cheapest edge that does not make a cycle.</li>
+        <li><b>Forest</b> — a set of separate trees.</li>
+        <li><b>Cut</b> — a split of the vertices into two groups.</li>
+        <li><b>Broadcast</b> — send one message to every node in a component.</li>
+      </ul>
+
       <h4>Spanning tree and MST (book definitions)</h4>
       <p>A <b>spanning tree</b> of a graph G is a subgraph that contains <b>all the vertices</b> of G and contains <b>no circuit</b>. A <b>minimum spanning tree (MST)</b> of a weighted connected graph G is a spanning tree with minimum (smallest) total weight.</p>
       <p>The book's example (Fig. 6.3.1) is the graph G with edges A–E = 5, A–B = 10, E–D = 3, E–C = 7, D–C = 2, D–B = 6, B–C = 1. Two spanning trees are:</p>
@@ -531,9 +1161,24 @@ PMerge(T, a1, c1, a2, c2, A, a3)
         <li>T<sub>2</sub> = {A–B, B–C, C–E, E–D}, weight = 10 + 1 + 7 + 3 = <b>21</b>.</li>
       </ul>
       <p>So T<sub>1</sub> is the minimum spanning tree.</p>
+      <p><b>What this means:</b> both trees connect all five nodes and have no cycle. T<sub>1</sub> is cheaper, so it is the MST. A spanning tree on n nodes always has exactly n−1 edges.</p>
+
+      <h4>How the answer 11 is built (Kruskal view)</h4>
+      <ol>
+        <li>Sort the edges by weight: B–C 1, D–C 2, E–D 3, A–E 5, D–B 6, E–C 7, A–B 10.</li>
+        <li>Take B–C (1).</li>
+        <li>Take D–C (2).</li>
+        <li>Take E–D (3).</li>
+        <li>Take A–E (5).</li>
+        <li>Skip D–B (6): B and D are already connected, so it would make a cycle.</li>
+        <li>Skip E–C (7): E and C are already connected.</li>
+        <li>Skip A–B (10): A and B are already connected.</li>
+        <li>Stop after four edges. Total weight = 1 + 2 + 3 + 5 = 11.</li>
+      </ol>
+      <p><b>What this means:</b> always take the cheapest edge that does not create a cycle. After n−1 edges, every node is connected and the tree is complete.</p>
 
       <h4>Distributed MST — Gallager–Humblet–Spira (GHS)</h4>
-      <p>The book says GHS uses <b>Kruskal's strategy</b> and works in <b>phases</b>. After each phase we have a spanning forest in which every component tree has a <b>leader</b>. In each phase every component finds its <b>Minimum Weight Outgoing Edge (MWOE)</b>; the components then merge using all the MWOEs to form the components for the next phase.</p>
+      <p>The book says GHS uses <b>Kruskal's strategy</b> and works in <b>phases</b>. After each phase we have a spanning forest in which every component tree has a <b>leader</b>. In each phase, every component finds its <b>Minimum Weight Outgoing Edge (MWOE)</b>. The components then merge along these MWOEs to form the next phase's components.</p>
       <p><b>Initially:</b> every node is a component by itself (a level-0 component).</p>
       <p><b>Phase 1 (produces level-1 components):</b></p>
       <ol>
@@ -542,6 +1187,8 @@ PMerge(T, a1, c1, a2, c2, A, a3)
         <li>There is a unique edge that is the MWOE of two components; the two components join across it.</li>
         <li>The leader of the new component is the higher-id endpoint of this unique edge.</li>
       </ol>
+      <p><b>What this means:</b> single nodes look for their cheapest link. Two nodes that choose the same link merge into one component. The higher-id node becomes the leader.</p>
+
       <p><b>Phase K+1 (produces level-(K+1) components):</b></p>
       <ol>
         <li>The leader of each component broadcasts <code>initiate</code> on the tree edges to start the search for the component's MWOE.</li>
@@ -557,24 +1204,40 @@ PMerge(T, a1, c1, a2, c2, A, a3)
         <li>Send <code>connect</code> across the MWOE.</li>
         <li>Again there is a unique edge that is the MWOE of two components; the leader of the new component is the higher-id endpoint of that edge.</li>
       </ol>
+      <p><b>What the messages do:</b></p>
+      <ul>
+        <li><code>initiate</code> — the leader starts a new phase.</li>
+        <li><code>test</code> — “is this edge leaving my component?”</li>
+        <li><code>accept</code> — yes, the other endpoint is outside this component.</li>
+        <li><code>reject</code> — no, the other endpoint is inside this component.</li>
+        <li><code>report</code> — a node sends its best edge up the tree.</li>
+        <li><code>change-root</code> — make the MWOE endpoint the new root so the tree can grow there.</li>
+        <li><code>connect</code> — merge across the chosen MWOE.</li>
+      </ul>
+      <p><b>What this means:</b> a component cannot see the whole graph. It tests edges one by one. The leader gathers the best local answers and chooses one edge to grow the tree.</p>
       <p>Repeat until one component remains. The edges chosen across the MWOEs form the MST.</p>
 
       <h4>Analysis (book)</h4>
       <div class="math">Message complexity = <b>O(n log n + |E|)</b><br>
       Time complexity = <b>O(n log n)</b></div>
+      <p><b>What this means:</b> the number of messages grows slowly with n and linearly with the number of edges. The level structure keeps the number of phases logarithmic.</p>
       <p>The level structure keeps the components balanced, so there are O(log n) phases. Within a phase each edge is tested at most once from each side, which gives the |E| term.</p>
 
       <h4>Why MWOE, component id and level are needed</h4>
-      <p>The MWOE is the cheapest edge leaving a component, so adding it is safe by the <b>cut property</b> of MSTs. The component id and level let a node decide whether a tested edge leaves its component (<code>accept</code>) or stays inside it (<code>reject</code>), and they prevent two components from merging into a cycle. Choosing the higher-id endpoint as leader gives a unique leader for the merged component.</p>
+      <p>The MWOE is the cheapest edge leaving a component, so adding it is safe by the <b>cut property</b> of MSTs. A node uses the component id and level to decide if a tested edge leaves its component (<code>accept</code>) or stays inside it (<code>reject</code>). These values also prevent two components from merging into a cycle. Choosing the higher-id endpoint as leader gives a unique leader for the merged component.</p>
+      <p><b>What this means:</b> the component id answers “are we in the same group?”. The level answers “which group is more advanced?”. Together they stop cycles and keep merges balanced.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> several neighbourhoods want the cheapest set of bridges that connects them all. Each neighbourhood picks its cheapest bridge to the outside. Two neighbourhoods that pick the same bridge join into one larger neighbourhood. Repeat until all are connected.</div>
+
+      <div class="confuse"><b>Common confusion:</b> an MST minimises the total weight of all links, not the distance between two chosen nodes. A shortest-path tree is a different object. Also, the MWOE is the cheapest edge leaving a component, not the cheapest edge in the whole graph.</div>
 
       <p class="booksrc">📘 <b>Book:</b> §6.3.3 Distributed Minimum Spanning Tree, p. 6-18 – 6-20</p>
     </div>
   </div>
 </section>
 
-<!-- 6.6 -->
 <section class="card" id="s66">
-  <h2>6.6 Naive string matching</h2>
+  <div class="prio">Priority 7 · ★★ 2× repeated</div><h2>6.6 Naive string matching</h2>
 
   <div class="qa">
     <div class="qa-head">
@@ -584,11 +1247,29 @@ PMerge(T, a1, c1, a2, c2, A, a3)
     <div class="qa-body">
       <p class="asked"><b>Asked in:</b> 2025 Nov Q8(a) [10] · pseudocode + analysis: 2022 Nov Q8(b) [8]</p>
 
+      <div class="simple"><b>In simple words:</b> Naive string matching slides the pattern over the text one position at a time. At each position it compares characters until a mismatch. It is simple, but it can be slow when many windows share a long prefix.</div>
+
+      <h4>Why we do this</h4>
+      <p>This is the baseline method for finding a word inside a text. It is easy to code and easy to trace. It also shows the worst case that faster methods such as Rabin–Karp try to avoid.</p>
+
+      <h4>Terms you need first</h4>
+      <ul>
+        <li><b>Text T</b> — the long string we search inside.</li>
+        <li><b>Pattern P</b> — the short string we look for.</li>
+        <li><b>Shift s</b> — the starting position where P is aligned under T.</li>
+        <li><b>Window</b> — the m characters of T that line up with P at a given shift.</li>
+        <li><b>Match</b> — every character in the window equals the pattern.</li>
+        <li><b>Mismatch</b> — at least one character differs.</li>
+        <li><b>Brute force</b> — try every possible position, one by one.</li>
+        <li><b>Prefix</b> — the first few characters of a string.</li>
+      </ul>
+
       <h4>String matching — the book's definition</h4>
-      <p>String matching is used in text processing. Given a <b>text</b> T = t<sub>0</sub>t<sub>1</sub>…t<sub>n−1</sub> and a <b>pattern</b> P = p<sub>0</sub>p<sub>1</sub>…p<sub>m−1</sub>, the job is to find one or all occurrences of P in T. The pattern is compared with every length-m window of the text.</p>
+      <p>String matching is used in text processing. Given a <b>text</b> T = t<sub>0</sub>t<sub>1</sub>…t<sub>n−1</sub> and a <b>pattern</b> P = p<sub>0</sub>p<sub>1</sub>…p<sub>m−1</sub>. The job is to find one or all occurrences of P in T. The pattern is compared with every length-m window of the text.</p>
+      <p><b>What this means:</b> n is the text length and m is the pattern length. There are n−m+1 possible starting positions.</p>
 
       <h4>Naïve (brute-force) algorithm</h4>
-      <p>The book calls this the simplest method, working by the <b>brute-force</b> ("Just do it") approach. It checks every position from 0 to n−m, shifts the pattern by exactly <b>one</b> position to the right after each attempt, and reports a match when the whole window equals the pattern.</p>
+      <p>The book calls this the simplest method, working by the <b>brute-force</b> (“Just do it”) approach. It checks every position from 0 to n−m. After each attempt, it shifts the pattern right by exactly <b>one</b> position. It reports a match when the whole window equals the pattern.</p>
 <pre><code>Naive(T[1..n], P[1..m])
 {
     for s ← 0 to n - m do
@@ -598,10 +1279,22 @@ PMerge(T, a1, c1, a2, c2, A, a3)
     }
 }</code></pre>
       <p>Here s is the shift: the pattern is aligned with T[s+1..s+m]. If the window does not match, the pattern moves one place right and the comparison is repeated.</p>
+      <p><b>Step by step:</b></p>
+      <ol>
+        <li>Read n and m.</li>
+        <li>Set shift s = 0.</li>
+        <li>Line up P with the window T[s+1..s+m].</li>
+        <li>Compare characters from left to right.</li>
+        <li>If all m characters match, report s.</li>
+        <li>If a mismatch appears, stop this try.</li>
+        <li>Move s one place right and repeat.</li>
+        <li>Stop after s = n−m.</li>
+      </ol>
 
       <h4>Analysis (book)</h4>
       <p>The outer <code>for</code> runs at most n−m+1 times, and the comparison inside can examine up to m characters. Hence the worst-case running time is</p>
       <div class="math">O((n − m + 1) · m) = <b>O(nm)</b></div>
+      <p><b>What this means:</b> in the worst case, every window matches almost all characters before failing. Then the work is about n times m.</p>
       <p>For a typical word search in natural language, the average-case efficiency is <b>Θ(n)</b> (book). The worst case occurs when many windows match a long prefix before failing, e.g. T = "AAAAAA", P = "AAA".</p>
 
       <h4>Trace: T = KITCHEN, P = HEN (n = 7, m = 3)</h4>
@@ -617,170 +1310,43 @@ PMerge(T, a1, c1, a2, c2, A, a3)
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> the pattern first matches at shift 4. That is the fifth character of KITCHEN, because the first shift is 0.</p>
+      <p><b>The trace, step by step:</b></p>
+      <ol>
+        <li>s = 0: compare K with H. They differ, so move on.</li>
+        <li>s = 1: compare I with H. They differ, so move on.</li>
+        <li>s = 2: compare T with H. They differ, so move on.</li>
+        <li>s = 3: compare C with H. They differ, so move on.</li>
+        <li>s = 4: compare H with H, E with E, N with N. All match.</li>
+        <li>Report the match at s = 4.</li>
+      </ol>
       <div class="math">Pattern found at index 4 (the 5th position).<br>
       Comparisons = 4 failed first-character checks + 3 successful character checks = <b>7 comparisons</b>.</div>
+      <p><b>What this means:</b> only 7 character comparisons were needed. The first four tries failed immediately, and the last try matched all three letters.</p>
 
       <h4>The book's solved examples</h4>
       <ul>
         <li><b>Example 6.4.1:</b> P = 1001 in T = 0000100010010 (n = 13, m = 4). The first eight shifts fail; at shift 8 the window is 1001, so the match is reported at <b>index 8</b>.</li>
         <li><b>Word example:</b> T = "raman likes mango" (n = 17), P = "mango" (m = 5). The pattern is shifted from index 0 to index 12; all earlier windows fail and the match is found at <b>index 12</b>.</li>
       </ul>
+      <p><b>What this means:</b> both examples follow the same slide-one rule. The binary example checks 0s and 1s; the word example checks letters. The shift number is always the starting index of the match.</p>
+
+      <div class="analogy"><b>Real-life analogy:</b> you place a stencil with three holes over a word. You check the letters under the holes. If they fail, you slide the stencil one letter right and check again.</div>
+
+      <div class="confuse"><b>Common confusion:</b> shift 4 is the fifth character, not the fourth. The last possible shift is n−m, not n. Also, the average case is fast, but the worst case is O(nm), not O(n+m).</div>
 
       <p class="booksrc">📘 <b>Book:</b> §6.4.1 Naïve Algorithm, p. 6-21 – 6-26</p>
     </div>
   </div>
 </section>
 
+<!-- 6.1 -->
+<!-- 6.2 -->
+<!-- 6.3 -->
+<!-- 6.4 -->
+<!-- 6.5 -->
+<!-- 6.6 -->
 <!-- 6.7 -->
-<section class="card" id="s67">
-  <h2>6.7 Rabin–Karp algorithm <span class="b rep hot" style="font-size:12px;vertical-align:middle">★★★★★ 5×</span></h2>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q1</span>Write the Rabin–Karp string-matching algorithm. For a text of length n and pattern of length m, give the expected and worst-case running times.</p>
-      <div class="badges"><span class="b marks">8–10 marks</span><span class="b rep">★★★★★ 5×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2022 Nov Q8(b) [8] · 2023 Nov Q7(a)(ii) [10 — part of the short-note question] · 2024 May Q7(a) [10] · 2025 May Q8(b) [10] · 2025 Nov Q7(a) [10]</p>
-
-      <h4>Idea — hashing instead of comparing every character</h4>
-      <p>The book says Rabin–Karp is based on the <b>hashing technique</b>. Each character is treated as a digit in <b>radix-d</b> notation, and the algorithm uses the equality of two numbers <b>modulo a third number q</b>. For a decimal string d = 10; for a binary string d = 2.</p>
-      <p>Let T[1..n] be the text and P[1..m] the pattern. Define:</p>
-      <ul>
-        <li><b>p</b> = the decimal value of the pattern P[1..m].</li>
-        <li><b>t<sub>s</sub></b> = the decimal value of the substring T[s+1..s+m], for s = 0, 1, …, n−m.</li>
-      </ul>
-      <p>If p = t<sub>s</sub> (mod q), the window is a <b>candidate</b>; the characters are then checked to confirm the match. A candidate that is not a real match is a <b>spurious hit</b>.</p>
-
-      <h4>The book's three steps</h4>
-      <ol>
-        <li>Compute p in <b>O(m)</b> time.</li>
-        <li>Compute all t<sub>s</sub> values in a total of <b>O(n)</b> time.</li>
-        <li>Find all valid shifts s in a total of <b>O(n)</b> time.</li>
-      </ol>
-      <p>p is computed by <b>Horner's rule</b>:</p>
-      <div class="math">p = P[m] + d(P[m−1] + d(P[m−2] + … + d(P[2] + d·P[1])))</div>
-      <p>Book's example: P = 41603, m = 5, d = 10, so</p>
-      <div class="math">p = 3 + 10(0) + 10<sup>2</sup>(6) + 10<sup>3</sup>(1) + 10<sup>4</sup>(4) = <b>41603</b></div>
-      <p>After t<sub>s</sub> is known, the next window is obtained in O(1) time by the <b>rolling hash</b>:</p>
-      <div class="math">t<sub>s+1</sub> = d(t<sub>s</sub> − d<sup>m−1</sup>·T[s+1]) + T[s+m+1]</div>
-      <p>Because p and t<sub>s</sub> may be very large, all values are kept <b>mod q</b>. With h = d<sup>m−1</sup> mod q, the update becomes:</p>
-      <div class="math">t<sub>s+1</sub> = (d(t<sub>s</sub> − T[s+1]·h) + T[s+m+1]) mod q</div>
-
-      <h4>Algorithm (book)</h4>
-<pre><code>RabinKarp(T[1..n], P[1..m], d, q)
-{
-    h = d^(m-1) mod q              // high-order digit position
-    p = 0;  t0 = 0
-    for i = 1 to m
-    {
-        p  = (d*p + P[i]) mod q
-        t0 = (d*t0 + T[i]) mod q
-    }
-    for s = 0 to n - m
-    {
-        if (p = t_s) then
-        {
-            if (P[1..m] = T[s+1 .. s+m]) then
-                write("pattern found with shift", s)
-        }
-        if (s &lt; n - m) then
-            t_(s+1) = (d*(t_s - T[s+1]*h) + T[s+m+1]) mod q
-    }
-}</code></pre>
-
-      <h4>Book's solved example (Example 6.4.2)</h4>
-      <p>T = 3141592653589793, P = 26, q = 11. The pattern hash is 26 mod 11 = <b>4</b>. With m = 2, the 15 windows and their mod-11 values are:</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Window</th><th>31</th><th>14</th><th>41</th><th>15</th><th>59</th><th>92</th><th>26</th><th>65</th><th>53</th><th>35</th><th>58</th><th>89</th><th>97</th><th>79</th><th>93</th></tr></thead>
-        <tbody>
-          <tr><td>mod 11</td><td>9</td><td>3</td><td>8</td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td>10</td><td>9</td><td>2</td><td>3</td><td>1</td><td>9</td><td>2</td><td>5</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>Four windows hash to 4: 15, 59, 92 and 26. Only 26 is the real pattern, so 15, 59 and 92 are <b>spurious hits</b>; the book reports the valid match at the <b>7th position</b> (shift s = 6). The rolling check from window 26 to 65 is exactly the book's line:</p>
-      <div class="math">t<sub>s+1</sub> = 10(26 − 10·2) + 5 = 60 + 5 = 65</div>
-
-      <h4>Complexity</h4>
-      <div class="math">Preprocessing the pattern and first window = <b>Θ(m)</b><br>
-      Each shift = O(1) hash check, plus O(m) only when the hash matches<br>
-      <b>Expected total = O(n + m)</b><br>
-      <b>Worst case = O((n − m + 1)·m) = O(nm)</b></div>
-      <p>The worst case occurs when many windows have the same hash as the pattern (many spurious hits), forcing a full character comparison at every shift. This is the book's stated matching time, Θ((n−m+1)m).</p>
-
-      <p class="booksrc">📘 <b>Book:</b> §6.4.2 The Rabin Karp Algorithm, p. 6-27 – 6-30</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q2</span>With modulus q = 11, how many spurious hits does Rabin–Karp encounter in T = 31415926535, given P mod q = 4?</p>
-      <div class="badges"><span class="b marks">8 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2023 Nov Q8(b) [8]</p>
-      <p>Rabin–Karp compares hash values before comparing characters. With q = 11 and P mod 11 = 4, the pattern is the two-digit string <b>26</b> (26 mod 11 = 4). For m = 2, d = 10, h = d<sup>m−1</sup> mod q = 10 mod 11 = 10, so each window T[s+1..s+2] has value 10·T[s+1] + T[s+2].</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Window</th><th>31</th><th>14</th><th>41</th><th>15</th><th>59</th><th>92</th><th>26</th><th>65</th><th>53</th><th>35</th></tr></thead>
-        <tbody>
-          <tr><td>mod 11</td><td>9</td><td>3</td><td>8</td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td><b>4</b></td><td>10</td><td>9</td><td>2</td></tr>
-          <tr><td>Hash = 4?</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td><td>no</td></tr>
-          <tr><td>Result</td><td>—</td><td>—</td><td>—</td><td>spurious</td><td>spurious</td><td>spurious</td><td>✅ real</td><td>—</td><td>—</td><td>—</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>Four windows have hash 4: 15, 59, 92 and 26. Only 26 is the actual pattern; the other three are <b>spurious hits</b>.</p>
-      <div class="math">Hash matches = 4<br>
-      Real matches = 1<br>
-      <b>Spurious hits = 4 − 1 = 3</b> (the windows 15, 59 and 92)</div>
-      <p><b>Rolling check (book's formula):</b> t<sub>s+1</sub> = (10(t<sub>s</sub> − 10·T[s+1]) + T[s+3]) mod 11.</p>
-      <div class="math">15 (t = 4) → 59: 10(4 − 10·1) + 9 = −51 ≡ 4 (mod 11)<br>
-      59 (4) → 92: 10(4 − 10·5) + 2 = −458 ≡ 4<br>
-      92 (4) → 26: 10(4 − 10·9) + 6 = −854 ≡ 4<br>
-      26 (4) → 65: 10(4 − 10·2) + 5 = −155 ≡ 10 &nbsp; (hash run ends)</div>
-      <p>So the hash matches are the three spurious windows plus the real match. The book's Example 6.4.2 uses the longer text 3141592653589793; the PYQ text is its first 11 digits, so the first ten windows — and the same three spurious hits — are unchanged.</p>
-
-      <p class="booksrc">📘 <b>Book:</b> §6.4.2 The Rabin Karp Algorithm, p. 6-27 – 6-28</p>
-    </div>
-  </div>
-
-  <div class="qa">
-    <div class="qa-head">
-      <p class="qtitle"><span class="qno">Q3</span>Text hash code = 4133124, pattern hash code = 124, q = 13. Apply Rabin–Karp step by step and give the time complexity.</p>
-      <div class="badges"><span class="b marks">10 marks</span><span class="b rep">★ 1×</span></div>
-    </div>
-    <div class="qa-body">
-      <p class="asked"><b>Asked in:</b> 2025 Nov Q7(a) [10]</p>
-      <p>Here d = 10, m = 3 (pattern "124") and q = 13. The high-order multiplier is h = d<sup>m−1</sup> mod q = 10<sup>2</sup> mod 13 = 100 mod 13 = <b>9</b>. The pattern hash is p = 124 mod 13 = <b>7</b>. The first window is 413, so t<sub>0</sub> = 413 mod 13 = <b>10</b>.</p>
-      <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Shift s</th><th>Window</th><th>Value</th><th>mod 13</th><th>Hash = 7?</th><th>Character check</th></tr></thead>
-        <tbody>
-          <tr><td>0</td><td>413</td><td>413</td><td>10</td><td>no</td><td>—</td></tr>
-          <tr><td>1</td><td>133</td><td>133</td><td>3</td><td>no</td><td>—</td></tr>
-          <tr><td>2</td><td>331</td><td>331</td><td>6</td><td>no</td><td>—</td></tr>
-          <tr><td>3</td><td>312</td><td>312</td><td>0</td><td>no</td><td>—</td></tr>
-          <tr><td>4</td><td><b>124</b></td><td>124</td><td><b>7</b></td><td><b>yes</b></td><td>1 = 1, 2 = 2, 4 = 4 → <b>match</b></td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p><b>Rolling step by step</b> (book's formula t<sub>s+1</sub> = (d(t<sub>s</sub> − T[s+1]·h) + T[s+m+1]) mod q):</p>
-      <div class="math">
-      t<sub>1</sub> = (10(10 − 4·9) + 3) mod 13 = (−260 + 3) mod 13 = <b>3</b><br>
-      t<sub>2</sub> = (10(3 − 1·9) + 1) mod 13 = (−60 + 1) mod 13 = <b>6</b><br>
-      t<sub>3</sub> = (10(6 − 3·9) + 2) mod 13 = (−210 + 2) mod 13 = <b>0</b><br>
-      t<sub>4</sub> = (10(0 − 3·9) + 4) mod 13 = (−270 + 4) mod 13 = <b>7</b>
-      </div>
-      <p>These agree with the direct values 133 mod 13 = 3, 331 mod 13 = 6, 312 mod 13 = 0 and 124 mod 13 = 7. At s = 4 the hash equals the pattern hash, and the character-by-character check confirms "124" = "124", so the pattern occurs at <b>shift 4</b>. There are <b>no spurious hits</b>.</p>
-      <p><b>Time complexity:</b> preprocessing the pattern and first window takes Θ(m); each of the n−m+1 shifts costs O(1) for the rolling hash, plus O(m) only when the hash matches. Expected <b>O(n + m)</b>; worst case <b>O((n − m + 1)·m) = O(nm)</b> when there are many spurious hits. Here n = 7 and m = 3, so there are 5 shifts.</p>
-
-      <p class="booksrc">📘 <b>Book:</b> §6.4.2 The Rabin Karp Algorithm, p. 6-27 – 6-30</p>
-    </div>
-  </div>
-</section>
-
 <section class="card" id="cheat">
   <h2>⚡ Last-minute revision sheet</h2>
   <div class="grid2">
@@ -799,11 +1365,13 @@ PMerge(T, a1, c1, a2, c2, A, a3)
         </tbody>
       </table>
       </div>
+      <p><b>What this means:</b> this table is the one-line cost summary for every algorithm in the unit. Check the algorithm name, then read its total work and its longest chain.</p>
       <h4>Formula bank</h4>
       <div class="math">T<sub>P</sub> = T<sub>1</sub>/P + T<sub>∞</sub><br>
       speedup = T<sub>1</sub>/T<sub>P</sub>, parallelism = T<sub>1</sub>/T<sub>∞</sub><br>
       h = Σ c<sub>i</sub> d<sup>m−i</sup> mod q<br>
       h<sub>new</sub> = (d(h<sub>old</sub> − c<sub>old</sub>d<sup>m−1</sup>) + c<sub>new</sub>) mod q</div>
+      <p><b>What this means:</b> the first line estimates parallel time. The second line gives speedup and its upper bound. The last two lines build and roll a hash.</p>
     </div>
     <div>
       <h4>Solved answers to memorise</h4>
